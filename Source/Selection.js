@@ -35,7 +35,7 @@ export class Selection extends WrappedObject {
     iterateAndClear(block) {
       var layers = this.object.selectedLayers();
       this.clear();
-      this.iterateWithLayers(layers, block);
+      this._iterateWithLayers(layers, block);
     }
 
     /**
@@ -44,7 +44,7 @@ export class Selection extends WrappedObject {
 
     iterate(block) {
       var layers = this.object.selectedLayers();
-      this.iterateWithLayers(layers, block);
+      this._iterateWithLayers(layers, block);
     }
 
     /**
@@ -55,7 +55,12 @@ export class Selection extends WrappedObject {
       this.object.currentPage().deselectAllLayers();
     }
 
-    iterateWithLayers(layers, block) {
+
+    /**
+        Iterate through a bunch of layers, executing a block.
+    */
+
+    _iterateWithLayers(layers, block) {
       var loop = layers.objectEnumerator();
       var item;
       while (item = loop.nextObject()) {
