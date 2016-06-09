@@ -55,7 +55,7 @@ export class Selection extends WrappedObject {
       this.object.currentPage().deselectAllLayers();
     }
 
-    private iterateWithLayers(layers, block) {
+    iterateWithLayers(layers, block) {
       var loop = layers.objectEnumerator();
       var item;
       while (item = loop.nextObject()) {
