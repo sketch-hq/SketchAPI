@@ -9,7 +9,7 @@ The intention is to make something which is:
 - fully supported by Bohemian between releases (ie we try not to change it, unlike our internal API which we can and do change whenever we need to)
 - still allows you to drop down to our internal API when absolutely necessary.
 
-Comments and suggestions for this API are welcome - send them to developer@sketchapp.com.
+Comments and suggestions for this API are welcome - send them to developers@sketchapp.com.
 
 ## Install
 
