@@ -35,7 +35,7 @@ export class Application extends WrappedObject {
         @param context The context dictionary passed to the script when it was invoked.
         @return A new Application object.
     */
-    
+
     constructor(context) {
       super(context)
       this.metadata = MSApplicationMetadata.metadata()
@@ -103,6 +103,7 @@ export class Application extends WrappedObject {
         Returns the full version of Sketch that is running
 
         @return {string} Version and build number as a string, eg "3.6 (15352)".
+    */
 
     get full_version() {
       return this.version + " (" + this.build + ")"
