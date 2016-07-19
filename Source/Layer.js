@@ -11,7 +11,7 @@ import { Rectangle } from './Rectangle.js'
 /**
   Represents a Sketch layer.
  */
- 
+
 export class Layer extends WrappedObject {
 
     /**
@@ -48,11 +48,64 @@ export class Layer extends WrappedObject {
       return new Layer(this.object.duplicate(), this.document);
     }
 
+    /**
+        Is this a page?
+
+        All Layer objects respond to this method, but only pages return true.
+
+        @return true {bool} for instances of Group, false for any other layer type.
+    */
+
     get isPage() { return false; }
+
+    /**
+        Is this an artboard?
+
+        All Layer objects respond to this method, but only Artboard objects return true.
+
+        @return true for instances of Artboard, false for any other layer type.
+    */
+
     get isArtboard() { return false; }
+
+    /**
+        Is this an group?
+
+        All Layer objects respond to this method, but only Groups or things that inherit from groups return true.
+
+        @return true {bool} for instances of Group, false for any other layer type.
+    */
+
     get isGroup() { return false; }
+
+    /**
+        Is this a text layer?
+
+        All Layer objects respond to this method, but only text layers return true.
+
+        @return true {bool} for instances of Group, false for any other layer type.
+    */
+
     get isText() { return false; }
+
+    /**
+        Is this a shape layer?
+
+        All Layer objects respond to this method, but only shape layers (rectangles, ovals, paths etc) return true.
+
+        @return true {bool} for instances of Group, false for any other layer type.
+    */
+
     get isShape() { return false; }
+
+    /**
+        Is this an image layer?
+
+        All Layer objects respond to this method, but only image layers return true.
+
+        @return true {bool} for instances of Group, false for any other layer type.
+    */
+
     get isImage() { return false; }
 
     addWrappedLayerWithProperties(newLayer, properties, wrapper) {

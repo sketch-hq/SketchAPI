@@ -10,7 +10,7 @@ import { Layer } from './Layer.js'
 /**
   Represents a Page in a Sketch document.
  */
- 
+
 export class Page extends Layer {
 
   /**
@@ -25,6 +25,14 @@ export class Page extends Layer {
     super(page)
     this.document = document
   }
+
+  /**
+      Is this a page?
+
+      All Layer objects respond to this method, but only pages return true.
+
+      @return true {bool} for instances of Group, false for any other layer type.
+  */
 
   get isPage() {
     return true;

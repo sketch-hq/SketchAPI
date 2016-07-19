@@ -30,7 +30,11 @@ export class Text extends Layer {
     }
 
     /**
-      Is this a text layer?
+        Is this a text layer?
+
+        All Layer objects respond to this method, but only text layers return true.
+
+        @return true {bool} for instances of Group, false for any other layer type.
     */
 
     get isText() {

@@ -24,6 +24,14 @@ export class Shape extends Layer {
       super(shape, document)
     }
 
+    /**
+        Is this a shape layer?
+
+        All Layer objects respond to this method, but only shape layers (rectangles, ovals, paths etc) return true.
+
+        @return true {bool} for instances of Group, false for any other layer type.
+    */
+
     get isShape() {
       return true;
     }

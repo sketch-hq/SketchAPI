@@ -24,6 +24,14 @@ export class Image extends Layer {
     super(layer, document)
   }
 
+  /**
+      Is this an image layer?
+
+      All Layer objects respond to this method, but only image layers return true.
+
+      @return true {bool} for instances of Group, false for any other layer type.
+  */
+
   get isImage() {
     return true;
   }
