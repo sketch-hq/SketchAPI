@@ -5,8 +5,6 @@
 // All code (C) 2016 Bohemian Coding.
 // ********************************
 
-// ## Imports
-
 import { Layer } from './Layer.js'
 
 /**
@@ -14,6 +12,14 @@ import { Layer } from './Layer.js'
  */
 
 export class Group extends Layer {
+
+    /**
+      Make a new group object.
+
+      @param group {MSLayerGroup} The underlying model object from Sketch.
+      @param document The document that the group belongs to.
+    */
+
     constructor(group, document) {
       super(group, document)
     }
@@ -23,7 +29,7 @@ export class Group extends Layer {
 
         All Layer objects respond to this method, but only Groups or things that inherit from groups return true.
 
-        @return true for instances of Group, false for any other layer type.
+        @return true {bool} for instances of Group, false for any other layer type.
     */
 
     is_group() {

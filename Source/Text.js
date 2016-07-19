@@ -5,8 +5,6 @@
 // All code (C) 2016 Bohemian Coding.
 // ********************************
 
-// ## Imports
-
 import { Layer } from './Layer.js'
 
 // ## Constants
@@ -14,6 +12,10 @@ import { Layer } from './Layer.js'
 const BCTextBehaviourFlexibleWidth = 0
 const BCTextBehaviourFixedWidth = 1
 
+/**
+  Represents a text layer.
+ */
+ 
 export class Text extends Layer {
     constructor(text, document) {
       super(text, document)

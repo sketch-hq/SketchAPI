@@ -5,13 +5,23 @@
 // All code (C) 2016 Bohemian Coding.
 // ********************************
 
-// ## Imports
-
 import { Layer } from './Layer.js'
 
+/**
+  Represents an image layer.
+ */
+
 export class Image extends Layer {
-  constructor(page, document) {
-    super(page, document)
+
+  /**
+    Make a new image layer object.
+
+    @param layer {MSBitmapLayer} The underlying model object from Sketch.
+    @param document The document that the bitmap layer belongs to.
+  */
+
+  constructor(layer, document) {
+    super(layer, document)
   }
 
   get isImage() {

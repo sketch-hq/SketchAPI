@@ -5,12 +5,22 @@
 // All code (C) 2016 Bohemian Coding.
 // ********************************
 
-// ## Imports
-
 import { WrappedObject } from './WrappedObject.js'
 import { Rectangle } from './Rectangle.js'
 
+/**
+  Represents a Sketch layer.
+ */
+ 
 export class Layer extends WrappedObject {
+
+    /**
+      Make a new layer object.
+
+      @param layer {MSLayer} The underlying model object from Sketch.
+      @param document The document that the layer belongs to.
+    */
+
     constructor(layer, document) {
       super(layer)
       this.document = document

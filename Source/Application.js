@@ -5,8 +5,6 @@
 // All code (C) 2016 Bohemian Coding.
 // ********************************
 
-// ## Imports
-
 import { WrappedObject } from './WrappedObject.js'
 import { Document } from './Document.js'
 import { Rectangle } from './Rectangle.js'
@@ -286,7 +284,7 @@ export class Application extends WrappedObject {
         @return The new Rectangle object.
     */
 
-    rectangle(x, y, w, h) {
-      return new Rectangle(x, y, w, h)
+    rectangle(x, y, width, height) {
+      return new Rectangle(x, y, width, height)
     }
 }
