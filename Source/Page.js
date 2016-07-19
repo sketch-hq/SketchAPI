@@ -37,4 +37,19 @@ export class Page extends Layer {
   get isPage() {
     return true;
   }
+
+  /**
+      Returns a newly created artboard, which has been added to this page,
+      and sets it up using the supplied properties.
+
+      @param properties {dictionary} Properties to apply to the artboard.
+      @return {Artboard} the new artboard.
+  */
+
+  newArtboard(properties) {
+    var frame = this.frameForLayerWithProperties(properties)
+    var newLayer = MSArtboardGroup.alloc().initWithFrame_(frame.asCGRect());
+    return this.addWrappedLayerWithProperties(newLayer, properties, "Artboard");
+  }
+
 }

@@ -137,11 +137,27 @@ export class Layer extends WrappedObject {
       return frame
     }
 
+    /**
+        Returns a newly created shape, which has been added to this layer,
+        and sets it up using the supplied properties.
+
+        @param properties {dictionary} Properties to apply to the shape.
+        @return {Shape} the new shape.
+    */
+
     newShape(properties) {
       var frame = this.frameForLayerWithProperties(properties)
       var newLayer = MSShapeGroup.shapeWithBezierPath_(NSBezierPath.bezierPathWithRect_(frame.asCGRect()));
       return this.addWrappedLayerWithProperties(newLayer, properties, "Shape");
     }
+
+    /**
+        Returns a newly created text layer, which has been added to this layer,
+        and sets it up using the supplied properties.
+
+        @param properties {dictionary} Properties to apply to the text layer.
+        @return {Text} the new text layer.
+    */
 
     newText(properties) {
       var frame = this.frameForLayerWithProperties(properties)
@@ -150,23 +166,38 @@ export class Layer extends WrappedObject {
       return this.addWrappedLayerWithProperties(newLayer, properties, "Text");
     }
 
+    /**
+        Returns a newly created group, which has been added to this layer,
+        and sets it up using the supplied properties.
+
+        @param properties {dictionary} Properties to apply to the group.
+        @return {Group} the new group.
+    */
+
     newGroup(properties) {
       var frame = this.frameForLayerWithProperties(properties)
       var newLayer = MSLayerGroup.alloc().initWithFrame_(frame.asCGRect());
       return this.addWrappedLayerWithProperties(newLayer, properties, "Group");
     }
 
-    newArtboard(properties) {
-      var frame = this.frameForLayerWithProperties(properties)
-      var newLayer = MSArtboardGroup.alloc().initWithFrame_(frame.asCGRect());
-      return this.addWrappedLayerWithProperties(newLayer, properties, "Artboard");
-    }
+
+    /**
+        Returns a newly created image layer, which has been added to this layer,
+        and sets it up using the supplied properties.
+
+        @param properties {dictionary} Properties to apply to the layer.
+        @return {Image} the new image layer.
+    */
 
     newImage(properties) {
       var frame = this.frameForLayerWithProperties(properties)
       var newLayer = MSBitmapLayer.alloc().initWithFrame_(frame.asCGRect());
       return this.addWrappedLayerWithProperties(newLayer, properties, "Image");
     }
+
+    /**
+        Remove this layer from its parent.
+    */
 
     remove() {
       var parent = this.object.parentGroup();
@@ -175,18 +206,42 @@ export class Layer extends WrappedObject {
       }
     }
 
+    /**
+        Select the layer.
+        This will clear the previous selection. Use addToSelection() if you wish
+        to preserve the existing selection.
+    */
+
     select() {
       this.object.select_byExpandingSelection(true, false);
     }
+
+    /**
+        Deselect this layer.
+        Any other layers that were previously selected will remain selected.
+    */
 
     deselect() {
       this.object.select_byExpandingSelection(false, true);
     }
 
+    /**
+        Add this layer to the selected layers.
+        Any other layers that were previously selected will remain selected.
+    */
+
     addToSelection() {
       this.object.select_byExpandingSelection(true, true);
     }
 
+    /**
+        Perform a function for every sub-layer inside this one.
+        The function will be passed a single argument each time it is
+        invoked - which will be an object representing the sub-layer.
+
+        @param block {function} The function to execute for each layer.
+    */
+    
     iterate(block) {
       var loop = this.object().layers().objectEnumerator();
       while (item = loop.nextObject()) {
