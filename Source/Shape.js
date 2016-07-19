@@ -12,6 +12,14 @@ import { Layer } from './Layer.js'
  */
 
 export class Shape extends Layer {
+
+    /**
+      Make a new shape object.
+
+      @param shape {MSShapeGroup} The underlying model object from Sketch.
+      @param document The document that the shape belongs to.
+    */
+
     constructor(shape, document) {
       super(shape, document)
     }
