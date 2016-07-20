@@ -29,27 +29,26 @@ log(sketch.build)
 log(sketch.full_version)
 
 
-var document = sketch.frontDocument;
-var selection = document.selection;
+var document = sketch.selectedDocument;
+var selection = document.selectedLayers;
 var page = document.selectedPage;
 
 var group = page.newGroup({frame:sketch.rectangle(0, 0, 100, 100), name:"Test"});
 var rect = group.newShape({frame:sketch.rectangle(10, 10, 80, 80)});
 
-log(selection.is_empty());
+log(selection.isEmpty);
 selection.iterate(function(item) { log(item.name); } );
 
 selection.clear();
-log(selection.is_empty());
+log(selection.isEmpty);
 
 group.select();
-rect.add_to_selection();
+rect.addToSelection();
 
-sketch.input("Test", "default");
-sketch.select("Test", ["One", "Two"], 1);
+sketch.getStringFromUser("Test", "default");
+sketch.getSelectionFromUser("Test", ["One", "Two"], 1);
 sketch.message("Hello mum!");
 sketch.alert("Title", "message");
-
 
 */
 
