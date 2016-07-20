@@ -36,8 +36,8 @@ export class Document extends WrappedObject {
 
         @type {Application}
       */
-      
-      this.application = application
+
+      this._application = application
     }
 
     /**
