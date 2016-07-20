@@ -46,9 +46,9 @@ export class Page extends Layer {
   */
 
   newArtboard(properties) {
-    var frame = this.frameForLayerWithProperties(properties)
+    var frame = this._frameForLayerWithProperties(properties)
     var newLayer = MSArtboardGroup.alloc().initWithFrame_(frame.asCGRect());
-    return this.addWrappedLayerWithProperties(newLayer, properties, "Artboard");
+    return this._addWrappedLayerWithProperties(newLayer, properties, "Artboard");
   }
 
 }

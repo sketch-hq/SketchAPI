@@ -29,12 +29,18 @@ export class Image extends Layer {
 
       All Layer objects respond to this method, but only image layers return true.
 
-      @return {bool} true for instances of Group, false for any other layer type.
+      @return {bool} true for instances of Image, false for any other layer type.
   */
 
   get isImage() {
     return true;
   }
+
+  /**
+    Set the layer's image to the contents of the image file at a given URL.
+
+    @param {NSURL} url The location of the image to use.
+  */
 
   set imageURL(url) {
     var image = NSImage.alloc().initWithContentsOfURL_(url)
