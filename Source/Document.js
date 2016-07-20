@@ -57,7 +57,6 @@ export class Document extends WrappedObject {
     */
 
     get selectedPage() {
-      print(this._object)
       return new Page(this._object.currentPage(), this)
     }
 
