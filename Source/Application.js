@@ -241,7 +241,7 @@ export class Application extends WrappedObject {
     */
 
     get selectedDocument() {
-      return new Document(this._object._document, this)
+      return new Document(this._object.document, this)
     }
 
 
@@ -267,7 +267,7 @@ export class Application extends WrappedObject {
     */
 
     message(message) {
-      this._object._document.showMessage(message)
+      this._object.document.showMessage(message)
     }
 
     /**
