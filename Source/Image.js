@@ -16,8 +16,8 @@ export class Image extends Layer {
   /**
     Make a new image layer object.
 
-    @param layer {MSBitmapLayer} The underlying model object from Sketch.
-    @param document The document that the bitmap layer belongs to.
+    @param {MSBitmapLayer} layer The underlying model object from Sketch.
+    @param {Document} document The document that the bitmap layer belongs to.
   */
 
   constructor(layer, document) {
@@ -29,7 +29,7 @@ export class Image extends Layer {
 
       All Layer objects respond to this method, but only image layers return true.
 
-      @return true {bool} for instances of Group, false for any other layer type.
+      @return {bool} true for instances of Group, false for any other layer type.
   */
 
   get isImage() {
@@ -39,6 +39,6 @@ export class Image extends Layer {
   set imageURL(url) {
     var image = NSImage.alloc().initWithContentsOfURL_(url)
     var imageData = MSImageData.alloc().initWithImage_convertColorSpace_(image, true)
-    this.object.setImage_(imageData)
+    this._object.setImage_(imageData)
   }
 }

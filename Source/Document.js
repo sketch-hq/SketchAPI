@@ -30,6 +30,13 @@ export class Document extends WrappedObject {
 
     constructor(document, application) {
       super(document)
+
+      /**
+        The application that this document belongs to.
+
+        @type {Application}
+      */
+      
       this.application = application
     }
 
@@ -40,7 +47,7 @@ export class Document extends WrappedObject {
     */
 
     get selectedLayers() {
-      return new Selection(this.object);
+      return new Selection(this._object);
     }
 
     /**
@@ -50,8 +57,8 @@ export class Document extends WrappedObject {
     */
 
     get selectedPage() {
-      print(this.object)
-      return new Page(this.object.currentPage(), this)
+      print(this._object)
+      return new Page(this._object.currentPage(), this)
     }
 
     /**
@@ -62,7 +69,7 @@ export class Document extends WrappedObject {
 
     get pages() {
       var result = [];
-      var loop = this.object.pages().objectEnumerator()
+      var loop = this._object.pages()._objectEnumerator()
       var item;
       while (item = loop.nextObject()) {
         result.push(new Page(item, this));
@@ -77,7 +84,7 @@ export class Document extends WrappedObject {
     */
 
     layerWithID(layer_id) {
-      var layer = this.object.documentData().layerWithID_(layer_id);
+      var layer = this._object._documentData().layerWithID_(layer_id);
       if (layer)
         return new Layer(layer, this);
     }
@@ -94,7 +101,7 @@ export class Document extends WrappedObject {
       // That might not always be true though, which is why the JS API splits
       // them into separate functions.
 
-      var layer = this.object.documentData().layerWithID_(layer_name);
+      var layer = this._object._documentData().layerWithID_(layer_name);
       if (layer)
         return new Layer(layer, this);
     }

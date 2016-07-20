@@ -36,11 +36,22 @@ export class Application extends WrappedObject {
 
     constructor(context) {
       super(context)
-      this.metadata = MSApplicationMetadata.metadata()
 
-      // this is a slightly clumsy way to pass related classes into Layer
-      // without setting up a circular dependency between classes (eg Layer imports Artboard which imports Layer...)
-      // there has to be a better way to do this...
+      /**
+        Metadata about this version of Sketch.
+        @type {dictionary}
+      */
+      this._metadata = MSApplicationMetadata._metadata()
+
+
+      /**
+        This is a slightly clumsy way to pass related classes into Layer
+        without setting up a circular dependency between classes (eg Layer imports Artboard which imports Layer...)
+        there has to be a better way to do this...
+
+        @type {dictionary}
+      */
+
       this.factory = {
         "Group" : Group,
         "Page" : Page,
@@ -73,7 +84,7 @@ export class Application extends WrappedObject {
     */
 
     get context() {
-      return this.object
+      return this._object
     }
 
 
@@ -84,7 +95,7 @@ export class Application extends WrappedObject {
     */
 
     get version() {
-      return this.metadata['appVersion']
+      return this._metadata['appVersion']
     }
 
     /**
@@ -94,7 +105,7 @@ export class Application extends WrappedObject {
     */
 
     get build() {
-      return this.metadata['build']
+      return this._metadata['build']
     }
 
     /**
@@ -118,7 +129,7 @@ export class Application extends WrappedObject {
     */
 
     settingForKey(key) {
-      return NSUserDefaults.standardUserDefaults().objectForKey_(key);
+      return NSUserDefaults.standardUserDefaults()._objectForKey_(key);
     }
 
     /**
@@ -145,7 +156,7 @@ export class Application extends WrappedObject {
     */
 
     resourceNamed(name) {
-      return this.object.plugin.urlForResourceNamed_(name)
+      return this._object.plugin.urlForResourceNamed_(name)
     }
 
     /**
@@ -230,7 +241,7 @@ export class Application extends WrappedObject {
     */
 
     get selectedDocument() {
-      return new Document(this.object.document, this)
+      return new Document(this._object._document, this)
     }
 
 
@@ -256,7 +267,7 @@ export class Application extends WrappedObject {
     */
 
     message(message) {
-      this.object.document.showMessage(message)
+      this._object._document.showMessage(message)
     }
 
     /**

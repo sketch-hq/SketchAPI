@@ -17,35 +17,71 @@ export class Layer extends WrappedObject {
     /**
       Make a new layer object.
 
-      @param layer {MSLayer} The underlying model object from Sketch.
-      @param document The document that the layer belongs to.
+      @param {MSLayer} layer The underlying model object from Sketch.
+      @param {Document} document The document that the layer belongs to.
     */
 
     constructor(layer, document) {
       super(layer)
-      this.document = document
+
+      /** @type {Document} The document that this layer belongs to. */
+      this._document = document
     }
+
+    /**
+      The name of the layer.
+
+      @return {string} The layer's name.
+    */
 
     get name() {
-      return this.object.name();
+      return this._object.name();
     }
+
+    /**
+      Set the name of the layer.
+
+      @param {string} name The new name.
+    */
 
     set name(value) {
-      this.object.setName_(value);
+      this._object.setName_(value);
     }
 
+    /**
+      The frame of the layer.
+      This is given in coordinates that are local to the parent of the layer.
+
+      @return {Rectangle} The layer's frame.
+    */
+
     get frame() {
-      var f = this.object.frame();
+      var f = this._object.frame();
       return new Rectangle(f.x(), f.y(), f.width(), f.height());
     }
 
+    /**
+      Set the frame of the layer.
+      This will move and/or resize the layer as appropriate.
+      The new frame should be given in coordinates that are local to the parent of the layer.
+
+      @param {Rectangle} frame - The new frame of the layer.
+    */
+
     set frame(value) {
-      var f = this.object.frame();
+      var f = this._object.frame();
       f.setRect_(NSMakeRect(value.x, value.y, value.width, value.height));
     }
 
+    /**
+      Duplicate this layer.
+      A new identical layer will be inserted into the parent of this layer.
+
+      @return {Layer} A new layer identical to this one.
+    */
+
     duplicate() {
-      return new Layer(this.object.duplicate(), this.document);
+      return new Layer(this._object.duplicate(), this._document);
     }
 
     /**
@@ -53,7 +89,7 @@ export class Layer extends WrappedObject {
 
         All Layer objects respond to this method, but only pages return true.
 
-        @return true {bool} for instances of Group, false for any other layer type.
+        @return {bool} true for instances of Group, false for any other layer type.
     */
 
     get isPage() { return false; }
@@ -73,7 +109,7 @@ export class Layer extends WrappedObject {
 
         All Layer objects respond to this method, but only Groups or things that inherit from groups return true.
 
-        @return true {bool} for instances of Group, false for any other layer type.
+        @return {bool} true for instances of Group, false for any other layer type.
     */
 
     get isGroup() { return false; }
@@ -83,7 +119,7 @@ export class Layer extends WrappedObject {
 
         All Layer objects respond to this method, but only text layers return true.
 
-        @return true {bool} for instances of Group, false for any other layer type.
+        @return {bool} true for instances of Group, false for any other layer type.
     */
 
     get isText() { return false; }
@@ -93,7 +129,7 @@ export class Layer extends WrappedObject {
 
         All Layer objects respond to this method, but only shape layers (rectangles, ovals, paths etc) return true.
 
-        @return true {bool} for instances of Group, false for any other layer type.
+        @return {bool} true for instances of Group, false for any other layer type.
     */
 
     get isShape() { return false; }
@@ -103,7 +139,7 @@ export class Layer extends WrappedObject {
 
         All Layer objects respond to this method, but only image layers return true.
 
-        @return true {bool} for instances of Group, false for any other layer type.
+        @return {bool} true for instances of Group, false for any other layer type.
     */
 
     get isImage() { return false; }
@@ -111,12 +147,12 @@ export class Layer extends WrappedObject {
     addWrappedLayerWithProperties(newLayer, properties, wrapper) {
       if (newLayer) {
         // add the Sketch object to this layer
-        var layer = this.object
+        var layer = this._object
         layer.addLayers_(NSArray.arrayWithObject_(newLayer))
 
         // make a Javascript wrapper object for the new layer
-        var wrapperToMake = this.document.application.factory[wrapper]
-        var wrapper = new wrapperToMake(newLayer, this.document)
+        var wrapperToMake = this._document._application.factory[wrapper]
+        var wrapper = new wrapperToMake(newLayer, this._document)
 
         // apply properties, via the wrapper
         for (var p in properties) {
@@ -200,9 +236,9 @@ export class Layer extends WrappedObject {
     */
 
     remove() {
-      var parent = this.object.parentGroup();
+      var parent = this._object.parentGroup();
       if (parent) {
-        parent.removeLayer_(this.object);
+        parent.removeLayer_(this._object);
       }
     }
 
@@ -213,7 +249,7 @@ export class Layer extends WrappedObject {
     */
 
     select() {
-      this.object.select_byExpandingSelection(true, false);
+      this._object.select_byExpandingSelection(true, false);
     }
 
     /**
@@ -222,7 +258,7 @@ export class Layer extends WrappedObject {
     */
 
     deselect() {
-      this.object.select_byExpandingSelection(false, true);
+      this._object.select_byExpandingSelection(false, true);
     }
 
     /**
@@ -231,7 +267,7 @@ export class Layer extends WrappedObject {
     */
 
     addToSelection() {
-      this.object.select_byExpandingSelection(true, true);
+      this._object.select_byExpandingSelection(true, true);
     }
 
     /**
@@ -243,9 +279,9 @@ export class Layer extends WrappedObject {
     */
     
     iterate(block) {
-      var loop = this.object().layers().objectEnumerator();
+      var loop = this._object().layers()._objectEnumerator();
       while (item = loop.nextObject()) {
-        block(new Layer(item, this.document));
+        block(new Layer(item, this._document));
       }
     }
 }

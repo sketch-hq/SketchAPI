@@ -16,14 +16,13 @@ export class Page extends Layer {
   /**
     Make a new page object.
 
-    @param page {MSPage} The underlying model object from Sketch.
+    @param {MSPage} page The underlying model object from Sketch.
     @param document The document that the page belongs to.
   */
 
-
   constructor(page, document) {
     super(page)
-    this.document = document
+    this._document = document
   }
 
   /**
@@ -31,7 +30,7 @@ export class Page extends Layer {
 
       All Layer objects respond to this method, but only pages return true.
 
-      @return true {bool} for instances of Group, false for any other layer type.
+      @return {bool} true for instances of Group, false for any other layer type.
   */
 
   get isPage() {
