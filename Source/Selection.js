@@ -75,7 +75,7 @@ export class Selection extends WrappedObject {
     */
 
     _iterateWithLayers(layers, block) {
-      var loop = layers._objectEnumerator();
+      var loop = layers.objectEnumerator();
       var item;
       while (item = loop.nextObject()) {
         block(new Layer(item));

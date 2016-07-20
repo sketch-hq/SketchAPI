@@ -69,7 +69,7 @@ export class Document extends WrappedObject {
 
     get pages() {
       var result = [];
-      var loop = this._object.pages()._objectEnumerator()
+      var loop = this._object.pages().objectEnumerator()
       var item;
       while (item = loop.nextObject()) {
         result.push(new Page(item, this));

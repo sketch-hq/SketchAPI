@@ -298,7 +298,7 @@ export class Layer extends WrappedObject {
     */
 
     iterate(block) {
-      var loop = this._object().layers()._objectEnumerator();
+      var loop = this._object().layers().objectEnumerator();
       while (item = loop.nextObject()) {
         block(new Layer(item, this._document));
       }
