@@ -41,7 +41,7 @@ export class Application extends WrappedObject {
         Metadata about this version of Sketch.
         @type {dictionary}
       */
-      this._metadata = MSApplicationMetadata._metadata()
+      this._metadata = MSApplicationMetadata.metadata()
 
 
       /**
