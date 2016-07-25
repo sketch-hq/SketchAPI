@@ -196,7 +196,7 @@ export class Layer extends WrappedObject {
         Returns a newly created shape, which has been added to this layer,
         and sets it up using the supplied properties.
 
-        @param properties {dictionary} Properties to apply to the shape.
+        @param {dictionary} properties Properties to apply to the shape.
         @return {Shape} the new shape.
     */
 
