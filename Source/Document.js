@@ -30,7 +30,14 @@ export class Document extends WrappedObject {
 
     constructor(document, application) {
       super(document)
-      this.application = application
+
+      /**
+        The application that this document belongs to.
+
+        @type {Application}
+      */
+
+      this._application = application
     }
 
     /**
@@ -40,17 +47,28 @@ export class Document extends WrappedObject {
     */
 
     get selectedLayers() {
-      return new Selection(this.object);
+      return new Selection(this._object);
     }
 
+    /**
+      The current page that the user has selected.
+
+      @return {Page} A page object representing the page that the user is currently viewing.
+    */
+
     get selectedPage() {
-      print(this.object)
-      return new Page(this.object.currentPage(), this)
+      return new Page(this._object.currentPage(), this)
     }
+
+    /**
+      Returns a list of the pages in this document.
+
+      @return {list} The pages.
+    */
 
     get pages() {
       var result = [];
-      var loop = this.object.pages().objectEnumerator()
+      var loop = this._object.pages().objectEnumerator()
       var item;
       while (item = loop.nextObject()) {
         result.push(new Page(item, this));
@@ -58,13 +76,31 @@ export class Document extends WrappedObject {
       return result;
     }
 
+    /**
+      Find the first layer in this document which has the given id.
+
+      @return {Layer} A layer object, if one was found.
+    */
+
     layerWithID(layer_id) {
-      return new Layer(this.object.documentData().layerWithID_(layer_id), this);
+      var layer = this._object._documentData().layerWithID_(layer_id);
+      if (layer)
+        return new Layer(layer, this);
     }
 
-    layerNamed(layer_id) {
-      // as it happens, layerWithID also matches names
-      var layer = this.object.documentData().layerWithID_(layer_id);
+    /**
+      Find the first layer in this document which has the given name.
+
+      @return {Layer} A layer object, if one was found.
+    */
+
+    layerNamed(layer_name) {
+      // As it happens, layerWithID also matches names, so we can implement
+      // this method in the same way as layerWithID.
+      // That might not always be true though, which is why the JS API splits
+      // them into separate functions.
+
+      var layer = this._object._documentData().layerWithID_(layer_name);
       if (layer)
         return new Layer(layer, this);
     }
