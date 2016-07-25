@@ -289,4 +289,24 @@ export class Application extends WrappedObject {
     rectangle(x, y, w, h) {
       return new Rectangle(x, y, w, h)
     }
+
+    /**
+        Run all of our internal unit tests.
+        Returns a dictionary indicating how many tests ran, passed, failed, and crashed,
+        and a list of more detailed information for each failure.
+
+        At some point we may switch to using Mocha or some other test framework, but for
+        now we want to be able to invoke the tests from the Sketch side or from a plugin
+        command, so it's simpler to use a simple test framework of our own devising.
+    */
+
+    runUnitTests() {
+      return {
+        "run" : 0,
+        "passed" : 0,
+        "failed" : 0,
+        "crashed" : 0,
+        "failures" : {}
+      };
+    }
 }
