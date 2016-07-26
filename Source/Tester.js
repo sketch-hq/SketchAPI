@@ -25,9 +25,17 @@ export class Tester {
     constructor(application) {
         /** @type {array} List of failures in the currently running test. */
         this._testFailures = []
+
+        /** @type {Application} The application that is running these tests. */
         this._application = application
+
+        /** @type {number} The number of tests we've run. */
         this._ran = 0
+
+        /** @type {array} The names of the tests that have passed. */
         this._passes = []
+
+        /** @type {array} Failure information for each test that has failed. */
         this._failures = []
 
     }
@@ -61,6 +69,14 @@ export class Tester {
         }
     }
 
+
+    /**
+        The application instance that we're running the tests for.
+        This is the instance associated with the script context that launched the tests.
+     
+        @return {Application} The application object.
+     */
+
     get application() {
         return this._application
     }
@@ -77,6 +93,7 @@ export class Tester {
      to perform tests.
 
      @param {dictionary} specification A dictionary describing the tests to run. See discussion.
+     @param {string} suiteName The name of the suite, if we're running a sub-collection. This will be null for the top level tests.
      @return {dictionary} Returns a dictionary indicating how many tests ran, and a list of the passed, failed, and crashed tests.
      */
 
