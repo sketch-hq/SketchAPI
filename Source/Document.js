@@ -104,4 +104,14 @@ export class Document extends WrappedObject {
       if (layer)
         return new Layer(layer, this);
     }
+
+    /**
+      Center the view of the document window on a given layer.
+
+      @param {Layer} layer The layer to center on.
+      */
+
+    centerOnLayer(layer) {
+      this._object.currentView().centerRect_(layer._object.rect())
+    }
 }

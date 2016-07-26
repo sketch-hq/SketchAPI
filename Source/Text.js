@@ -103,4 +103,14 @@ export class Text extends Layer {
         this._object.textBehaviour = BCTextBehaviourFlexibleWidth
       }
     }
+
+    /**
+      Adjust the frame of the layer to fit its contents.
+    */
+
+    resizeToFitContents() {
+      this._object.adjustFrameToFit()
+    }
+
+
 }
