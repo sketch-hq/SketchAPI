@@ -112,5 +112,20 @@ export class Text extends Layer {
       this._object.adjustFrameToFit()
     }
 
+    /**
+     Return a list of tests to run for this class.
+
+     @return {dictionary} A dictionary containing the tests to run. Each key is the name of a test, each value is a function which takes a Tester instance.
+     */
+
+    static tests() {
+        return {
+            "tests" : {
+                "test something" : function(tester) {
+                    tester.assert(true);
+                },
+            }
+        };
+    }
 
 }

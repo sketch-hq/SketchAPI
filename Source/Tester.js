@@ -22,13 +22,13 @@ export class Tester {
 
      */
 
-    constructor() {
+    constructor(application) {
         /** @type {array} List of failures in the currently running test. */
-        this._testFailures = [];
-
-        this._ran = 0;
-        this._passes = [];
-        this._failures = [];
+        this._testFailures = []
+        this._application = application
+        this._ran = 0
+        this._passes = []
+        this._failures = []
 
     }
 
@@ -61,6 +61,10 @@ export class Tester {
         }
     }
 
+    get application() {
+        return this._application
+    }
+    
     /**
      Run a collection of tests.
      

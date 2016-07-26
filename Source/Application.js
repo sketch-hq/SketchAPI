@@ -15,6 +15,8 @@ import { Shape } from './Shape.js'
 import { Artboard } from './Artboard.js'
 import { Page } from './Page.js'
 import { Tester } from './Tester.js'
+import { Layer } from './Layer.js'
+import { Selection } from './Selection.js'
 
 /**
     Gives you access to Sketch, and provides access to:
@@ -309,14 +311,14 @@ export class Application extends WrappedObject {
         @return {dictionary} A dictionary containing the tests to run. Each key is the name of a test, each value is a function which takes a Tester instance.
     */
 
-    static tests(application) {
+    static tests() {
       return {
           "tests" : {
             "test api version" : function(tester) {
-              tester.assertEqual(application.api_version, "1.1");
+              tester.assertEqual(tester.application.api_version, "1.1");
             },
             "test app version" : function(tester) {
-              tester.assertEqual(application.version, "1.0");
+              tester.assertEqual(tester.application.version, "1.0");
             }
           }
       };
@@ -335,12 +337,22 @@ export class Application extends WrappedObject {
     runUnitTests() {
         var tests = {
             "suites" : {
-                "Application" : Application.tests(this),
-                "Document" : Document.tests()
+                "Application" : Application.tests(),
+                "Artboard" : Artboard.tests(),
+                "Document" : Document.tests(),
+                "Group" : Group.tests(),
+                "Image" : Image.tests(),
+                "Layer" : Layer.tests(),
+                "Page" : Page.tests(),
+                "Rectangle" : Rectangle.tests(),
+                "Selection" : Selection.tests(),
+                "Shape" : Shape.tests(),
+                "Text" : Text.tests(),
+                "WrappedObject" : WrappedObject.tests()
             }
         }
 
-      var tester = new Tester();
+      var tester = new Tester(this);
       return tester.runUnitTests(tests);
     }
 
