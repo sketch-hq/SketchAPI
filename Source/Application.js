@@ -317,10 +317,11 @@ export class Application extends WrappedObject {
     static tests() {
       return {
         "test1" : function(tester) {
+          print("blah");
           tester.assert(true);
         },
         "test2" : function(tester) {
-          tester.assert(false);
+          tester.assert(false, "deliberately failed");
         }
       };
     }
@@ -337,37 +338,35 @@ export class Application extends WrappedObject {
 
     runUnitTests() {
       var tests = Application.tests();
-      var run = 0;
-      var passed = 0;
-      var failed = 0;
-      var testClass;
-      var test;
+      var ran = 0;
+      var passes = [];
+      var failures = [];
       var testFailure;
       var tester = {
-        "assert" : function(value) {
+        "assert" : function(value, description) {
           if (!value) {
-            testFailure = true;
+            if (!description) description = "unknown failure";
+            testFailure.push(description)
           }
         }
       }
+      var test;
       for (test in tests) {
-        run++;
-        testFailure = false;
+        ran++;
+        testFailure = [];
         var result = tests[test](tester);
-        if (testFailure) {
-          failed++;
+        if (testFailure.length > 0) {
+          failures.push(test)
         } else {
-          passed++;
+          passes.push(test)
         }
       }
 
       return {
-        "run" : run,
-        "passed" : passed,
-        "failed" : failed,
+        "ran" : ran,
         "crashed" : 0,
-        "failures" : {},
-        "tests" : tests
+        "failures" : failures,
+        "passes" : passes
       };
     }
 
