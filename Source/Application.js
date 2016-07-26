@@ -299,6 +299,32 @@ export class Application extends WrappedObject {
       return new Rectangle(x, y, width, height)
     }
 
+    getAllTestMethods(object) {
+      var proto = object.prototype;
+      return Object.getOwnPropertyNames(proto).filter(function(property) {
+        return property.startsWith("test");
+        // var desc = Object.getOwnPropertyDescriptor(proto, property);
+        // return (desc.get != null) || (desc.value != null);
+        // return proto[property];
+        // return typeof proto[property] == 'function';
+      });
+    }
+
+    get testClasses() {
+      return [ Application ];
+    }
+
+    static tests() {
+      return {
+        "test1" : function(tester) {
+          tester.assert(true);
+        },
+        "test2" : function(tester) {
+          tester.assert(false);
+        }
+      };
+    }
+
     /**
         Run all of our internal unit tests.
         Returns a dictionary indicating how many tests ran, passed, failed, and crashed,
@@ -310,12 +336,39 @@ export class Application extends WrappedObject {
     */
 
     runUnitTests() {
+      var tests = Application.tests();
+      var run = 0;
+      var passed = 0;
+      var failed = 0;
+      var testClass;
+      var test;
+      var testFailure;
+      var tester = {
+        "assert" : function(value) {
+          if (!value) {
+            testFailure = true;
+          }
+        }
+      }
+      for (test in tests) {
+        run++;
+        testFailure = false;
+        var result = tests[test](tester);
+        if (testFailure) {
+          failed++;
+        } else {
+          passed++;
+        }
+      }
+
       return {
-        "run" : 0,
-        "passed" : 0,
-        "failed" : 0,
+        "run" : run,
+        "passed" : passed,
+        "failed" : failed,
         "crashed" : 0,
-        "failures" : {}
+        "failures" : {},
+        "tests" : tests
       };
     }
+
 }
