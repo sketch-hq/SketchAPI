@@ -300,18 +300,25 @@ export class Application extends WrappedObject {
       return new Rectangle(x, y, width, height)
     }
 
-    get testClasses() {
-      return [ Application ];
-    }
+    /**
+        Return a list of tests to run for this class.
+        
+        We could do some fancy introspection here to derive the tests from
+        the class, but for now we're opting for the simple approach.
+        
+        @return {dictionary} A dictionary containing the tests to run. Each key is the name of a test, each value is a function which takes a Tester instance.
+    */
 
     static tests(application) {
       return {
-        "test api version" : function(tester) {
-          tester.assertEqual(application.api_version, "1.1");
-        },
-        "test app version" : function(tester) {
-          tester.assertEqual(application.version, "1.0");
-        }
+          "tests" : {
+            "test api version" : function(tester) {
+              tester.assertEqual(application.api_version, "1.1");
+            },
+            "test app version" : function(tester) {
+              tester.assertEqual(application.version, "1.0");
+            }
+          }
       };
     }
 
@@ -326,7 +333,13 @@ export class Application extends WrappedObject {
     */
 
     runUnitTests() {
-      var tests = Application.tests(this);
+        var tests = {
+            "suites" : {
+                "Application" : Application.tests(this),
+                "Document" : Document.tests()
+            }
+        }
+
       var tester = new Tester();
       return tester.runUnitTests(tests);
     }
