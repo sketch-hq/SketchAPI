@@ -299,29 +299,17 @@ export class Application extends WrappedObject {
       return new Rectangle(x, y, width, height)
     }
 
-    getAllTestMethods(object) {
-      var proto = object.prototype;
-      return Object.getOwnPropertyNames(proto).filter(function(property) {
-        return property.startsWith("test");
-        // var desc = Object.getOwnPropertyDescriptor(proto, property);
-        // return (desc.get != null) || (desc.value != null);
-        // return proto[property];
-        // return typeof proto[property] == 'function';
-      });
-    }
-
     get testClasses() {
       return [ Application ];
     }
 
-    static tests() {
+    static tests(application) {
       return {
-        "test1" : function(tester) {
-          print("blah");
-          tester.assert(true);
+        "test api version" : function(tester) {
+          tester.assertEqual(application.api_version, "1.1");
         },
-        "test2" : function(tester) {
-          tester.assert(false, "deliberately failed");
+        "test app version" : function(tester) {
+          tester.assertEqual(application.version, "1.0");
         }
       };
     }
@@ -337,26 +325,31 @@ export class Application extends WrappedObject {
     */
 
     runUnitTests() {
-      var tests = Application.tests();
+      var tests = Application.tests(this);
       var ran = 0;
       var passes = [];
       var failures = [];
-      var testFailure;
+      var testFailures;
       var tester = {
         "assert" : function(value, description) {
           if (!value) {
-            if (!description) description = "unknown failure";
-            testFailure.push(description)
+            if (!description) description = "";
+            testFailures.push(description)
+          }
+        },
+        "assertEqual" : function(v1, v2) {
+          if (v1 != v2) {
+            testFailures.push(v1 + " != " + v2)
           }
         }
       }
       var test;
       for (test in tests) {
         ran++;
-        testFailure = [];
+        testFailures = [];
         var result = tests[test](tester);
-        if (testFailure.length > 0) {
-          failures.push(test)
+        if (testFailures.length > 0) {
+          failures.push({"name" : test, "reasons" : testFailures})
         } else {
           passes.push(test)
         }
