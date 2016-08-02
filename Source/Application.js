@@ -337,6 +337,16 @@ export class Application extends WrappedObject {
                 "test app version" : function(tester) {
                     tester.assertEqual(tester.application.version, "1.0");
                 }
+
+                /** @test {Application#wrapObject} */
+                "test wrap object" : function(tester) {
+                  var frame = NSMakeRect(0, 0, 100, 100)
+                  var object = MSLayerGroup().alloc().initWithFrame(frame)
+                  var mockDocument = {}
+                  var wrapped = tester.application.wrapObject(object, mockDocument)
+                  tester.assertEqual(wrapped._object, object)
+                  tester.assertEqual(wrapped._document, mockDocument)
+                }
             }
         };
     }
