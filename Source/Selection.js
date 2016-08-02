@@ -78,7 +78,8 @@ export class Selection extends WrappedObject {
       var loop = layers.objectEnumerator();
       var item;
       while (item = loop.nextObject()) {
-        block(new Layer(item));
+        var layer = this._object._application.wrapObject(item, this._object)
+        block(layer);
       }
     }
 

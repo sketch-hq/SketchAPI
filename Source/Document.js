@@ -11,124 +11,139 @@ import { Page } from './Page.js'
 import { Selection } from './Selection.js'
 
 /**
-    A Sketch document.
+A Sketch document.
 */
 
 export class Document extends WrappedObject {
+  /**
+  Make a new document object.
+
+  @param {MSDocument} document The underlying MSDocument object.
+  @param {Application} application The application object.
+
+  Note that constructing one of these doesn't actually create
+  a Sketch document. Instead you pass in the underlying MSDocument
+  that this object represents.
+
+  If you do want to create a new document, you can do so with Application#newDocument.
+  */
+
+  constructor(document, application) {
+    super(document)
+
     /**
-        Make a new document object.
+    The application that this document belongs to.
 
-        @param {MSDocument} document The underlying MSDocument object.
-        @param {Application} application The application object.
-
-        Note that constructing one of these doesn't actually create
-        a Sketch document. Instead you pass in the underlying MSDocument
-        that this object represents.
-
-        If you do want to create a new document, you can do so with Application#newDocument.
+    @type {Application}
     */
 
-    constructor(document, application) {
-      super(document)
+    this._application = application
+  }
 
-      /**
-        The application that this document belongs to.
+  /**
+  Return a wrapped version of a Sketch object.
+  We don't know about *all* Sketch object types, but
+  for some we will return a special subclass.
+  The fallback position is just to return an instance of WrappedObject.
 
-        @type {Application}
-      */
+  @param {object} sketchObject The underlying sketch object that we're wrapping.
+  @return {WrappedObject} A javascript object (subclass of WrappedObject), which represents the Sketch object we were given.
+  */
 
-      this._application = application
+  wrapObject(sketchObject, inDocument) {
+    return this._application.wrapObject(sketchObject, this)
+  }
+  
+
+  /**
+  The layers that the user has selected.
+
+  @return {Selection} A selection object representing the layers that the user has selected.
+  */
+
+  get selectedLayers() {
+    return new Selection(this._object);
+  }
+
+  /**
+  The current page that the user has selected.
+
+  @return {Page} A page object representing the page that the user is currently viewing.
+  */
+
+  get selectedPage() {
+    return new Page(this._object.currentPage(), this)
+  }
+
+  /**
+  Returns a list of the pages in this document.
+
+  @return {list} The pages.
+  */
+
+  get pages() {
+    var result = [];
+    var loop = this._object.pages().objectEnumerator()
+    var item;
+    while (item = loop.nextObject()) {
+      result.push(new Page(item, this));
     }
+    return result;
+  }
 
-    /**
-        The layers that the user has selected.
+  /**
+  Find the first layer in this document which has the given id.
 
-        @return {Selection} A selection object representing the layers that the user has selected.
-    */
+  @return {Layer} A layer object, if one was found.
+  */
 
-    get selectedLayers() {
-      return new Selection(this._object);
-    }
+  layerWithID(layer_id) {
+    var layer = this._object.documentData().layerWithID_(layer_id);
+    if (layer)
+    return new Layer(layer, this);
+  }
 
-    /**
-      The current page that the user has selected.
+  /**
+  Find the first layer in this document which has the given name.
 
-      @return {Page} A page object representing the page that the user is currently viewing.
-    */
+  @return {Layer} A layer object, if one was found.
+  */
 
-    get selectedPage() {
-      return new Page(this._object.currentPage(), this)
-    }
+  layerNamed(layer_name) {
+    // As it happens, layerWithID also matches names, so we can implement
+    // this method in the same way as layerWithID.
+    // That might not always be true though, which is why the JS API splits
+    // them into separate functions.
 
-    /**
-      Returns a list of the pages in this document.
+    var layer = this._object.documentData().layerWithID_(layer_name);
+    if (layer)
+    return new Layer(layer, this);
+  }
 
-      @return {list} The pages.
-    */
+  /**
+  Center the view of the document window on a given layer.
 
-    get pages() {
-      var result = [];
-      var loop = this._object.pages().objectEnumerator()
-      var item;
-      while (item = loop.nextObject()) {
-        result.push(new Page(item, this));
+  @param {Layer} layer The layer to center on.
+  */
+
+  centerOnLayer(layer) {
+    this._object.currentView().centerRect_(layer._object.rect())
+  }
+
+  /**
+  Return a list of tests to run for this class.
+
+  @return {dictionary} A dictionary containing the tests to run. Each key is the name of a test, each value is a function which takes a Tester instance.
+  */
+
+  static tests() {
+    return {
+      "tests" : {
+        "test something" : function(tester) {
+          tester.assert(true);
+        },
       }
-      return result;
-    }
-
-    /**
-      Find the first layer in this document which has the given id.
-
-      @return {Layer} A layer object, if one was found.
-    */
-
-    layerWithID(layer_id) {
-      var layer = this._object.documentData().layerWithID_(layer_id);
-      if (layer)
-        return new Layer(layer, this);
-    }
-
-    /**
-      Find the first layer in this document which has the given name.
-
-      @return {Layer} A layer object, if one was found.
-    */
-
-    layerNamed(layer_name) {
-      // As it happens, layerWithID also matches names, so we can implement
-      // this method in the same way as layerWithID.
-      // That might not always be true though, which is why the JS API splits
-      // them into separate functions.
-
-      var layer = this._object.documentData().layerWithID_(layer_name);
-      if (layer)
-        return new Layer(layer, this);
-    }
-
-    /**
-      Center the view of the document window on a given layer.
-
-      @param {Layer} layer The layer to center on.
-      */
-
-    centerOnLayer(layer) {
-      this._object.currentView().centerRect_(layer._object.rect())
-    }
-
-    /**
-     Return a list of tests to run for this class.
-
-     @return {dictionary} A dictionary containing the tests to run. Each key is the name of a test, each value is a function which takes a Tester instance.
-     */
-
-    static tests() {
-        return {
-            "tests" : {
-                "test something" : function(tester) {
-                    tester.assert(true);
-                },
-            }
-        };
-    }
+    };
+  }
 
 }
