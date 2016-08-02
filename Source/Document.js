@@ -83,7 +83,7 @@ export class Document extends WrappedObject {
     */
 
     layerWithID(layer_id) {
-      var layer = this._object._documentData().layerWithID_(layer_id);
+      var layer = this._object.documentData().layerWithID_(layer_id);
       if (layer)
         return new Layer(layer, this);
     }
@@ -100,7 +100,7 @@ export class Document extends WrappedObject {
       // That might not always be true though, which is why the JS API splits
       // them into separate functions.
 
-      var layer = this._object._documentData().layerWithID_(layer_name);
+      var layer = this._object.documentData().layerWithID_(layer_name);
       if (layer)
         return new Layer(layer, this);
     }
