@@ -285,6 +285,25 @@ export class Application extends WrappedObject {
     }
 
     /**
+     Return a lookup table of known mappings between Sketch model classes
+     and our JS API wrapper classes.
+
+     @return {dictionary} A dictionary with keys for the Sketch Model classes, and values for the corresponding API wrapper classes.
+     */
+
+    wrapperMappings() {
+      var mappings = {
+        MSLayerGroup : Group,
+        MSPage : Page,
+        MSArtboardGroup : Artboard,
+        MSShapeGroup : Shape,
+        MSBitmapLayer : Image,
+        MSTextLayer : Text
+      }
+      return mappings
+    }
+
+    /**
      Return a wrapped version of a Sketch object.
      We don't know about *all* Sketch object types, but
      for some we will return a special subclass.
@@ -296,19 +315,11 @@ export class Application extends WrappedObject {
     */
 
     wrapObject(sketchObject, inDocument) {
-      var mapping = {
-        MSLayerGroup : Group,
-        MSPage : Page,
-        MSArtboardGroup : Artboard,
-        MSShapeGroup : Shape,
-        MSBitmapLayer : Image,
-        MSTextLayer : Text
-      }
+      var mapping = this.wrapperMappings()
 
       var jsClass = mapping[sketchObject.class()]
       if (!jsClass) {
-        print("no map for " + sketchObject.class())
-        print(mapping)
+        print("no mapped wrapper for " + sketchObject.class())
         jsClass = WrappedObject
       }
 
@@ -329,23 +340,28 @@ export class Application extends WrappedObject {
             /** @test {Application} */
             "tests" : {
                 /** @test {Application#api_version} */
-                "test api version" : function(tester) {
-                    tester.assertEqual(tester.application.api_version, "1.1");
+                testAPIVersion(tester) {
+                    tester.assertEqual(tester.application.api_version, "1.1")
                 },
 
                 /** @test {Application#version} */
-                "test app version" : function(tester) {
-                    tester.assertEqual(tester.application.version, "1.0");
-                }
+                testApplicationVersion(tester) {
+                    tester.assertEqual(tester.application.version, "1.0")
+                },
 
                 /** @test {Application#wrapObject} */
-                "test wrap object" : function(tester) {
-                  var frame = NSMakeRect(0, 0, 100, 100)
-                  var object = MSLayerGroup().alloc().initWithFrame(frame)
-                  var mockDocument = {}
-                  var wrapped = tester.application.wrapObject(object, mockDocument)
-                  tester.assertEqual(wrapped._object, object)
-                  tester.assertEqual(wrapped._document, mockDocument)
+                testWrapObject(tester) {
+                  var mappings = tester.application.wrapperMappings()
+                  for (var mapping in mappings) {
+                    print(mapping)
+                    var frame = NSMakeRect(0, 0, 100, 100)
+                    var object = mapping.alloc().initWithFrame(frame)
+                    var mockDocument = {}
+                    var wrapped = tester.application.wrapObject(object, mockDocument)
+                    tester.assertEqual(wrapped._object, object)
+                    tester.assertEqual(wrapped._document, mockDocument)
+                    tester.assertEqual(wrapped._prototype, mappings[mapping]._prototype)
+                  }
                 }
             }
         };
