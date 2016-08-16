@@ -81,7 +81,7 @@ export class Layer extends WrappedObject {
     */
 
     duplicate() {
-      return new Layer(this._object.duplicate(), this._document);
+      return self._document.wrapObject(this._object.duplicate());
     }
 
     /**
@@ -162,8 +162,7 @@ export class Layer extends WrappedObject {
         layer.addLayers_(NSArray.arrayWithObject_(newLayer))
 
         // make a Javascript wrapper object for the new layer
-        var wrapperToMake = this._document._application.factory[wrapper]
-        var wrapper = new wrapperToMake(newLayer, this._document)
+        var wrapper = this._document.wrapObject(newLayer)
 
         // apply properties, via the wrapper
         for (var p in properties) {
@@ -300,7 +299,8 @@ export class Layer extends WrappedObject {
     iterate(block) {
       var loop = this._object().layers().objectEnumerator();
       while (item = loop.nextObject()) {
-        block(new Layer(item, this._document));
+        var layer = self._document.wrapObject(item)
+        block(layer);
       }
     }
 

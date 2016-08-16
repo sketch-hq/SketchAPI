@@ -45,24 +45,6 @@ export class Application extends WrappedObject {
          @type {dictionary}
          */
         this._metadata = MSApplicationMetadata.metadata()
-
-
-        /**
-         This is a slightly clumsy way to pass related classes into Layer
-         without setting up a circular dependency between classes (eg Layer imports Artboard which imports Layer...)
-         there has to be a better way to do this...
-
-         @type {dictionary}
-         */
-
-        this.factory = {
-            "Group" : Group,
-            "Page" : Page,
-            "Artboard" : Artboard,
-            "Shape" : Shape,
-            "Image" : Image,
-            "Text" : Text
-        }
     }
 
     /**
@@ -132,7 +114,7 @@ export class Application extends WrappedObject {
      */
 
     settingForKey(key) {
-        return NSUserDefaults.standardUserDefaults()._objectForKey_(key);
+        return NSUserDefaults.standardUserDefaults().objectForKey_(key);
     }
 
     /**
@@ -303,6 +285,48 @@ export class Application extends WrappedObject {
     }
 
     /**
+     Return a lookup table of known mappings between Sketch model classes
+     and our JS API wrapper classes.
+
+     @return {dictionary} A dictionary with keys for the Sketch Model classes, and values for the corresponding API wrapper classes.
+     */
+
+    wrapperMappings() {
+      var mappings = {
+        MSLayerGroup : Group,
+        MSPage : Page,
+        MSArtboardGroup : Artboard,
+        MSShapeGroup : Shape,
+        MSBitmapLayer : Image,
+        MSTextLayer : Text
+      }
+      return mappings
+    }
+
+    /**
+     Return a wrapped version of a Sketch object.
+     We don't know about *all* Sketch object types, but
+     for some we will return a special subclass.
+     The fallback position is just to return an instance of WrappedObject.
+
+     @param {object} sketchObject The underlying sketch object that we're wrapping.
+     @param {Document} inDocument The wrapped document that this object is part of.
+     @return {WrappedObject} A javascript object (subclass of WrappedObject), which represents the Sketch object we were given.
+    */
+
+    wrapObject(sketchObject, inDocument) {
+      var mapping = this.wrapperMappings()
+
+      var jsClass = mapping[sketchObject.class()]
+      if (!jsClass) {
+        print("no mapped wrapper for " + sketchObject.class())
+        jsClass = WrappedObject
+      }
+
+      return new jsClass(sketchObject, inDocument)
+    }
+
+    /**
      Return a list of tests to run for this class.
 
      We could do some fancy introspection here to derive the tests from
@@ -316,13 +340,29 @@ export class Application extends WrappedObject {
             /** @test {Application} */
             "tests" : {
                 /** @test {Application#api_version} */
-                "test api version" : function(tester) {
-                    tester.assertEqual(tester.application.api_version, "1.1");
+                testAPIVersion(tester) {
+                    tester.assertEqual(tester.application.api_version, "1.1")
                 },
 
                 /** @test {Application#version} */
-                "test app version" : function(tester) {
-                    tester.assertEqual(tester.application.version, "1.0");
+                testApplicationVersion(tester) {
+                    tester.assertEqual(tester.application.version, "1.0")
+                },
+
+                /** @test {Application#wrapObject} */
+                testWrapObject(tester) {
+                  var classesToTest = [MSLayerGroup, MSPage, MSArtboardGroup, MSShapeGroup, MSBitmapLayer, MSTextLayer]
+                  var mappings = tester.application.wrapperMappings()
+                  for (var index in classesToTest) {
+                    var classToTest = classesToTest[index]
+                    var frame = NSMakeRect(0, 0, 100, 100)
+                    var object = classToTest.alloc().initWithFrame(frame)
+                    var mockDocument = {}
+                    var wrapped = tester.application.wrapObject(object, mockDocument)
+                    tester.assertEqual(wrapped._object, object)
+                    tester.assertEqual(wrapped._document, mockDocument)
+                    tester.assertEqual(wrapped.class, mappings[classToTest].class)
+                  }
                 }
             }
         };
@@ -355,9 +395,9 @@ export class Application extends WrappedObject {
                 "WrappedObject" : WrappedObject.tests()
             }
         }
-        
+
         var tester = new Tester(this);
         return tester.runUnitTests(tests);
     }
-    
+
 }
