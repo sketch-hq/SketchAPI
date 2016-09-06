@@ -210,6 +210,12 @@ export class Layer extends WrappedObject {
             style.fill().setColor_(color)
         }
 
+        var color = properties.borderColor
+        if (color) {
+            delete properties["borderColor"]
+            style.border().setColor_(color)
+        }
+
         return style
     }
 
