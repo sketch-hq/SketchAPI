@@ -137,9 +137,10 @@ export class Document extends WrappedObject {
     }
 
     var loop = layers.objectEnumerator();
-    while (let item = loop.nextObject()) {
+    var item
+    while (item = loop.nextObject()) {
       var layer = this.wrapObject(item)
-      if ((filter == null) || filter(layer) {
+      if ((filter == null) || filter(layer)) {
           block(layer);
       }
     }

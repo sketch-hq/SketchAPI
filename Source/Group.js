@@ -52,7 +52,7 @@ export class Group extends Layer {
 
      iterate(block, filter = null) {
        var layers = this._object().layers()
-       this._document.iterateWithRawLayers(layers, filter, block)
+       this._document.iterateWithNativeLayers(layers, filter, block)
      }
 
      /**

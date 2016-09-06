@@ -46,7 +46,7 @@ export class Selection extends WrappedObject {
     iterateAndClear(block, filter = null) {
       var layers = this._object.selectedLayers();
       this.clear();
-      this._document.iterateWithRawLayers(layers, filter, block);
+      this._document.iterateWithNativeLayers(layers, filter, block);
     }
 
     /**
@@ -58,7 +58,7 @@ export class Selection extends WrappedObject {
 
     iterate(block, filter = null) {
       var layers = this._object.selectedLayers();
-      this._document.iterateWithRawLayers(layers, filter, block);
+      this._document.iterateWithNativeLayers(layers, filter, block);
     }
 
     /**
