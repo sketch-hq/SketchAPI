@@ -132,17 +132,26 @@ export class Document extends WrappedObject {
   iterateWithNativeLayers(layers, filter, block) {
     // if we're given a string as a filter, treat it as a function
     // to call on the layer
+    var loopBlock = block
     if (typeof filter === 'string' || filter instanceof String) {
-        filter = function(layer) { return layer[filter]() }
+        loopBlock = function(layer) {
+            if (layer[filter]) {
+                block(layer)
+            }
+        }
+    } else if (filter) {
+        loopBlock = function(layer) {
+            if (filter(layer)) {
+                block(layer)
+            }
+        }
     }
 
     var loop = layers.objectEnumerator();
     var item
     while (item = loop.nextObject()) {
       var layer = this.wrapObject(item)
-      if ((filter == null) || filter(layer)) {
-          block(layer);
-      }
+      loopBlock(layer);
     }
   }
 
