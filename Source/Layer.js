@@ -192,6 +192,28 @@ export class Layer extends WrappedObject {
     }
 
     /**
+      Extract the style to use for a layer from some properties.
+      If the style wasn't supplied at all, we use the default one.
+      */
+
+    _styleForLayerWithProperties(properties) {
+        var style = properties.style
+        if (style) {
+            delete properties["style"]
+        } else {
+            style = MSDefaultStyle.defaultStyle()
+        }
+
+        var color = properties.color
+        if (color) {
+            delete properties["color"]
+            style.fill().setColor_(color)
+        }
+
+        return style
+    }
+
+    /**
         Returns a newly created shape, which has been added to this layer,
         and sets it up using the supplied properties.
 
@@ -202,7 +224,7 @@ export class Layer extends WrappedObject {
     newShape(properties) {
       var frame = this._frameForLayerWithProperties(properties)
       var newLayer = MSShapeGroup.shapeWithBezierPath_(NSBezierPath.bezierPathWithRect_(frame.asCGRect()));
-      newLayer.style = MSDefaultStyle.defaultStyle()
+      newLayer.style = this._styleForLayerWithProperties(properties)
 
       return this._addWrappedLayerWithProperties(newLayer, properties, "Shape");
     }
@@ -290,21 +312,7 @@ export class Layer extends WrappedObject {
       this._object.select_byExpandingSelection(true, true);
     }
 
-    /**
-        Perform a function for every sub-layer inside this one.
-        The function will be passed a single argument each time it is
-        invoked - which will be an object representing the sub-layer.
 
-        @param block {function} The function to execute for each layer.
-    */
-
-    iterate(block) {
-      var loop = this._object().layers().objectEnumerator()
-      while (item = loop.nextObject()) {
-        var layer = self._document.wrapObject(item)
-        block(layer);
-      }
-    }
 
     /**
      Return the parent container of this layer.
