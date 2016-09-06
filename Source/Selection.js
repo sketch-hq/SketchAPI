@@ -40,23 +40,25 @@ export class Selection extends WrappedObject {
         Perform an action once for each layer in the selection, then clear it.
 
         @param {function(layer: Layer)} block The function to execute for each layer.
+        @param {function(layer: Layer)} filter Optional filter function called on each layer first to check whether it should be iterated.
     */
 
-    iterateAndClear(block) {
+    iterateAndClear(block, filter = null) {
       var layers = this._object.selectedLayers();
       this.clear();
-      this._iterateWithLayers(layers, block);
+      this._iterateWithLayers(layers, filter, block);
     }
 
     /**
         Perform an action once for each layer in the selection.
 
         @param {function(layer: Layer)} block The function to execute for each layer.
+        @param {function(layer: Layer)} filter Optional filter function called on each layer first to check whether it should be iterated.
     */
 
-    iterate(block) {
+    iterate(block, filter = null) {
       var layers = this._object.selectedLayers();
-      this._iterateWithLayers(layers, block);
+      this._iterateWithLayers(layers, filter, block);
     }
 
     /**
@@ -75,12 +77,14 @@ export class Selection extends WrappedObject {
         @param {function(layer: Layer)} block The function to execute for each layer.
     */
 
-    _iterateWithLayers(layers, block) {
+    _iterateWithLayers(layers, filter, block) {
       var loop = layers.objectEnumerator();
       var item;
       while (item = loop.nextObject()) {
         var layer = this._document.wrapObject(item)
-        block(layer);
+        if ((filter == null) || filter(layer)) {
+            block(layer);
+        }
       }
     }
 
