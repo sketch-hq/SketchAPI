@@ -46,7 +46,7 @@ export class Selection extends WrappedObject {
     iterateAndClear(block, filter = null) {
       var layers = this._object.selectedLayers();
       this.clear();
-      this._iterateWithLayers(layers, filter, block);
+      this._document.iterateWithRawLayers(layers, filter, block);
     }
 
     /**
@@ -58,7 +58,7 @@ export class Selection extends WrappedObject {
 
     iterate(block, filter = null) {
       var layers = this._object.selectedLayers();
-      this._iterateWithLayers(layers, filter, block);
+      this._document.iterateWithRawLayers(layers, filter, block);
     }
 
     /**
@@ -70,29 +70,6 @@ export class Selection extends WrappedObject {
     }
 
 
-    /**
-        Iterate through a bunch of layers, executing a block.
-
-        @param {array} layers The layers to iterate over.
-        @param {function(layer: Layer)} block The function to execute for each layer.
-    */
-
-    _iterateWithLayers(layers, filter, block) {
-      // if we're given a string as a filter, treat it as a function
-      // to call on the layer
-      if (typeof filter === 'string' || filter instanceof String) {
-          filter = function(layer) { return layer[filter]() }
-      }
-
-      var loop = layers.objectEnumerator();
-      var item;
-      while (item = loop.nextObject()) {
-        var layer = this._document.wrapObject(item)
-        if ((filter == null) || filter(layer) {
-            block(layer);
-        }
-      }
-    }
 
     /**
      Return a list of tests to run for this class.

@@ -43,6 +43,19 @@ export class Group extends Layer {
      */
 
      /**
+         Perform a function for every sub-layer inside this one.
+         The function will be passed a single argument each time it is
+         invoked - which will be an object representing the sub-layer.
+
+         @param block {function} The function to execute for each layer.
+     */
+
+     iterate(block, filter = null) {
+       var layers = this._object().layers()
+       this._document.iterateWithRawLayers(layers, filter, block)
+     }
+
+     /**
        Convert a rectangle in page coordinates to one relative to this container's coordinates.
       */
 

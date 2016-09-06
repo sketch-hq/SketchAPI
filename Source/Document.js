@@ -121,6 +121,31 @@ export class Document extends WrappedObject {
   }
 
   /**
+      Iterate through a bunch of native Sketch layers, executing a block.
+      Used internally by Group and Selection.
+
+      @param {array} layers The layers to iterate over.
+      @param {function(layer: Layer)} filter A filter function to call for each layer. If it returns false, the layer is skipped.
+      @param {function(layer: Layer)} block The function to execute for each layer.
+  */
+
+  iterateWithNativeLayers(layers, filter, block) {
+    // if we're given a string as a filter, treat it as a function
+    // to call on the layer
+    if (typeof filter === 'string' || filter instanceof String) {
+        filter = function(layer) { return layer[filter]() }
+    }
+
+    var loop = layers.objectEnumerator();
+    while (let item = loop.nextObject()) {
+      var layer = this.wrapObject(item)
+      if ((filter == null) || filter(layer) {
+          block(layer);
+      }
+    }
+  }
+
+  /**
   Center the view of the document window on a given layer.
 
   @param {Layer} layer The layer to center on.
