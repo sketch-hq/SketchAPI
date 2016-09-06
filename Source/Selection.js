@@ -78,11 +78,17 @@ export class Selection extends WrappedObject {
     */
 
     _iterateWithLayers(layers, filter, block) {
+      // if we're given a string as a filter, treat it as a function
+      // to call on the layer
+      if (typeof filter === 'string' || filter instanceof String) {
+          filter = function(layer) { return layer[filter]() }
+      }
+
       var loop = layers.objectEnumerator();
       var item;
       while (item = loop.nextObject()) {
         var layer = this._document.wrapObject(item)
-        if ((filter == null) || filter(layer)) {
+        if ((filter == null) || filter(layer) {
             block(layer);
         }
       }
