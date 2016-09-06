@@ -50,10 +50,10 @@ export class Document extends WrappedObject {
   @return {WrappedObject} A javascript object (subclass of WrappedObject), which represents the Sketch object we were given.
   */
 
-  wrapObject(sketchObject, inDocument) {
+  wrapObject(sketchObject) {
     return this._application.wrapObject(sketchObject, this)
   }
-  
+
 
   /**
   The layers that the user has selected.
@@ -62,7 +62,7 @@ export class Document extends WrappedObject {
   */
 
   get selectedLayers() {
-    return new Selection(this._object);
+    return new Selection(this);
   }
 
   /**

@@ -22,7 +22,8 @@ export class Selection extends WrappedObject {
     */
 
     constructor(document) {
-      super(document)
+      super(document._object)
+      this._document = document
     }
 
     /**
@@ -78,7 +79,7 @@ export class Selection extends WrappedObject {
       var loop = layers.objectEnumerator();
       var item;
       while (item = loop.nextObject()) {
-        var layer = this._object._application.wrapObject(item, this._object)
+        var layer = this._document.wrapObject(item)
         block(layer);
       }
     }
