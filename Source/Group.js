@@ -51,6 +51,13 @@ export class Group extends Layer {
          return new Rectangle(origin.x, origin.y, rect.width, rect.height)
      }
 
+     /**
+      Adjust the group to fit its children.
+      */
+
+      adjustToFit() {
+          this._object.resizeToFitChildrenWithOption_(0)
+      }
 
     static tests() {
         return {
