@@ -297,7 +297,7 @@ export class Layer extends WrappedObject {
     */
 
     iterate(block) {
-      var loop = this._object().layers().objectEnumerator();
+      var loop = this._object().layers().objectEnumerator()
       while (item = loop.nextObject()) {
         var layer = self._document.wrapObject(item)
         block(layer);
@@ -305,10 +305,53 @@ export class Layer extends WrappedObject {
     }
 
     /**
+     Return the parent container of this layer.
+
+     @return {Group} The containing layer of this layer.
+     */
+
+     get container() {
+         return this._document.wrapObject(this._object.parentGroup())
+     }
+
+    /**
      Return a list of tests to run for this class.
 
      @return {dictionary} A dictionary containing the tests to run. Each key is the name of a test, each value is a function which takes a Tester instance.
      */
+
+     /**
+      Move this layer to the front of its container.
+      */
+
+      moveToFront() {
+        MSLayerMovement.moveToFront([this._object])
+      }
+
+     /**
+      Move this layer forward in its container.
+      */
+
+      moveForward() {
+          MSLayerMovement.moveForward([this._object])
+      }
+
+     /**
+      Move this layer to the back of its container.
+      */
+
+      moveToBack() {
+          MSLayerMovement.moveToBack([this._object])
+      }
+
+     /**
+      Move this layer backwards in its container.
+      */
+
+      moveBackward() {
+          MSLayerMovement.moveBackward([this._object])
+      }
+
 
     static tests() {
         return {
