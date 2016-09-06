@@ -202,6 +202,8 @@ export class Layer extends WrappedObject {
     newShape(properties) {
       var frame = this._frameForLayerWithProperties(properties)
       var newLayer = MSShapeGroup.shapeWithBezierPath_(NSBezierPath.bezierPathWithRect_(frame.asCGRect()));
+      newLayer.style = MSDefaultStyle.defaultStyle()
+
       return this._addWrappedLayerWithProperties(newLayer, properties, "Shape");
     }
 
