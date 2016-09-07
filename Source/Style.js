@@ -25,10 +25,35 @@ export class Style extends WrappedObject {
 
 
     /**
+     Return the default style object.
+     */
+
+    static default() {
+        return new Style(MSDefaultStyle.defaultStyle())
+    }
+
+    get fillEnabled() {
+        return self.sketchObject.fill().enabled
+    }
+
+    set fillEnabled(value) {
+        self.sketchObject.fill().enabled = value
+    }
+
+    get borderEnabled() {
+        return self.sketchObject.border().enabled
+    }
+
+    set borderEnabled(value) {
+        self.sketchObject.border().enabled = value
+    }
+
+    /**
      Return a list of tests to run for this class.
 
      @return {dictionary} A dictionary containing the tests to run. Each key is the name of a test, each value is a function which takes a Tester instance.
      */
+
 
     static tests() {
         return {

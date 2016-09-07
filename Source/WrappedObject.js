@@ -24,6 +24,16 @@ export class WrappedObject {
       this._object = object
     }
 
+
+    /**
+      Returns the wrapped Sketch object.
+      */
+
+    get sketchObject() {
+        return this._object
+    }
+
+
     /**
       Returns the object ID of the wrapped Sketch model object.
 
@@ -33,6 +43,7 @@ export class WrappedObject {
     get id() {
       return this._object._objectID();
     }
+
 
     /**
      Return a list of tests to run for this class.

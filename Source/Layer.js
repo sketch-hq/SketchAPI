@@ -7,6 +7,7 @@
 
 import { WrappedObject } from './WrappedObject.js'
 import { Rectangle } from './Rectangle.js'
+import { Style } from './Style.js'
 
 /**
   Represents a Sketch layer.
@@ -198,22 +199,20 @@ export class Layer extends WrappedObject {
 
     _styleForLayerWithProperties(properties) {
         var style = properties.style
-        if (style) {
-            delete properties["style"]
-        } else {
-            style = MSDefaultStyle.defaultStyle()
+        if (!style) {
+            style = Style.default()
         }
 
         var color = properties.color
         if (color) {
             delete properties["color"]
-            style.fill().setColor_(color)
+            style.sketchObject.fill().setColor_(color)
         }
 
         var color = properties.borderColor
         if (color) {
             delete properties["borderColor"]
-            style.border().setColor_(color)
+            style.sketchObject.border().setColor_(color)
         }
 
         return style
@@ -230,7 +229,7 @@ export class Layer extends WrappedObject {
     newShape(properties) {
       var frame = this._frameForLayerWithProperties(properties)
       var newLayer = MSShapeGroup.shapeWithBezierPath_(NSBezierPath.bezierPathWithRect_(frame.asCGRect()));
-      newLayer.style = this._styleForLayerWithProperties(properties)
+      properties["style"] = this._styleForLayerWithProperties(properties)
 
       return this._addWrappedLayerWithProperties(newLayer, properties, "Shape");
     }

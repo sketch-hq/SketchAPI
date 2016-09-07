@@ -37,6 +37,21 @@ export class Shape extends Layer {
     }
 
     /**
+     Return the style of the layer.
+
+     @return {Style} The style of the layer.
+     */
+
+     get style() {
+         return new Style(this.sketchObject.style())
+     }
+
+     set style(value) {
+         this.sketchObject.style = value
+     }
+
+
+    /**
      Return a list of tests to run for this class.
 
      @return {dictionary} A dictionary containing the tests to run. Each key is the name of a test, each value is a function which takes a Tester instance.
