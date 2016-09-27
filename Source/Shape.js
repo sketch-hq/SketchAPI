@@ -14,16 +14,18 @@ import { Style } from './Style.js'
 
 export class Shape extends Layer {
 
+
     /**
       Make a new shape object.
 
-      @param shape {MSShapeGroup} The underlying model object from Sketch.
-      @param document The document that the shape belongs to.
+      @param {MSShapeGroup} shape The underlying model object from Sketch.
+      @param {Document} document The document that the shape belongs to.
     */
 
     constructor(shape, document) {
       super(shape, document)
     }
+
 
     /**
         Is this a shape layer?
@@ -37,6 +39,7 @@ export class Shape extends Layer {
       return true;
     }
 
+
     /**
      Return the style of the layer.
 
@@ -46,6 +49,13 @@ export class Shape extends Layer {
      get style() {
          return new Style(this.sketchObject.style())
      }
+
+
+     /**
+     Set the style of the layer.
+
+     @param {Style} value The style settings to use for the layer.
+     */
 
      set style(value) {
          this.sketchObject.style = value.sketchObject

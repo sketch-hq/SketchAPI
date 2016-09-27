@@ -8,13 +8,20 @@
 import { Layer } from './Layer.js'
 import { Rectangle } from './Rectangle.js'
 
-// ## Constants
 
+/// Width is adjusted to fit the content.
 const BCTextBehaviourFlexibleWidth = 0
+
+/// Width is fixed.
 const BCTextBehaviourFixedWidth = 1
 
-const BCTextLineSpacingBehaviourV2 = 1         // Uses min & max line height on paragraph style
-const BCTextLineSpacingBehaviourV3 = 2         // Uses MSConstantBaselineTypesetter for fixed line height
+
+/// Uses min & max line height on paragraph style
+const BCTextLineSpacingBehaviourV2 = 1
+
+/// Uses MSConstantBaselineTypesetter for fixed line height
+const BCTextLineSpacingBehaviourV3 = 2
+
 
 /**
   Represents a text layer.
@@ -33,6 +40,7 @@ export class Text extends Layer {
       super(text, document)
     }
 
+
     /**
         Is this a text layer?
 
@@ -45,13 +53,17 @@ export class Text extends Layer {
       return true
     }
 
+
     /**
       The text of the layer.
+
+      @return {string} The layer text.
     */
 
     get text() {
       return this._object.stringValue
     }
+
 
     /**
       Set the text of the layer.
@@ -74,6 +86,7 @@ export class Text extends Layer {
       this._object.font = value
     }
 
+
     /**
        Set the font of the layer to the system font at a given size.
 
@@ -84,6 +97,7 @@ export class Text extends Layer {
       this._object.font = NSFont.systemFontOfSize_(size)
     }
 
+
     /**
        Set the alignment of the layer.
 
@@ -93,6 +107,7 @@ export class Text extends Layer {
     set alignment(mode) {
       this._object.textAlignment = mode
     }
+
 
     /**
      Set the layer to be fixed width or variable width.
@@ -108,6 +123,7 @@ export class Text extends Layer {
       }
     }
 
+
     /**
       Adjust the frame of the layer to fit its contents.
     */
@@ -116,9 +132,12 @@ export class Text extends Layer {
       this._object.adjustFrameToFit()
     }
 
+
     /**
       Return a list of the text fragments for the text.
-      */
+
+      @return {array} The line fragments. Each one is a dictionary containing a rectangle, and a baseline offset.
+    */
 
     get fragments() {
       var textLayer = this.sketchObject
@@ -146,6 +165,7 @@ export class Text extends Layer {
 
       return fragments;
     }
+
 
     /**
       Set whether to use constant baseline line spacing mode.
