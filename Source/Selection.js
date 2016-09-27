@@ -40,10 +40,22 @@ export class Selection extends WrappedObject {
         Perform an action once for each layer in the selection, then clear it.
 
         @param {function(layer: Layer)} block The function to execute for each layer.
-        @param {function(layer: Layer)} filter Optional filter function called on each layer first to check whether it should be iterated.
     */
 
-    iterateAndClear(block, filter = null) {
+    iterateThenClear(block) {
+      var layers = this._object.selectedLayers();
+      this.clear();
+      this._document.iterateWithNativeLayers(layers, null, block);
+    }
+
+    /**
+        Perform an action once for each layer in the selection that passes a filter, then clear the selection.
+
+        @param {function(layer: Layer)} filter Filter function called on each layer first to check whether it should be iterated.
+        @param {function(layer: Layer)} block The function to execute for each layer.
+    */
+
+    iterateWithFilterThenClear(filter, block) {
       var layers = this._object.selectedLayers();
       this.clear();
       this._document.iterateWithNativeLayers(layers, filter, block);
@@ -53,13 +65,25 @@ export class Selection extends WrappedObject {
         Perform an action once for each layer in the selection.
 
         @param {function(layer: Layer)} block The function to execute for each layer.
-        @param {function(layer: Layer)} filter Optional filter function called on each layer first to check whether it should be iterated.
     */
 
-    iterate(block, filter = null) {
+    iterate(block) {
+      var layers = this._object.selectedLayers();
+      this._document.iterateWithNativeLayers(layers, null, block);
+    }
+
+    /**
+        Perform an action once for each layer in the selection that passes a filter.
+
+        @param {function(layer: Layer)} filter Filter function called on each layer first to check whether it should be iterated.
+        @param {function(layer: Layer)} block The function to execute for each layer.
+    */
+
+    iterateWithFilter(filter, block) {
       var layers = this._object.selectedLayers();
       this._document.iterateWithNativeLayers(layers, filter, block);
     }
+
 
     /**
         Clear the selection.

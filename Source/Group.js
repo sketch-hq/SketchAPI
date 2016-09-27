@@ -47,10 +47,24 @@ export class Group extends Layer {
          The function will be passed a single argument each time it is
          invoked - which will be an object representing the sub-layer.
 
-         @param block {function} The function to execute for each layer.
+         @param {function(layer: Layer)} block The function to execute for each layer.
      */
 
-     iterate(block, filter = null) {
+     iterate(block) {
+       var layers = this._object().layers()
+       this._document.iterateWithNativeLayers(layers, null, block)
+     }
+
+     /**
+         Perform a function for every sub-layer inside this one that passes a filter.
+         The function will be passed a single argument each time it is
+         invoked - which will be an object representing the sub-layer.
+
+         @param {function(layer: Layer)} filter Filter function called on each layer first to check whether it should be iterated.
+         @param {function(layer: Layer)} block The function to execute for each layer.
+     */
+
+     iterateWithFilter(filter, block) {
        var layers = this._object().layers()
        this._document.iterateWithNativeLayers(layers, filter, block)
      }

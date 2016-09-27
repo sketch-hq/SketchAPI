@@ -12,6 +12,9 @@ import { Layer } from './Layer.js'
 const BCTextBehaviourFlexibleWidth = 0
 const BCTextBehaviourFixedWidth = 1
 
+const BCTextLineSpacingBehaviourV2 = 1         // Uses min & max line height on paragraph style
+const BCTextLineSpacingBehaviourV3 = 2         // Uses MSConstantBaselineTypesetter for fixed line height
+
 /**
   Represents a text layer.
  */
@@ -140,6 +143,23 @@ export class Text extends Layer {
       }
 
       return fragments;
+    }
+
+    /**
+      Set whether to use constant baseline line spacing mode.
+
+      @param {bool} value If true, we use constant baseline spacing mode. This is the default for new text layers in Sketch. If false, we use the legacy line spacing mode.
+      */
+
+    set useConstantBaselines(value) {
+      var lineSpacingBehaviour = value ? BCTextLineSpacingBehaviourV3 : BCTextLineSpacingBehaviourV2
+      var textLayer = this.sketchObject
+      var initialBaselineOffset = textLayer.firstBaselineOffset()
+      textLayer.lineSpacingBehaviour = lineSpacingBehaviour
+      var baselineOffset = textLayer.firstBaselineOffset()
+      var rect = this.frame
+      rect.y -= (baselineOffset - initialBaselineOffset)
+      this.frame = rect
     }
 
 
