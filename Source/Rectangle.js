@@ -53,6 +53,18 @@ export class Rectangle {
   }
 
   /**
+    Adjust this rectangle by offsetting it.
+
+    @param {number} x The x offset to apply.
+    @param {number} y The y offset to apply.
+    */
+
+    offset(x, y) {
+      this.x += x
+      this.y += y
+    }
+
+  /**
     Return the Rectangle as a CGRect.
 
     @return {CGRect} The rectangle.
