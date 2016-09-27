@@ -113,6 +113,37 @@ export class Text extends Layer {
     }
 
     /**
+      Return a list of the text fragments for the text.
+      */
+
+    get fragments() {
+      var textLayer = this.sketchObject
+      var storage = textLayer.createTextStorage()
+      var layout = storage.layoutManagers().firstObject()
+      var actualCharacterRangePtr = MOPointer.new()
+      var charRange = NSMakeRange(0, storage.length())
+      var origin = textLayer.rect().origin
+
+      layout.glyphRangeForCharacterRange_actualCharacterRange_(charRange, actualCharacterRangePtr)
+      var glyphRange = actualCharacterRangePtr.value()
+
+      var fragments = NSMutableArray.new()
+      var currentLocation = 0
+      while (currentLocation < NSMaxRange(glyphRange)) {
+        var effectiveRangePtr = MOPointer.new()
+        var rect = layout.lineFragmentRectForGlyphAtIndex_effectiveRange_(currentLocation, effectiveRangePtr)
+        rect = textLayer.convertRectToAbsoluteCoordinates(rect)
+        var effectiveRange = effectiveRangePtr.value()
+        var baselineOffset = layout.typesetter().baselineOffsetInLayoutManager_glyphIndex_(layout, currentLocation)
+        fragments.addObject({"rect": rect, "baselineOffset": baselineOffset, range: effectiveRange}); // TODO: use Rectangle class
+        currentLocation = NSMaxRange(effectiveRange)+1;
+      }
+
+      return fragments;
+    }
+
+
+    /**
      Return a list of tests to run for this class.
 
      @return {dictionary} A dictionary containing the tests to run. Each key is the name of a test, each value is a function which takes a Tester instance.
