@@ -203,16 +203,16 @@ export class Layer extends WrappedObject {
             style = new Style()
         }
 
-        var color = properties.color
-        if (color) {
-            delete properties["color"]
-            style.sketchObject.fill().setColor_(color)
+        var fills = properties.fills
+        if (fills) {
+            delete properties["fills"]
+            style.fills = fills
         }
 
-        var color = properties.borderColor
-        if (color) {
-            delete properties["borderColor"]
-            style.sketchObject.border().setColor_(color)
+        var borders = properties.borders
+        if (borders) {
+            delete properties["borders"]
+            style.borders = borders
         }
 
         return style

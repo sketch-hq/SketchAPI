@@ -58,7 +58,7 @@ export class Style extends WrappedObject {
     set borders(value) {
       var objects = []
       for (var b in value) {
-        var color = MSColor.colorWithRed_green_blue_alpha_(1.0, 0.0, 0.0, 0.6) // TODO: fill in proper color
+        var color = MSColor.colorWithSVGString_(value[b])
         var border = MSStyleBorder.new()
         border.setColor_(color)
         border.setFillType_(BCFillTypeColor)
@@ -72,7 +72,7 @@ export class Style extends WrappedObject {
     set fills(value) {
       var objects = []
       for (var b in value) {
-        var color = MSColor.colorWithRed_green_blue_alpha_(1.0, 0.0, 0.0, 0.6) // TODO: fill in proper color
+        var color = MSColor.colorWithSVGString_(value[b])
         var fill = MSStyleFill.new()
         fill.setColor_(color)
         fill.setFillType_(BCFillTypeColor)
