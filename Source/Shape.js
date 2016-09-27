@@ -6,6 +6,7 @@
 // ********************************
 
 import { Layer } from './Layer.js'
+import { Style } from './Style.js'
 
 /**
   Represents a shape layer (a rectangle, oval, path, etc).
@@ -47,7 +48,7 @@ export class Shape extends Layer {
      }
 
      set style(value) {
-         this.sketchObject.style = value
+         this.sketchObject.style = value.sketchObject
      }
 
 

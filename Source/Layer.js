@@ -200,7 +200,7 @@ export class Layer extends WrappedObject {
     _styleForLayerWithProperties(properties) {
         var style = properties.style
         if (!style) {
-            style = Style.default()
+            style = new Style()
         }
 
         var color = properties.color

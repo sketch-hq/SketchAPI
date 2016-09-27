@@ -20,32 +20,34 @@ export class Style extends WrappedObject {
     */
 
     constructor(style) {
+      if (!style) {
+        style = MSDefaultStyle.defaultStyle()
+      }
+
       super(style)
     }
 
 
-    /**
-     Return the default style object.
-     */
-
-    static default() {
-        return new Style(MSDefaultStyle.defaultStyle())
-    }
-
     get fillEnabled() {
-        return self.sketchObject.fill().enabled
+        return this.sketchObject.fill().enabled
     }
 
     set fillEnabled(value) {
-        self.sketchObject.fill().enabled = value
+      var fill = this.sketchObject.fill()
+      if (fill) {
+        fill.enabled = value
+      }
     }
 
     get borderEnabled() {
-        return self.sketchObject.border().enabled
+        return this.sketchObject.border().enabled
     }
 
     set borderEnabled(value) {
-        self.sketchObject.border().enabled = value
+      var border = this.sketchObject.border()
+      if (border) {
+        border.enabled = value
+      }
     }
 
     /**
