@@ -6,6 +6,7 @@
 // ********************************
 
 import { Layer } from './Layer.js'
+import { Rectangle } from './Rectangle.js'
 
 // ## Constants
 
@@ -130,16 +131,17 @@ export class Text extends Layer {
       layout.glyphRangeForCharacterRange_actualCharacterRange_(charRange, actualCharacterRangePtr)
       var glyphRange = actualCharacterRangePtr.value()
 
-      var fragments = NSMutableArray.new()
+      var fragments = []
       var currentLocation = 0
       while (currentLocation < NSMaxRange(glyphRange)) {
         var effectiveRangePtr = MOPointer.new()
-        var rect = layout.lineFragmentRectForGlyphAtIndex_effectiveRange_(currentLocation, effectiveRangePtr)
-        rect = textLayer.convertRectToAbsoluteCoordinates(rect)
+        var localRect = layout.lineFragmentRectForGlyphAtIndex_effectiveRange_(currentLocation, effectiveRangePtr)
+        var rect = new Rectangle(localRect.origin.x, localRect.origin.y, localRect.size.width, localRect.size.height)
         var effectiveRange = effectiveRangePtr.value()
         var baselineOffset = layout.typesetter().baselineOffsetInLayoutManager_glyphIndex_(layout, currentLocation)
-        fragments.addObject({"rect": rect, "baselineOffset": baselineOffset, range: effectiveRange}); // TODO: use Rectangle class
-        currentLocation = NSMaxRange(effectiveRange)+1;
+
+        fragments.push({"rect": rect, "baselineOffset": baselineOffset, range: effectiveRange})
+        currentLocation = NSMaxRange(effectiveRange) + 1
       }
 
       return fragments;
