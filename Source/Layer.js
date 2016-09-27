@@ -370,11 +370,26 @@ export class Layer extends WrappedObject {
 
       /**
         Convert a rectangle in the coordinates that this layer uses to absolute (page) coordinates.
+
+        @param {Rectangle} rect The rectangle to convert.
+        @return {Rectangle} The converted rectangle expressed in page coordinates.
        */
 
       localRectToPageRect(rect) {
           var rect = this.sketchObject.convertRectToAbsoluteCoordinates(rect.asCGRect)
           return new Rectangle(rect.x, rect.y, rect.width, rect.height)
+      }
+
+      /**
+        Convert a rectangle in the coordinates that this layer uses to it's parent's coordinates.
+
+        @param {Rectangle} rect The rectangle to convert.
+        @return {Rectangle} The converted rectangle expressed in the coordinate system of the parent layer.
+       */
+
+      localRectToParentRect(rect) {
+        var frame = this.frame
+        return new Rectangle(rect.x + frame.x, rect.y + frame.y, rect.width, rect.height)
       }
 
     static tests() {
