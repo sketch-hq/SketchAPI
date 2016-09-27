@@ -36,9 +36,7 @@ export class Group extends Layer {
   @return {bool} true for instances of Group, false for any other layer type.
   */
 
-  is_group() {
-    return true;
-  }
+  get isGroup() { return true; }
 
 
   /**

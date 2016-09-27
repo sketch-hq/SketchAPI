@@ -106,7 +106,7 @@ export class Layer extends WrappedObject {
   get isArtboard() { return false; }
 
   /**
-  Is this an group?
+  Is this a group?
 
   All Layer objects respond to this method, but only Groups or things that inherit from groups return true.
 
