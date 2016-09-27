@@ -226,7 +226,7 @@ export class Layer extends WrappedObject {
   @return {Shape} the new shape.
   */
 
-  newShape(properties) {
+  newShape(properties = {}) {
     var frame = this._frameForLayerWithProperties(properties)
     var newLayer = MSShapeGroup.shapeWithBezierPath_(NSBezierPath.bezierPathWithRect_(frame.asCGRect()));
     properties["style"] = this._styleForLayerWithProperties(properties)
@@ -242,7 +242,7 @@ export class Layer extends WrappedObject {
   @return {Text} the new text layer.
   */
 
-  newText(properties) {
+  newText(properties = {}) {
     var frame = this._frameForLayerWithProperties(properties)
     var newLayer = MSTextLayer.alloc().initWithFrame_(frame.asCGRect());
     newLayer.adjustFrameToFit();
@@ -257,7 +257,7 @@ export class Layer extends WrappedObject {
   @return {Group} the new group.
   */
 
-  newGroup(properties) {
+  newGroup(properties = {}) {
     var frame = this._frameForLayerWithProperties(properties)
     var newLayer = MSLayerGroup.alloc().initWithFrame_(frame.asCGRect());
     return this._addWrappedLayerWithProperties(newLayer, properties, "Group");
@@ -272,7 +272,7 @@ export class Layer extends WrappedObject {
   @return {Image} the new image layer.
   */
 
-  newImage(properties) {
+  newImage(properties = {}) {
     var frame = this._frameForLayerWithProperties(properties)
     var newLayer = MSBitmapLayer.alloc().initWithFrame_(frame.asCGRect());
     return this._addWrappedLayerWithProperties(newLayer, properties, "Image");

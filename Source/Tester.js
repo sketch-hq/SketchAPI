@@ -5,6 +5,7 @@
 // All code (C) 2016 Bohemian Coding.
 // ********************************
 
+import { Document } from './Document.js'
 
 /**
     Very simple unit testing utility.
@@ -43,7 +44,7 @@ export class Tester {
     /**
      Assert that a condition is true.
      If the assertion fails, the failure is recorded for later reporting by the tester.
-     
+
      @param {bool} condition The condition we're asserting.
      @param {string} description A description of the test.
      */
@@ -73,22 +74,35 @@ export class Tester {
     /**
         The application instance that we're running the tests for.
         This is the instance associated with the script context that launched the tests.
-     
+
         @return {Application} The application object.
      */
 
     get application() {
         return this._application
     }
+
+
+    /**
+        Returns a new document to use in tests.
+
+        @return {Document} Test document.
+      */
+
+    newTestDocument() {
+      var document = new Document(MSDocumentData.new(), this._application)
+      return document
+    }
+
     
     /**
      Run a collection of tests.
-     
+
      The method takes a dictionary describing the tests to run.
      The dictionary can contain two keys:
      - suites: this is a dictionary of sub-collections, each of which is recursively run by calling this method again.
      - tests: this is a dictionary of test functions, each of which is executed.
-     
+
      The test functions are passed this tester object when they are executed, and should use the assertion methods on it
      to perform tests.
 

@@ -44,7 +44,7 @@ export class Selection extends WrappedObject {
     */
 
     iterateThenClear(block) {
-      var layers = this._object.selectedLayers();
+      var layers = this._object.selectedLayers().layers();
       this.clear();
       this._document.iterateWithNativeLayers(layers, null, block);
     }
@@ -57,7 +57,7 @@ export class Selection extends WrappedObject {
     */
 
     iterateWithFilterThenClear(filter, block) {
-      var layers = this._object.selectedLayers();
+      var layers = this._object.selectedLayers().layers();
       this.clear();
       this._document.iterateWithNativeLayers(layers, filter, block);
     }
@@ -69,7 +69,7 @@ export class Selection extends WrappedObject {
     */
 
     iterate(block) {
-      var layers = this._object.selectedLayers();
+      var layers = this._object.selectedLayers().layers();
       this._document.iterateWithNativeLayers(layers, null, block);
     }
 
@@ -81,7 +81,7 @@ export class Selection extends WrappedObject {
     */
 
     iterateWithFilter(filter, block) {
-      var layers = this._object.selectedLayers();
+      var layers = this._object.selectedLayers().layers();
       this._document.iterateWithNativeLayers(layers, filter, block);
     }
 
@@ -105,8 +105,14 @@ export class Selection extends WrappedObject {
     static tests() {
         return {
             "tests" : {
-                "test something" : function(tester) {
-                    tester.assert(true);
+                "testIterate" : function(tester) {
+                  var document = tester.newTestDocument()
+                  var group = document.selectedPage.newGroup()
+                  var selection = document.selectedLayers
+
+                  selection.iterate(function(layer) {
+                    tester.assertEqual(layer.sketchObject, group.sketchObject);
+                  })
                 },
             }
         };

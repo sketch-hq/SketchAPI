@@ -175,7 +175,7 @@ export class Document extends WrappedObject {
     return {
       "tests" : {
         "testPages" : function(tester) {
-          var document = new Document(MSDocumentData.new(), tester.application)
+          var document = tester.newTestDocument()
           var pages = document.pages
 
           tester.assertEqual(pages.length, 1)
@@ -184,7 +184,7 @@ export class Document extends WrappedObject {
         },
 
         "testSelectedLayers" : function(tester) {
-          var document = new Document(MSDocumentData.new(), tester.application)
+          var document = tester.newTestDocument()
           var selection = document.selectedLayers
           tester.assert(selection.isEmpty, "should have an empty selection")
 
@@ -196,7 +196,7 @@ export class Document extends WrappedObject {
         },
 
         "testLayerWithID" : function(tester) {
-          var document = new Document(MSDocumentData.new(), tester.application)
+          var document = tester.newTestDocument()
           var page = document.selectedPage
           var group = page.newGroup({ 'name': "Test"})
           var id = group.id

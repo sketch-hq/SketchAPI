@@ -84,9 +84,26 @@ export class Page extends Layer {
     static tests() {
         return {
             "tests" : {
-                "test something" : function(tester) {
-                    tester.assert(true);
-                },
+              "testSelectedLayers" : function(tester) {
+                var document = tester.newTestDocument()
+                var selection = document.selectedLayers
+                tester.assert(selection.isEmpty, "should have an empty selection")
+
+                var page = document.selectedPage
+                var group = page.newGroup({ 'name': "Test"})
+                group.select()
+
+                tester.assert(!selection.isEmpty, "should no longer have an empty selection")
+              },
+
+              "testLayerWithID" : function(tester) {
+                var document = tester.newTestDocument()
+                var page = document.selectedPage
+                var group = page.newGroup({ 'name': "Test"})
+                var id = group.id
+                var found = document.layerWithID(id)
+                tester.assertEqual(group.sketchObject, found.sketchObject)
+              }
             }
         };
     }
