@@ -346,7 +346,11 @@ export class Application extends WrappedObject {
 
                 /** @test {Application#version} */
                 testApplicationVersion(tester) {
-                    tester.assertEqual(tester.application.version, "1.0")
+                    if (!MSApplicationMetadata.metadata().app.startsWith("com.bohemiancoding.sketch3")) {
+                      // When invoked by the Objective-C unit tests, we know that the bundle's version will be
+                      // set to 1.0 so it's ok to test it.
+                      tester.assertEqual(tester.application.version, "1.0")
+                    }
                 },
 
                 /** @test {Application#wrapObject} */

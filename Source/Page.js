@@ -6,6 +6,7 @@
 // ********************************
 
 import { Layer } from './Layer.js'
+import { Selection } from './Selection.js'
 
 /**
   Represents a Page in a Sketch document.
@@ -25,6 +26,17 @@ export class Page extends Layer {
     this._document = document
   }
 
+
+  /**
+  The layers that the user has selected.
+
+  @return {Selection} A selection object representing the layers that the user has selected.
+  */
+
+  get selectedLayers() {
+    return new Selection(this);
+  }
+
   /**
       Is this a page?
 
@@ -36,6 +48,18 @@ export class Page extends Layer {
   get isPage() {
     return true;
   }
+
+
+  /**
+  The layers that the user has selected.
+
+  @return {Selection} A selection object representing the layers that the user has selected.
+  */
+
+  get selectedLayers() {
+    return new Selection(this);
+  }
+
 
   /**
       Returns a newly created artboard, which has been added to this page,

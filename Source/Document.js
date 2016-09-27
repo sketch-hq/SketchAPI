@@ -56,13 +56,13 @@ export class Document extends WrappedObject {
 
 
   /**
-  The layers that the user has selected.
+  The layers that the user has selected in the currently selected page.
 
-  @return {Selection} A selection object representing the layers that the user has selected.
+  @return {Selection} A selection object representing the layers that the user has selected in the currently selected page.
   */
 
   get selectedLayers() {
-    return new Selection(this);
+    return new Selection(this.selectedPage);
   }
 
   /**
@@ -174,9 +174,36 @@ export class Document extends WrappedObject {
   static tests() {
     return {
       "tests" : {
-        "test something" : function(tester) {
-          tester.assert(true);
+        "testPages" : function(tester) {
+          var document = new Document(MSDocumentData.new(), tester.application)
+          var pages = document.pages
+
+          tester.assertEqual(pages.length, 1)
+          tester.assertEqual(pages[0].sketchObject, document.selectedPage.sketchObject)
+
         },
+
+        "testSelectedLayers" : function(tester) {
+          var document = new Document(MSDocumentData.new(), tester.application)
+          var selection = document.selectedLayers
+          tester.assert(selection.isEmpty, "should have an empty selection")
+
+          var page = document.selectedPage
+          var group = page.newGroup({ 'name': "Test"})
+          group.select()
+
+          tester.assert(!selection.isEmpty, "should no longer have an empty selection")
+        },
+
+        "testLayerWithID" : function(tester) {
+          var document = new Document(MSDocumentData.new(), tester.application)
+          var page = document.selectedPage
+          var group = page.newGroup({ 'name': "Test"})
+          var id = group.id
+          var found = document.layerWithID(id)
+          tester.assertEqual(group.sketchObject, found.sketchObject)
+        }
+
       }
     };
   }

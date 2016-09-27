@@ -18,12 +18,12 @@ export class Selection extends WrappedObject {
     /**
       Make a new Selection object.
 
-      @param {Document} document The document that the selection relates to.
+      @param {Page} page The page that the selection relates to.
     */
 
-    constructor(document) {
-      super(document._object)
-      this._document = document
+    constructor(page) {
+      super(page._object)
+      this._document = page._document
     }
 
     /**
@@ -33,7 +33,8 @@ export class Selection extends WrappedObject {
     */
 
     get isEmpty() {
-        return (this._object.selectedLayers().count() == 0);
+        var layers = this._object.selectedLayers().layers()
+        return (layers.count() == 0);
     }
 
     /**
@@ -90,7 +91,7 @@ export class Selection extends WrappedObject {
     */
 
     clear() {
-      this._object.currentPage().deselectAllLayers();
+      this._page.sketchObject.deselectAllLayers();
     }
 
 

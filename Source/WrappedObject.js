@@ -41,7 +41,7 @@ export class WrappedObject {
     */
 
     get id() {
-      return this._object._objectID();
+      return this._object.objectID();
     }
 
 
@@ -54,9 +54,18 @@ export class WrappedObject {
     static tests() {
         return {
             "tests" : {
-                "test something" : function(tester) {
-                    tester.assert(true);
+                "testSketchObject" : function(tester) {
+                    var object = MSLayer.new()
+                    var wrapped = new WrappedObject(object)
+                    tester.assertEqual(wrapped.sketchObject, object);
                 },
+
+                "testID" : function(tester) {
+                    var object = MSLayer.new()
+                    var wrapped = new WrappedObject(object)
+                    tester.assertEqual(wrapped.id, object.objectID());
+                },
+
             }
         };
     }
