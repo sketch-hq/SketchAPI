@@ -11,6 +11,11 @@ import { WrappedObject } from './WrappedObject.js'
   Represents a Sketch layer style.
  */
 
+const BCFillTypeColor    = 0
+const BCFillTypeGradient = 1
+const BCFillTypePattern  = 4
+const BCFillTypeNoise    = 5
+
 export class Style extends WrappedObject {
 
     /**
@@ -48,6 +53,34 @@ export class Style extends WrappedObject {
       if (border) {
         border.enabled = value
       }
+    }
+
+    set borders(value) {
+      var objects = []
+      for (var b in value) {
+        var color = MSColor.colorWithRed_green_blue_alpha_(1.0, 0.0, 0.0, 0.6) // TODO: fill in proper color
+        var border = MSStyleBorder.new()
+        border.setColor_(color)
+        border.setFillType_(BCFillTypeColor)
+        border.enabled = true
+
+        objects.push(border)
+      }
+      this.sketchObject.setBorders_(objects)
+    }
+
+    set fills(value) {
+      var objects = []
+      for (var b in value) {
+        var color = MSColor.colorWithRed_green_blue_alpha_(1.0, 0.0, 0.0, 0.6) // TODO: fill in proper color
+        var fill = MSStyleFill.new()
+        fill.setColor_(color)
+        fill.setFillType_(BCFillTypeColor)
+        fill.enabled = true
+
+        objects.push(fill)
+      }
+      this.sketchObject.setFills_(objects)
     }
 
     /**
