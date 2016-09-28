@@ -45,6 +45,18 @@ export class Application extends WrappedObject {
          @type {dictionary}
          */
         this._metadata = MSApplicationMetadata.metadata()
+
+        // expose some classes
+        this.Application = Application
+        this.Rectangle = Rectangle
+        this.Document = Document
+        this.Group = Group
+        this.Text = Text
+        this.Image = Image
+        this.Shape = Shape
+        this.Artboard = Artboard
+        this.Page = Page
+        this.Selection = Selection
     }
 
     /**
@@ -268,20 +280,6 @@ export class Application extends WrappedObject {
     alert(title, message) {
         var app = NSApplication.sharedApplication()
         app.displayDialog_withTitle(title, message)
-    }
-
-    /**
-     Return a new Rectangle object for a given x,y, width and height.
-
-     @param {number} x The x coordinate of the top-left corner of the rectangle.
-     @param {number} y The y coordinate of the top-left corner of the rectangle.
-     @param {number} width The width of the rectangle.
-     @param {number} height The height of the rectangle.
-     @return The new Rectangle object.
-     */
-
-    rectangle(x, y, width, height) {
-        return new Rectangle(x, y, width, height)
     }
 
     /**

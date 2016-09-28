@@ -137,6 +137,13 @@ export class Group extends Layer {
           tester.assertEqual(iterations, 1)
           tester.assertEqual(groups, 1)
         },
+
+        "testPageToLocalRect" : function(tester) {
+          var document = tester.newTestDocument()
+          var page = document.selectedPage
+          var group = page.newGroup({"frame" : new Rectangle(100, 100, 100, 100)})
+
+        }
       }
     };
   }
