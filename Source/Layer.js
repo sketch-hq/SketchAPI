@@ -7,7 +7,6 @@
 
 import { WrappedObject } from './WrappedObject.js'
 import { Rectangle } from './Rectangle.js'
-import { Style } from './Style.js'
 
 /**
 Represents a Sketch layer.
@@ -82,7 +81,7 @@ export class Layer extends WrappedObject {
   */
 
   duplicate() {
-    return self._document.wrapObject(this._object.duplicate());
+    return this._document.wrapObject(this._object.duplicate());
   }
 
   /**
@@ -144,139 +143,6 @@ export class Layer extends WrappedObject {
   */
 
   get isImage() { return false; }
-
-  /**
-  Add a new wrapped layer object to represent a Sketch layer.
-  Apply any supplied properties to the wrapper (which will apply
-  them in turn to the wrapped layer).
-
-  @param {MSLayer} newLayer The underlying Sketch layer object.
-  @param {dictionary} properties The properties to apply.
-  @param {string} wrapper The name of wrapper class to use.
-  @return {Layer} The wrapped layer object.
-  */
-
-  _addWrappedLayerWithProperties(newLayer, properties, wrapper) {
-    if (newLayer) {
-      // add the Sketch object to this layer
-      var layer = this._object
-      layer.addLayers_(NSArray.arrayWithObject_(newLayer))
-
-      // make a Javascript wrapper object for the new layer
-      var wrapper = this._document.wrapObject(newLayer)
-
-      // apply properties, via the wrapper
-      for (var p in properties) {
-        wrapper[p] = properties[p]
-      }
-
-      return wrapper
-    }
-  }
-
-  /**
-  Extract the frame to use for a layer from some properties.
-  If the frame wasn't supplied in the properties, we return a default value instead.
-
-  @param {dictionary} properties The properties to use when looking for a frame value.
-  @return {Rectangle} The frame rectangle to use.
-  */
-
-  _frameForLayerWithProperties(properties) {
-    var frame = properties.frame
-    if (frame) {
-      delete properties["frame"]
-    } else {
-      frame = new Rectangle(0, 0, 100, 100)
-    }
-    return frame
-  }
-
-  /**
-  Extract the style to use for a layer from some properties.
-  If the style wasn't supplied at all, we use the default one.
-  */
-
-  _styleForLayerWithProperties(properties) {
-    var style = properties.style
-    if (!style) {
-      style = new Style()
-    }
-
-    var fills = properties.fills
-    if (fills) {
-      delete properties["fills"]
-      style.fills = fills
-    }
-
-    var borders = properties.borders
-    if (borders) {
-      delete properties["borders"]
-      style.borders = borders
-    }
-
-    return style
-  }
-
-  /**
-  Returns a newly created shape, which has been added to this layer,
-  and sets it up using the supplied properties.
-
-  @param {dictionary} properties Properties to apply to the shape.
-  @return {Shape} the new shape.
-  */
-
-  newShape(properties = {}) {
-    var frame = this._frameForLayerWithProperties(properties)
-    var newLayer = MSShapeGroup.shapeWithBezierPath_(NSBezierPath.bezierPathWithRect_(frame.asCGRect()));
-    properties["style"] = this._styleForLayerWithProperties(properties)
-
-    return this._addWrappedLayerWithProperties(newLayer, properties, "Shape");
-  }
-
-  /**
-  Returns a newly created text layer, which has been added to this layer,
-  and sets it up using the supplied properties.
-
-  @param {dictionary} properties Properties to apply to the text layer.
-  @return {Text} the new text layer.
-  */
-
-  newText(properties = {}) {
-    var frame = this._frameForLayerWithProperties(properties)
-    var newLayer = MSTextLayer.alloc().initWithFrame_(frame.asCGRect());
-    newLayer.adjustFrameToFit();
-    return this._addWrappedLayerWithProperties(newLayer, properties, "Text");
-  }
-
-  /**
-  Returns a newly created group, which has been added to this layer,
-  and sets it up using the supplied properties.
-
-  @param {dictionary} properties Properties to apply to the group.
-  @return {Group} the new group.
-  */
-
-  newGroup(properties = {}) {
-    var frame = this._frameForLayerWithProperties(properties)
-    var newLayer = MSLayerGroup.alloc().initWithFrame_(frame.asCGRect());
-    return this._addWrappedLayerWithProperties(newLayer, properties, "Group");
-  }
-
-
-  /**
-  Returns a newly created image layer, which has been added to this layer,
-  and sets it up using the supplied properties.
-
-  @param {dictionary} properties Properties to apply to the layer.
-  @return {Image} the new image layer.
-  */
-
-  newImage(properties = {}) {
-    var frame = this._frameForLayerWithProperties(properties)
-    var newLayer = MSBitmapLayer.alloc().initWithFrame_(frame.asCGRect());
-    return this._addWrappedLayerWithProperties(newLayer, properties, "Image");
-  }
 
   /**
   Remove this layer from its parent.
@@ -401,9 +267,32 @@ export class Layer extends WrappedObject {
   static tests() {
     return {
       "tests" : {
-        "test something" : function(tester) {
-          tester.assert(true);
+        "testName" : function(tester) {
+          var document = tester.newTestDocument()
+          var page = document.selectedPage
+          page.name = "This is a page"
+          tester.assertEqual(page.name, "This is a page")
+          var group = page.newGroup({"name" : "blah"})
+          tester.assertEqual(group.name, "blah")
         },
+
+        "testFrame" : function(tester) {
+          var document = tester.newTestDocument()
+          var page = document.selectedPage
+          var frame = new Rectangle(10, 10, 20, 20)
+          var group = page.newGroup({"frame" : frame})
+          tester.assertEqual(group.frame, frame)
+        },
+
+        "testDuplicate" : function(tester) {
+          var document = tester.newTestDocument()
+          var page = document.selectedPage
+          var group = page.newGroup({"name" : "Test"})
+          tester.assertEqual(page.sketchObject.layers().count(), 1)
+          var group2 = group.duplicate()
+          tester.assertEqual(page.sketchObject.layers().count(), 2)
+        },
+
       }
     };
   }
