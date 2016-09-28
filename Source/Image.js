@@ -57,9 +57,13 @@ export class Image extends Layer {
     static tests() {
         return {
             "tests" : {
-                "test something" : function(tester) {
-                    tester.assert(true);
-                },
+              "testIsImage" : function(tester) {
+                var document = tester.newTestDocument()
+                var page = document.selectedPage
+                var image = page.newImage()
+                tester.assertTrue(image.isImage)
+                tester.assertFalse(page.isImage)
+              },
             }
         };
     }

@@ -143,7 +143,20 @@ export class Group extends Layer {
           var page = document.selectedPage
           var group = page.newGroup({"frame" : new Rectangle(100, 100, 100, 100)})
 
-        }
+        },
+
+        "testIsGroup" : function(tester) {
+          var document = tester.newTestDocument()
+          var page = document.selectedPage
+          var group = page.newGroup()
+          var text = page.newText()
+          var artboard = page.newArtboard()
+          tester.assertTrue(group.isGroup)
+          tester.assertFalse(text.isGroup)
+          tester.assertTrue(page.isGroup)       // pages are also groups
+          tester.assertTrue(artboard.isGroup)   // artboards are also groups
+        },
+
       }
     };
   }

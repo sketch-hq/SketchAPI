@@ -5,13 +5,13 @@
 // All code (C) 2016 Bohemian Coding.
 // ********************************
 
-import { Layer } from './Layer.js'
+import { Group } from './Group.js'
 
 /**
     A Sketch artboard.
 */
 
-export class Artboard extends Layer {
+export class Artboard extends Group {
 
     /**
         Make a new artboard.
@@ -45,8 +45,12 @@ export class Artboard extends Layer {
     static tests() {
         return {
             "tests" : {
-                "test something" : function(tester) {
-                    tester.assert(true);
+                "testIsArtboard" : function(tester) {
+                  var document = tester.newTestDocument()
+                  var page = document.selectedPage
+                  var artboard = page.newArtboard({"name" : "Test"})
+                  tester.assertTrue(artboard.isArtboard)
+                  tester.assertFalse(page.isArtboard)
                 },
             }
         };

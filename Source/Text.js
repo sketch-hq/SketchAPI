@@ -194,9 +194,13 @@ export class Text extends Layer {
     static tests() {
         return {
             "tests" : {
-                "test something" : function(tester) {
-                    tester.assert(true);
-                },
+              "testIsText" : function(tester) {
+                var document = tester.newTestDocument()
+                var page = document.selectedPage
+                var text = page.newText()
+                tester.assertTrue(text.isText)
+                tester.assertFalse(page.isText)
+              },
             }
         };
     }

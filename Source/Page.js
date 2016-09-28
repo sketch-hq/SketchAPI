@@ -69,7 +69,7 @@ export class Page extends Group {
       @return {Artboard} the new artboard.
   */
 
-  newArtboard(properties) {
+  newArtboard(properties = {}) {
     var frame = this._frameForLayerWithProperties(properties)
     var newLayer = MSArtboardGroup.alloc().initWithFrame_(frame.asCGRect());
     return this._addWrappedLayerWithProperties(newLayer, properties, "Artboard");
@@ -103,7 +103,16 @@ export class Page extends Group {
                 var id = group.id
                 var found = document.layerWithID(id)
                 tester.assertEqual(group.sketchObject, found.sketchObject)
-              }
+              },
+
+              "testIsPage" : function(tester) {
+                var document = tester.newTestDocument()
+                var page = document.selectedPage
+                var image = page.newImage()
+                tester.assertTrue(page.isPage)
+                tester.assertFalse(image.isPage)
+              },
+
             }
         };
     }

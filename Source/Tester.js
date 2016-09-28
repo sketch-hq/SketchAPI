@@ -72,6 +72,35 @@ export class Tester {
 
 
     /**
+     Assert that a value is true.
+     If the assertion fails, the failure is recorded for later reporting by the tester.
+
+     @param v The value to check.
+    */
+
+    assertTrue(v) {
+      if (!v) {
+        this._testFailures.push("expected true, got: " + v)
+      }
+    }
+
+
+
+    /**
+     Assert that a value is false.
+     If the assertion fails, the failure is recorded for later reporting by the tester.
+
+     @param v The value to check.
+    */
+
+    assertFalse(v) {
+      if (v) {
+        this._testFailures.push("expected false, got: " + v)
+      }
+    }
+
+
+    /**
         The application instance that we're running the tests for.
         This is the instance associated with the script context that launched the tests.
 
@@ -94,7 +123,7 @@ export class Tester {
       return document
     }
 
-    
+
     /**
      Run a collection of tests.
 

@@ -71,9 +71,13 @@ export class Shape extends Layer {
     static tests() {
         return {
             "tests" : {
-                "test something" : function(tester) {
-                    tester.assert(true);
-                },
+              "testIsShape" : function(tester) {
+                var document = tester.newTestDocument()
+                var page = document.selectedPage
+                var shape = page.newShape()
+                tester.assertTrue(shape.isShape)
+                tester.assertFalse(page.isShape)
+              },
             }
         };
     }
