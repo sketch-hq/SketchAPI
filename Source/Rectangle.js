@@ -74,6 +74,18 @@ export class Rectangle {
     return CGRectMake(this.x, this.y, this.width, this.height)
   }
 
+  /**
+    Return a string description of the rectangle.
+
+    @return {string} Description of the rectangle.
+    */
+
+    toString() {
+      return "{" + this.x + ", " + this.y + ", " + this.width + ", " + this.height + "}"
+    }
+
+
+
     /**
      Return a list of tests to run for this class.
 
