@@ -74,17 +74,6 @@ export class Layer extends WrappedObject {
   }
 
   /**
-  Duplicate this layer.
-  A new identical layer will be inserted into the parent of this layer.
-
-  @return {Layer} A new layer identical to this one.
-  */
-
-  duplicate() {
-    return this._document.wrapObject(this._object.duplicate());
-  }
-
-  /**
   Is this a page?
 
   All Layer objects respond to this method, but only pages return true.
@@ -144,6 +133,20 @@ export class Layer extends WrappedObject {
 
   get isImage() { return false; }
 
+
+
+  /**
+  Duplicate this layer.
+  A new identical layer will be inserted into the parent of this layer.
+
+  @return {Layer} A new layer identical to this one.
+  */
+
+  duplicate() {
+    return this._document.wrapObject(this._object.duplicate());
+  }
+
+
   /**
   Remove this layer from its parent.
   */
@@ -155,6 +158,7 @@ export class Layer extends WrappedObject {
     }
   }
 
+
   /**
   Select the layer.
   This will clear the previous selection. Use addToSelection() if you wish
@@ -165,6 +169,7 @@ export class Layer extends WrappedObject {
     this._object.select_byExpandingSelection(true, false);
   }
 
+
   /**
   Deselect this layer.
   Any other layers that were previously selected will remain selected.
@@ -173,6 +178,7 @@ export class Layer extends WrappedObject {
   deselect() {
     this._object.select_byExpandingSelection(false, true);
   }
+
 
   /**
   Add this layer to the selected layers.
@@ -291,6 +297,42 @@ export class Layer extends WrappedObject {
           tester.assertEqual(page.sketchObject.layers().count(), 1)
           var group2 = group.duplicate()
           tester.assertEqual(page.sketchObject.layers().count(), 2)
+        },
+
+        "testRemove" : function(tester) {
+          var document = tester.newTestDocument()
+          var page = document.selectedPage
+          var group = page.newGroup({"name" : "Test"})
+          tester.assertEqual(page.sketchObject.layers().count(), 1)
+          group.remove()
+          tester.assertEqual(page.sketchObject.layers().count(), 0)
+        },
+
+        "testSelection" : function(tester) {
+          var document = tester.newTestDocument()
+          var page = document.selectedPage
+          var group = page.newGroup({"name" : "Test"})
+
+          // start with nothing selected
+          tester.assertTrue(page.selectedLayers.isEmpty)
+
+          // select a layer
+          group.select()
+          tester.assertFalse(page.selectedLayers.isEmpty)
+
+          // deselect it - should go back to nothing selected
+          group.deselect()
+          tester.assertTrue(page.selectedLayers.isEmpty)
+
+          // select one layer then another - only the last should be selected
+          var group2 = page.newGroup({"name" : "Test"})
+          group.select()
+          group2.select()
+          tester.assertEqual(page.selectedLayers.length, 1)
+
+          // add a second layer to the selection - both should be selected
+          group.addToSelection()
+          tester.assertEqual(page.selectedLayers.length, 2)
         },
 
       }
