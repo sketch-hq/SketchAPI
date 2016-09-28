@@ -55,7 +55,7 @@ export class Group extends Layer {
   */
 
   iterate(block) {
-    var layers = this._object().layers()
+    var layers = this._object.layers()
     this._document.iterateWithNativeLayers(layers, null, block)
   }
 
@@ -70,7 +70,7 @@ export class Group extends Layer {
   */
 
   iterateWithFilter(filter, block) {
-    var layers = this._object().layers()
+    var layers = this._object.layers()
     this._document.iterateWithNativeLayers(layers, filter, block)
   }
 
@@ -106,8 +106,36 @@ export class Group extends Layer {
   static tests() {
     return {
       "tests" : {
-        "test something" : function(tester) {
-          tester.assert(true);
+        "testIterate" : function(tester) {
+          var document = tester.newTestDocument()
+          var page = document.selectedPage
+          var group = page.newGroup()
+          var text = page.newText()
+
+          var iterations = 0
+          var groups = 0
+          page.iterate(function(layer) {
+            iterations++
+            if (layer.sketchObject == group.sketchObject) groups++
+          })
+          tester.assertEqual(iterations, 2)
+          tester.assertEqual(groups, 1)
+        },
+
+        "testIterateWithFilter" : function(tester) {
+          var document = tester.newTestDocument()
+          var page = document.selectedPage
+          var group = page.newGroup()
+          var text = page.newText()
+
+          var iterations = 0
+          var groups = 0
+          page.iterateWithFilter("isGroup", function(layer) {
+            iterations++
+            if (layer.sketchObject == group.sketchObject) groups++
+          })
+          tester.assertEqual(iterations, 1)
+          tester.assertEqual(groups, 1)
         },
       }
     };

@@ -5,14 +5,14 @@
 // All code (C) 2016 Bohemian Coding.
 // ********************************
 
-import { Layer } from './Layer.js'
+import { Group } from './Group.js'
 import { Selection } from './Selection.js'
 
 /**
   Represents a Page in a Sketch document.
  */
 
-export class Page extends Layer {
+export class Page extends Group {
 
   /**
     Make a new page object.
