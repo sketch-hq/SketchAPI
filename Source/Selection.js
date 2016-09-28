@@ -38,7 +38,17 @@ export class Selection extends WrappedObject {
     }
 
 
+    /**
+      Return the number of selected layers.
 
+      @return {number} The number of layers that are selected.
+      */
+
+    get length() {
+      return this.nativeLayers.count()
+    }
+
+    
     /**
         Does the selection contain any layers?
 
