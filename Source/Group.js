@@ -142,7 +142,24 @@ export class Group extends Layer {
           var document = tester.newTestDocument()
           var page = document.selectedPage
           var group = page.newGroup({"frame" : new Rectangle(100, 100, 100, 100)})
+          var local = group.pageRectToLocalRect(new Rectangle(125, 75, 50, 200))
+          tester.assertEqual(local.x, 25)
+          tester.assertEqual(local.y, -25)
+          tester.assertEqual(local.width, 50)
+          tester.assertEqual(local.height, 200)
+        },
 
+        "testAdjustToFit" : function(tester) {
+          var document = tester.newTestDocument()
+          var page = document.selectedPage
+          var group = page.newGroup({"frame" : new Rectangle(100, 100, 100, 100)})
+          var text = group.newShape({"frame" : new Rectangle(50, 50, 50, 50)})
+          group.adjustToFit()
+          var frame = group.frame
+          tester.assertEqual(frame.x, 150)
+          tester.assertEqual(frame.y, 150)
+          tester.assertEqual(frame.width, 50)
+          tester.assertEqual(frame.height, 50)
         },
 
         "testIsGroup" : function(tester) {
