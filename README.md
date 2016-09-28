@@ -22,9 +22,29 @@ Calls to this object then give you access to the rest of the API.
 
 ## Overview
 
-The approach that the API takes is to wrap the native Sketch model objects inside javascript objects.
+The API exposed is deliberately thin at the moment, and primarily covers the following areas:
 
-These are thin wrappers, and contain no state - they just exist as a way to provide a cleaner and more stable coding interface to the underlying model.
+- obtaining the selected document, page, and layers
+- iterating over the selection
+- iterating over any page, artboard or group
+- finding layers by name or id
+- creating new layers
+
+The approach taken is to wrap the native Sketch model objects inside javascript objects. These are thin wrappers, and contain no state - they just exist as a way to provide a cleaner and more stable coding interface to the underlying model.
+
+The layer hierarchy is deliberately simplified, with all shape layers being treated the same way. Thus there are currently wrapper classes for the following layer types: `Page`, `Artboard`, `Group`, `Shape`, `Text`, `Image`.
+
+On top of this sits a `Document` class for each document, and an `Application` class which is the root of the tree. It's an instance of this that you are given when you call `context.api()`, and it is this single object which gives you access to all the others.
+
+One or two important properties of layers are exposed directly in the wrappers. For example `name`, `id`, and `frame`. Over time, more properties will be exposed this way, but for now you will often have to drop down to interrogating the underlying model object: `layer.sketchObject.`.
+
+There is the beginning of a wrapper class `Style` for layer styles, but it's currently very simple. The plan here will be to allow a quick way to set up all the common properties of a style, in a way that is uniform and consistent.
+
+On the `Application` class there is also some support for more global tasks such as reading/writing preferences. This stuff will be expanded over time.
+
+The application object also exposes some utility classes. Currently the main one of note is `Rectangle`, which is a javascript-native representation of a rectangle. The plan is to use this class consistently within the API, in order to try to mask the fact that the model itself uses a confusing mix of `NSRect`, `CGRect`,  `MSRect` and `MSAbsoluteRect`! In time more utility classes may be added. In time, also, we hope to clean up the model to be more consistent, at which point `Rectangle` might just turn into a thin wrapper for one of the native types.
+
+Finally, there is some crude support for interaction with the user via alerts/sheets and the messages area at the bottom of the canvas. This stuff is *not* final, and is currently just a re-working of some of our original code snippets. Ideally we'd like to come up with a more powerful and cleaner API to allow your plugin to interact with the user in a way that is consistent and compatible with the way Sketch itself interacts. It will probably take some time for us to get to this stuff!
 
 
 ## Performance and Identity
@@ -45,12 +65,9 @@ if (obj1.sketchObject == obj2.sketchObject) { /* do stuff */ }    // this is bet
 ```
 
 
-
-
-
 ## Usage
 
-Example script:
+Here's a very simple example script:
 
 ```javascript
 var sketch = context.api()
@@ -82,6 +99,11 @@ sketch.getSelectionFromUser("Test", ["One", "Two"], 1);
 sketch.message("Hello mum!");
 sketch.alert("Title", "message");
 ```
+
+For more examples, we recommend checking out the [examples section of the developer website](http://developer.sketchapp.com/examples/).
+
+Happy coding!
+
 
 ## Acknowledgements
 
