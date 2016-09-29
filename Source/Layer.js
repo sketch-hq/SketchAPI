@@ -208,6 +208,18 @@ export class Layer extends WrappedObject {
   */
 
   /**
+  Return the index of this layer in it's container.
+  The layer at the back of the container (visualy) will be layer 0. The layer at the front will be layer n - 1 (if there are n layers).
+
+  @return {number} The layer order.
+  */
+
+  get index() {
+    var ourLayer = this.sketchObject
+    return ourLayer.parentGroup().indexOfLayer_(ourLayer)
+  }
+
+  /**
   Move this layer to the front of its container.
   */
 
@@ -293,7 +305,7 @@ export class Layer extends WrappedObject {
         "testDuplicate" : function(tester) {
           var document = tester.newTestDocument()
           var page = document.selectedPage
-          var group = page.newGroup({"name" : "Test"})
+          var group = page.newGroup()
           tester.assertEqual(page.sketchObject.layers().count(), 1)
           var group2 = group.duplicate()
           tester.assertEqual(page.sketchObject.layers().count(), 2)
@@ -302,7 +314,7 @@ export class Layer extends WrappedObject {
         "testRemove" : function(tester) {
           var document = tester.newTestDocument()
           var page = document.selectedPage
-          var group = page.newGroup({"name" : "Test"})
+          var group = page.newGroup()
           tester.assertEqual(page.sketchObject.layers().count(), 1)
           group.remove()
           tester.assertEqual(page.sketchObject.layers().count(), 0)
@@ -311,7 +323,7 @@ export class Layer extends WrappedObject {
         "testSelection" : function(tester) {
           var document = tester.newTestDocument()
           var page = document.selectedPage
-          var group = page.newGroup({"name" : "Test"})
+          var group = page.newGroup()
 
           // start with nothing selected
           tester.assertTrue(page.selectedLayers.isEmpty)
@@ -325,7 +337,7 @@ export class Layer extends WrappedObject {
           tester.assertTrue(page.selectedLayers.isEmpty)
 
           // select one layer then another - only the last should be selected
-          var group2 = page.newGroup({"name" : "Test"})
+          var group2 = page.newGroup()
           group.select()
           group2.select()
           tester.assertEqual(page.selectedLayers.length, 1)
@@ -334,6 +346,45 @@ export class Layer extends WrappedObject {
           group.addToSelection()
           tester.assertEqual(page.selectedLayers.length, 2)
         },
+
+        "testContainer" : function(tester) {
+          var document = tester.newTestDocument()
+          var page = document.selectedPage
+          var group = page.newGroup()
+          tester.assertEqual(group.container.sketchObject, page.sketchObject)
+        },
+
+        "testOrdering" : function(tester) {
+          var document = tester.newTestDocument()
+          var page = document.selectedPage
+          var group1 = page.newGroup()
+          var group2 = page.newGroup()
+          var group3 = page.newGroup()
+          tester.assertEqual(group1.index, 0)
+          tester.assertEqual(group2.index, 1)
+          tester.assertEqual(group3.index, 2)
+
+          group1.moveToFront()
+          tester.assertEqual(group2.index, 0)
+          tester.assertEqual(group3.index, 1)
+          tester.assertEqual(group1.index, 2)
+
+          group3.moveToBack()
+          tester.assertEqual(group3.index, 0)
+          tester.assertEqual(group2.index, 1)
+          tester.assertEqual(group1.index, 2)
+
+          group2.moveForward()
+          tester.assertEqual(group3.index, 0)
+          tester.assertEqual(group1.index, 1)
+          tester.assertEqual(group2.index, 2)
+
+          group1.moveBackward()
+          tester.assertEqual(group1.index, 0)
+          tester.assertEqual(group3.index, 1)
+          tester.assertEqual(group2.index, 2)
+
+        }
 
       }
     };
