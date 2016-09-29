@@ -61,7 +61,7 @@ export class Text extends Layer {
     */
 
     get text() {
-      return this._object.stringValue
+      return this._object.stringValue()
     }
 
 
@@ -128,7 +128,7 @@ export class Text extends Layer {
       Adjust the frame of the layer to fit its contents.
     */
 
-    resizeToFitContents() {
+    adjustToFit() {
       this._object.adjustFrameToFit()
     }
 
@@ -201,6 +201,16 @@ export class Text extends Layer {
                 tester.assertTrue(text.isText)
                 tester.assertFalse(page.isText)
               },
+
+              "testText" : function(tester) {
+                var document = tester.newTestDocument()
+                var page = document.selectedPage
+                var text = page.newText({"text" : "blah"})
+                tester.assertEqual(text.text, "blah")
+                text.text = "doodah"
+                tester.assertEqual(text.text, "doodah")
+              },
+
             }
         };
     }
