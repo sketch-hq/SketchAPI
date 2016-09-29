@@ -211,6 +211,14 @@ export class Text extends Layer {
                 tester.assertEqual(text.text, "doodah")
               },
 
+              "testAdjustToFit" : function(tester) {
+                var document = tester.newTestDocument()
+                var page = document.selectedPage
+                var text = page.newText({"text" : "blah", "frame" : new Rectangle(10, 10, 1000, 1000)})
+                text.adjustToFit()
+                tester.assertEqual(text.frame, new Rectangle(10, 10, 23, 14))
+              },
+
             }
         };
     }
