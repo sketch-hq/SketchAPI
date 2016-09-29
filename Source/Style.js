@@ -114,9 +114,18 @@ export class Style extends WrappedObject {
     static tests() {
         return {
             "tests" : {
-                "test something" : function(tester) {
-                    tester.assert(true);
+                "testBorders" : function(tester) {
+                  var style = new Style()
+                  style.borders = [ "#11223344", "#1234" ]
+                  tester.assertEqual(style.sketchObject.borders().count(), 2)
                 },
+
+                "testFills" : function(tester) {
+                  var style = new Style()
+                  style.borders = [ "#11223344", "#1234" ]
+                  tester.assertEqual(style.sketchObject.borders().count(), 2)
+                },
+
             }
         };
     }

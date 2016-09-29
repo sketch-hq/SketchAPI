@@ -17,6 +17,7 @@ import { Page } from './Page.js'
 import { Tester } from './Tester.js'
 import { Layer } from './Layer.js'
 import { Selection } from './Selection.js'
+import { Style } from './Style.js'
 
 /**
  Gives you access to Sketch, and provides access to:
@@ -57,6 +58,7 @@ export class Application extends WrappedObject {
         this.Artboard = Artboard
         this.Page = Page
         this.Selection = Selection
+        this.Style = Style
     }
 
     /**
@@ -394,7 +396,8 @@ export class Application extends WrappedObject {
                 "Selection" : Selection.tests(),
                 "Shape" : Shape.tests(),
                 "Text" : Text.tests(),
-                "WrappedObject" : WrappedObject.tests()
+                "WrappedObject" : WrappedObject.tests(),
+                "Style" : Style.tests()
             }
         }
 

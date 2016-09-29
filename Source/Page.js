@@ -9,16 +9,16 @@ import { Group } from './Group.js'
 import { Selection } from './Selection.js'
 
 /**
-  Represents a Page in a Sketch document.
- */
+Represents a Page in a Sketch document.
+*/
 
 export class Page extends Group {
 
   /**
-    Make a new page object.
+  Make a new page object.
 
-    @param {MSPage} page The underlying model object from Sketch.
-    @param document The document that the page belongs to.
+  @param {MSPage} page The underlying model object from Sketch.
+  @param document The document that the page belongs to.
   */
 
   constructor(page, document) {
@@ -38,11 +38,11 @@ export class Page extends Group {
   }
 
   /**
-      Is this a page?
+  Is this a page?
 
-      All Layer objects respond to this method, but only pages return true.
+  All Layer objects respond to this method, but only pages return true.
 
-      @return {bool} true for instances of Group, false for any other layer type.
+  @return {bool} true for instances of Group, false for any other layer type.
   */
 
   get isPage() {
@@ -62,11 +62,11 @@ export class Page extends Group {
 
 
   /**
-      Returns a newly created artboard, which has been added to this page,
-      and sets it up using the supplied properties.
+  Returns a newly created artboard, which has been added to this page,
+  and sets it up using the supplied properties.
 
-      @param properties {dictionary} Properties to apply to the artboard.
-      @return {Artboard} the new artboard.
+  @param properties {dictionary} Properties to apply to the artboard.
+  @return {Artboard} the new artboard.
   */
 
   newArtboard(properties = {}) {
@@ -75,46 +75,46 @@ export class Page extends Group {
     return this._addWrappedLayerWithProperties(newLayer, properties, "Artboard");
   }
 
-    /**
-     Return a list of tests to run for this class.
+  /**
+  Return a list of tests to run for this class.
 
-     @return {dictionary} A dictionary containing the tests to run. Each key is the name of a test, each value is a function which takes a Tester instance.
-     */
+  @return {dictionary} A dictionary containing the tests to run. Each key is the name of a test, each value is a function which takes a Tester instance.
+  */
 
-    static tests() {
-        return {
-            "tests" : {
-              "testSelectedLayers" : function(tester) {
-                var document = tester.newTestDocument()
-                var selection = document.selectedLayers
-                tester.assert(selection.isEmpty, "should have an empty selection")
+  static tests() {
+    return {
+      "tests" : {
+        "testSelectedLayers" : function(tester) {
+          var document = tester.newTestDocument()
+          var selection = document.selectedLayers
+          tester.assert(selection.isEmpty, "should have an empty selection")
 
-                var page = document.selectedPage
-                var group = page.newGroup({ 'name': "Test"})
-                group.select()
+          var page = document.selectedPage
+          var group = page.newGroup({ 'name': "Test"})
+          group.select()
 
-                tester.assert(!selection.isEmpty, "should no longer have an empty selection")
-              },
+          tester.assert(!selection.isEmpty, "should no longer have an empty selection")
+        },
 
-              "testLayerWithID" : function(tester) {
-                var document = tester.newTestDocument()
-                var page = document.selectedPage
-                var group = page.newGroup({ 'name': "Test"})
-                var id = group.id
-                var found = document.layerWithID(id)
-                tester.assertEqual(group.sketchObject, found.sketchObject)
-              },
+        "testLayerWithID" : function(tester) {
+          var document = tester.newTestDocument()
+          var page = document.selectedPage
+          var group = page.newGroup({ 'name': "Test"})
+          var id = group.id
+          var found = document.layerWithID(id)
+          tester.assertEqual(group.sketchObject, found.sketchObject)
+        },
 
-              "testIsPage" : function(tester) {
-                var document = tester.newTestDocument()
-                var page = document.selectedPage
-                var image = page.newImage()
-                tester.assertTrue(page.isPage)
-                tester.assertFalse(image.isPage)
-              },
+        "testIsPage" : function(tester) {
+          var document = tester.newTestDocument()
+          var page = document.selectedPage
+          var image = page.newImage()
+          tester.assertTrue(page.isPage)
+          tester.assertFalse(image.isPage)
+        },
 
-            }
-        };
-    }
+      }
+    };
+  }
 
 }

@@ -95,9 +95,32 @@ export class Rectangle {
     static tests() {
         return {
             "tests" : {
-                "test something" : function(tester) {
-                    tester.assert(true);
+                "testConstructor" : function(tester) {
+                  var r = new Rectangle(1, 2, 3, 4)
+                  tester.assertEqual(r.x, 1)
+                  tester.assertEqual(r.y, 2)
+                  tester.assertEqual(r.width, 3)
+                  tester.assertEqual(r.height, 4)
                 },
+
+                "testOffset" : function(tester) {
+                  var r = new Rectangle(1, 2, 3, 4)
+                  r.offset(10, 10)
+                  tester.assertEqual(r.x, 11)
+                  tester.assertEqual(r.y, 12)
+                  tester.assertEqual(r.width, 3)
+                  tester.assertEqual(r.height, 4)
+                },
+
+                "testCGRect" : function(tester) {
+                  var r = new Rectangle(1, 2, 3, 4)
+                  var c = r.asCGRect()
+                  tester.assertEqual(c.origin.x, 1)
+                  tester.assertEqual(c.origin.y, 2)
+                  tester.assertEqual(c.size.width, 3)
+                  tester.assertEqual(c.size.height, 4)
+                },
+
             }
         };
     }
