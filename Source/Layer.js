@@ -143,7 +143,10 @@ export class Layer extends WrappedObject {
   */
 
   duplicate() {
-    return this._document.wrapObject(this._object.duplicate());
+    var object = this.sketchObject
+    var duplicate = object.copy()
+    object.parentGroup().insertLayers_afterLayer_([duplicate], object)
+    return this._document.wrapObject(duplicate);
   }
 
 
