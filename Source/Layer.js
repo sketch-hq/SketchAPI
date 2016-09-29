@@ -292,6 +292,8 @@ export class Layer extends WrappedObject {
           tester.assertEqual(page.name, "This is a page")
           var group = page.newGroup({"name" : "blah"})
           tester.assertEqual(group.name, "blah")
+          var group2 = page.newGroup()
+          tester.assertEqual(group2.name, "Group")
         },
 
         "testFrame" : function(tester) {
