@@ -40,6 +40,15 @@ export class Style extends WrappedObject {
       super(style)
     }
 
+    /**
+      Given a string description of a color, return an MSColor.
+      */
+
+    colorFromString(value) {
+      var immutable = MSImmutableColor.colorWithSVGString_(value)
+      return MSColor.alloc().initWithImmutableObject_(immutable)
+    }
+
 
     /**
       Set the borders to use for this style.
@@ -61,7 +70,7 @@ export class Style extends WrappedObject {
     set borders(value) {
       var objects = []
       for (var b in value) {
-        var color = MSColor.colorWithSVGString_(value[b])
+        var color = this.colorFromString(value[b])
         var border = MSStyleBorder.new()
         border.setColor_(color)
         border.setFillType_(BCFillTypeColor)
@@ -93,7 +102,7 @@ export class Style extends WrappedObject {
     set fills(value) {
       var objects = []
       for (var b in value) {
-        var color = MSColor.colorWithSVGString_(value[b])
+        var color = this.colorFromString(value[b])
         var fill = MSStyleFill.new()
         fill.setColor_(color)
         fill.setFillType_(BCFillTypeColor)
