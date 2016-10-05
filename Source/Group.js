@@ -183,7 +183,10 @@ export class Group extends Layer {
 
     newShape(properties = {}) {
       var frame = this._frameForLayerWithProperties(properties)
-      var newLayer = MSShapeGroup.shapeWithBezierPath_(NSBezierPath.bezierPathWithRect_(frame.asCGRect()));
+      // TODO: Eventually we want to distinguish between different shape sub-types here depending
+      //       on what is set in properties ('frame', 'path', 'radius', etc), and to construct the
+      //       appropriate layer type accordingly. For now we only make rectangles.
+      var newLayer = MSShapeGroup.shapeWithRect_(frame.asCGRect());
       properties["style"] = this._styleForLayerWithProperties(properties)
 
       return this._addWrappedLayerWithProperties(newLayer, properties, "Shape");
