@@ -204,11 +204,6 @@ export class Layer extends WrappedObject {
     return this._document.wrapObject(this._object.parentGroup())
   }
 
-  /**
-  Return a list of tests to run for this class.
-
-  @return {dictionary} A dictionary containing the tests to run. Each key is the name of a test, each value is a function which takes a Tester instance.
-  */
 
   /**
   Return the index of this layer in it's container.
@@ -222,6 +217,7 @@ export class Layer extends WrappedObject {
     return ourLayer.parentGroup().indexOfLayer_(ourLayer)
   }
 
+
   /**
   Move this layer to the front of its container.
   */
@@ -229,6 +225,7 @@ export class Layer extends WrappedObject {
   moveToFront() {
     MSLayerMovement.moveToFront([this._object])
   }
+
 
   /**
   Move this layer forward in its container.
@@ -238,6 +235,7 @@ export class Layer extends WrappedObject {
     MSLayerMovement.moveForward([this._object])
   }
 
+
   /**
   Move this layer to the back of its container.
   */
@@ -245,6 +243,7 @@ export class Layer extends WrappedObject {
   moveToBack() {
     MSLayerMovement.moveToBack([this._object])
   }
+
 
   /**
   Move this layer backwards in its container.
@@ -278,6 +277,18 @@ export class Layer extends WrappedObject {
     var frame = this.frame
     return new Rectangle(rect.x + frame.x, rect.y + frame.y, rect.width, rect.height)
   }
+
+
+  /**
+  Export this layer (and the ones below it), using the options supplied.
+
+  @param {dictionary} options Options indicating which layers to export, which sizes and formats to use, etc.
+  */
+
+  export(options) {
+    this._document._application.log("exporting " + this.name)
+  }
+
 
   /**
   Return a list of tests to run for this class.
