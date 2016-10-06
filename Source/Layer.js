@@ -279,6 +279,40 @@ export class Layer extends WrappedObject {
   }
 
 
+  // imageDataForRequest(request) {
+  //   var layer = this.sketchObject
+  //   request.immutableDocument = layer.documentData().immutableModelObject
+  //   request.immutablePage = layer.parentPage().immutableModelObject
+  //
+  //   var renderer = MSExporter.exporterForRequest_colorSpace_(request, NSColorSpace.sRGBColorSpace())
+  //   var data = [renderer data]
+  //   return data
+  // }
+  //
+  // exportRequestForOptions(options) {
+  //   var request = MSExportRequest.new()
+  //
+  //   request.saveForWeb = options["saveForWeb"]
+  //   request.compression = options["compression"] || 1.0
+  //   request.progressive = options["progressive"]
+  //   request.exportedOptions = options["compact"] ? SVGExportOptionsDefault : SVGExportOptionsCompact
+  //   request.exportedOptions |= options["include-namespaces"] ? SVGExportOptionsIncludeNamespace : 0
+  //   request.shouldTrim = options["trim"]
+  //
+  //   var background = options["background"]
+  //   if (background) {
+  //     request.backgroundColor = MSImmutableColor.colorWithSVGString_(background)
+  //   }
+  //
+  //   if (options["group-contents-only"]) {
+  //     var ancestry = MSImmutableLayerAncestry.ancestryWithMSLayer_(this.sketchObject)
+  //     request.configureForLayerAncestry_layerOptions_includedIDs(ancestry, MSExportLayersInGroup, null)
+  //   }
+  //
+  //   return request
+  // }
+
+
   /**
   Export this layer (and the ones below it), using the options supplied.
 
@@ -286,6 +320,32 @@ export class Layer extends WrappedObject {
   */
 
   export(options) {
+
+//     var request = exportRequestForOptions(options)
+//     var data = imageDataForRequest(request)
+//     if (data) {
+//       var path = options["path"] || "~/Documents"
+//       var url = NSURL.fileURLWithPath_(path)
+//     NSString* name = request.name;
+//     result = [self outputFileWithName:name engine:engine URL:&fileURL existing:&existing];
+//     if (result == ECCommandLineResultOK) {
+//       NSURL *fullURL = [fileURL URLByAppendingPathExtension:format];
+//       [data writeToURL:fullURL atomically:YES];
+//       NSString *fullName = [fullURL lastPathComponent];
+//       [engine outputFormat:@"Exported %@\n", fullName];
+//       NSSize size = request.rect.size;
+//       NSPoint origin = request.rect.origin;
+//       [engine outputInfo:@{@"format" : format, @"name": name, @"scale" : @(request.scale), @"width" : @(size.width), @"height" : @(size.height), @"x" : @(origin.x), @"y" : @(origin.y)} withKey:fullName];
+//     } else {
+//       NSError* error = [NSError errorWithDomain:BCSTErrorDomain code:BCSTExportFailed userInfo:nil];
+//       [engine outputError:error format:@"Failed to export %@", name];
+//       result = ECCommandLineResultImplementationReturnedError;
+//     }
+//   }
+//
+//   return result;
+// }
+
     this._document._application.log("exporting " + this.name)
   }
 
