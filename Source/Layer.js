@@ -296,6 +296,7 @@ export class Layer extends WrappedObject {
       "progressive" : false,
       "save-for-web" : false,
       "use-id-for-name" : false,
+      "output" : "~/Documents/Sketch Exports"
      }
 
      var merged = defaults
@@ -304,7 +305,7 @@ export class Layer extends WrappedObject {
       }
 
       var exporter = MSSelfContainedHighLevelExporter.alloc().initWithOptions(merged)
-      exporter.exportLayers_formats_([this.sketchObject], [])
+      exporter.exportLayers([this.sketchObject])
   }
 
 
