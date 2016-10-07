@@ -81,6 +81,30 @@ export class Page extends Group {
   @return {dictionary} A dictionary containing the tests to run. Each key is the name of a test, each value is a function which takes a Tester instance.
   */
 
+  /**
+  Export this page, using the options supplied.
+
+  @param {dictionary} options Options indicating which sizes and formats to use, etc.
+  */
+
+  export(options) {
+    var merged = this.exportOptionsMergedWithDefaults(options)
+    var exporter = MSSelfContainedHighLevelExporter.alloc().initWithOptions(merged)
+    exporter.exportPage(this.sketchObject)
+  }
+
+  /**
+  Export this layer (and the ones below it), using the options supplied.
+
+  @param {dictionary} options Options indicating which layers to export, which sizes and formats to use, etc.
+  */
+
+  exportArtboards(options) {
+    var merged = this.exportOptionsMergedWithDefaults(options)
+    var exporter = MSSelfContainedHighLevelExporter.alloc().initWithOptions(merged)
+    exporter.exportLayers(this.sketchObject.artboards())
+  }
+
   static tests() {
     return {
       "tests" : {

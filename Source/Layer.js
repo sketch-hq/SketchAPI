@@ -280,22 +280,20 @@ export class Layer extends WrappedObject {
 
 
   /**
-  Export this layer (and the ones below it), using the options supplied.
-
-  @param {dictionary} options Options indicating which layers to export, which sizes and formats to use, etc.
+  Returns a list of export options with any missing ones replaced by default values.
   */
 
-  export(options) {
+  exportOptionsMergedWithDefaults(options) {
     var defaults = {
       "compact" : false,
       "include-namespaces" : false,
-      "include-symbols" : false,
       "compression" : 1.0,
       "group-contents-only" : false,
       "overwriting" : false,
       "progressive" : false,
       "save-for-web" : false,
       "use-id-for-name" : false,
+      "trimmed" : false,
       "output" : "~/Documents/Sketch Exports"
      }
 
@@ -304,8 +302,19 @@ export class Layer extends WrappedObject {
         merged[key] = options[key];
       }
 
-      var exporter = MSSelfContainedHighLevelExporter.alloc().initWithOptions(merged)
-      exporter.exportLayers([this.sketchObject])
+      return merged
+  }
+
+  /**
+  Export this layer (and the ones below it), using the options supplied.
+
+  @param {dictionary} options Options indicating which layers to export, which sizes and formats to use, etc.
+  */
+
+  export(options) {
+    var merged = exportOptionsMergedWithDefaults(options)
+    var exporter = MSSelfContainedHighLevelExporter.alloc().initWithOptions(merged)
+    exporter.exportLayers([this.sketchObject])
   }
 
 
