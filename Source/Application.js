@@ -273,7 +273,7 @@ export class Application extends WrappedObject {
 
     alert(title, message) {
       var app = NSApplication.sharedApplication()
-      app.displayDialog_withTitle(title, message)
+      app.displayDialog_withTitle(message, title)
     }
 
     /**
