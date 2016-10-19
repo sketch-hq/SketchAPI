@@ -62,6 +62,7 @@ We would like to thank:
 If you want to build the library locally, you need to run this on the project's root folder (this assumes you already have [node](https://nodejs.org) installed):
 
 ```
+npm install -g gulp
 npm install
 ```
 
