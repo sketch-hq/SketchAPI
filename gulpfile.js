@@ -28,7 +28,7 @@ gulp.task('deploy', function (callback) {
 
   var scriptPath = path.join(__dirname, 'build', 'api.js');
   var headerPath = path.join(__dirname, 'header.js');
-  var deploymentPath = path.join(__dirname, '..', 'SketchPluginManager', 'Source', 'SketchAPI.js');
+  var deploymentPath = path.join(__dirname, 'Output', 'SketchAPI.js');
 
   async.parallel({
     runtime: function (callback) {

@@ -72,7 +72,7 @@ Once that's ready, you can run
 gulp
 ```
 
-to compile the library. It will be saved in `../SketchPluginManager/Source/SketchAPI.js` (you can tweak the output path in `gulpfile.js`)
+to compile the library. It will be saved in `Output/SketchAPI.js`.
 
 To have Sketch use the .js file you just built, you can run this:
 
