@@ -59,4 +59,28 @@ We would like to thank:
 
 ## Development
 
-(tbc)
+If you want to build the library locally, you need to run this on the project's root folder (this assumes you already have [node](https://nodejs.org) installed):
+
+```
+npm install
+```
+
+Once that's ready, you can run
+
+```
+gulp
+```
+
+to compile the library. It will be saved in `../SketchPluginManager/Source/SketchAPI.js` (you can tweak the output path in `gulpfile.js`)
+
+To have Sketch use the .js file you just built, you can run this:
+
+```
+defaults write com.bohemiancoding.sketch3 SketchAPILocation "/path/to/SketchAPI.js"
+```
+
+and Sketch will load the external .js file instead of the bundled version.
+
+### Testing
+
+TBD
