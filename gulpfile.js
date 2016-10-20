@@ -13,7 +13,7 @@ var spawn       = require("gulp-spawn");
 var minimist    = require('minimist');
 
 var options = minimist(process.argv.slice(2), {
-  string: 'output', default: { output: path.join(__dirname, '..', 'SketchPluginManager', 'Source', 'SketchAPI.js') }
+  string: 'output', default: { output: path.join('..', 'SketchPluginManager', 'Source', 'SketchAPI.js') }
 });
 
 gulp.task('clean', function () {
@@ -33,6 +33,10 @@ gulp.task('deploy', function (callback) {
 
   var scriptPath = path.join(__dirname, 'build', 'api.js');
   var headerPath = path.join(__dirname, 'header.js');
+  var deploymentPath = options.output;
+  if (!path.isAbsolute(deploymentPath)) {
+    deploymentPath = path.join(__dirname, deploymentPath);
+  }
 
   async.parallel({
     runtime: function (callback) {
@@ -40,7 +44,7 @@ gulp.task('deploy', function (callback) {
       var header = fs.readFileSync(headerPath, 'utf8');
       script = [header, script].join("");
 
-      fse.outputFile(options.output, script, callback);
+      fse.outputFile(deploymentPath, script, callback);
     }
   }, function (err, data) {
     callback(null);

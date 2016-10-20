@@ -75,7 +75,7 @@ gulp
 to compile the library. By default, it will be saved to `../SketchPluginManager/Source/SketchAPI.js`. You can specify your own output path by using the `--output` argument:
 
 ```
-gulp --output ~/Development/SketchAPI/Output/SketchAPI.js
+gulp --output Output/SketchAPI.js
 ```
 
 To have Sketch use the .js file you just built, you can run this:
