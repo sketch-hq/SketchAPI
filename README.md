@@ -66,13 +66,17 @@ npm install -g gulp
 npm install
 ```
 
-Once that's ready, you can run
+Once that's ready, you can run:
 
 ```
 gulp
 ```
 
-to compile the library. It will be saved in `Output/SketchAPI.js`.
+to compile the library. By default, it will be saved to `../SketchPluginManager/Source/SketchAPI.js`. You can specify your own output path by using the `--output` argument:
+
+```
+gulp --output ~/Development/SketchAPI/Output/SketchAPI.js
+```
 
 To have Sketch use the .js file you just built, you can run this:
 
