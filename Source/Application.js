@@ -67,7 +67,7 @@ export class Application extends WrappedObject {
      @return A version string.
      */
 
-    get api_version() {
+    get apiVersion() {
         return "1.1"
     }
 
@@ -113,7 +113,7 @@ export class Application extends WrappedObject {
      @return {string} Version and build number as a string, eg "3.6 (15352)".
      */
 
-    get full_version() {
+    get fullVersion() {
         return this.version + " (" + this.build + ")"
     }
 
@@ -341,7 +341,7 @@ export class Application extends WrappedObject {
             "tests" : {
                 /** @test {Application#api_version} */
                 testAPIVersion(tester) {
-                    tester.assertEqual(tester.application.api_version, "1.1")
+                    tester.assertEqual(tester.application.apiVersion, "1.1")
                 },
 
                 /** @test {Application#version} */
