@@ -143,4 +143,31 @@ and Sketch will load the external .js file instead of the bundled version.
 
 ### Testing
 
-TBD
+Each class has it's own series of tests. For example:
+
+```javascript
+"testInset" : function(tester) {
+  var r = new Rectangle(0, 0, 40, 40)
+  r.inset(5, 10)
+  tester.assertEqual(r.x, 5)
+  tester.assertEqual(r.y, 10)
+  tester.assertEqual(r.width, 30)
+  tester.assertEqual(r.height, 20)
+},
+```
+
+There are 3 assert test functions:
+```javascript
+assertEqual
+assertTrue
+assertFalse
+```
+
+To run all of the tests launch Sketch and open the custom script editor through Plugins > Custom Plugin...
+
+Then, paste the following into the editor to check for any failures:
+
+```javascript
+var sketch = context.api();
+log(sketch.runUnitTests().failures);
+```
