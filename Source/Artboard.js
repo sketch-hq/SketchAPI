@@ -5,20 +5,18 @@
 // All code (C) 2016 Bohemian Coding.
 // ********************************
 
-// ## Imports
-
-import { Layer } from './Layer.js'
+import { Group } from './Group.js'
 
 /**
     A Sketch artboard.
 */
 
-export class Artboard extends Layer {
+export class Artboard extends Group {
 
     /**
         Make a new artboard.
 
-        @param artboard The underlying MSArtboardGroup model object from Sketch.
+        @param artboard {MSArtboardGroup} The underlying MSArtboardGroup model object from Sketch.
         @param document The document that the artboard belongs to.
     */
 
@@ -38,4 +36,23 @@ export class Artboard extends Layer {
       return true;
     }
 
+    /**
+     Return a list of tests to run for this class.
+
+     @return {dictionary} A dictionary containing the tests to run. Each key is the name of a test, each value is a function which takes a Tester instance.
+     */
+
+    static tests() {
+        return {
+            "tests" : {
+                "testIsArtboard" : function(tester) {
+                  var document = tester.newTestDocument()
+                  var page = document.selectedPage
+                  var artboard = page.newArtboard({"name" : "Test"})
+                  tester.assertTrue(artboard.isArtboard)
+                  tester.assertFalse(page.isArtboard)
+                },
+            }
+        };
+    }
 }

@@ -69,6 +69,7 @@ gulp.task('bundle', function () {
   return bundler.bundle()
     .on('error',(function(arg) {
       console.log(arg.message);
+      this.emit('end');
     }))
     .pipe(source('api.js'))
     .pipe(gulp.dest('./build/'));
