@@ -72,10 +72,10 @@ Here's a very simple example script:
 ```javascript
 var sketch = context.api()
 
-log(sketch.api_version)
+log(sketch.apiVersion)
 log(sketch.version)
 log(sketch.build)
-log(sketch.full_version)
+log(sketch.fullVersion)
 
 
 var document = sketch.selectedDocument;
