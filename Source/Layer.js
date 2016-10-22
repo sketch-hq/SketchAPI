@@ -148,7 +148,7 @@ export class Layer extends WrappedObject {
     object.parentGroup().insertLayers_afterLayer_([duplicate], object)
     return this._document.wrapObject(duplicate);
   }
-
+  
 
   /**
   Remove this layer from its parent.
@@ -203,12 +203,6 @@ export class Layer extends WrappedObject {
   get container() {
     return this._document.wrapObject(this._object.parentGroup())
   }
-
-  /**
-  Return a list of tests to run for this class.
-
-  @return {dictionary} A dictionary containing the tests to run. Each key is the name of a test, each value is a function which takes a Tester instance.
-  */
 
   /**
   Return the index of this layer in it's container.
