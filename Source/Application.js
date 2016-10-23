@@ -67,7 +67,7 @@ export class Application extends WrappedObject {
      @return A version string.
      */
 
-    get api_version() {
+    get apiVersion() {
         return "1.1"
     }
 
@@ -113,7 +113,7 @@ export class Application extends WrappedObject {
      @return {string} Version and build number as a string, eg "3.6 (15352)".
      */
 
-    get full_version() {
+    get fullVersion() {
         return this.version + " (" + this.build + ")"
     }
 
@@ -280,8 +280,8 @@ export class Application extends WrappedObject {
      */
 
     alert(title, message) {
-        var app = NSApplication.sharedApplication()
-        app.displayDialog_withTitle(title, message)
+      var app = NSApplication.sharedApplication()
+      app.displayDialog_withTitle(message, title)
     }
 
     /**
@@ -341,7 +341,7 @@ export class Application extends WrappedObject {
             "tests" : {
                 /** @test {Application#api_version} */
                 testAPIVersion(tester) {
-                    tester.assertEqual(tester.application.api_version, "1.1")
+                    tester.assertEqual(tester.application.apiVersion, "1.1")
                 },
 
                 /** @test {Application#version} */
@@ -401,8 +401,16 @@ export class Application extends WrappedObject {
             }
         }
 
-        var tester = new Tester(this);
-        return tester.runUnitTests(tests);
+        return this.tester.runUnitTests(tests);
+    }
+
+    /**
+        Get a Tester object to use to run tests.
+
+        @return {Tester} A tester object to use to run tests.
+    */
+    get tester() {
+        return new Tester(this);
     }
 
 }

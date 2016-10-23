@@ -71,14 +71,14 @@ export class Tester {
       // (crude, and not guaranteed, but it will cover some basic cases)
       if (different && (typeof v1 === 'object') && (typeof v2 === 'object')) {
         if (v1.compare) {
-          different = v1.compare(v2)
+          different = !v1.compare(v2)
         } else {
           different = v1.toString() != v2.toString()
         }
       }
 
       if (different) {
-          this._testFailures.push(v1 + " != " + v2)
+          this._testFailures.push(v1.toString() + " != " + v2.toString())
       }
     }
 

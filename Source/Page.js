@@ -28,16 +28,6 @@ export class Page extends Group {
 
 
   /**
-  The layers that the user has selected.
-
-  @return {Selection} A selection object representing the layers that the user has selected.
-  */
-
-  get selectedLayers() {
-    return new Selection(this);
-  }
-
-  /**
   Is this a page?
 
   All Layer objects respond to this method, but only pages return true.

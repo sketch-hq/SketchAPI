@@ -72,10 +72,10 @@ Here's a very simple example script:
 ```javascript
 var sketch = context.api()
 
-log(sketch.api_version)
+log(sketch.apiVersion)
 log(sketch.version)
 log(sketch.build)
-log(sketch.full_version)
+log(sketch.fullVersion)
 
 
 var document = sketch.selectedDocument;
@@ -111,3 +111,63 @@ We would like to thank:
 
 - [Andrey Shakhmin](https://github.com/turbobabr), for his inspiration during the [Hamburg Hackathon](http://designtoolshackday.com), where he showed us how to use node modules inside Sketch.
 - The Sketch plugin community everywhere, for such awesome work.
+
+## Development
+
+If you want to build the library locally, you need to run this on the project's root folder (this assumes you already have [node](https://nodejs.org) installed):
+
+```
+npm install -g gulp
+npm install
+```
+
+Once that's ready, you can run:
+
+```
+gulp
+```
+
+to compile the library. By default, it will be saved to `../SketchPluginManager/Source/SketchAPI.js`. You can specify your own output path by using the `--output` argument:
+
+```
+gulp --output Output/SketchAPI.js
+```
+
+To have Sketch use the .js file you just built, you can run this:
+
+```
+defaults write com.bohemiancoding.sketch3 SketchAPILocation "/path/to/SketchAPI.js"
+```
+
+and Sketch will load the external .js file instead of the bundled version.
+
+### Testing
+
+Each class has it's own series of tests. For example:
+
+```javascript
+"testInset" : function(tester) {
+  var r = new Rectangle(0, 0, 40, 40)
+  r.inset(5, 10)
+  tester.assertEqual(r.x, 5)
+  tester.assertEqual(r.y, 10)
+  tester.assertEqual(r.width, 30)
+  tester.assertEqual(r.height, 20)
+},
+```
+
+There are 3 assert test functions:
+```javascript
+assertEqual
+assertTrue
+assertFalse
+```
+
+To run all of the tests launch Sketch and open the custom script editor through Plugins > Custom Plugin...
+
+Then, paste the following into the editor to check for any failures:
+
+```javascript
+var sketch = context.api();
+log(sketch.runUnitTests().failures);
+```
