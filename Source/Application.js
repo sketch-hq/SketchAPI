@@ -401,8 +401,16 @@ export class Application extends WrappedObject {
             }
         }
 
-        var tester = new Tester(this);
-        return tester.runUnitTests(tests);
+        return this.tester.runUnitTests(tests);
+    }
+
+    /**
+        Get a Tester object to use to run tests.
+
+        @return {Tester} A tester object to use to run tests.
+    */
+    get tester() {
+        return new Tester(this);
     }
 
 }
