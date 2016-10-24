@@ -43,7 +43,7 @@ export class Selection extends WrappedObject {
       */
     get layers() {
         var layers = [];
-        selection.iterate(function(layer) {
+        this.iterate(function(layer) {
             layers.push(layer);
         });  
         return layers;
