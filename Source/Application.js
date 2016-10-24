@@ -161,22 +161,24 @@ export class Application extends WrappedObject {
     /**
      Shows a simple input sheet which displays a message, and asks for a single string
      input.
-     @param msg The prompt message to show.
+     @param message The prompt message to show.
      @param initial The initial value of the input string.
      @return The string that the user input.
      */
 
-    getStringFromUser(msg, initial) {
+    getStringFromUser(message, initial) {
+        if (initial === undefined) {
+            initial = "";
+        }
         var panel = MSModalInputSheet.alloc().init()
-        var result = panel.runPanelWithNibName_ofType_initialString_label_("MSModalInputSheet", 0, initial, msg)
-        return result
+        return panel.runPanelWithNibName_ofType_initialString_label_("MSModalInputSheet", 0, initial, message)
     }
 
     /**
      Shows an input sheet which displays a popup with a series of options,
      from which the user is asked to choose.
 
-     @param msg The prompt message to show.
+     @param message The prompt message to show.
      @param items A list of option items.
      @param selectedItemIndex The index of the item to select initially.
      @return An array with two items: [responseCode, selection].
@@ -186,7 +188,7 @@ export class Application extends WrappedObject {
      The selection will be the integer index of the selected item.
      */
 
-    getSelectionFromUser(msg, items, selectedItemIndex) {
+    getSelectionFromUser(message, items, selectedItemIndex) {
         selectedItemIndex = selectedItemIndex || 0
 
         var accessory = NSComboBox.alloc().initWithFrame(NSMakeRect(0,0,200,25))
@@ -194,7 +196,7 @@ export class Application extends WrappedObject {
         accessory.selectItemAtIndex(selectedItemIndex)
 
         var alert = NSAlert.alloc().init()
-        alert.setMessageText(msg)
+        alert.setMessageText(message)
         alert.addButtonWithTitle('OK')
         alert.addButtonWithTitle('Cancel')
         alert.setAccessoryView(accessory)
