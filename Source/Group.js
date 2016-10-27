@@ -193,6 +193,20 @@ export class Group extends Layer {
     }
 
     /**
+    Returns a newly created slice layer, which has been added to this layer,
+    and sets it up using the supplied properties.
+
+    @param {dictionary} properties Properties to apply to the slice layer.
+    @return {Slice} the new slice layer.
+    */
+
+    newSlice(properties = {}) {
+      var frame = this._frameForLayerWithProperties(properties)
+      var newLayer = MSSliceLayer.alloc().initWithFrame_(frame.asCGRect());
+      return this._addWrappedLayerWithProperties(newLayer, properties, "Slice");
+    }
+
+    /**
     Returns a newly created text layer, which has been added to this layer,
     and sets it up using the supplied properties.
 

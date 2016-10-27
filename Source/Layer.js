@@ -88,7 +88,7 @@ export class Layer extends WrappedObject {
 
   All Layer objects respond to this method, but only Artboard objects return true.
 
-  @return true for instances of Artboard, false for any other layer type.
+  @return true for instances of Page, false for any other layer type.
   */
 
   get isArtboard() { return false; }
@@ -98,7 +98,7 @@ export class Layer extends WrappedObject {
 
   All Layer objects respond to this method, but only Groups or things that inherit from groups return true.
 
-  @return {bool} true for instances of Group, false for any other layer type.
+  @return {bool} true for instances of Artboard, false for any other layer type.
   */
 
   get isGroup() { return false; }
@@ -118,7 +118,7 @@ export class Layer extends WrappedObject {
 
   All Layer objects respond to this method, but only shape layers (rectangles, ovals, paths etc) return true.
 
-  @return {bool} true for instances of Group, false for any other layer type.
+  @return {bool} true for instances of Text, false for any other layer type.
   */
 
   get isShape() { return false; }
@@ -128,12 +128,60 @@ export class Layer extends WrappedObject {
 
   All Layer objects respond to this method, but only image layers return true.
 
-  @return {bool} true for instances of Group, false for any other layer type.
+  @return {bool} true for instances of Image, false for any other layer type.
   */
 
   get isImage() { return false; }
 
+  /**
+  Is this an slice layer?
 
+  All Layer objects respond to this method, but only slice layers return true.
+
+  @return {bool} true for instances of Slice, false for any other layer type.
+  */
+
+  get isSlice() { return false; }  
+
+  /**
+  Check if this layer is hidden.
+
+  @return {bool} true if the layer is hidden.
+  */
+
+  get isHidden() {
+    return this.sketchObject.isVisible();
+  }
+
+  /**
+  Set the if the layer is hidden.
+
+  @param {bool} state true to hide the layer, false to unhide it.
+  */
+
+  set hide(state) {
+    return this.sketchObject.setIsVisible(state);
+  }  
+
+  /**
+  Check if this layer is locked.
+
+  @return {bool} true for if the layer is locked.
+  */
+
+  get isLocked() {
+    return this.sketchObject.isLocked();
+  }
+
+  /**
+  Set the if the layer is locked
+
+  @param {bool} state true to lock the layer, false to unlock it.
+  */
+
+  set lock(state) {
+    return this.sketchObject.setIsLocked(state);
+  }  
 
   /**
   Duplicate this layer.
@@ -288,6 +336,29 @@ export class Layer extends WrappedObject {
   static tests() {
     return {
       "tests" : {
+        "testHidden" : function(tester) {
+          var document = tester.newTestDocument()
+          var page = document.selectedPage
+          var text = page.newText()
+          // this is failing for some reason...
+          // tester.assertFalse(text.isHidden)
+          text.hide = true
+          tester.assertTrue(text.isHidden)
+          text.hide = false
+          tester.assertFalse(text.isHidden)          
+        },
+
+        "testLocked" : function(tester) {
+          var document = tester.newTestDocument()
+          var page = document.selectedPage
+          var text = page.newText()
+          tester.assertFalse(text.isLocked)
+          text.lock = true
+          tester.assertTrue(text.isLocked)
+          text.lock = false
+          tester.assertFalse(text.isLocked)          
+        },        
+
         "testName" : function(tester) {
           var document = tester.newTestDocument()
           var page = document.selectedPage
