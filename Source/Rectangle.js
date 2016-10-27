@@ -23,6 +23,11 @@ export class Rectangle {
 
   constructor(x, y, width, height) {
 
+    if (x === undefined) { x = 0 }
+    if (y === undefined) { y = 0 }
+    if (width === undefined) { width = 0 }
+    if (height === undefined) { height = 0 }
+
     /**
       The x coordinate of the top-left corner of the rectangle.
       @type {number}
@@ -65,6 +70,26 @@ export class Rectangle {
     }
 
   /**
+    The max X of the rectangle.
+
+    @return {number} This rectangle x + width.
+    */
+
+    get maxX() {
+      return this.x + this.width
+    }  
+
+  /**
+    The max Y of the rectangle.
+
+    @return {number} This rectangle y + height.
+    */
+
+    get maxY() {
+      return this.y + this.height
+    }  
+
+  /**
     Return the Rectangle as a CGRect.
 
     @return {CGRect} The rectangle.
@@ -103,6 +128,14 @@ export class Rectangle {
                   tester.assertEqual(r.height, 4)
                 },
 
+                "testConstructorEmpty" : function(tester) {
+                  var r = new Rectangle()
+                  tester.assertEqual(r.x, 0)
+                  tester.assertEqual(r.y, 0)
+                  tester.assertEqual(r.width, 0)
+                  tester.assertEqual(r.height, 0)
+                },                
+
                 "testOffset" : function(tester) {
                   var r = new Rectangle(1, 2, 3, 4)
                   r.offset(10, 10)
@@ -120,6 +153,12 @@ export class Rectangle {
                   tester.assertEqual(c.size.width, 3)
                   tester.assertEqual(c.size.height, 4)
                 },
+
+                "testMaxXY" : function(tester) {
+                  var r = new Rectangle(1, 2, 3, 4)
+                  tester.assertEqual(r.maxX, 4)
+                  tester.assertEqual(r.maxY, 6)                  
+                },                
 
             }
         };
