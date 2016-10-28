@@ -203,6 +203,13 @@ export class Document extends WrappedObject {
   static tests() {
     return {
       "tests" : {
+        "testNewPage" : function(tester) {
+          var document = tester.newTestDocument();
+          var page = document.newPage("Test");
+
+          tester.assertEqual(page.name, "Test");
+        },
+
         "testPages" : function(tester) {
           var document = tester.newTestDocument()
           var pages = document.pages
@@ -222,6 +229,45 @@ export class Document extends WrappedObject {
           group.select()
 
           tester.assert(!selection.isEmpty, "should no longer have an empty selection")
+        },
+
+        "testLayerNamed" : function(tester) {
+          var artboardName = "Artboard Test";
+          var pageName = "Page Test";
+          var groupName = "Group Test";
+          var shapeName = "Shape Test";
+          var textName = "Text Test";
+          var imgName = "Image Test";
+
+          // Build the DOM.
+          var document = tester.newTestDocument();
+          var page = document.newPage(pageName);
+          var artboard = page.newArtboard({'name' : artboardName});
+          var group = page.newGroup({'name' : groupName});
+          var shape = group.newShape({'name' : shapeName});
+          var text = group.newText({'name' : textName});
+          var image = group.newImage({'name': imgName});
+
+          // Find the nodes.
+          var foundGroup = document.layerNamed(groupName);
+          var foundPage = document.layerNamed(pageName);
+          var foundArtboard = document.layerNamed(artboardName);
+          var foundShape = document.layerNamed(shapeName);
+          var foundText = document.layerNamed(textName);
+          var foundImage = document.layerNamed(imgName);
+
+          // Type resolution assumed true.
+          tester.assertTrue(foundPage.isPage);
+          tester.assertTrue(foundGroup.isGroup);
+          tester.assertTrue(foundArtboard.isArtboard);
+          tester.assertTrue(foundShape.isShape);
+          tester.assertTrue(foundText.isText);
+          tester.assertTrue(foundImage.isImage);
+
+          // Type resolution assumed false
+          tester.assertFalse(foundPage.isArtboard);
+          tester.assertFalse(foundShape.isText);
+          tester.assertFalse(foundImage.isPage);
         },
 
         "testLayerWithID" : function(tester) {

@@ -366,15 +366,17 @@ export class Application extends WrappedObject {
                 /** @test {Application#wrapObject} */
                 testWrapObject(tester) {
                   var classesToTest = [MSLayerGroup, MSPage, MSArtboardGroup, MSShapeGroup, MSBitmapLayer, MSTextLayer]
-                  var mappings = tester.application.wrapperMappings()
+                  var mappings = tester.application.wrapperMappings();
+
                   for (var index in classesToTest) {
                     var classToTest = classesToTest[index]
                     var frame = NSMakeRect(0, 0, 100, 100)
                     var object = classToTest.alloc().initWithFrame(frame)
                     var mockDocument = {}
-                    var wrapped = tester.application.wrapObject(object, mockDocument)
+                    var wrapped = tester.application.wrapObject(object, mockDocument);
+
                     tester.assertEqual(wrapped.sketchObject, object)
-                    tester.assertEqual(wrapped.document, mockDocument)
+                    tester.assertEqual(wrapped.sketchDocument, mockDocument)
                     tester.assertEqual(wrapped.class, mappings[classToTest].class)
                   }
                 }
