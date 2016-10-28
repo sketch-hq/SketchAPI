@@ -56,7 +56,7 @@ export class Group extends Layer {
   */
 
   iterate(block) {
-    var layers = this._object.layers()
+    var layers = this.sketchObject.layers()
     this._document.iterateWithNativeLayers(layers, null, block)
   }
 
@@ -71,7 +71,7 @@ export class Group extends Layer {
   */
 
   iterateWithFilter(filter, block) {
-    var layers = this._object.layers()
+    var layers = this.sketchObject.layers()
     this._document.iterateWithNativeLayers(layers, filter, block)
   }
 
@@ -84,7 +84,7 @@ export class Group extends Layer {
   */
 
   pageRectToLocalRect(rect) {
-    var origin = this._object.convertPoint_fromLayer_(NSMakePoint(rect.x, rect.y), null)
+    var origin = this.sketchObject.convertPoint_fromLayer_(NSMakePoint(rect.x, rect.y), null)
     return new Rectangle(origin.x, origin.y, rect.width, rect.height)
   }
 
@@ -94,7 +94,7 @@ export class Group extends Layer {
   */
 
   adjustToFit() {
-    this._object.resizeToFitChildrenWithOption_(0)
+    this.sketchObject.resizeToFitChildrenWithOption_(0)
   }
 
 
@@ -114,7 +114,7 @@ export class Group extends Layer {
     _addWrappedLayerWithProperties(newLayer, properties, wrapper) {
       if (newLayer) {
         // add the Sketch object to this layer
-        var layer = this._object
+        var layer = this.sketchObject
         layer.addLayers_(NSArray.arrayWithObject_(newLayer))
 
         // make a Javascript wrapper object for the new layer
@@ -125,6 +125,7 @@ export class Group extends Layer {
           wrapper[p] = properties[p]
         }
 
+        this._document.reloadInspector();
         return wrapper
       }
     }
@@ -153,21 +154,21 @@ export class Group extends Layer {
     */
 
     _styleForLayerWithProperties(properties) {
-      var style = properties.style
+      var style = properties.style;
       if (!style) {
-        style = new Style()
+        style = new Style(null,this._document);
       }
 
       var fills = properties.fills
       if (fills) {
-        delete properties["fills"]
-        style.fills = fills
+        delete properties["fills"];
+        style.fills = fills;
       }
 
       var borders = properties.borders
       if (borders) {
-        delete properties["borders"]
-        style.borders = borders
+        delete properties["borders"];
+        style.borders = borders;
       }
 
       return style

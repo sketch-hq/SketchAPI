@@ -34,7 +34,10 @@ var selection = document.selectedLayers;
 var page = document.selectedPage;
 
 var group = page.newGroup({frame: new sketch.Rectangle(0, 0, 100, 100), name:"Test"});
-var rect = group.newShape({frame: new Sketch.rectangle(10, 10, 80, 80)});
+var rect = group.newShape({frame: new sketch.Rectangle(10, 10, 80, 80)});
+
+var newPage = document.newPage("New Page");
+var artboard = newPage.newArtboard({frame: new sketch.Rectangle(0, 0, 100, 100), name:"New Artboard"});
 
 log(selection.isEmpty);
 selection.iterate(function(item) { log(item.name); } );

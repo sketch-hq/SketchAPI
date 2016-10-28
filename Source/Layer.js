@@ -25,7 +25,7 @@ export class Layer extends WrappedObject {
     super(layer)
 
     /** @type {Document} The document that this layer belongs to. */
-    this._document = document
+    this._document = document;
   }
 
   /**
@@ -35,7 +35,7 @@ export class Layer extends WrappedObject {
   */
 
   get name() {
-    return this._object.name();
+    return this.sketchObject.name();
   }
 
   /**
@@ -45,7 +45,7 @@ export class Layer extends WrappedObject {
   */
 
   set name(value) {
-    this._object.setName_(value);
+    this.sketchObject.setName_(value);
   }
 
   /**
@@ -56,7 +56,7 @@ export class Layer extends WrappedObject {
   */
 
   get frame() {
-    var f = this._object.frame();
+    var f = this.sketchObject.frame();
     return new Rectangle(f.x(), f.y(), f.width(), f.height());
   }
 
@@ -69,7 +69,7 @@ export class Layer extends WrappedObject {
   */
 
   set frame(value) {
-    var f = this._object.frame();
+    var f = this.sketchObject.frame();
     f.setRect_(NSMakeRect(value.x, value.y, value.width, value.height));
   }
 
@@ -155,9 +155,9 @@ export class Layer extends WrappedObject {
   */
 
   remove() {
-    var parent = this._object.parentGroup();
+    var parent = this.sketchObject.parentGroup();
     if (parent) {
-      parent.removeLayer_(this._object);
+      parent.removeLayer_(this.sketchObject);
     }
   }
 
@@ -169,7 +169,7 @@ export class Layer extends WrappedObject {
   */
 
   select() {
-    this._object.select_byExpandingSelection(true, false);
+    this.sketchObject.select_byExpandingSelection(true, false);
   }
 
 
@@ -179,7 +179,7 @@ export class Layer extends WrappedObject {
   */
 
   deselect() {
-    this._object.select_byExpandingSelection(false, true);
+    this.sketchObject.select_byExpandingSelection(false, true);
   }
 
 
@@ -189,7 +189,7 @@ export class Layer extends WrappedObject {
   */
 
   addToSelection() {
-    this._object.select_byExpandingSelection(true, true);
+    this.sketchObject.select_byExpandingSelection(true, true);
   }
 
 
@@ -201,7 +201,7 @@ export class Layer extends WrappedObject {
   */
 
   get container() {
-    return this._document.wrapObject(this._object.parentGroup())
+    return this._document.wrapObject(this.sketchObject.parentGroup())
   }
 
   /**
@@ -227,7 +227,7 @@ export class Layer extends WrappedObject {
   */
 
   moveToFront() {
-    MSLayerMovement.moveToFront([this._object])
+    MSLayerMovement.moveToFront([this.sketchObject])
   }
 
   /**
@@ -235,7 +235,7 @@ export class Layer extends WrappedObject {
   */
 
   moveForward() {
-    MSLayerMovement.moveForward([this._object])
+    MSLayerMovement.moveForward([this.sketchObject])
   }
 
   /**
@@ -243,7 +243,7 @@ export class Layer extends WrappedObject {
   */
 
   moveToBack() {
-    MSLayerMovement.moveToBack([this._object])
+    MSLayerMovement.moveToBack([this.sketchObject])
   }
 
   /**
@@ -251,7 +251,7 @@ export class Layer extends WrappedObject {
   */
 
   moveBackward() {
-    MSLayerMovement.moveBackward([this._object])
+    MSLayerMovement.moveBackward([this.sketchObject])
   }
 
 

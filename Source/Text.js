@@ -79,7 +79,7 @@ export class Text extends Layer {
   */
 
   get text() {
-    return this._object.stringValue()
+    return this.sketchObject.stringValue()
   }
 
 
@@ -107,7 +107,7 @@ export class Text extends Layer {
   */
 
   set font(value) {
-    this._object.font = value
+    this.sketchObject.font = value
   }
 
 
@@ -118,7 +118,7 @@ export class Text extends Layer {
   */
 
   set systemFontSize(size) {
-    this._object.font = NSFont.systemFontOfSize_(size)
+    this.sketchObject.font = NSFont.systemFontOfSize_(size)
   }
 
   /**
@@ -129,7 +129,7 @@ export class Text extends Layer {
   */
 
   get alignment() {
-    var raw = this._object.textAlignment()
+    var raw = this.sketchObject.textAlignment()
     var result = raw
     for (var key in NSTextAlignment) {
       if (NSTextAlignment[key] === raw) {
@@ -152,7 +152,7 @@ export class Text extends Layer {
 
   set alignment(mode) {
     var translated = NSTextAlignment[mode]
-    this._object.textAlignment = translated ? translated : mode
+    this.sketchObject.textAlignment = translated ? translated : mode
   }
 
 
@@ -164,9 +164,9 @@ export class Text extends Layer {
 
   set fixedWidth(value) {
     if (value) {
-      this._object.textBehaviour = BCTextBehaviourFixedWidth
+      this.sketchObject.textBehaviour = BCTextBehaviourFixedWidth
     } else {
-      this._object.textBehaviour = BCTextBehaviourFlexibleWidth
+      this.sketchObject.textBehaviour = BCTextBehaviourFlexibleWidth
     }
   }
 
@@ -176,7 +176,7 @@ export class Text extends Layer {
   */
 
   adjustToFit() {
-    this._object.adjustFrameToFit()
+    this.sketchObject.adjustFrameToFit()
   }
 
 

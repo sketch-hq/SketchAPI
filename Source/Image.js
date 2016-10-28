@@ -45,7 +45,7 @@ export class Image extends Layer {
   set imageURL(url) {
     var image = NSImage.alloc().initWithContentsOfURL_(url)
     var imageData = MSImageData.alloc().initWithImage_convertColorSpace_(image, true)
-    this._object.setImage_(imageData)
+    this.sketchObject.setImage_(imageData)
   }
 
     /**

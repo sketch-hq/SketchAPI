@@ -72,7 +72,7 @@ export class Document extends WrappedObject {
   */
 
   get selectedPage() {
-    return new Page(this._object.currentPage(), this)
+    return new Page(this.sketchObject.currentPage(), this)
   }
 
   /**
@@ -83,7 +83,7 @@ export class Document extends WrappedObject {
 
   get pages() {
     var result = [];
-    var loop = this._object.pages().objectEnumerator()
+    var loop = this.sketchObject.pages().objectEnumerator()
     var item;
     while (item = loop.nextObject()) {
       result.push(new Page(item, this));
@@ -98,9 +98,23 @@ export class Document extends WrappedObject {
   */
 
   layerWithID(layer_id) {
-    var layer = this._object.documentData().layerWithID_(layer_id);
+    var layer = this.sketchObject._documentData().layerWithID_(layer_id);
     if (layer)
     return new Layer(layer, this);
+  }
+
+  /**
+  Returns a newly created page, which has been added to this document,
+  and sets it up using the supplied properties.
+
+  @param name {string} Name of the new page.
+  @return {Page} the new page.
+  */
+
+  newPage(name) {
+    var pge = this.sketchObject.addBlankPage();
+    pge.setName(name);
+    return this._application.wrapObject(pge,this);
   }
 
   /**
@@ -115,9 +129,9 @@ export class Document extends WrappedObject {
     // That might not always be true though, which is why the JS API splits
     // them into separate functions.
 
-    var layer = this._object.documentData().layerWithID_(layer_name);
+    var layer = this.sketchObject.documentData().layerWithID_(layer_name);
     if (layer)
-    return new Layer(layer, this);
+      return this._application.wrapObject(layer, this)
   }
 
   /**
@@ -162,7 +176,22 @@ export class Document extends WrappedObject {
   */
 
   centerOnLayer(layer) {
-    this._object.currentView().centerRect_(layer._object.rect())
+    this.sketchObject.currentView().centerRect_(layer.sketchObject.rect())
+  }
+
+  wrapObject(layer) {
+    return this._application.wrapObject(layer,this);
+  }
+
+  /*
+    MSDocument owns the relationship for the ReloadInspector to begin with. Ideally
+    it would be better served via an event system that provokes the reload to occurr
+    no matter where you are in the code base.
+
+    Actively useful for when you have SharedStyles and wish to update changes etc.
+  */
+  reloadInspector() {
+    this._application.reloadInspector();
   }
 
   /**

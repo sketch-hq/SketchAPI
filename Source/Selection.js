@@ -22,7 +22,7 @@ export class Selection extends WrappedObject {
     */
 
     constructor(page) {
-      super(page._object)
+      super(page.sketchObject)
       this._page = page
     }
 
@@ -33,7 +33,7 @@ export class Selection extends WrappedObject {
       */
 
     get nativeLayers() {
-      var layers = this._object.selectedLayers().layers();
+      var layers = this.sketchObject.selectedLayers().layers();
       return layers
     }
 
@@ -48,7 +48,7 @@ export class Selection extends WrappedObject {
       return this.nativeLayers.count()
     }
 
-    
+
     /**
         Does the selection contain any layers?
 

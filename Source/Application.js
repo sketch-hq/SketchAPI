@@ -83,7 +83,7 @@ export class Application extends WrappedObject {
      */
 
     get context() {
-        return this._object
+        return this.sketchObject
     }
 
 
@@ -155,7 +155,7 @@ export class Application extends WrappedObject {
      */
 
     resourceNamed(name) {
-        return this._object.plugin.urlForResourceNamed_(name)
+        return this.sketchObject.plugin.urlForResourceNamed_(name)
     }
 
     /**
@@ -215,6 +215,16 @@ export class Application extends WrappedObject {
         print(message)
     }
 
+    /*
+      Forces the Inspector to reload within the client. It's not Document specific
+      but will likely be used within currentDocument anyway.
+    */
+    reloadInspector() {
+      // maybe a better way to hook into a force inspector to reload given
+      // when dealing with sharedStyles etc this will be needed.
+      this.context.document.reloadInspector();
+    }
+
     /**
      Assert that a given condition is true.
      If the condition is false, throws an exception.
@@ -240,7 +250,7 @@ export class Application extends WrappedObject {
      */
 
     get selectedDocument() {
-        return new Document(this._object.document, this)
+        return new Document(this.sketchObject.document, this)
     }
 
 
@@ -266,7 +276,7 @@ export class Application extends WrappedObject {
      */
 
     message(message) {
-        this._object.document.showMessage(message)
+        this.sketchObject.document.showMessage(message)
     }
 
     /**
@@ -363,8 +373,8 @@ export class Application extends WrappedObject {
                     var object = classToTest.alloc().initWithFrame(frame)
                     var mockDocument = {}
                     var wrapped = tester.application.wrapObject(object, mockDocument)
-                    tester.assertEqual(wrapped._object, object)
-                    tester.assertEqual(wrapped._document, mockDocument)
+                    tester.assertEqual(wrapped.sketchObject, object)
+                    tester.assertEqual(wrapped.document, mockDocument)
                     tester.assertEqual(wrapped.class, mappings[classToTest].class)
                   }
                 }

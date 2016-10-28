@@ -85,6 +85,9 @@ var page = document.selectedPage;
 var group = page.newGroup({frame: new sketch.Rectangle(0, 0, 100, 100), name:"Test"});
 var rect = group.newShape({frame: new sketch.Rectangle(10, 10, 80, 80)});
 
+var newPage = document.newPage("New Page");
+var artboard = newPage.newArtboard({frame: new sketch.Rectangle(0, 0, 100, 100), name:"New Artboard"});
+
 log(selection.isEmpty);
 selection.iterate(function(item) { log(item.name); } );
 
@@ -111,3 +114,34 @@ We would like to thank:
 
 - [Andrey Shakhmin](https://github.com/turbobabr), for his inspiration during the [Hamburg Hackathon](http://designtoolshackday.com), where he showed us how to use node modules inside Sketch.
 - The Sketch plugin community everywhere, for such awesome work.
+
+## Development
+
+If you want to build the library locally, you need to run this on the project's root folder (this assumes you already have [node](https://nodejs.org) installed):
+
+```
+npm install -g gulp
+npm install
+```
+
+Once that's ready, you can run:
+
+```
+gulp
+```
+
+to compile the library. By default, it will be saved to `../SketchPluginManager/Source/SketchAPI.js`. You can specify your own output path by using the `--output` argument:
+
+```
+gulp --output Output/SketchAPI.js
+```
+
+To have Sketch use the .js file you just built, you can run this:
+
+```
+defaults write ~/Library/Preferences/com.bohemiancoding.sketch3.plist SketchAPILocation "/path/to/SketchAPI.js"
+```
+
+and Sketch will load the external .js file instead of the bundled version.
+
+### Testing

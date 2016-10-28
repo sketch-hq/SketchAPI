@@ -22,8 +22,7 @@ export class Page extends Group {
   */
 
   constructor(page, document) {
-    super(page)
-    this._document = document
+    super(page, document)
   }
 
 
