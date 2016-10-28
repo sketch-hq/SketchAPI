@@ -81,7 +81,7 @@ gulp --output Output/SketchAPI.js
 To have Sketch use the .js file you just built, you can run this:
 
 ```
-defaults write com.bohemiancoding.sketch3 SketchAPILocation "/path/to/SketchAPI.js"
+defaults write ~/Library/Preferences/com.bohemiancoding.sketch3.plist SketchAPILocation "/path/to/SketchAPI.js"
 ```
 
 and Sketch will load the external .js file instead of the bundled version.
