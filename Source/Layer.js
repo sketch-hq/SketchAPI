@@ -25,7 +25,7 @@ export class Layer extends WrappedObject {
     super(layer)
 
     /** @type {Document} The document that this layer belongs to. */
-    this._document = document;
+    this.sketchDocument = document;
   }
 
   /**
@@ -146,7 +146,7 @@ export class Layer extends WrappedObject {
     var object = this.sketchObject
     var duplicate = object.copy()
     object.parentGroup().insertLayers_afterLayer_([duplicate], object)
-    return this._document.wrapObject(duplicate);
+    return this.sketchDocument.wrapObject(duplicate);
   }
 
 
@@ -201,7 +201,7 @@ export class Layer extends WrappedObject {
   */
 
   get container() {
-    return this._document.wrapObject(this.sketchObject.parentGroup())
+    return this.sketchDocument.wrapObject(this.sketchObject.parentGroup())
   }
 
   /**

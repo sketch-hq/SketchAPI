@@ -39,7 +39,7 @@ export class Style extends WrappedObject {
       super(style)
 
       /** @type {Document} The document that this layer belongs to. */
-      this._document = document;
+      this.sketchDocument = document;
     }
 
     /**
@@ -97,7 +97,7 @@ export class Style extends WrappedObject {
       } else {
         this.updateSharedStyleWithStyle(name);
       }
-      this._document.reloadInspector();
+      this.sketchDocument.reloadInspector();
     }
 
 

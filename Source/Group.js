@@ -57,7 +57,7 @@ export class Group extends Layer {
 
   iterate(block) {
     var layers = this.sketchObject.layers()
-    this._document.iterateWithNativeLayers(layers, null, block)
+    this.sketchDocument.iterateWithNativeLayers(layers, null, block)
   }
 
 
@@ -72,7 +72,7 @@ export class Group extends Layer {
 
   iterateWithFilter(filter, block) {
     var layers = this.sketchObject.layers()
-    this._document.iterateWithNativeLayers(layers, filter, block)
+    this.sketchDocument.iterateWithNativeLayers(layers, filter, block)
   }
 
 
@@ -118,14 +118,14 @@ export class Group extends Layer {
         layer.addLayers_(NSArray.arrayWithObject_(newLayer))
 
         // make a Javascript wrapper object for the new layer
-        var wrapper = this._document.wrapObject(newLayer)
+        var wrapper = this.sketchDocument.wrapObject(newLayer)
 
         // apply properties, via the wrapper
         for (var p in properties) {
           wrapper[p] = properties[p]
         }
 
-        this._document.reloadInspector();
+        this.sketchDocument.reloadInspector();
         return wrapper
       }
     }
@@ -156,7 +156,7 @@ export class Group extends Layer {
     _styleForLayerWithProperties(properties) {
       var style = properties.style;
       if (!style) {
-        style = new Style(null,this._document);
+        style = new Style(null,this.sketchDocument);
       }
 
       var fills = properties.fills
@@ -189,7 +189,7 @@ export class Group extends Layer {
       //       appropriate layer type accordingly. For now we only make rectangles.
       //var newLayer = MSShapeGroup.shapeWithRect_(frame.asCGRect());
 
-      // Reverting back to original method until Issue #22 is resolved. 
+      // Reverting back to original method until Issue #22 is resolved.
       var newLayer = MSShapeGroup.shapeWithBezierPath_(NSBezierPath.bezierPathWithRect_(frame.asCGRect()));
       properties["style"] = this._styleForLayerWithProperties(properties)
 
