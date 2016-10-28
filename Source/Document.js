@@ -6,9 +6,13 @@
 // ********************************
 
 import { WrappedObject } from './WrappedObject.js'
-import { Layer } from './Layer.js'
+import { Rectangle } from './Rectangle.js'
+import { Group } from './Group.js'
+import { Text } from './Text.js'
+import { Image } from './Image.js'
+import { Shape } from './Shape.js'
+import { Artboard } from './Artboard.js'
 import { Page } from './Page.js'
-import { Selection } from './Selection.js'
 
 /**
     A Sketch document.
@@ -65,7 +69,26 @@ export class Document extends WrappedObject {
     layerNamed(layer_id) {
       // as it happens, layerWithID also matches names
       var layer = this.object.documentData().layerWithID_(layer_id);
-      if (layer)
-        return new Layer(layer, this);
+
+      if(layer) {
+        // I think the wrapper needs to have a better key/value pair lookup table
+        // that takes Native objects and routes them to their intended descriptor
+        var wrapperToMake = this.application.factory["Layer"]
+
+        if(layer instanceof MSPage) {
+          wrapperToMake = this.application.factory["Page"]
+        } else if(layer instanceof MSArtboardGroup) {
+          wrapperToMake = this.application.factory["Artboard"]
+        } else if(layer instanceof MSLayerGroup) {
+          wrapperToMake = this.application.factory["Group"]
+        } else if(layer instanceof MSShapeGroup) {
+          wrapperToMake = this.application.factory["Shape"]
+        } else if(layer instanceof MSTextLayer) {
+          wrapperToMake = this.application.factory["Text"]
+        } else if(layer instanceof MSBitmapLayer) {
+          wrapperToMake = this.application.factory["Image"]
+        }
+        return new wrapperToMake(layer, this)
+      }
     }
 }
