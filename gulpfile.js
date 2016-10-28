@@ -10,6 +10,11 @@ var path        = require('path');
 var runSequence = require('run-sequence');
 var source      = require('vinyl-source-stream');
 var spawn       = require("gulp-spawn");
+var minimist    = require('minimist');
+
+var options = minimist(process.argv.slice(2), {
+  string: 'output', default: { output: path.join('..', 'SketchPluginManager', 'Source', 'SketchAPI.js') }
+});
 
 gulp.task('clean', function () {
   return del(['build']);
@@ -28,7 +33,10 @@ gulp.task('deploy', function (callback) {
 
   var scriptPath = path.join(__dirname, 'build', 'api.js');
   var headerPath = path.join(__dirname, 'header.js');
-  var deploymentPath = path.join(__dirname, '..', 'SketchPluginManager', 'Source', 'SketchAPI.js');
+  var deploymentPath = options.output;
+  if (!path.isAbsolute(deploymentPath)) {
+    deploymentPath = path.join(__dirname, deploymentPath);
+  }
 
   async.parallel({
     runtime: function (callback) {
@@ -61,7 +69,6 @@ gulp.task('bundle', function () {
   return bundler.bundle()
     .on('error',(function(arg) {
       console.log(arg.message);
-      this.emit('end');
     }))
     .pipe(source('api.js'))
     .pipe(gulp.dest('./build/'));

@@ -98,7 +98,7 @@ export class Document extends WrappedObject {
   */
 
   layerWithID(layer_id) {
-    var layer = this.sketchObject._documentData().layerWithID_(layer_id);
+    var layer = this.sketchObject.documentData().layerWithID_(layer_id);
     if (layer)
     return new Layer(layer, this);
   }
