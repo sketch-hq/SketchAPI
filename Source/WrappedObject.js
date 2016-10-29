@@ -10,6 +10,7 @@
   wrap Sketch classes.
 
 */
+import { Application } from './Application.js'
 
 export class WrappedObject {
 
@@ -33,6 +34,9 @@ export class WrappedObject {
         return this._object
     }
 
+    get sketchApplication() {
+      return Application;
+    }
 
     /**
       Returns the object ID of the wrapped Sketch model object.

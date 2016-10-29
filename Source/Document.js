@@ -183,17 +183,6 @@ export class Document extends WrappedObject {
     return this._application.wrapObject(layer,this);
   }
 
-  /*
-    MSDocument owns the relationship for the ReloadInspector to begin with. Ideally
-    it would be better served via an event system that provokes the reload to occurr
-    no matter where you are in the code base.
-
-    Actively useful for when you have SharedStyles and wish to update changes etc.
-  */
-  reloadInspector() {
-    this._application.reloadInspector();
-  }
-
   /**
   Return a list of tests to run for this class.
 

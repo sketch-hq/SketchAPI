@@ -125,7 +125,7 @@ export class Group extends Layer {
           wrapper[p] = properties[p]
         }
 
-        this.sketchDocument.reloadInspector();
+        this.sketchApplication.reloadInspector();
         return wrapper
       }
     }
@@ -156,17 +156,17 @@ export class Group extends Layer {
     _styleForLayerWithProperties(properties) {
       var style = properties.style;
       if (!style) {
-        style = new Style(null,this.sketchDocument);
+        style = new Style();
       }
 
       var fills = properties.fills
-      if (fills) {
+      if (fills == undefined) {
         delete properties["fills"];
         style.fills = fills;
       }
 
       var borders = properties.borders
-      if (borders) {
+      if (borders == undefined) {
         delete properties["borders"];
         style.borders = borders;
       }
@@ -192,7 +192,6 @@ export class Group extends Layer {
       // Reverting back to original method until Issue #22 is resolved.
       var newLayer = MSShapeGroup.shapeWithBezierPath_(NSBezierPath.bezierPathWithRect_(frame.asCGRect()));
       properties["style"] = this._styleForLayerWithProperties(properties)
-
       return this._addWrappedLayerWithProperties(newLayer, properties, "Shape");
     }
 

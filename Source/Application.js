@@ -18,7 +18,8 @@ import { Tester } from './Tester.js'
 import { Layer } from './Layer.js'
 import { Selection } from './Selection.js'
 import { Style } from './Style.js'
-
+import { ColorHelper } from './ColorHelper.js'
+import { Border } from './Border.js'
 /**
  Gives you access to Sketch, and provides access to:
  - the document model and the layer tree
@@ -48,17 +49,19 @@ export class Application extends WrappedObject {
         this._metadata = MSApplicationMetadata.metadata()
 
         // expose some classes
-        this.Application = Application
-        this.Rectangle = Rectangle
-        this.Document = Document
-        this.Group = Group
-        this.Text = Text
-        this.Image = Image
-        this.Shape = Shape
-        this.Artboard = Artboard
-        this.Page = Page
-        this.Selection = Selection
-        this.Style = Style
+        this.Application = Application;
+        this.Rectangle = Rectangle;
+        this.Document = Document;
+        this.Group = Group;
+        this.Text = Text;
+        this.Image = Image;
+        this.Shape = Shape;
+        this.Artboard = Artboard;
+        this.Page = Page;
+        this.Selection = Selection;
+        this.Style = Style;
+        this.ColorHelper = ColorHelper;
+        this.Border = Border;
     }
 
     /**
@@ -219,12 +222,19 @@ export class Application extends WrappedObject {
       Forces the Inspector to reload within the client. It's not Document specific
       but will likely be used within currentDocument anyway.
     */
-    reloadInspector() {
-      // maybe a better way to hook into a force inspector to reload given
-      // when dealing with sharedStyles etc this will be needed.
-      this.context.document.reloadInspector();
+
+    static reloadInspector() {
+      // Meh - there has to be a better way to get this pointer...
+      Application.currentDocument.reloadInspector();
     }
 
+    static showDialog(title, message) {
+      NSApplication.sharedApplication().displayDialog_withTitle(message, title);
+    }
+
+    static get currentDocument() {
+      return NSDocumentController.sharedDocumentController().currentDocument();
+    }
     /**
      Assert that a given condition is true.
      If the condition is false, throws an exception.
