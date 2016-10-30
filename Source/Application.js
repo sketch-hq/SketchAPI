@@ -419,7 +419,9 @@ export class Application extends WrappedObject {
                 "Shape" : Shape.tests(),
                 "Text" : Text.tests(),
                 "WrappedObject" : WrappedObject.tests(),
-                "Style" : Style.tests()
+                "Style" : Style.tests(),
+                "Border" : Border.tests(),
+                "ColorHelper" : ColorHelper.tests()
             }
         }
 

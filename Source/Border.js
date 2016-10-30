@@ -5,7 +5,7 @@ import { Shape } from './Shape.js'
 
 
 // Enum of border positions.
-const BorderPosEnum = Object.freeze({"center":0, "inside":1, "outside":2});
+const borderPosEnum = Object.freeze({"center":0, "inside":1, "outside":2});
 export class Border extends WrappedObject {
 
   /**
@@ -29,8 +29,8 @@ export class Border extends WrappedObject {
   /**
     A Enum style pattern implementation for Border Position selection.
   */
-  static get BorderPosEnum() {
-    return BorderPosEnum;
+  static get borderPosEnum() {
+    return borderPosEnum;
   }
 
   /**
@@ -50,7 +50,7 @@ export class Border extends WrappedObject {
   */
   set flatColor(value) {
     // TODO : Create internal overloader that routes color conversion based on type (hex, int etc)
-    var hexToNSColor = ColorHelper.colorFromHex(value);
+    var hexToNSColor = ColorHelper.hexToMSColor(value);
     this.sketchObject.color = hexToNSColor;
   }
 
@@ -74,7 +74,7 @@ export class Border extends WrappedObject {
   /**
     Sets the Border position
 
-    @param {BorderPosEnum} borderEnum Center/Inside/Outside position
+    @param {borderPosEnum} borderEnum Center/Inside/Outside position
   */
   set position(borderEnum) {
     this.sketchObject.position = borderEnum;
@@ -111,6 +111,74 @@ export class Border extends WrappedObject {
   set gradientType(gradientTypeEnum) {
     this.sketchObject.gradientGeneric().gradientType = gradientTypeEnum;
     this.sketchApplication.reloadInspector();
+  }
+  /**
+  Return a list of tests to run for this class.
+
+  @return {dictionary} A dictionary containing the tests to run. Each key is the name of a test, each value is a function which takes a Tester instance.
+  */
+
+  /**
+   Return a list of tests to run for this class.
+
+   @return {dictionary} A dictionary containing the tests to run. Each key is the name of a test, each value is a function which takes a Tester instance.
+   */
+
+  static tests() {
+    return {
+      "tests" : {
+          "testBorderThickness" : function(tester) {
+            var border = new Border()
+            border.thickness = 4;
+            tester.assertEqual(border.thickness, 4)
+          },
+
+          "testBorderPosition" : function(tester) {
+            var border = new Border()
+
+            border.positions = borderPosEnum["outside"];
+            tester.assertEqual(border.positions, 2)
+
+            border.positions = borderPosEnum["inside"];
+            tester.assertEqual(border.positions, 1)
+
+            border.positions = borderPosEnum["center"];
+            tester.assertEqual(border.positions, 0)
+          },
+
+          "testGradientTypes" : function(tester) {
+            var border = new Border()
+
+            border.gradientType = ColorHelper.gradientTypeEnum["flat"];
+            tester.assertEqual(border.gradientType, 0);
+
+            border.gradientType = ColorHelper.gradientTypeEnum["linear"];
+            tester.assertEqual(border.gradientType, 1);
+
+            border.gradientType = ColorHelper.gradientTypeEnum["radial"];
+            tester.assertEqual(border.gradientType, 2);
+
+            border.gradientType = ColorHelper.gradientTypeEnum["angular"];
+            tester.assertEqual(border.gradientType, 3);
+
+          },
+
+          "testBorderFlatColor" : function(tester) {
+            var border = new Border()
+            border.flatColor = "#AABBCC";
+            tester.assertEqual(border.flatColor.hexValue(), "AABBCC")
+          },
+
+          "testBorderEnabled" : function(tester) {
+            var border = new Border()
+            border.enabled = false;
+            tester.assertEqual(border.enabled, false);
+
+            border.enabled = !border.enabled;
+            tester.assertEqual(border.enabled, true);
+          },
+        }
+    };
   }
 
 
