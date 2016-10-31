@@ -5,24 +5,13 @@
 // All code (C) 2016 Bohemian Coding.
 // ********************************
 
-import { Layer } from './Layer.js';
+import { Layer } from './Layer.js'
 
 /**
   Represents an image layer.
  */
 
 export class Image extends Layer {
-
-  /**
-    Make a new image layer object.
-
-    @param {MSBitmapLayer} layer The underlying model object from Sketch.
-    @param {Document} document The document that the bitmap layer belongs to.
-  */
-
-  constructor(layer, document) {
-    super(layer, document);
-  }
 
   /**
       Is this an image layer?
@@ -32,8 +21,8 @@ export class Image extends Layer {
       @return {bool} true for instances of Image, false for any other layer type.
   */
 
-  get isImage() {
-    return true;
+  get isImage () {
+    return true
   }
 
   /**
@@ -42,16 +31,16 @@ export class Image extends Layer {
     @param {NSURL} url The location of the image to use.
   */
 
-  set imageURL(url) {
+  set imageURL (url) {
     // TODO: need to do some type safety here to ensure "http://" style strings can map to NSURL.
-    var image = NSImage.alloc().initWithContentsOfURL_(url);
-    var imageData = MSImageData.alloc().initWithImage_convertColorSpace_(image, true);
-    this.sketchObject.setImage_(imageData);
+    var image = NSImage.alloc().initWithContentsOfURL_(url)
+    var imageData = MSImageData.alloc().initWithImage_convertColorSpace_(image, true)
+    this.sketchObject.setImage_(imageData)
   }
 
-  get imageURL() {
+  get imageURL () {
     // TODO : need to map this back to the current NSURL stored.
-    return null;
+    return null
   }
     /**
      Return a list of tests to run for this class.
@@ -59,21 +48,19 @@ export class Image extends Layer {
      @return {dictionary} A dictionary containing the tests to run. Each key is the name of a test, each value is a function which takes a Tester instance.
      */
 
-    static tests() {
-        return {
-            "tests" : {
-              "testIsImage" : function(tester) {
-                var document = tester.newTestDocument();
-                var page = document.selectedPage;
-                var image = page.newImage();
-                tester.assertTrue(image.isImage);
-                tester.assertFalse(page.isImage);
-              },
+  static tests () {
+    return {
+      'tests': {
+        'testIsImage': function (tester) {
+          var document = tester.newTestDocument()
+          var page = document.selectedPage
+          var image = page.newImage()
+          tester.assertTrue(image.isImage)
+          tester.assertFalse(page.isImage)
+        }
 
-
-
-            }
-        };
+      }
     }
+  }
 
 }

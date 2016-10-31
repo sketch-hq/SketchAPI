@@ -5,21 +5,20 @@
 // All code (C) 2016 Bohemian Coding.
 // ********************************
 
-import { WrappedObject } from './WrappedObject.js';
-import { ColorHelper } from './ColorHelper.js';
+import { WrappedObject } from './WrappedObject.js'
+import { ColorHelper } from './ColorHelper.js'
 
-/// A solid fill/border.
-const BCFillTypeColor = 0;
+// / A solid fill/border.
+const BCFillTypeColor = 0
 
-/// A gradient fill/border.
-const BCFillTypeGradient = 1;
+// / A gradient fill/border.
+const BCFillTypeGradient = 1 //eslint-disable-line
 
-/// A pattern fill/border.
-const BCFillTypePattern = 4;
+// / A pattern fill/border.
+const BCFillTypePattern = 4 //eslint-disable-line
 
-/// A noise fill/border.
-const BCFillTypeNoise = 5;
-
+// / A noise fill/border.
+const BCFillTypeNoise = 5 //eslint-disable-line
 
 /**
   Represents a Sketch layer style.
@@ -33,14 +32,12 @@ export class Style extends WrappedObject {
       @param {MSStyle} style The underlying model object from Sketch.
     */
 
-    constructor(style) {
-      if (!style || style === null) {
-        style = MSDefaultStyle.defaultStyle();
-      }
-      super(style);
+  constructor (style) {
+    if (!style || style === null) {
+      style = MSDefaultStyle.defaultStyle()
     }
-
-
+    super(style)
+  }
 
     /**
       Set the borders to use for this style.
@@ -59,44 +56,44 @@ export class Style extends WrappedObject {
 
     */
 
-    set borders(value) {
-      var objects = [];
-      for (var b in value) {
-        var color = ColorHelper.hexToNativeColorFormat(value[b]);
-        var border = MSStyleBorder.new();
-        border.setColor_(color);
-        border.setFillType_(BCFillTypeColor);
-        border.enabled = true;
-        objects.push(border);
-      }
-      this.sketchObject.setBorders_(objects);
+  set borders (value) {
+    var objects = []
+    for (var b in value) {
+      var color = ColorHelper.hexToNativeColorFormat(value[b])
+      var border = MSStyleBorder.new()
+      border.setColor_(color)
+      border.setFillType_(BCFillTypeColor)
+      border.enabled = true
+      objects.push(border)
     }
+    this.sketchObject.setBorders_(objects)
+  }
 
-    get borders() {
-        return this.sketchObject.borders();
-    }
+  get borders () {
+    return this.sketchObject.borders()
+  }
 
     /**
       Returns the primary Fill for this Style.
     */
-    get fill() {
-        return this.sketchObject.fill();
-    }
+  get fill () {
+    return this.sketchObject.fill()
+  }
 
     /**
       Returns whether the primary Fill for this Style isEnabled
     */
-    get fillEnabled() {
+  get fillEnabled () {
       // Prefer to have an 'isEmpty' as performing Counts isn't a great performance moment.
-      return this.sketchObject.fill().isEnabled();
-    }
+    return this.sketchObject.fill().isEnabled()
+  }
 
     /**
       Returns the primary fill Type.
     */
-    get fillType() {
-      return this.sketchObject.fill().fillType();
-    }
+  get fillType () {
+    return this.sketchObject.fill().fillType()
+  }
 
     /**
       Set the fills to use for this style.
@@ -115,23 +112,23 @@ export class Style extends WrappedObject {
 
     */
 
-    set fills(value) {
-      var objects = [];
-      for (var b in value) {
-        var color = ColorHelper.hexToNativeColorFormat(value[b]);
-        var fill = MSStyleFill.new();
-        fill.setColor_(color);
-        fill.setFillType_(BCFillTypeColor);
-        fill.enabled = true;
+  set fills (value) {
+    var objects = []
+    for (var b in value) {
+      var color = ColorHelper.hexToNativeColorFormat(value[b])
+      var fill = MSStyleFill.new()
+      fill.setColor_(color)
+      fill.setFillType_(BCFillTypeColor)
+      fill.enabled = true
 
-        objects.push(fill);
-      }
-      this.sketchObject.setFills_(objects);
+      objects.push(fill)
     }
+    this.sketchObject.setFills_(objects)
+  }
 
-    get fills() {
-      return this.sketchObject.fills();
-    }
+  get fills () {
+    return this.sketchObject.fills()
+  }
 
     /**
      Return a list of tests to run for this class.
@@ -139,23 +136,23 @@ export class Style extends WrappedObject {
      @return {dictionary} A dictionary containing the tests to run. Each key is the name of a test, each value is a function which takes a Tester instance.
      */
 
-    static tests() {
-        return {
-            "tests" : {
-                "testBorders" : function(tester) {
-                  var style = new Style();
-                  style.borders = [ "#11223344", "#1234" ];
-                  tester.assertEqual(style.borders.count(), 2);
-                },
+  static tests () {
+    return {
+      'tests': {
+        'testBorders': function (tester) {
+          var style = new Style()
+          style.borders = [ '#11223344', '#1234' ]
+          tester.assertEqual(style.borders.count(), 2)
+        },
 
-                "testFills" : function(tester) {
-                  var style = new Style();
-                  style.fills = [ "#11223344", "#1234" ];
-                  tester.assertEqual(style.fills.count(), 2);
-                },
+        'testFills': function (tester) {
+          var style = new Style()
+          style.fills = [ '#11223344', '#1234' ]
+          tester.assertEqual(style.fills.count(), 2)
+        }
 
-            }
-        };
+      }
     }
+  }
 
 }

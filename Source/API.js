@@ -4,8 +4,7 @@
 // All code (C) 2016 Bohemian Coding.
 // ********************************
 
-import { Application } from './Application.js';
-
+import { Application } from './Application.js'
 
 /**
     Return a function that captures the context.
@@ -18,18 +17,17 @@ import { Application } from './Application.js';
     scripts which don't call it at all suffer minimal overhead.
  */
 
-function SketchAPIWithCapturedContext(context) {
-    return (function() {
-
+function SketchAPIWithCapturedContext (context) {
+  return function () {
       // The Application object effectively *is* the api -- all other
       // functions and objects can be accessed via it.
 
-      return new Application(context);
-    });
+    return new Application(context)
+  }
 }
 
 // HACK: expose the SketchAPIWithCapturedContext function globally
 // I suspect that there's a better way to do this, but I've
 // not yet figured it out.
 
-__globals.SketchAPIWithCapturedContext = SketchAPIWithCapturedContext;
+__globals.SketchAPIWithCapturedContext = SketchAPIWithCapturedContext

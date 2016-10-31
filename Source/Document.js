@@ -5,10 +5,10 @@
 // All code (C) 2016 Bohemian Coding.
 // ********************************
 
-import { WrappedObject } from './WrappedObject.js';
-import { Layer } from './Layer.js';
-import { Page } from './Page.js';
-import { Selection } from './Selection.js';
+import { WrappedObject } from './WrappedObject.js'
+import { Layer } from './Layer.js'
+import { Page } from './Page.js'
+import { Selection } from './Selection.js'
 
 /**
 A Sketch document.
@@ -28,8 +28,8 @@ export class Document extends WrappedObject {
   If you do want to create a new document, you can do so with Application#newDocument.
   */
 
-  constructor(document, application) {
-    super(document);
+  constructor (document, application) {
+    super(document)
 
     /**
     The application that this document belongs to.
@@ -37,10 +37,8 @@ export class Document extends WrappedObject {
     @type {Application}
     */
 
-    this._application = application;
+    this._application = application
   }
-
-
 
   /**
   The layers that the user has selected in the currently selected page.
@@ -48,8 +46,8 @@ export class Document extends WrappedObject {
   @return {Selection} A selection object representing the layers that the user has selected in the currently selected page.
   */
 
-  get selectedLayers() {
-    return new Selection(this.selectedPage);
+  get selectedLayers () {
+    return new Selection(this.selectedPage)
   }
 
   /**
@@ -58,8 +56,8 @@ export class Document extends WrappedObject {
   @return {Page} A page object representing the page that the user is currently viewing.
   */
 
-  get selectedPage() {
-    return new Page(this.sketchObject.currentPage(), this);
+  get selectedPage () {
+    return new Page(this.sketchObject.currentPage(), this)
   }
 
   /**
@@ -68,14 +66,14 @@ export class Document extends WrappedObject {
   @return {list} The pages.
   */
 
-  get pages() {
-    var result = [];
-    var loop = this.sketchObject.pages().objectEnumerator();
-    var item;
-    while (item = loop.nextObject()) {
-      result.push(new Page(item, this));
+  get pages () {
+    var result = []
+    var loop = this.sketchObject.pages().objectEnumerator()
+    var item
+    while (item = loop.nextObject()) { //eslint-disable-line
+      result.push(new Page(item, this))
     }
-    return result;
+    return result
   }
 
   /**
@@ -84,10 +82,9 @@ export class Document extends WrappedObject {
   @return {Layer} A layer object, if one was found.
   */
 
-  layerWithID(layer_id) {
-    var layer = this.sketchObject.documentData().layerWithID_(layer_id);
-    if (layer)
-    return new Layer(layer, this);
+  layerWithID (layerId) {
+    var layer = this.sketchObject.documentData().layerWithID_(layerId)
+    if (layer) { return new Layer(layer, this) }
   }
 
   /**
@@ -98,10 +95,10 @@ export class Document extends WrappedObject {
   @return {Page} the new page.
   */
 
-  newPage(name) {
-    var pge = this.sketchObject.addBlankPage();
-    pge.setName(name);
-    return this._application.wrapObject(pge,this);
+  newPage (name) {
+    var pge = this.sketchObject.addBlankPage()
+    pge.setName(name)
+    return this._application.wrapObject(pge, this)
   }
 
   /**
@@ -110,15 +107,14 @@ export class Document extends WrappedObject {
   @return {Layer} A layer object, if one was found.
   */
 
-  layerNamed(layer_name) {
+  layerNamed (layerName) {
     // As it happens, layerWithID also matches names, so we can implement
     // this method in the same way as layerWithID.
     // That might not always be true though, which is why the JS API splits
     // them into separate functions.
 
-    var layer = this.sketchObject.documentData().layerWithID_(layer_name);
-    if (layer)
-      return this._application.wrapObject(layer, this);
+    var layer = this.sketchObject.documentData().layerWithID_(layerName)
+    if (layer) { return this._application.wrapObject(layer, this) }
   }
 
   /**
@@ -130,29 +126,29 @@ export class Document extends WrappedObject {
       @param {function(layer: Layer)} block The function to execute for each layer.
   */
 
-  iterateWithNativeLayers(layers, filter, block) {
+  iterateWithNativeLayers (layers, filter, block) {
     // if we're given a string as a filter, treat it as a function
     // to call on the layer
-    var loopBlock = block;
+    var loopBlock = block
     if (typeof filter === 'string' || filter instanceof String) {
-        loopBlock = function(layer) {
-            if (layer[filter]) {
-                block(layer);
-            }
-        };
+      loopBlock = function (layer) {
+        if (layer[filter]) {
+          block(layer)
+        }
+      }
     } else if (filter) {
-        loopBlock = function(layer) {
-            if (filter(layer)) {
-                block(layer);
-            }
-        };
+      loopBlock = function (layer) {
+        if (filter(layer)) {
+          block(layer)
+        }
+      }
     }
 
-    var loop = layers.objectEnumerator();
-    var item;
-    while (item = loop.nextObject()) {
-      var layer = this.wrapObject(item);
-      loopBlock(layer);
+    var loop = layers.objectEnumerator()
+    var item
+    while (item = loop.nextObject()) { //eslint-disable-line
+      var layer = this.wrapObject(item)
+      loopBlock(layer)
     }
   }
 
@@ -162,12 +158,12 @@ export class Document extends WrappedObject {
   @param {Layer} layer The layer to center on.
   */
 
-  centerOnLayer(layer) {
-    this.sketchObject.currentView().centerRect_(layer.sketchObject.rect());
+  centerOnLayer (layer) {
+    this.sketchObject.currentView().centerRect_(layer.sketchObject.rect())
   }
 
-  wrapObject(layer) {
-    return this._application.wrapObject(layer,this);
+  wrapObject (layer) {
+    return this._application.wrapObject(layer, this)
   }
 
   /**
@@ -176,87 +172,92 @@ export class Document extends WrappedObject {
   @return {dictionary} A dictionary containing the tests to run. Each key is the name of a test, each value is a function which takes a Tester instance.
   */
 
-  static tests() {
+  static tests () {
     return {
-      "tests" : {
-        "testNewPage" : function(tester) {
-          var document = tester.newTestDocument();
-          var page = document.newPage("Test");
+      'tests': {
+        'testNewPage': function (tester) {
+          var document = tester.newTestDocument()
+          var page = document.newPage('Test')
 
-          tester.assertEqual(page.name, "Test");
+          tester.assertEqual(page.name, 'Test')
         },
 
-        "testPages" : function(tester) {
-          var document = tester.newTestDocument();
-          var pages = document.pages;
+        'testPages': function (tester) {
+          var document = tester.newTestDocument()
+          var pages = document.pages
 
-          tester.assertEqual(pages.length, 1);
-          tester.assertEqual(pages[0].sketchObject, document.selectedPage.sketchObject);
-
+          tester.assertEqual(pages.length, 1)
+          tester.assertEqual(pages[0].sketchObject, document.selectedPage.sketchObject)
         },
 
-        "testSelectedLayers" : function(tester) {
-          var document = tester.newTestDocument();
-          var selection = document.selectedLayers;
-          tester.assert(selection.isEmpty, "should have an empty selection");
+        'testSelectedLayers': function (tester) {
+          var document = tester.newTestDocument()
+          var selection = document.selectedLayers
+          tester.assert(selection.isEmpty, 'should have an empty selection')
 
-          var page = document.selectedPage;
-          var group = page.newGroup({ 'name': "Test"});
-          group.select();
+          var page = document.selectedPage
+          var group = page.newGroup({'name': 'Test'})
+          group.select()
 
-          tester.assert(!selection.isEmpty, "should no longer have an empty selection");
+          tester.assert(!selection.isEmpty, 'should no longer have an empty selection')
         },
 
-        "testLayerNamed" : function(tester) {
-          var artboardName = "Artboard Test";
-          var pageName = "Page Test";
-          var groupName = "Group Test";
-          var shapeName = "Shape Test";
-          var textName = "Text Test";
-          var imgName = "Image Test";
+        'testLayerNamed': function (tester) {
+          var artboardName = 'Artboard Test'
+          var pageName = 'Page Test'
+          var groupName = 'Group Test'
+          var shapeName = 'Shape Test'
+          var textName = 'Text Test'
+          var imgName = 'Image Test'
 
           // Build the DOM.
-          var document = tester.newTestDocument();
-          var page = document.newPage(pageName);
-          var artboard = page.newArtboard({'name' : artboardName});
-          var group = page.newGroup({'name' : groupName});
-          var shape = group.newShape({'name' : shapeName});
-          var text = group.newText({'name' : textName});
-          var image = group.newImage({'name': imgName});
+          var document = tester.newTestDocument()
+          var page = document.newPage(pageName)
+          var artboard = page.newArtboard({'name': artboardName})
+          var group = page.newGroup({'name': groupName})
+          var shape = group.newShape({'name': shapeName})
+          var text = group.newText({'name': textName})
+          var image = group.newImage({'name': imgName})
 
           // Find the nodes.
-          var foundGroup = document.layerNamed(groupName);
-          var foundPage = document.layerNamed(pageName);
-          var foundArtboard = document.layerNamed(artboardName);
-          var foundShape = document.layerNamed(shapeName);
-          var foundText = document.layerNamed(textName);
-          var foundImage = document.layerNamed(imgName);
+          var foundGroup = document.layerNamed(groupName)
+          var foundPage = document.layerNamed(pageName)
+          var foundArtboard = document.layerNamed(artboardName)
+          var foundShape = document.layerNamed(shapeName)
+          var foundText = document.layerNamed(textName)
+          var foundImage = document.layerNamed(imgName)
+
+          tester.assertTrue(artboard.isArtboard)
+          tester.assertTrue(group.isGroup)
+          tester.assertTrue(shape.isShape)
+          tester.assertTrue(text.isText)
+          tester.assertTrue(image.isImage)
 
           // Type resolution assumed true.
-          tester.assertTrue(foundPage.isPage);
-          tester.assertTrue(foundGroup.isGroup);
-          tester.assertTrue(foundArtboard.isArtboard);
-          tester.assertTrue(foundShape.isShape);
-          tester.assertTrue(foundText.isText);
-          tester.assertTrue(foundImage.isImage);
+          tester.assertTrue(foundPage.isPage)
+          tester.assertTrue(foundGroup.isGroup)
+          tester.assertTrue(foundArtboard.isArtboard)
+          tester.assertTrue(foundShape.isShape)
+          tester.assertTrue(foundText.isText)
+          tester.assertTrue(foundImage.isImage)
 
           // Type resolution assumed false
-          tester.assertFalse(foundPage.isArtboard);
-          tester.assertFalse(foundShape.isText);
-          tester.assertFalse(foundImage.isPage);
+          tester.assertFalse(foundPage.isArtboard)
+          tester.assertFalse(foundShape.isText)
+          tester.assertFalse(foundImage.isPage)
         },
 
-        "testLayerWithID" : function(tester) {
-          var document = tester.newTestDocument();
-          var page = document.selectedPage;
-          var group = page.newGroup({ 'name': "Test"});
-          var id = group.id;
-          var found = document.layerWithID(id);
-          tester.assertEqual(group.sketchObject, found.sketchObject);
+        'testLayerWithID': function (tester) {
+          var document = tester.newTestDocument()
+          var page = document.selectedPage
+          var group = page.newGroup({'name': 'Test'})
+          var id = group.id
+          var found = document.layerWithID(id)
+          tester.assertEqual(group.sketchObject, found.sketchObject)
         }
 
       }
-    };
+    }
   }
 
 }
