@@ -312,7 +312,7 @@ export class Layer extends WrappedObject {
   */
 
   export(options) {
-    var merged = exportOptionsMergedWithDefaults(options)
+    var merged = this.exportOptionsMergedWithDefaults(options)
     var exporter = MSSelfContainedHighLevelExporter.alloc().initWithOptions(merged)
     exporter.exportLayers([this.sketchObject])
   }
