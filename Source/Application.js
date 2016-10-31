@@ -20,6 +20,9 @@ import { Selection } from './Selection.js'
 import { Style } from './Style.js'
 import { ColorHelper } from './ColorHelper.js'
 import { Border } from './Border.js'
+import { Fill } from './Fill.js'
+import { Utility } from './Utility.js'
+
 /**
  Gives you access to Sketch, and provides access to:
  - the document model and the layer tree
@@ -62,6 +65,8 @@ export class Application extends WrappedObject {
         this.Style = Style;
         this.ColorHelper = ColorHelper;
         this.Border = Border;
+        this.Fill = Fill;
+        this.Utility = Utility;
     }
 
     /**
@@ -421,6 +426,7 @@ export class Application extends WrappedObject {
                 "WrappedObject" : WrappedObject.tests(),
                 "Style" : Style.tests(),
                 "Border" : Border.tests(),
+                "Fill" : Fill.tests(),
                 "ColorHelper" : ColorHelper.tests()
             }
         }

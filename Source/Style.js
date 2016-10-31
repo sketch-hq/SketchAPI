@@ -62,11 +62,10 @@ export class Style extends WrappedObject {
       var objects = []
       for (var b in value) {
         var color = ColorHelper.hexToNativeColorFormat(value[b])
-        var border = MSStyleBorder.new()
-        border.setColor_(color)
-        border.setFillType_(BCFillTypeColor)
-        border.enabled = true
-
+        var border = MSStyleBorder.new();
+        border.setColor_(color);
+        border.setFillType_(BCFillTypeColor);
+        border.enabled = true;
         objects.push(border)
       }
       this.sketchObject.setBorders_(objects)
