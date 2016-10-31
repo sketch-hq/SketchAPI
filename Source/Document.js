@@ -5,10 +5,10 @@
 // All code (C) 2016 Bohemian Coding.
 // ********************************
 
-import { WrappedObject } from './WrappedObject.js'
-import { Layer } from './Layer.js'
-import { Page } from './Page.js'
-import { Selection } from './Selection.js'
+import { WrappedObject } from './WrappedObject.js';
+import { Layer } from './Layer.js';
+import { Page } from './Page.js';
+import { Selection } from './Selection.js';
 
 /**
 A Sketch document.
@@ -29,7 +29,7 @@ export class Document extends WrappedObject {
   */
 
   constructor(document, application) {
-    super(document)
+    super(document);
 
     /**
     The application that this document belongs to.
@@ -37,22 +37,9 @@ export class Document extends WrappedObject {
     @type {Application}
     */
 
-    this._application = application
+    this._application = application;
   }
 
-  /**
-  Return a wrapped version of a Sketch object.
-  We don't know about *all* Sketch object types, but
-  for some we will return a special subclass.
-  The fallback position is just to return an instance of WrappedObject.
-
-  @param {object} sketchObject The underlying sketch object that we're wrapping.
-  @return {WrappedObject} A javascript object (subclass of WrappedObject), which represents the Sketch object we were given.
-  */
-
-  wrapObject(sketchObject) {
-    return this._application.wrapObject(sketchObject, this)
-  }
 
 
   /**
@@ -72,7 +59,7 @@ export class Document extends WrappedObject {
   */
 
   get selectedPage() {
-    return new Page(this.sketchObject.currentPage(), this)
+    return new Page(this.sketchObject.currentPage(), this);
   }
 
   /**
@@ -83,7 +70,7 @@ export class Document extends WrappedObject {
 
   get pages() {
     var result = [];
-    var loop = this.sketchObject.pages().objectEnumerator()
+    var loop = this.sketchObject.pages().objectEnumerator();
     var item;
     while (item = loop.nextObject()) {
       result.push(new Page(item, this));
@@ -131,7 +118,7 @@ export class Document extends WrappedObject {
 
     var layer = this.sketchObject.documentData().layerWithID_(layer_name);
     if (layer)
-      return this._application.wrapObject(layer, this)
+      return this._application.wrapObject(layer, this);
   }
 
   /**
@@ -146,25 +133,25 @@ export class Document extends WrappedObject {
   iterateWithNativeLayers(layers, filter, block) {
     // if we're given a string as a filter, treat it as a function
     // to call on the layer
-    var loopBlock = block
+    var loopBlock = block;
     if (typeof filter === 'string' || filter instanceof String) {
         loopBlock = function(layer) {
             if (layer[filter]) {
-                block(layer)
+                block(layer);
             }
-        }
+        };
     } else if (filter) {
         loopBlock = function(layer) {
             if (filter(layer)) {
-                block(layer)
+                block(layer);
             }
-        }
+        };
     }
 
     var loop = layers.objectEnumerator();
-    var item
+    var item;
     while (item = loop.nextObject()) {
-      var layer = this.wrapObject(item)
+      var layer = this.wrapObject(item);
       loopBlock(layer);
     }
   }
@@ -176,7 +163,7 @@ export class Document extends WrappedObject {
   */
 
   centerOnLayer(layer) {
-    this.sketchObject.currentView().centerRect_(layer.sketchObject.rect())
+    this.sketchObject.currentView().centerRect_(layer.sketchObject.rect());
   }
 
   wrapObject(layer) {
@@ -200,24 +187,24 @@ export class Document extends WrappedObject {
         },
 
         "testPages" : function(tester) {
-          var document = tester.newTestDocument()
-          var pages = document.pages
+          var document = tester.newTestDocument();
+          var pages = document.pages;
 
-          tester.assertEqual(pages.length, 1)
-          tester.assertEqual(pages[0].sketchObject, document.selectedPage.sketchObject)
+          tester.assertEqual(pages.length, 1);
+          tester.assertEqual(pages[0].sketchObject, document.selectedPage.sketchObject);
 
         },
 
         "testSelectedLayers" : function(tester) {
-          var document = tester.newTestDocument()
-          var selection = document.selectedLayers
-          tester.assert(selection.isEmpty, "should have an empty selection")
+          var document = tester.newTestDocument();
+          var selection = document.selectedLayers;
+          tester.assert(selection.isEmpty, "should have an empty selection");
 
-          var page = document.selectedPage
-          var group = page.newGroup({ 'name': "Test"})
-          group.select()
+          var page = document.selectedPage;
+          var group = page.newGroup({ 'name': "Test"});
+          group.select();
 
-          tester.assert(!selection.isEmpty, "should no longer have an empty selection")
+          tester.assert(!selection.isEmpty, "should no longer have an empty selection");
         },
 
         "testLayerNamed" : function(tester) {
@@ -260,12 +247,12 @@ export class Document extends WrappedObject {
         },
 
         "testLayerWithID" : function(tester) {
-          var document = tester.newTestDocument()
-          var page = document.selectedPage
-          var group = page.newGroup({ 'name': "Test"})
-          var id = group.id
-          var found = document.layerWithID(id)
-          tester.assertEqual(group.sketchObject, found.sketchObject)
+          var document = tester.newTestDocument();
+          var page = document.selectedPage;
+          var group = page.newGroup({ 'name': "Test"});
+          var id = group.id;
+          var found = document.layerWithID(id);
+          tester.assertEqual(group.sketchObject, found.sketchObject);
         }
 
       }

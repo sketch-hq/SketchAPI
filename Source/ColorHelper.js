@@ -5,7 +5,7 @@
 // All code (C) 2016 Bohemian Coding.
 // ********************************
 
-import { WrappedObject} from './WrappedObject.js'
+import { WrappedObject} from './WrappedObject.js';
 
 export class ColorHelper extends WrappedObject {
 
@@ -85,7 +85,7 @@ export class ColorHelper extends WrappedObject {
     static hexToNativeColorFormat(hexColor) {
         var rgb = ColorHelper.hexToRgbPercent(hexColor);
         var immutable = MSImmutableColor.colorWithRed_green_blue_alpha(rgb.r, rgb.g, rgb.b, rgb.a);
-        return MSColor.alloc().initWithImmutableObject_(immutable)
+        return MSColor.alloc().initWithImmutableObject_(immutable);
     }
 
     /**
@@ -144,7 +144,7 @@ export class ColorHelper extends WrappedObject {
     static hslToRgb(h, s, l) {
         var r, g, b;
 
-        if (s == 0) {
+        if (s === 0) {
             r = g = b = l; // achromatic
         } else {
             var q = l < 0.5 ? l * (1 + s) : l + s - l * s;
@@ -207,7 +207,7 @@ export class ColorHelper extends WrappedObject {
             min = Math.min(r, g, b);
         var h, s, v = max;
         var d = max - min;
-        s = max == 0 ? 0 : d / max;
+        s = max === 0 ? 0 : d / max;
 
         if (max == min) {
             h = 0; // achromatic
@@ -272,7 +272,7 @@ export class ColorHelper extends WrappedObject {
             l: l
         };
     }
-    
+
     static get NamedColor() {
         return Object.freeze({
             liceblue: "#f0f8ff",

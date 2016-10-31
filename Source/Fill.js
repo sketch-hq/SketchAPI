@@ -5,10 +5,10 @@
 // All code (C) 2016 Bohemian Coding.
 // ********************************
 
-import { WrappedObject } from './WrappedObject.js'
-import { Style } from './Style.js'
-import { ColorHelper } from './ColorHelper.js'
-import { Border } from './Border.js'
+import { WrappedObject } from './WrappedObject.js';
+import { Style } from './Style.js';
+import { ColorHelper } from './ColorHelper.js';
+import { Border } from './Border.js';
 /**
  Gives you access to Sketch, and provides access to:
  - the document model and the layer tree
@@ -23,7 +23,7 @@ export class Fill extends WrappedObject {
     */
     constructor(style) {
 
-        if (!style || style == null) {
+        if (!style || style === null) {
             style = MSDefaultStyle.defaultStyle().fill();
 
             // Automatically unpacks the current fill style and enables a pointer
@@ -32,7 +32,7 @@ export class Fill extends WrappedObject {
         } else if (style.isShape) {
             style = style.sketchObject.style().fills().firstObject(); // Not without firstObject it will pick first Enabled;
         }
-        super(style)
+        super(style);
     }
 
     get opacity() {
@@ -49,7 +49,7 @@ export class Fill extends WrappedObject {
         return {
             "tests": {
                 "testFillOpacity": function(tester) {
-                    var fill = new Fill()
+                    var fill = new Fill();
                     tester.assertEqual(fill.opacity, 1);
                 },
 

@@ -5,9 +5,9 @@
 // All code (C) 2016 Bohemian Coding.
 // ********************************
 
-import { Layer } from './Layer.js'
-import { Rectangle } from './Rectangle.js'
-import { Style } from './Style.js'
+import { Layer } from './Layer.js';
+import { Rectangle } from './Rectangle.js';
+import { Style } from './Style.js';
 
 
 /**
@@ -25,7 +25,7 @@ export class Group extends Layer {
   */
 
   constructor(group, document) {
-    super(group, document)
+    super(group, document);
   }
 
 
@@ -56,8 +56,8 @@ export class Group extends Layer {
   */
 
   iterate(block) {
-    var layers = this.sketchObject.layers()
-    this.sketchDocument.iterateWithNativeLayers(layers, null, block)
+    var layers = this.sketchObject.layers();
+    this.sketchDocument.iterateWithNativeLayers(layers, null, block);
   }
 
 
@@ -71,8 +71,8 @@ export class Group extends Layer {
   */
 
   iterateWithFilter(filter, block) {
-    var layers = this.sketchObject.layers()
-    this.sketchDocument.iterateWithNativeLayers(layers, filter, block)
+    var layers = this.sketchObject.layers();
+    this.sketchDocument.iterateWithNativeLayers(layers, filter, block);
   }
 
 
@@ -84,8 +84,8 @@ export class Group extends Layer {
   */
 
   pageRectToLocalRect(rect) {
-    var origin = this.sketchObject.convertPoint_fromLayer_(NSMakePoint(rect.x, rect.y), null)
-    return new Rectangle(origin.x, origin.y, rect.width, rect.height)
+    var origin = this.sketchObject.convertPoint_fromLayer_(NSMakePoint(rect.x, rect.y), null);
+    return new Rectangle(origin.x, origin.y, rect.width, rect.height);
   }
 
 
@@ -94,7 +94,7 @@ export class Group extends Layer {
   */
 
   adjustToFit() {
-    this.sketchObject.resizeToFitChildrenWithOption_(0)
+    this.sketchObject.resizeToFitChildrenWithOption_(0);
   }
 
 
@@ -114,19 +114,19 @@ export class Group extends Layer {
     _addWrappedLayerWithProperties(newLayer, properties, wrapper) {
       if (newLayer) {
         // add the Sketch object to this layer
-        var layer = this.sketchObject
-        layer.addLayers_(NSArray.arrayWithObject_(newLayer))
+        var layer = this.sketchObject;
+        layer.addLayers_(NSArray.arrayWithObject_(newLayer));
 
         // make a Javascript wrapper object for the new layer
-        var wrapper = this.sketchDocument.wrapObject(newLayer)
+        wrapper = this.sketchDocument.wrapObject(newLayer);
 
         // apply properties, via the wrapper
         for (var p in properties) {
-          wrapper[p] = properties[p]
+          wrapper[p] = properties[p];
         }
 
         this.sketchApplication.reloadInspector();
-        return wrapper
+        return wrapper;
       }
     }
 
@@ -139,13 +139,13 @@ export class Group extends Layer {
     */
 
     _frameForLayerWithProperties(properties) {
-      var frame = properties.frame
+      var frame = properties.frame;
       if (frame) {
-        delete properties["frame"]
+        delete properties.frame;
       } else {
-        frame = new Rectangle(0, 0, 100, 100)
+        frame = new Rectangle(0, 0, 100, 100);
       }
-      return frame
+      return frame;
     }
 
     /**
@@ -159,19 +159,19 @@ export class Group extends Layer {
         style = new Style();
       }
 
-      var fills = properties.fills
-      if (fills == undefined) {
-        delete properties["fills"];
+      var fills = properties.fills;
+      if (fills === undefined) {
+        delete properties.fills;
         style.fills = fills;
       }
 
-      var borders = properties.borders
-      if (borders == undefined) {
-        delete properties["borders"];
+      var borders = properties.borders;
+      if (borders === undefined) {
+        delete properties.borders;
         style.borders = borders;
       }
 
-      return style
+      return style;
     }
 
     /**
@@ -183,7 +183,7 @@ export class Group extends Layer {
     */
 
     newShape(properties = {}) {
-      var frame = this._frameForLayerWithProperties(properties)
+      var frame = this._frameForLayerWithProperties(properties);
       // TODO: Eventually we want to distinguish between different shape sub-types here depending
       //       on what is set in properties ('frame', 'path', 'radius', etc), and to construct the
       //       appropriate layer type accordingly. For now we only make rectangles.
@@ -191,7 +191,7 @@ export class Group extends Layer {
 
       // Reverting back to original method until Issue #22 is resolved.
       var newLayer = MSShapeGroup.shapeWithBezierPath_(NSBezierPath.bezierPathWithRect_(frame.asCGRect()));
-      properties["style"] = this._styleForLayerWithProperties(properties)
+      properties.style = this._styleForLayerWithProperties(properties);
       return this._addWrappedLayerWithProperties(newLayer, properties, "Shape");
     }
 
@@ -204,7 +204,7 @@ export class Group extends Layer {
     */
 
     newText(properties = {}) {
-      var frame = this._frameForLayerWithProperties(properties)
+      var frame = this._frameForLayerWithProperties(properties);
       var newLayer = MSTextLayer.alloc().initWithFrame_(frame.asCGRect());
       newLayer.adjustFrameToFit();
       return this._addWrappedLayerWithProperties(newLayer, properties, "Text");
@@ -219,7 +219,7 @@ export class Group extends Layer {
     */
 
     newGroup(properties = {}) {
-      var frame = this._frameForLayerWithProperties(properties)
+      var frame = this._frameForLayerWithProperties(properties);
       var newLayer = MSLayerGroup.alloc().initWithFrame_(frame.asCGRect());
       return this._addWrappedLayerWithProperties(newLayer, properties, "Group");
     }
@@ -234,7 +234,7 @@ export class Group extends Layer {
     */
 
     newImage(properties = {}) {
-      var frame = this._frameForLayerWithProperties(properties)
+      var frame = this._frameForLayerWithProperties(properties);
       var newLayer = MSBitmapLayer.alloc().initWithFrame_(frame.asCGRect());
       return this._addWrappedLayerWithProperties(newLayer, properties, "Image");
     }
@@ -251,65 +251,64 @@ export class Group extends Layer {
     return {
       "tests" : {
         "testIterate" : function(tester) {
-          var document = tester.newTestDocument()
-          var page = document.selectedPage
-          var group = page.newGroup()
-          var text = page.newText()
+          var document = tester.newTestDocument();
+          var page = document.selectedPage;
+          var group = page.newGroup();
+          var text = page.newText();
 
-          var iterations = 0
-          var groups = 0
+          var iterations = 0;
+          var groups = 0;
           page.iterate(function(layer) {
-            iterations++
-            if (layer.sketchObject == group.sketchObject) groups++
-          })
-          tester.assertEqual(iterations, 2)
-          tester.assertEqual(groups, 1)
+            iterations++;
+            if (layer.sketchObject == group.sketchObject) groups++;
+          });
+          tester.assertEqual(iterations, 2);
+          tester.assertEqual(groups, 1);
         },
 
         "testIterateWithFilter" : function(tester) {
-          var document = tester.newTestDocument()
-          var page = document.selectedPage
-          var group = page.newGroup()
-          var text = page.newText()
+          var document = tester.newTestDocument();
+          var page = document.selectedPage;
+          var group = page.newGroup();
+          var text = page.newText();
 
-          var iterations = 0
-          var groups = 0
+          var iterations = 0;
+          var groups = 0;
           page.iterateWithFilter("isGroup", function(layer) {
-            iterations++
-            if (layer.sketchObject == group.sketchObject) groups++
-          })
-          tester.assertEqual(iterations, 1)
-          tester.assertEqual(groups, 1)
+            iterations++;
+            if (layer.sketchObject == group.sketchObject) groups++;
+          });
+          tester.assertEqual(iterations, 1);
+          tester.assertEqual(groups, 1);
         },
 
         "testPageToLocalRect" : function(tester) {
-          var document = tester.newTestDocument()
-          var page = document.selectedPage
-          var group = page.newGroup({"frame" : new Rectangle(100, 100, 100, 100)})
-          var local = group.pageRectToLocalRect(new Rectangle(125, 75, 50, 200))
-          tester.assertEqual(local, new Rectangle(25, -25, 50, 200))
+          var document = tester.newTestDocument();
+          var page = document.selectedPage;
+          var group = page.newGroup({"frame" : new Rectangle(100, 100, 100, 100)});
+          var local = group.pageRectToLocalRect(new Rectangle(125, 75, 50, 200));
+          tester.assertEqual(local, new Rectangle(25, -25, 50, 200));
         },
 
         "testAdjustToFit" : function(tester) {
-          var document = tester.newTestDocument()
-          var page = document.selectedPage
-          var group = page.newGroup({"frame" : new Rectangle(100, 100, 100, 100)})
-          var text = group.newShape({"frame" : new Rectangle(50, 50, 50, 50)})
-          group.adjustToFit()
-          var frame = group.frame
-          tester.assertEqual(frame, new Rectangle(150, 150, 50, 50))
+          var document = tester.newTestDocument();
+          var page = document.selectedPage;
+          var group = page.newGroup({"frame" : new Rectangle(100, 100, 100, 100)});
+          var text = group.newShape({"frame" : new Rectangle(50, 50, 50, 50)});
+          group.adjustToFit();
+          var frame = group.frame;
+          tester.assertEqual(frame, new Rectangle(150, 150, 50, 50));
         },
 
         "testIsGroup" : function(tester) {
-          var document = tester.newTestDocument()
-          var page = document.selectedPage
-          var group = page.newGroup()
-          var text = page.newText()
-          var artboard = page.newArtboard()
-          tester.assertTrue(group.isGroup)
-          tester.assertFalse(text.isGroup)
-          tester.assertTrue(page.isGroup)       // pages are also groups
-          tester.assertTrue(artboard.isGroup)   // artboards are also groups
+          var document = tester.newTestDocument();
+          var page = document.selectedPage;
+          var group = page.newGroup();
+          var text = page.newText();
+          var artboard = page.newArtboard();
+          tester.assertTrue(group.isGroup);
+          tester.assertTrue(page.isGroup);       // pages are also groups
+          tester.assertTrue(artboard.isGroup);   // artboards are also groups
         },
 
       }

@@ -5,8 +5,8 @@
 // All code (C) 2016 Bohemian Coding.
 // ********************************
 
-import { WrappedObject } from './WrappedObject.js'
-import { Rectangle } from './Rectangle.js'
+import { WrappedObject } from './WrappedObject.js';
+import { Rectangle } from './Rectangle.js';
 
 /**
 Represents a Sketch layer.
@@ -22,7 +22,7 @@ export class Layer extends WrappedObject {
   */
 
   constructor(layer, document) {
-    super(layer)
+    super(layer);
 
     /** @type {Document} The document that this layer belongs to. */
     this.sketchDocument = document;
@@ -143,9 +143,9 @@ export class Layer extends WrappedObject {
   */
 
   duplicate() {
-    var object = this.sketchObject
-    var duplicate = object.copy()
-    object.parentGroup().insertLayers_afterLayer_([duplicate], object)
+    var object = this.sketchObject;
+    var duplicate = object.copy();
+    object.parentGroup().insertLayers_afterLayer_([duplicate], object);
     return this.sketchDocument.wrapObject(duplicate);
   }
 
@@ -201,7 +201,7 @@ export class Layer extends WrappedObject {
   */
 
   get container() {
-    return this.sketchDocument.wrapObject(this.sketchObject.parentGroup())
+    return this.sketchDocument.wrapObject(this.sketchObject.parentGroup());
   }
 
   /**
@@ -218,8 +218,8 @@ export class Layer extends WrappedObject {
   */
 
   get index() {
-    var ourLayer = this.sketchObject
-    return ourLayer.parentGroup().indexOfLayer_(ourLayer)
+    var ourLayer = this.sketchObject;
+    return ourLayer.parentGroup().indexOfLayer_(ourLayer);
   }
 
   /**
@@ -227,7 +227,7 @@ export class Layer extends WrappedObject {
   */
 
   moveToFront() {
-    MSLayerMovement.moveToFront([this.sketchObject])
+    MSLayerMovement.moveToFront([this.sketchObject]);
   }
 
   /**
@@ -235,7 +235,7 @@ export class Layer extends WrappedObject {
   */
 
   moveForward() {
-    MSLayerMovement.moveForward([this.sketchObject])
+    MSLayerMovement.moveForward([this.sketchObject]);
   }
 
   /**
@@ -243,7 +243,7 @@ export class Layer extends WrappedObject {
   */
 
   moveToBack() {
-    MSLayerMovement.moveToBack([this.sketchObject])
+    MSLayerMovement.moveToBack([this.sketchObject]);
   }
 
   /**
@@ -251,7 +251,7 @@ export class Layer extends WrappedObject {
   */
 
   moveBackward() {
-    MSLayerMovement.moveBackward([this.sketchObject])
+    MSLayerMovement.moveBackward([this.sketchObject]);
   }
 
 
@@ -263,8 +263,8 @@ export class Layer extends WrappedObject {
   */
 
   localRectToPageRect(rect) {
-    var rect = this.sketchObject.convertRectToAbsoluteCoordinates(rect.asCGRect)
-    return new Rectangle(rect.x, rect.y, rect.width, rect.height)
+    var r = this.sketchObject.convertRectToAbsoluteCoordinates(rect.asCGRect);
+    return new Rectangle(r.x, r.y, r.width, r.height);
   }
 
   /**
@@ -275,8 +275,8 @@ export class Layer extends WrappedObject {
   */
 
   localRectToParentRect(rect) {
-    var frame = this.frame
-    return new Rectangle(rect.x + frame.x, rect.y + frame.y, rect.width, rect.height)
+    var frame = this.frame;
+    return new Rectangle(rect.x + frame.x, rect.y + frame.y, rect.width, rect.height);
   }
 
   /**
@@ -289,105 +289,105 @@ export class Layer extends WrappedObject {
     return {
       "tests" : {
         "testName" : function(tester) {
-          var document = tester.newTestDocument()
-          var page = document.selectedPage
-          page.name = "This is a page"
-          tester.assertEqual(page.name, "This is a page")
-          var group = page.newGroup({"name" : "blah"})
-          tester.assertEqual(group.name, "blah")
-          var group2 = page.newGroup()
-          tester.assertEqual(group2.name, "Group")
+          var document = tester.newTestDocument();
+          var page = document.selectedPage;
+          page.name = "This is a page";
+          tester.assertEqual(page.name, "This is a page");
+          var group = page.newGroup({"name" : "blah"});
+          tester.assertEqual(group.name, "blah");
+          var group2 = page.newGroup();
+          tester.assertEqual(group2.name, "Group");
         },
 
         "testFrame" : function(tester) {
-          var document = tester.newTestDocument()
-          var page = document.selectedPage
-          var frame = new Rectangle(10, 10, 20, 20)
-          var group = page.newGroup({"frame" : frame})
-          tester.assertEqual(group.frame, frame)
+          var document = tester.newTestDocument();
+          var page = document.selectedPage;
+          var frame = new Rectangle(10, 10, 20, 20);
+          var group = page.newGroup({"frame" : frame});
+          tester.assertEqual(group.frame, frame);
         },
 
         "testDuplicate" : function(tester) {
-          var document = tester.newTestDocument()
-          var page = document.selectedPage
-          var group = page.newGroup()
-          tester.assertEqual(page.sketchObject.layers().count(), 1)
-          var group2 = group.duplicate()
-          tester.assertEqual(page.sketchObject.layers().count(), 2)
+          var document = tester.newTestDocument();
+          var page = document.selectedPage;
+          var group = page.newGroup();
+          tester.assertEqual(page.sketchObject.layers().count(), 1);
+          var group2 = group.duplicate();
+          tester.assertEqual(page.sketchObject.layers().count(), 2);
         },
 
         "testRemove" : function(tester) {
-          var document = tester.newTestDocument()
-          var page = document.selectedPage
-          var group = page.newGroup()
-          tester.assertEqual(page.sketchObject.layers().count(), 1)
-          group.remove()
-          tester.assertEqual(page.sketchObject.layers().count(), 0)
+          var document = tester.newTestDocument();
+          var page = document.selectedPage;
+          var group = page.newGroup();
+          tester.assertEqual(page.sketchObject.layers().count(), 1);
+          group.remove();
+          tester.assertEqual(page.sketchObject.layers().count(), 0);
         },
 
         "testSelection" : function(tester) {
-          var document = tester.newTestDocument()
-          var page = document.selectedPage
-          var group = page.newGroup()
+          var document = tester.newTestDocument();
+          var page = document.selectedPage;
+          var group = page.newGroup();
 
           // start with nothing selected
-          tester.assertTrue(page.selectedLayers.isEmpty)
+          tester.assertTrue(page.selectedLayers.isEmpty);
 
           // select a layer
-          group.select()
-          tester.assertFalse(page.selectedLayers.isEmpty)
+          group.select();
+          tester.assertFalse(page.selectedLayers.isEmpty);
 
           // deselect it - should go back to nothing selected
-          group.deselect()
-          tester.assertTrue(page.selectedLayers.isEmpty)
+          group.deselect();
+          tester.assertTrue(page.selectedLayers.isEmpty);
 
           // select one layer then another - only the last should be selected
-          var group2 = page.newGroup()
-          group.select()
-          group2.select()
-          tester.assertEqual(page.selectedLayers.length, 1)
+          var group2 = page.newGroup();
+          group.select();
+          group2.select();
+          tester.assertEqual(page.selectedLayers.length, 1);
 
           // add a second layer to the selection - both should be selected
-          group.addToSelection()
-          tester.assertEqual(page.selectedLayers.length, 2)
+          group.addToSelection();
+          tester.assertEqual(page.selectedLayers.length, 2);
         },
 
         "testContainer" : function(tester) {
-          var document = tester.newTestDocument()
-          var page = document.selectedPage
-          var group = page.newGroup()
-          tester.assertEqual(group.container.sketchObject, page.sketchObject)
+          var document = tester.newTestDocument();
+          var page = document.selectedPage;
+          var group = page.newGroup();
+          tester.assertEqual(group.container.sketchObject, page.sketchObject);
         },
 
         "testOrdering" : function(tester) {
-          var document = tester.newTestDocument()
-          var page = document.selectedPage
-          var group1 = page.newGroup()
-          var group2 = page.newGroup()
-          var group3 = page.newGroup()
-          tester.assertEqual(group1.index, 0)
-          tester.assertEqual(group2.index, 1)
-          tester.assertEqual(group3.index, 2)
+          var document = tester.newTestDocument();
+          var page = document.selectedPage;
+          var group1 = page.newGroup();
+          var group2 = page.newGroup();
+          var group3 = page.newGroup();
+          tester.assertEqual(group1.index, 0);
+          tester.assertEqual(group2.index, 1);
+          tester.assertEqual(group3.index, 2);
 
-          group1.moveToFront()
-          tester.assertEqual(group2.index, 0)
-          tester.assertEqual(group3.index, 1)
-          tester.assertEqual(group1.index, 2)
+          group1.moveToFront();
+          tester.assertEqual(group2.index, 0);
+          tester.assertEqual(group3.index, 1);
+          tester.assertEqual(group1.index, 2);
 
-          group3.moveToBack()
-          tester.assertEqual(group3.index, 0)
-          tester.assertEqual(group2.index, 1)
-          tester.assertEqual(group1.index, 2)
+          group3.moveToBack();
+          tester.assertEqual(group3.index, 0);
+          tester.assertEqual(group2.index, 1);
+          tester.assertEqual(group1.index, 2);
 
-          group2.moveForward()
-          tester.assertEqual(group3.index, 0)
-          tester.assertEqual(group1.index, 1)
-          tester.assertEqual(group2.index, 2)
+          group2.moveForward();
+          tester.assertEqual(group3.index, 0);
+          tester.assertEqual(group1.index, 1);
+          tester.assertEqual(group2.index, 2);
 
-          group1.moveBackward()
-          tester.assertEqual(group1.index, 0)
-          tester.assertEqual(group3.index, 1)
-          tester.assertEqual(group2.index, 2)
+          group1.moveBackward();
+          tester.assertEqual(group1.index, 0);
+          tester.assertEqual(group3.index, 1);
+          tester.assertEqual(group2.index, 2);
 
         }
 

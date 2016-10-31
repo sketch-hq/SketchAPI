@@ -5,22 +5,21 @@
 // All code (C) 2016 Bohemian Coding.
 // ********************************
 
-import { Layer } from './Layer.js'
-import { Rectangle } from './Rectangle.js'
+import { Layer } from './Layer.js';
+import { Rectangle } from './Rectangle.js';
 
 
 /// Width is adjusted to fit the content.
-const BCTextBehaviourFlexibleWidth = 0
+const BCTextBehaviourFlexibleWidth = 0;
 
 /// Width is fixed.
-const BCTextBehaviourFixedWidth = 1
-
+const BCTextBehaviourFixedWidth = 1;
 
 /// Uses min & max line height on paragraph style
-const BCTextLineSpacingBehaviourV2 = 1
+const BCTextLineSpacingBehaviourV2 = 1;
 
 /// Uses MSConstantBaselineTypesetter for fixed line height
-const BCTextLineSpacingBehaviourV3 = 2
+const BCTextLineSpacingBehaviourV3 = 2;
 
 
 /// Mapping between text alignment names and values.
@@ -39,7 +38,7 @@ const NSTextAlignment = {
 
   /// Indicates the default alignment for script
   "natural": 4
-}
+};
 
 /**
 Represents a text layer.
@@ -55,7 +54,7 @@ export class Text extends Layer {
   */
 
   constructor(text, document) {
-    super(text, document)
+    super(text, document);
   }
 
 
@@ -68,7 +67,7 @@ export class Text extends Layer {
   */
 
   get isText() {
-    return true
+    return true;
   }
 
 
@@ -79,7 +78,7 @@ export class Text extends Layer {
   */
 
   get text() {
-    return this.sketchObject.stringValue()
+    return this.sketchObject.stringValue();
   }
 
 
@@ -92,10 +91,10 @@ export class Text extends Layer {
   */
 
   set text(value) {
-    var object = this.sketchObject
-    object.stringValue = value
+    var object = this.sketchObject;
+    object.stringValue = value;
     if (!object.nameIsFixed()) {
-      object.name = value
+      object.name = value;
     }
   }
 
@@ -107,9 +106,12 @@ export class Text extends Layer {
   */
 
   set font(value) {
-    this.sketchObject.font = value
+    this.sketchObject.font = value;
   }
 
+  get font() {
+    return this.sketchObject.font();
+  }
 
   /**
   Set the font of the layer to the system font at a given size.
@@ -118,9 +120,11 @@ export class Text extends Layer {
   */
 
   set systemFontSize(size) {
-    this.sketchObject.font = NSFont.systemFontOfSize_(size)
+    this.sketchObject.font = NSFont.systemFontOfSize_(size);
   }
-
+  get systemFontSize() {
+    return this.sketchObject.systemFontOfSize();
+  }
   /**
   The alignment of the layer.
   This will be one of the values: "left", "center", "right", "justified", "natural".
@@ -129,15 +133,15 @@ export class Text extends Layer {
   */
 
   get alignment() {
-    var raw = this.sketchObject.textAlignment()
-    var result = raw
+    var raw = this.sketchObject.textAlignment();
+    var result = raw;
     for (var key in NSTextAlignment) {
       if (NSTextAlignment[key] === raw) {
-        result = key
-        break
+        result = key;
+        break;
       }
     }
-    return result
+    return result;
   }
 
 
@@ -151,8 +155,8 @@ export class Text extends Layer {
   */
 
   set alignment(mode) {
-    var translated = NSTextAlignment[mode]
-    this.sketchObject.textAlignment = translated ? translated : mode
+    var translated = NSTextAlignment[mode];
+    this.sketchObject.textAlignment = translated ? translated : mode;
   }
 
 
@@ -164,19 +168,21 @@ export class Text extends Layer {
 
   set fixedWidth(value) {
     if (value) {
-      this.sketchObject.textBehaviour = BCTextBehaviourFixedWidth
+      this.sketchObject.textBehaviour = BCTextBehaviourFixedWidth;
     } else {
-      this.sketchObject.textBehaviour = BCTextBehaviourFlexibleWidth
+      this.sketchObject.textBehaviour = BCTextBehaviourFlexibleWidth;
     }
   }
-
+  get fixedWidth() {
+    return this.sketchObject.textBehaviour();
+  }
 
   /**
   Adjust the frame of the layer to fit its contents.
   */
 
   adjustToFit() {
-    this.sketchObject.adjustFrameToFit()
+    this.sketchObject.adjustFrameToFit();
   }
 
 
@@ -187,27 +193,27 @@ export class Text extends Layer {
   */
 
   get fragments() {
-    var textLayer = this.sketchObject
-    var storage = textLayer.createTextStorage()
-    var layout = storage.layoutManagers().firstObject()
-    var actualCharacterRangePtr = MOPointer.new()
-    var charRange = NSMakeRange(0, storage.length())
-    var origin = textLayer.rect().origin
+    var textLayer = this.sketchObject;
+    var storage = textLayer.createTextStorage();
+    var layout = storage.layoutManagers().firstObject();
+    var actualCharacterRangePtr = MOPointer.new();
+    var charRange = NSMakeRange(0, storage.length());
+    var origin = textLayer.rect().origin;
 
-    layout.glyphRangeForCharacterRange_actualCharacterRange_(charRange, actualCharacterRangePtr)
-    var glyphRange = actualCharacterRangePtr.value()
+    layout.glyphRangeForCharacterRange_actualCharacterRange_(charRange, actualCharacterRangePtr);
+    var glyphRange = actualCharacterRangePtr.value();
 
-    var fragments = []
-    var currentLocation = 0
+    var fragments = [];
+    var currentLocation = 0;
     while (currentLocation < NSMaxRange(glyphRange)) {
-      var effectiveRangePtr = MOPointer.new()
-      var localRect = layout.lineFragmentRectForGlyphAtIndex_effectiveRange_(currentLocation, effectiveRangePtr)
-      var rect = new Rectangle(localRect.origin.x, localRect.origin.y, localRect.size.width, localRect.size.height)
-      var effectiveRange = effectiveRangePtr.value()
-      var baselineOffset = layout.typesetter().baselineOffsetInLayoutManager_glyphIndex_(layout, currentLocation)
+      var effectiveRangePtr = MOPointer.new();
+      var localRect = layout.lineFragmentRectForGlyphAtIndex_effectiveRange_(currentLocation, effectiveRangePtr);
+      var rect = new Rectangle(localRect.origin.x, localRect.origin.y, localRect.size.width, localRect.size.height);
+      var effectiveRange = effectiveRangePtr.value();
+      var baselineOffset = layout.typesetter().baselineOffsetInLayoutManager_glyphIndex_(layout, currentLocation);
 
-      fragments.push({"rect": rect, "baselineOffset": baselineOffset, range: effectiveRange})
-      currentLocation = NSMaxRange(effectiveRange) + 1
+      fragments.push({"rect": rect, "baselineOffset": baselineOffset, range: effectiveRange});
+      currentLocation = NSMaxRange(effectiveRange) + 1;
     }
 
     return fragments;
@@ -221,16 +227,19 @@ export class Text extends Layer {
   */
 
   set useConstantBaselines(value) {
-    var lineSpacingBehaviour = value ? BCTextLineSpacingBehaviourV3 : BCTextLineSpacingBehaviourV2
-    var textLayer = this.sketchObject
-    var initialBaselineOffset = textLayer.firstBaselineOffset()
-    textLayer.lineSpacingBehaviour = lineSpacingBehaviour
-    var baselineOffset = textLayer.firstBaselineOffset()
-    var rect = this.frame
-    rect.y -= (baselineOffset - initialBaselineOffset)
-    this.frame = rect
+    var lineSpacingBehaviour = value ? BCTextLineSpacingBehaviourV3 : BCTextLineSpacingBehaviourV2;
+    var textLayer = this.sketchObject;
+    var initialBaselineOffset = textLayer.firstBaselineOffset();
+    textLayer.lineSpacingBehaviour = lineSpacingBehaviour;
+    var baselineOffset = textLayer.firstBaselineOffset();
+    var rect = this.frame;
+    rect.y -= (baselineOffset - initialBaselineOffset);
+    this.frame = rect;
+    this._useConstantBaseLines = value;
   }
-
+  get useConstantBaselines() {
+    return this._useConstantBaseLines;
+  }
 
   /**
   Return a list of tests to run for this class.
@@ -242,42 +251,42 @@ export class Text extends Layer {
     return {
       "tests" : {
         "testIsText" : function(tester) {
-          var document = tester.newTestDocument()
-          var page = document.selectedPage
-          var text = page.newText()
-          tester.assertTrue(text.isText)
-          tester.assertFalse(page.isText)
+          var document = tester.newTestDocument();
+          var page = document.selectedPage;
+          var text = page.newText();
+          tester.assertTrue(text.isText);
+          tester.assertFalse(page.isText);
         },
 
         "testText" : function(tester) {
-          var document = tester.newTestDocument()
-          var page = document.selectedPage
-          var text = page.newText({"text" : "blah"})
-          tester.assertEqual(text.text, "blah")
-          text.text = "doodah"
-          tester.assertEqual(text.text, "doodah")
+          var document = tester.newTestDocument();
+          var page = document.selectedPage;
+          var text = page.newText({"text" : "blah"});
+          tester.assertEqual(text.text, "blah");
+          text.text = "doodah";
+          tester.assertEqual(text.text, "doodah");
         },
 
         "testAdjustToFit" : function(tester) {
-          var document = tester.newTestDocument()
-          var page = document.selectedPage
-          var text = page.newText({"text" : "blah", "frame" : new Rectangle(10, 10, 1000, 1000)})
-          text.adjustToFit()
-          tester.assertEqual(text.frame, new Rectangle(10, 10, 23, 14))
+          var document = tester.newTestDocument();
+          var page = document.selectedPage;
+          var text = page.newText({"text" : "blah", "frame" : new Rectangle(10, 10, 1000, 1000)});
+          text.adjustToFit();
+          tester.assertEqual(text.frame, new Rectangle(10, 10, 23, 14));
         },
 
         "testAlignment" : function(tester) {
-          var document = tester.newTestDocument()
-          var page = document.selectedPage
-          var text = page.newText({"text" : "blah", "frame" : new Rectangle(10, 10, 1000, 1000)})
+          var document = tester.newTestDocument();
+          var page = document.selectedPage;
+          var text = page.newText({"text" : "blah", "frame" : new Rectangle(10, 10, 1000, 1000)});
           for (var key in NSTextAlignment) {
             // test setting by name
-            text.alignment = key
-            tester.assertEqual(text.alignment, key)
+            text.alignment = key;
+            tester.assertEqual(text.alignment, key);
 
             // test setting by value
-            text.alignment = NSTextAlignment[key]
-            tester.assertEqual(text.alignment, key)
+            text.alignment = NSTextAlignment[key];
+            tester.assertEqual(text.alignment, key);
           }
         },
 

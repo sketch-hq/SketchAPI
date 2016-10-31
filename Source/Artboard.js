@@ -5,7 +5,7 @@
 // All code (C) 2016 Bohemian Coding.
 // ********************************
 
-import { Group } from './Group.js'
+import { Group } from './Group.js';
 
 /**
     A Sketch artboard.
@@ -21,7 +21,7 @@ export class Artboard extends Group {
     */
 
     constructor(artboard, document) {
-      super(artboard, document)
+      super(artboard, document);
     }
 
     /**
@@ -46,11 +46,11 @@ export class Artboard extends Group {
         return {
             "tests" : {
                 "testIsArtboard" : function(tester) {
-                  var document = tester.newTestDocument()
-                  var page = document.selectedPage
-                  var artboard = page.newArtboard({"name" : "Test"})
-                  tester.assertTrue(artboard.isArtboard)
-                  tester.assertFalse(page.isArtboard)
+                  var document = tester.newTestDocument();
+                  var page = document.selectedPage;
+                  var artboard = page.newArtboard({"name" : "Test"});
+                  tester.assertTrue(artboard.isArtboard);
+                  tester.assertFalse(page.isArtboard);
                 },
             }
         };

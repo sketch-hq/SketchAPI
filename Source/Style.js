@@ -5,19 +5,20 @@
 // All code (C) 2016 Bohemian Coding.
 // ********************************
 
-import { WrappedObject } from './WrappedObject.js'
-import { ColorHelper } from './ColorHelper.js'
+import { WrappedObject } from './WrappedObject.js';
+import { ColorHelper } from './ColorHelper.js';
+
 /// A solid fill/border.
-const BCFillTypeColor    = 0
+const BCFillTypeColor = 0;
 
 /// A gradient fill/border.
-const BCFillTypeGradient = 1
+const BCFillTypeGradient = 1;
 
 /// A pattern fill/border.
-const BCFillTypePattern  = 4
+const BCFillTypePattern = 4;
 
 /// A noise fill/border.
-const BCFillTypeNoise    = 5
+const BCFillTypeNoise = 5;
 
 
 /**
@@ -33,10 +34,10 @@ export class Style extends WrappedObject {
     */
 
     constructor(style) {
-      if (!style || style == null) {
-        style = MSDefaultStyle.defaultStyle()
+      if (!style || style === null) {
+        style = MSDefaultStyle.defaultStyle();
       }
-      super(style)
+      super(style);
     }
 
 
@@ -59,16 +60,20 @@ export class Style extends WrappedObject {
     */
 
     set borders(value) {
-      var objects = []
+      var objects = [];
       for (var b in value) {
-        var color = ColorHelper.hexToNativeColorFormat(value[b])
+        var color = ColorHelper.hexToNativeColorFormat(value[b]);
         var border = MSStyleBorder.new();
         border.setColor_(color);
         border.setFillType_(BCFillTypeColor);
         border.enabled = true;
-        objects.push(border)
+        objects.push(border);
       }
-      this.sketchObject.setBorders_(objects)
+      this.sketchObject.setBorders_(objects);
+    }
+
+    get borders() {
+        return this.sketchObject.borders();
     }
 
     /**
@@ -111,19 +116,22 @@ export class Style extends WrappedObject {
     */
 
     set fills(value) {
-      var objects = []
+      var objects = [];
       for (var b in value) {
-        var color = ColorHelper.hexToNativeColorFormat(value[b])
-        var fill = MSStyleFill.new()
-        fill.setColor_(color)
-        fill.setFillType_(BCFillTypeColor)
-        fill.enabled = true
+        var color = ColorHelper.hexToNativeColorFormat(value[b]);
+        var fill = MSStyleFill.new();
+        fill.setColor_(color);
+        fill.setFillType_(BCFillTypeColor);
+        fill.enabled = true;
 
-        objects.push(fill)
+        objects.push(fill);
       }
-      this.sketchObject.setFills_(objects)
+      this.sketchObject.setFills_(objects);
     }
 
+    get fills() {
+      return this.sketchObject.fills();
+    }
 
     /**
      Return a list of tests to run for this class.
@@ -135,15 +143,15 @@ export class Style extends WrappedObject {
         return {
             "tests" : {
                 "testBorders" : function(tester) {
-                  var style = new Style()
-                  style.borders = [ "#11223344", "#1234" ]
-                  tester.assertEqual(style.sketchObject.borders().count(), 2)
+                  var style = new Style();
+                  style.borders = [ "#11223344", "#1234" ];
+                  tester.assertEqual(style.borders.count(), 2);
                 },
 
                 "testFills" : function(tester) {
-                  var style = new Style()
-                  style.borders = [ "#11223344", "#1234" ]
-                  tester.assertEqual(style.sketchObject.borders().count(), 2)
+                  var style = new Style();
+                  style.fills = [ "#11223344", "#1234" ];
+                  tester.assertEqual(style.fills.count(), 2);
                 },
 
             }

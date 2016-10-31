@@ -10,7 +10,7 @@
   wrap Sketch classes.
 
 */
-import { Application } from './Application.js'
+import { Application } from './Application.js';
 
 export class WrappedObject {
 
@@ -22,7 +22,7 @@ export class WrappedObject {
 
     constructor(object) {
       /** @type {Object} The underlying Sketch model object that we are wrapping. */
-      this._object = object
+      this._object = object;
     }
 
 
@@ -31,7 +31,7 @@ export class WrappedObject {
       */
 
     get sketchObject() {
-        return this._object
+        return this._object;
     }
 
     get sketchApplication() {
@@ -59,14 +59,14 @@ export class WrappedObject {
         return {
             "tests" : {
                 "testSketchObject" : function(tester) {
-                    var object = MSLayer.new()
-                    var wrapped = new WrappedObject(object)
+                    var object = MSLayer.new();
+                    var wrapped = new WrappedObject(object);
                     tester.assertEqual(wrapped.sketchObject, object);
                 },
 
                 "testID" : function(tester) {
-                    var object = MSLayer.new()
-                    var wrapped = new WrappedObject(object)
+                    var object = MSLayer.new();
+                    var wrapped = new WrappedObject(object);
                     tester.assertEqual(wrapped.id, object.objectID());
                 },
 

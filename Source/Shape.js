@@ -5,8 +5,8 @@
 // All code (C) 2016 Bohemian Coding.
 // ********************************
 
-import { Layer } from './Layer.js'
-import { Style } from './Style.js'
+import { Layer } from './Layer.js';
+import { Style } from './Style.js';
 
 /**
   Represents a shape layer (a rectangle, oval, path, etc).
@@ -23,7 +23,7 @@ export class Shape extends Layer {
     */
 
     constructor(shape, document) {
-      super(shape, document)
+      super(shape, document);
     }
 
 
@@ -47,7 +47,7 @@ export class Shape extends Layer {
      */
 
      get style() {
-         return new Style(this.sketchObject.style(), this.sketchDocument)
+         return new Style(this.sketchObject.style(), this.sketchDocument);
      }
 
 
@@ -58,7 +58,7 @@ export class Shape extends Layer {
      */
 
      set style(value) {
-         this.sketchObject.style = value.sketchObject
+         this.sketchObject.style = value.sketchObject;
      }
 
 
@@ -72,11 +72,11 @@ export class Shape extends Layer {
         return {
             "tests" : {
               "testIsShape" : function(tester) {
-                var document = tester.newTestDocument()
-                var page = document.selectedPage
-                var shape = page.newShape()
-                tester.assertTrue(shape.isShape)
-                tester.assertFalse(page.isShape)
+                var document = tester.newTestDocument();
+                var page = document.selectedPage;
+                var shape = page.newShape();
+                tester.assertTrue(shape.isShape);
+                tester.assertFalse(page.isShape);
               },
             }
         };

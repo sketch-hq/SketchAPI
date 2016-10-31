@@ -1,7 +1,7 @@
-import { WrappedObject } from './WrappedObject.js'
-import { ColorHelper } from './ColorHelper.js'
-import { Shape } from './Shape.js'
-import { Utility } from './Utility.js'
+import { WrappedObject } from './WrappedObject.js';
+import { ColorHelper } from './ColorHelper.js';
+import { Shape } from './Shape.js';
+import { Utility } from './Utility.js';
 
 export class Border extends WrappedObject {
 
@@ -11,7 +11,7 @@ export class Border extends WrappedObject {
       @param {MSStyleBorder} border The underlying model object from Sketch.
     */
     constructor(style) {
-        if (!style || style == null) {
+        if (!style || style === null) {
             style = MSDefaultStyle.defaultStyle().border();
 
             // Automatically unpacks the current border style and enables a pointer
@@ -20,7 +20,7 @@ export class Border extends WrappedObject {
         } else if (style.isShape) {
             style = style.sketchObject.style().borders().firstObject(); // Not without firstObject it will pick first Enabled;
         }
-        super(style)
+        super(style);
     }
 
     /**
@@ -113,26 +113,26 @@ export class Border extends WrappedObject {
         return {
             "tests": {
                 "testBorderThickness": function(tester) {
-                    var border = new Border()
+                    var border = new Border();
                     border.thickness = 4;
-                    tester.assertEqual(border.thickness, 4)
+                    tester.assertEqual(border.thickness, 4);
                 },
 
                 "testBorderPosition": function(tester) {
-                    var border = new Border()
+                    var border = new Border();
 
                     border.position = Utility.BorderPosition.center;
-                    tester.assertEqual(border.position, 0)
+                    tester.assertEqual(border.position, 0);
 
                     border.position = Utility.BorderPosition.inside;
-                    tester.assertEqual(border.position, 1)
+                    tester.assertEqual(border.position, 1);
 
                     border.position = Utility.BorderPosition.outside;
-                    tester.assertEqual(border.position, 2)
+                    tester.assertEqual(border.position, 2);
                 },
 
                 "testGradientTypes": function(tester) {
-                    var border = new Border()
+                    var border = new Border();
 
                     border.gradientType = Utility.GradientType.flat;
                     tester.assertEqual(border.gradientType, 0);
@@ -149,13 +149,13 @@ export class Border extends WrappedObject {
                 },
 
                 "testBorderFlatColor": function(tester) {
-                    var border = new Border()
+                    var border = new Border();
                     border.flatColor = "#AABBCC";
-                    tester.assertEqual(border.flatColor.hexValue(), "AABBCC")
+                    tester.assertEqual(border.flatColor.hexValue(), "AABBCC");
                 },
 
                 "testBorderEnabled": function(tester) {
-                    var border = new Border()
+                    var border = new Border();
                     border.enabled = false;
                     tester.assertEqual(border.enabled, false);
 

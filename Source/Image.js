@@ -5,7 +5,7 @@
 // All code (C) 2016 Bohemian Coding.
 // ********************************
 
-import { Layer } from './Layer.js'
+import { Layer } from './Layer.js';
 
 /**
   Represents an image layer.
@@ -21,7 +21,7 @@ export class Image extends Layer {
   */
 
   constructor(layer, document) {
-    super(layer, document)
+    super(layer, document);
   }
 
   /**
@@ -43,11 +43,16 @@ export class Image extends Layer {
   */
 
   set imageURL(url) {
-    var image = NSImage.alloc().initWithContentsOfURL_(url)
-    var imageData = MSImageData.alloc().initWithImage_convertColorSpace_(image, true)
-    this.sketchObject.setImage_(imageData)
+    // TODO: need to do some type safety here to ensure "http://" style strings can map to NSURL.
+    var image = NSImage.alloc().initWithContentsOfURL_(url);
+    var imageData = MSImageData.alloc().initWithImage_convertColorSpace_(image, true);
+    this.sketchObject.setImage_(imageData);
   }
 
+  get imageURL() {
+    // TODO : need to map this back to the current NSURL stored.
+    return null;
+  }
     /**
      Return a list of tests to run for this class.
 
@@ -58,12 +63,15 @@ export class Image extends Layer {
         return {
             "tests" : {
               "testIsImage" : function(tester) {
-                var document = tester.newTestDocument()
-                var page = document.selectedPage
-                var image = page.newImage()
-                tester.assertTrue(image.isImage)
-                tester.assertFalse(page.isImage)
+                var document = tester.newTestDocument();
+                var page = document.selectedPage;
+                var image = page.newImage();
+                tester.assertTrue(image.isImage);
+                tester.assertFalse(page.isImage);
               },
+
+
+
             }
         };
     }

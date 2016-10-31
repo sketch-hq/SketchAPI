@@ -5,7 +5,7 @@
 // All code (C) 2016 Bohemian Coding.
 // ********************************
 
-import { Document } from './Document.js'
+import { Document } from './Document.js';
 
 /**
     Very simple unit testing utility.
@@ -25,19 +25,19 @@ export class Tester {
 
     constructor(application) {
         /** @type {array} List of failures in the currently running test. */
-        this._testFailures = []
+        this._testFailures = [];
 
         /** @type {Application} The application that is running these tests. */
-        this._application = application
+        this._application = application;
 
         /** @type {number} The number of tests we've run. */
-        this._ran = 0
+        this._ran = 0;
 
         /** @type {array} The names of the tests that have passed. */
-        this._passes = []
+        this._passes = [];
 
         /** @type {array} Failure information for each test that has failed. */
-        this._failures = []
+        this._failures = [];
 
     }
 
@@ -51,8 +51,8 @@ export class Tester {
 
     assert(condition, description) {
         if (!condition) {
-            if (!description) description = ""
-            this._testFailures.push(description)
+            if (!description) description = "";
+            this._testFailures.push(description);
         }
     }
 
@@ -65,20 +65,20 @@ export class Tester {
     */
 
     assertEqual(v1, v2) {
-      var different = v1 != v2
+      var different = v1 != v2;
 
       // if we're comparing two objects, try matching them as strings
       // (crude, and not guaranteed, but it will cover some basic cases)
       if (different && (typeof v1 === 'object') && (typeof v2 === 'object')) {
         if (v1.compare) {
-          different = v1.compare(v2)
+          different = v1.compare(v2);
         } else {
-          different = v1.toString() != v2.toString()
+          different = v1.toString() != v2.toString();
         }
       }
 
       if (different) {
-          this._testFailures.push(v1 + " != " + v2)
+          this._testFailures.push(v1 + " != " + v2);
       }
     }
 
@@ -92,7 +92,7 @@ export class Tester {
 
     assertTrue(v) {
       if (!v) {
-        this._testFailures.push("expected true, got: " + v)
+        this._testFailures.push("expected true, got: " + v);
       }
     }
 
@@ -107,7 +107,7 @@ export class Tester {
 
     assertFalse(v) {
       if (v) {
-        this._testFailures.push("expected false, got: " + v)
+        this._testFailures.push("expected false, got: " + v);
       }
     }
 
@@ -120,7 +120,7 @@ export class Tester {
      */
 
     get application() {
-        return this._application
+        return this._application;
     }
 
 
@@ -131,8 +131,8 @@ export class Tester {
       */
 
     newTestDocument() {
-      var document = new Document(MSDocumentData.new(), this._application)
-      return document
+      var document = new Document(MSDocumentData.new(), this._application);
+      return document;
     }
 
 
@@ -153,22 +153,22 @@ export class Tester {
      */
 
     runUnitTests(specification, suiteName) {
-        var suites = specification.suites
+        var suites = specification.suites;
         for (var suite in suites) {
-            this.runUnitTests(suites[suite], suite)
+            this.runUnitTests(suites[suite], suite);
         }
 
-        var tests = specification.tests
+        var tests = specification.tests;
         for (var name in tests) {
-            var test = tests[name]
+            var test = tests[name];
             this._ran++;
             this._testFailures = [];
             var result = test(this);
-            var fullName = suiteName ? suiteName + " : " + name : name
+            var fullName = suiteName ? suiteName + " : " + name : name;
             if (this._testFailures.length > 0) {
-              this._failures.push({"name" : fullName, "reasons" : this._testFailures})
+              this._failures.push({"name" : fullName, "reasons" : this._testFailures});
             } else {
-              this._passes.push(fullName)
+              this._passes.push(fullName);
             }
         }
 
