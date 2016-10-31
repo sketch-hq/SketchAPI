@@ -9,11 +9,11 @@ import {
     WrappedObject
 } from './WrappedObject.js'
 
-const gradientTypeEnum = Object.freeze({
-    "flat": 0,
-    "linear": 1,
-    "radial": 2,
-    "angular": 3
+const gradientTypes = Object.freeze({
+    flat: 0,
+    linear: 1,
+    radial: 2,
+    angular: 3
 });
 
 const namedColors = {
@@ -164,8 +164,8 @@ export class ColorHelper extends WrappedObject {
     /**
       A Enum style pattern implementation for Gradient Types;
     */
-    static get gradientTypeEnum() {
-        return gradientTypeEnum;
+    static get gradientTypes() {
+        return gradientTypes;
     }
 
     static get namedColors() {
@@ -236,11 +236,11 @@ export class ColorHelper extends WrappedObject {
     }
 
     /**
-      Converts a Hex String value into native MSColor
+      Converts a Hex String value into Native Color format
       @param {string} hexColor Hex Color (with or without #)
       @return {MSColor} color returns converted MSColor
     */
-    static hexToMSColor(hexColor) {
+    static hexToNativeColorFormat(hexColor) {
         var rgb = ColorHelper.hexToRgbPercent(hexColor);
         var immutable = MSImmutableColor.colorWithRed_green_blue_alpha(rgb.r, rgb.g, rgb.b, rgb.a);
         return MSColor.alloc().initWithImmutableObject_(immutable)
@@ -401,19 +401,17 @@ export class ColorHelper extends WrappedObject {
 
             "testColorConversions" : function(tester) {
               var color = "#AADDBB";
-              var hexToMSColor = ColorHelper.hexToMSColor(color);
+              var hexToNativeColorFormat = ColorHelper.hexToNativeColorFormat(color);
               var hexToRgbPercent = ColorHelper.hexToRgbPercent(color);
-
-              tester.assertTrue(hexToMSColor instanceof MSColor);
-              tester.assertEqual(hexToRgbPercent.r, hexToMSColor.red());
-              tester.assertEqual(hexToRgbPercent.g, hexToMSColor.green());
-              tester.assertEqual(hexToRgbPercent.b, hexToMSColor.blue());
-              tester.assertEqual(hexToRgbPercent.a, hexToMSColor.alpha());
+              tester.assertTrue(hexToNativeColorFormat instanceof MSColor);
+              tester.assertEqual(hexToRgbPercent.r, hexToNativeColorFormat.red());
+              tester.assertEqual(hexToRgbPercent.g, hexToNativeColorFormat.green());
+              tester.assertEqual(hexToRgbPercent.b, hexToNativeColorFormat.blue());
+              tester.assertEqual(hexToRgbPercent.a, hexToNativeColorFormat.alpha());
 
             },
 
             "testHSL_Hue_HSV_convertors": function(tester) {
-
                 var org = "#AADDBB";
                 var rgb = ColorHelper.hexToRgb(org);
                 var hex = ColorHelper.rgbToHex(rgb.r, rgb.g, rgb.b);

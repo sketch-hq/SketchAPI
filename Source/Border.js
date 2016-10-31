@@ -2,10 +2,13 @@ import { WrappedObject } from './WrappedObject.js'
 import { ColorHelper } from './ColorHelper.js'
 import { Shape } from './Shape.js'
 
-
-
 // Enum of border positions.
-const borderPosEnum = Object.freeze({"center":0, "inside":1, "outside":2});
+const borderPosition = Object.freeze({
+    center: 0,
+    inside: 1,
+    outside: 2
+});
+
 export class Border extends WrappedObject {
 
   /**
@@ -29,8 +32,8 @@ export class Border extends WrappedObject {
   /**
     A Enum style pattern implementation for Border Position selection.
   */
-  static get borderPosEnum() {
-    return borderPosEnum;
+  static get positions() {
+    return borderPosition;
   }
 
   /**
@@ -50,7 +53,7 @@ export class Border extends WrappedObject {
   */
   set flatColor(value) {
     // TODO : Create internal overloader that routes color conversion based on type (hex, int etc)
-    var hexToNSColor = ColorHelper.hexToMSColor(value);
+    var hexToNSColor = ColorHelper.hexToNativeColorFormat(value);
     this.sketchObject.color = hexToNSColor;
   }
 
@@ -135,30 +138,27 @@ export class Border extends WrappedObject {
 
           "testBorderPosition" : function(tester) {
             var border = new Border()
-
-            border.positions = borderPosEnum["outside"];
+            border.positions = Border.positions.outside;
             tester.assertEqual(border.positions, 2)
-
-            border.positions = borderPosEnum["inside"];
+            border.positions = Border.positions.inside;
             tester.assertEqual(border.positions, 1)
-
-            border.positions = borderPosEnum["center"];
+            border.positions = Border.positions.center;
             tester.assertEqual(border.positions, 0)
           },
 
           "testGradientTypes" : function(tester) {
             var border = new Border()
 
-            border.gradientType = ColorHelper.gradientTypeEnum["flat"];
+            border.gradientType = ColorHelper.gradientTypes.flat;
             tester.assertEqual(border.gradientType, 0);
 
-            border.gradientType = ColorHelper.gradientTypeEnum["linear"];
+            border.gradientType = ColorHelper.gradientTypes.linear;
             tester.assertEqual(border.gradientType, 1);
 
-            border.gradientType = ColorHelper.gradientTypeEnum["radial"];
+            border.gradientType = ColorHelper.gradientTypes.radial;
             tester.assertEqual(border.gradientType, 2);
 
-            border.gradientType = ColorHelper.gradientTypeEnum["angular"];
+            border.gradientType = ColorHelper.gradientTypes.angular;
             tester.assertEqual(border.gradientType, 3);
 
           },

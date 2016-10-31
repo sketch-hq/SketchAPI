@@ -61,7 +61,7 @@ export class Style extends WrappedObject {
     set borders(value) {
       var objects = []
       for (var b in value) {
-        var color = ColorHelper.hexToMSColor(value[b])
+        var color = ColorHelper.hexToNativeColorFormat(value[b])
         var border = MSStyleBorder.new()
         border.setColor_(color)
         border.setFillType_(BCFillTypeColor)
@@ -114,7 +114,7 @@ export class Style extends WrappedObject {
     set fills(value) {
       var objects = []
       for (var b in value) {
-        var color = ColorHelper.hexToMSColor(value[b])
+        var color = ColorHelper.hexToNativeColorFormat(value[b])
         var fill = MSStyleFill.new()
         fill.setColor_(color)
         fill.setFillType_(BCFillTypeColor)
