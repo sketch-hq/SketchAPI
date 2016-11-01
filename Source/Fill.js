@@ -33,14 +33,26 @@ export class Fill extends WrappedObject {
   }
 
   get opacity () {
-    return this.sketchObject.interfaceOpacity()
+    return this.sketchObject.contextSettingsGeneric().opacity()
   }
 
-    /**
-    Return a list of tests to run for this class.
+  set opacity (value) {
+    this.sketchObject.contextSettingsGeneric().opacity = value
+  }
 
-    @return {dictionary} A dictionary containing the tests to run. Each key is the name of a test, each value is a function which takes a Tester instance.
-    */
+  set blendingMode (value) {
+    this.sketchObject.contextSettingsGeneric().blendMode = value
+  }
+
+  get blendingMode () {
+    return this.sketchObject.contextSettingsGeneric().blendMode()
+  }
+
+  /**
+  Return a list of tests to run for this class.
+
+  @return {dictionary} A dictionary containing the tests to run. Each key is the name of a test, each value is a function which takes a Tester instance.
+  */
 
   static tests () {
     return {
