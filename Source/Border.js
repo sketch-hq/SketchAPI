@@ -7,6 +7,7 @@
 
 import { WrappedObject } from './WrappedObject.js'
 import { ColorHelper } from './ColorHelper.js'
+import { Application } from './Application.js'
 import { Utility } from './Utility.js'
 
 export class Border extends WrappedObject {
@@ -106,7 +107,7 @@ export class Border extends WrappedObject {
     */
   set gradientType (gradientTypeEnum) {
     this.sketchObject.gradientGeneric().gradientType = gradientTypeEnum
-    this._application.reloadInspector()
+    Application.reloadInspector()
   }
 
     /**

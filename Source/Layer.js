@@ -371,7 +371,7 @@ export class Layer extends WrappedObject {
 
           tester.assertEqual(group.container.sketchObject, page.sketchObject)
           tester.assertEqual(group.frame.x, 2)
-          tester.assertEqual(group.frame.y,900)
+          tester.assertEqual(group.frame.y, 900)
         },
 
         'testContainer': function (tester) {

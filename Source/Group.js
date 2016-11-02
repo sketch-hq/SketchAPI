@@ -8,7 +8,7 @@
 import { Layer } from './Layer.js'
 import { Rectangle } from './Rectangle.js'
 import { Style } from './Style.js'
-
+import { Application } from './Application.js'
 /**
 Represents a group of layers.
 */
@@ -103,7 +103,7 @@ export class Group extends Layer {
         wrapper[p] = properties[p]
       }
 
-      this._application.reloadInspector()
+      Application.reloadInspector()
       return wrapper
     }
   }
