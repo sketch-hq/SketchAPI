@@ -400,7 +400,7 @@ export class Application extends WrappedObject {
             var wrapped = Application.wrapObject(object, mockDocument)
 
             tester.assertEqual(wrapped.sketchObject, object)
-            tester.assertEqual(wrapped.sketchDocument, mockDocument)
+            tester.assertEqual(wrapped._document, mockDocument)
             tester.assertEqual(wrapped.class, mappings[classToTest].class)
           }
         }

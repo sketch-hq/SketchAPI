@@ -33,12 +33,12 @@ export class WrappedObject {
     return this._object
   }
 
-  get sketchApplication () {
+  get _application () {
     return Application
   }
 
   wrapObject (sketchObject, inDocument) {
-    return this.sketchApplication.wrapObject(sketchObject, inDocument)
+    return this._application.wrapObject(sketchObject, inDocument)
   }
 
     /**

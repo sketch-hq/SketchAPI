@@ -41,7 +41,7 @@ export class Group extends Layer {
 
   iterate (block) {
     var layers = this.sketchObject.layers()
-    this.sketchDocument.iterateWithNativeLayers(layers, null, block)
+    this._document.iterateWithNativeLayers(layers, null, block)
   }
 
   /**
@@ -55,7 +55,7 @@ export class Group extends Layer {
 
   iterateWithFilter (filter, block) {
     var layers = this.sketchObject.layers()
-    this.sketchDocument.iterateWithNativeLayers(layers, filter, block)
+    this._document.iterateWithNativeLayers(layers, filter, block)
   }
 
   /**
@@ -103,7 +103,7 @@ export class Group extends Layer {
         wrapper[p] = properties[p]
       }
 
-      this.sketchApplication.reloadInspector()
+      this._application.reloadInspector()
       return wrapper
     }
   }

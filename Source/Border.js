@@ -106,7 +106,7 @@ export class Border extends WrappedObject {
     */
   set gradientType (gradientTypeEnum) {
     this.sketchObject.gradientGeneric().gradientType = gradientTypeEnum
-    this.sketchApplication.reloadInspector()
+    this._application.reloadInspector()
   }
 
     /**

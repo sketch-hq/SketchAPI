@@ -25,7 +25,7 @@ export class Layer extends WrappedObject {
     super(layer)
 
     /** @type {Document} The document that this layer belongs to. */
-    this.sketchDocument = document
+    this._document = document
   }
 
   /**
@@ -224,6 +224,16 @@ export class Layer extends WrappedObject {
   }
 
   /**
+  Move this layer to a specified X, Y Position coordinate
+  @param {int} x the X coordinate
+  @param {int} y the y coordinate
+  */
+  moveToPosition (x, y) {
+    this.sketchObject.frame().setLeft(x)
+    this.sketchObject.frame().setTop(y)
+  }
+
+  /**
   Move this layer to the front of its container.
   */
 
@@ -351,6 +361,17 @@ export class Layer extends WrappedObject {
           // add a second layer to the selection - both should be selected
           group.addToSelection()
           tester.assertEqual(page.selectedLayers.length, 2)
+        },
+
+        'testPositionMovement': function (tester) {
+          var document = tester.newTestDocument()
+          var page = document.selectedPage
+          var group = page.newGroup()
+          group.moveToPosition(2,900)
+
+          tester.assertEqual(group.container.sketchObject, page.sketchObject)
+          tester.assertEqual(group.frame.x, 2)
+          tester.assertEqual(group.frame.y,900)
         },
 
         'testContainer': function (tester) {

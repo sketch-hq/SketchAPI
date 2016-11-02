@@ -60,7 +60,7 @@ export class Selection extends WrappedObject {
     this.iterate(function (layer) {
       firstLayer = layer.sketchObject
     })
-    return this._page.sketchDocument.wrapObject(firstLayer)
+    return this.wrapObject(firstLayer)
   }
   /**
       Perform an action once for each layer in the selection, then clear it.
@@ -71,7 +71,7 @@ export class Selection extends WrappedObject {
   iterateThenClear (block) {
     var layers = this.nativeLayers
     this.clear()
-    this._page.sketchDocument.iterateWithNativeLayers(layers, null, block)
+    this._page._document.iterateWithNativeLayers(layers, null, block)
   }
 
   /**
@@ -84,7 +84,7 @@ export class Selection extends WrappedObject {
   iterateWithFilterThenClear (filter, block) {
     var layers = this.nativeLayers
     this.clear()
-    this._page.sketchDocument.iterateWithNativeLayers(layers, filter, block)
+    this._page._document.iterateWithNativeLayers(layers, filter, block)
   }
 
     /**
@@ -94,7 +94,7 @@ export class Selection extends WrappedObject {
     */
 
   iterate (block) {
-    this._page.sketchDocument.iterateWithNativeLayers(this.nativeLayers, null, block)
+    this._page._document.iterateWithNativeLayers(this.nativeLayers, null, block)
   }
 
   /**
@@ -105,7 +105,7 @@ export class Selection extends WrappedObject {
   */
 
   iterateWithFilter (filter, block) {
-    this._page.sketchDocument.iterateWithNativeLayers(this.nativeLayers, filter, block)
+    this._page._document.iterateWithNativeLayers(this.nativeLayers, filter, block)
   }
 
   /**

@@ -33,7 +33,7 @@ export class Shape extends Layer {
      */
 
   get style () {
-    return new Style(this.sketchObject.style(), this.sketchDocument)
+    return new Style(this.sketchObject.style(), this._document)
   }
 
      /**
