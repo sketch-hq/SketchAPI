@@ -49,6 +49,7 @@ module.exports = {
       "NSMaxRange" : true,
       "MSSymbolInstance": true,
       "NSUserDefaults" : true,
+      "NSPredicate" : true,
       "print" : true,
     }
 };

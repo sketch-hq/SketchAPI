@@ -70,8 +70,8 @@ export class Document extends WrappedObject {
     var result = []
     var loop = this.sketchObject.pages().objectEnumerator()
     var item
-    while (item = loop.nextObject()) { //eslint-disable-line
-      result.push(new Page(item, this))
+    while ((item = loop.nextObject())) {
+      result.push(this.wrapObject(item, this))
     }
     return result
   }
@@ -107,14 +107,29 @@ export class Document extends WrappedObject {
   @return {Layer} A layer object, if one was found.
   */
 
-  layerNamed (layerName) {
+  layerNamed (keyword) {
     // As it happens, layerWithID also matches names, so we can implement
     // this method in the same way as layerWithID.
     // That might not always be true though, which is why the JS API splits
     // them into separate functions.
 
-    var layer = this.sketchObject.documentData().layerWithID_(layerName)
+    var predicate = NSPredicate.predicateWithFormat('name LIKE[c] %@', keyword)
+    var allChildren = this.sketchObject.pages().valueForKeyPath('@distinctUnionOfArrays.children')
+    var layer = allChildren.filteredArrayUsingPredicate(predicate).firstObject()
     if (layer) { return this.wrapObject(layer, this) }
+  }
+
+  allLayersNamed (keyword) {
+    var predicate = NSPredicate.predicateWithFormat('name LIKE[c] %@', keyword + '*')
+    var documentLayers = this.sketchObject.pages().valueForKeyPath('@distinctUnionOfArrays.children')
+    var layers = documentLayers.filteredArrayUsingPredicate(predicate).objectEnumerator()
+    var result = []
+    var layer
+    while ((layer = layers.nextObject())) {
+      // log(layers[i])
+      result.push(this.wrapObject(layer, this))
+    }
+    return result
   }
 
   /**

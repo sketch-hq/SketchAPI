@@ -367,7 +367,7 @@ export class Layer extends WrappedObject {
           var document = tester.newTestDocument()
           var page = document.selectedPage
           var group = page.newGroup()
-          group.moveToPosition(2,900)
+          group.moveToPosition(2, 900)
 
           tester.assertEqual(group.container.sketchObject, page.sketchObject)
           tester.assertEqual(group.frame.x, 2)

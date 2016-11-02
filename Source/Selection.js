@@ -45,16 +45,21 @@ export class Selection extends WrappedObject {
     return this.nativeLayers.count()
   }
 
-    /**
-        Does the selection contain any layers?
+  /**
+      Does the selection contain any layers?
 
-        @return {boolean} true if the selection is empty.
-    */
+      @return {boolean} true if the selection is empty.
+  */
 
   get isEmpty () {
     return (this.nativeLayers.count() === 0)
   }
 
+  /**
+    Will Return the First Layer in the selection
+
+    @return {Layer} layer the first Layer found.
+  */
   get first () {
     var firstLayer = null
     this.iterate(function (layer) {
@@ -62,6 +67,7 @@ export class Selection extends WrappedObject {
     })
     return this.wrapObject(firstLayer)
   }
+
   /**
       Perform an action once for each layer in the selection, then clear it.
 
@@ -87,11 +93,11 @@ export class Selection extends WrappedObject {
     this._page._document.iterateWithNativeLayers(layers, filter, block)
   }
 
-    /**
-        Perform an action once for each layer in the selection.
+  /**
+      Perform an action once for each layer in the selection.
 
-        @param {function(layer: Layer)} block The function to execute for each layer.
-    */
+      @param {function(layer: Layer)} block The function to execute for each layer.
+  */
 
   iterate (block) {
     this._page._document.iterateWithNativeLayers(this.nativeLayers, null, block)

@@ -12,11 +12,11 @@ import { Utility } from './Utility.js'
 
 export class Border extends WrappedObject {
 
-    /**
-      Make a new border object.
+  /**
+    Make a new border object.
 
-      @param {MSStyleBorder} border The underlying model object from Sketch.
-    */
+    @param {MSStyleBorder} border The underlying model object from Sketch.
+  */
   constructor (style) {
     if (!style || style === null) {
       style = MSDefaultStyle.defaultStyle().border()
