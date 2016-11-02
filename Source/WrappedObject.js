@@ -37,6 +37,10 @@ export class WrappedObject {
     return Application
   }
 
+  wrapObject (sketchObject, inDocument) {
+    return this.sketchApplication.wrapObject(sketchObject, inDocument)
+  }
+
     /**
       Returns the object ID of the wrapped Sketch model object.
 

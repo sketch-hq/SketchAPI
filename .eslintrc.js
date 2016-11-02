@@ -47,6 +47,7 @@ module.exports = {
       "NSMakeRange" : true,
       "NSMakeRect": true,
       "NSMaxRange" : true,
+      "MSSymbolInstance": true,
       "NSUserDefaults" : true,
       "print" : true,
     }

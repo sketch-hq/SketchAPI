@@ -13,33 +13,33 @@ import { WrappedObject } from './WrappedObject.js'
 
 export class Selection extends WrappedObject {
 
-    /**
-      Make a new Selection object.
+  /**
+    Make a new Selection object.
 
-      @param {Page} page The page that the selection relates to.
-    */
+    @param {Page} page The page that the selection relates to.
+  */
 
   constructor (page) {
     super(page.sketchObject)
     this._page = page
   }
 
-    /**
-      Return the native Sketch layers in the selection.
+  /**
+    Return the native Sketch layers in the selection.
 
-      @return {array} The selected layers.
-      */
+    @return {array} The selected layers.
+  */
 
   get nativeLayers () {
     var layers = this.sketchObject.selectedLayers().layers()
     return layers
   }
 
-    /**
-      Return the number of selected layers.
+  /**
+    Return the number of selected layers.
 
-      @return {number} The number of layers that are selected.
-      */
+    @return {number} The number of layers that are selected.
+  */
 
   get length () {
     return this.nativeLayers.count()
@@ -55,11 +55,18 @@ export class Selection extends WrappedObject {
     return (this.nativeLayers.count() === 0)
   }
 
-    /**
-        Perform an action once for each layer in the selection, then clear it.
+  get first () {
+    var firstLayer = null
+    this.iterate(function (layer) {
+      firstLayer = layer.sketchObject
+    })
+    return this._page.sketchDocument.wrapObject(firstLayer)
+  }
+  /**
+      Perform an action once for each layer in the selection, then clear it.
 
-        @param {function(layer: Layer)} block The function to execute for each layer.
-    */
+      @param {function(layer: Layer)} block The function to execute for each layer.
+  */
 
   iterateThenClear (block) {
     var layers = this.nativeLayers
@@ -67,12 +74,12 @@ export class Selection extends WrappedObject {
     this._page.sketchDocument.iterateWithNativeLayers(layers, null, block)
   }
 
-    /**
-        Perform an action once for each layer in the selection that passes a filter, then clear the selection.
+  /**
+      Perform an action once for each layer in the selection that passes a filter, then clear the selection.
 
-        @param {function(layer: Layer)} filter Filter function called on each layer first to check whether it should be iterated.
-        @param {function(layer: Layer)} block The function to execute for each layer.
-    */
+      @param {function(layer: Layer)} filter Filter function called on each layer first to check whether it should be iterated.
+      @param {function(layer: Layer)} block The function to execute for each layer.
+  */
 
   iterateWithFilterThenClear (filter, block) {
     var layers = this.nativeLayers
@@ -90,30 +97,30 @@ export class Selection extends WrappedObject {
     this._page.sketchDocument.iterateWithNativeLayers(this.nativeLayers, null, block)
   }
 
-    /**
-        Perform an action once for each layer in the selection that passes a filter.
+  /**
+      Perform an action once for each layer in the selection that passes a filter.
 
-        @param {function(layer: Layer)} filter Filter function called on each layer first to check whether it should be iterated.
-        @param {function(layer: Layer)} block The function to execute for each layer.
-    */
+      @param {function(layer: Layer)} filter Filter function called on each layer first to check whether it should be iterated.
+      @param {function(layer: Layer)} block The function to execute for each layer.
+  */
 
   iterateWithFilter (filter, block) {
     this._page.sketchDocument.iterateWithNativeLayers(this.nativeLayers, filter, block)
   }
 
-    /**
-        Clear the selection.
-    */
+  /**
+      Clear the selection.
+  */
 
   clear () {
     this._page.sketchObject.deselectAllLayers()
   }
 
-    /**
-     Return a list of tests to run for this class.
+  /**
+   Return a list of tests to run for this class.
 
-     @return {dictionary} A dictionary containing the tests to run. Each key is the name of a test, each value is a function which takes a Tester instance.
-     */
+   @return {dictionary} A dictionary containing the tests to run. Each key is the name of a test, each value is a function which takes a Tester instance.
+  */
 
   static tests () {
     return {

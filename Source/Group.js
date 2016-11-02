@@ -96,7 +96,7 @@ export class Group extends Layer {
       layer.addLayers_(NSArray.arrayWithObject_(newLayer))
 
         // make a Javascript wrapper object for the new layer
-      wrapper = this.sketchDocument.wrapObject(newLayer)
+      wrapper = this.wrapObject(newLayer)
 
         // apply properties, via the wrapper
       for (var p in properties) {

@@ -22,7 +22,7 @@ import { ColorHelper } from './ColorHelper.js'
 import { Border } from './Border.js'
 import { Fill } from './Fill.js'
 import { Utility } from './Utility.js'
-
+import { Symbol } from './Symbol.js'
 /**
  Gives you access to Sketch, and provides access to:
  - the document model and the layer tree
@@ -67,6 +67,7 @@ export class Application extends WrappedObject {
     this.Border = Border
     this.Fill = Fill
     this.Utility = Utility
+    this.Symbol = Symbol
   }
 
     /**
@@ -222,29 +223,26 @@ export class Application extends WrappedObject {
     print(message)
   }
 
-    /*
-      Forces the Inspector to reload within the client. It's not Document specific
-      but will likely be used within currentDocument anyway.
-    */
+  /*
+    Forces the Inspector to reload within the client. It's not Document specific
+    but will likely be used within currentDocument anyway.
+  */
 
   static reloadInspector () {
       // Meh - there has to be a better way to get this pointer...
-    Application.currentDocument.reloadInspector()
+    Application.selectedNativeDocument.reloadInspector()
   }
 
   static showDialog (title, message) {
     NSApplication.sharedApplication().displayDialog_withTitle(message, title)
   }
 
-  static get currentDocument () {
-    return NSDocumentController.sharedDocumentController().currentDocument()
-  }
-    /**
-     Assert that a given condition is true.
-     If the condition is false, throws an exception.
+  /**
+   Assert that a given condition is true.
+   If the condition is false, throws an exception.
 
-     @param condition An expression that is expected to evaluate to true if everything is ok.
-     */
+   @param condition An expression that is expected to evaluate to true if everything is ok.
+   */
 
   assert (condition) {
     if (!condition) { // eslint-disable-line
@@ -253,25 +251,37 @@ export class Application extends WrappedObject {
     }
   }
 
-    /**
-     The selected document.
+  /**
+   The selected document.
 
-     If the user invoked the script explicitly (for example by selecting a menu item),
-     this will be the document that they were working in at the time - ie the frontmost one.
-     If the script was invoked as an action handler, this will be the document that the action
-     occurred in.
+   If the user invoked the script explicitly (for example by selecting a menu item),
+   this will be the document that they were working in at the time - ie the frontmost one.
+   If the script was invoked as an action handler, this will be the document that the action
+   occurred in.
 
-     @return A Document object.
-     */
+   @return A Document object.
+   */
 
   get selectedDocument () {
     return new Document(this.sketchObject.document, this)
   }
+  /**
+   The selected Native document {MSDocument}.
 
-    /**
-     Create a new document and bring it to the front.
-     @return The new document.
-     */
+   If the user invoked the script explicitly (for example by selecting a menu item),
+   this will be the native document that they were working in at the time - ie the frontmost one.
+   If the script was invoked as an action handler, this will be the document that the action
+   occurred in.
+
+   @return {MSDocument} A Native Document object.
+   */
+  static get selectedNativeDocument () {
+    return NSDocumentController.sharedDocumentController().currentDocument()
+  }
+  /**
+   Create a new document and bring it to the front.
+   @return The new document.
+   */
 
   newDocument () {
     var app = NSDocumentController.sharedDocumentController()
@@ -292,53 +302,54 @@ export class Application extends WrappedObject {
     this.sketchObject.document.showMessage(message)
   }
 
-    /**
-     Show an alert with a custom title and message.
+  /**
+   Show an alert with a custom title and message.
 
-     @param {string} title The title of the alert.
-     @param {string} message The text of the message.
+   @param {string} title The title of the alert.
+   @param {string} message The text of the message.
 
-     The alert is modal, so it will stay around until the user dismisses it
-     by pressing the OK button.
-     */
+   The alert is modal, so it will stay around until the user dismisses it
+   by pressing the OK button.
+   */
 
   alert (title, message) {
     var app = NSApplication.sharedApplication()
     app.displayDialog_withTitle(title, message)
   }
 
-    /**
-     Return a lookup table of known mappings between Sketch model classes
-     and our JS API wrapper classes.
+  /**
+   Return a lookup table of known mappings between Sketch model classes
+   and our JS API wrapper classes.
 
-     @return {dictionary} A dictionary with keys for the Sketch Model classes, and values for the corresponding API wrapper classes.
-     */
+   @return {dictionary} A dictionary with keys for the Sketch Model classes, and values for the corresponding API wrapper classes.
+   */
 
-  wrapperMappings () {
+  static wrapperMappings () {
     var mappings = {
       MSLayerGroup: Group,
       MSPage: Page,
       MSArtboardGroup: Artboard,
       MSShapeGroup: Shape,
       MSBitmapLayer: Image,
-      MSTextLayer: Text
+      MSTextLayer: Text,
+      MSSymbolInstance: Symbol
     }
     return mappings
   }
 
-    /**
-     Return a wrapped version of a Sketch object.
-     We don't know about *all* Sketch object types, but
-     for some we will return a special subclass.
-     The fallback position is just to return an instance of WrappedObject.
+  /**
+   Return a wrapped version of a Sketch object.
+   We don't know about *all* Sketch object types, but
+   for some we will return a special subclass.
+   The fallback position is just to return an instance of WrappedObject.
 
-     @param {object} sketchObject The underlying sketch object that we're wrapping.
-     @param {Document} inDocument The wrapped document that this object is part of.
-     @return {WrappedObject} A javascript object (subclass of WrappedObject), which represents the Sketch object we were given.
-    */
+   @param {object} sketchObject The underlying sketch object that we're wrapping.
+   @param {Document} inDocument The wrapped document that this object is part of.
+   @return {WrappedObject} A javascript object (subclass of WrappedObject), which represents the Sketch object we were given.
+  */
 
-  wrapObject (sketchObject, inDocument) {
-    var mapping = this.wrapperMappings()
+  static wrapObject (sketchObject, inDocument) {
+    var mapping = Application.wrapperMappings()
 
     var jsClass = mapping[sketchObject.class()]
     if (!jsClass) {
@@ -349,14 +360,14 @@ export class Application extends WrappedObject {
     return new jsClass(sketchObject, inDocument)
   }
 
-    /**
-     Return a list of tests to run for this class.
+  /**
+   Return a list of tests to run for this class.
 
-     We could do some fancy introspection here to derive the tests from
-     the class, but for now we're opting for the simple approach.
+   We could do some fancy introspection here to derive the tests from
+   the class, but for now we're opting for the simple approach.
 
-     @return {dictionary} A dictionary containing the tests to run. Each key is the name of a test, each value is a function which takes a Tester instance.
-     */
+   @return {dictionary} A dictionary containing the tests to run. Each key is the name of a test, each value is a function which takes a Tester instance.
+   */
 
   static tests () {
     return {
@@ -379,14 +390,14 @@ export class Application extends WrappedObject {
                 /** @test {Application#wrapObject} */
         testWrapObject (tester) {
           var classesToTest = [MSLayerGroup, MSPage, MSArtboardGroup, MSShapeGroup, MSBitmapLayer, MSTextLayer]
-          var mappings = tester.application.wrapperMappings()
+          var mappings = Application.wrapperMappings()
 
           for (var index in classesToTest) {
             var classToTest = classesToTest[index]
             var frame = NSMakeRect(0, 0, 100, 100)
             var object = classToTest.alloc().initWithFrame(frame)
             var mockDocument = {}
-            var wrapped = tester.application.wrapObject(object, mockDocument)
+            var wrapped = Application.wrapObject(object, mockDocument)
 
             tester.assertEqual(wrapped.sketchObject, object)
             tester.assertEqual(wrapped.sketchDocument, mockDocument)
@@ -397,15 +408,15 @@ export class Application extends WrappedObject {
     }
   }
 
-    /**
-     Run all of our internal unit tests.
-     Returns a dictionary indicating how many tests ran, passed, failed, and crashed,
-     and a list of more detailed information for each failure.
+  /**
+   Run all of our internal unit tests.
+   Returns a dictionary indicating how many tests ran, passed, failed, and crashed,
+   and a list of more detailed information for each failure.
 
-     At some point we may switch to using Mocha or some other test framework, but for
-     now we want to be able to invoke the tests from the Sketch side or from a plugin
-     command, so it's simpler to use a simple test framework of our own devising.
-     */
+   At some point we may switch to using Mocha or some other test framework, but for
+   now we want to be able to invoke the tests from the Sketch side or from a plugin
+   command, so it's simpler to use a simple test framework of our own devising.
+   */
 
   runUnitTests () {
     var tests = {
@@ -425,7 +436,8 @@ export class Application extends WrappedObject {
         'Style': Style.tests(),
         'Border': Border.tests(),
         'Fill': Fill.tests(),
-        'ColorHelper': ColorHelper.tests()
+        'ColorHelper': ColorHelper.tests(),
+        'Symbol': Symbol.tests()
       }
     }
 

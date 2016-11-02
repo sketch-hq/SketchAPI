@@ -98,7 +98,7 @@ export class Document extends WrappedObject {
   newPage (name) {
     var pge = this.sketchObject.addBlankPage()
     pge.setName(name)
-    return this._application.wrapObject(pge, this)
+    return this.wrapObject(pge, this)
   }
 
   /**
@@ -114,7 +114,7 @@ export class Document extends WrappedObject {
     // them into separate functions.
 
     var layer = this.sketchObject.documentData().layerWithID_(layerName)
-    if (layer) { return this._application.wrapObject(layer, this) }
+    if (layer) { return this.wrapObject(layer, this) }
   }
 
   /**
@@ -160,10 +160,6 @@ export class Document extends WrappedObject {
 
   centerOnLayer (layer) {
     this.sketchObject.currentView().centerRect_(layer.sketchObject.rect())
-  }
-
-  wrapObject (layer) {
-    return this._application.wrapObject(layer, this)
   }
 
   /**

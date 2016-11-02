@@ -76,7 +76,7 @@ export class Layer extends WrappedObject {
   /**
   Is this a page?
 
-  All Layer objects respond to this method, but only pages return true.
+  All Layer objects respond to this method, but only {Page} return true.
 
   @return {bool} true for instances of Group, false for any other layer type.
   */
@@ -86,7 +86,7 @@ export class Layer extends WrappedObject {
   /**
   Is this an artboard?
 
-  All Layer objects respond to this method, but only Artboard objects return true.
+  All Layer objects respond to this method, but only {Artboard} objects return true.
 
   @return true for instances of Artboard, false for any other layer type.
   */
@@ -96,7 +96,7 @@ export class Layer extends WrappedObject {
   /**
   Is this a group?
 
-  All Layer objects respond to this method, but only Groups or things that inherit from groups return true.
+  All Layer objects respond to this method, but only {Group} or things that inherit from groups return true.
 
   @return {bool} true for instances of Group, false for any other layer type.
   */
@@ -106,7 +106,7 @@ export class Layer extends WrappedObject {
   /**
   Is this a text layer?
 
-  All Layer objects respond to this method, but only text layers return true.
+  All Layer objects respond to this method, but only {Text} layers return true.
 
   @return {bool} true for instances of Group, false for any other layer type.
   */
@@ -116,7 +116,7 @@ export class Layer extends WrappedObject {
   /**
   Is this a shape layer?
 
-  All Layer objects respond to this method, but only shape layers (rectangles, ovals, paths etc) return true.
+  All Layer objects respond to this method, but only {Shape} layers (rectangles, ovals, paths etc) return true.
 
   @return {bool} true for instances of Group, false for any other layer type.
   */
@@ -126,12 +126,21 @@ export class Layer extends WrappedObject {
   /**
   Is this an image layer?
 
-  All Layer objects respond to this method, but only image layers return true.
+  All Layer objects respond to this method, but only {Image} layers return true.
 
   @return {bool} true for instances of Group, false for any other layer type.
   */
 
   get isImage () { return false }
+
+  /**
+  Is this a Symbol layer?
+
+  All Layer objects respond to this method, but only {Symbol} layers return true.
+
+  @return {bool} true for instances of Group, false for any other layer type.
+  */
+  get isSymbol () { return false }
 
   /**
   Duplicate this layer.
@@ -144,7 +153,7 @@ export class Layer extends WrappedObject {
     var object = this.sketchObject
     var duplicate = object.copy()
     object.parentGroup().insertLayers_afterLayer_([duplicate], object)
-    return this.sketchDocument.wrapObject(duplicate)
+    return this.wrapObject(duplicate)
   }
 
   /**
@@ -193,7 +202,7 @@ export class Layer extends WrappedObject {
   */
 
   get container () {
-    return this.sketchDocument.wrapObject(this.sketchObject.parentGroup())
+    return this.wrapObject(this.sketchObject.parentGroup())
   }
 
   /**
