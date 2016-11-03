@@ -8,18 +8,8 @@
 import { WrappedObject } from './WrappedObject.js'
 import { ColorHelper } from './ColorHelper.js'
 import { Fill } from './Fill.js'
+import { Border } from './Border.js'
 import { Utility } from './Utility.js'
-// / A solid fill/border.
-const BCFillTypeColor = 0
-
-// / A gradient fill/border.
-const BCFillTypeGradient = 1 //eslint-disable-line
-
-// / A pattern fill/border.
-const BCFillTypePattern = 4 //eslint-disable-line
-
-// / A noise fill/border.
-const BCFillTypeNoise = 5 //eslint-disable-line
 
 /**
   Represents a Sketch layer style.
@@ -57,21 +47,32 @@ export class Style extends WrappedObject {
 
     */
 
-  set borders (value) {
+  set borders (borderValue) {
     var objects = []
-    for (var b in value) {
-      var color = ColorHelper.hexToNativeColorFormat(value[b])
-      var border = MSStyleBorder.new()
-      border.setColor_(color)
-      border.setFillType_(BCFillTypeColor)
-      border.enabled = true
-      objects.push(border)
+
+    for (var b in borderValue) {
+      if (b instanceof Border) {
+        objects.push(b.nativeStyle)
+      } else {
+        var borderInstance = new Border()
+        borderInstance.flatColor = borderValue[b]
+        borderInstance.enabled = true
+        borderInstance.gradientType = Utility.GradientType.flat
+        objects.push(borderInstance.nativeStyle)
+      }
     }
     this.sketchObject.setBorders_(objects)
   }
 
   get borders () {
-    return this.sketchObject.borders()
+    var allBorders = this.sketchObject.borders().objectEnumerator()
+    var result = []
+    var border
+    while ((border = allBorders.nextObject())) {
+      var borderInstance = new Border(border)
+      result.push(borderInstance)
+    }
+    return result
   }
 
     /**
@@ -152,8 +153,29 @@ export class Style extends WrappedObject {
       'tests': {
         'testBorders': function (tester) {
           var style = new Style()
-          style.borders = [ '#AABBCC', '#AABBDD' ]
-          tester.assertEqual(style.borders.count(), 2)
+          var hexFills = [ '#AABBCC', '#AABBDD' ]
+
+          style.borders = hexFills
+          var resolvedHexFills = style.borders
+
+          tester.assertEqual(style.borders.length, 2)
+          tester.assertEqual(resolvedHexFills.length, 2)
+          tester.assertTrue(resolvedHexFills[0] instanceof Border)
+          tester.assertEqual(resolvedHexFills[0].flatColor, hexFills[0])
+          tester.assertEqual(resolvedHexFills[1].flatColor, hexFills[1])
+        },
+        'testNativeBorders': function (tester) {
+          var style = new Style()
+          var nativeFills = [ColorHelper.hexToNativeColorFormat('#AABBCC'), ColorHelper.hexToNativeColorFormat('#AABBDD')]
+
+          style.borders = nativeFills
+
+          var resolvedFills = style.borders
+          tester.assertEqual(style.borders.length, 2)
+          tester.assertEqual(resolvedFills.length, 2)
+          tester.assertTrue(resolvedFills[0] instanceof Border)
+          tester.assertEqual(resolvedFills[0].flatColor, ColorHelper.nativeToHex(nativeFills[0]))
+          tester.assertEqual(resolvedFills[1].flatColor, ColorHelper.nativeToHex(nativeFills[1]))
         },
         'testNativeFills': function (tester) {
           var style = new Style()

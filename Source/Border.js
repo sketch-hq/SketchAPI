@@ -17,69 +17,79 @@ export class Border extends WrappedObject {
 
     @param {MSStyleBorder} border The underlying model object from Sketch.
   */
-  constructor (style) {
-    if (!style || style === null) {
-      style = MSDefaultStyle.defaultStyle().border()
+  constructor (borderStyle) {
+    if (!borderStyle || borderStyle === null) {
+      borderStyle = MSDefaultStyle.defaultStyle().border()
 
-            // Automatically unpacks the current border style and enables a pointer
-            // to the setting(s). If there are multiple borders it will simply only
-            // choose border at the bottom of the stack.
-    } else if (style.isShape) {
-      style = style.sketchObject.style().borders().firstObject() // Not without firstObject it will pick first Enabled;
+    // Automatically unpacks the current fill style and enables a pointer
+    // to the setting(s). If there are multiple fills it will simply only
+    // choose border at the bottom of the stack.
+    } else if (borderStyle.isShape) {
+      borderStyle = borderStyle.sketchObject.style().borders().firstObject() // Not without firstObject it will pick first Enabled;
     }
-    super(style)
+    super(borderStyle)
   }
 
-    /**
-      Returns Flat color for this border.
+  /**
+    Returns Flat color for this border.
 
-      @return {MSColor} Flat Color used for border
-    */
+    @return {MSColor} Flat Color used for border
+  */
   get flatColor () {
-    return this.sketchObject.color()
+    return ColorHelper.nativeToHex(this.sketchObject.color())
   }
 
-    /**
-      Sets the Flat color for this border.
+  /**
+    Sets the Flat color for this border.
 
-      @param {object} value Hex/Int/MSColor color code.
-    */
+    @param {object} value Hex/Int/MSColor color code.
+  */
   set flatColor (value) {
-    var hexToNSColor = ColorHelper.hexToNativeColorFormat(value)
-    this.sketchObject.color = hexToNSColor
+    var msColor = ColorHelper.anyToNativeColorFormat(value)
+    this.sketchObject.color = msColor
   }
 
+  /**
+    Gets the border thickness amount
+
+    @return {int} thickness Thickness size
+  */
   get thickness () {
     return this.sketchObject.thickness()
   }
 
-    /**
-      Sets border thickness amount
+  /**
+    Sets border thickness amount
 
-      @param {object} value Thickness size
-    */
+    @param {object} value Thickness size
+  */
   set thickness (value) {
     this.sketchObject.setThickness(value)
   }
 
+  /**
+    Gets the border Center/Inside/Outside position
+
+    @return {BorderPosition} borderPosition border position
+  */
   get position () {
     return this.sketchObject.position()
   }
 
-    /**
-      Sets the Border position
+  /**
+    Gets the border Center/Inside/Outside position
 
-      @param {BorderPosition} borderPosition Center/Inside/Outside position
-    */
+    @param {BorderPosition} borderPosition border position
+  */
   set position (borderPosition) {
     this.sketchObject.position = borderPosition
   }
 
-    /**
-      Sets the Border enabled/disabled state.
+  /**
+    Sets the Border enabled/disabled state.
 
-      @param {bool} value is border enabled?
-    */
+    @param {bool} value is border enabled?
+  */
   set enabled (value) {
     this.sketchObject.isEnabled = value
   }
@@ -98,21 +108,30 @@ export class Border extends WrappedObject {
     return this.sketchObject.gradientGeneric().gradientType()
   }
 
-    /**
-      Sets what type of Gradient Type this border will use.
+  /**
+    Sets what type of Gradient Type this border will use.
 
-      @param {GradientType} Gradient Type to use (flat, linear, radial, angular)
-    */
+    @param {GradientType} Gradient Type to use (flat, linear, radial, angular)
+  */
   set gradientType (gradientTypeEnum) {
     this.sketchObject.gradientGeneric().gradientType = gradientTypeEnum
     Application.reloadInspector()
   }
 
-    /**
-    Return a list of tests to run for this class.
+  get nativeStyle () {
+    return this.sketchObject
+  }
 
-    @return {dictionary} A dictionary containing the tests to run. Each key is the name of a test, each value is a function which takes a Tester instance.
-    */
+  set nativeStyle (value) {
+    if (value instanceof MSStyleBorder) {
+      this.sketchObject = value
+    }
+  }
+  /**
+  Return a list of tests to run for this class.
+
+  @return {dictionary} A dictionary containing the tests to run. Each key is the name of a test, each value is a function which takes a Tester instance.
+  */
 
   static tests () {
     return {
@@ -154,8 +173,9 @@ export class Border extends WrappedObject {
 
         'testBorderFlatColor': function (tester) {
           var border = new Border()
-          border.flatColor = '#AABBCC'
-          tester.assertEqual(border.flatColor.hexValue(), 'AABBCC')
+          var hexColor = '#AABBCC'
+          border.flatColor = hexColor
+          tester.assertEqual(border.flatColor, hexColor)
         },
 
         'testBorderEnabled': function (tester) {
