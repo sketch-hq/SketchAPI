@@ -6,7 +6,8 @@
 // ********************************
 
 import { WrappedObject } from './WrappedObject.js'
-
+import { Application } from './Application.js'
+import { ColorHelper } from './ColorHelper.js'
 /**
  Gives you access to Sketch, and provides access to:
  - the document model and the layer tree
@@ -17,19 +18,30 @@ import { WrappedObject } from './WrappedObject.js'
 export class Fill extends WrappedObject {
     /**
       Make a new fill object.
-      @param {MSStyleFill} border The underlying model object from Sketch.
+      @param {object} fill The underlying model object from Sketch.
     */
-  constructor (style) {
-    if (!style || style === null) {
-      style = MSDefaultStyle.defaultStyle().fill()
+  constructor (fillStyle) {
+    // If a {MSSStyleFill} is passed in, it will automatically connect it
+    // to this.sketchObject.
 
-            // Automatically unpacks the current fill style and enables a pointer
-            // to the setting(s). If there are multiple fills it will simply only
-            // choose border at the bottom of the stack.
-    } else if (style.isShape) {
-      style = style.sketchObject.style().fills().firstObject() // Not without firstObject it will pick first Enabled;
+    if (!fillStyle || fillStyle === null) {
+      fillStyle = MSDefaultStyle.defaultStyle().fill()
+
+    // Automatically unpacks the current fill style and enables a pointer
+    // to the setting(s). If there are multiple fills it will simply only
+    // choose border at the bottom of the stack.
+    } else if (fillStyle.isShape) {
+      fillStyle = fillStyle.sketchObject.style().fills().firstObject() // Not without firstObject it will pick first Enabled;
     }
-    super(style)
+    super(fillStyle)
+  }
+  get color () {
+    return ColorHelper.nativeToHex(this.sketchObject.color())
+  }
+
+  set color (value) {
+    var msColor = ColorHelper.anyToNativeColorFormat(value)
+    this.sketchObject.color = msColor
   }
 
   get opacity () {
@@ -46,6 +58,49 @@ export class Fill extends WrappedObject {
 
   get blendingMode () {
     return this.sketchObject.contextSettingsGeneric().blendMode()
+  }
+
+  get nativeStyle () {
+    return this.sketchObject
+  }
+
+  set nativeStyle (value) {
+    if (value instanceof MSStyleFill) {
+      this.sketchObject = value
+    }
+  }
+
+  /**
+    Sets the Border enabled/disabled state.
+
+    @param {bool} value is border enabled?
+  */
+  set enabled (value) {
+    this.sketchObject.isEnabled = value
+  }
+
+  /**
+    Gets the Border enabled/disabled state.
+  */
+  get enabled () {
+    return this.sketchObject.isEnabled()
+  }
+
+  /**
+    Gets what type of Gradient Type this border is using.
+  */
+  get gradientType () {
+    return this.sketchObject.gradientGeneric().gradientType()
+  }
+
+  /**
+    Sets what type of Gradient Type this border will use.
+
+    @param {GradientType} Gradient Type to use (flat, linear, radial, angular)
+  */
+  set gradientType (gradientTypeEnum) {
+    this.sketchObject.gradientGeneric().gradientType = gradientTypeEnum
+    Application.reloadInspector()
   }
 
   /**

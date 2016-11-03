@@ -36,7 +36,6 @@ export class Border extends WrappedObject {
       @return {MSColor} Flat Color used for border
     */
   get flatColor () {
-        // TODO : Color needs to route to MSStyleBorder filLType
     return this.sketchObject.color()
   }
 
@@ -46,7 +45,6 @@ export class Border extends WrappedObject {
       @param {object} value Hex/Int/MSColor color code.
     */
   set flatColor (value) {
-        // TODO : Create internal overloader that routes color conversion based on type (hex, int etc)
     var hexToNSColor = ColorHelper.hexToNativeColorFormat(value)
     this.sketchObject.color = hexToNSColor
   }
@@ -86,16 +84,16 @@ export class Border extends WrappedObject {
     this.sketchObject.isEnabled = value
   }
 
-    /**
-      Gets the Border enabled/disabled state.
-    */
+  /**
+    Gets the Border enabled/disabled state.
+  */
   get enabled () {
     return this.sketchObject.isEnabled()
   }
 
-    /**
-      Gets what type of Gradient Type this border is using.
-    */
+  /**
+    Gets what type of Gradient Type this border is using.
+  */
   get gradientType () {
     return this.sketchObject.gradientGeneric().gradientType()
   }

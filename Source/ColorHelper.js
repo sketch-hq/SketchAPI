@@ -6,7 +6,6 @@
 // ********************************
 
 import {WrappedObject} from './WrappedObject.js'
-
 export class ColorHelper extends WrappedObject {
 
     /**
@@ -87,6 +86,27 @@ export class ColorHelper extends WrappedObject {
     return MSColor.alloc().initWithImmutableObject_(immutable)
   }
 
+  static isHex (hexValue) {
+    var re = /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i
+    var ishex = re.test(hexValue)
+    re.lastIndex = 0
+    return ishex
+  }
+
+  static anyToNativeColorFormat (value) {
+    var isHex = ColorHelper.isHex(value)
+
+    if (typeof value === 'string' || isHex) {
+      value = ColorHelper.hexToNativeColorFormat(value)
+    } else if (!value.isKindOfClass(MSColor)) {
+      log('ERROR: ColorHelper.toNativeColorFormat -  Cannot resolve this type of Color')
+    }
+    return value
+  }
+
+  static nativeToHex (mscolor) {
+    return '#' + mscolor.hexValue().toUpperCase()
+  }
     /**
       Converts HSV Color values to RGB
 

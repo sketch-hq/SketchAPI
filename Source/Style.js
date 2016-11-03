@@ -7,7 +7,8 @@
 
 import { WrappedObject } from './WrappedObject.js'
 import { ColorHelper } from './ColorHelper.js'
-
+import { Fill } from './Fill.js'
+import { Utility } from './Utility.js'
 // / A solid fill/border.
 const BCFillTypeColor = 0
 
@@ -112,22 +113,32 @@ export class Style extends WrappedObject {
 
     */
 
-  set fills (value) {
+  set fills (fillValue) {
     var objects = []
-    for (var b in value) {
-      var color = ColorHelper.hexToNativeColorFormat(value[b])
-      var fill = MSStyleFill.new()
-      fill.setColor_(color)
-      fill.setFillType_(BCFillTypeColor)
-      fill.enabled = true
 
-      objects.push(fill)
+    for (var f in fillValue) {
+      if (f instanceof Fill) {
+        objects.push(f.nativeStyle)
+      } else {
+        var fillInstance = new Fill()
+        fillInstance.color = fillValue[f]
+        fillInstance.enabled = true
+        fillInstance.gradientType = Utility.GradientType.flat
+        objects.push(fillInstance.nativeStyle)
+      }
     }
     this.sketchObject.setFills_(objects)
   }
 
   get fills () {
-    return this.sketchObject.fills()
+    var allFills = this.sketchObject.fills().objectEnumerator()
+    var result = []
+    var fill
+    while ((fill = allFills.nextObject())) {
+      var fillInstance = new Fill(fill)
+      result.push(fillInstance)
+    }
+    return result
   }
 
     /**
@@ -141,14 +152,35 @@ export class Style extends WrappedObject {
       'tests': {
         'testBorders': function (tester) {
           var style = new Style()
-          style.borders = [ '#11223344', '#1234' ]
+          style.borders = [ '#AABBCC', '#AABBDD' ]
           tester.assertEqual(style.borders.count(), 2)
+        },
+        'testNativeFills': function (tester) {
+          var style = new Style()
+          var nativeFills = [ColorHelper.hexToNativeColorFormat('#AABBCC'), ColorHelper.hexToNativeColorFormat('#AABBDD')]
+
+          style.fills = nativeFills
+
+          var resolvedFills = style.fills
+          tester.assertEqual(style.fills.length, 2)
+          tester.assertEqual(resolvedFills.length, 2)
+          tester.assertTrue(resolvedFills[0] instanceof Fill)
+          tester.assertEqual(resolvedFills[0].color, ColorHelper.nativeToHex(nativeFills[0]))
+          tester.assertEqual(resolvedFills[1].color, ColorHelper.nativeToHex(nativeFills[1]))
         },
 
         'testFills': function (tester) {
           var style = new Style()
-          style.fills = [ '#11223344', '#1234' ]
-          tester.assertEqual(style.fills.count(), 2)
+          var hexFills = [ '#AABBCC', '#AABBDD' ]
+
+          style.fills = hexFills
+          var resolvedHexFills = style.fills
+
+          tester.assertEqual(style.fills.length, 2)
+          tester.assertEqual(resolvedHexFills.length, 2)
+          tester.assertTrue(resolvedHexFills[0] instanceof Fill)
+          tester.assertEqual(resolvedHexFills[0].color, hexFills[0])
+          tester.assertEqual(resolvedHexFills[1].color, hexFills[1])
         }
 
       }
