@@ -20,20 +20,32 @@ export class Fill extends WrappedObject {
       Make a new fill object.
       @param {object} fill The underlying model object from Sketch.
     */
-  constructor (fillStyle) {
-    // If a {MSSStyleFill} is passed in, it will automatically connect it
-    // to this.sketchObject.
+  constructor (value) {
+    var defaultFillStyle = MSDefaultStyle.defaultStyle().fill()
+    var isHex = ColorHelper.isHex(value)
 
-    if (!fillStyle || fillStyle === null) {
-      fillStyle = MSDefaultStyle.defaultStyle().fill()
-
-    // Automatically unpacks the current fill style and enables a pointer
-    // to the setting(s). If there are multiple fills it will simply only
-    // choose border at the bottom of the stack.
-    } else if (fillStyle.isShape) {
-      fillStyle = fillStyle.sketchObject.style().fills().firstObject() // Not without firstObject it will pick first Enabled;
+    if (!isHex && value) {
+      if ((value instanceof MSStyleFill)) {
+        defaultFillStyle = value
+      // Automatically unpacks the current fill style and enables a pointer
+      // to the setting(s). If there are multiple fills it will simply only
+      // choose border at the bottom of the stack.
+      } else if ((value instanceof MSColor)) {
+        isHex = true
+        value = ColorHelper.nativeToHex(value)
+      } else if (value.isShape) {
+        // If no borders are added to this shape, then just ignore it.
+        if (value.fills.length > 0) {
+          defaultFillStyle = value.style.fill // Not without firstObject it will pick first Enabled;
+        }
+      }
     }
-    super(fillStyle)
+
+    super(defaultFillStyle)
+
+    if (isHex) {
+      this.color = value
+    }
   }
   get color () {
     return ColorHelper.nativeToHex(this.sketchObject.color())

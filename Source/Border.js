@@ -17,17 +17,32 @@ export class Border extends WrappedObject {
 
     @param {MSStyleBorder} border The underlying model object from Sketch.
   */
-  constructor (borderStyle) {
-    if (!borderStyle || borderStyle === null) {
-      borderStyle = MSDefaultStyle.defaultStyle().border()
+  constructor (value) {
+    var defaultBorderStyle = MSDefaultStyle.defaultStyle().border()
+    var isHex = ColorHelper.isHex(value)
 
-    // Automatically unpacks the current fill style and enables a pointer
-    // to the setting(s). If there are multiple fills it will simply only
-    // choose border at the bottom of the stack.
-    } else if (borderStyle.isShape) {
-      borderStyle = borderStyle.sketchObject.style().borders().firstObject() // Not without firstObject it will pick first Enabled;
+    if (!isHex && value) {
+      if ((value instanceof MSStyleBorder)) {
+        defaultBorderStyle = value
+      // Automatically unpacks the current fill style and enables a pointer
+      // to the setting(s). If there are multiple fills it will simply only
+      // choose border at the bottom of the stack.
+      } else if ((value instanceof MSColor)) {
+        isHex = true
+        value = ColorHelper.nativeToHex(value)
+      } else if (value.isShape) {
+        // If no borders are added to this shape, then just ignore it.
+        if (value.borders.length > 0) {
+          defaultBorderStyle = value.style.border // Not without firstObject it will pick first Enabled;
+        }
+      }
     }
-    super(borderStyle)
+
+    super(defaultBorderStyle)
+
+    if (isHex) {
+      this.flatColor = value
+    }
   }
 
   /**

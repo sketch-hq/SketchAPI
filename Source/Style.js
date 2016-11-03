@@ -30,23 +30,17 @@ export class Style extends WrappedObject {
     super(style)
   }
 
-    /**
-      Set the borders to use for this style.
+  /**
+    Set the borders to use for this style.
 
-      The value provided is a list of items, with each one representing a style.
+    The value provided is a list of items, with each one representing a style.
 
-      Currently these values can only be strings with css-style color specifications
-      such as #ffee33 (alpha values are supported too, so #aabbccdd is valid).
+    Currently these values can be both strings (with css-style color specifications
+    such as #ffee33 (alpha values are supported too, so #aabbccdd is valid)) and {Border}.
 
-      These strings are used to create simple borders.
+    @param {array} borderValues A list of colors or {Border} - each one representing a border to create.
 
-      In the future the intention is to also support dictionaries allowing gradients
-      and other more complex border parameters to be specified.
-
-      @param {array} values A list of colors - each one representing a border to create.
-
-    */
-
+  */
   set borders (borderValue) {
     var objects = []
 
@@ -64,55 +58,70 @@ export class Style extends WrappedObject {
     this.sketchObject.setBorders_(objects)
   }
 
+  /**
+    Retrieves a an array of {Border} that represents the current styles
+    border options.
+
+    @return {array} borderValues - A list of Border(s)
+  */
   get borders () {
     var allBorders = this.sketchObject.borders().objectEnumerator()
     var result = []
-    var border
-    while ((border = allBorders.nextObject())) {
-      var borderInstance = new Border(border)
+    var b
+    while ((b = allBorders.nextObject())) {
+      var borderInstance = new Border(b)
       result.push(borderInstance)
     }
     return result
   }
 
-    /**
-      Returns the primary Fill for this Style.
-    */
+  /**
+    Returns the primary Border for this Style.
+  */
+  get border () {
+    return new Border(this.sketchObject.border())
+  }
+
+  /**
+    Returns the primary Fill for this Style.
+  */
+  set border (value) {
+    if (value instanceof Border) {
+      this.sketchObject.border = value.nativeStyle
+    } else {
+      this.sketchObject.border = new Border(value).nativeStyle
+    }
+  }
+
+  /**
+    Returns the primary Fill for this Style.
+  */
   get fill () {
-    return this.sketchObject.fill()
+    return new Fill(this.sketchObject.fill())
   }
 
-    /**
-      Returns whether the primary Fill for this Style isEnabled
-    */
-  get fillEnabled () {
-      // Prefer to have an 'isEmpty' as performing Counts isn't a great performance moment.
-    return this.sketchObject.fill().isEnabled()
+  /**
+    Returns the primary Fill for this Style.
+  */
+  set fill (value) {
+    if (value instanceof Fill) {
+      this.sketchObject.fill = value.nativeStyle
+    } else {
+      this.sketchObject.fill = new Fill(value).nativeStyle
+    }
   }
 
-    /**
-      Returns the primary fill Type.
-    */
-  get fillType () {
-    return this.sketchObject.fill().fillType()
-  }
+  /**
+    Set the fills to use for this style.
 
-    /**
-      Set the fills to use for this style.
+    The value provided is a list of items, with each one representing a style.
 
-      The value provided is a list of items, with each one representing a style.
+    Currently these values can be both strings (with css-style color specifications
+    such as #ffee33 (alpha values are supported too, so #aabbccdd is valid)) and {Fill}.
 
-      Currently these values can only be strings with css-style color specifications
-      such as #ffee33 (alpha values are supported too, so #aabbccdd is valid).
+    @param {array} fillValues A list of colors or {Fill} - each one representing a fill to create.
 
-      These strings are used to create simple fills.
-
-      In the future the intention is to also support dictionaries allowing gradients
-      and other more complex fill parameters to be specified.
-
-      @param {array} values A list of colors - each one representing a fill to create.
-
-    */
+  */
 
   set fills (fillValue) {
     var objects = []
@@ -131,6 +140,12 @@ export class Style extends WrappedObject {
     this.sketchObject.setFills_(objects)
   }
 
+  /**
+    Retrieves a an array of {Fill} that represents the current styles
+    border options.
+
+    @return {array} fillValues - A list of Fill(s)
+  */
   get fills () {
     var allFills = this.sketchObject.fills().objectEnumerator()
     var result = []
@@ -142,15 +157,32 @@ export class Style extends WrappedObject {
     return result
   }
 
-    /**
-     Return a list of tests to run for this class.
+  /**
+   Return a list of tests to run for this class.
 
-     @return {dictionary} A dictionary containing the tests to run. Each key is the name of a test, each value is a function which takes a Tester instance.
-     */
-
+   @return {dictionary} A dictionary containing the tests to run. Each key is the name of a test, each value is a function which takes a Tester instance.
+   */
   static tests () {
     return {
       'tests': {
+        'testSingleBorder': function (tester) {
+          var style = new Style()
+          var hex = '#FFBBAA'
+
+          style.border = hex
+          var resolvedBorder = style.border
+          tester.assertEqual(style.borders.length, 1)
+          tester.assertTrue(resolvedBorder instanceof Border)
+          tester.assertEqual(resolvedBorder.flatColor, hex)
+
+          var nativeColor = ColorHelper.hexToNativeColorFormat(hex)
+          var nativeHex = ColorHelper.nativeToHex(nativeColor)
+          tester.assertEqual(nativeHex, hex)
+          style.border = nativeColor
+          var resolvedColor = style.border.flatColor
+          tester.assertEqual(nativeHex, resolvedColor)
+        },
+
         'testBorders': function (tester) {
           var style = new Style()
           var hexFills = [ '#AABBCC', '#AABBDD' ]
@@ -164,9 +196,10 @@ export class Style extends WrappedObject {
           tester.assertEqual(resolvedHexFills[0].flatColor, hexFills[0])
           tester.assertEqual(resolvedHexFills[1].flatColor, hexFills[1])
         },
+
         'testNativeBorders': function (tester) {
           var style = new Style()
-          var nativeFills = [ColorHelper.hexToNativeColorFormat('#AABBCC'), ColorHelper.hexToNativeColorFormat('#AABBDD')]
+          var nativeFills = [ColorHelper.hexToNativeColorFormat('#112233'), ColorHelper.hexToNativeColorFormat('#444444')]
 
           style.borders = nativeFills
 
@@ -177,23 +210,26 @@ export class Style extends WrappedObject {
           tester.assertEqual(resolvedFills[0].flatColor, ColorHelper.nativeToHex(nativeFills[0]))
           tester.assertEqual(resolvedFills[1].flatColor, ColorHelper.nativeToHex(nativeFills[1]))
         },
-        'testNativeFills': function (tester) {
+        'testSingleFill': function (tester) {
           var style = new Style()
-          var nativeFills = [ColorHelper.hexToNativeColorFormat('#AABBCC'), ColorHelper.hexToNativeColorFormat('#AABBDD')]
+          var hex = '#DDFFAA'
 
-          style.fills = nativeFills
+          style.fill = hex
+          var resolvedFill = style.fill
+          tester.assertEqual(style.fills.length, 1)
+          tester.assertTrue(resolvedFill instanceof Fill)
+          tester.assertEqual(resolvedFill.color, hex)
 
-          var resolvedFills = style.fills
-          tester.assertEqual(style.fills.length, 2)
-          tester.assertEqual(resolvedFills.length, 2)
-          tester.assertTrue(resolvedFills[0] instanceof Fill)
-          tester.assertEqual(resolvedFills[0].color, ColorHelper.nativeToHex(nativeFills[0]))
-          tester.assertEqual(resolvedFills[1].color, ColorHelper.nativeToHex(nativeFills[1]))
+          var nativeColor = ColorHelper.hexToNativeColorFormat(hex)
+          var nativeHex = ColorHelper.nativeToHex(nativeColor)
+          tester.assertEqual(nativeHex, hex)
+          style.fill = nativeColor
+          var resolvedColor = style.fill.color
+          tester.assertEqual(nativeHex, resolvedColor)
         },
-
         'testFills': function (tester) {
           var style = new Style()
-          var hexFills = [ '#AABBCC', '#AABBDD' ]
+          var hexFills = [ '#11AA22', '#22AA33' ]
 
           style.fills = hexFills
           var resolvedHexFills = style.fills
@@ -203,6 +239,19 @@ export class Style extends WrappedObject {
           tester.assertTrue(resolvedHexFills[0] instanceof Fill)
           tester.assertEqual(resolvedHexFills[0].color, hexFills[0])
           tester.assertEqual(resolvedHexFills[1].color, hexFills[1])
+        },
+        'testNativeFills': function (tester) {
+          var style = new Style()
+          var nativeFills = [ColorHelper.hexToNativeColorFormat('#EEFFAA'), ColorHelper.hexToNativeColorFormat('#DDBBCC')]
+
+          style.fills = nativeFills
+
+          var resolvedFills = style.fills
+          tester.assertEqual(style.fills.length, 2)
+          tester.assertEqual(resolvedFills.length, 2)
+          tester.assertTrue(resolvedFills[0] instanceof Fill)
+          tester.assertEqual(resolvedFills[0].color, ColorHelper.nativeToHex(nativeFills[0]))
+          tester.assertEqual(resolvedFills[1].color, ColorHelper.nativeToHex(nativeFills[1]))
         }
 
       }
