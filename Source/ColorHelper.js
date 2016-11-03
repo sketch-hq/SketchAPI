@@ -93,7 +93,7 @@ export class ColorHelper extends WrappedObject {
     return ishex
   }
 
-  static anyToNativeColorFormat (value) {
+  static tryGetHex (value) {
     var isHex = ColorHelper.isHex(value)
 
     if (typeof value === 'string' || isHex) {

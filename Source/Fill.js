@@ -52,7 +52,7 @@ export class Fill extends WrappedObject {
   }
 
   set color (value) {
-    var msColor = ColorHelper.anyToNativeColorFormat(value)
+    var msColor = ColorHelper.tryGetHex(value)
     this.sketchObject.color = msColor
   }
 

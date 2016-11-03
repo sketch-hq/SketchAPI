@@ -60,7 +60,7 @@ export class Border extends WrappedObject {
     @param {object} value Hex/Int/MSColor color code.
   */
   set flatColor (value) {
-    var msColor = ColorHelper.anyToNativeColorFormat(value)
+    var msColor = ColorHelper.tryGetHex(value)
     this.sketchObject.color = msColor
   }
 
