@@ -69,11 +69,23 @@ export class Rectangle {
     this.x += x
     this.y += y
   }
+
+  /**
+    Adjust this rectangle by insetting it on all sides.
+    @param {number} x The x offset to apply.
+    @param {number} y The y offset to apply.
+  */
+  inset (x, y) {
+    this.x += x
+    this.y += y
+    this.width -= x * 2
+    this.height -= y * 2
+  }
+
   /**
     The max X of the rectangle.
     @return {number} This rectangle x + width.
   */
-
   get maxX () {
     return this.x + this.width
   }
@@ -132,6 +144,14 @@ export class Rectangle {
           tester.assertEqual(r.width, 3)
           tester.assertEqual(r.height, 4)
         },
+        'testInset': function (tester) {
+          var r = new Rectangle(0, 0, 40, 40)
+          r.inset(5, 10)
+          tester.assertEqual(r.x, 5)
+          tester.assertEqual(r.y, 10)
+          tester.assertEqual(r.width, 30)
+          tester.assertEqual(r.height, 20)
+        },
 
         'testCGRect': function (tester) {
           var r = new Rectangle(1, 2, 3, 4)
@@ -141,6 +161,7 @@ export class Rectangle {
           tester.assertEqual(c.size.width, 3)
           tester.assertEqual(c.size.height, 4)
         },
+
         'testCGRectNoValues': function (tester) {
           var r = new Rectangle()
           var c = r.asCGRect()

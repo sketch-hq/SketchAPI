@@ -47,12 +47,29 @@ export class WrappedObject {
     return this._object.objectID()
   }
 
-    /**
-     Return a list of tests to run for this class.
+   /**
+     Returns a text description of the object.
+     @return {string} The text description of the object.
+   */
+  toString () {
+    return this._object.toString()
+  }
 
-     @return {dictionary} A dictionary containing the tests to run. Each key is the name of a test, each value is a function which takes a Tester instance.
-     */
+   /**
+     Compare to another object. Compares the underlying sketch objects.
+     @return {boolean} true if the two objects are the same, false if not.
+   */
+  compare (object) {
+    if (object.sketchObject) {
+      return this.sketchObject == object.sketchObject
+    }
+    return false
+  }
+  /**
+    Return a list of tests to run for this class.
 
+    @return {dictionary} A dictionary containing the tests to run. Each key is the name of a test, each value is a function which takes a Tester instance.
+  */
   static tests () {
     return {
       'tests': {

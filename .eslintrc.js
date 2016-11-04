@@ -5,6 +5,9 @@ module.exports = {
         "standard",
         "promise"
     ],
+    "rules": {
+      "eqeqeq": "off"
+    },
     "globals": {
       "__globals" : true,
       "BCFillTypeGradient" : true,

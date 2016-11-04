@@ -56,18 +56,21 @@ export class Selection extends WrappedObject {
   }
 
   /**
-    Will Return the First Layer in the selection
-
-    @return {Layer} layer the first Layer found.
+      Return the first layer in the selection.
+      @return {Layer} last layer in selection.
   */
   get first () {
-    var firstLayer = null
-    this.iterate(function (layer) {
-      firstLayer = layer.sketchObject
-    })
-
-    if (firstLayer) {
-      return this.wrapObject(firstLayer)
+    if (!this.isEmpty) {
+      return this._page._document.wrapObject(this._nativeLayers[0])
+    }
+  }
+  /**
+      Return the last layer in the selection.
+      @return {Layer} last layer in selection.
+  */
+  get last () {
+    if (!this.isEmpty) {
+      return this._page._document.wrapObject(this._nativeLayers[this.length - 1])
     }
   }
 
@@ -213,6 +216,18 @@ export class Selection extends WrappedObject {
           })
           tester.assertEqual(iterations, 0)
           tester.assert(selection.isEmpty, 'selection should be empty')
+        },
+        'testFirstAndLast': function (tester) {
+          var document = tester.newTestDocument()
+          var text1 = document.selectedPage.newText()
+          var text2 = document.selectedPage.newText()
+          var text3 = document.selectedPage.newText()
+          text1.select()
+          text2.addToSelection()
+          text3.addToSelection()
+          var selection = document.selectedLayers
+          tester.assertEqual(selection.first, text1)
+          tester.assertEqual(selection.last, text3)
         }
       }
     }
