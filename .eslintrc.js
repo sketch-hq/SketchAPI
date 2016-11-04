@@ -50,6 +50,7 @@ module.exports = {
       "MSSymbolInstance": true,
       "NSUserDefaults" : true,
       "NSPredicate" : true,
+      "MSSliceLayer" : true,
       "print" : true,
     }
 };

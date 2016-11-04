@@ -66,7 +66,7 @@ export class Selection extends WrappedObject {
       firstLayer = layer.sketchObject
     })
 
-    if (null) {
+    if (firstLayer) {
       return this.wrapObject(firstLayer)
     }
   }

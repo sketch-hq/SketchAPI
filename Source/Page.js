@@ -44,10 +44,10 @@ export class Page extends Group {
   @return {Artboard} the new artboard.
   */
 
-  newArtboard (properties = {}) {
+  newArtboard (properties = {}, inDocument) {
     var frame = this._frameForLayerWithProperties(properties)
     var newLayer = MSArtboardGroup.alloc().initWithFrame_(frame.asCGRect())
-    return this._addWrappedLayerWithProperties(newLayer, properties, 'Artboard')
+    return this._addWrappedLayerWithProperties(newLayer, properties, 'Artboard', inDocument == null ? this._document : inDocument)
   }
 
   /**

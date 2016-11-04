@@ -145,6 +145,7 @@ export class Document extends WrappedObject {
     // if we're given a string as a filter, treat it as a function
     // to call on the layer
     var loopBlock = block
+
     if (typeof filter === 'string' || filter instanceof String) {
       loopBlock = function (layer) {
         if (layer[filter]) {
@@ -162,7 +163,7 @@ export class Document extends WrappedObject {
     var loop = layers.objectEnumerator()
     var item
     while (item = loop.nextObject()) { //eslint-disable-line
-      var layer = this.wrapObject(item)
+      var layer = this.wrapObject(item, this)
       loopBlock(layer)
     }
   }

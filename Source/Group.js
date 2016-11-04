@@ -71,6 +71,19 @@ export class Group extends Layer {
   }
 
   /**
+    Return the layers in the group.
+
+    @return {array} The selected layers.
+  */
+  get layers () {
+    var layers = []
+    this.iterate(function (layer) {
+      layers.push(layer)
+    })
+    return layers
+  }
+
+  /**
     Adjust the group to fit its children.
   */
 
@@ -89,14 +102,16 @@ export class Group extends Layer {
     @return {Layer} The wrapped layer object.
   */
 
-  _addWrappedLayerWithProperties (newLayer, properties, wrapper) {
+  _addWrappedLayerWithProperties (newLayer, properties, wrapper, doc) {
     if (newLayer) {
         // add the Sketch object to this layer
       var layer = this.sketchObject
       layer.addLayers_(NSArray.arrayWithObject_(newLayer))
-
+      if (doc == null) {
+        print('ERROR: Cannot find Document for ' + newLayer)
+      }
         // make a Javascript wrapper object for the new layer
-      wrapper = this.wrapObject(newLayer)
+      wrapper = this.wrapObject(newLayer, doc)
 
         // apply properties, via the wrapper
       for (var p in properties) {
@@ -162,15 +177,18 @@ export class Group extends Layer {
 
   newShape (properties = {}) {
     var frame = this._frameForLayerWithProperties(properties)
-      // TODO: Eventually we want to distinguish between different shape sub-types here depending
-      //       on what is set in properties ('frame', 'path', 'radius', etc), and to construct the
-      //       appropriate layer type accordingly. For now we only make rectangles.
-      // var newLayer = MSShapeGroup.shapeWithRect_(frame.asCGRect());
+    // TODO: Eventually we want to distinguish between different shape sub-types here depending
+    //       on what is set in properties ('frame', 'path', 'radius', etc), and to construct the
+    //       appropriate layer type accordingly. For now we only make rectangles.
+    // var newLayer = MSShapeGroup.shapeWithRect_(frame.asCGRect());
 
-      // Reverting back to original method until Issue #22 is resolved.
+    // Reverting back to original method until Issue #22 is resolved.
     var newLayer = MSShapeGroup.shapeWithBezierPath_(NSBezierPath.bezierPathWithRect_(frame.asCGRect()))
+    if (newLayer == null) {
+      print('ERROR: Cannot Generate a default Shape ' + frame)
+    }
     properties.style = this._styleForLayerWithProperties(properties)
-    return this._addWrappedLayerWithProperties(newLayer, properties, 'Shape')
+    return this._addWrappedLayerWithProperties(newLayer, properties, 'Shape', this._document)
   }
 
   /**
@@ -181,11 +199,11 @@ export class Group extends Layer {
     @return {Text} the new text layer.
   */
 
-  newText (properties = {}) {
+  newText (properties = {}, inDocument) {
     var frame = this._frameForLayerWithProperties(properties)
     var newLayer = MSTextLayer.alloc().initWithFrame_(frame.asCGRect())
     newLayer.adjustFrameToFit()
-    return this._addWrappedLayerWithProperties(newLayer, properties, 'Text')
+    return this._addWrappedLayerWithProperties(newLayer, properties, 'Text', this._document)
   }
 
   /**
@@ -196,10 +214,10 @@ export class Group extends Layer {
     @return {Group} the new group.
   */
 
-  newGroup (properties = {}) {
+  newGroup (properties = {}, inDocument) {
     var frame = this._frameForLayerWithProperties(properties)
     var newLayer = MSLayerGroup.alloc().initWithFrame_(frame.asCGRect())
-    return this._addWrappedLayerWithProperties(newLayer, properties, 'Group')
+    return this._addWrappedLayerWithProperties(newLayer, properties, 'Group', this._document)
   }
 
   /**
@@ -213,7 +231,7 @@ export class Group extends Layer {
   newImage (properties = {}) {
     var frame = this._frameForLayerWithProperties(properties)
     var newLayer = MSBitmapLayer.alloc().initWithFrame_(frame.asCGRect())
-    return this._addWrappedLayerWithProperties(newLayer, properties, 'Image')
+    return this._addWrappedLayerWithProperties(newLayer, properties, 'Image', this._document)
   }
 
   /**
@@ -223,10 +241,10 @@ export class Group extends Layer {
   @return {Slice} the new slice layer.
   */
 
-  newSlice (properties = {}) {
+  newSlice (properties = {}, inDocument) {
     var frame = this._frameForLayerWithProperties(properties)
     var newLayer = MSSliceLayer.alloc().initWithFrame_(frame.asCGRect())
-    return this._addWrappedLayerWithProperties(newLayer, properties, 'Slice')
+    return this._addWrappedLayerWithProperties(newLayer, properties, 'Slice', this._document)
   }
   /**
   Return a list of tests to run for this class.
@@ -274,7 +292,7 @@ export class Group extends Layer {
         'testPageToLocalRect': function (tester) {
           var document = tester.newTestDocument()
           var page = document.selectedPage
-          var group = page.newGroup({'frame': new Rectangle(100, 100, 100, 100)})
+          var group = page.newGroup({'frame': new Rectangle(100, 100, 100, 100), 'name': 'GroupTest 01'})
           var local = group.pageRectToLocalRect(new Rectangle(125, 75, 50, 200))
           tester.assertEqual(local, new Rectangle(25, -25, 50, 200))
         },
@@ -283,11 +301,35 @@ export class Group extends Layer {
           var document = tester.newTestDocument()
           var page = document.selectedPage
           var group = page.newGroup({'frame': new Rectangle(100, 100, 100, 100)})
-          var shape = group.newShape({'frame': new Rectangle(50, 50, 50, 50)})
+          var shape = group.newShape({'frame': new Rectangle(50, 50, 50, 50), 'name': 'GroupTest 02'})
           group.adjustToFit()
           var frame = group.frame
           tester.assertEqual(frame, new Rectangle(150, 150, 50, 50))
           tester.assertTrue(shape.isShape)
+        },
+        'testGroupLayers': function (tester) {
+          var document = tester.newTestDocument()
+          var page = document.selectedPage
+          var group1 = page.newGroup({'frame': new Rectangle(100, 100, 100, 100), 'name': 'GroupTest 03'})
+          var shape1 = group1.newShape({'frame': new Rectangle(), 'name': 'Shape 01'})
+          var shape2 = group1.newShape({'frame': new Rectangle(100, 100, 100, 100), 'name': 'Shape 02'})
+
+          // Added random shape to Page
+          var shape3 = page.newShape({'frame': new Rectangle(100, 100, 100, 100), 'name': 'Shape 03'})
+
+          // Created a group within Group and adding shape wihtin it.
+          var group2 = group1.newGroup({'frame': new Rectangle(100, 100, 100, 100), 'name': 'GroupTest 04'})
+          var shape4 = group2.newShape({'frame': new Rectangle(100, 100, 100, 100), 'name': 'Shape 03'})
+
+          // There should be now 2x Shapes and 1x Group within Group1
+          var layerCount = group1.layers.length
+          tester.assertEqual(layerCount, 3)
+          tester.assertTrue(shape1.container.isGroup)
+          tester.assertTrue(shape2.container.isGroup)
+          tester.assertTrue(shape3.container.isGroup)
+          tester.assertTrue(shape4.container.isGroup)
+          tester.assertTrue(group1.container.isPage)
+          tester.assertTrue(group2.container.isGroup)
         },
 
         'testIsGroup': function (tester) {
