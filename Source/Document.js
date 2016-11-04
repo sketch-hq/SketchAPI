@@ -84,7 +84,9 @@ export class Document extends WrappedObject {
 
   layerWithID (layerId) {
     var layer = this.sketchObject.documentData().layerWithID_(layerId)
-    if (layer) { return new Layer(layer, this) }
+    if (layer) {
+      return new Layer(layer, this)
+    }
   }
 
   /**
@@ -116,7 +118,9 @@ export class Document extends WrappedObject {
     var predicate = NSPredicate.predicateWithFormat('name LIKE[c] %@', keyword)
     var allChildren = this.sketchObject.pages().valueForKeyPath('@distinctUnionOfArrays.children')
     var layer = allChildren.filteredArrayUsingPredicate(predicate).firstObject()
-    if (layer) { return this.wrapObject(layer, this) }
+    if (layer) {
+      return this.wrapObject(layer, this)
+    }
   }
 
   allLayersNamed (keyword) {
@@ -208,7 +212,9 @@ export class Document extends WrappedObject {
           tester.assert(selection.isEmpty, 'should have an empty selection')
 
           var page = document.selectedPage
-          var group = page.newGroup({'name': 'Test'})
+          var group = page.newGroup({
+            'name': 'Test'
+          })
           group.select()
 
           tester.assert(!selection.isEmpty, 'should no longer have an empty selection')
@@ -225,11 +231,21 @@ export class Document extends WrappedObject {
           // Build the DOM.
           var document = tester.newTestDocument()
           var page = document.newPage(pageName)
-          var artboard = page.newArtboard({'name': artboardName})
-          var group = page.newGroup({'name': groupName})
-          var shape = group.newShape({'name': shapeName})
-          var text = group.newText({'name': textName})
-          var image = group.newImage({'name': imgName})
+          var artboard = page.newArtboard({
+            'name': artboardName
+          })
+          var group = page.newGroup({
+            'name': groupName
+          })
+          var shape = group.newShape({
+            'name': shapeName
+          })
+          var text = group.newText({
+            'name': textName
+          })
+          var image = group.newImage({
+            'name': imgName
+          })
 
           // Find the nodes.
           var foundGroup = document.layerNamed(groupName)
@@ -262,7 +278,9 @@ export class Document extends WrappedObject {
         'testLayerWithID': function (tester) {
           var document = tester.newTestDocument()
           var page = document.selectedPage
-          var group = page.newGroup({'name': 'Test'})
+          var group = page.newGroup({
+            'name': 'Test'
+          })
           var id = group.id
           var found = document.layerWithID(id)
           tester.assertEqual(group.sketchObject, found.sketchObject)

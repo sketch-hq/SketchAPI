@@ -13,30 +13,22 @@ import { Group } from './Group.js'
 
 export class Artboard extends Group {
 
-    /**
-        Make a new artboard.
-
-        @param artboard {MSArtboardGroup} The underlying MSArtboardGroup model object from Sketch.
-        @param document The document that the artboard belongs to.
-    */
-
-    /**
-        Is this an artboard?
-
-        All Layer objects respond to this method, but only Artboard objects return true.
-
-        @return true for instances of Artboard, false for any other layer type.
-    */
-
+  /**
+   * get - Is this a {Artboard} layer?
+   *
+   * All Layer objects respond to this method, but only {Artboard} layers return true.
+   *
+   * @return {boolean}  for instances of {Artboard}, false for any other layer type.
+   */
   get isArtboard () {
     return true
   }
 
-    /**
-     Return a list of tests to run for this class.
+  /**
+   Return a list of tests to run for this class.
 
-     @return {dictionary} A dictionary containing the tests to run. Each key is the name of a test, each value is a function which takes a Tester instance.
-     */
+   @return {dictionary} A dictionary containing the tests to run. Each key is the name of a test, each value is a function which takes a Tester instance.
+   */
 
   static tests () {
     return {
@@ -44,7 +36,9 @@ export class Artboard extends Group {
         'testIsArtboard': function (tester) {
           var document = tester.newTestDocument()
           var page = document.selectedPage
-          var artboard = page.newArtboard({'name': 'Test'})
+          var artboard = page.newArtboard({
+            'name': 'Test'
+          })
           tester.assertTrue(artboard.isArtboard)
           tester.assertFalse(page.isArtboard)
         }

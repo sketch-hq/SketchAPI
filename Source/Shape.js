@@ -14,43 +14,43 @@ import { Style } from './Style.js'
 
 export class Shape extends Layer {
 
-    /**
-        Is this a shape layer?
-
-        All Layer objects respond to this method, but only shape layers (rectangles, ovals, paths etc) return true.
-
-        @return {bool} true for instances of Group, false for any other layer type.
-    */
+  /**
+   * get - Is this a {Shape} layer?
+   *
+   * All Layer objects respond to this method, but only {Shape} layers return true.
+   *
+   * @return {boolean}  for instances of {Shape}, false for any other layer type.
+   */
 
   get isShape () {
     return true
   }
 
-    /**
-     Return the style of the layer.
+  /**
+   Return the style of the layer.
 
-     @return {Style} The style of the layer.
-     */
+   @return {Style} The style of the layer.
+   */
 
   get style () {
     return new Style(this.sketchObject.style(), this._document)
   }
 
-     /**
-     Set the style of the layer.
+  /**
+  Set the style of the layer.
 
-     @param {Style} value The style settings to use for the layer.
-     */
+  @param {Style} value The style settings to use for the layer.
+  */
 
   set style (value) {
     this.sketchObject.style = value.sketchObject
   }
 
-    /**
-     Return a list of tests to run for this class.
+  /**
+   Return a list of tests to run for this class.
 
-     @return {dictionary} A dictionary containing the tests to run. Each key is the name of a test, each value is a function which takes a Tester instance.
-     */
+   @return {dictionary} A dictionary containing the tests to run. Each key is the name of a test, each value is a function which takes a Tester instance.
+   */
 
   static tests () {
     return {

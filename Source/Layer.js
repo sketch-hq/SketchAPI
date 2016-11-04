@@ -74,81 +74,95 @@ export class Layer extends WrappedObject {
   }
 
   /**
-    Is this a page?
+   * get - Is this a {Page} layer?
+   *
+   * All Layer objects respond to this method, but only {Page} layers return true.
+   *
+   * @return {boolean}  for instances of {Page}, false for any other layer type.
+   */
 
-    All Layer objects respond to this method, but only {Page} return true.
-
-    @return {bool} true for instances of Group, false for any other layer type.
-  */
-
-  get isPage () { return false }
-
-  /**
-    Is this an artboard?
-
-    All Layer objects respond to this method, but only {Artboard} objects return true.
-
-    @return true for instances of Artboard, false for any other layer type.
-  */
-
-  get isArtboard () { return false }
+  get isPage () {
+    return false
+  }
 
   /**
-    Is this a group?
+   * get - Is this a {Artboard} layer?
+   *
+   * All Layer objects respond to this method, but only {Artboard} layers return true.
+   *
+   * @return {boolean}  for instances of {Artboard}, false for any other layer type.
+   */
 
-    All Layer objects respond to this method, but only {Group} or things that inherit from groups return true.
-
-    @return {bool} true for instances of Group, false for any other layer type.
-  */
-
-  get isGroup () { return false }
-
-  /**
-    Is this a text layer?
-
-    All Layer objects respond to this method, but only {Text} layers return true.
-
-    @return {bool} true for instances of Group, false for any other layer type.
-  */
-
-  get isText () { return false }
+  get isArtboard () {
+    return false
+  }
 
   /**
-    Is this a shape layer?
-
-    All Layer objects respond to this method, but only {Shape} layers (rectangles, ovals, paths etc) return true.
-
-    @return {bool} true for instances of Group, false for any other layer type.
-  */
-
-  get isShape () { return false }
-
-  /**
-    Is this an image layer?
-
-    All Layer objects respond to this method, but only {Image} layers return true.
-
-    @return {bool} true for instances of Group, false for any other layer type.
-  */
-
-  get isImage () { return false }
+   * get - Is this a {Group} layer?
+   *
+   * All Layer objects respond to this method, but only {Group} layers return true.
+   *
+   * @return {boolean}  for instances of {Group}, false for any other layer type.
+   */
+  get isGroup () {
+    return false
+  }
 
   /**
-    Is this a Symbol layer?
-
-    All Layer objects respond to this method, but only {Symbol} layers return true.
-
-    @return {bool} true for instances of Group, false for any other layer type.
-  */
-  get isSymbol () { return false }
+   * get - Is this a {Text} layer?
+   *
+   * All Layer objects respond to this method, but only {Text} layers return true.
+   *
+   * @return {boolean}  for instances of {Text}, false for any other layer type.
+   */
+  get isText () {
+    return false
+  }
 
   /**
-     Is this an slice layer?
-     All Layer objects respond to this method, but only slice layers return true.
-     @return {bool} true for instances of Slice, false for any other layer type.
-  */
+   * get - Is this a {Shape} layer?
+   *
+   * All Layer objects respond to this method, but only {Shape} layers return true.
+   *
+   * @return {boolean}  for instances of {Shape}, false for any other layer type.
+   */
+  get isShape () {
+    return false
+  }
 
-  get isSlice () { return false }
+  /**
+   * get - Is this a {Image} layer?
+   *
+   * All Layer objects respond to this method, but only {Image} layers return true.
+   *
+   * @return {boolean}  for instances of {Image}, false for any other layer type.
+   */
+
+  get isImage () {
+    return false
+  }
+
+  /**
+   * get - Is this a {Symbol} layer?
+   *
+   * All Layer objects respond to this method, but only {Symbol} layers return true.
+   *
+   * @return {boolean}  for instances of {Symbol}, false for any other layer type.
+   */
+  get isSymbol () {
+    return false
+  }
+
+  /**
+   * get - Is this a {Slice} layer?
+   *
+   * All Layer objects respond to this method, but only {Slice} layers return true.
+   *
+   * @return {boolean}  for instances of {Slice}, false for any other layer type.
+   */
+  get isSlice () {
+    return false
+  }
 
   /**
     Check if this layer is hidden.
@@ -344,7 +358,9 @@ export class Layer extends WrappedObject {
           var page = document.selectedPage
           page.name = 'This is a page'
           tester.assertEqual(page.name, 'This is a page')
-          var group = page.newGroup({'name': 'blah'})
+          var group = page.newGroup({
+            'name': 'blah'
+          })
           tester.assertEqual(group.name, 'blah')
           var group2 = page.newGroup()
           tester.assertEqual(group2.name, 'Group')
@@ -354,7 +370,9 @@ export class Layer extends WrappedObject {
           var document = tester.newTestDocument()
           var page = document.selectedPage
           var frame = new Rectangle(10, 10, 20, 20)
-          var group = page.newGroup({'frame': frame})
+          var group = page.newGroup({
+            'frame': frame
+          })
           tester.assertEqual(group.frame, frame)
         },
 
@@ -456,8 +474,8 @@ export class Layer extends WrappedObject {
           var document = tester.newTestDocument()
           var page = document.selectedPage
           var text = page.newText()
-                 // this is failing for some reason...
-                 // tester.assertFalse(text.isHidden)
+          // this is failing for some reason...
+          // tester.assertFalse(text.isHidden)
           text.hide = true
           tester.assertTrue(text.isHidden)
           text.hide = false

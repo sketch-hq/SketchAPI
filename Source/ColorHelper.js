@@ -5,23 +5,23 @@
 // All code (C) 2016 Bohemian Coding.
 // ********************************
 
-import {WrappedObject} from './WrappedObject.js'
+import { WrappedObject } from './WrappedObject.js'
 export class ColorHelper extends WrappedObject {
 
-    /**
-      A Enum style pattern implementation for Gradient Types;
-    */
+  /**
+    A Enum style pattern implementation for Gradient Types;
+  */
 
-    /**
-      Given the Hex color provide will add a percentage of white or black to
-      generate a variation of that colors brightness.
+  /**
+    Given the Hex color provide will add a percentage of white or black to
+    generate a variation of that colors brightness.
 
-      Use 0 to 1 for increasing brightness
-      Use 0 to -1 for decreasing brightness.
+    Use 0 to 1 for increasing brightness
+    Use 0 to -1 for decreasing brightness.
 
-      @param {string} hexColor Base color to apply shading to.
-      @param {float} percent 0 applies no shading, -1 applies 100% black and 1 applies 100% white.
-    */
+    @param {string} hexColor Base color to apply shading to.
+    @param {float} percent 0 applies no shading, -1 applies 100% black and 1 applies 100% white.
+  */
   static adjustBrightness (hexColor, percent) {
     var f = parseInt(hexColor.slice(1), 16)
     var t = percent < 0 ? 0 : 255
@@ -31,17 +31,17 @@ export class ColorHelper extends WrappedObject {
     var B = f & 0x0000FF
 
     return ('#' + (
-            0x1000000 + (Math.floor((t - R) * p) + R) *
-            0x10000 + (Math.floor((t - G) * p) + G) *
-            0x100 + (Math.floor((t - B) * p) + B)).toString(16).slice(1)).toUpperCase()
+    0x1000000 + (Math.floor((t - R) * p) + R) *
+    0x10000 + (Math.floor((t - G) * p) + G) *
+    0x100 + (Math.floor((t - B) * p) + B)).toString(16).slice(1)).toUpperCase()
   }
 
-    /**
-      Converts a Hex String value into native RGB
+  /**
+    Converts a Hex String value into native RGB
 
-      @param {string} hexColor Hex Color (with or without #)
-      @return {rgba} rgb returns converted RGB values.
-    */
+    @param {string} hexColor Hex Color (with or without #)
+    @return {rgba} rgb returns converted RGB values.
+  */
   static hexToRgb (hex) {
     var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex)
     result = result ? {
@@ -52,15 +52,15 @@ export class ColorHelper extends WrappedObject {
     return result
   }
 
-    /**
-      Converts a Hex String value into native RGB Percent color
+  /**
+    Converts a Hex String value into native RGB Percent color
 
-      Note: To convert this to true RGB you'll need to multiply each value
-      by 255 (eg: result.r * 255, result.g * 255)
+    Note: To convert this to true RGB you'll need to multiply each value
+    by 255 (eg: result.r * 255, result.g * 255)
 
-      @param {string} hexColor Hex Color (with or without #)
-      @return {rgba} rgbaPercent returns converted RGB value in percentage format.
-    */
+    @param {string} hexColor Hex Color (with or without #)
+    @return {rgba} rgbaPercent returns converted RGB value in percentage format.
+  */
   static hexToRgbPercent (hexColor) {
     var color = MSColor.colorWithSVGString(hexColor)
     var r = color.red()
@@ -75,11 +75,11 @@ export class ColorHelper extends WrappedObject {
     }
   }
 
-    /**
-      Converts a Hex String value into Native Color format
-      @param {string} hexColor Hex Color (with or without #)
-      @return {MSColor} color returns converted MSColor
-    */
+  /**
+    Converts a Hex String value into Native Color format
+    @param {string} hexColor Hex Color (with or without #)
+    @return {MSColor} color returns converted MSColor
+  */
   static hexToNativeColorFormat (hexColor) {
     var rgb = ColorHelper.hexToRgbPercent(hexColor)
     var immutable = MSImmutableColor.colorWithRed_green_blue_alpha(rgb.r, rgb.g, rgb.b, rgb.a)
@@ -107,17 +107,19 @@ export class ColorHelper extends WrappedObject {
   static nativeToHex (mscolor) {
     return '#' + mscolor.hexValue().toUpperCase()
   }
-    /**
-      Converts HSV Color values to RGB
+  /**
+    Converts HSV Color values to RGB
 
-      @param {int} h Hue
-      @param {int} s Saturation
-      @param {int} v Value
+    @param {int} h Hue
+    @param {int} s Saturation
+    @param {int} v Value
 
-      @return {rgb} RGBObject returns converted rgb values.
-    */
+    @return {rgb} RGBObject returns converted rgb values.
+  */
   static hsvToRgb (h, s, v) {
-    var r, g, b
+    var r,
+      g,
+      b
     var i = Math.floor(h * 6)
     var f = h * 6 - i
     var p = v * (1 - s)
@@ -163,17 +165,19 @@ export class ColorHelper extends WrappedObject {
     }
   }
 
-    /**
-      Converts HSV Color values to RGB
+  /**
+    Converts HSV Color values to RGB
 
-      @param {int} h Hue
-      @param {int} s Saturation
-      @param {int} l Lightness
+    @param {int} h Hue
+    @param {int} s Saturation
+    @param {int} l Lightness
 
-      @return {rgb} RGBObject returns converted rgb values.
-    */
+    @return {rgb} RGBObject returns converted rgb values.
+  */
   static hslToRgb (h, s, l) {
-    var r, g, b
+    var r,
+      g,
+      b
 
     if (s === 0) {
       r = g = b = l // achromatic
@@ -181,9 +185,11 @@ export class ColorHelper extends WrappedObject {
       var q = l < 0.5 ? l * (1 + s) : l + s - l * s
       var p = 2 * l - q
       /* eslint-disable */
-      function hueToRgb (p, q, t) {
-        if (t < 0) t += 1
-        if (t > 1) t -= 1
+      function hueToRgb(p, q, t) {
+        if (t < 0)
+          t += 1
+        if (t > 1)
+          t -= 1
         if (t < 1 / 6) return p + (q - p) * 6 * t
         if (t < 1 / 2) return q
         if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6
@@ -201,14 +207,14 @@ export class ColorHelper extends WrappedObject {
     }
   }
 
-    /**
-      Converts RGB Color values to Hex
+  /**
+    Converts RGB Color values to Hex
 
-      @param {int} r Red
-      @param {int} b Blue
-      @param {int} g Green
-      @return {string} hexColor returns converted hex value with # prefix.
-    */
+    @param {int} r Red
+    @param {int} b Blue
+    @param {int} g Green
+    @return {string} hexColor returns converted hex value with # prefix.
+  */
   static rgbToHex (red, green, blue) {
     var out = '#'
 
@@ -224,14 +230,14 @@ export class ColorHelper extends WrappedObject {
     return out.toUpperCase()
   }
 
-    /**
-      Converts RGB Color values to HSV
+  /**
+    Converts RGB Color values to HSV
 
-      @param {int} r Red
-      @param {int} b Blue
-      @param {int} g Green
-      @return {hsv} hsvColor returns converted HSV.
-    */
+    @param {int} r Red
+    @param {int} b Blue
+    @param {int} g Green
+    @return {hsv} hsvColor returns converted HSV.
+  */
   static rgbToHsv (r, g, b) {
     r = r / 255
     g = g / 255
@@ -268,14 +274,14 @@ export class ColorHelper extends WrappedObject {
     }
   }
 
-    /**
-      Converts RGB Color values to HSL
+  /**
+    Converts RGB Color values to HSL
 
-      @param {int} r Red
-      @param {int} b Blue
-      @param {int} g Green
-      @return {hsl} hslColor returns converted HSL.
-    */
+    @param {int} r Red
+    @param {int} b Blue
+    @param {int} g Green
+    @return {hsl} hslColor returns converted HSL.
+  */
   static rgbToHsl (r, g, b) {
     r /= 255
     g /= 255
@@ -494,13 +500,13 @@ export class ColorHelper extends WrappedObject {
         },
 
         'testColorShading': function (tester) {
-                    // Note: Most color converters use Math.round() on color conversion
-                    // but SketchApp appears to use Math.floor() with its color picker.
-                    // Therefore the best way to test this visually is create a swatch,
-                    // give it #3F83A3 as the color. Then duplicate it, set the top layer
-                    // to 50% white, then in a 3rd layer using color picker choose that color.
-                    // The two colors should line-up exactly to the values provided
-                    // in this test.
+          // Note: Most color converters use Math.round() on color conversion
+          // but SketchApp appears to use Math.floor() with its color picker.
+          // Therefore the best way to test this visually is create a swatch,
+          // give it #3F83A3 as the color. Then duplicate it, set the top layer
+          // to 50% white, then in a 3rd layer using color picker choose that color.
+          // The two colors should line-up exactly to the values provided
+          // in this test.
 
           var color = '#3F83A3'
           var color20percentWhite = ColorHelper.adjustBrightness(color, 0.20)

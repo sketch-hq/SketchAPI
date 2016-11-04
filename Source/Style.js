@@ -17,11 +17,11 @@ import { Utility } from './Utility.js'
 
 export class Style extends WrappedObject {
 
-    /**
-      Make a new style object.
+  /**
+    Make a new style object.
 
-      @param {MSStyle} style The underlying model object from Sketch.
-    */
+    @param {MSStyle} style The underlying model object from Sketch.
+  */
 
   constructor (style) {
     if (!style || style === null) {
@@ -185,7 +185,7 @@ export class Style extends WrappedObject {
 
         'testBorders': function (tester) {
           var style = new Style()
-          var hexFills = [ '#AABBCC', '#AABBDD' ]
+          var hexFills = ['#AABBCC', '#AABBDD']
 
           style.borders = hexFills
           var resolvedHexFills = style.borders
@@ -229,7 +229,7 @@ export class Style extends WrappedObject {
         },
         'testFills': function (tester) {
           var style = new Style()
-          var hexFills = [ '#11AA22', '#22AA33' ]
+          var hexFills = ['#11AA22', '#22AA33']
 
           style.fills = hexFills
           var resolvedHexFills = style.fills

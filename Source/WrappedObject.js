@@ -14,20 +14,20 @@ import { Application } from './Application.js'
 
 export class WrappedObject {
 
-    /**
-      Return a new wrapped object for a given Sketch model object.
+  /**
+    Return a new wrapped object for a given Sketch model object.
 
-      @param {Object} object - The Sketch model object to wrap.
-    */
+    @param {Object} object - The Sketch model object to wrap.
+  */
 
   constructor (object) {
-      /** @type {Object} The underlying Sketch model object that we are wrapping. */
+    /** @type {Object} The underlying Sketch model object that we are wrapping. */
     this._object = object
   }
 
-    /**
-      Returns the wrapped Sketch object.
-      */
+  /**
+    Returns the wrapped Sketch object.
+    */
 
   get sketchObject () {
     return this._object
@@ -37,28 +37,28 @@ export class WrappedObject {
     return Application.wrapObject(sketchObject, inDocument)
   }
 
-    /**
-      Returns the object ID of the wrapped Sketch model object.
+  /**
+    Returns the object ID of the wrapped Sketch model object.
 
-      @return {string} The id.
-    */
+    @return {string} The id.
+  */
 
   get id () {
     return this._object.objectID()
   }
 
-   /**
-     Returns a text description of the object.
-     @return {string} The text description of the object.
-   */
+  /**
+    Returns a text description of the object.
+    @return {string} The text description of the object.
+  */
   toString () {
     return this._object.toString()
   }
 
-   /**
-     Compare to another object. Compares the underlying sketch objects.
-     @return {boolean} true if the two objects are the same, false if not.
-   */
+  /**
+    Compare to another object. Compares the underlying sketch objects.
+    @return {boolean} true if the two objects are the same, false if not.
+  */
   compare (object) {
     if (object.sketchObject) {
       return this.sketchObject == object.sketchObject

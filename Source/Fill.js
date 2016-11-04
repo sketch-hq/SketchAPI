@@ -16,10 +16,10 @@ import { ColorHelper } from './ColorHelper.js'
  - access to the running plugin, it's resources and settings
  */
 export class Fill extends WrappedObject {
-    /**
-      Make a new fill object.
-      @param {object} fill The underlying model object from Sketch.
-    */
+  /**
+    Make a new fill object.
+    @param {object} fill The underlying model object from Sketch.
+  */
   constructor (value) {
     var defaultFillStyle = MSDefaultStyle.defaultStyle().fill()
     var isHex = ColorHelper.isHex(value)

@@ -45,13 +45,12 @@ Represents a text layer.
 export class Text extends Layer {
 
   /**
-  Is this a text layer?
-
-  All Layer objects respond to this method, but only text layers return true.
-
-  @return {bool} true for instances of Group, false for any other layer type.
-  */
-
+   * get - Is this a {Text} layer?
+   *
+   * All Layer objects respond to this method, but only {Text} layers return true.
+   *
+   * @return {boolean}  for instances of {Text}, false for any other layer type.
+   */
   get isText () {
     return true
   }
@@ -192,7 +191,11 @@ export class Text extends Layer {
       var effectiveRange = effectiveRangePtr.value()
       var baselineOffset = layout.typesetter().baselineOffsetInLayoutManager_glyphIndex_(layout, currentLocation)
 
-      fragments.push({'rect': rect, 'baselineOffset': baselineOffset, range: effectiveRange})
+      fragments.push({
+        'rect': rect,
+        'baselineOffset': baselineOffset,
+        range: effectiveRange
+      })
       currentLocation = NSMaxRange(effectiveRange) + 1
     }
 
@@ -240,7 +243,9 @@ export class Text extends Layer {
         'testText': function (tester) {
           var document = tester.newTestDocument()
           var page = document.selectedPage
-          var text = page.newText({'text': 'blah'})
+          var text = page.newText({
+            'text': 'blah'
+          })
           tester.assertEqual(text.text, 'blah')
           text.text = 'doodah'
           tester.assertEqual(text.text, 'doodah')
@@ -249,7 +254,10 @@ export class Text extends Layer {
         'testAdjustToFit': function (tester) {
           var document = tester.newTestDocument()
           var page = document.selectedPage
-          var text = page.newText({'text': 'blah', 'frame': new Rectangle(10, 10, 1000, 1000)})
+          var text = page.newText({
+            'text': 'blah',
+            'frame': new Rectangle(10, 10, 1000, 1000)
+          })
           text.adjustToFit()
           tester.assertEqual(text.frame, new Rectangle(10, 10, 23, 14))
         },
@@ -257,7 +265,10 @@ export class Text extends Layer {
         'testAlignment': function (tester) {
           var document = tester.newTestDocument()
           var page = document.selectedPage
-          var text = page.newText({'text': 'blah', 'frame': new Rectangle(10, 10, 1000, 1000)})
+          var text = page.newText({
+            'text': 'blah',
+            'frame': new Rectangle(10, 10, 1000, 1000)
+          })
           for (var key in NSTextAlignment) {
             // test setting by name
             text.alignment = key

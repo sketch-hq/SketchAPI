@@ -11,6 +11,12 @@
 
 export class Utility {
 
+  /**
+   * static - Reflects passed in objects properties/methods into the console.
+   *
+   * @param  {NSObject} obj   object to reflect.
+   * @return {string}         the reflection of available properties/methods
+   */
   static dump (obj) {
     log('#####################################################################################')
     log('## Dumping object ' + obj)
@@ -41,6 +47,15 @@ export class Utility {
     log(obj.treeAsDictionary())
   }
 
+  /**
+   * static - The border position can be adjusted on closed shape, by either
+   * being placed on the inside, center, or outside of the shape’s outline.
+   * If you apply a border onto an open path, then the only available option
+   * would be center.
+   *
+   * @see https://www.sketchapp.com/learn/documentation/08-styling/2-borders.html
+   * @return {int}  the border position
+   */
   static get BorderPosition () {
     return Object.freeze({
       center: 0,
@@ -49,6 +64,12 @@ export class Utility {
     })
   }
 
+  /**
+   * static - The three gradient choices available to you are linear, radial,
+   * and angular but they work in much the same way.
+   *
+   * @return {int}  the gradient type.
+   */
   static get GradientType () {
     return Object.freeze({
       flat: 0,

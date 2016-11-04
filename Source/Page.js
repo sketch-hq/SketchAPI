@@ -25,13 +25,12 @@ export class Page extends Group {
   }
 
   /**
-  Is this a page?
-
-  All Layer objects respond to this method, but only pages return true.
-
-  @return {bool} true for instances of Group, false for any other layer type.
-  */
-
+   * get - Is this a {Page} layer?
+   *
+   * All Layer objects respond to this method, but only {Page} layers return true.
+   *
+   * @return {boolean}  for instances of {Page}, false for any other layer type.
+   */
   get isPage () {
     return true
   }
@@ -65,7 +64,9 @@ export class Page extends Group {
           tester.assert(selection.isEmpty, 'should have an empty selection')
 
           var page = document.selectedPage
-          var group = page.newGroup({'name': 'Test'})
+          var group = page.newGroup({
+            'name': 'Test'
+          })
           group.select()
 
           tester.assert(!selection.isEmpty, 'should no longer have an empty selection')
@@ -74,7 +75,9 @@ export class Page extends Group {
         'testLayerWithID': function (tester) {
           var document = tester.newTestDocument()
           var page = document.selectedPage
-          var group = page.newGroup({'name': 'Test'})
+          var group = page.newGroup({
+            'name': 'Test'
+          })
           var id = group.id
           var found = document.layerWithID(id)
           tester.assertEqual(group.sketchObject, found.sketchObject)

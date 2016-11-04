@@ -15,12 +15,12 @@ import { Rectangle } from './Rectangle.js'
 export class Slice extends Layer {
 
   /**
-    Is this a slice layer?
-
-    All Layer objects respond to this method, but only slice layers (rectangles, ovals, paths etc) return true.
-
-    @return {bool} true for instances of Group, false for any other layer type.
-  */
+   * get - Is this a {Slice} layer?
+   *
+   * All Layer objects respond to this method, but only {Slice} layers return true.
+   *
+   * @return {boolean}  for instances of {Slice}, false for any other layer type.
+   */
 
   get isSlice () {
     return true
@@ -60,7 +60,10 @@ export class Slice extends Layer {
           var frame = new Rectangle(5, 10, 100, 44)
           var document = tester.newTestDocument()
           var page = document.selectedPage
-          var slice = page.newSlice({'name': name, frame: frame})
+          var slice = page.newSlice({
+            'name': name,
+            frame: frame
+          })
           tester.assertEqual(slice.name, name)
           tester.assertEqual(slice.frame, frame)
         },

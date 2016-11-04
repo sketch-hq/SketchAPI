@@ -26,13 +26,21 @@ export class Rectangle {
       The x coordinate of the top-left corner of the rectangle.
       @type {number}
     */
-    if (x === undefined) { x = 0 }
-    if (y === undefined) { y = 0 }
+    if (x === undefined) {
+      x = 0
+    }
+    if (y === undefined) {
+      y = 0
+    }
 
     // In order to genreate a Shape you need at least 1x positive value for either
     // width or height.
-    if (width === undefined) { width = 1 }
-    if (height === undefined) { height = 1 } //
+    if (width === undefined) {
+      width = 1
+    }
+    if (height === undefined) {
+      height = 1
+    } //
 
     this.x = x
 
@@ -119,11 +127,11 @@ export class Rectangle {
     return '{' + this.x + ', ' + this.y + ', ' + this.width + ', ' + this.height + '}'
   }
 
-    /**
-     Return a list of tests to run for this class.
+  /**
+   Return a list of tests to run for this class.
 
-     @return {dictionary} A dictionary containing the tests to run. Each key is the name of a test, each value is a function which takes a Tester instance.
-     */
+   @return {dictionary} A dictionary containing the tests to run. Each key is the name of a test, each value is a function which takes a Tester instance.
+   */
 
   static tests () {
     return {

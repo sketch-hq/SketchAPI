@@ -16,14 +16,15 @@ import { Application } from './Application.js'
 export class Group extends Layer {
 
   /**
-    Is this an group?
-
-    All Layer objects respond to this method, but only Groups or things that inherit from groups return true.
-
-    @return {bool} true for instances of Group, false for any other layer type.
-  */
-
-  get isGroup () { return true }
+   * get - Is this a {Group} layer?
+   *
+   * All Layer objects respond to this method, but only {Group} layers return true.
+   *
+   * @return {boolean}  for instances of {Symbol}, false for any other layer type.
+   */
+  get isGroup () {
+    return true
+  }
 
   /**
     Return a list of tests to run for this class.
@@ -104,16 +105,16 @@ export class Group extends Layer {
 
   _addWrappedLayerWithProperties (newLayer, properties, wrapper, doc) {
     if (newLayer) {
-        // add the Sketch object to this layer
+      // add the Sketch object to this layer
       var layer = this.sketchObject
       layer.addLayers_(NSArray.arrayWithObject_(newLayer))
       if (doc == null) {
         print('ERROR: Cannot find Document for ' + newLayer)
       }
-        // make a Javascript wrapper object for the new layer
+      // make a Javascript wrapper object for the new layer
       wrapper = this.wrapObject(newLayer, doc)
 
-        // apply properties, via the wrapper
+      // apply properties, via the wrapper
       for (var p in properties) {
         wrapper[p] = properties[p]
       }
@@ -292,7 +293,10 @@ export class Group extends Layer {
         'testPageToLocalRect': function (tester) {
           var document = tester.newTestDocument()
           var page = document.selectedPage
-          var group = page.newGroup({'frame': new Rectangle(100, 100, 100, 100), 'name': 'GroupTest 01'})
+          var group = page.newGroup({
+            'frame': new Rectangle(100, 100, 100, 100),
+            'name': 'GroupTest 01'
+          })
           var local = group.pageRectToLocalRect(new Rectangle(125, 75, 50, 200))
           tester.assertEqual(local, new Rectangle(25, -25, 50, 200))
         },
@@ -300,8 +304,13 @@ export class Group extends Layer {
         'testAdjustToFit': function (tester) {
           var document = tester.newTestDocument()
           var page = document.selectedPage
-          var group = page.newGroup({'frame': new Rectangle(100, 100, 100, 100)})
-          var shape = group.newShape({'frame': new Rectangle(50, 50, 50, 50), 'name': 'GroupTest 02'})
+          var group = page.newGroup({
+            'frame': new Rectangle(100, 100, 100, 100)
+          })
+          var shape = group.newShape({
+            'frame': new Rectangle(50, 50, 50, 50),
+            'name': 'GroupTest 02'
+          })
           group.adjustToFit()
           var frame = group.frame
           tester.assertEqual(frame, new Rectangle(150, 150, 50, 50))
@@ -310,16 +319,34 @@ export class Group extends Layer {
         'testGroupLayers': function (tester) {
           var document = tester.newTestDocument()
           var page = document.selectedPage
-          var group1 = page.newGroup({'frame': new Rectangle(100, 100, 100, 100), 'name': 'GroupTest 03'})
-          var shape1 = group1.newShape({'frame': new Rectangle(), 'name': 'Shape 01'})
-          var shape2 = group1.newShape({'frame': new Rectangle(100, 100, 100, 100), 'name': 'Shape 02'})
+          var group1 = page.newGroup({
+            'frame': new Rectangle(100, 100, 100, 100),
+            'name': 'GroupTest 03'
+          })
+          var shape1 = group1.newShape({
+            'frame': new Rectangle(),
+            'name': 'Shape 01'
+          })
+          var shape2 = group1.newShape({
+            'frame': new Rectangle(100, 100, 100, 100),
+            'name': 'Shape 02'
+          })
 
           // Added random shape to Page
-          var shape3 = page.newShape({'frame': new Rectangle(100, 100, 100, 100), 'name': 'Shape 03'})
+          var shape3 = page.newShape({
+            'frame': new Rectangle(100, 100, 100, 100),
+            'name': 'Shape 03'
+          })
 
           // Created a group within Group and adding shape wihtin it.
-          var group2 = group1.newGroup({'frame': new Rectangle(100, 100, 100, 100), 'name': 'GroupTest 04'})
-          var shape4 = group2.newShape({'frame': new Rectangle(100, 100, 100, 100), 'name': 'Shape 03'})
+          var group2 = group1.newGroup({
+            'frame': new Rectangle(100, 100, 100, 100),
+            'name': 'GroupTest 04'
+          })
+          var shape4 = group2.newShape({
+            'frame': new Rectangle(100, 100, 100, 100),
+            'name': 'Shape 03'
+          })
 
           // There should be now 2x Shapes and 1x Group within Group1
           var layerCount = group1.layers.length
@@ -339,8 +366,8 @@ export class Group extends Layer {
           var text = page.newText()
           var artboard = page.newArtboard()
           tester.assertTrue(group.isGroup)
-          tester.assertTrue(page.isGroup)       // pages are also groups
-          tester.assertTrue(artboard.isGroup)   // artboards are also groups
+          tester.assertTrue(page.isGroup) // pages are also groups
+          tester.assertTrue(artboard.isGroup) // artboards are also groups
           tester.assertTrue(text.isText)
         }
 
