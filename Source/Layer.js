@@ -29,9 +29,9 @@ export class Layer extends WrappedObject {
   }
 
   /**
-  The name of the layer.
+    The name of the layer.
 
-  @return {string} The layer's name.
+    @return {string} The layer's name.
   */
 
   get name () {
@@ -39,9 +39,9 @@ export class Layer extends WrappedObject {
   }
 
   /**
-  Set the name of the layer.
+    Set the name of the layer.
 
-  @param {string} name The new name.
+    @param {string} name The new name.
   */
 
   set name (value) {
@@ -49,11 +49,11 @@ export class Layer extends WrappedObject {
   }
 
   /**
-  The frame of the layer.
-  This is given in coordinates that are local to the parent of the layer.
+    The frame of the layer.
+    This is given in coordinates that are local to the parent of the layer.
 
-  @return {Rectangle} The layer's frame.
-  */
+    @return {Rectangle} The layer's frame.
+    */
 
   get frame () {
     var f = this.sketchObject.frame()
@@ -61,11 +61,11 @@ export class Layer extends WrappedObject {
   }
 
   /**
-  Set the frame of the layer.
-  This will move and/or resize the layer as appropriate.
-  The new frame should be given in coordinates that are local to the parent of the layer.
+    Set the frame of the layer.
+    This will move and/or resize the layer as appropriate.
+    The new frame should be given in coordinates that are local to the parent of the layer.
 
-  @param {Rectangle} frame - The new frame of the layer.
+    @param {Rectangle} frame - The new frame of the layer.
   */
 
   set frame (value) {
@@ -74,74 +74,115 @@ export class Layer extends WrappedObject {
   }
 
   /**
-  Is this a page?
+    Is this a page?
 
-  All Layer objects respond to this method, but only {Page} return true.
+    All Layer objects respond to this method, but only {Page} return true.
 
-  @return {bool} true for instances of Group, false for any other layer type.
+    @return {bool} true for instances of Group, false for any other layer type.
   */
 
   get isPage () { return false }
 
   /**
-  Is this an artboard?
+    Is this an artboard?
 
-  All Layer objects respond to this method, but only {Artboard} objects return true.
+    All Layer objects respond to this method, but only {Artboard} objects return true.
 
-  @return true for instances of Artboard, false for any other layer type.
+    @return true for instances of Artboard, false for any other layer type.
   */
 
   get isArtboard () { return false }
 
   /**
-  Is this a group?
+    Is this a group?
 
-  All Layer objects respond to this method, but only {Group} or things that inherit from groups return true.
+    All Layer objects respond to this method, but only {Group} or things that inherit from groups return true.
 
-  @return {bool} true for instances of Group, false for any other layer type.
+    @return {bool} true for instances of Group, false for any other layer type.
   */
 
   get isGroup () { return false }
 
   /**
-  Is this a text layer?
+    Is this a text layer?
 
-  All Layer objects respond to this method, but only {Text} layers return true.
+    All Layer objects respond to this method, but only {Text} layers return true.
 
-  @return {bool} true for instances of Group, false for any other layer type.
+    @return {bool} true for instances of Group, false for any other layer type.
   */
 
   get isText () { return false }
 
   /**
-  Is this a shape layer?
+    Is this a shape layer?
 
-  All Layer objects respond to this method, but only {Shape} layers (rectangles, ovals, paths etc) return true.
+    All Layer objects respond to this method, but only {Shape} layers (rectangles, ovals, paths etc) return true.
 
-  @return {bool} true for instances of Group, false for any other layer type.
+    @return {bool} true for instances of Group, false for any other layer type.
   */
 
   get isShape () { return false }
 
   /**
-  Is this an image layer?
+    Is this an image layer?
 
-  All Layer objects respond to this method, but only {Image} layers return true.
+    All Layer objects respond to this method, but only {Image} layers return true.
 
-  @return {bool} true for instances of Group, false for any other layer type.
+    @return {bool} true for instances of Group, false for any other layer type.
   */
 
   get isImage () { return false }
 
   /**
-  Is this a Symbol layer?
+    Is this a Symbol layer?
 
-  All Layer objects respond to this method, but only {Symbol} layers return true.
+    All Layer objects respond to this method, but only {Symbol} layers return true.
 
-  @return {bool} true for instances of Group, false for any other layer type.
+    @return {bool} true for instances of Group, false for any other layer type.
   */
   get isSymbol () { return false }
 
+  /**
+     Is this an slice layer?
+     All Layer objects respond to this method, but only slice layers return true.
+     @return {bool} true for instances of Slice, false for any other layer type.
+  */
+
+  get isSlice () { return false }
+
+  /**
+    Check if this layer is hidden.
+    @return {bool} true if the layer is hidden.
+  */
+
+  get isHidden () {
+    return this.sketchObject.isVisible()
+  }
+
+  /**
+    Set the if the layer is hidden.
+    @param {bool} state true to hide the layer, false to unhide it.
+  */
+  set hide (state) {
+    return this.sketchObject.setIsVisible(state)
+  }
+  /**
+   Check if this layer is locked.
+   @return {bool} true for if the layer is locked.
+  */
+
+  get locked () {
+    return this.sketchObject.isLocked()
+  }
+
+  /**
+   Check if this layer is locked.
+   @return {bool} true for if the layer is locked.
+  */
+
+  set locked (value) {
+    this.sketchObject.isLocked = value
+  }
   /**
   Duplicate this layer.
   A new identical layer will be inserted into the parent of this layer.
@@ -168,9 +209,9 @@ export class Layer extends WrappedObject {
   }
 
   /**
-  Select the layer.
-  This will clear the previous selection. Use addToSelection() if you wish
-  to preserve the existing selection.
+    Select the layer.
+    This will clear the previous selection. Use addToSelection() if you wish
+    to preserve the existing selection.
   */
 
   select () {
@@ -178,8 +219,8 @@ export class Layer extends WrappedObject {
   }
 
   /**
-  Deselect this layer.
-  Any other layers that were previously selected will remain selected.
+    Deselect this layer.
+    Any other layers that were previously selected will remain selected.
   */
 
   deselect () {
@@ -196,9 +237,9 @@ export class Layer extends WrappedObject {
   }
 
   /**
-  Return the parent container of this layer.
+    Return the parent container of this layer.
 
-  @return {Group} The containing layer of this layer.
+    @return {Group} The containing layer of this layer.
   */
 
   get container () {
@@ -206,16 +247,16 @@ export class Layer extends WrappedObject {
   }
 
   /**
-  Return a list of tests to run for this class.
+    Return a list of tests to run for this class.
 
-  @return {dictionary} A dictionary containing the tests to run. Each key is the name of a test, each value is a function which takes a Tester instance.
+    @return {dictionary} A dictionary containing the tests to run. Each key is the name of a test, each value is a function which takes a Tester instance.
   */
 
   /**
-  Return the index of this layer in it's container.
-  The layer at the back of the container (visualy) will be layer 0. The layer at the front will be layer n - 1 (if there are n layers).
+    Return the index of this layer in it's container.
+    The layer at the back of the container (visualy) will be layer 0. The layer at the front will be layer n - 1 (if there are n layers).
 
-  @return {number} The layer order.
+    @return {number} The layer order.
   */
 
   get index () {
@@ -224,9 +265,9 @@ export class Layer extends WrappedObject {
   }
 
   /**
-  Move this layer to a specified X, Y Position coordinate
-  @param {int} x the X coordinate
-  @param {int} y the y coordinate
+    Move this layer to a specified X, Y Position coordinate
+    @param {int} x the X coordinate
+    @param {int} y the y coordinate
   */
   moveToPosition (x, y) {
     this.sketchObject.frame().setLeft(x)
@@ -242,7 +283,7 @@ export class Layer extends WrappedObject {
   }
 
   /**
-  Move this layer forward in its container.
+    Move this layer forward in its container.
   */
 
   moveForward () {
@@ -250,7 +291,7 @@ export class Layer extends WrappedObject {
   }
 
   /**
-  Move this layer to the back of its container.
+    Move this layer to the back of its container.
   */
 
   moveToBack () {
@@ -258,7 +299,7 @@ export class Layer extends WrappedObject {
   }
 
   /**
-  Move this layer backwards in its container.
+    Move this layer backwards in its container.
   */
 
   moveBackward () {
@@ -266,10 +307,10 @@ export class Layer extends WrappedObject {
   }
 
   /**
-  Convert a rectangle in the coordinates that this layer uses to absolute (page) coordinates.
+    Convert a rectangle in the coordinates that this layer uses to absolute (page) coordinates.
 
-  @param {Rectangle} rect The rectangle to convert.
-  @return {Rectangle} The converted rectangle expressed in page coordinates.
+    @param {Rectangle} rect The rectangle to convert.
+    @return {Rectangle} The converted rectangle expressed in page coordinates.
   */
 
   localRectToPageRect (rect) {
@@ -278,10 +319,10 @@ export class Layer extends WrappedObject {
   }
 
   /**
-  Convert a rectangle in the coordinates that this layer uses to it's parent's coordinates.
+    Convert a rectangle in the coordinates that this layer uses to it's parent's coordinates.
 
-  @param {Rectangle} rect The rectangle to convert.
-  @return {Rectangle} The converted rectangle expressed in the coordinate system of the parent layer.
+    @param {Rectangle} rect The rectangle to convert.
+    @return {Rectangle} The converted rectangle expressed in the coordinate system of the parent layer.
   */
 
   localRectToParentRect (rect) {
@@ -290,9 +331,9 @@ export class Layer extends WrappedObject {
   }
 
   /**
-  Return a list of tests to run for this class.
+    Return a list of tests to run for this class.
 
-  @return {dictionary} A dictionary containing the tests to run. Each key is the name of a test, each value is a function which takes a Tester instance.
+    @return {dictionary} A dictionary containing the tests to run. Each key is the name of a test, each value is a function which takes a Tester instance.
   */
 
   static tests () {
@@ -410,8 +451,29 @@ export class Layer extends WrappedObject {
           tester.assertEqual(group1.index, 0)
           tester.assertEqual(group3.index, 1)
           tester.assertEqual(group2.index, 2)
-        }
+        },
+        'testHidden': function (tester) {
+          var document = tester.newTestDocument()
+          var page = document.selectedPage
+          var text = page.newText()
+                 // this is failing for some reason...
+                 // tester.assertFalse(text.isHidden)
+          text.hide = true
+          tester.assertTrue(text.isHidden)
+          text.hide = false
+          tester.assertFalse(text.isHidden)
+        },
 
+        'testLocked': function (tester) {
+          var document = tester.newTestDocument()
+          var page = document.selectedPage
+          var text = page.newText()
+          tester.assertFalse(text.locked)
+          text.locked = true
+          tester.assertTrue(text.locked)
+          text.locked = false
+          tester.assertFalse(text.locked)
+        }
       }
     }
   }

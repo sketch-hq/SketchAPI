@@ -10,33 +10,33 @@ import { Rectangle } from './Rectangle.js'
 import { Style } from './Style.js'
 import { Application } from './Application.js'
 /**
-Represents a group of layers.
+  Represents a group of layers.
 */
 
 export class Group extends Layer {
 
   /**
-  Is this an group?
+    Is this an group?
 
-  All Layer objects respond to this method, but only Groups or things that inherit from groups return true.
+    All Layer objects respond to this method, but only Groups or things that inherit from groups return true.
 
-  @return {bool} true for instances of Group, false for any other layer type.
+    @return {bool} true for instances of Group, false for any other layer type.
   */
 
   get isGroup () { return true }
 
   /**
-  Return a list of tests to run for this class.
+    Return a list of tests to run for this class.
 
-  @return {dictionary} A dictionary containing the tests to run. Each key is the name of a test, each value is a function which takes a Tester instance.
+    @return {dictionary} A dictionary containing the tests to run. Each key is the name of a test, each value is a function which takes a Tester instance.
   */
 
   /**
-  Perform a function for every sub-layer inside this one.
-  The function will be passed a single argument each time it is
-  invoked - which will be an object representing the sub-layer.
+    Perform a function for every sub-layer inside this one.
+    The function will be passed a single argument each time it is
+    invoked - which will be an object representing the sub-layer.
 
-  @param {function(layer: Layer)} block The function to execute for each layer.
+    @param {function(layer: Layer)} block The function to execute for each layer.
   */
 
   iterate (block) {
@@ -45,12 +45,12 @@ export class Group extends Layer {
   }
 
   /**
-  Perform a function for every sub-layer inside this one that passes a filter.
-  The function will be passed a single argument each time it is
-  invoked - which will be an object representing the sub-layer.
+    Perform a function for every sub-layer inside this one that passes a filter.
+    The function will be passed a single argument each time it is
+    invoked - which will be an object representing the sub-layer.
 
-  @param {function(layer: Layer)} filter Filter function called on each layer first to check whether it should be iterated.
-  @param {function(layer: Layer)} block The function to execute for each layer.
+    @param {function(layer: Layer)} filter Filter function called on each layer first to check whether it should be iterated.
+    @param {function(layer: Layer)} block The function to execute for each layer.
   */
 
   iterateWithFilter (filter, block) {
@@ -59,10 +59,10 @@ export class Group extends Layer {
   }
 
   /**
-  Convert a rectangle in page coordinates to one relative to this container's coordinates.
+    Convert a rectangle in page coordinates to one relative to this container's coordinates.
 
-  @param {Rectangle} rect The rectangle to convert.
-  @return {Rectangle} The rectangle in local coordinates.
+    @param {Rectangle} rect The rectangle to convert.
+    @return {Rectangle} The rectangle in local coordinates.
   */
 
   pageRectToLocalRect (rect) {
@@ -71,14 +71,14 @@ export class Group extends Layer {
   }
 
   /**
-  Adjust the group to fit its children.
+    Adjust the group to fit its children.
   */
 
   adjustToFit () {
     this.sketchObject.resizeToFitChildrenWithOption_(0)
   }
 
-    /**
+  /**
     Add a new wrapped layer object to represent a Sketch layer.
     Apply any supplied properties to the wrapper (which will apply
     them in turn to the wrapped layer).
@@ -87,7 +87,7 @@ export class Group extends Layer {
     @param {dictionary} properties The properties to apply.
     @param {string} wrapper The name of wrapper class to use.
     @return {Layer} The wrapped layer object.
-    */
+  */
 
   _addWrappedLayerWithProperties (newLayer, properties, wrapper) {
     if (newLayer) {
@@ -108,13 +108,13 @@ export class Group extends Layer {
     }
   }
 
-    /**
+  /**
     Extract the frame to use for a layer from some properties.
     If the frame wasn't supplied in the properties, we return a default value instead.
 
     @param {dictionary} properties The properties to use when looking for a frame value.
     @return {Rectangle} The frame rectangle to use.
-    */
+  */
 
   _frameForLayerWithProperties (properties) {
     var frame = properties.frame
@@ -126,10 +126,10 @@ export class Group extends Layer {
     return frame
   }
 
-    /**
+  /**
     Extract the style to use for a layer from some properties.
     If the style wasn't supplied at all, we use the default one.
-    */
+  */
 
   _styleForLayerWithProperties (properties) {
     var style = properties.style
@@ -152,13 +152,13 @@ export class Group extends Layer {
     return style
   }
 
-    /**
+  /**
     Returns a newly created shape, which has been added to this layer,
     and sets it up using the supplied properties.
 
     @param {dictionary} properties Properties to apply to the shape.
     @return {Shape} the new shape.
-    */
+  */
 
   newShape (properties = {}) {
     var frame = this._frameForLayerWithProperties(properties)
@@ -173,13 +173,13 @@ export class Group extends Layer {
     return this._addWrappedLayerWithProperties(newLayer, properties, 'Shape')
   }
 
-    /**
+  /**
     Returns a newly created text layer, which has been added to this layer,
     and sets it up using the supplied properties.
 
     @param {dictionary} properties Properties to apply to the text layer.
     @return {Text} the new text layer.
-    */
+  */
 
   newText (properties = {}) {
     var frame = this._frameForLayerWithProperties(properties)
@@ -188,13 +188,13 @@ export class Group extends Layer {
     return this._addWrappedLayerWithProperties(newLayer, properties, 'Text')
   }
 
-    /**
+  /**
     Returns a newly created group, which has been added to this layer,
     and sets it up using the supplied properties.
 
     @param {dictionary} properties Properties to apply to the group.
     @return {Group} the new group.
-    */
+  */
 
   newGroup (properties = {}) {
     var frame = this._frameForLayerWithProperties(properties)
@@ -202,13 +202,13 @@ export class Group extends Layer {
     return this._addWrappedLayerWithProperties(newLayer, properties, 'Group')
   }
 
-    /**
+  /**
     Returns a newly created image layer, which has been added to this layer,
     and sets it up using the supplied properties.
 
     @param {dictionary} properties Properties to apply to the layer.
     @return {Image} the new image layer.
-    */
+  */
 
   newImage (properties = {}) {
     var frame = this._frameForLayerWithProperties(properties)
@@ -216,6 +216,18 @@ export class Group extends Layer {
     return this._addWrappedLayerWithProperties(newLayer, properties, 'Image')
   }
 
+  /**
+  Returns a newly created slice layer, which has been added to this layer,
+  and sets it up using the supplied properties.
+  @param {dictionary} properties Properties to apply to the slice layer.
+  @return {Slice} the new slice layer.
+  */
+
+  newSlice (properties = {}) {
+    var frame = this._frameForLayerWithProperties(properties)
+    var newLayer = MSSliceLayer.alloc().initWithFrame_(frame.asCGRect())
+    return this._addWrappedLayerWithProperties(newLayer, properties, 'Slice')
+  }
   /**
   Return a list of tests to run for this class.
 

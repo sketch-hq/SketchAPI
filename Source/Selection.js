@@ -65,7 +65,10 @@ export class Selection extends WrappedObject {
     this.iterate(function (layer) {
       firstLayer = layer.sketchObject
     })
-    return this.wrapObject(firstLayer)
+
+    if (null) {
+      return this.wrapObject(firstLayer)
+    }
   }
 
   /**

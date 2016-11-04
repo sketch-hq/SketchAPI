@@ -23,6 +23,7 @@ import { Border } from './Border.js'
 import { Fill } from './Fill.js'
 import { Utility } from './Utility.js'
 import { Symbol } from './Symbol.js'
+import { Slice } from './Slice.js'
 /**
  Gives you access to Sketch, and provides access to:
  - the document model and the layer tree
@@ -68,6 +69,7 @@ export class Application extends WrappedObject {
     this.Fill = Fill
     this.Utility = Utility
     this.Symbol = Symbol
+    this.Slice = Slice
   }
 
     /**
@@ -332,7 +334,8 @@ export class Application extends WrappedObject {
       MSShapeGroup: Shape,
       MSBitmapLayer: Image,
       MSTextLayer: Text,
-      MSSymbolInstance: Symbol
+      MSSymbolInstance: Symbol,
+      MSSliceLayer: Slice
     }
     return mappings
   }
@@ -349,8 +352,11 @@ export class Application extends WrappedObject {
   */
 
   static wrapObject (sketchObject, inDocument) {
+    // if (sketchObject == null) {
+    //   print('null objects cannot be wrapped')
+    //   return
+    // }
     var mapping = Application.wrapperMappings()
-
     var jsClass = mapping[sketchObject.class()]
     if (!jsClass) {
       print('no mapped wrapper for ' + sketchObject.class())
@@ -437,7 +443,8 @@ export class Application extends WrappedObject {
         'Border': Border.tests(),
         'Fill': Fill.tests(),
         'ColorHelper': ColorHelper.tests(),
-        'Symbol': Symbol.tests()
+        'Symbol': Symbol.tests(),
+        'Slice': Slice.tests()
       }
     }
 
