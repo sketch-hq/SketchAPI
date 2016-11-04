@@ -1,8 +1,6 @@
-# Sketch API
+# Sketch API Alpha
 
-This is a prototype Javascript API for Sketch.
-
-The intention is to make something which is:
+This is a prototype Javascript API for Sketch. It's still a work in progress, but the intention is to make something which is:
 
 - native Javascript
 - an easily understandable subset of the full internals of Sketch
