@@ -62,11 +62,11 @@ export class ColorHelper extends WrappedObject {
     @return {rgba} rgbaPercent returns converted RGB value in percentage format.
   */
   static hexToRgbPercent (hexColor) {
-    var color = MSColor.colorWithSVGString(hexColor)
-    var r = color.red()
-    var g = color.green()
-    var b = color.blue()
-    var a = color.alpha()
+    var color = ColorHelper.hexToRgb(hexColor)
+    var r = color.r
+    var g = color.g
+    var b = color.b
+    var a = 1
     return {
       r: r,
       g: g,
@@ -105,7 +105,9 @@ export class ColorHelper extends WrappedObject {
   }
 
   static nativeToHex (mscolor) {
-    return '#' + mscolor.hexValue().toUpperCase()
+    var result = ColorHelper.rgbToHex(mscolor.red(), mscolor.green(), mscolor.blue()).toUpperCase()
+  
+    return result
   }
   /**
     Converts HSV Color values to RGB
