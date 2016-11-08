@@ -10,6 +10,12 @@ var path        = require('path');
 var runSequence = require('run-sequence');
 var source      = require('vinyl-source-stream');
 var spawn       = require("gulp-spawn");
+var minimist    = require('minimist');
+var prependify = require('prependify');
+
+var options = minimist(process.argv.slice(2), {
+  string: 'output', default: { output: path.join('..', 'SketchPluginManager', 'Source', 'SketchAPI.js') }
+});
 
 gulp.task('clean', function () {
   return del(['build']);
@@ -25,10 +31,12 @@ gulp.task('prepare-folders', function (callback) {
 
 
 gulp.task('deploy', function (callback) {
-
   var scriptPath = path.join(__dirname, 'build', 'api.js');
   var headerPath = path.join(__dirname, 'header.js');
-  var deploymentPath = path.join(__dirname, '..', 'SketchPluginManager', 'Source', 'SketchAPI.js');
+  var deploymentPath = options.output;
+  if (!path.isAbsolute(deploymentPath)) {
+    deploymentPath = path.join(__dirname, deploymentPath);
+  }
 
   async.parallel({
     runtime: function (callback) {
@@ -57,6 +65,15 @@ gulp.task('bundle', function () {
   bundler.transform(babelify.configure({
     presets: ["es2015"],
   }));
+
+  // Prepending the Header.js as for some reason this
+  // was getting omitted. In order to use Custom console
+  // this is needed otherwise you get undefined __global errors
+  // before any plugin is run.
+  var headerPath = path.join(__dirname, 'header.js');
+  var header = fs.readFileSync(headerPath, 'utf8');
+  bundler.plugin(prependify, header + "\n");
+
 
   return bundler.bundle()
     .on('error',(function(arg) {

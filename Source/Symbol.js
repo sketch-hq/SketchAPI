@@ -1,29 +1,27 @@
 // ********************************
-// # Artboard.js
+// # Symbol.js
 // # Sketch Javascript API.
 //
 // All code (C) 2016 Bohemian Coding.
 // ********************************
 
-import { Group } from './Group.js'
-
+import { Layer } from './Layer.js'
 /**
-    A Sketch artboard.
+Represents a Sketch layer.
 */
 
-export class Artboard extends Group {
+export class Symbol extends Layer {
 
   /**
-   * get - Is this a {Artboard} layer?
+   * get - Is this a {Symbol} layer?
    *
-   * All Layer objects respond to this method, but only {Artboard} layers return true.
+   * All Layer objects respond to this method, but only {Symbol} layers return true.
    *
-   * @return {boolean}  for instances of {Artboard}, false for any other layer type.
+   * @return {boolean}  for instances of {Symbol}, false for any other layer type.
    */
-  get isArtboard () {
+  get isSymbol () {
     return true
   }
-
   /**
    Return a list of tests to run for this class.
 
@@ -33,14 +31,11 @@ export class Artboard extends Group {
   static tests () {
     return {
       'tests': {
-        'testIsArtboard': function (tester) {
+        'testIsSymbol': function (tester) {
           var document = tester.newTestDocument()
           var page = document.selectedPage
-          var artboard = page.newArtboard({
-            'name': 'Test'
-          })
-          tester.assertTrue(artboard.isArtboard)
-          tester.assertFalse(page.isArtboard)
+          var shape = page.newShape()
+          tester.assertFalse(shape.isSymbol)
         }
       }
     }
