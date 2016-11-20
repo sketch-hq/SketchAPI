@@ -4,7 +4,7 @@
   "author": "Sam Deane",
   "license": "MIT",
   "description": "Javascript API for Sketch",
-  "main": "Source/API.js",
+  "main": "build/api.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
