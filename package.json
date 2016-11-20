@@ -5,6 +5,10 @@
   "license": "MIT",
   "description": "Javascript API for Sketch",
   "main": "build/api.js",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:BohemianCoding/SketchAPI.git"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
