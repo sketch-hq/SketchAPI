@@ -59,6 +59,7 @@ gulp.task('bundle', function () {
   var bundler = browserify({
     entries: ['./Source/API.js'],
     extensions: ['.js'],
+    standalone: 'sketch-api',
     debug: false
   });
 

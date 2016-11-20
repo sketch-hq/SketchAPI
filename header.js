@@ -53,4 +53,3 @@ sketch.alert("Title", "message");
 
 */
 
-var __globals = this;
