@@ -8,6 +8,7 @@
 // ## Imports
 
 import { Layer } from './Layer.js'
+import { TEXT } from './Constants';
 
 // ## Constants
 
@@ -17,10 +18,7 @@ const BCTextBehaviourFixedWidth = 1
 export class Text extends Layer {
     constructor(text, document) {
       super(text, document)
-    }
-
-    get isText() {
-      return true
+      this.type = TEXT
     }
 
     // Get/set the text of the layer.

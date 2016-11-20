@@ -8,14 +8,12 @@
 // ## Imports
 
 import { Layer } from './Layer.js'
+import { IMAGE } from './Constants'
 
 export class Image extends Layer {
   constructor(page, document) {
     super(page, document)
-  }
-
-  get isImage() {
-    return true;
+    this.type = IMAGE;
   }
 
   set imageURL(url) {

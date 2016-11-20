@@ -38,13 +38,6 @@ export class Layer extends WrappedObject {
       return new Layer(this.object.duplicate(), this.document);
     }
 
-    get isPage() { return false; }
-    get isArtboard() { return false; }
-    get isGroup() { return false; }
-    get isText() { return false; }
-    get isShape() { return false; }
-    get isImage() { return false; }
-
     addWrappedLayerWithProperties(newLayer, properties, wrapper) {
       if (newLayer) {
         // add the Sketch object to this layer

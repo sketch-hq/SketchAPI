@@ -8,6 +8,7 @@
 // ## Imports
 
 import { Layer } from './Layer.js'
+import { ARTBOARD } from './Constants'
 
 /**
     A Sketch artboard.
@@ -24,18 +25,6 @@ export class Artboard extends Layer {
 
     constructor(artboard, document) {
       super(artboard, document)
+      this.type = ARTBOARD
     }
-
-    /**
-        Is this an artboard?
-
-        All Layer objects respond to this method, but only Artboard objects return true.
-
-        @return true for instances of Artboard, false for any other layer type.
-    */
-
-    get isArtboard() {
-      return true;
-    }
-
 }

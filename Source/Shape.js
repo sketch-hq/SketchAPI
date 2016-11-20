@@ -8,14 +8,11 @@
 // ## Imports
 
 import { Layer } from './Layer.js'
+import { SHAPE } from './Constants'
 
 export class Shape extends Layer {
     constructor(shape, document) {
       super(shape, document)
+      this.type = SHAPE
     }
-
-    get isShape() {
-      return true;
-    }
-
 }

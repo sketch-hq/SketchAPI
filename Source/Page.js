@@ -8,14 +8,12 @@
 // ## Imports
 
 import { Layer } from './Layer.js'
+import { PAGE } from './Constants'
 
 export class Page extends Layer {
   constructor(page, document) {
     super(page)
     this.document = document
-  }
-
-  get isPage() {
-    return true;
+    this.type = PAGE
   }
 }
