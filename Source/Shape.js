@@ -7,9 +7,9 @@
 
 // ## Imports
 
-import { Layer } from './Layer.js'
+import Layer from './Layer'
 
-export class Shape extends Layer {
+export default class Shape extends Layer {
     constructor(shape, document) {
       super(shape, document)
     }

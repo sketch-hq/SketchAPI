@@ -7,15 +7,15 @@
 
 // ## Imports
 
-import { WrappedObject } from './WrappedObject.js'
-import { Document } from './Document.js'
-import { Rectangle } from './Rectangle.js'
-import { Group } from './Group.js'
-import { Text } from './Text.js'
-import { Image } from './Image.js'
-import { Shape } from './Shape.js'
-import { Artboard } from './Artboard.js'
-import { Page } from './Page.js'
+import WrappedObject from './WrappedObject'
+import Document from './Document'
+import Rectangle from './Rectangle'
+import Group from './Group'
+import Text from './Text'
+import Image from './Image'
+import Shape from './Shape'
+import Artboard from './Artboard'
+import Page from './Page'
 
 /**
     Gives you access to Sketch, and provides access to:
@@ -25,7 +25,7 @@ import { Page } from './Page.js'
     - access to the running plugin, it's resources and settings
 */
 
-export class Application extends WrappedObject {
+export default class Application extends WrappedObject {
 
     /**
         Construct a new Application object.

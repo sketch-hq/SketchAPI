@@ -7,14 +7,14 @@
 
 // ## Imports
 
-import { Layer } from './Layer.js'
+import Layer from './Layer'
 
 // ## Constants
 
 const BCTextBehaviourFlexibleWidth = 0
 const BCTextBehaviourFixedWidth = 1
 
-export class Text extends Layer {
+export default class Text extends Layer {
     constructor(text, document) {
       super(text, document)
     }

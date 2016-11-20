@@ -8,7 +8,7 @@
 // Base class for all objects that
 // wrap Sketch classes.
 
-export class WrappedObject {
+export default class WrappedObject {
     constructor(object) {
       this.object = object
     }

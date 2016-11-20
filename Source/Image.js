@@ -7,9 +7,9 @@
 
 // ## Imports
 
-import { Layer } from './Layer.js'
+import Layer from './Layer'
 
-export class Image extends Layer {
+export default class Image extends Layer {
   constructor(page, document) {
     super(page, document)
   }

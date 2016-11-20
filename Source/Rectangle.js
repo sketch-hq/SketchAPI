@@ -7,7 +7,7 @@
 
 // ## Imports
 
-export class Rectangle {
+export default class Rectangle {
   constructor(x, y, w, h) {
     this.x = x
     this.y = y

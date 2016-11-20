@@ -7,10 +7,10 @@
 
 // ## Imports
 
-import { WrappedObject } from './WrappedObject.js'
-import { Rectangle } from './Rectangle.js'
+import WrappedObject from './WrappedObject'
+import Rectangle from './Rectangle'
 
-export class Layer extends WrappedObject {
+export default class Layer extends WrappedObject {
     constructor(layer, document) {
       super(layer)
       this.document = document

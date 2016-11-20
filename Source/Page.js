@@ -7,9 +7,9 @@
 
 // ## Imports
 
-import { Layer } from './Layer.js'
+import Layer from './Layer'
 
-export class Page extends Layer {
+export default class Page extends Layer {
   constructor(page, document) {
     super(page)
     this.document = document

@@ -4,7 +4,7 @@
 // All code (C) 2016 Bohemian Coding.
 // ********************************
 
-import { Application } from './Application.js'
+import Application from './Application'
 
 
 /**

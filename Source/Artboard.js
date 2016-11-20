@@ -7,13 +7,13 @@
 
 // ## Imports
 
-import { Layer } from './Layer.js'
+import Layer from './Layer'
 
 /**
     A Sketch artboard.
 */
 
-export class Artboard extends Layer {
+export default class Artboard extends Layer {
 
     /**
         Make a new artboard.
