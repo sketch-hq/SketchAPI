@@ -45,10 +45,8 @@ export class Style extends WrappedObject {
       */
 
     colorFromString(value) {
-      var immutable = MSImmutableColor.colorWithSVGString_(value)
-      return MSColor.alloc().initWithImmutableObject_(immutable)
+      return MSImmutableColor.colorWithSVGString(value).newMutableCounterpart();
     }
-
 
     /**
       Set the borders to use for this style.
@@ -123,6 +121,7 @@ export class Style extends WrappedObject {
     static tests() {
         return {
             "tests" : {
+
                 "testBorders" : function(tester) {
                   var style = new Style()
                   style.borders = [ "#11223344", "#1234" ]

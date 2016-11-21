@@ -61,6 +61,31 @@ export class Selection extends WrappedObject {
 
 
     /**
+        Return the first layer in the selection.
+
+        @return {Layer} first layer in selection.
+    */
+
+    get first() {
+      if (!this.isEmpty) {
+        return this._page._document.wrapObject(this.nativeLayers[0])
+      }
+    } 
+    
+    /**
+        Return the first layer in the selection.
+
+        @return {Layer} last layer in selection.
+    */
+
+    get last() {
+      if (!this.isEmpty) {
+       return this._page._document.wrapObject(this.nativeLayers[this.length-1])
+      }
+    }     
+
+
+    /**
         Perform an action once for each layer in the selection, then clear it.
 
         @param {function(layer: Layer)} block The function to execute for each layer.
@@ -113,8 +138,7 @@ export class Selection extends WrappedObject {
 
     clear() {
       this._page.sketchObject.deselectAllLayers();
-    }
-
+    }       
 
 
     /**
@@ -206,6 +230,19 @@ export class Selection extends WrappedObject {
                 tester.assertEqual(iterations, 0)
                 tester.assert(selection.isEmpty, "selection should be empty")
               },
+
+              "testFirstAndLast" : function(tester) {
+                var document = tester.newTestDocument()
+                var text1 = document.selectedPage.newText()
+                var text2 = document.selectedPage.newText()
+                var text3 = document.selectedPage.newText()
+                text1.select()
+                text2.addToSelection()
+                text3.addToSelection()
+                var selection = document.selectedLayers
+                tester.assertEqual(selection.first, text1)
+                tester.assertEqual(selection.last, text3)
+              },              
             }
         };
     }

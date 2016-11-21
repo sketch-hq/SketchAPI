@@ -181,16 +181,17 @@ export class Group extends Layer {
     @return {Shape} the new shape.
     */
 
-    newShape(properties = {}) {
-      var frame = this._frameForLayerWithProperties(properties)
-      // TODO: Eventually we want to distinguish between different shape sub-types here depending
-      //       on what is set in properties ('frame', 'path', 'radius', etc), and to construct the
-      //       appropriate layer type accordingly. For now we only make rectangles.
-      var newLayer = MSShapeGroup.shapeWithRect_(frame.asCGRect());
-      properties["style"] = this._styleForLayerWithProperties(properties)
+    // TODO: #22 - newShape is failing because MSShapeGroup.shapeWithRect_ is not a function.
+    // newShape(properties = {}) {
+    //   var frame = this._frameForLayerWithProperties(properties)
+    //   // TODO: Eventually we want to distinguish between different shape sub-types here depending
+    //   //       on what is set in properties ('frame', 'path', 'radius', etc), and to construct the
+    //   //       appropriate layer type accordingly. For now we only make rectangles.
+    //   var newLayer = MSShapeGroup.shapeWithRect_(frame.asCGRect());
+    //   properties["style"] = this._styleForLayerWithProperties(properties)
 
-      return this._addWrappedLayerWithProperties(newLayer, properties, "Shape");
-    }
+    //   return this._addWrappedLayerWithProperties(newLayer, properties, "Shape");
+    // }
 
     /**
     Returns a newly created text layer, which has been added to this layer,
@@ -291,7 +292,7 @@ export class Group extends Layer {
           var document = tester.newTestDocument()
           var page = document.selectedPage
           var group = page.newGroup({"frame" : new Rectangle(100, 100, 100, 100)})
-          var text = group.newShape({"frame" : new Rectangle(50, 50, 50, 50)})
+          group.newGroup({"frame" : new Rectangle(50, 50, 50, 50)})
           group.adjustToFit()
           var frame = group.frame
           tester.assertEqual(frame, new Rectangle(150, 150, 50, 50))
