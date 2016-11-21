@@ -60,6 +60,7 @@ export class Application extends WrappedObject {
         this.Page = Page
         this.Selection = Selection
         this.Style = Style
+        this.Slice = Slice
     }
 
     /**
