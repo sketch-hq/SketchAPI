@@ -37,29 +37,7 @@ export class Slice extends Layer {
     get isSlice() {
       return true;
     }
-
-
-    /**
-     Return the style of the layer.
-
-     @return {Style} The style of the layer.
-     */
-
-     get style() {
-         return new Style(this.sketchObject.style())
-     }
-
-
-     /**
-     Set the style of the layer.
-
-     @param {Style} value The style settings to use for the layer.
-     */
-
-     set style(value) {
-         this.sketchObject.style = value.sketchObject
-     }
-
+    
 
     /**
      Return a list of tests to run for this class.
