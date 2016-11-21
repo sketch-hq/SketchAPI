@@ -18,6 +18,8 @@ import { Tester } from './Tester.js'
 import { Layer } from './Layer.js'
 import { Selection } from './Selection.js'
 import { Style } from './Style.js'
+import { SymbolInstance } from './SymbolInstance.js'
+import { SymbolMaster } from './SymbolMaster.js'
 
 /**
  Gives you access to Sketch, and provides access to:
@@ -59,6 +61,8 @@ export class Application extends WrappedObject {
         this.Page = Page
         this.Selection = Selection
         this.Style = Style
+        this.SymbolInstance = SymbolInstance
+        this.SymbolMaster = SymbolMaster
     }
 
     /**
@@ -298,7 +302,9 @@ export class Application extends WrappedObject {
         MSArtboardGroup : Artboard,
         MSShapeGroup : Shape,
         MSBitmapLayer : Image,
-        MSTextLayer : Text
+        MSTextLayer : Text,
+        MSSymbolInstance: SymbolInstance,
+        MSSymbolMaster: SymbolMaster
       }
       return mappings
     }
@@ -397,7 +403,9 @@ export class Application extends WrappedObject {
                 "Shape" : Shape.tests(),
                 "Text" : Text.tests(),
                 "WrappedObject" : WrappedObject.tests(),
-                "Style" : Style.tests()
+                "Style" : Style.tests(),
+                "SymbolInstance" : SymbolInstance.tests(),
+                "SymbolMaster" : SymbolMaster.tests()
             }
         }
 
