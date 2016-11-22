@@ -87,6 +87,12 @@ export class Layer extends WrappedObject {
       return this.addWrappedLayerWithProperties(newLayer, properties, "Text");
     }
 
+    newPage(properties) {
+      var frame = this.frameForLayerWithProperties(properties)
+      var newLayer = MSPage.alloc().initWithFrame_(frame.asCGRect());
+      return this.addWrappedLayerWithProperties(newLayer, properties, "Page");
+    }
+    
     newGroup(properties) {
       var frame = this.frameForLayerWithProperties(properties)
       var newLayer = MSLayerGroup.alloc().initWithFrame_(frame.asCGRect());

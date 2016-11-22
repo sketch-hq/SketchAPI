@@ -14,6 +14,10 @@ export class Group extends Layer {
       super(group, document)
     }
 
+    get isGroup() {
+      return true;
+    }
+
     is_group() {
       return true;
     }
