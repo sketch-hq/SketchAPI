@@ -112,7 +112,7 @@ export class Selection extends WrappedObject {
     */
 
     clear() {
-      this._page.sketchObject.changeSelectionBySelectingLayers();
+      this._page.sketchObject.changeSelectionBySelectingLayers(null);
     }
 
 
