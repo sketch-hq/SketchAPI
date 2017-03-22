@@ -169,7 +169,7 @@ export class Layer extends WrappedObject {
   */
 
   select() {
-    this._object.select_byExpandingSelection(true, false);
+    this._object.select_byExtendingSelection(true, false);
   }
 
 
@@ -179,7 +179,7 @@ export class Layer extends WrappedObject {
   */
 
   deselect() {
-    this._object.select_byExpandingSelection(false, true);
+    this._object.select_byExtendingSelection(false, true);
   }
 
 
@@ -189,7 +189,7 @@ export class Layer extends WrappedObject {
   */
 
   addToSelection() {
-    this._object.select_byExpandingSelection(true, true);
+    this._object.select_byExtendingSelection(true, true);
   }
 
 
