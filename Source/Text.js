@@ -188,11 +188,11 @@ export class Text extends Layer {
 
   get fragments() {
     var textLayer = this.sketchObject
-    var storage = textLayer.createTextStorage()
+    var storage = textLayer.immutableModelObject().createTextStorage()
     var layout = storage.layoutManagers().firstObject()
     var actualCharacterRangePtr = MOPointer.new()
     var charRange = NSMakeRange(0, storage.length())
-    var origin = textLayer.rect().origin
+    var drawingPoint = textLayer.drawingPointForText()
 
     layout.glyphRangeForCharacterRange_actualCharacterRange_(charRange, actualCharacterRangePtr)
     var glyphRange = actualCharacterRangePtr.value()
@@ -202,7 +202,10 @@ export class Text extends Layer {
     while (currentLocation < NSMaxRange(glyphRange)) {
       var effectiveRangePtr = MOPointer.new()
       var localRect = layout.lineFragmentRectForGlyphAtIndex_effectiveRange_(currentLocation, effectiveRangePtr)
-      var rect = new Rectangle(localRect.origin.x, localRect.origin.y, localRect.size.width, localRect.size.height)
+      var rect = new Rectangle(localRect.origin.x + drawingPoint.x, 
+		  					   localRect.origin.y + drawingPoint.y, 
+		  					   localRect.size.width, 
+		                       localRect.size.height)
       var effectiveRange = effectiveRangePtr.value()
       var baselineOffset = layout.typesetter().baselineOffsetInLayoutManager_glyphIndex_(layout, currentLocation)
 
