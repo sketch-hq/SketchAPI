@@ -19,7 +19,7 @@
     "esdoc": "^0.4.7",
     "expand-tilde": "^1.2.0",
     "fs-extra": "^0.30.0",
-    "gulp": "^3.9.0",
+    "gulp": "^3.9.1",
     "gulp-babel": "^6.1.2",
     "gulp-spawn": "^0.3.0",
     "lodash": "^4.2.1",
