@@ -24,7 +24,8 @@
     "gulp-spawn": "^0.4.0",
     "lodash": "^4.2.1",
     "run-sequence": "^1.1.5",
-    "vinyl-source-stream": "^1.1.0"
+    "vinyl-source-stream": "^1.1.0",
+    "minimist": "^1.2.0"
   },
   "dependencies": {}
 }
