@@ -115,7 +115,7 @@ If you want to build this library file locally, you need to have [node](https://
 
 ```
 npm install -g gulp
-npm install
+npm install --no-shrinkwrap
 ```
 
 Once that's ready, you can run:
