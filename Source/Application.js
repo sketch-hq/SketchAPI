@@ -295,24 +295,6 @@ export class Application extends WrappedObject {
     }
 
     /**
-     Register random dynamic data with an associated label.
-     
-     @param {string} dataLabel The label to be shown in the random data menu.
-     @param {string} dataSupplierKey A key that returns the
-     */
-    registerDynamicRandomDataSupplier(dataLabel, dataSupplierKey) {
-        this.log("In registerDynamicRandomDataSupplier");
-    }
-
-    deregisterStaticRandomData(dataLabel) {
-        this.log("In deregisterStaticRandomDataSupplier");
-    }
-
-    deregisterDynamicRandomDataSupplier(dataLabel) {
-        this.log("In deregisterDynamicRandomDataSupplier");
-    }
-
-    /**
      Return a lookup table of known mappings between Sketch model classes
      and our JS API wrapper classes.
 

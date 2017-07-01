@@ -7,21 +7,8 @@
 
 import { WrappedObject } from './WrappedObject.js'
 
-/// A solid fill/border.
-const BCFillTypeColor    = 0
-
-/// A gradient fill/border.
-const BCFillTypeGradient = 1
-
-/// A pattern fill/border.
-const BCFillTypePattern  = 4
-
-/// A noise fill/border.
-const BCFillTypeNoise    = 5
-
-
 /**
-  Represents a Sketch layer style.
+  Sketch data supplier manager.
  */
 
 export class DataSupplier extends WrappedObject {
@@ -39,85 +26,40 @@ export class DataSupplier extends WrappedObject {
 
       super(dataSupplier)
     }
-
+  
+    /**
+     Register some data with a name and the plugin it has come from.
+     
+     @param {string} dataName The data name, will be used as the menu item title for the data.
+     @param {array} data The data provided by the plugin immediately.
+    */
     registerStaticSupplier(dataName, data) {
-      [this.sketchObject
+      this._object.registerStaticData_withName_pluginIdentifier_(data, dataName, context.plugin.identifier());
     }
 
     /**
-      Given a string description of a color, return an MSColor.
-      */
-
-    
-    colorFromString(value) {
-      var immutable = MSImmutableColor.colorWithSVGString_(value)
-      return MSColor.alloc().initWithImmutableObject_(immutable)
-    }
-
-
-    /**
-      Set the borders to use for this style.
-
-      The value provided is a list of items, with each one representing a style.
-
-      Currently these values can only be strings with css-style color specifications
-      such as #ffee33 (alpha values are supported too, so #aabbccdd is valid).
-
-      These strings are used to create simple borders.
-
-      In the future the intention is to also support dictionaries allowing gradients
-      and other more complex border parameters to be specified.
-
-      @param {array} values A list of colors - each one representing a border to create.
-
+     Register a function to supply data on request.
+     
+     @param {string} dataName The data name, will be used as the menu item title for the data.
+     @param {string} supplierJSMethodName The name of the javascript method that will provide the data on demand.
     */
-
-    set borders(value) {
-      var objects = []
-      for (var b in value) {
-        var color = this.colorFromString(value[b])
-        var border = MSStyleBorder.new()
-        border.setColor_(color)
-        border.setFillType_(BCFillTypeColor)
-        border.enabled = true
-
-        objects.push(border)
-      }
-      this.sketchObject.setBorders_(objects)
+    registerDynamicSupplier(dataName, supplierJSMethodName) {
+      this._object.registerDynamicSupplier_withName_pluginIdentifier_(supplierJSMethodName, dataName, context.plugin.identifier);
     }
-
+  
+    /**
+     Deregister any static data or dynamic data providers for a particular plugin. Typically called from the Shutdown method of the plugin.
+     */
+    deregisterDataSupplier() {
+      this._object.deregisterDataSupplierForPluginWithIdentifier_(context.plugin.identifier);
+    }
 
     /**
-      Set the fills to use for this style.
-
-      The value provided is a list of items, with each one representing a style.
-
-      Currently these values can only be strings with css-style color specifications
-      such as #ffee33 (alpha values are supported too, so #aabbccdd is valid).
-
-      These strings are used to create simple fills.
-
-      In the future the intention is to also support dictionaries allowing gradients
-      and other more complex fill parameters to be specified.
-
-      @param {array} values A list of colors - each one representing a fill to create.
-
-    */
-
-    set fills(value) {
-      var objects = []
-      for (var b in value) {
-        var color = this.colorFromString(value[b])
-        var fill = MSStyleFill.new()
-        fill.setColor_(color)
-        fill.setFillType_(BCFillTypeColor)
-        fill.enabled = true
-
-        objects.push(fill)
-      }
-      this.sketchObject.setFills_(objects)
+     When the plugin providing the dynamic data has finished generating the data, it will call this function with the data key and the data.
+     */
+    supplyDataForKey(data, key) {
+      this._object.supplyData_forKey_(data, key);
     }
-
 
     /**
      Return a list of tests to run for this class.
