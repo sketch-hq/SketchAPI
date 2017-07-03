@@ -263,8 +263,9 @@ export class Application extends WrappedObject {
      */
 
     randomDataManager() {
+        log('### In Application.randomDataManager')
         var app = AppController.sharedInstance()
-        return DataSupplier(app.dataSupplierManager())
+        return new DataSupplier(app.dataSupplierManager())
     }
 
     /**
@@ -293,16 +294,6 @@ export class Application extends WrappedObject {
     alert(title, message) {
         var app = NSApplication.sharedApplication()
         app.displayDialog_withTitle(title, message)
-    }
-
-    /**
-     Register random static data with an associated label.
-     
-     @param {string} dataLabel The label to be shown in the random data menu.
-     @param {array} data The data in a
-     */
-    registerStaticRandomData(dataLabel, data) {
-        this.log("In registerStaticRandomDataSupplier");
     }
 
     /**

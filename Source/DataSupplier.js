@@ -20,8 +20,10 @@ export class DataSupplier extends WrappedObject {
     */
 
     constructor(dataSupplier) {
+      log('### In constructor for DataSupplier')
+      log(dataSupplier)
       if (!dataSupplier) {
-        dataSupplier = AppController.dataSupplierManager()
+        dataSupplier = AppController.sharedIntance.dataSupplierManager()
       }
 
       super(dataSupplier)
@@ -33,8 +35,8 @@ export class DataSupplier extends WrappedObject {
      @param {string} dataName The data name, will be used as the menu item title for the data.
      @param {array} data The data provided by the plugin immediately.
     */
-    registerStaticSupplier(dataName, data) {
-      this._object.registerStaticData_withName_pluginIdentifier_(data, dataName, context.plugin.identifier());
+    registerStaticSupplier(dataName, data, pluginIdentifier) {
+      this._object.registerStaticData_withName_pluginIdentifier_(data, dataName, pluginIdentifier);
     }
 
     /**
@@ -43,15 +45,15 @@ export class DataSupplier extends WrappedObject {
      @param {string} dataName The data name, will be used as the menu item title for the data.
      @param {string} supplierJSMethodName The name of the javascript method that will provide the data on demand.
     */
-    registerDynamicSupplier(dataName, supplierJSMethodName) {
-      this._object.registerDynamicSupplier_withName_pluginIdentifier_(supplierJSMethodName, dataName, context.plugin.identifier);
+    registerDynamicSupplier(dataName, supplierJSMethodName, pluginIdentifier) {
+      this._object.registerDynamicSupplier_withName_pluginIdentifier_(supplierJSMethodName, dataName, pluginIdentifier);
     }
   
     /**
      Deregister any static data or dynamic data providers for a particular plugin. Typically called from the Shutdown method of the plugin.
      */
-    deregisterDataSuppliers() {
-      this._object.deregisterDataSupplierForPluginWithIdentifier_(context.plugin.identifier);
+    deregisterDataSuppliers(pluginIdentifier) {
+      this._object.deregisterDataSupplierForPluginWithIdentifier_(pluginIdentifier);
     }
 
     /**
