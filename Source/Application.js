@@ -263,7 +263,6 @@ export class Application extends WrappedObject {
      */
 
     randomDataManager() {
-        log('### In Application.randomDataManager')
         var app = AppController.sharedInstance()
         return new DataSupplier(app.dataSupplierManager())
     }

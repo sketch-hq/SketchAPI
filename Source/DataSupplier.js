@@ -20,8 +20,6 @@ export class DataSupplier extends WrappedObject {
     */
 
     constructor(dataSupplier) {
-      log('### In constructor for DataSupplier')
-      log(dataSupplier)
       if (!dataSupplier) {
         dataSupplier = AppController.sharedIntance.dataSupplierManager()
       }
@@ -53,7 +51,7 @@ export class DataSupplier extends WrappedObject {
      Deregister any static data or dynamic data providers for a particular plugin. Typically called from the Shutdown method of the plugin.
      */
     deregisterDataSuppliers(pluginIdentifier) {
-      this._object.deregisterDataSupplierForPluginWithIdentifier_(pluginIdentifier);
+      this._object.deregisterDataSuppliersForPluginWithIdentifier_(pluginIdentifier);
     }
 
     /**
