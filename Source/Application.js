@@ -18,6 +18,7 @@ import { Tester } from './Tester.js'
 import { Layer } from './Layer.js'
 import { Selection } from './Selection.js'
 import { Style } from './Style.js'
+import { DataSupplier } from './DataSupplier.js'
 
 /**
  Gives you access to Sketch, and provides access to:
@@ -59,6 +60,7 @@ export class Application extends WrappedObject {
         this.Page = Page
         this.Selection = Selection
         this.Style = Style
+        this.DataSupplier = DataSupplier
     }
 
     /**
@@ -253,7 +255,16 @@ export class Application extends WrappedObject {
         var app = NSDocumentController.sharedDocumentController()
         app.newDocument_(this)
         return new Document(app.currentDocument(), this)
+    }
 
+    /**
+     Get the object that manages the data provided by plugins.
+     @return The data manager object.
+     */
+
+    randomDataManager() {
+        var app = AppController.sharedInstance()
+        return DataSupplier(app.dataSupplierManager())
     }
 
     /**

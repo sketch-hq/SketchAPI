@@ -66,24 +66,4 @@ export class DataSupplier extends WrappedObject {
 
      @return {dictionary} A dictionary containing the tests to run. Each key is the name of a test, each value is a function which takes a Tester instance.
      */
-
-    static tests() {
-        return {
-            "tests" : {
-                "testBorders" : function(tester) {
-                  var style = new Style()
-                  style.borders = [ "#11223344", "#1234" ]
-                  tester.assertEqual(style.sketchObject.borders().count(), 2)
-                },
-
-                "testFills" : function(tester) {
-                  var style = new Style()
-                  style.borders = [ "#11223344", "#1234" ]
-                  tester.assertEqual(style.sketchObject.borders().count(), 2)
-                },
-
-            }
-        };
-    }
-
 }
