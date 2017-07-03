@@ -50,7 +50,7 @@ export class DataSupplier extends WrappedObject {
     /**
      Deregister any static data or dynamic data providers for a particular plugin. Typically called from the Shutdown method of the plugin.
      */
-    deregisterDataSupplier() {
+    deregisterDataSuppliers() {
       this._object.deregisterDataSupplierForPluginWithIdentifier_(context.plugin.identifier);
     }
 
