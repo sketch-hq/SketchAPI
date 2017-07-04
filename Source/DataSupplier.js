@@ -19,12 +19,13 @@ export class DataSupplier extends WrappedObject {
       @param {MSDataSupplierManager} dataSupplier The underlying data supplier manager object from Sketch.
     */
 
-    constructor(dataSupplier) {
+    constructor(dataSupplier, application) {
       if (!dataSupplier) {
         dataSupplier = AppController.sharedIntance.dataSupplierManager()
       }
-
       super(dataSupplier)
+      
+      this._application = application
     }
   
     /**
