@@ -47,8 +47,11 @@ export class Application extends WrappedObject {
          @type {dictionary}
          */
         this._metadata = MSApplicationMetadata.metadata()
-
-        this._appController = AppController.sharedInstance()
+      
+        if (this._metadata.app.startsWith("com.bohemiancoding.sketch3")) {
+          // We will only have an AppController when the app is Sketch not a test bundle.
+          this._appController = AppController.sharedInstance()
+        }
   
         // expose some classes
         this.Application = Application
