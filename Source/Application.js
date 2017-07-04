@@ -48,6 +48,8 @@ export class Application extends WrappedObject {
          */
         this._metadata = MSApplicationMetadata.metadata()
 
+        this._appController = AppController.sharedInstance()
+  
         // expose some classes
         this.Application = Application
         this.Rectangle = Rectangle
@@ -262,9 +264,16 @@ export class Application extends WrappedObject {
      @return The data manager object.
      */
 
-    randomDataManager() {
-        var app = AppController.sharedInstance()
-        return new DataSupplier(app.dataSupplierManager())
+    dataManager() {
+        return new DataSupplier(this.appController.dataSupplierManager(), this)
+    }
+
+    /**
+     Get Sketch's AppController shared instance.
+     @return The AppController shared instance.
+     */
+    get appController() {
+        return this._appController
     }
 
     /**
@@ -314,6 +323,7 @@ export class Application extends WrappedObject {
       return mappings
     }
 
+  
     /**
      Return a wrapped version of a Sketch object.
      We don't know about *all* Sketch object types, but
