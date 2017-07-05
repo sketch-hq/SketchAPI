@@ -107,11 +107,15 @@ Happy coding!
 
 ## Development
 
-If you want to build the library locally, you need to run this on the project's root folder (this assumes you already have [node](https://nodejs.org) installed):
+The API is organised as a series of files defining javascript classes, and written with ES6 syntax.
+
+However, the version that is embedded in Sketch is a single minified and transpiled library file called `SketchAPI.js`.
+
+If you want to build this library file locally, you need to have [node](https://nodejs.org) installed, and then to run the following in the project's root folder:
 
 ```
 npm install -g gulp
-npm install
+npm install --no-shrinkwrap
 ```
 
 Once that's ready, you can run:
@@ -120,24 +124,30 @@ Once that's ready, you can run:
 gulp
 ```
 
-to compile the library. By default, it will be saved to `../SketchPluginManager/Source/SketchAPI.js`. You can specify your own output path by using the `--output` argument:
+to compile the library. By default, it will be saved to `../SketchPluginManager/Source/SketchAPI.js` (which is where the build process for Sketch expects to find it).
+
+Unless you're part of the Bohemian team and are actually building Sketch, you'll probably want to put it somewhere else. You can specify your own output path by using the `--output` argument:
 
 ```
-gulp --output Output/SketchAPI.js
+gulp --output /path/to/your/SketchAPI.js
 ```
 
-To have Sketch use the .js file you just built, you can run this:
+To test your changes, you need to get Sketch to use the version of `SketchAPI.js` you just built, instead of the one embedded inside it.
+
+To do this you can run:
 
 ```
-defaults write com.bohemiancoding.sketch3 SketchAPILocation "/path/to/SketchAPI.js"
+defaults write com.bohemiancoding.sketch3 SketchAPILocation "/path/to/your/SketchAPI.js"
 ```
 
-and Sketch will load the external .js file instead of the bundled version.
+Sketch will then load the external .js file instead of the bundled version.
 
 
 ## Acknowledgements
 
 We would like to thank:
 
-- [Andrey Shakhmin](https://github.com/turbobabr), for his inspiration during the [Hamburg Hackathon](http://designtoolshackday.com), where he showed us how to use node modules inside Sketch.
+- [Logan Collins](https://github.com/logancollins) for [Mocha](https://github.com/logancollins/Mocha), which powers Cocoascript.
+- [Gus Mueller](https://github.com/ccgus) for [Cocoascript](https://github.com/ccgus/CocoaScript), which powers our plugin engine.
+- [Andrey Shakhmin](https://github.com/turbobabr), for his inspiration during the [Hamburg Hackathon](http://designtoolshackday.com), where he showed us a clean way to use node modules inside Sketch.
 - The Sketch plugin community everywhere, for such awesome work.
