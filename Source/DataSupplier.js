@@ -30,24 +30,25 @@ export class DataSupplier extends WrappedObject {
   
     /**
      Register some data with a name and the plugin it has come from.
-     
+     @param {string} dataType The data type. Currently "public.text" or "public.image" are the only allowed values.
      @param {string} dataName The data name, will be used as the menu item title for the data.
      @param {array} data The data provided by the plugin immediately.
     */
-    registerStaticSupplier(dataName, data) {
+    registerStaticSupplier(dataType, dataName, data) {
       var identifier = this._application.context.plugin.identifier()
-      this._object.registerStaticData_withName_pluginIdentifier_(data, dataName, identifier)
+      this._object.registerStaticData_withName_dataType_pluginIdentifier_(data, dataName, dataType, identifier)
     }
 
     /**
      Register a function to supply data on request.
      
+     @param {string} dataType The data type. Currently "public.text" or "public.image" are the only allowed values.
      @param {string} dataName The data name, will be used as the menu item title for the data.
      @param {string} supplierJSMethodName The name of the javascript method that will provide the data on demand.
     */
-    registerDynamicSupplier(dataName, supplierJSMethodName) {
+    registerDynamicSupplier(dataType, dataName, supplierJSMethodName) {
       var identifier = this._application.context.plugin.identifier()
-      this._object.registerDynamicSupplier_withName_pluginIdentifier_(supplierJSMethodName, dataName, identifier)
+      this._object.registerDynamicSupplier_withName_dataType_pluginIdentifier_(supplierJSMethodName, dataName, dataType, identifier)
     }
   
     /**
