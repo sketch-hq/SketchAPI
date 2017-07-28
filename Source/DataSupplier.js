@@ -44,11 +44,11 @@ export class DataSupplier extends WrappedObject {
      
      @param {string} dataType The data type. Currently "public.text" or "public.image" are the only allowed values.
      @param {string} dataName The data name, will be used as the menu item title for the data.
-     @param {string} supplierJSMethodName The name of the javascript method that will provide the data on demand.
+     @param {string} dynamicDataKey The key to use to select the dynamic data to supply in onSupplyData.
     */
-    registerDynamicSupplier(dataType, dataName, supplierJSMethodName) {
+    registerDynamicSupplier(dataType, dataName, dynamicDataKey) {
       var identifier = this._application.context.plugin.identifier()
-      this._object.registerDynamicSupplier_withName_dataType_pluginIdentifier_(supplierJSMethodName, dataName, dataType, identifier)
+      this._object.registerDynamicSupplier_withName_dataType_pluginIdentifier_(dynamicDataKey, dataName, dataType, identifier)
     }
   
     /**
