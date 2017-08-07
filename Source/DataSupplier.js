@@ -36,7 +36,8 @@ export class DataSupplier extends WrappedObject {
     */
     registerStaticSupplier(dataType, dataName, data) {
       var identifier = this._application.context.plugin.identifier()
-      this._object.registerStaticData_withName_dataType_pluginIdentifier_(data, dataName, dataType, identifier)
+      var commandIdentifier = this._application.context.command.identifier()
+      this._object.registerStaticData_withName_dataType_pluginIdentifier_commandIdentifier_(data, dataName, dataType, identifier, commandIdentifier)
     }
 
     /**
@@ -48,7 +49,8 @@ export class DataSupplier extends WrappedObject {
     */
     registerDynamicSupplier(dataType, dataName, dynamicDataKey) {
       var identifier = this._application.context.plugin.identifier()
-      this._object.registerDynamicSupplier_withName_dataType_pluginIdentifier_(dynamicDataKey, dataName, dataType, identifier)
+      var commandIdentifier = this._application.context.command.identifier()
+      this._object.registerDynamicSupplier_withName_dataType_pluginIdentifier_commandIdentifier_(dynamicDataKey, dataName, dataType, identifier, commandIdentifier)
     }
   
     /**
