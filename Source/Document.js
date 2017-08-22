@@ -162,7 +162,7 @@ export class Document extends WrappedObject {
   */
 
   centerOnLayer(layer) {
-    this._object.currentView().centerRect_(layer._object.rect())
+    this._object.contentDrawView().centerRect_(layer._object.rect())
   }
 
   /**
