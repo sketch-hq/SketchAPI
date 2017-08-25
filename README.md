@@ -137,6 +137,14 @@ To restore the default setting, run
 npm config delete sketch-api:output
 ```
 
+For your convenience, you can use
+
+```
+npm run watch
+```
+
+and a script will watch for any change in the `Source` folder, and build the .js file when anything has changed.
+
 To test your changes, you need to get Sketch to use the version of `SketchAPI.js` you just built, instead of the one embedded inside it.
 
 To do this you can run:
