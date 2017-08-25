@@ -5,12 +5,15 @@
     "license": "MIT",
     "description": "Javascript API for Sketch",
     "main": "Source/API.js",
+    "config": {
+        "output": "../SketchPluginManager/Source/SketchAPI.js"
+    },
     "scripts": {
         "clean": "rm -Rf build && mkdir build && mkdir build/tmp",
-        "prestart": "npm run-script clean",
+        "prestart": "npm run clean",
         "compile": "babel Source --out-dir build/tmp && browserify build/tmp/API.js --outfile build/tmp/api.js && cat header.js build/tmp/api.js > build/api.js",
-        "deploy": "cp build/api.js ../SketchPluginManager/Source/SketchAPI.js",
-        "start": "npm run-script compile && npm run-script deploy",
+        "deploy": "cp build/api.js $npm_package_config_output",
+        "start": "npm run compile && npm run deploy",
         "poststart": "rm -Rf build/tmp",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
