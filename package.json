@@ -8,7 +8,9 @@
     "scripts": {
         "clean": "rm -Rf build && mkdir build && mkdir build/tmp",
         "prestart": "npm run-script clean",
-        "start": "babel Source --out-dir build/tmp && browserify build/tmp/API.js --outfile build/tmp/api.js && cat header.js build/tmp/api.js > build/api.js ",
+        "compile": "babel Source --out-dir build/tmp && browserify build/tmp/API.js --outfile build/tmp/api.js && cat header.js build/tmp/api.js > build/api.js",
+        "deploy": "cp build/api.js ../SketchPluginManager/Source/SketchAPI.js",
+        "start": "npm run-script compile && npm run-script deploy",
         "poststart": "rm -Rf build/tmp",
         "test": "echo \"Error: no test specified\" && exit 1"
     },

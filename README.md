@@ -114,14 +114,13 @@ However, the version that is embedded in Sketch is a single minified and transpi
 If you want to build this library file locally, you need to have [node](https://nodejs.org) installed, and then to run the following in the project's root folder:
 
 ```
-npm install -g gulp
 npm install --no-shrinkwrap
 ```
 
 Once that's ready, you can run:
 
 ```
-gulp
+npm start
 ```
 
 to compile the library. By default, it will be saved to `../SketchPluginManager/Source/SketchAPI.js` (which is where the build process for Sketch expects to find it).
