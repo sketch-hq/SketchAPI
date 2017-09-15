@@ -114,23 +114,36 @@ However, the version that is embedded in Sketch is a single minified and transpi
 If you want to build this library file locally, you need to have [node](https://nodejs.org) installed, and then to run the following in the project's root folder:
 
 ```
-npm install -g gulp
 npm install --no-shrinkwrap
 ```
 
 Once that's ready, you can run:
 
 ```
-gulp
+npm start
 ```
 
 to compile the library. By default, it will be saved to `../SketchPluginManager/Source/SketchAPI.js` (which is where the build process for Sketch expects to find it).
 
-Unless you're part of the Bohemian team and are actually building Sketch, you'll probably want to put it somewhere else. You can specify your own output path by using the `--output` argument:
+Unless you're part of the Bohemian team and are actually building Sketch, you'll probably want to put it somewhere else. You can specify your own output path by running
 
 ```
-gulp --output /path/to/your/SketchAPI.js
+npm config set sketch-api:output your/output/path/file.js
 ```
+
+To restore the default setting, run
+
+```
+npm config delete sketch-api:output
+```
+
+For your convenience, you can use
+
+```
+npm run watch
+```
+
+and a script will watch for any change in the `Source` folder, and build the .js file when anything has changed.
 
 To test your changes, you need to get Sketch to use the version of `SketchAPI.js` you just built, instead of the one embedded inside it.
 
