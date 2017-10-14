@@ -181,6 +181,48 @@ export class Text extends Layer {
 
 
   /**
+  The font size.
+
+  @return {number} The font size.
+  */
+
+  get fontSize() {
+    return this._object.fontSize();
+  } 
+
+  /**
+  Set the font size.
+
+  @param {number} The font size.
+  */
+
+  set fontSize(size) {
+    return this._object.setFontSize(size);
+  }   
+
+
+  /**
+  The line height.
+
+  @return {number} The line height.
+  */
+
+  get lineHeight() {
+    return this._object.lineHeight();
+  }  
+
+  /**
+  Set the line height.
+
+  @param {number} The line height.
+  */
+
+  set lineHeight(height) {
+    this._object.setLineHeight(height);
+  }     
+
+
+  /**
   Return a list of the text fragments for the text.
 
   @return {array} The line fragments. Each one is a dictionary containing a rectangle, and a baseline offset.
