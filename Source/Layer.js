@@ -133,6 +133,36 @@ export class Layer extends WrappedObject {
 
   get isImage() { return false; }
 
+  /**
+  Is this a symbol layer?
+
+  All Layer objects respond to this method, but only symbol layers return true.
+
+  @return {bool} true for instances of SymbolInstance or SymbolMaster, false for any other layer type.
+  */
+
+  get isSymbol() { return false; }
+
+  /**
+  Is this a symbol instance layer?
+
+  All Layer objects respond to this method, but only symbol instance layers return true.
+
+  @return {bool} true for instances of SymbolInstance, false for any other layer type.
+  */
+
+  get isSymbolInstance() { return false; }
+
+  /**
+  Is this a symbol master layer?
+
+  All Layer objects respond to this method, but only symbol master layers return true.
+
+  @return {bool} true for instances of SymbolMaster, false for any other layer type.
+  */
+
+  get isSymbolMaster() { return false; }  
+
 
 
   /**
