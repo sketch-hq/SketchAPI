@@ -18,6 +18,7 @@ import { Tester } from './Tester.js'
 import { Layer } from './Layer.js'
 import { Selection } from './Selection.js'
 import { Style } from './Style.js'
+import { DataSupplier } from './DataSupplier.js'
 
 /**
  Gives you access to Sketch, and provides access to:
@@ -46,7 +47,12 @@ export class Application extends WrappedObject {
          @type {dictionary}
          */
         this._metadata = MSApplicationMetadata.metadata()
-
+      
+        if (this._metadata.app.startsWith("com.bohemiancoding.sketch3")) {
+          // We will only have an AppController when the app is Sketch not a test bundle.
+          this._appController = AppController.sharedInstance()
+        }
+  
         // expose some classes
         this.Application = Application
         this.Rectangle = Rectangle
@@ -59,6 +65,7 @@ export class Application extends WrappedObject {
         this.Page = Page
         this.Selection = Selection
         this.Style = Style
+        this.DataSupplier = DataSupplier
     }
 
     /**
@@ -253,7 +260,23 @@ export class Application extends WrappedObject {
         var app = NSDocumentController.sharedDocumentController()
         app.newDocument_(this)
         return new Document(app.currentDocument(), this)
+    }
 
+    /**
+     Get the object that manages the data provided by plugins.
+     @return The data manager object.
+     */
+
+    dataManager() {
+        return new DataSupplier(this.appController.dataSupplierManager(), this)
+    }
+
+    /**
+     Get Sketch's AppController shared instance.
+     @return The AppController shared instance.
+     */
+    get appController() {
+        return this._appController
     }
 
     /**
@@ -303,6 +326,7 @@ export class Application extends WrappedObject {
       return mappings
     }
 
+  
     /**
      Return a wrapped version of a Sketch object.
      We don't know about *all* Sketch object types, but
