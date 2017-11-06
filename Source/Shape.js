@@ -9,18 +9,18 @@ import { Layer } from './Layer.js'
 import { Style } from './Style.js'
 
 /**
-  Represents a shape layer (a rectangle, oval, path, etc).
+ * Represents a shape layer (a rectangle, oval, path, etc).
  */
 
 export class Shape extends Layer {
 
 
     /**
-      Make a new shape object.
-
-      @param {MSShapeGroup} shape The underlying model object from Sketch.
-      @param {Document} document The document that the shape belongs to.
-    */
+     * Make a new shape object.
+     *
+     * @param {MSShapeGroup} shape The underlying model object from Sketch.
+     * @param {Document} document The document that the shape belongs to.
+     */
 
     constructor(shape, document) {
       super(shape, document)
@@ -28,12 +28,12 @@ export class Shape extends Layer {
 
 
     /**
-        Is this a shape layer?
-
-        All Layer objects respond to this method, but only shape layers (rectangles, ovals, paths etc) return true.
-
-        @return {bool} true for instances of Group, false for any other layer type.
-    */
+     * Is this a shape layer?
+     *
+     * All Layer objects respond to this method, but only shape layers (rectangles, ovals, paths etc) return true.
+     *
+     * @return {bool} true for instances of Group, false for any other layer type.
+     */
 
     get isShape() {
       return true;
@@ -41,9 +41,9 @@ export class Shape extends Layer {
 
 
     /**
-     Return the style of the layer.
-
-     @return {Style} The style of the layer.
+     * Return the style of the layer.
+     *
+     * @return {Style} The style of the layer.
      */
 
      get style() {
@@ -52,10 +52,10 @@ export class Shape extends Layer {
 
 
      /**
-     Set the style of the layer.
-
-     @param {Style} value The style settings to use for the layer.
-     */
+      * Set the style of the layer.
+      *
+      * @param {Style} value The style settings to use for the layer.
+      */
 
      set style(value) {
          this.sketchObject.style = value.sketchObject
@@ -63,9 +63,9 @@ export class Shape extends Layer {
 
 
     /**
-     Return a list of tests to run for this class.
-
-     @return {dictionary} A dictionary containing the tests to run. Each key is the name of a test, each value is a function which takes a Tester instance.
+     * Return a list of tests to run for this class.
+     *
+     * @return {dictionary} A dictionary containing the tests to run. Each key is the name of a test, each value is a function which takes a Tester instance.
      */
 
     static tests() {

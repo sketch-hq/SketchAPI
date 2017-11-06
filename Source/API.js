@@ -8,14 +8,14 @@ import { Application } from './Application.js'
 
 
 /**
-    Return a function that captures the context.
-    When called, this function will initialise the API
-    and return an Application object that provides access
-    to all API functions.
-
-    We do it like this to defer having to perform a lot
-    of setup until context.api() is actually called -- thus
-    scripts which don't call it at all suffer minimal overhead.
+ * Return a function that captures the context.
+ * When called, this function will initialise the API
+ * and return an Application object that provides access
+ * to all API functions.
+ *
+ * We do it like this to defer having to perform a lot
+ * of setup until context.api() is actually called -- thus
+ * scripts which don't call it at all suffer minimal overhead.
  */
 
 function SketchAPIWithCapturedContext(context) {
