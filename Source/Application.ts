@@ -26,7 +26,6 @@ import { WrappedObject } from "./WrappedObject";
  * - utilities for interacting with the user
  * - access to the running plugin, it's resources and settings
  */
-
 export class Application extends WrappedObject {
     /**
      * Metadata about this version of Sketch.
@@ -378,5 +377,4 @@ export class Application extends WrappedObject {
         const tester = new Tester(this);
         return tester.runUnitTests(tests);
     }
-    
 }
