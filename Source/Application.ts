@@ -55,7 +55,6 @@ export class Application extends WrappedObject {
      * @param context The context dictionary passed to the script when it was invoked.
      * @return A new Application object.
      */
-
     constructor(context) {
         super(context);
     }
@@ -65,7 +64,6 @@ export class Application extends WrappedObject {
      *
      * @return A version string.
      */
-
     get api_version() {
         return "1.1";
     }
@@ -80,7 +78,6 @@ export class Application extends WrappedObject {
      *
      * @return A context dictionary.
      */
-
     get context() {
         return this._object;
     }
@@ -90,7 +87,6 @@ export class Application extends WrappedObject {
      *
      * @return The version as a string, eg "3.6".
      */
-
     get version() {
         return this._metadata["appVersion"];
     }
@@ -100,7 +96,6 @@ export class Application extends WrappedObject {
      *
      * @return The build number as a string, eg "15352".
      */
-
     get build() {
         return this._metadata["build"];
     }
@@ -110,7 +105,6 @@ export class Application extends WrappedObject {
      *
      * @return {string} Version and build number as a string, eg "3.6 (15352)".
      */
-
     get full_version() {
         return this.version + " (" + this.build + ")";
     }
@@ -124,7 +118,6 @@ export class Application extends WrappedObject {
      * running version of Sketch using the `defaults` command line tool,
      * eg: defaults read com.bohemiancoding.sketch3 <key>
      */
-
     settingForKey(key) {
         return NSUserDefaults.standardUserDefaults().objectForKey_(key);
     }
@@ -139,7 +132,6 @@ export class Application extends WrappedObject {
      * running version of Sketch using the `defaults` command line tool,
      * eg: defaults write com.bohemiancoding.sketch3 <key> <value>
      */
-
     setSettingForKey(key, value) {
         NSUserDefaults.standardUserDefaults().setObject_forKey_(value, key);
     }
@@ -151,7 +143,6 @@ export class Application extends WrappedObject {
      * @param name The resource file name, including any file extension.
      * @return The resource location, in the form "file://path/to/resource".
      */
-
     resourceNamed(name) {
         return this._object.plugin.urlForResourceNamed_(name);
     }
@@ -163,7 +154,6 @@ export class Application extends WrappedObject {
      * @param initial The initial value of the input string.
      * @return The string that the user input.
      */
-
     getStringFromUser(msg, initial) {
         let panel = MSModalInputSheet.alloc().init();
         let result = panel.runPanelWithNibName_ofType_initialString_label_("MSModalInputSheet", 0, initial, msg);
@@ -183,7 +173,6 @@ export class Application extends WrappedObject {
      * one of NSAlertFirstButtonReturn or NSAlertSecondButtonReturn.
      * The selection will be the integer index of the selected item.
      */
-
     getSelectionFromUser(msg, items, selectedItemIndex) {
         selectedItemIndex = selectedItemIndex || 0;
 
@@ -208,7 +197,6 @@ export class Application extends WrappedObject {
      *
      * @param {string} message The message to output.
      */
-
     log(message) {
         print(message);
     }
@@ -219,7 +207,6 @@ export class Application extends WrappedObject {
      *
      * @param condition An expression that is expected to evaluate to true if everything is ok.
      */
-
     assert(condition) {
         if (!condition) {
             throw new Error("Assert failed!");
@@ -236,7 +223,6 @@ export class Application extends WrappedObject {
      *
      * @return A Document object.
      */
-
     get selectedDocument() {
         return new Document(this._object.document, this);
     }
@@ -245,7 +231,6 @@ export class Application extends WrappedObject {
      * Create a new document and bring it to the front.
      * @return The new document.
      */
-
     newDocument() {
         let app = NSDocumentController.sharedDocumentController();
         app.newDocument_(this);
@@ -261,7 +246,6 @@ export class Application extends WrappedObject {
      *
      * @param {string} message The message to show.
      */
-
     message(message) {
         this._object.document.showMessage(message);
     }
@@ -275,7 +259,6 @@ export class Application extends WrappedObject {
      * The alert is modal, so it will stay around until the user dismisses it
      * by pressing the OK button.
      */
-
     alert(title, message) {
         let app = NSApplication.sharedApplication();
         app.displayDialog_withTitle(message, title);
@@ -287,7 +270,6 @@ export class Application extends WrappedObject {
      *
      * @return {dictionary} A dictionary with keys for the Sketch Model classes, and values for the corresponding API wrapper classes.
      */
-
     wrapperMappings() {
       let mappings = {
         MSLayerGroup : Group,
@@ -310,7 +292,6 @@ export class Application extends WrappedObject {
      * @param {Document} inDocument The wrapped document that this object is part of.
      * @return {WrappedObject} A javascript object (subclass of WrappedObject), which represents the Sketch object we were given.
      */
-
     wrapObject(sketchObject, inDocument) {
       let mapping = this.wrapperMappings();
 
@@ -331,7 +312,6 @@ export class Application extends WrappedObject {
      *
      * @return {dictionary} A dictionary containing the tests to run. Each key is the name of a test, each value is a function which takes a Tester instance.
      */
-
     static tests() {
         return {
             /** @test {Application} */
@@ -378,7 +358,6 @@ export class Application extends WrappedObject {
      * now we want to be able to invoke the tests from the Sketch side or from a plugin
      * command, so it's simpler to use a simple test framework of our own devising.
      */
-
     runUnitTests() {
         let tests = {
             suites : {
