@@ -5,19 +5,19 @@
 // All code (C) 2016 Bohemian Coding.
 // ********************************
 
-import { WrappedObject } from './WrappedObject'
-import { Document } from './Document'
-import { Rectangle } from './Rectangle'
-import { Group } from './Group'
-import { Text } from './Text'
-import { Image } from './Image'
-import { Shape } from './Shape'
-import { Artboard } from './Artboard'
-import { Page } from './Page'
-import { Tester } from './Tester'
-import { Layer } from './Layer'
-import { Selection } from './Selection'
-import { Style } from './Style'
+import { Artboard } from "./Artboard";
+import { Document } from "./Document";
+import { Group } from "./Group";
+import { Image } from "./Image";
+import { Layer } from "./Layer";
+import { Page } from "./Page";
+import { Rectangle } from "./Rectangle";
+import { Selection } from "./Selection";
+import { Shape } from "./Shape";
+import { Style } from "./Style";
+import { Tester } from "./Tester";
+import { Text } from "./Text";
+import { WrappedObject } from "./WrappedObject";
 
 /**
  * Gives you access to Sketch, and provides access to:
@@ -39,26 +39,26 @@ export class Application extends WrappedObject {
      */
 
     constructor(context) {
-        super(context)
+        super(context);
 
         /**
          * Metadata about this version of Sketch.
          * @type {dictionary}
          */
-        this._metadata = MSApplicationMetadata.metadata()
+        this._metadata = MSApplicationMetadata.metadata();
 
         // expose some classes
-        this.Application = Application
-        this.Rectangle = Rectangle
-        this.Document = Document
-        this.Group = Group
-        this.Text = Text
-        this.Image = Image
-        this.Shape = Shape
-        this.Artboard = Artboard
-        this.Page = Page
-        this.Selection = Selection
-        this.Style = Style
+        this.Application = Application;
+        this.Rectangle = Rectangle;
+        this.Document = Document;
+        this.Group = Group;
+        this.Text = Text;
+        this.Image = Image;
+        this.Shape = Shape;
+        this.Artboard = Artboard;
+        this.Page = Page;
+        this.Selection = Selection;
+        this.Style = Style;
     }
 
     /**
@@ -68,7 +68,7 @@ export class Application extends WrappedObject {
      */
 
     get api_version() {
-        return "1.1"
+        return "1.1";
     }
 
     /**
@@ -83,9 +83,8 @@ export class Application extends WrappedObject {
      */
 
     get context() {
-        return this._object
+        return this._object;
     }
-
 
     /**
      * The version of Sketch that is running.
@@ -94,7 +93,7 @@ export class Application extends WrappedObject {
      */
 
     get version() {
-        return this._metadata['appVersion']
+        return this._metadata["appVersion"];
     }
 
     /**
@@ -104,7 +103,7 @@ export class Application extends WrappedObject {
      */
 
     get build() {
-        return this._metadata['build']
+        return this._metadata["build"];
     }
 
     /**
@@ -114,7 +113,7 @@ export class Application extends WrappedObject {
      */
 
     get full_version() {
-        return this.version + " (" + this.build + ")"
+        return this.version + " (" + this.build + ")";
     }
 
     /**
@@ -143,7 +142,7 @@ export class Application extends WrappedObject {
      */
 
     setSettingForKey(key, value) {
-        NSUserDefaults.standardUserDefaults().setObject_forKey_(value, key)
+        NSUserDefaults.standardUserDefaults().setObject_forKey_(value, key);
     }
 
     /**
@@ -155,7 +154,7 @@ export class Application extends WrappedObject {
      */
 
     resourceNamed(name) {
-        return this._object.plugin.urlForResourceNamed_(name)
+        return this._object.plugin.urlForResourceNamed_(name);
     }
 
     /**
@@ -167,9 +166,9 @@ export class Application extends WrappedObject {
      */
 
     getStringFromUser(msg, initial) {
-        var panel = MSModalInputSheet.alloc().init()
-        var result = panel.runPanelWithNibName_ofType_initialString_label_("MSModalInputSheet", 0, initial, msg)
-        return result
+        let panel = MSModalInputSheet.alloc().init();
+        let result = panel.runPanelWithNibName_ofType_initialString_label_("MSModalInputSheet", 0, initial, msg);
+        return result;
     }
 
     /**
@@ -187,22 +186,22 @@ export class Application extends WrappedObject {
      */
 
     getSelectionFromUser(msg, items, selectedItemIndex) {
-        selectedItemIndex = selectedItemIndex || 0
+        selectedItemIndex = selectedItemIndex || 0;
 
-        var accessory = NSComboBox.alloc().initWithFrame(NSMakeRect(0,0,200,25))
-        accessory.addItemsWithObjectValues(items)
-        accessory.selectItemAtIndex(selectedItemIndex)
+        let accessory = NSComboBox.alloc().initWithFrame(NSMakeRect(0, 0, 200, 25));
+        accessory.addItemsWithObjectValues(items);
+        accessory.selectItemAtIndex(selectedItemIndex);
 
-        var alert = NSAlert.alloc().init()
-        alert.setMessageText(msg)
-        alert.addButtonWithTitle('OK')
-        alert.addButtonWithTitle('Cancel')
-        alert.setAccessoryView(accessory)
+        let alert = NSAlert.alloc().init();
+        alert.setMessageText(msg);
+        alert.addButtonWithTitle("OK");
+        alert.addButtonWithTitle("Cancel");
+        alert.setAccessoryView(accessory);
 
-        var responseCode = alert.runModal()
-        var sel = accessory.indexOfSelectedItem()
+        let responseCode = alert.runModal();
+        let sel = accessory.indexOfSelectedItem();
 
-        return [responseCode, sel]
+        return [responseCode, sel];
     }
 
     /**
@@ -212,7 +211,7 @@ export class Application extends WrappedObject {
      */
 
     log(message) {
-        print(message)
+        print(message);
     }
 
     /**
@@ -224,7 +223,7 @@ export class Application extends WrappedObject {
 
     assert(condition) {
         if (!condition) {
-            throw "Assert failed!"
+            throw new Error("Assert failed!");
         }
     }
 
@@ -240,9 +239,8 @@ export class Application extends WrappedObject {
      */
 
     get selectedDocument() {
-        return new Document(this._object.document, this)
+        return new Document(this._object.document, this);
     }
-
 
     /**
      * Create a new document and bring it to the front.
@@ -250,9 +248,9 @@ export class Application extends WrappedObject {
      */
 
     newDocument() {
-        var app = NSDocumentController.sharedDocumentController()
-        app.newDocument_(this)
-        return new Document(app.currentDocument(), this)
+        let app = NSDocumentController.sharedDocumentController();
+        app.newDocument_(this);
+        return new Document(app.currentDocument(), this);
 
     }
 
@@ -266,7 +264,7 @@ export class Application extends WrappedObject {
      */
 
     message(message) {
-        this._object.document.showMessage(message)
+        this._object.document.showMessage(message);
     }
 
     /**
@@ -280,8 +278,8 @@ export class Application extends WrappedObject {
      */
 
     alert(title, message) {
-        var app = NSApplication.sharedApplication()
-        app.displayDialog_withTitle(message, title)
+        let app = NSApplication.sharedApplication();
+        app.displayDialog_withTitle(message, title);
     }
 
     /**
@@ -292,15 +290,15 @@ export class Application extends WrappedObject {
      */
 
     wrapperMappings() {
-      var mappings = {
+      let mappings = {
         MSLayerGroup : Group,
         MSPage : Page,
         MSArtboardGroup : Artboard,
         MSShapeGroup : Shape,
         MSBitmapLayer : Image,
-        MSTextLayer : Text
-      }
-      return mappings
+        MSTextLayer : Text,
+      };
+      return mappings;
     }
 
     /**
@@ -315,15 +313,15 @@ export class Application extends WrappedObject {
      */
 
     wrapObject(sketchObject, inDocument) {
-      var mapping = this.wrapperMappings()
+      let mapping = this.wrapperMappings();
 
-      var jsClass = mapping[sketchObject.class()]
+      let jsClass = mapping[sketchObject.class()];
       if (!jsClass) {
-        print("no mapped wrapper for " + sketchObject.class())
-        jsClass = WrappedObject
+        print("no mapped wrapper for " + sketchObject.class());
+        jsClass = WrappedObject;
       }
 
-      return new jsClass(sketchObject, inDocument)
+      return new jsClass(sketchObject, inDocument);
     }
 
     /**
@@ -338,10 +336,10 @@ export class Application extends WrappedObject {
     static tests() {
         return {
             /** @test {Application} */
-            "tests" : {
+            tests : {
                 /** @test {Application#api_version} */
                 testAPIVersion(tester) {
-                    tester.assertEqual(tester.application.api_version, "1.1")
+                    tester.assertEqual(tester.application.api_version, "1.1");
                 },
 
                 /** @test {Application#version} */
@@ -349,26 +347,26 @@ export class Application extends WrappedObject {
                     if (!MSApplicationMetadata.metadata().app.startsWith("com.bohemiancoding.sketch3")) {
                       // When invoked by the Objective-C unit tests, we know that the bundle's version will be
                       // set to 1.0 so it's ok to test it.
-                      tester.assertEqual(tester.application.version, "1.0")
+                      tester.assertEqual(tester.application.version, "1.0");
                     }
                 },
 
                 /** @test {Application#wrapObject} */
                 testWrapObject(tester) {
-                  var classesToTest = [MSLayerGroup, MSPage, MSArtboardGroup, MSShapeGroup, MSBitmapLayer, MSTextLayer]
-                  var mappings = tester.application.wrapperMappings()
-                  for (var index in classesToTest) {
-                    var classToTest = classesToTest[index]
-                    var frame = NSMakeRect(0, 0, 100, 100)
-                    var object = classToTest.alloc().initWithFrame(frame)
-                    var mockDocument = {}
-                    var wrapped = tester.application.wrapObject(object, mockDocument)
-                    tester.assertEqual(wrapped._object, object)
-                    tester.assertEqual(wrapped._document, mockDocument)
-                    tester.assertEqual(wrapped.class, mappings[classToTest].class)
+                  let classesToTest = [MSLayerGroup, MSPage, MSArtboardGroup, MSShapeGroup, MSBitmapLayer, MSTextLayer];
+                  let mappings = tester.application.wrapperMappings();
+                  for (let index in classesToTest) {
+                    let classToTest = classesToTest[index];
+                    let frame = NSMakeRect(0, 0, 100, 100);
+                    let object = classToTest.alloc().initWithFrame(frame);
+                    let mockDocument = {};
+                    let wrapped = tester.application.wrapObject(object, mockDocument);
+                    tester.assertEqual(wrapped._object, object);
+                    tester.assertEqual(wrapped._document, mockDocument);
+                    tester.assertEqual(wrapped.class, mappings[classToTest].class);
                   }
-                }
-            }
+                },
+            },
         };
     }
 
@@ -383,25 +381,25 @@ export class Application extends WrappedObject {
      */
 
     runUnitTests() {
-        var tests = {
-            "suites" : {
-                "Application" : Application.tests(),
-                "Artboard" : Artboard.tests(),
-                "Document" : Document.tests(),
-                "Group" : Group.tests(),
-                "Image" : Image.tests(),
-                "Layer" : Layer.tests(),
-                "Page" : Page.tests(),
-                "Rectangle" : Rectangle.tests(),
-                "Selection" : Selection.tests(),
-                "Shape" : Shape.tests(),
-                "Text" : Text.tests(),
-                "WrappedObject" : WrappedObject.tests(),
-                "Style" : Style.tests()
-            }
-        }
+        let tests = {
+            suites : {
+                Application : Application.tests(),
+                Artboard : Artboard.tests(),
+                Document : Document.tests(),
+                Group : Group.tests(),
+                Image : Image.tests(),
+                Layer : Layer.tests(),
+                Page : Page.tests(),
+                Rectangle : Rectangle.tests(),
+                Selection : Selection.tests(),
+                Shape : Shape.tests(),
+                Text : Text.tests(),
+                WrappedObject : WrappedObject.tests(),
+                Style : Style.tests(),
+            },
+        };
 
-        var tester = new Tester(this);
+        let tester = new Tester(this);
         return tester.runUnitTests(tests);
     }
 
