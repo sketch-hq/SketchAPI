@@ -28,7 +28,25 @@ import { WrappedObject } from "./WrappedObject";
  */
 
 export class Application extends WrappedObject {
-
+    /**
+     * Metadata about this version of Sketch.
+     * @type {dictionary}
+     */
+    _metadata = MSApplicationMetadata.metadata();
+    
+    // expose some classes
+    Application = Application;
+    Rectangle = Rectangle;
+    Document = Document;
+    Group = Group;
+    Text = Text;
+    Image = Image;
+    Shape = Shape;
+    Artboard = Artboard;
+    Page = Page;
+    Selection = Selection;
+    Style = Style;
+    
     /**
      * Construct a new Application object.
      * An instance of this class will be passed back to you when you
@@ -40,25 +58,6 @@ export class Application extends WrappedObject {
 
     constructor(context) {
         super(context);
-
-        /**
-         * Metadata about this version of Sketch.
-         * @type {dictionary}
-         */
-        this._metadata = MSApplicationMetadata.metadata();
-
-        // expose some classes
-        this.Application = Application;
-        this.Rectangle = Rectangle;
-        this.Document = Document;
-        this.Group = Group;
-        this.Text = Text;
-        this.Image = Image;
-        this.Shape = Shape;
-        this.Artboard = Artboard;
-        this.Page = Page;
-        this.Selection = Selection;
-        this.Style = Style;
     }
 
     /**
