@@ -5,8 +5,8 @@
 // All code (C) 2016 Bohemian Coding.
 // ********************************
 
-import { Group } from './Group.js'
-import { Selection } from './Selection.js'
+import { Group } from './Group'
+import { Selection } from './Selection'
 
 /**
  * Represents a Page in a Sketch document.

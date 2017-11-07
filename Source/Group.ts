@@ -5,9 +5,9 @@
 // All code (C) 2016 Bohemian Coding.
 // ********************************
 
-import { Layer } from './Layer.js'
-import { Rectangle } from './Rectangle.js'
-import { Style } from './Style.js'
+import { Layer } from './Layer'
+import { Rectangle } from './Rectangle'
+import { Style } from './Style'
 
 
 /**

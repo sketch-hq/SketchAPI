@@ -5,7 +5,7 @@
 // All code (C) 2016 Bohemian Coding.
 // ********************************
 
-import { WrappedObject } from './WrappedObject.js'
+import { WrappedObject } from './WrappedObject'
 
 /// A solid fill/border.
 const BCFillTypeColor    = 0

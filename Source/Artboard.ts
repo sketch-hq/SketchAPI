@@ -5,7 +5,7 @@
 // All code (C) 2016 Bohemian Coding.
 // ********************************
 
-import { Group } from './Group.js'
+import { Group } from './Group'
 
 /**
  * A Sketch artboard.

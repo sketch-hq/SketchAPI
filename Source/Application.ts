@@ -5,19 +5,19 @@
 // All code (C) 2016 Bohemian Coding.
 // ********************************
 
-import { WrappedObject } from './WrappedObject.js'
-import { Document } from './Document.js'
-import { Rectangle } from './Rectangle.js'
-import { Group } from './Group.js'
-import { Text } from './Text.js'
-import { Image } from './Image.js'
-import { Shape } from './Shape.js'
-import { Artboard } from './Artboard.js'
-import { Page } from './Page.js'
-import { Tester } from './Tester.js'
-import { Layer } from './Layer.js'
-import { Selection } from './Selection.js'
-import { Style } from './Style.js'
+import { WrappedObject } from './WrappedObject'
+import { Document } from './Document'
+import { Rectangle } from './Rectangle'
+import { Group } from './Group'
+import { Text } from './Text'
+import { Image } from './Image'
+import { Shape } from './Shape'
+import { Artboard } from './Artboard'
+import { Page } from './Page'
+import { Tester } from './Tester'
+import { Layer } from './Layer'
+import { Selection } from './Selection'
+import { Style } from './Style'
 
 /**
  * Gives you access to Sketch, and provides access to:

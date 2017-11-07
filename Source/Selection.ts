@@ -5,8 +5,8 @@
 // All code (C) 2016 Bohemian Coding.
 // ********************************
 
-import { WrappedObject } from './WrappedObject.js'
-import { Layer } from './Layer.js'
+import { WrappedObject } from './WrappedObject'
+import { Layer } from './Layer'
 
 
 /**

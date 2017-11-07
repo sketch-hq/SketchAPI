@@ -5,7 +5,7 @@
 // All code (C) 2016 Bohemian Coding.
 // ********************************
 
-import { Layer } from './Layer.js'
+import { Layer } from './Layer'
 
 /**
  * Represents an image layer.

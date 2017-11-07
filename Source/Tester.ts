@@ -5,7 +5,7 @@
 // All code (C) 2016 Bohemian Coding.
 // ********************************
 
-import { Document } from './Document.js'
+import { Document } from './Document'
 
 /**
  * Very simple unit testing utility.

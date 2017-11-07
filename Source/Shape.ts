@@ -5,8 +5,8 @@
 // All code (C) 2016 Bohemian Coding.
 // ********************************
 
-import { Layer } from './Layer.js'
-import { Style } from './Style.js'
+import { Layer } from './Layer'
+import { Style } from './Style'
 
 /**
  * Represents a shape layer (a rectangle, oval, path, etc).

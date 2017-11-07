@@ -5,8 +5,8 @@
 // All code (C) 2016 Bohemian Coding.
 // ********************************
 
-import { WrappedObject } from './WrappedObject.js'
-import { Rectangle } from './Rectangle.js'
+import { WrappedObject } from './WrappedObject'
+import { Rectangle } from './Rectangle'
 
 /**
  * Represents a Sketch layer.
