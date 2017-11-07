@@ -4,8 +4,7 @@
 // All code (C) 2016 Bohemian Coding.
 // ********************************
 
-import { Application } from './Application'
-
+import { Application } from "./Application";
 
 /**
  * Return a function that captures the context.
@@ -19,12 +18,12 @@ import { Application } from './Application'
  */
 
 function SketchAPIWithCapturedContext(context) {
-    return (function() {
+    return (() => {
 
       // The Application object effectively *is* the api -- all other
       // functions and objects can be accessed via it.
 
-      return new Application(context)
+      return new Application(context);
     });
 }
 
@@ -32,4 +31,4 @@ function SketchAPIWithCapturedContext(context) {
 // I suspect that there's a better way to do this, but I've
 // not yet figured it out.
 
-__globals.SketchAPIWithCapturedContext = SketchAPIWithCapturedContext
+__globals.SketchAPIWithCapturedContext = SketchAPIWithCapturedContext;
