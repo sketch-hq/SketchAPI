@@ -155,8 +155,8 @@ export class Application extends WrappedObject {
      * @return The string that the user input.
      */
     getStringFromUser(msg, initial) {
-        let panel = MSModalInputSheet.alloc().init();
-        let result = panel.runPanelWithNibName_ofType_initialString_label_("MSModalInputSheet", 0, initial, msg);
+        const panel = MSModalInputSheet.alloc().init();
+        const result = panel.runPanelWithNibName_ofType_initialString_label_("MSModalInputSheet", 0, initial, msg);
         return result;
     }
     
@@ -176,18 +176,18 @@ export class Application extends WrappedObject {
     getSelectionFromUser(msg, items, selectedItemIndex) {
         selectedItemIndex = selectedItemIndex || 0;
         
-        let accessory = NSComboBox.alloc().initWithFrame(NSMakeRect(0, 0, 200, 25));
+        const accessory = NSComboBox.alloc().initWithFrame(NSMakeRect(0, 0, 200, 25));
         accessory.addItemsWithObjectValues(items);
         accessory.selectItemAtIndex(selectedItemIndex);
         
-        let alert = NSAlert.alloc().init();
+        const alert = NSAlert.alloc().init();
         alert.setMessageText(msg);
         alert.addButtonWithTitle("OK");
         alert.addButtonWithTitle("Cancel");
         alert.setAccessoryView(accessory);
         
-        let responseCode = alert.runModal();
-        let sel = accessory.indexOfSelectedItem();
+        const responseCode = alert.runModal();
+        const sel = accessory.indexOfSelectedItem();
         
         return [responseCode, sel];
     }
@@ -232,7 +232,7 @@ export class Application extends WrappedObject {
      * @return The new document.
      */
     newDocument() {
-        let app = NSDocumentController.sharedDocumentController();
+        const app = NSDocumentController.sharedDocumentController();
         app.newDocument_(this);
         return new Document(app.currentDocument(), this);
         
@@ -260,7 +260,7 @@ export class Application extends WrappedObject {
      * by pressing the OK button.
      */
     alert(title, message) {
-        let app = NSApplication.sharedApplication();
+        const app = NSApplication.sharedApplication();
         app.displayDialog_withTitle(message, title);
     }
     
@@ -271,7 +271,7 @@ export class Application extends WrappedObject {
      * @return {dictionary} A dictionary with keys for the Sketch Model classes, and values for the corresponding API wrapper classes.
      */
     wrapperMappings() {
-        let mappings = {
+        const mappings = {
             MSLayerGroup : Group,
             MSPage : Page,
             MSArtboardGroup : Artboard,
@@ -293,9 +293,9 @@ export class Application extends WrappedObject {
      * @return {WrappedObject} A javascript object (subclass of WrappedObject), which represents the Sketch object we were given.
      */
     wrapObject(sketchObject, inDocument) {
-        let mapping = this.wrapperMappings();
+        const mapping = this.wrapperMappings();
         
-        let jsClass = mapping[sketchObject.class()];
+        const jsClass = mapping[sketchObject.class()];
         if (!jsClass) {
             print("no mapped wrapper for " + sketchObject.class());
             jsClass = WrappedObject;
@@ -332,14 +332,14 @@ export class Application extends WrappedObject {
                 
                 /** @test {Application#wrapObject} */
                 testWrapObject(tester) {
-                    let classesToTest = [MSLayerGroup, MSPage, MSArtboardGroup, MSShapeGroup, MSBitmapLayer, MSTextLayer];
-                    let mappings = tester.application.wrapperMappings();
-                    for (let index in classesToTest) {
-                        let classToTest = classesToTest[index];
-                        let frame = NSMakeRect(0, 0, 100, 100);
-                        let object = classToTest.alloc().initWithFrame(frame);
-                        let mockDocument = {};
-                        let wrapped = tester.application.wrapObject(object, mockDocument);
+                    const classesToTest = [MSLayerGroup, MSPage, MSArtboardGroup, MSShapeGroup, MSBitmapLayer, MSTextLayer];
+                    const mappings = tester.application.wrapperMappings();
+                    for (const index in classesToTest) {
+                        const classToTest = classesToTest[index];
+                        const frame = NSMakeRect(0, 0, 100, 100);
+                        const object = classToTest.alloc().initWithFrame(frame);
+                        const mockDocument = {};
+                        const wrapped = tester.application.wrapObject(object, mockDocument);
                         tester.assertEqual(wrapped._object, object);
                         tester.assertEqual(wrapped._document, mockDocument);
                         tester.assertEqual(wrapped.class, mappings[classToTest].class);
@@ -359,7 +359,7 @@ export class Application extends WrappedObject {
      * command, so it's simpler to use a simple test framework of our own devising.
      */
     runUnitTests() {
-        let tests = {
+        const tests = {
             suites : {
                 Application : Application.tests(),
                 Artboard : Artboard.tests(),
@@ -377,7 +377,7 @@ export class Application extends WrappedObject {
             },
         };
         
-        let tester = new Tester(this);
+        const tester = new Tester(this);
         return tester.runUnitTests(tests);
     }
     
