@@ -146,7 +146,7 @@ export class Tester {
      * @param {string} suiteName The name of the suite, if we're running a sub-collection. This will be null for the top level tests.
      * @return {dictionary} Returns a dictionary indicating how many tests ran, and a list of the passed, failed, and crashed tests.
      */
-    runUnitTests(specification, suiteName?) {
+    runUnitTests(specification: TestSpecification, suiteName?) {
         const suites = specification.suites;
         if (suites) {
             for (const name of Object.keys(suites)) {
