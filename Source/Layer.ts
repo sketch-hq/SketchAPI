@@ -7,6 +7,7 @@
 
 import { Rectangle } from "./Rectangle";
 import { WrappedObject } from "./WrappedObject";
+import { TestSpecification } from "./Tester";
 
 /**
  * Represents a Sketch layer.
@@ -279,7 +280,7 @@ export class Layer extends WrappedObject {
      *
      * @return Object containing the tests to run. Each key is the name of a test, each value is a function which takes a Tester instance.
      */
-    static tests() {
+    static tests(): TestSpecification {
         return {
             tests: {
                 testName(tester) {
