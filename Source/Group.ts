@@ -132,10 +132,7 @@ export class Group extends Layer {
      * If the style wasn't supplied at all, we use the default one.
      */
     _styleForLayerWithProperties(properties) {
-        const style = properties.style;
-        if (!style) {
-            style = new Style();
-        }
+        const style = properties.style ? properties.style : new Style();
         
         const fills = properties.fills;
         if (fills) {
