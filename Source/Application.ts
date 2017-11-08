@@ -292,12 +292,12 @@ export class Application extends WrappedObject {
         const mapping = this.wrapperMappings();
         
         const jsClass = mapping[sketchObject.class()];
-        if (!jsClass) {
+        if (jsClass) {
+            return new jsClass(sketchObject, inDocument);
+        } else {
             print("no mapped wrapper for " + sketchObject.class());
-            jsClass = WrappedObject;
+            return new WrappedObject(sketchObject, inDocument);
         }
-        
-        return new jsClass(sketchObject, inDocument);
     }
     
     /**
