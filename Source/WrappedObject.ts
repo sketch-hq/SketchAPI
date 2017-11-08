@@ -51,14 +51,14 @@ export class WrappedObject {
         return {
             tests : {
                 testSketchObject(tester) {
-                    let object = MSLayer.new();
-                    let wrapped = new WrappedObject(object);
+                    const object = MSLayer.new();
+                    const wrapped = new WrappedObject(object);
                     tester.assertEqual(wrapped.sketchObject, object);
                 },
                 
                 testID(tester) {
-                    let object = MSLayer.new();
-                    let wrapped = new WrappedObject(object);
+                    const object = MSLayer.new();
+                    const wrapped = new WrappedObject(object);
                     tester.assertEqual(wrapped.id, object.objectID());
                 },
                 
