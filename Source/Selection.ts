@@ -46,7 +46,7 @@ export class Selection extends WrappedObject {
      * @return {boolean} true if the selection is empty.
      */
     get isEmpty() {
-        return (this.nativeLayers.count() == 0);
+        return (this.nativeLayers.count() === 0);
     }
     
     /**
