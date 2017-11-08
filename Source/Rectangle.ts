@@ -8,9 +8,7 @@
 /**
  * Represents a rectangle.
  */
-
 export class Rectangle {
-    
     /**
      * Return a new Rectangle object for a given x,y, width and height.
      *
@@ -20,7 +18,6 @@ export class Rectangle {
      * @param {number} height The height of the rectangle.
      * @return The new Rectangle object.
      */
-    
     constructor(x, y, width, height) {
         
         /**
@@ -58,7 +55,6 @@ export class Rectangle {
      * @param {number} x The x offset to apply.
      * @param {number} y The y offset to apply.
      */
-    
     offset(x, y) {
         this.x += x
         this.y += y
@@ -69,7 +65,6 @@ export class Rectangle {
      *
      * @return {CGRect} The rectangle.
      */
-    
     asCGRect() {
         return CGRectMake(this.x, this.y, this.width, this.height)
     }
@@ -79,7 +74,6 @@ export class Rectangle {
      *
      * @return {string} Description of the rectangle.
      */
-    
     toString() {
         return "{" + this.x + ", " + this.y + ", " + this.width + ", " + this.height + "}"
     }
@@ -91,7 +85,6 @@ export class Rectangle {
      *
      * @return Object containing the tests to run. Each key is the name of a test, each value is a function which takes a Tester instance.
      */
-    
     static tests() {
         return {
             "tests" : {
@@ -124,5 +117,4 @@ export class Rectangle {
             }
         };
     }
-    
 }

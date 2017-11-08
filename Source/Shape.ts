@@ -11,7 +11,6 @@ import { Style } from './Style'
 /**
  * Represents a shape layer (a rectangle, oval, path, etc).
  */
-
 export class Shape extends Layer {
     
     
@@ -21,7 +20,6 @@ export class Shape extends Layer {
      * @param {MSShapeGroup} shape The underlying model object from Sketch.
      * @param {Document} document The document that the shape belongs to.
      */
-    
     constructor(shape, document) {
         super(shape, document)
     }
@@ -34,7 +32,6 @@ export class Shape extends Layer {
      *
      * @return {boolean} true for instances of Group, false for any other layer type.
      */
-    
     get isShape() {
         return true;
     }
@@ -45,7 +42,6 @@ export class Shape extends Layer {
      *
      * @return {Style} The style of the layer.
      */
-    
     get style() {
         return new Style(this.sketchObject.style())
     }
@@ -56,7 +52,6 @@ export class Shape extends Layer {
      *
      * @param {Style} value The style settings to use for the layer.
      */
-    
     set style(value) {
         this.sketchObject.style = value.sketchObject
     }
@@ -67,7 +62,6 @@ export class Shape extends Layer {
      *
      * @return Object containing the tests to run. Each key is the name of a test, each value is a function which takes a Tester instance.
      */
-    
     static tests() {
         return {
             "tests" : {
@@ -81,5 +75,4 @@ export class Shape extends Layer {
             }
         };
     }
-    
 }

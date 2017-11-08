@@ -12,15 +12,12 @@ import { Layer } from './Layer'
 /**
  * Represents the layers that the user has selected.
  */
-
 export class Selection extends WrappedObject {
-    
     /**
      * Make a new Selection object.
      *
      * @param {Page} page The page that the selection relates to.
      */
-    
     constructor(page) {
         super(page._object)
         this._page = page
@@ -31,7 +28,6 @@ export class Selection extends WrappedObject {
      *
      * @return {array} The selected layers.
      */
-    
     get nativeLayers() {
         var layers = this._object.selectedLayers().layers();
         return layers
@@ -43,7 +39,6 @@ export class Selection extends WrappedObject {
      *
      * @return {number} The number of layers that are selected.
      */
-    
     get length() {
         return this.nativeLayers.count()
     }
@@ -54,7 +49,6 @@ export class Selection extends WrappedObject {
      *
      * @return {boolean} true if the selection is empty.
      */
-    
     get isEmpty() {
         return (this.nativeLayers.count() == 0);
     }
@@ -65,7 +59,6 @@ export class Selection extends WrappedObject {
      *
      * @param {function(layer: Layer)} block The function to execute for each layer.
      */
-    
     iterateThenClear(block) {
         var layers = this.nativeLayers
         this.clear();
@@ -78,7 +71,6 @@ export class Selection extends WrappedObject {
      * @param {function(layer: Layer)} filter Filter function called on each layer first to check whether it should be iterated.
      * @param {function(layer: Layer)} block The function to execute for each layer.
      */
-    
     iterateWithFilterThenClear(filter, block) {
         var layers = this.nativeLayers
         this.clear();
@@ -90,7 +82,6 @@ export class Selection extends WrappedObject {
      *
      * @param {function(layer: Layer)} block The function to execute for each layer.
      */
-    
     iterate(block) {
         this._page._document.iterateWithNativeLayers(this.nativeLayers, null, block);
     }
@@ -101,7 +92,6 @@ export class Selection extends WrappedObject {
      * @param {function(layer: Layer)} filter Filter function called on each layer first to check whether it should be iterated.
      * @param {function(layer: Layer)} block The function to execute for each layer.
      */
-    
     iterateWithFilter(filter, block) {
         this._page._document.iterateWithNativeLayers(this.nativeLayers, filter, block);
     }
@@ -110,7 +100,6 @@ export class Selection extends WrappedObject {
     /**
      * Clear the selection.
      */
-    
     clear() {
         this._page.sketchObject.changeSelectionBySelectingLayers(null);
     }
@@ -122,7 +111,6 @@ export class Selection extends WrappedObject {
      *
      * @return Object containing the tests to run. Each key is the name of a test, each value is a function which takes a Tester instance.
      */
-    
     static tests() {
         return {
             "tests" : {
@@ -209,5 +197,4 @@ export class Selection extends WrappedObject {
             }
         };
     }
-    
 }

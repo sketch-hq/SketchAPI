@@ -22,15 +22,12 @@ const BCFillTypeNoise    = 5;
 /**
  * Represents a Sketch layer style.
  */
-
 export class Style extends WrappedObject {
-    
     /**
      * Make a new style object.
      *
      * @param {MSStyle} style The underlying model object from Sketch.
      */
-    
     constructor(style) {
         if (!style) {
             style = MSDefaultStyle.defaultStyle();
@@ -42,7 +39,6 @@ export class Style extends WrappedObject {
     /**
      * Given a string description of a color, return an MSColor.
      */
-    
     colorFromString(value) {
         let immutable = MSImmutableColor.colorWithSVGString_(value);
         return MSColor.alloc().initWithImmutableObject_(immutable);
@@ -63,7 +59,6 @@ export class Style extends WrappedObject {
      *
      * @param {array} values A list of colors - each one representing a border to create.
      */
-    
     set borders(value) {
         let objects = [];
         for (let b in value) {
@@ -94,7 +89,6 @@ export class Style extends WrappedObject {
      * @param {array} values A list of colors - each one representing a fill to create.
      *
      */
-    
     set fills(value) {
         let objects = [];
         for (let b in value) {
@@ -114,7 +108,6 @@ export class Style extends WrappedObject {
      *
      * @return Object containing the tests to run. Each key is the name of a test, each value is a function which takes a Tester instance.
      */
-    
     static tests() {
         return {
             tests : {
@@ -133,5 +126,4 @@ export class Style extends WrappedObject {
             },
         };
     }
-    
 }

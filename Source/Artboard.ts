@@ -10,16 +10,13 @@ import { Group } from './Group'
 /**
  * A Sketch artboard.
  */
-
 export class Artboard extends Group {
-    
     /**
      * Make a new artboard.
      *
      * @param artboard {MSArtboardGroup} The underlying MSArtboardGroup model object from Sketch.
      * @param document The document that the artboard belongs to.
      */
-    
     constructor(artboard, document) {
         super(artboard, document)
     }
@@ -31,7 +28,6 @@ export class Artboard extends Group {
      *
      * @return true for instances of Artboard, false for any other layer type.
      */
-    
     get isArtboard() {
         return true;
     }
@@ -41,7 +37,6 @@ export class Artboard extends Group {
      *
      * @return Object containing the tests to run. Each key is the name of a test, each value is a function which takes a Tester instance.
      */
-    
     static tests() {
         return {
             "tests" : {

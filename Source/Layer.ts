@@ -11,16 +11,13 @@ import { Rectangle } from './Rectangle'
 /**
  * Represents a Sketch layer.
  */
-
 export class Layer extends WrappedObject {
-    
     /**
      * Make a new layer object.
      *
      * @param {MSLayer} layer The underlying model object from Sketch.
      * @param {Document} document The document that the layer belongs to.
      */
-    
     constructor(layer, document) {
         super(layer)
         
@@ -33,7 +30,6 @@ export class Layer extends WrappedObject {
      *
      * @return {string} The layer's name.
      */
-    
     get name() {
         return this._object.name();
     }
@@ -43,7 +39,6 @@ export class Layer extends WrappedObject {
      *
      * @param {string} name The new name.
      */
-    
     set name(value) {
         this._object.setName_(value);
     }
@@ -54,7 +49,6 @@ export class Layer extends WrappedObject {
      *
      * @return {Rectangle} The layer's frame.
      */
-    
     get frame() {
         var f = this._object.frame();
         return new Rectangle(f.x(), f.y(), f.width(), f.height());
@@ -67,7 +61,6 @@ export class Layer extends WrappedObject {
      *
      * @param {Rectangle} frame - The new frame of the layer.
      */
-    
     set frame(value) {
         var f = this._object.frame();
         f.setRect_(NSMakeRect(value.x, value.y, value.width, value.height));
@@ -80,7 +73,6 @@ export class Layer extends WrappedObject {
      *
      * @return {boolean} true for instances of Group, false for any other layer type.
      */
-    
     get isPage() { return false; }
     
     /**
@@ -90,7 +82,6 @@ export class Layer extends WrappedObject {
      *
      * @return true for instances of Artboard, false for any other layer type.
      */
-    
     get isArtboard() { return false; }
     
     /**
@@ -100,7 +91,6 @@ export class Layer extends WrappedObject {
      *
      * @return {boolean} true for instances of Group, false for any other layer type.
      */
-    
     get isGroup() { return false; }
     
     /**
@@ -110,7 +100,6 @@ export class Layer extends WrappedObject {
      *
      * @return {boolean} true for instances of Group, false for any other layer type.
      */
-    
     get isText() { return false; }
     
     /**
@@ -120,7 +109,6 @@ export class Layer extends WrappedObject {
      *
      * @return {boolean} true for instances of Group, false for any other layer type.
      */
-    
     get isShape() { return false; }
     
     /**
@@ -130,7 +118,6 @@ export class Layer extends WrappedObject {
      *
      * @return {boolean} true for instances of Group, false for any other layer type.
      */
-    
     get isImage() { return false; }
     
     
@@ -141,7 +128,6 @@ export class Layer extends WrappedObject {
      *
      * @return {Layer} A new layer identical to this one.
      */
-    
     duplicate() {
         var object = this.sketchObject
         var duplicate = object.copy()
@@ -153,7 +139,6 @@ export class Layer extends WrappedObject {
     /**
      * Remove this layer from its parent.
      */
-    
     remove() {
         var parent = this._object.parentGroup();
         if (parent) {
@@ -167,7 +152,6 @@ export class Layer extends WrappedObject {
      * This will clear the previous selection. Use addToSelection() if you wish
      * to preserve the existing selection.
      */
-    
     select() {
         this._object.select_byExtendingSelection(true, false);
     }
@@ -177,7 +161,6 @@ export class Layer extends WrappedObject {
      * Deselect this layer.
      * Any other layers that were previously selected will remain selected.
      */
-    
     deselect() {
         this._object.select_byExtendingSelection(false, true);
     }
@@ -187,7 +170,6 @@ export class Layer extends WrappedObject {
      * Add this layer to the selected layers.
      * Any other layers that were previously selected will remain selected.
      */
-    
     addToSelection() {
         this._object.select_byExtendingSelection(true, true);
     }
@@ -199,7 +181,6 @@ export class Layer extends WrappedObject {
      *
      * @return {Group} The containing layer of this layer.
      */
-    
     get container() {
         return this._document.wrapObject(this._object.parentGroup())
     }
@@ -211,7 +192,6 @@ export class Layer extends WrappedObject {
      *
      * @return {number} The layer order.
      */
-    
     get index() {
         var ourLayer = this.sketchObject
         return ourLayer.parentGroup().indexOfLayer_(ourLayer)
@@ -221,7 +201,6 @@ export class Layer extends WrappedObject {
     /**
      * Move this layer to the front of its container.
      */
-    
     moveToFront() {
         MSLayerMovement.moveToFront([this._object])
     }
@@ -230,7 +209,6 @@ export class Layer extends WrappedObject {
     /**
      * Move this layer forward in its container.
      */
-    
     moveForward() {
         MSLayerMovement.moveForward([this._object])
     }
@@ -239,7 +217,6 @@ export class Layer extends WrappedObject {
     /**
      * Move this layer to the back of its container.
      */
-    
     moveToBack() {
         MSLayerMovement.moveToBack([this._object])
     }
@@ -248,7 +225,6 @@ export class Layer extends WrappedObject {
     /**
      * Move this layer backwards in its container.
      */
-    
     moveBackward() {
         MSLayerMovement.moveBackward([this._object])
     }
@@ -260,7 +236,6 @@ export class Layer extends WrappedObject {
      * @param {Rectangle} rect The rectangle to convert.
      * @return {Rectangle} The converted rectangle expressed in page coordinates.
      */
-    
     localRectToPageRect(rect) {
         var rect = this.sketchObject.convertRectToAbsoluteCoordinates(rect.asCGRect)
         return new Rectangle(rect.x, rect.y, rect.width, rect.height)
@@ -272,7 +247,6 @@ export class Layer extends WrappedObject {
      * @param {Rectangle} rect The rectangle to convert.
      * @return {Rectangle} The converted rectangle expressed in the coordinate system of the parent layer.
      */
-    
     localRectToParentRect(rect) {
         var frame = this.frame
         return new Rectangle(rect.x + frame.x, rect.y + frame.y, rect.width, rect.height)
@@ -282,7 +256,6 @@ export class Layer extends WrappedObject {
     /**
      * Returns a list of export options with any missing ones replaced by default values.
      */
-    
     exportOptionsMergedWithDefaults(options) {
         var defaults = {
             "compact" : false,
@@ -310,7 +283,6 @@ export class Layer extends WrappedObject {
      *
      * @param {dictionary} options Options indicating which layers to export, which sizes and formats to use, etc.
      */
-    
     export(options) {
         var merged = this.exportOptionsMergedWithDefaults(options)
         var exporter = MSSelfContainedHighLevelExporter.alloc().initWithOptions(merged)
@@ -323,7 +295,6 @@ export class Layer extends WrappedObject {
      *
      * @return Object containing the tests to run. Each key is the name of a test, each value is a function which takes a Tester instance.
      */
-    
     static tests() {
         return {
             "tests" : {
@@ -433,5 +404,4 @@ export class Layer extends WrappedObject {
             }
         };
     }
-    
 }

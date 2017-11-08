@@ -15,14 +15,11 @@ import { Document } from './Document'
  * now we want to be able to invoke the tests from the Sketch side or from a plugin
  * command, so it's simpler to use a simple test framework of our own devising.
  */
-
 export class Tester {
-    
     /**
      * Make a new tester.
      *
      */
-    
     constructor(application) {
         /** @type {array} List of failures in the currently running test. */
         this._testFailures = []
@@ -48,7 +45,6 @@ export class Tester {
      * @param {boolean} condition The condition we're asserting.
      * @param {string} description A description of the test.
      */
-    
     assert(condition, description) {
         if (!condition) {
             if (!description) description = ""
@@ -63,7 +59,6 @@ export class Tester {
      * @param v1 The first value to compare.
      * @param v2 The second value to compare.
      */
-    
     assertEqual(v1, v2) {
         var different = v1 != v2
         
@@ -89,7 +84,6 @@ export class Tester {
      *
      * @param v The value to check.
      */
-    
     assertTrue(v) {
         if (!v) {
             this._testFailures.push("expected true, got: " + v)
@@ -104,7 +98,6 @@ export class Tester {
      *
      * @param v The value to check.
      */
-    
     assertFalse(v) {
         if (v) {
             this._testFailures.push("expected false, got: " + v)
@@ -118,7 +111,6 @@ export class Tester {
      *
      * @return {Application} The application object.
      */
-    
     get application() {
         return this._application
     }
@@ -129,7 +121,6 @@ export class Tester {
      *
      * @return {Document} Test document.
      */
-    
     newTestDocument() {
         var document = new Document(MSDocumentData.new(), this._application)
         return document
@@ -151,7 +142,6 @@ export class Tester {
      * @param {string} suiteName The name of the suite, if we're running a sub-collection. This will be null for the top level tests.
      * @return {dictionary} Returns a dictionary indicating how many tests ran, and a list of the passed, failed, and crashed tests.
      */
-    
     runUnitTests(specification, suiteName?) {
         var suites = specification.suites
         for (var suite in suites) {
@@ -179,5 +169,4 @@ export class Tester {
             "passes" : this._passes
         };
     }
-    
 }

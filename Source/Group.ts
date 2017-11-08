@@ -13,7 +13,6 @@ import { Style } from './Style'
 /**
  * Represents a group of layers.
  */
-
 export class Group extends Layer {
     
     
@@ -23,7 +22,6 @@ export class Group extends Layer {
      * @param {MSLayerGroup} group  The underlying model object from Sketch.
      * @param {Document} document The document that the group belongs to.
      */
-    
     constructor(group, document) {
         super(group, document)
     }
@@ -36,7 +34,6 @@ export class Group extends Layer {
      *
      * @return {boolean} true for instances of Group, false for any other layer type.
      */
-    
     get isGroup() { return true; }
     
     
@@ -46,7 +43,6 @@ export class Group extends Layer {
      * @return Object containing the tests to run. Each key is the name of a test, each value is a function which takes a Tester instance.
      */
     
-    
     /**
      * Perform a function for every sub-layer inside this one.
      * The function will be passed a single argument each time it is
@@ -54,7 +50,6 @@ export class Group extends Layer {
      *
      * @param {function(layer: Layer)} block The function to execute for each layer.
      */
-    
     iterate(block) {
         var layers = this._object.layers()
         this._document.iterateWithNativeLayers(layers, null, block)
@@ -69,7 +64,6 @@ export class Group extends Layer {
      * @param {function(layer: Layer)} filter Filter function called on each layer first to check whether it should be iterated.
      * @param {function(layer: Layer)} block The function to execute for each layer.
      */
-    
     iterateWithFilter(filter, block) {
         var layers = this._object.layers()
         this._document.iterateWithNativeLayers(layers, filter, block)
@@ -82,7 +76,6 @@ export class Group extends Layer {
      * @param {Rectangle} rect The rectangle to convert.
      * @return {Rectangle} The rectangle in local coordinates.
      */
-    
     pageRectToLocalRect(rect) {
         var origin = this._object.convertPoint_fromLayer_(NSMakePoint(rect.x, rect.y), null)
         return new Rectangle(origin.x, origin.y, rect.width, rect.height)
@@ -92,7 +85,6 @@ export class Group extends Layer {
     /**
      * Adjust the group to fit its children.
      */
-    
     adjustToFit() {
         this._object.resizeToFitChildrenWithOption_(0)
     }
@@ -110,7 +102,6 @@ export class Group extends Layer {
      * @param {string} wrapper The name of wrapper class to use.
      * @return {Layer} The wrapped layer object.
      */
-    
     _addWrappedLayerWithProperties(newLayer, properties, wrapper) {
         if (newLayer) {
             // add the Sketch object to this layer
@@ -136,7 +127,6 @@ export class Group extends Layer {
      * @param {dictionary} properties The properties to use when looking for a frame value.
      * @return {Rectangle} The frame rectangle to use.
      */
-    
     _frameForLayerWithProperties(properties) {
         var frame = properties.frame
         if (frame) {
@@ -151,7 +141,6 @@ export class Group extends Layer {
      * Extract the style to use for a layer from some properties.
      * If the style wasn't supplied at all, we use the default one.
      */
-    
     _styleForLayerWithProperties(properties) {
         var style = properties.style
         if (!style) {
@@ -180,7 +169,6 @@ export class Group extends Layer {
      * @param {dictionary} properties Properties to apply to the shape.
      * @return {Shape} the new shape.
      */
-    
     newShape(properties = {}) {
         var frame = this._frameForLayerWithProperties(properties)
         // TODO: Eventually we want to distinguish between different shape sub-types here depending
@@ -199,7 +187,6 @@ export class Group extends Layer {
      * @param {dictionary} properties Properties to apply to the text layer.
      * @return {Text} the new text layer.
      */
-    
     newText(properties = {}) {
         var frame = this._frameForLayerWithProperties(properties)
         var newLayer = MSTextLayer.alloc().initWithFrame_(frame.asCGRect());
@@ -214,7 +201,6 @@ export class Group extends Layer {
      * @param {dictionary} properties Properties to apply to the group.
      * @return {Group} the new group.
      */
-    
     newGroup(properties = {}) {
         var frame = this._frameForLayerWithProperties(properties)
         var newLayer = MSLayerGroup.alloc().initWithFrame_(frame.asCGRect());
@@ -229,7 +215,6 @@ export class Group extends Layer {
      * @param {dictionary} properties Properties to apply to the layer.
      * @return {Image} the new image layer.
      */
-    
     newImage(properties = {}) {
         var frame = this._frameForLayerWithProperties(properties)
         var newLayer = MSBitmapLayer.alloc().initWithFrame_(frame.asCGRect());
@@ -243,7 +228,6 @@ export class Group extends Layer {
      *
      * @return Object containing the tests to run. Each key is the name of a test, each value is a function which takes a Tester instance.
      */
-    
     static tests() {
         return {
             "tests" : {

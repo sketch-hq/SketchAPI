@@ -10,16 +10,13 @@ import { Layer } from './Layer'
 /**
  * Represents an image layer.
  */
-
 export class Image extends Layer {
-    
     /**
      * Make a new image layer object.
      *
      * @param {MSBitmapLayer} layer The underlying model object from Sketch.
      * @param {Document} document The document that the bitmap layer belongs to.
      */
-    
     constructor(layer, document) {
         super(layer, document)
     }
@@ -31,7 +28,6 @@ export class Image extends Layer {
      *
      * @return {boolean} true for instances of Image, false for any other layer type.
      */
-    
     get isImage() {
         return true;
     }
@@ -41,7 +37,6 @@ export class Image extends Layer {
      *
      * @param {NSURL} url The location of the image to use.
      */
-    
     set imageURL(url) {
         var image = NSImage.alloc().initWithContentsOfURL_(url)
         var imageData = MSImageData.alloc().initWithImage(image)
@@ -53,7 +48,6 @@ export class Image extends Layer {
      *
      * @return Object containing the tests to run. Each key is the name of a test, each value is a function which takes a Tester instance.
      */
-    
     static tests() {
         return {
             "tests" : {
@@ -67,5 +61,4 @@ export class Image extends Layer {
             }
         };
     }
-    
 }

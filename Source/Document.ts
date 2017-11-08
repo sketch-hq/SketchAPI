@@ -13,7 +13,6 @@ import { Selection } from './Selection'
 /**
  * A Sketch document.
  */
-
 export class Document extends WrappedObject {
     /**
      * Make a new document object.
@@ -27,7 +26,6 @@ export class Document extends WrappedObject {
      *
      * If you do want to create a new document, you can do so with Application#newDocument.
      */
-    
     constructor(document, application) {
         super(document)
         
@@ -49,7 +47,6 @@ export class Document extends WrappedObject {
      * @param {object} sketchObject The underlying sketch object that we're wrapping.
      * @return {WrappedObject} A javascript object (subclass of WrappedObject), which represents the Sketch object we were given.
      */
-    
     wrapObject(sketchObject) {
         return this._application.wrapObject(sketchObject, this)
     }
@@ -60,7 +57,6 @@ export class Document extends WrappedObject {
      *
      * @return {Selection} A selection object representing the layers that the user has selected in the currently selected page.
      */
-    
     get selectedLayers() {
         return new Selection(this.selectedPage);
     }
@@ -70,7 +66,6 @@ export class Document extends WrappedObject {
      *
      * @return {Page} A page object representing the page that the user is currently viewing.
      */
-    
     get selectedPage() {
         return new Page(this._object.currentPage(), this)
     }
@@ -80,7 +75,6 @@ export class Document extends WrappedObject {
      *
      * @return {list} The pages.
      */
-    
     get pages() {
         var result = [];
         var loop = this._object.pages().objectEnumerator()
@@ -96,7 +90,6 @@ export class Document extends WrappedObject {
      *
      * @return {Layer} A layer object, if one was found.
      */
-    
     layerWithID(layer_id) {
         var layer = this._object.documentData().layerWithID_(layer_id);
         if (layer)
@@ -108,7 +101,6 @@ export class Document extends WrappedObject {
      *
      * @return {Layer} A layer object, if one was found.
      */
-    
     layerNamed(layer_name) {
         // As it happens, layerWithID also matches names, so we can implement
         // this method in the same way as layerWithID.
@@ -128,7 +120,6 @@ export class Document extends WrappedObject {
      * @param {function(layer: Layer)} filter A filter function to call for each layer. If it returns false, the layer is skipped.
      * @param {function(layer: Layer)} block The function to execute for each layer.
      */
-    
     iterateWithNativeLayers(layers, filter, block) {
         // if we're given a string as a filter, treat it as a function
         // to call on the layer
@@ -160,7 +151,6 @@ export class Document extends WrappedObject {
      *
      * @param {Layer} layer The layer to center on.
      */
-    
     centerOnLayer(layer) {
         this._object.contentDrawView().centerRect_(layer._object.rect())
     }
@@ -170,7 +160,6 @@ export class Document extends WrappedObject {
      *
      * @return Object containing the tests to run. Each key is the name of a test, each value is a function which takes a Tester instance.
      */
-    
     static tests() {
         return {
             "tests" : {
@@ -207,5 +196,4 @@ export class Document extends WrappedObject {
             }
         };
     }
-    
 }

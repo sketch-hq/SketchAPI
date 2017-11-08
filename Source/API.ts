@@ -16,7 +16,6 @@ import { Application } from "./Application";
  * of setup until context.api() is actually called -- thus
  * scripts which don't call it at all suffer minimal overhead.
  */
-
 function SketchAPIWithCapturedContext(context) {
     return (() => {
 

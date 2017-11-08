@@ -11,16 +11,13 @@ import { Selection } from './Selection'
 /**
  * Represents a Page in a Sketch document.
  */
-
 export class Page extends Group {
-    
     /**
      * Make a new page object.
      *
      * @param {MSPage} page The underlying model object from Sketch.
      * @param document The document that the page belongs to.
      */
-    
     constructor(page, document) {
         super(page)
         this._document = document
@@ -32,7 +29,6 @@ export class Page extends Group {
      *
      * @return {Selection} A selection object representing the layers that the user has selected.
      */
-    
     get selectedLayers() {
         return new Selection(this);
     }
@@ -44,7 +40,6 @@ export class Page extends Group {
      *
      * @return {boolean} true for instances of Group, false for any other layer type.
      */
-    
     get isPage() {
         return true;
     }
@@ -55,7 +50,6 @@ export class Page extends Group {
      *
      * @return {Selection} A selection object representing the layers that the user has selected.
      */
-    
     get selectedLayers() {
         return new Selection(this);
     }
@@ -68,7 +62,6 @@ export class Page extends Group {
      * @param properties {dictionary} Properties to apply to the artboard.
      * @return {Artboard} the new artboard.
      */
-    
     newArtboard(properties = {}) {
         var frame = this._frameForLayerWithProperties(properties)
         var newLayer = MSArtboardGroup.alloc().initWithFrame_(frame.asCGRect());
@@ -80,7 +73,6 @@ export class Page extends Group {
      *
      * @return Object containing the tests to run. Each key is the name of a test, each value is a function which takes a Tester instance.
      */
-    
     /**
      * Export this page, using the options supplied.
      *
@@ -112,7 +104,6 @@ export class Page extends Group {
      *
      * @param {dictionary} options Options indicating which sizes and formats to use, etc.
      */
-    
     export(options) {
         var merged = this.exportOptionsMergedWithDefaults(options)
         var exporter = MSSelfContainedHighLevelExporter.alloc().initWithOptions(merged)
@@ -124,7 +115,6 @@ export class Page extends Group {
      *
      * @param {dictionary} options Options indicating which layers to export, which sizes and formats to use, etc.
      */
-    
     exportArtboards(options) {
         var merged = this.exportOptionsMergedWithDefaults(options)
         var exporter = MSSelfContainedHighLevelExporter.alloc().initWithOptions(merged)
@@ -166,5 +156,4 @@ export class Page extends Group {
             }
         };
     }
-    
 }
