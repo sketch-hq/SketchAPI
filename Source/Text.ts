@@ -41,16 +41,13 @@ const NSTextAlignment = {
 /**
  * Represents a text layer.
  */
-
 export class Text extends Layer {
-    
     /**
      * Make a new text object.
      *
      * @param {MSTextLayer} text The underlying model object from Sketch.
      * @param {Document} document The document that the text layer belongs to.
      */
-    
     constructor(text, document) {
         super(text, document);
     }
@@ -62,7 +59,6 @@ export class Text extends Layer {
      *
      * @return {bool} true for instances of Group, false for any other layer type.
      */
-    
     get isText() {
         return true;
     }
@@ -72,7 +68,6 @@ export class Text extends Layer {
      *
      * @return {string} The layer text.
      */
-    
     get text() {
         return this._object.stringValue();
     }
@@ -84,7 +79,6 @@ export class Text extends Layer {
      *
      * @param {string} value The text to use.
      */
-    
     set text(value) {
         const object = this.sketchObject;
         object.stringValue = value;
@@ -98,7 +92,6 @@ export class Text extends Layer {
      *
      * @param {NSFont} value The font to use.
      */
-    
     set font(value) {
         this._object.font = value;
     }
@@ -108,7 +101,6 @@ export class Text extends Layer {
      *
      * @param {number} size The system font size to use.
      */
-    
     set systemFontSize(size) {
         this._object.font = NSFont.systemFontOfSize_(size);
     }
@@ -119,7 +111,6 @@ export class Text extends Layer {
      *
      * @return {string} The alignment mode.
      */
-    
     get alignment() {
         const raw = this._object.textAlignment();
         const result = raw;
@@ -140,7 +131,6 @@ export class Text extends Layer {
      *
      * @param {string} mode The alignment mode to use.
      */
-    
     set alignment(mode) {
         const translated = NSTextAlignment[mode];
         this._object.textAlignment = translated ? translated : mode;
@@ -151,7 +141,6 @@ export class Text extends Layer {
      *
      * @param {bool} value Whether the layer should be fixed width (true) or variable width (false).
      */
-    
     set fixedWidth(value) {
         if (value) {
             this._object.textBehaviour = BCTextBehaviourFixedWidth;
@@ -163,7 +152,6 @@ export class Text extends Layer {
     /**
      * Adjust the frame of the layer to fit its contents.
      */
-    
     adjustToFit() {
         this._object.adjustFrameToFit();
     }
@@ -173,7 +161,6 @@ export class Text extends Layer {
      *
      * @return {array} The line fragments. Each one is a dictionary containing a rectangle, and a baseline offset.
      */
-    
     get fragments() {
         const textLayer = this.sketchObject;
         const storage = textLayer.immutableModelObject().createTextStorage();
@@ -209,7 +196,6 @@ export class Text extends Layer {
      *
      * @param {bool} value If true, we use constant baseline spacing mode. This is the default for new text layers in Sketch. If false, we use the legacy line spacing mode.
      */
-    
     set useConstantBaselines(value) {
         const lineSpacingBehaviour = value ? BCTextLineSpacingBehaviourV3 : BCTextLineSpacingBehaviourV2;
         const textLayer = this.sketchObject;
@@ -226,7 +212,6 @@ export class Text extends Layer {
      *
      * @return Object containing the tests to run. Each key is the name of a test, each value is a function which takes a Tester instance.
      */
-    
     static tests() {
         return {
             tests : {
@@ -272,5 +257,4 @@ export class Text extends Layer {
             },
         };
     }
-    
 }
