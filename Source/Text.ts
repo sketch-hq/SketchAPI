@@ -5,9 +5,8 @@
 // All code (C) 2016 Bohemian Coding.
 // ********************************
 
-import { Layer } from './Layer'
-import { Rectangle } from './Rectangle'
-
+import { Layer } from "./Layer";
+import { Rectangle } from "./Rectangle";
 
 /// Width is adjusted to fit the content.
 const BCTextBehaviourFlexibleWidth = 0;
@@ -15,30 +14,28 @@ const BCTextBehaviourFlexibleWidth = 0;
 /// Width is fixed.
 const BCTextBehaviourFixedWidth = 1;
 
-
 /// Uses min & max line height on paragraph style
 const BCTextLineSpacingBehaviourV2 = 1;
 
 /// Uses MSConstantBaselineTypesetter for fixed line height
 const BCTextLineSpacingBehaviourV3 = 2;
 
-
 /// Mapping between text alignment names and values.
 const NSTextAlignment = {
     /// Visually left aligned
-    "left": 0,
+    left: 0,
     
     /// Visually right aligned
-    "right": 1,
+    right: 1,
     
     /// Visually centered
-    "center": 2,
+    center: 2,
     
     /// Fully-justified. The last line in a paragraph is natural-aligned.
-    "justified": 3,
+    justified: 3,
     
     /// Indicates the default alignment for script
-    "natural": 4
+    natural: 4,
 };
 
 /**
@@ -55,9 +52,8 @@ export class Text extends Layer {
      */
     
     constructor(text, document) {
-        super(text, document)
+        super(text, document);
     }
-    
     
     /**
      * Is this a text layer?
@@ -68,9 +64,8 @@ export class Text extends Layer {
      */
     
     get isText() {
-        return true
+        return true;
     }
-    
     
     /**
      * The text of the layer.
@@ -79,9 +74,8 @@ export class Text extends Layer {
      */
     
     get text() {
-        return this._object.stringValue()
+        return this._object.stringValue();
     }
-    
     
     /**
      * Set the text of the layer.
@@ -92,13 +86,12 @@ export class Text extends Layer {
      */
     
     set text(value) {
-        var object = this.sketchObject;
+        let object = this.sketchObject;
         object.stringValue = value;
         if (!object.nameIsFixed()) {
-            object.name = value
+            object.name = value;
         }
     }
-    
     
     /**
      * Set the font of the layer to an NSFont object.
@@ -107,9 +100,8 @@ export class Text extends Layer {
      */
     
     set font(value) {
-        this._object.font = value
+        this._object.font = value;
     }
-    
     
     /**
      * Set the font of the layer to the system font at a given size.
@@ -118,7 +110,7 @@ export class Text extends Layer {
      */
     
     set systemFontSize(size) {
-        this._object.font = NSFont.systemFontOfSize_(size)
+        this._object.font = NSFont.systemFontOfSize_(size);
     }
     
     /**
@@ -129,17 +121,16 @@ export class Text extends Layer {
      */
     
     get alignment() {
-        var raw = this._object.textAlignment();
-        var result = raw;
-        for (var key in NSTextAlignment) {
+        let raw = this._object.textAlignment();
+        let result = raw;
+        for (let key in NSTextAlignment) {
             if (NSTextAlignment[key] === raw) {
                 result = key;
-                break
+                break;
             }
         }
-        return result
+        return result;
     }
-    
     
     /**
      * Set the alignment of the layer.
@@ -151,10 +142,9 @@ export class Text extends Layer {
      */
     
     set alignment(mode) {
-        var translated = NSTextAlignment[mode];
-        this._object.textAlignment = translated ? translated : mode
+        let translated = NSTextAlignment[mode];
+        this._object.textAlignment = translated ? translated : mode;
     }
-    
     
     /**
      * Set the layer to be fixed width or variable width.
@@ -164,21 +154,19 @@ export class Text extends Layer {
     
     set fixedWidth(value) {
         if (value) {
-            this._object.textBehaviour = BCTextBehaviourFixedWidth
+            this._object.textBehaviour = BCTextBehaviourFixedWidth;
         } else {
-            this._object.textBehaviour = BCTextBehaviourFlexibleWidth
+            this._object.textBehaviour = BCTextBehaviourFlexibleWidth;
         }
     }
-    
     
     /**
      * Adjust the frame of the layer to fit its contents.
      */
     
     adjustToFit() {
-        this._object.adjustFrameToFit()
+        this._object.adjustFrameToFit();
     }
-    
     
     /**
      * Return a list of the text fragments for the text.
@@ -187,35 +175,34 @@ export class Text extends Layer {
      */
     
     get fragments() {
-        var textLayer = this.sketchObject;
-        var storage = textLayer.immutableModelObject().createTextStorage();
-        var layout = storage.layoutManagers().firstObject();
-        var actualCharacterRangePtr = MOPointer.new();
-        var charRange = NSMakeRange(0, storage.length());
-        var drawingPoint = textLayer.drawingPointForText();
+        let textLayer = this.sketchObject;
+        let storage = textLayer.immutableModelObject().createTextStorage();
+        let layout = storage.layoutManagers().firstObject();
+        let actualCharacterRangePtr = MOPointer.new();
+        let charRange = NSMakeRange(0, storage.length());
+        let drawingPoint = textLayer.drawingPointForText();
         
         layout.glyphRangeForCharacterRange_actualCharacterRange_(charRange, actualCharacterRangePtr);
-        var glyphRange = actualCharacterRangePtr.value();
+        let glyphRange = actualCharacterRangePtr.value();
         
-        var fragments = [];
-        var currentLocation = 0;
+        let fragments = [];
+        let currentLocation = 0;
         while (currentLocation < NSMaxRange(glyphRange)) {
-            var effectiveRangePtr = MOPointer.new();
-            var localRect = layout.lineFragmentRectForGlyphAtIndex_effectiveRange_(currentLocation, effectiveRangePtr);
-            var rect = new Rectangle(localRect.origin.x + drawingPoint.x,
+            let effectiveRangePtr = MOPointer.new();
+            let localRect = layout.lineFragmentRectForGlyphAtIndex_effectiveRange_(currentLocation, effectiveRangePtr);
+            let rect = new Rectangle(localRect.origin.x + drawingPoint.x,
                 localRect.origin.y + drawingPoint.y,
                 localRect.size.width,
                 localRect.size.height);
-            var effectiveRange = effectiveRangePtr.value();
-            var baselineOffset = layout.typesetter().baselineOffsetInLayoutManager_glyphIndex_(layout, currentLocation);
+            let effectiveRange = effectiveRangePtr.value();
+            let baselineOffset = layout.typesetter().baselineOffsetInLayoutManager_glyphIndex_(layout, currentLocation);
             
-            fragments.push({"rect": rect, "baselineOffset": baselineOffset, range: effectiveRange});
-            currentLocation = NSMaxRange(effectiveRange) + 1
+            fragments.push({rect, baselineOffset, range: effectiveRange});
+            currentLocation = NSMaxRange(effectiveRange) + 1;
         }
         
         return fragments;
     }
-    
     
     /**
      * Set whether to use constant baseline line spacing mode.
@@ -224,16 +211,15 @@ export class Text extends Layer {
      */
     
     set useConstantBaselines(value) {
-        var lineSpacingBehaviour = value ? BCTextLineSpacingBehaviourV3 : BCTextLineSpacingBehaviourV2;
-        var textLayer = this.sketchObject;
-        var initialBaselineOffset = textLayer.firstBaselineOffset();
+        let lineSpacingBehaviour = value ? BCTextLineSpacingBehaviourV3 : BCTextLineSpacingBehaviourV2;
+        let textLayer = this.sketchObject;
+        let initialBaselineOffset = textLayer.firstBaselineOffset();
         textLayer.lineSpacingBehaviour = lineSpacingBehaviour;
-        var baselineOffset = textLayer.firstBaselineOffset();
-        var rect = this.frame;
+        let baselineOffset = textLayer.firstBaselineOffset();
+        let rect = this.frame;
         rect.y -= (baselineOffset - initialBaselineOffset);
-        this.frame = rect
+        this.frame = rect;
     }
-    
     
     /**
      * Return a list of tests to run for this class.
@@ -243,48 +229,47 @@ export class Text extends Layer {
     
     static tests() {
         return {
-            "tests" : {
-                "testIsText" : function(tester) {
-                    var document = tester.newTestDocument();
-                    var page = document.selectedPage;
-                    var text = page.newText();
+            tests : {
+                testIsText(tester) {
+                    let document = tester.newTestDocument();
+                    let page = document.selectedPage;
+                    let text = page.newText();
                     tester.assertTrue(text.isText);
-                    tester.assertFalse(page.isText)
+                    tester.assertFalse(page.isText);
                 },
                 
-                "testText" : function(tester) {
-                    var document = tester.newTestDocument();
-                    var page = document.selectedPage;
-                    var text = page.newText({"text" : "blah"});
+                testText(tester) {
+                    let document = tester.newTestDocument();
+                    let page = document.selectedPage;
+                    let text = page.newText({text : "blah"});
                     tester.assertEqual(text.text, "blah");
                     text.text = "doodah";
-                    tester.assertEqual(text.text, "doodah")
+                    tester.assertEqual(text.text, "doodah");
                 },
                 
-                "testAdjustToFit" : function(tester) {
-                    var document = tester.newTestDocument();
-                    var page = document.selectedPage;
-                    var text = page.newText({"text" : "blah", "frame" : new Rectangle(10, 10, 1000, 1000)});
+                testAdjustToFit(tester) {
+                    let document = tester.newTestDocument();
+                    let page = document.selectedPage;
+                    let text = page.newText({text : "blah", frame : new Rectangle(10, 10, 1000, 1000)});
                     text.adjustToFit();
-                    tester.assertEqual(text.frame, new Rectangle(10, 10, 23, 14))
+                    tester.assertEqual(text.frame, new Rectangle(10, 10, 23, 14));
                 },
                 
-                "testAlignment" : function(tester) {
-                    var document = tester.newTestDocument();
-                    var page = document.selectedPage;
-                    var text = page.newText({"text" : "blah", "frame" : new Rectangle(10, 10, 1000, 1000)});
-                    for (var key in NSTextAlignment) {
+                testAlignment(tester) {
+                    let document = tester.newTestDocument();
+                    let page = document.selectedPage;
+                    let text = page.newText({text : "blah", frame : new Rectangle(10, 10, 1000, 1000)});
+                    for (let key in NSTextAlignment) {
                         // test setting by name
                         text.alignment = key;
                         tester.assertEqual(text.alignment, key);
                         
                         // test setting by value
                         text.alignment = NSTextAlignment[key];
-                        tester.assertEqual(text.alignment, key)
+                        tester.assertEqual(text.alignment, key);
                     }
                 },
-                
-            }
+            },
         };
     }
     
