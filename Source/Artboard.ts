@@ -41,9 +41,9 @@ export class Artboard extends Group {
         return {
             tests : {
                 testIsArtboard(tester) {
-                    let document = tester.newTestDocument();
-                    let page = document.selectedPage;
-                    let artboard = page.newArtboard({name : "Test"});
+                    const document = tester.newTestDocument();
+                    const page = document.selectedPage;
+                    const artboard = page.newArtboard({name : "Test"});
                     tester.assertTrue(artboard.isArtboard);
                     tester.assertFalse(page.isArtboard);
                 },
