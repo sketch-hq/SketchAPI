@@ -40,7 +40,7 @@ export class Layer extends WrappedObject {
      *
      * @param {string} name The new name.
      */
-    set name(value) {
+    set name(name) {
         this._object.setName_(value);
     }
     
@@ -60,9 +60,9 @@ export class Layer extends WrappedObject {
      * This will move and/or resize the layer as appropriate.
      * The new frame should be given in coordinates that are local to the parent of the layer.
      *
-     * @param {Rectangle} frame - The new frame of the layer.
+     * @param {Rectangle} frame The new frame of the layer.
      */
-    set frame(value) {
+    set frame(frame) {
         const f = this._object.frame();
         f.setRect_(NSMakeRect(value.x, value.y, value.width, value.height));
     }
