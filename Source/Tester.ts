@@ -143,7 +143,7 @@ export class Tester {
      *
      * @param {TestSpecification} specification Object describing the tests to run. See discussion.
      * @param {string} suiteName The name of the suite, if we're running a sub-collection. This will be undefined for the top level tests.
-     * @return {dictionary} Returns a dictionary indicating how many tests ran, and a list of the passed, failed, and crashed tests.
+     * @return {Object} Returns object indicating how many tests ran, and a list of the passed, failed, and crashed tests.
      */
     runUnitTests(specification: TestSpecification, suiteName?: string) {
         const suites = specification.suites;
