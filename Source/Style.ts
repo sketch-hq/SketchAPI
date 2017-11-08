@@ -53,7 +53,7 @@ export class Style extends WrappedObject {
      * In the future the intention is to also support dictionaries allowing gradients
      * and other more complex border parameters to be specified.
      *
-     * @param {array} values A list of colors - each one representing a border to create.
+     * @param {Array} values A list of colors - each one representing a border to create.
      */
     set borders(value) {
         const objects = [];
@@ -82,7 +82,7 @@ export class Style extends WrappedObject {
      * In the future the intention is to also support dictionaries allowing gradients
      * and other more complex fill parameters to be specified.
      *
-     * @param {array} values A list of colors - each one representing a fill to create.
+     * @param {Array} values A list of colors - each one representing a fill to create.
      *
      */
     set fills(value) {

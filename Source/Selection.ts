@@ -25,7 +25,7 @@ export class Selection extends WrappedObject {
     /**
      * Return the native Sketch layers in the selection.
      *
-     * @return {array} The selected layers.
+     * @return {Array} The selected layers.
      */
     get nativeLayers() {
         const layers = this._object.selectedLayers().layers();

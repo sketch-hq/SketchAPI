@@ -117,7 +117,7 @@ export class Document extends WrappedObject {
      * Iterate through a bunch of native Sketch layers, executing a block.
      * Used internally by Group and Selection.
      *
-     * @param {array} layers The layers to iterate over.
+     * @param {Array} layers The layers to iterate over.
      * @param {function(layer: Layer)} filter A filter function to call for each layer. If it returns false, the layer is skipped.
      * @param {function(layer: Layer)} block The function to execute for each layer.
      */
