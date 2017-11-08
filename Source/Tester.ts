@@ -7,6 +7,15 @@
 
 import { Document } from "./Document";
 
+// TODO no any type
+type Suites = any;
+type Tests = any;
+
+export interface TestSpecification {
+    suites?: Suites;
+    tests?: Tests;
+}
+
 /**
  * Very simple unit testing utility.
  *
