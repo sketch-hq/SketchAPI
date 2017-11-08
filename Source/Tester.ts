@@ -70,19 +70,19 @@ export class Tester {
      * @param v2 The second value to compare.
      */
     assertEqual(v1, v2) {
-        const different = v1 != v2;
+        let mutableDifferent = v1 != v2;
         
         // if we're comparing two objects, try matching them as strings
         // (crude, and not guaranteed, but it will cover some basic cases)
-        if (different && (typeof v1 === "object") && (typeof v2 === "object")) {
+        if (mutableDifferent && (typeof v1 === "object") && (typeof v2 === "object")) {
             if (v1.compare) {
-                different = v1.compare(v2);
+                mutableDifferent = v1.compare(v2);
             } else {
-                different = v1.toString() != v2.toString();
+                mutableDifferent = v1.toString() != v2.toString();
             }
         }
         
-        if (different) {
+        if (mutableDifferent) {
             this._testFailures.push(v1 + " != " + v2);
         }
     }
