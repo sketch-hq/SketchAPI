@@ -148,21 +148,25 @@ export class Tester {
      */
     runUnitTests(specification, suiteName?) {
         const suites = specification.suites;
-        for (const suiteKey of Object.keys(suites)) {
-            this.runUnitTests(suites[suiteKey], suiteKey);
+        if (suites) {
+            for (const suiteKey of Object.keys(suites)) {
+                this.runUnitTests(suites[suiteKey], suiteKey);
+            }
         }
         
         const tests = specification.tests;
-        for (const name in tests) {
-            const test = tests[name];
-            this._ran++;
-            this._testFailures = [];
-            const result = test(this);
-            const fullName = suiteName ? suiteName + ": " + name : name;
-            if (this._testFailures.length > 0) {
-                this._failures.push({name: fullName, reasons: this._testFailures});
-            } else {
-                this._passes.push(fullName);
+        if (tests) {
+            for (const name in tests) {
+                const test = tests[name];
+                this._ran++;
+                this._testFailures = [];
+                const result = test(this);
+                const fullName = suiteName ? suiteName + ": " + name : name;
+                if (this._testFailures.length > 0) {
+                    this._failures.push({name: fullName, reasons: this._testFailures});
+                } else {
+                    this._passes.push(fullName);
+                }
             }
         }
         
