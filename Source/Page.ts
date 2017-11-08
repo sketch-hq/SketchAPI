@@ -19,7 +19,7 @@ export class Page extends Group {
      * @param document The document that the page belongs to.
      */
     constructor(page, document) {
-        super(page);
+        super(page, document);
         this._document = document;
     }
     
