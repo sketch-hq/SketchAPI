@@ -102,9 +102,7 @@ export class Group extends Layer {
             const wrapper = this._document.wrapObject(newLayer);
             
             // apply properties, via the wrapper
-            for (const p in properties) {
-                wrapper[p] = properties[p];
-            }
+            Object.assign(wrapper, properties);
             
             return wrapper;
         }
