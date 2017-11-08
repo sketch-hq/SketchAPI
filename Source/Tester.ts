@@ -141,7 +141,7 @@ export class Tester {
      * The test functions are passed this tester object when they are executed, and should use the assertion methods on it
      * to perform tests.
      *
-     * @param {dictionary} specification A dictionary describing the tests to run. See discussion.
+     * @param {TestSpecification} specification Object describing the tests to run. See discussion.
      * @param {string} suiteName The name of the suite, if we're running a sub-collection. This will be undefined for the top level tests.
      * @return {dictionary} Returns a dictionary indicating how many tests ran, and a list of the passed, failed, and crashed tests.
      */
