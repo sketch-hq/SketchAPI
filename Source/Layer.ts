@@ -50,7 +50,7 @@ export class Layer extends WrappedObject {
      * @return {Rectangle} The layer's frame.
      */
     get frame() {
-        let f = this._object.frame();
+        const f = this._object.frame();
         return new Rectangle(f.x(), f.y(), f.width(), f.height());
     }
     
@@ -62,7 +62,7 @@ export class Layer extends WrappedObject {
      * @param {Rectangle} frame - The new frame of the layer.
      */
     set frame(value) {
-        let f = this._object.frame();
+        const f = this._object.frame();
         f.setRect_(NSMakeRect(value.x, value.y, value.width, value.height));
     }
     
@@ -127,8 +127,8 @@ export class Layer extends WrappedObject {
      * @return {Layer} A new layer identical to this one.
      */
     duplicate() {
-        let object = this.sketchObject;
-        let duplicate = object.copy();
+        const object = this.sketchObject;
+        const duplicate = object.copy();
         object.parentGroup().insertLayers_afterLayer_([duplicate], object);
         return this._document.wrapObject(duplicate);
     }
@@ -137,7 +137,7 @@ export class Layer extends WrappedObject {
      * Remove this layer from its parent.
      */
     remove() {
-        let parent = this._object.parentGroup();
+        const parent = this._object.parentGroup();
         if (parent) {
             parent.removeLayer_(this._object);
         }
@@ -184,7 +184,7 @@ export class Layer extends WrappedObject {
      * @return {number} The layer order.
      */
     get index() {
-        let ourLayer = this.sketchObject;
+        const ourLayer = this.sketchObject;
         return ourLayer.parentGroup().indexOfLayer_(ourLayer);
     }
     
@@ -223,7 +223,7 @@ export class Layer extends WrappedObject {
      * @return {Rectangle} The converted rectangle expressed in page coordinates.
      */
     localRectToPageRect(rect) {
-        let rect = this.sketchObject.convertRectToAbsoluteCoordinates(rect.asCGRect);
+        const rect = this.sketchObject.convertRectToAbsoluteCoordinates(rect.asCGRect);
         return new Rectangle(rect.x, rect.y, rect.width, rect.height);
     }
     
@@ -234,7 +234,7 @@ export class Layer extends WrappedObject {
      * @return {Rectangle} The converted rectangle expressed in the coordinate system of the parent layer.
      */
     localRectToParentRect(rect) {
-        let frame = this.frame;
+        const frame = this.frame;
         return new Rectangle(rect.x + frame.x, rect.y + frame.y, rect.width, rect.height);
     }
     
@@ -242,7 +242,7 @@ export class Layer extends WrappedObject {
      * Returns a list of export options with any missing ones replaced by default values.
      */
     exportOptionsMergedWithDefaults(options) {
-        let defaults = {
+        const defaults = {
             "compact": false,
             "include-namespaces": false,
             "compression": 1.0,
@@ -255,8 +255,8 @@ export class Layer extends WrappedObject {
             "output": "~/Documents/Sketch Exports",
         };
         
-        let merged = defaults;
-        for (let key in options) {
+        const merged = defaults;
+        for (const key in options) {
             merged[key] = options[key];
         }
         
@@ -269,8 +269,8 @@ export class Layer extends WrappedObject {
      * @param {dictionary} options Options indicating which layers to export, which sizes and formats to use, etc.
      */
     export(options) {
-        let merged = this.exportOptionsMergedWithDefaults(options);
-        let exporter = MSSelfContainedHighLevelExporter.alloc().initWithOptions(merged);
+        const merged = this.exportOptionsMergedWithDefaults(options);
+        const exporter = MSSelfContainedHighLevelExporter.alloc().initWithOptions(merged);
         exporter.exportLayers([this.sketchObject]);
     }
     
@@ -283,46 +283,46 @@ export class Layer extends WrappedObject {
         return {
             tests: {
                 testName(tester) {
-                    let document = tester.newTestDocument();
-                    let page = document.selectedPage;
+                    const document = tester.newTestDocument();
+                    const page = document.selectedPage;
                     page.name = "This is a page";
                     tester.assertEqual(page.name, "This is a page");
-                    let group = page.newGroup({name: "blah"});
+                    const group = page.newGroup({name: "blah"});
                     tester.assertEqual(group.name, "blah");
-                    let group2 = page.newGroup();
+                    const group2 = page.newGroup();
                     tester.assertEqual(group2.name, "Group");
                 },
                 
                 testFrame(tester) {
-                    let document = tester.newTestDocument();
-                    let page = document.selectedPage;
-                    let frame = new Rectangle(10, 10, 20, 20);
-                    let group = page.newGroup({frame});
+                    const document = tester.newTestDocument();
+                    const page = document.selectedPage;
+                    const frame = new Rectangle(10, 10, 20, 20);
+                    const group = page.newGroup({frame});
                     tester.assertEqual(group.frame, frame);
                 },
                 
                 testDuplicate(tester) {
-                    let document = tester.newTestDocument();
-                    let page = document.selectedPage;
-                    let group = page.newGroup();
+                    const document = tester.newTestDocument();
+                    const page = document.selectedPage;
+                    const group = page.newGroup();
                     tester.assertEqual(page.sketchObject.layers().count(), 1);
-                    let group2 = group.duplicate();
+                    const group2 = group.duplicate();
                     tester.assertEqual(page.sketchObject.layers().count(), 2);
                 },
                 
                 testRemove(tester) {
-                    let document = tester.newTestDocument();
-                    let page = document.selectedPage;
-                    let group = page.newGroup();
+                    const document = tester.newTestDocument();
+                    const page = document.selectedPage;
+                    const group = page.newGroup();
                     tester.assertEqual(page.sketchObject.layers().count(), 1);
                     group.remove();
                     tester.assertEqual(page.sketchObject.layers().count(), 0);
                 },
                 
                 testSelection(tester) {
-                    let document = tester.newTestDocument();
-                    let page = document.selectedPage;
-                    let group = page.newGroup();
+                    const document = tester.newTestDocument();
+                    const page = document.selectedPage;
+                    const group = page.newGroup();
                     
                     // start with nothing selected
                     tester.assertTrue(page.selectedLayers.isEmpty);
@@ -336,7 +336,7 @@ export class Layer extends WrappedObject {
                     tester.assertTrue(page.selectedLayers.isEmpty);
                     
                     // select one layer then another - only the last should be selected
-                    let group2 = page.newGroup();
+                    const group2 = page.newGroup();
                     group.select();
                     group2.select();
                     tester.assertEqual(page.selectedLayers.length, 1);
@@ -347,18 +347,18 @@ export class Layer extends WrappedObject {
                 },
                 
                 testContainer(tester) {
-                    let document = tester.newTestDocument();
-                    let page = document.selectedPage;
-                    let group = page.newGroup();
+                    const document = tester.newTestDocument();
+                    const page = document.selectedPage;
+                    const group = page.newGroup();
                     tester.assertEqual(group.container.sketchObject, page.sketchObject);
                 },
                 
                 testOrdering(tester) {
-                    let document = tester.newTestDocument();
-                    let page = document.selectedPage;
-                    let group1 = page.newGroup();
-                    let group2 = page.newGroup();
-                    let group3 = page.newGroup();
+                    const document = tester.newTestDocument();
+                    const page = document.selectedPage;
+                    const group1 = page.newGroup();
+                    const group2 = page.newGroup();
+                    const group3 = page.newGroup();
                     tester.assertEqual(group1.index, 0);
                     tester.assertEqual(group2.index, 1);
                     tester.assertEqual(group3.index, 2);
