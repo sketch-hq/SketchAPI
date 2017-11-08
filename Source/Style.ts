@@ -28,11 +28,7 @@ export class Style extends WrappedObject {
      *
      * @param {MSStyle} style The underlying model object from Sketch.
      */
-    constructor(style) {
-        if (!style) {
-            style = MSDefaultStyle.defaultStyle();
-        }
-        
+    constructor(style = MSDefaultStyle.defaultStyle()) {
         super(style);
     }
     
