@@ -156,7 +156,7 @@ export class Tester {
         
         const tests = specification.tests;
         if (tests) {
-            for (const name in tests) {
+            for (const name of Object.keys(tests)) {
                 const test = tests[name];
                 this._ran++;
                 this._testFailures = [];
