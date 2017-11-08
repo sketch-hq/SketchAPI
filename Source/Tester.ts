@@ -70,7 +70,7 @@ export class Tester {
      * @param v2 The second value to compare.
      */
     assertEqual(v1, v2) {
-        let mutableDifferent = v1 != v2;
+        let mutableDifferent = v1 !== v2;
         
         // if we're comparing two objects, try matching them as strings
         // (crude, and not guaranteed, but it will cover some basic cases)
@@ -78,12 +78,12 @@ export class Tester {
             if (v1.compare) {
                 mutableDifferent = v1.compare(v2);
             } else {
-                mutableDifferent = v1.toString() != v2.toString();
+                mutableDifferent = v1.toString() !== v2.toString();
             }
         }
         
         if (mutableDifferent) {
-            this._testFailures.push(v1 + " != " + v2);
+            this._testFailures.push(v1 + " !== " + v2);
         }
     }
     
