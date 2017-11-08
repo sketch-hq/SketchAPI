@@ -151,7 +151,7 @@ export class Selection extends WrappedObject {
                     const groups = 0;
                     selection.iterateWithFilter("isGroup", (layer) => {
                         iterations++;
-                        if (layer.sketchObject == group.sketchObject) { groups++; }
+                        if (layer.sketchObject === group.sketchObject) { groups++; }
                     });
                     tester.assertEqual(iterations, 1);
                     tester.assertEqual(groups, 1);
