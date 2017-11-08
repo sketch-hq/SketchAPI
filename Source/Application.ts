@@ -330,8 +330,7 @@ export class Application extends WrappedObject {
                 testWrapObject(tester) {
                     const classesToTest = [MSLayerGroup, MSPage, MSArtboardGroup, MSShapeGroup, MSBitmapLayer, MSTextLayer];
                     const mappings = tester.application.wrapperMappings();
-                    for (const index in classesToTest) {
-                        const classToTest = classesToTest[index];
+                    for (const classToTest of classesToTest) {
                         const frame = NSMakeRect(0, 0, 100, 100);
                         const object = classToTest.alloc().initWithFrame(frame);
                         const mockDocument = {};
