@@ -28,8 +28,7 @@ export class Selection extends WrappedObject {
      * @return {Array} The selected layers.
      */
     get nativeLayers() {
-        const layers = this._object.selectedLayers().layers();
-        return layers;
+        return this._object.selectedLayers().layers();
     }
     
     /**
