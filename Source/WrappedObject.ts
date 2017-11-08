@@ -46,9 +46,9 @@ export class WrappedObject {
      *
      * @return Object containing the tests to run. Each key is the name of a test, each value is a function which takes a Tester instance.
      */
-    static tests() {
+    static tests(): { tests: { [index: string]: () => void } } {
         return {
-            tests : {
+            tests: {
                 testSketchObject(tester) {
                     const object = MSLayer.new();
                     const wrapped = new WrappedObject(object);
