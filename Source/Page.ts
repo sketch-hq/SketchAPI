@@ -60,8 +60,8 @@ export class Page extends Group {
      * @return {Artboard} the new artboard.
      */
     newArtboard(properties = {}) {
-        let frame = this._frameForLayerWithProperties(properties);
-        let newLayer = MSArtboardGroup.alloc().initWithFrame_(frame.asCGRect());
+        const frame = this._frameForLayerWithProperties(properties);
+        const newLayer = MSArtboardGroup.alloc().initWithFrame_(frame.asCGRect());
         return this._addWrappedLayerWithProperties(newLayer, properties, "Artboard");
     }
     
@@ -102,8 +102,8 @@ export class Page extends Group {
      * @param {dictionary} options Options indicating which sizes and formats to use, etc.
      */
     export(options) {
-        let merged = this.exportOptionsMergedWithDefaults(options);
-        let exporter = MSSelfContainedHighLevelExporter.alloc().initWithOptions(merged);
+        const merged = this.exportOptionsMergedWithDefaults(options);
+        const exporter = MSSelfContainedHighLevelExporter.alloc().initWithOptions(merged);
         exporter.exportPage(this.sketchObject);
     }
     
@@ -113,8 +113,8 @@ export class Page extends Group {
      * @param {dictionary} options Options indicating which layers to export, which sizes and formats to use, etc.
      */
     exportArtboards(options) {
-        let merged = this.exportOptionsMergedWithDefaults(options);
-        let exporter = MSSelfContainedHighLevelExporter.alloc().initWithOptions(merged);
+        const merged = this.exportOptionsMergedWithDefaults(options);
+        const exporter = MSSelfContainedHighLevelExporter.alloc().initWithOptions(merged);
         exporter.exportLayers(this.sketchObject.artboards());
     }
     
@@ -122,30 +122,30 @@ export class Page extends Group {
         return {
             tests: {
                 testSelectedLayers(tester) {
-                    let document = tester.newTestDocument();
-                    let selection = document.selectedLayers;
+                    const document = tester.newTestDocument();
+                    const selection = document.selectedLayers;
                     tester.assert(selection.isEmpty, "should have an empty selection");
                     
-                    let page = document.selectedPage;
-                    let group = page.newGroup({ name: "Test"});
+                    const page = document.selectedPage;
+                    const group = page.newGroup({ name: "Test"});
                     group.select();
                     
                     tester.assert(!selection.isEmpty, "should no longer have an empty selection");
                 },
                 
                 testLayerWithID(tester) {
-                    let document = tester.newTestDocument();
-                    let page = document.selectedPage;
-                    let group = page.newGroup({ name: "Test"});
-                    let id = group.id;
-                    let found = document.layerWithID(id);
+                    const document = tester.newTestDocument();
+                    const page = document.selectedPage;
+                    const group = page.newGroup({ name: "Test"});
+                    const id = group.id;
+                    const found = document.layerWithID(id);
                     tester.assertEqual(group.sketchObject, found.sketchObject);
                 },
                 
                 testIsPage(tester) {
-                    let document = tester.newTestDocument();
-                    let page = document.selectedPage;
-                    let image = page.newImage();
+                    const document = tester.newTestDocument();
+                    const page = document.selectedPage;
+                    const image = page.newImage();
                     tester.assertTrue(page.isPage);
                     tester.assertFalse(image.isPage);
                 },
