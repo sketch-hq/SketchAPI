@@ -85,10 +85,10 @@ export class Style extends WrappedObject {
      * @param {Array} values A list of colors - each one representing a fill to create.
      *
      */
-    set fills(value) {
+    set fills(values) {
         const objects = [];
-        for (const b in value) {
-            const color = this.colorFromString(value[b]);
+        for (const b in values) {
+            const color = this.colorFromString(values[b]);
             const fill = MSStyleFill.new();
             fill.setColor_(color);
             fill.setFillType_(BCFillTypeColor);
