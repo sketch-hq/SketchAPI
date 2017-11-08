@@ -244,7 +244,7 @@ export class Text extends Layer {
                     const document = tester.newTestDocument();
                     const page = document.selectedPage;
                     const text = page.newText({text: "blah", frame: new Rectangle(10, 10, 1000, 1000)});
-                    for (const key in NSTextAlignment) {
+                    for (const key of Object.keys(NSTextAlignment)) {
                         // test setting by name
                         text.alignment = key;
                         tester.assertEqual(text.alignment, key);
