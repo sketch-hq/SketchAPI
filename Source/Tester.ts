@@ -127,8 +127,7 @@ export class Tester {
      * @return {Document} Test document.
      */
     newTestDocument() {
-        const document = new Document(MSDocumentData.new(), this._application);
-        return document;
+        return new Document(MSDocumentData.new(), this._application);
     }
     
     /**
