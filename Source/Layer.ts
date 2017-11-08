@@ -267,7 +267,7 @@ export class Layer extends WrappedObject {
     /**
      * Export this layer (and the ones below it), using the options supplied.
      *
-     * @param {dictionary} options Options indicating which layers to export, which sizes and formats to use, etc.
+     * @param {Object} options Options indicating which layers to export, which sizes and formats to use, etc.
      */
     export(options) {
         const merged = this.exportOptionsMergedWithDefaults(options);
