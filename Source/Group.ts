@@ -226,7 +226,7 @@ export class Group extends Layer {
                     
                     const iterations = 0;
                     const groups = 0;
-                    page.iterate(function(layer) {
+                    page.iterate((layer) => {
                         iterations++;
                         if (layer.sketchObject == group.sketchObject) { groups++; }
                     });
@@ -242,7 +242,7 @@ export class Group extends Layer {
                     
                     const iterations = 0;
                     const groups = 0;
-                    page.iterateWithFilter("isGroup", function(layer) {
+                    page.iterateWithFilter("isGroup", (layer) => {
                         iterations++;
                         if (layer.sketchObject == group.sketchObject) { groups++; }
                     });
