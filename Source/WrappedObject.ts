@@ -10,7 +10,6 @@
  * wrap Sketch classes.
  *
  */
-
 export class WrappedObject {
     /**
      * The underlying Sketch model object that we are wrapping.
@@ -55,15 +54,12 @@ export class WrappedObject {
                     const wrapped = new WrappedObject(object);
                     tester.assertEqual(wrapped.sketchObject, object);
                 },
-                
                 testID(tester) {
                     const object = MSLayer.new();
                     const wrapped = new WrappedObject(object);
                     tester.assertEqual(wrapped.id, object.objectID());
                 },
-                
             },
         };
     }
-    
 }
