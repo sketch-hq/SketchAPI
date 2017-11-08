@@ -29,7 +29,6 @@ import { WrappedObject } from "./WrappedObject";
 export class Application extends WrappedObject {
     /**
      * Metadata about this version of Sketch.
-     * @type {dictionary}
      */
     _metadata = MSApplicationMetadata.metadata();
     
