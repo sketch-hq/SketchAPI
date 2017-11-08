@@ -30,7 +30,7 @@ export class WrappedObject {
      * Returns the wrapped Sketch object.
      */
     get sketchObject() {
-        return this._object
+        return this._object;
     }
     
     /**
@@ -49,20 +49,20 @@ export class WrappedObject {
      */
     static tests() {
         return {
-            "tests" : {
-                "testSketchObject" : function(tester) {
-                    var object = MSLayer.new()
-                    var wrapped = new WrappedObject(object)
+            tests : {
+                testSketchObject(tester) {
+                    let object = MSLayer.new();
+                    let wrapped = new WrappedObject(object);
                     tester.assertEqual(wrapped.sketchObject, object);
                 },
                 
-                "testID" : function(tester) {
-                    var object = MSLayer.new()
-                    var wrapped = new WrappedObject(object)
+                testID(tester) {
+                    let object = MSLayer.new();
+                    let wrapped = new WrappedObject(object);
                     tester.assertEqual(wrapped.id, object.objectID());
                 },
                 
-            }
+            },
         };
     }
     
