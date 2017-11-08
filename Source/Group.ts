@@ -88,7 +88,7 @@ export class Group extends Layer {
      * them in turn to the wrapped layer).
      *
      * @param {MSLayer} newLayer The underlying Sketch layer object.
-     * @param {dictionary} properties The properties to apply.
+     * @param {Object} properties The properties to apply.
      * @param {string} wrapper The name of wrapper class to use.
      * @return {Layer} The wrapped layer object.
      */
@@ -114,7 +114,7 @@ export class Group extends Layer {
      * Extract the frame to use for a layer from some properties.
      * If the frame wasn't supplied in the properties, we return a default value instead.
      *
-     * @param {dictionary} properties The properties to use when looking for a frame value.
+     * @param {Object} properties The properties to use when looking for a frame value.
      * @return {Rectangle} The frame rectangle to use.
      */
     _frameForLayerWithProperties(properties) {
@@ -156,7 +156,7 @@ export class Group extends Layer {
      * Returns a newly created shape, which has been added to this layer,
      * and sets it up using the supplied properties.
      *
-     * @param {dictionary} properties Properties to apply to the shape.
+     * @param {Object} properties Properties to apply to the shape.
      * @return {Shape} the new shape.
      */
     newShape(properties = {}) {
@@ -174,7 +174,7 @@ export class Group extends Layer {
      * Returns a newly created text layer, which has been added to this layer,
      * and sets it up using the supplied properties.
      *
-     * @param {dictionary} properties Properties to apply to the text layer.
+     * @param {Object} properties Properties to apply to the text layer.
      * @return {Text} the new text layer.
      */
     newText(properties = {}) {
@@ -188,7 +188,7 @@ export class Group extends Layer {
      * Returns a newly created group, which has been added to this layer,
      * and sets it up using the supplied properties.
      *
-     * @param {dictionary} properties Properties to apply to the group.
+     * @param {Object} properties Properties to apply to the group.
      * @return {Group} the new group.
      */
     newGroup(properties = {}) {
@@ -201,7 +201,7 @@ export class Group extends Layer {
      * Returns a newly created image layer, which has been added to this layer,
      * and sets it up using the supplied properties.
      *
-     * @param {dictionary} properties Properties to apply to the layer.
+     * @param {Object} properties Properties to apply to the layer.
      * @return {Image} the new image layer.
      */
     newImage(properties = {}) {

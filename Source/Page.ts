@@ -56,7 +56,7 @@ export class Page extends Group {
      * Returns a newly created artboard, which has been added to this page,
      * and sets it up using the supplied properties.
      *
-     * @param properties {dictionary} Properties to apply to the artboard.
+     * @param properties {Object} Properties to apply to the artboard.
      * @return {Artboard} the new artboard.
      */
     newArtboard(properties = {}) {
@@ -99,7 +99,7 @@ export class Page extends Group {
      * - group-contents-only: false,
      *
      *
-     * @param {dictionary} options Options indicating which sizes and formats to use, etc.
+     * @param {Object} options Options indicating which sizes and formats to use, etc.
      */
     export(options) {
         const merged = this.exportOptionsMergedWithDefaults(options);
@@ -110,7 +110,7 @@ export class Page extends Group {
     /**
      * Export this layer (and the ones below it), using the options supplied.
      *
-     * @param {dictionary} options Options indicating which layers to export, which sizes and formats to use, etc.
+     * @param {Object} options Options indicating which layers to export, which sizes and formats to use, etc.
      */
     exportArtboards(options) {
         const merged = this.exportOptionsMergedWithDefaults(options);
