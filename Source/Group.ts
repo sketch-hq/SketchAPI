@@ -34,7 +34,7 @@ export class Group extends Layer {
      *
      * All Layer objects respond to this method, but only Groups or things that inherit from groups return true.
      *
-     * @return {bool} true for instances of Group, false for any other layer type.
+     * @return {boolean} true for instances of Group, false for any other layer type.
      */
     
     get isGroup() { return true; }

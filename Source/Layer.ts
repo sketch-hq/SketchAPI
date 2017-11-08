@@ -78,7 +78,7 @@ export class Layer extends WrappedObject {
      *
      * All Layer objects respond to this method, but only pages return true.
      *
-     * @return {bool} true for instances of Group, false for any other layer type.
+     * @return {boolean} true for instances of Group, false for any other layer type.
      */
     
     get isPage() { return false; }
@@ -98,7 +98,7 @@ export class Layer extends WrappedObject {
      *
      * All Layer objects respond to this method, but only Groups or things that inherit from groups return true.
      *
-     * @return {bool} true for instances of Group, false for any other layer type.
+     * @return {boolean} true for instances of Group, false for any other layer type.
      */
     
     get isGroup() { return false; }
@@ -108,7 +108,7 @@ export class Layer extends WrappedObject {
      *
      * All Layer objects respond to this method, but only text layers return true.
      *
-     * @return {bool} true for instances of Group, false for any other layer type.
+     * @return {boolean} true for instances of Group, false for any other layer type.
      */
     
     get isText() { return false; }
@@ -118,7 +118,7 @@ export class Layer extends WrappedObject {
      *
      * All Layer objects respond to this method, but only shape layers (rectangles, ovals, paths etc) return true.
      *
-     * @return {bool} true for instances of Group, false for any other layer type.
+     * @return {boolean} true for instances of Group, false for any other layer type.
      */
     
     get isShape() { return false; }
@@ -128,7 +128,7 @@ export class Layer extends WrappedObject {
      *
      * All Layer objects respond to this method, but only image layers return true.
      *
-     * @return {bool} true for instances of Group, false for any other layer type.
+     * @return {boolean} true for instances of Group, false for any other layer type.
      */
     
     get isImage() { return false; }

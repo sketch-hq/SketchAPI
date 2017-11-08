@@ -57,7 +57,7 @@ export class Text extends Layer {
      *
      * All Layer objects respond to this method, but only text layers return true.
      *
-     * @return {bool} true for instances of Group, false for any other layer type.
+     * @return {boolean} true for instances of Group, false for any other layer type.
      */
     get isText() {
         return true;
@@ -139,7 +139,7 @@ export class Text extends Layer {
     /**
      * Set the layer to be fixed width or variable width.
      *
-     * @param {bool} value Whether the layer should be fixed width (true) or variable width (false).
+     * @param {boolean} value Whether the layer should be fixed width (true) or variable width (false).
      */
     set fixedWidth(value) {
         if (value) {
@@ -194,7 +194,7 @@ export class Text extends Layer {
     /**
      * Set whether to use constant baseline line spacing mode.
      *
-     * @param {bool} value If true, we use constant baseline spacing mode. This is the default for new text layers in Sketch. If false, we use the legacy line spacing mode.
+     * @param {boolean} value If true, we use constant baseline spacing mode. This is the default for new text layers in Sketch. If false, we use the legacy line spacing mode.
      */
     set useConstantBaselines(value) {
         const lineSpacingBehaviour = value ? BCTextLineSpacingBehaviourV3 : BCTextLineSpacingBehaviourV2;

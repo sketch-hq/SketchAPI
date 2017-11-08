@@ -45,7 +45,7 @@ export class Tester {
      * Assert that a condition is true.
      * If the assertion fails, the failure is recorded for later reporting by the tester.
      *
-     * @param {bool} condition The condition we're asserting.
+     * @param {boolean} condition The condition we're asserting.
      * @param {string} description A description of the test.
      */
     

@@ -32,7 +32,7 @@ export class Shape extends Layer {
      *
      * All Layer objects respond to this method, but only shape layers (rectangles, ovals, paths etc) return true.
      *
-     * @return {bool} true for instances of Group, false for any other layer type.
+     * @return {boolean} true for instances of Group, false for any other layer type.
      */
     
     get isShape() {
