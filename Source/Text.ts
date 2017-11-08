@@ -173,19 +173,19 @@ export class Text extends Layer {
         const glyphRange = actualCharacterRangePtr.value();
         
         const fragments = [];
-        const currentLocation = 0;
-        while (currentLocation < NSMaxRange(glyphRange)) {
+        let mutableCurrentLocation = 0;
+        while (mutableCurrentLocation < NSMaxRange(glyphRange)) {
             const effectiveRangePtr = MOPointer.new();
-            const localRect = layout.lineFragmentRectForGlyphAtIndex_effectiveRange_(currentLocation, effectiveRangePtr);
+            const localRect = layout.lineFragmentRectForGlyphAtIndex_effectiveRange_(mutableCurrentLocation, effectiveRangePtr);
             const rect = new Rectangle(localRect.origin.x + drawingPoint.x,
                 localRect.origin.y + drawingPoint.y,
                 localRect.size.width,
                 localRect.size.height);
             const effectiveRange = effectiveRangePtr.value();
-            const baselineOffset = layout.typesetter().baselineOffsetInLayoutManager_glyphIndex_(layout, currentLocation);
+            const baselineOffset = layout.typesetter().baselineOffsetInLayoutManager_glyphIndex_(layout, mutableCurrentLocation);
             
             fragments.push({rect, baselineOffset, range: effectiveRange});
-            currentLocation = NSMaxRange(effectiveRange) + 1;
+            mutableCurrentLocation = NSMaxRange(effectiveRange) + 1;
         }
         
         return fragments;
