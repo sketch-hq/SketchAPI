@@ -13,13 +13,17 @@
 
 export class WrappedObject {
     /**
+     * The underlying Sketch model object that we are wrapping.
+     */
+    _object: any;
+    
+    /**
      * Return a new wrapped object for a given Sketch model object.
      *
      * @param {Object} object - The Sketch model object to wrap.
      */
     constructor(object) {
-        /** @type {Object} The underlying Sketch model object that we are wrapping. */
-        this._object = object
+        this._object = object;
     }
     
     /**
