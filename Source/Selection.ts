@@ -133,7 +133,7 @@ export class Selection extends WrappedObject {
                     let mutableGroups = 0;
                     selection.iterate((layer) => {
                         mutableIterations++;
-                        if (layer.sketchObject == group.sketchObject) { mutableGroups++; }
+                        if (layer.sketchObject === group.sketchObject) { mutableGroups++; }
                     });
                     tester.assertEqual(mutableIterations, 2);
                     tester.assertEqual(mutableGroups, 1);
