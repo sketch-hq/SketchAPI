@@ -55,9 +55,8 @@ export class Tester {
      * @param {boolean} condition The condition we're asserting.
      * @param {string} description A description of the test.
      */
-    assert(condition, description) {
+    assert(condition, description = "") {
         if (!condition) {
-            if (!description) { description = ""; }
             this._testFailures.push(description);
         }
     }
