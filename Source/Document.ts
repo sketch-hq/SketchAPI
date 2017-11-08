@@ -163,7 +163,7 @@ export class Document extends WrappedObject {
      */
     static tests() {
         return {
-            tests : {
+            tests: {
                 testPages(tester) {
                     const document = tester.newTestDocument();
                     const pages = document.pages;

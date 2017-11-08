@@ -268,12 +268,12 @@ export class Application extends WrappedObject {
      */
     wrapperMappings() {
         const mappings = {
-            MSLayerGroup : Group,
-            MSPage : Page,
-            MSArtboardGroup : Artboard,
-            MSShapeGroup : Shape,
-            MSBitmapLayer : Image,
-            MSTextLayer : Text,
+            MSLayerGroup: Group,
+            MSPage: Page,
+            MSArtboardGroup: Artboard,
+            MSShapeGroup: Shape,
+            MSBitmapLayer: Image,
+            MSTextLayer: Text,
         };
         return mappings;
     }
@@ -311,7 +311,7 @@ export class Application extends WrappedObject {
     static tests() {
         return {
             /** @test {Application} */
-            tests : {
+            tests: {
                 /** @test {Application#api_version} */
                 testAPIVersion(tester) {
                     tester.assertEqual(tester.application.api_version, "1.1");
@@ -355,20 +355,20 @@ export class Application extends WrappedObject {
      */
     runUnitTests() {
         const tests = {
-            suites : {
-                Application : Application.tests(),
-                Artboard : Artboard.tests(),
-                Document : Document.tests(),
-                Group : Group.tests(),
-                Image : Image.tests(),
-                Layer : Layer.tests(),
-                Page : Page.tests(),
-                Rectangle : Rectangle.tests(),
-                Selection : Selection.tests(),
-                Shape : Shape.tests(),
-                Text : Text.tests(),
-                WrappedObject : WrappedObject.tests(),
-                Style : Style.tests(),
+            suites: {
+                Application: Application.tests(),
+                Artboard: Artboard.tests(),
+                Document: Document.tests(),
+                Group: Group.tests(),
+                Image: Image.tests(),
+                Layer: Layer.tests(),
+                Page: Page.tests(),
+                Rectangle: Rectangle.tests(),
+                Selection: Selection.tests(),
+                Shape: Shape.tests(),
+                Text: Text.tests(),
+                WrappedObject: WrappedObject.tests(),
+                Style: Style.tests(),
             },
         };
         

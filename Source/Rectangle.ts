@@ -85,7 +85,7 @@ export class Rectangle {
      */
     static tests() {
         return {
-            tests : {
+            tests: {
                 testConstructor(tester) {
                     let r = new Rectangle(1, 2, 3, 4);
                     tester.assertEqual(r.x, 1);

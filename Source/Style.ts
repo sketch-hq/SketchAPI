@@ -106,7 +106,7 @@ export class Style extends WrappedObject {
      */
     static tests() {
         return {
-            tests : {
+            tests: {
                 testBorders(tester) {
                     const style = new Style();
                     style.borders = [ "#11223344", "#1234" ];

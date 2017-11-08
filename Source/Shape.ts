@@ -59,7 +59,7 @@ export class Shape extends Layer {
      */
     static tests() {
         return {
-            tests : {
+            tests: {
                 testIsShape(tester) {
                     const document = tester.newTestDocument();
                     const page = document.selectedPage;

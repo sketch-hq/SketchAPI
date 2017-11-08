@@ -50,7 +50,7 @@ export class Image extends Layer {
      */
     static tests() {
         return {
-            tests : {
+            tests: {
                 testIsImage(tester) {
                     let document = tester.newTestDocument();
                     let page = document.selectedPage;

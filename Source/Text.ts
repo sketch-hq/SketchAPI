@@ -214,7 +214,7 @@ export class Text extends Layer {
      */
     static tests() {
         return {
-            tests : {
+            tests: {
                 testIsText(tester) {
                     const document = tester.newTestDocument();
                     const page = document.selectedPage;
@@ -226,7 +226,7 @@ export class Text extends Layer {
                 testText(tester) {
                     const document = tester.newTestDocument();
                     const page = document.selectedPage;
-                    const text = page.newText({text : "blah"});
+                    const text = page.newText({text: "blah"});
                     tester.assertEqual(text.text, "blah");
                     text.text = "doodah";
                     tester.assertEqual(text.text, "doodah");
@@ -235,7 +235,7 @@ export class Text extends Layer {
                 testAdjustToFit(tester) {
                     const document = tester.newTestDocument();
                     const page = document.selectedPage;
-                    const text = page.newText({text : "blah", frame : new Rectangle(10, 10, 1000, 1000)});
+                    const text = page.newText({text: "blah", frame: new Rectangle(10, 10, 1000, 1000)});
                     text.adjustToFit();
                     tester.assertEqual(text.frame, new Rectangle(10, 10, 23, 14));
                 },
@@ -243,7 +243,7 @@ export class Text extends Layer {
                 testAlignment(tester) {
                     const document = tester.newTestDocument();
                     const page = document.selectedPage;
-                    const text = page.newText({text : "blah", frame : new Rectangle(10, 10, 1000, 1000)});
+                    const text = page.newText({text: "blah", frame: new Rectangle(10, 10, 1000, 1000)});
                     for (const key in NSTextAlignment) {
                         // test setting by name
                         text.alignment = key;

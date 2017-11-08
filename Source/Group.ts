@@ -217,7 +217,7 @@ export class Group extends Layer {
      */
     static tests() {
         return {
-            tests : {
+            tests: {
                 testIterate(tester) {
                     let document = tester.newTestDocument();
                     let page = document.selectedPage;
@@ -253,7 +253,7 @@ export class Group extends Layer {
                 testPageToLocalRect(tester) {
                     let document = tester.newTestDocument();
                     let page = document.selectedPage;
-                    let group = page.newGroup({frame : new Rectangle(100, 100, 100, 100)});
+                    let group = page.newGroup({frame: new Rectangle(100, 100, 100, 100)});
                     let local = group.pageRectToLocalRect(new Rectangle(125, 75, 50, 200));
                     tester.assertEqual(local, new Rectangle(25, -25, 50, 200));
                 },
@@ -261,8 +261,8 @@ export class Group extends Layer {
                 testAdjustToFit(tester) {
                     let document = tester.newTestDocument();
                     let page = document.selectedPage;
-                    let group = page.newGroup({frame : new Rectangle(100, 100, 100, 100)});
-                    let text = group.newShape({frame : new Rectangle(50, 50, 50, 50)});
+                    let group = page.newGroup({frame: new Rectangle(100, 100, 100, 100)});
+                    let text = group.newShape({frame: new Rectangle(50, 50, 50, 50)});
                     group.adjustToFit();
                     let frame = group.frame;
                     tester.assertEqual(frame, new Rectangle(150, 150, 50, 50));

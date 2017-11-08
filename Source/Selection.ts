@@ -106,7 +106,7 @@ export class Selection extends WrappedObject {
      */
     static tests() {
         return {
-            tests : {
+            tests: {
                 testEmpty(tester) {
                     let document = tester.newTestDocument();
                     tester.assert(document.selectedLayers.isEmpty, "selection should be empty");

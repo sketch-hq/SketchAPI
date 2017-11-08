@@ -243,16 +243,16 @@ export class Layer extends WrappedObject {
      */
     exportOptionsMergedWithDefaults(options) {
         let defaults = {
-            "compact" : false,
-            "include-namespaces" : false,
-            "compression" : 1.0,
-            "group-contents-only" : false,
-            "overwriting" : false,
-            "progressive" : false,
-            "save-for-web" : false,
-            "use-id-for-name" : false,
-            "trimmed" : false,
-            "output" : "~/Documents/Sketch Exports",
+            "compact": false,
+            "include-namespaces": false,
+            "compression": 1.0,
+            "group-contents-only": false,
+            "overwriting": false,
+            "progressive": false,
+            "save-for-web": false,
+            "use-id-for-name": false,
+            "trimmed": false,
+            "output": "~/Documents/Sketch Exports",
         };
         
         let merged = defaults;
@@ -281,13 +281,13 @@ export class Layer extends WrappedObject {
      */
     static tests() {
         return {
-            tests : {
+            tests: {
                 testName(tester) {
                     let document = tester.newTestDocument();
                     let page = document.selectedPage;
                     page.name = "This is a page";
                     tester.assertEqual(page.name, "This is a page");
-                    let group = page.newGroup({name : "blah"});
+                    let group = page.newGroup({name: "blah"});
                     tester.assertEqual(group.name, "blah");
                     let group2 = page.newGroup();
                     tester.assertEqual(group2.name, "Group");

@@ -148,19 +148,19 @@ export class Tester {
             this._ran++;
             this._testFailures = [];
             let result = test(this);
-            let fullName = suiteName ? suiteName + " : " + name : name;
+            let fullName = suiteName ? suiteName + ": " + name: name;
             if (this._testFailures.length > 0) {
-                this._failures.push({name : fullName, reasons : this._testFailures});
+                this._failures.push({name: fullName, reasons: this._testFailures});
             } else {
                 this._passes.push(fullName);
             }
         }
         
         return {
-            ran : this._ran,
-            crashes : [],
-            failures : this._failures,
-            passes : this._passes,
+            ran: this._ran,
+            crashes: [],
+            failures: this._failures,
+            passes: this._passes,
         };
     }
 }
