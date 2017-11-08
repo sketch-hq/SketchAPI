@@ -44,15 +44,6 @@ export class Page extends Group {
     }
     
     /**
-     * The layers that the user has selected.
-     *
-     * @return {Selection} A selection object representing the layers that the user has selected.
-     */
-    get selectedLayers() {
-        return new Selection(this);
-    }
-    
-    /**
      * Returns a newly created artboard, which has been added to this page,
      * and sets it up using the supplied properties.
      *
