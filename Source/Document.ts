@@ -140,9 +140,9 @@ export class Document extends WrappedObject {
         }
         
         const loop = layers.objectEnumerator();
-        const item;
-        while (item = loop.nextObject()) {
-            const layer = this.wrapObject(item);
+        let mutableItem;
+        while (mutableItem = loop.nextObject()) {
+            const layer = this.wrapObject(mutableItem);
             loopBlock(layer);
         }
     }
