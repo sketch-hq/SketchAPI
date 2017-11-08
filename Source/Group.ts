@@ -224,14 +224,14 @@ export class Group extends Layer {
                     const group = page.newGroup();
                     const text = page.newText();
                     
-                    const iterations = 0;
-                    const groups = 0;
+                    let mutableIterations = 0;
+                    let mutableGroups = 0;
                     page.iterate((layer) => {
-                        iterations++;
-                        if (layer.sketchObject === group.sketchObject) { groups++; }
+                        mutableIterations++;
+                        if (layer.sketchObject === group.sketchObject) { mutableGroups++; }
                     });
-                    tester.assertEqual(iterations, 2);
-                    tester.assertEqual(groups, 1);
+                    tester.assertEqual(mutableIterations, 2);
+                    tester.assertEqual(mutableGroups, 1);
                 },
                 
                 testIterateWithFilter(tester) {
@@ -240,14 +240,14 @@ export class Group extends Layer {
                     const group = page.newGroup();
                     const text = page.newText();
                     
-                    const iterations = 0;
-                    const groups = 0;
+                    let mutableIterations = 0;
+                    let mutableGroups = 0;
                     page.iterateWithFilter("isGroup", (layer) => {
-                        iterations++;
-                        if (layer.sketchObject === group.sketchObject) { groups++; }
+                        mutableIterations++;
+                        if (layer.sketchObject === group.sketchObject) { mutableGroups++; }
                     });
-                    tester.assertEqual(iterations, 1);
-                    tester.assertEqual(groups, 1);
+                    tester.assertEqual(mutableIterations, 1);
+                    tester.assertEqual(mutableGroups, 1);
                 },
                 
                 testPageToLocalRect(tester) {
