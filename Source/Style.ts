@@ -40,7 +40,7 @@ export class Style extends WrappedObject {
      * Given a string description of a color, return an MSColor.
      */
     colorFromString(value) {
-        let immutable = MSImmutableColor.colorWithSVGString_(value);
+        const immutable = MSImmutableColor.colorWithSVGString_(value);
         return MSColor.alloc().initWithImmutableObject_(immutable);
     }
     
@@ -60,10 +60,10 @@ export class Style extends WrappedObject {
      * @param {array} values A list of colors - each one representing a border to create.
      */
     set borders(value) {
-        let objects = [];
-        for (let b in value) {
-            let color = this.colorFromString(value[b]);
-            let border = MSStyleBorder.new();
+        const objects = [];
+        for (const b in value) {
+            const color = this.colorFromString(value[b]);
+            const border = MSStyleBorder.new();
             border.setColor_(color);
             border.setFillType_(BCFillTypeColor);
             border.enabled = true;
@@ -90,10 +90,10 @@ export class Style extends WrappedObject {
      *
      */
     set fills(value) {
-        let objects = [];
-        for (let b in value) {
-            let color = this.colorFromString(value[b]);
-            let fill = MSStyleFill.new();
+        const objects = [];
+        for (const b in value) {
+            const color = this.colorFromString(value[b]);
+            const fill = MSStyleFill.new();
             fill.setColor_(color);
             fill.setFillType_(BCFillTypeColor);
             fill.enabled = true;
@@ -112,13 +112,13 @@ export class Style extends WrappedObject {
         return {
             tests : {
                 testBorders(tester) {
-                    let style = new Style();
+                    const style = new Style();
                     style.borders = [ "#11223344", "#1234" ];
                     tester.assertEqual(style.sketchObject.borders().count(), 2);
                 },
                 
                 testFills(tester) {
-                    let style = new Style();
+                    const style = new Style();
                     style.borders = [ "#11223344", "#1234" ];
                     tester.assertEqual(style.sketchObject.borders().count(), 2);
                 },
