@@ -86,7 +86,7 @@ export class Text extends Layer {
      */
     
     set text(value) {
-        let object = this.sketchObject;
+        const object = this.sketchObject;
         object.stringValue = value;
         if (!object.nameIsFixed()) {
             object.name = value;
@@ -121,9 +121,9 @@ export class Text extends Layer {
      */
     
     get alignment() {
-        let raw = this._object.textAlignment();
-        let result = raw;
-        for (let key in NSTextAlignment) {
+        const raw = this._object.textAlignment();
+        const result = raw;
+        for (const key in NSTextAlignment) {
             if (NSTextAlignment[key] === raw) {
                 result = key;
                 break;
@@ -142,7 +142,7 @@ export class Text extends Layer {
      */
     
     set alignment(mode) {
-        let translated = NSTextAlignment[mode];
+        const translated = NSTextAlignment[mode];
         this._object.textAlignment = translated ? translated : mode;
     }
     
@@ -175,27 +175,27 @@ export class Text extends Layer {
      */
     
     get fragments() {
-        let textLayer = this.sketchObject;
-        let storage = textLayer.immutableModelObject().createTextStorage();
-        let layout = storage.layoutManagers().firstObject();
-        let actualCharacterRangePtr = MOPointer.new();
-        let charRange = NSMakeRange(0, storage.length());
-        let drawingPoint = textLayer.drawingPointForText();
+        const textLayer = this.sketchObject;
+        const storage = textLayer.immutableModelObject().createTextStorage();
+        const layout = storage.layoutManagers().firstObject();
+        const actualCharacterRangePtr = MOPointer.new();
+        const charRange = NSMakeRange(0, storage.length());
+        const drawingPoint = textLayer.drawingPointForText();
         
         layout.glyphRangeForCharacterRange_actualCharacterRange_(charRange, actualCharacterRangePtr);
-        let glyphRange = actualCharacterRangePtr.value();
+        const glyphRange = actualCharacterRangePtr.value();
         
-        let fragments = [];
-        let currentLocation = 0;
+        const fragments = [];
+        const currentLocation = 0;
         while (currentLocation < NSMaxRange(glyphRange)) {
-            let effectiveRangePtr = MOPointer.new();
-            let localRect = layout.lineFragmentRectForGlyphAtIndex_effectiveRange_(currentLocation, effectiveRangePtr);
-            let rect = new Rectangle(localRect.origin.x + drawingPoint.x,
+            const effectiveRangePtr = MOPointer.new();
+            const localRect = layout.lineFragmentRectForGlyphAtIndex_effectiveRange_(currentLocation, effectiveRangePtr);
+            const rect = new Rectangle(localRect.origin.x + drawingPoint.x,
                 localRect.origin.y + drawingPoint.y,
                 localRect.size.width,
                 localRect.size.height);
-            let effectiveRange = effectiveRangePtr.value();
-            let baselineOffset = layout.typesetter().baselineOffsetInLayoutManager_glyphIndex_(layout, currentLocation);
+            const effectiveRange = effectiveRangePtr.value();
+            const baselineOffset = layout.typesetter().baselineOffsetInLayoutManager_glyphIndex_(layout, currentLocation);
             
             fragments.push({rect, baselineOffset, range: effectiveRange});
             currentLocation = NSMaxRange(effectiveRange) + 1;
@@ -211,12 +211,12 @@ export class Text extends Layer {
      */
     
     set useConstantBaselines(value) {
-        let lineSpacingBehaviour = value ? BCTextLineSpacingBehaviourV3 : BCTextLineSpacingBehaviourV2;
-        let textLayer = this.sketchObject;
-        let initialBaselineOffset = textLayer.firstBaselineOffset();
+        const lineSpacingBehaviour = value ? BCTextLineSpacingBehaviourV3 : BCTextLineSpacingBehaviourV2;
+        const textLayer = this.sketchObject;
+        const initialBaselineOffset = textLayer.firstBaselineOffset();
         textLayer.lineSpacingBehaviour = lineSpacingBehaviour;
-        let baselineOffset = textLayer.firstBaselineOffset();
-        let rect = this.frame;
+        const baselineOffset = textLayer.firstBaselineOffset();
+        const rect = this.frame;
         rect.y -= (baselineOffset - initialBaselineOffset);
         this.frame = rect;
     }
@@ -231,35 +231,35 @@ export class Text extends Layer {
         return {
             tests : {
                 testIsText(tester) {
-                    let document = tester.newTestDocument();
-                    let page = document.selectedPage;
-                    let text = page.newText();
+                    const document = tester.newTestDocument();
+                    const page = document.selectedPage;
+                    const text = page.newText();
                     tester.assertTrue(text.isText);
                     tester.assertFalse(page.isText);
                 },
                 
                 testText(tester) {
-                    let document = tester.newTestDocument();
-                    let page = document.selectedPage;
-                    let text = page.newText({text : "blah"});
+                    const document = tester.newTestDocument();
+                    const page = document.selectedPage;
+                    const text = page.newText({text : "blah"});
                     tester.assertEqual(text.text, "blah");
                     text.text = "doodah";
                     tester.assertEqual(text.text, "doodah");
                 },
                 
                 testAdjustToFit(tester) {
-                    let document = tester.newTestDocument();
-                    let page = document.selectedPage;
-                    let text = page.newText({text : "blah", frame : new Rectangle(10, 10, 1000, 1000)});
+                    const document = tester.newTestDocument();
+                    const page = document.selectedPage;
+                    const text = page.newText({text : "blah", frame : new Rectangle(10, 10, 1000, 1000)});
                     text.adjustToFit();
                     tester.assertEqual(text.frame, new Rectangle(10, 10, 23, 14));
                 },
                 
                 testAlignment(tester) {
-                    let document = tester.newTestDocument();
-                    let page = document.selectedPage;
-                    let text = page.newText({text : "blah", frame : new Rectangle(10, 10, 1000, 1000)});
-                    for (let key in NSTextAlignment) {
+                    const document = tester.newTestDocument();
+                    const page = document.selectedPage;
+                    const text = page.newText({text : "blah", frame : new Rectangle(10, 10, 1000, 1000)});
+                    for (const key in NSTextAlignment) {
                         // test setting by name
                         text.alignment = key;
                         tester.assertEqual(text.alignment, key);
