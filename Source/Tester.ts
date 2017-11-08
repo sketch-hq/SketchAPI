@@ -16,26 +16,27 @@ import { Document } from "./Document";
  * command, so it's simpler to use a simple test framework of our own devising.
  */
 export class Tester {
+    /** @type {array} List of failures in the currently running test. */
+    _testFailures = [];
+    
+    /** @type {Application} The application that is running these tests. */
+    _application = application;
+    
+    /** @type {number} The number of tests we've run. */
+    _ran = 0;
+    
+    /** @type {array} The names of the tests that have passed. */
+    _passes = [];
+    
+    /** @type {array} Failure information for each test that has failed. */
+    _failures = [];
+    
     /**
      * Make a new tester.
      *
      */
     constructor(application) {
-        /** @type {array} List of failures in the currently running test. */
-        this._testFailures = [];
-        
-        /** @type {Application} The application that is running these tests. */
-        this._application = application;
-        
-        /** @type {number} The number of tests we've run. */
-        this._ran = 0;
-        
-        /** @type {array} The names of the tests that have passed. */
-        this._passes = [];
-        
-        /** @type {array} Failure information for each test that has failed. */
-        this._failures = [];
-        
+        // nothing
     }
     
     /**
