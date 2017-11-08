@@ -55,10 +55,10 @@ export class Style extends WrappedObject {
      *
      * @param {Array} values A list of colors - each one representing a border to create.
      */
-    set borders(value) {
+    set borders(values) {
         const objects = [];
-        for (const b in value) {
-            const color = this.colorFromString(value[b]);
+        for (const b in values) {
+            const color = this.colorFromString(values[b]);
             const border = MSStyleBorder.new();
             border.setColor_(color);
             border.setFillType_(BCFillTypeColor);
