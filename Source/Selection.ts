@@ -129,14 +129,14 @@ export class Selection extends WrappedObject {
                     group.addToSelection();
                     const selection = document.selectedLayers;
                     
-                    const iterations = 0;
-                    const groups = 0;
+                    let mutableIterations = 0;
+                    let mutableGroups = 0;
                     selection.iterate((layer) => {
-                        iterations++;
-                        if (layer.sketchObject == group.sketchObject) { groups++; }
+                        mutableIterations++;
+                        if (layer.sketchObject == group.sketchObject) { mutableGroups++; }
                     });
-                    tester.assertEqual(iterations, 2);
-                    tester.assertEqual(groups, 1);
+                    tester.assertEqual(mutableIterations, 2);
+                    tester.assertEqual(mutableGroups, 1);
                 },
                 
                 testIterateWithFilter(tester) {
@@ -146,15 +146,15 @@ export class Selection extends WrappedObject {
                     text.select();
                     group.addToSelection();
                     const selection = document.selectedLayers;
-                    
-                    const iterations = 0;
-                    const groups = 0;
+    
+                    let mutableIterations = 0;
+                    let mutableGroups = 0;
                     selection.iterateWithFilter("isGroup", (layer) => {
-                        iterations++;
-                        if (layer.sketchObject === group.sketchObject) { groups++; }
+                        mutableIterations++;
+                        if (layer.sketchObject === group.sketchObject) { mutableGroups++; }
                     });
-                    tester.assertEqual(iterations, 1);
-                    tester.assertEqual(groups, 1);
+                    tester.assertEqual(mutableIterations, 1);
+                    tester.assertEqual(mutableGroups, 1);
                 },
                 
                 testIterateThenClear(tester) {
@@ -162,13 +162,13 @@ export class Selection extends WrappedObject {
                     const group = document.selectedPage.newGroup();
                     group.select();
                     const selection = document.selectedLayers;
-                    
-                    const iterations = 0;
+    
+                    let mutableIterations = 0;
                     tester.assert(!selection.isEmpty, "selection should not be empty");
                     selection.iterateThenClear((layer) => {
-                        iterations++;
+                        mutableIterations++;
                     });
-                    tester.assertEqual(iterations, 1);
+                    tester.assertEqual(mutableIterations, 1);
                     tester.assert(selection.isEmpty, "selection should be empty");
                 },
                 
@@ -178,12 +178,12 @@ export class Selection extends WrappedObject {
                     group.select();
                     const selection = document.selectedLayers;
                     
-                    const iterations = 0;
+                    let mutableIterations = 0;
                     tester.assert(!selection.isEmpty, "selection should not be empty");
                     selection.iterateWithFilterThenClear("isText", (layer) => {
-                        iterations++;
+                        mutableIterations++;
                     });
-                    tester.assertEqual(iterations, 0);
+                    tester.assertEqual(mutableIterations, 0);
                     tester.assert(selection.isEmpty, "selection should be empty");
                 },
             },
