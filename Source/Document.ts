@@ -193,7 +193,6 @@ export class Document extends WrappedObject {
                     const found = document.layerWithID(id);
                     tester.assertEqual(group.sketchObject, found.sketchObject);
                 },
-                
             },
         };
     }

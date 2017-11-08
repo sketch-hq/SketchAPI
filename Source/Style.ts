@@ -118,7 +118,6 @@ export class Style extends WrappedObject {
                     style.borders = [ "#11223344", "#1234" ];
                     tester.assertEqual(style.sketchObject.borders().count(), 2);
                 },
-                
             },
         };
     }

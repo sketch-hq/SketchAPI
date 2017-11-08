@@ -385,7 +385,6 @@ export class Layer extends WrappedObject {
                     tester.assertEqual(group2.index, 2);
                     
                 },
-                
             },
         };
     }

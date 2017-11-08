@@ -149,7 +149,6 @@ export class Page extends Group {
                     tester.assertTrue(page.isPage);
                     tester.assertFalse(image.isPage);
                 },
-                
             },
         };
     }

@@ -278,7 +278,6 @@ export class Group extends Layer {
                     tester.assertTrue(page.isGroup);       // pages are also groups
                     tester.assertTrue(artboard.isGroup);   // artboards are also groups
                 },
-                
             },
         };
     }

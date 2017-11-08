@@ -111,7 +111,6 @@ export class Rectangle {
                     tester.assertEqual(c.size.width, 3);
                     tester.assertEqual(c.size.height, 4);
                 },
-                
             },
         };
     }
