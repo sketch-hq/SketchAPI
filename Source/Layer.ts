@@ -257,7 +257,7 @@ export class Layer extends WrappedObject {
         };
         
         const merged = defaults;
-        for (const key in options) {
+        for (const key of Object.keys(options)) {
             merged[key] = options[key];
         }
         
