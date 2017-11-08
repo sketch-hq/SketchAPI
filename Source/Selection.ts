@@ -131,7 +131,7 @@ export class Selection extends WrappedObject {
                     
                     const iterations = 0;
                     const groups = 0;
-                    selection.iterate(function(layer) {
+                    selection.iterate((layer) => {
                         iterations++;
                         if (layer.sketchObject == group.sketchObject) { groups++; }
                     });
@@ -149,7 +149,7 @@ export class Selection extends WrappedObject {
                     
                     const iterations = 0;
                     const groups = 0;
-                    selection.iterateWithFilter("isGroup", function(layer) {
+                    selection.iterateWithFilter("isGroup", (layer) => {
                         iterations++;
                         if (layer.sketchObject == group.sketchObject) { groups++; }
                     });
@@ -165,7 +165,7 @@ export class Selection extends WrappedObject {
                     
                     const iterations = 0;
                     tester.assert(!selection.isEmpty, "selection should not be empty");
-                    selection.iterateThenClear(function(layer) {
+                    selection.iterateThenClear((layer) => {
                         iterations++;
                     });
                     tester.assertEqual(iterations, 1);
@@ -180,7 +180,7 @@ export class Selection extends WrappedObject {
                     
                     const iterations = 0;
                     tester.assert(!selection.isEmpty, "selection should not be empty");
-                    selection.iterateWithFilterThenClear("isText", function(layer) {
+                    selection.iterateWithFilterThenClear("isText", (layer) => {
                         iterations++;
                     });
                     tester.assertEqual(iterations, 0);
