@@ -8,16 +8,16 @@
 import { WrappedObject } from './WrappedObject'
 
 /// A solid fill/border.
-const BCFillTypeColor    = 0
+const BCFillTypeColor    = 0;
 
 /// A gradient fill/border.
-const BCFillTypeGradient = 1
+const BCFillTypeGradient = 1;
 
 /// A pattern fill/border.
-const BCFillTypePattern  = 4
+const BCFillTypePattern  = 4;
 
 /// A noise fill/border.
-const BCFillTypeNoise    = 5
+const BCFillTypeNoise    = 5;
 
 
 /**
@@ -45,7 +45,7 @@ export class Style extends WrappedObject {
      */
     
     colorFromString(value) {
-        var immutable = MSImmutableColor.colorWithSVGString_(value)
+        var immutable = MSImmutableColor.colorWithSVGString_(value);
         return MSColor.alloc().initWithImmutableObject_(immutable)
     }
     
@@ -67,13 +67,13 @@ export class Style extends WrappedObject {
      */
     
     set borders(value) {
-        var objects = []
+        var objects = [];
         for (var b in value) {
-            var color = this.colorFromString(value[b])
-            var border = MSStyleBorder.new()
-            border.setColor_(color)
-            border.setFillType_(BCFillTypeColor)
-            border.enabled = true
+            var color = this.colorFromString(value[b]);
+            var border = MSStyleBorder.new();
+            border.setColor_(color);
+            border.setFillType_(BCFillTypeColor);
+            border.enabled = true;
             
             objects.push(border)
         }
@@ -99,13 +99,13 @@ export class Style extends WrappedObject {
      */
     
     set fills(value) {
-        var objects = []
+        var objects = [];
         for (var b in value) {
-            var color = this.colorFromString(value[b])
-            var fill = MSStyleFill.new()
-            fill.setColor_(color)
-            fill.setFillType_(BCFillTypeColor)
-            fill.enabled = true
+            var color = this.colorFromString(value[b]);
+            var fill = MSStyleFill.new();
+            fill.setColor_(color);
+            fill.setFillType_(BCFillTypeColor);
+            fill.enabled = true;
             
             objects.push(fill)
         }
@@ -123,14 +123,14 @@ export class Style extends WrappedObject {
         return {
             "tests" : {
                 "testBorders" : function(tester) {
-                    var style = new Style()
-                    style.borders = [ "#11223344", "#1234" ]
+                    var style = new Style();
+                    style.borders = [ "#11223344", "#1234" ];
                     tester.assertEqual(style.sketchObject.borders().count(), 2)
                 },
                 
                 "testFills" : function(tester) {
-                    var style = new Style()
-                    style.borders = [ "#11223344", "#1234" ]
+                    var style = new Style();
+                    style.borders = [ "#11223344", "#1234" ];
                     tester.assertEqual(style.sketchObject.borders().count(), 2)
                 },
                 
