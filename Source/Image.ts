@@ -38,8 +38,8 @@ export class Image extends Layer {
      * @param {NSURL} url The location of the image to use.
      */
     set imageURL(url) {
-        let image = NSImage.alloc().initWithContentsOfURL_(url);
-        let imageData = MSImageData.alloc().initWithImage(image);
+        const image = NSImage.alloc().initWithContentsOfURL_(url);
+        const imageData = MSImageData.alloc().initWithImage(image);
         this._object.setImage_(imageData);
     }
     
@@ -52,9 +52,9 @@ export class Image extends Layer {
         return {
             tests: {
                 testIsImage(tester) {
-                    let document = tester.newTestDocument();
-                    let page = document.selectedPage;
-                    let image = page.newImage();
+                    const document = tester.newTestDocument();
+                    const page = document.selectedPage;
+                    const image = page.newImage();
                     tester.assertTrue(image.isImage);
                     tester.assertFalse(page.isImage);
                 },

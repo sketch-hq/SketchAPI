@@ -87,7 +87,7 @@ export class Rectangle {
         return {
             tests: {
                 testConstructor(tester) {
-                    let r = new Rectangle(1, 2, 3, 4);
+                    const r = new Rectangle(1, 2, 3, 4);
                     tester.assertEqual(r.x, 1);
                     tester.assertEqual(r.y, 2);
                     tester.assertEqual(r.width, 3);
@@ -95,7 +95,7 @@ export class Rectangle {
                 },
                 
                 testOffset(tester) {
-                    let r = new Rectangle(1, 2, 3, 4);
+                    const r = new Rectangle(1, 2, 3, 4);
                     r.offset(10, 10);
                     tester.assertEqual(r.x, 11);
                     tester.assertEqual(r.y, 12);
@@ -104,8 +104,8 @@ export class Rectangle {
                 },
                 
                 testCGRect(tester) {
-                    let r = new Rectangle(1, 2, 3, 4);
-                    let c = r.asCGRect();
+                    const r = new Rectangle(1, 2, 3, 4);
+                    const c = r.asCGRect();
                     tester.assertEqual(c.origin.x, 1);
                     tester.assertEqual(c.origin.y, 2);
                     tester.assertEqual(c.size.width, 3);

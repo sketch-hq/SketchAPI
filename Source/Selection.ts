@@ -28,7 +28,7 @@ export class Selection extends WrappedObject {
      * @return {array} The selected layers.
      */
     get nativeLayers() {
-        let layers = this._object.selectedLayers().layers();
+        const layers = this._object.selectedLayers().layers();
         return layers;
     }
     
@@ -56,7 +56,7 @@ export class Selection extends WrappedObject {
      * @param {function(layer: Layer)} block The function to execute for each layer.
      */
     iterateThenClear(block) {
-        let layers = this.nativeLayers;
+        const layers = this.nativeLayers;
         this.clear();
         this._page._document.iterateWithNativeLayers(layers, null, block);
     }
@@ -68,7 +68,7 @@ export class Selection extends WrappedObject {
      * @param {function(layer: Layer)} block The function to execute for each layer.
      */
     iterateWithFilterThenClear(filter, block) {
-        let layers = this.nativeLayers;
+        const layers = this.nativeLayers;
         this.clear();
         this._page._document.iterateWithNativeLayers(layers, filter, block);
     }
@@ -108,30 +108,30 @@ export class Selection extends WrappedObject {
         return {
             tests: {
                 testEmpty(tester) {
-                    let document = tester.newTestDocument();
+                    const document = tester.newTestDocument();
                     tester.assert(document.selectedLayers.isEmpty, "selection should be empty");
                 },
                 
                 testClear(tester) {
-                    let document = tester.newTestDocument();
-                    let group = document.selectedPage.newGroup();
+                    const document = tester.newTestDocument();
+                    const group = document.selectedPage.newGroup();
                     group.select();
-                    let selection = document.selectedLayers;
+                    const selection = document.selectedLayers;
                     tester.assert(!selection.isEmpty, "selection should not be empty");
                     selection.clear();
                     tester.assert(selection.isEmpty, "selection should be empty");
                 },
                 
                 testIterate(tester) {
-                    let document = tester.newTestDocument();
-                    let group = document.selectedPage.newGroup();
-                    let text = document.selectedPage.newText();
+                    const document = tester.newTestDocument();
+                    const group = document.selectedPage.newGroup();
+                    const text = document.selectedPage.newText();
                     text.select();
                     group.addToSelection();
-                    let selection = document.selectedLayers;
+                    const selection = document.selectedLayers;
                     
-                    let iterations = 0;
-                    let groups = 0;
+                    const iterations = 0;
+                    const groups = 0;
                     selection.iterate(function(layer) {
                         iterations++;
                         if (layer.sketchObject == group.sketchObject) { groups++; }
@@ -141,15 +141,15 @@ export class Selection extends WrappedObject {
                 },
                 
                 testIterateWithFilter(tester) {
-                    let document = tester.newTestDocument();
-                    let group = document.selectedPage.newGroup();
-                    let text = document.selectedPage.newText();
+                    const document = tester.newTestDocument();
+                    const group = document.selectedPage.newGroup();
+                    const text = document.selectedPage.newText();
                     text.select();
                     group.addToSelection();
-                    let selection = document.selectedLayers;
+                    const selection = document.selectedLayers;
                     
-                    let iterations = 0;
-                    let groups = 0;
+                    const iterations = 0;
+                    const groups = 0;
                     selection.iterateWithFilter("isGroup", function(layer) {
                         iterations++;
                         if (layer.sketchObject == group.sketchObject) { groups++; }
@@ -159,12 +159,12 @@ export class Selection extends WrappedObject {
                 },
                 
                 testIterateThenClear(tester) {
-                    let document = tester.newTestDocument();
-                    let group = document.selectedPage.newGroup();
+                    const document = tester.newTestDocument();
+                    const group = document.selectedPage.newGroup();
                     group.select();
-                    let selection = document.selectedLayers;
+                    const selection = document.selectedLayers;
                     
-                    let iterations = 0;
+                    const iterations = 0;
                     tester.assert(!selection.isEmpty, "selection should not be empty");
                     selection.iterateThenClear(function(layer) {
                         iterations++;
@@ -174,12 +174,12 @@ export class Selection extends WrappedObject {
                 },
                 
                 testIterateWithFilterThenClear(tester) {
-                    let document = tester.newTestDocument();
-                    let group = document.selectedPage.newGroup();
+                    const document = tester.newTestDocument();
+                    const group = document.selectedPage.newGroup();
                     group.select();
-                    let selection = document.selectedLayers;
+                    const selection = document.selectedLayers;
                     
-                    let iterations = 0;
+                    const iterations = 0;
                     tester.assert(!selection.isEmpty, "selection should not be empty");
                     selection.iterateWithFilterThenClear("isText", function(layer) {
                         iterations++;
