@@ -139,8 +139,8 @@ export class Tester {
      */
     runUnitTests(specification, suiteName?) {
         const suites = specification.suites;
-        for (const suite in suites) {
-            this.runUnitTests(suites[suite], suite);
+        for (const suiteKey of Object.keys(suites)) {
+            this.runUnitTests(suites[suiteKey], suiteKey);
         }
         
         const tests = specification.tests;
