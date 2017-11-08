@@ -159,7 +159,7 @@ export class Text extends Layer {
     /**
      * Return a list of the text fragments for the text.
      *
-     * @return {array} The line fragments. Each one is a dictionary containing a rectangle, and a baseline offset.
+     * @return The line fragments. Each one is a dictionary containing a rectangle, and a baseline offset.
      */
     get fragments() {
         const textLayer = this.sketchObject;
