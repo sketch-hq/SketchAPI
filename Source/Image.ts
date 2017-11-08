@@ -5,7 +5,7 @@
 // All code (C) 2016 Bohemian Coding.
 // ********************************
 
-import { Layer } from './Layer'
+import { Layer } from "./Layer";
 
 /**
  * Represents an image layer.
@@ -18,7 +18,7 @@ export class Image extends Layer {
      * @param {Document} document The document that the bitmap layer belongs to.
      */
     constructor(layer, document) {
-        super(layer, document)
+        super(layer, document);
     }
     
     /**
@@ -38,9 +38,9 @@ export class Image extends Layer {
      * @param {NSURL} url The location of the image to use.
      */
     set imageURL(url) {
-        var image = NSImage.alloc().initWithContentsOfURL_(url)
-        var imageData = MSImageData.alloc().initWithImage(image)
-        this._object.setImage_(imageData)
+        let image = NSImage.alloc().initWithContentsOfURL_(url);
+        let imageData = MSImageData.alloc().initWithImage(image);
+        this._object.setImage_(imageData);
     }
     
     /**
@@ -50,15 +50,15 @@ export class Image extends Layer {
      */
     static tests() {
         return {
-            "tests" : {
-                "testIsImage" : function(tester) {
-                    var document = tester.newTestDocument()
-                    var page = document.selectedPage
-                    var image = page.newImage()
-                    tester.assertTrue(image.isImage)
-                    tester.assertFalse(page.isImage)
+            tests : {
+                testIsImage(tester) {
+                    let document = tester.newTestDocument();
+                    let page = document.selectedPage;
+                    let image = page.newImage();
+                    tester.assertTrue(image.isImage);
+                    tester.assertFalse(page.isImage);
                 },
-            }
+            },
         };
     }
 }

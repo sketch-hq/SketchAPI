@@ -25,28 +25,28 @@ export class Rectangle {
          * @type {number}
          */
         
-        this.x = x
+        this.x = x;
         
         /**
          * The y coordinate of the top-left corner of the rectangle.
          * @type {number}
          */
         
-        this.y = y
+        this.y = y;
         
         /**
          * The width of the rectangle.
          * @type {number}
          */
         
-        this.width = width
+        this.width = width;
         
         /**
          * The height of the rectangle.
          * @type {number}
          */
         
-        this.height = height
+        this.height = height;
     }
     
     /**
@@ -56,8 +56,8 @@ export class Rectangle {
      * @param {number} y The y offset to apply.
      */
     offset(x, y) {
-        this.x += x
-        this.y += y
+        this.x += x;
+        this.y += y;
     }
     
     /**
@@ -66,7 +66,7 @@ export class Rectangle {
      * @return {CGRect} The rectangle.
      */
     asCGRect() {
-        return CGRectMake(this.x, this.y, this.width, this.height)
+        return CGRectMake(this.x, this.y, this.width, this.height);
     }
     
     /**
@@ -75,10 +75,8 @@ export class Rectangle {
      * @return {string} Description of the rectangle.
      */
     toString() {
-        return "{" + this.x + ", " + this.y + ", " + this.width + ", " + this.height + "}"
+        return "{" + this.x + ", " + this.y + ", " + this.width + ", " + this.height + "}";
     }
-    
-    
     
     /**
      * Return a list of tests to run for this class.
@@ -87,34 +85,34 @@ export class Rectangle {
      */
     static tests() {
         return {
-            "tests" : {
-                "testConstructor" : function(tester) {
-                    var r = new Rectangle(1, 2, 3, 4)
-                    tester.assertEqual(r.x, 1)
-                    tester.assertEqual(r.y, 2)
-                    tester.assertEqual(r.width, 3)
-                    tester.assertEqual(r.height, 4)
+            tests : {
+                testConstructor(tester) {
+                    let r = new Rectangle(1, 2, 3, 4);
+                    tester.assertEqual(r.x, 1);
+                    tester.assertEqual(r.y, 2);
+                    tester.assertEqual(r.width, 3);
+                    tester.assertEqual(r.height, 4);
                 },
                 
-                "testOffset" : function(tester) {
-                    var r = new Rectangle(1, 2, 3, 4)
-                    r.offset(10, 10)
-                    tester.assertEqual(r.x, 11)
-                    tester.assertEqual(r.y, 12)
-                    tester.assertEqual(r.width, 3)
-                    tester.assertEqual(r.height, 4)
+                testOffset(tester) {
+                    let r = new Rectangle(1, 2, 3, 4);
+                    r.offset(10, 10);
+                    tester.assertEqual(r.x, 11);
+                    tester.assertEqual(r.y, 12);
+                    tester.assertEqual(r.width, 3);
+                    tester.assertEqual(r.height, 4);
                 },
                 
-                "testCGRect" : function(tester) {
-                    var r = new Rectangle(1, 2, 3, 4)
-                    var c = r.asCGRect()
-                    tester.assertEqual(c.origin.x, 1)
-                    tester.assertEqual(c.origin.y, 2)
-                    tester.assertEqual(c.size.width, 3)
-                    tester.assertEqual(c.size.height, 4)
+                testCGRect(tester) {
+                    let r = new Rectangle(1, 2, 3, 4);
+                    let c = r.asCGRect();
+                    tester.assertEqual(c.origin.x, 1);
+                    tester.assertEqual(c.origin.y, 2);
+                    tester.assertEqual(c.size.width, 3);
+                    tester.assertEqual(c.size.height, 4);
                 },
                 
-            }
+            },
         };
     }
 }

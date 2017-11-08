@@ -5,7 +5,7 @@
 // All code (C) 2016 Bohemian Coding.
 // ********************************
 
-import { Document } from './Document'
+import { Document } from "./Document";
 
 /**
  * Very simple unit testing utility.
@@ -22,19 +22,19 @@ export class Tester {
      */
     constructor(application) {
         /** @type {array} List of failures in the currently running test. */
-        this._testFailures = []
+        this._testFailures = [];
         
         /** @type {Application} The application that is running these tests. */
-        this._application = application
+        this._application = application;
         
         /** @type {number} The number of tests we've run. */
-        this._ran = 0
+        this._ran = 0;
         
         /** @type {array} The names of the tests that have passed. */
-        this._passes = []
+        this._passes = [];
         
         /** @type {array} Failure information for each test that has failed. */
-        this._failures = []
+        this._failures = [];
         
     }
     
@@ -47,8 +47,8 @@ export class Tester {
      */
     assert(condition, description) {
         if (!condition) {
-            if (!description) description = ""
-            this._testFailures.push(description)
+            if (!description) { description = ""; }
+            this._testFailures.push(description);
         }
     }
     
@@ -60,23 +60,22 @@ export class Tester {
      * @param v2 The second value to compare.
      */
     assertEqual(v1, v2) {
-        var different = v1 != v2
+        let different = v1 != v2;
         
         // if we're comparing two objects, try matching them as strings
         // (crude, and not guaranteed, but it will cover some basic cases)
-        if (different && (typeof v1 === 'object') && (typeof v2 === 'object')) {
+        if (different && (typeof v1 === "object") && (typeof v2 === "object")) {
             if (v1.compare) {
-                different = v1.compare(v2)
+                different = v1.compare(v2);
             } else {
-                different = v1.toString() != v2.toString()
+                different = v1.toString() != v2.toString();
             }
         }
         
         if (different) {
-            this._testFailures.push(v1 + " != " + v2)
+            this._testFailures.push(v1 + " != " + v2);
         }
     }
-    
     
     /**
      * Assert that a value is true.
@@ -86,11 +85,9 @@ export class Tester {
      */
     assertTrue(v) {
         if (!v) {
-            this._testFailures.push("expected true, got: " + v)
+            this._testFailures.push("expected true, got: " + v);
         }
     }
-    
-    
     
     /**
      * Assert that a value is false.
@@ -100,10 +97,9 @@ export class Tester {
      */
     assertFalse(v) {
         if (v) {
-            this._testFailures.push("expected false, got: " + v)
+            this._testFailures.push("expected false, got: " + v);
         }
     }
-    
     
     /**
      * The application instance that we're running the tests for.
@@ -112,9 +108,8 @@ export class Tester {
      * @return {Application} The application object.
      */
     get application() {
-        return this._application
+        return this._application;
     }
-    
     
     /**
      * Returns a new document to use in tests.
@@ -122,10 +117,9 @@ export class Tester {
      * @return {Document} Test document.
      */
     newTestDocument() {
-        var document = new Document(MSDocumentData.new(), this._application)
-        return document
+        let document = new Document(MSDocumentData.new(), this._application);
+        return document;
     }
-    
     
     /**
      * Run a collection of tests.
@@ -143,30 +137,30 @@ export class Tester {
      * @return {dictionary} Returns a dictionary indicating how many tests ran, and a list of the passed, failed, and crashed tests.
      */
     runUnitTests(specification, suiteName?) {
-        var suites = specification.suites
-        for (var suite in suites) {
-            this.runUnitTests(suites[suite], suite)
+        let suites = specification.suites;
+        for (let suite in suites) {
+            this.runUnitTests(suites[suite], suite);
         }
         
-        var tests = specification.tests
-        for (var name in tests) {
-            var test = tests[name]
+        let tests = specification.tests;
+        for (let name in tests) {
+            let test = tests[name];
             this._ran++;
             this._testFailures = [];
-            var result = test(this);
-            var fullName = suiteName ? suiteName + " : " + name : name
+            let result = test(this);
+            let fullName = suiteName ? suiteName + " : " + name : name;
             if (this._testFailures.length > 0) {
-                this._failures.push({"name" : fullName, "reasons" : this._testFailures})
+                this._failures.push({name : fullName, reasons : this._testFailures});
             } else {
-                this._passes.push(fullName)
+                this._passes.push(fullName);
             }
         }
         
         return {
-            "ran" : this._ran,
-            "crashes" : [],
-            "failures" : this._failures,
-            "passes" : this._passes
+            ran : this._ran,
+            crashes : [],
+            failures : this._failures,
+            passes : this._passes,
         };
     }
 }

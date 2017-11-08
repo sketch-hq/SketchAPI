@@ -5,16 +5,14 @@
 // All code (C) 2016 Bohemian Coding.
 // ********************************
 
-import { Layer } from './Layer'
-import { Rectangle } from './Rectangle'
-import { Style } from './Style'
-
+import { Layer } from "./Layer";
+import { Rectangle } from "./Rectangle";
+import { Style } from "./Style";
 
 /**
  * Represents a group of layers.
  */
 export class Group extends Layer {
-    
     
     /**
      * Make a new group object.
@@ -23,9 +21,8 @@ export class Group extends Layer {
      * @param {Document} document The document that the group belongs to.
      */
     constructor(group, document) {
-        super(group, document)
+        super(group, document);
     }
-    
     
     /**
      * Is this an group?
@@ -35,7 +32,6 @@ export class Group extends Layer {
      * @return {boolean} true for instances of Group, false for any other layer type.
      */
     get isGroup() { return true; }
-    
     
     /**
      * Return a list of tests to run for this class.
@@ -51,10 +47,9 @@ export class Group extends Layer {
      * @param {function(layer: Layer)} block The function to execute for each layer.
      */
     iterate(block) {
-        var layers = this._object.layers()
-        this._document.iterateWithNativeLayers(layers, null, block)
+        let layers = this._object.layers();
+        this._document.iterateWithNativeLayers(layers, null, block);
     }
-    
     
     /**
      * Perform a function for every sub-layer inside this one that passes a filter.
@@ -65,10 +60,9 @@ export class Group extends Layer {
      * @param {function(layer: Layer)} block The function to execute for each layer.
      */
     iterateWithFilter(filter, block) {
-        var layers = this._object.layers()
-        this._document.iterateWithNativeLayers(layers, filter, block)
+        let layers = this._object.layers();
+        this._document.iterateWithNativeLayers(layers, filter, block);
     }
-    
     
     /**
      * Convert a rectangle in page coordinates to one relative to this container's coordinates.
@@ -77,20 +71,16 @@ export class Group extends Layer {
      * @return {Rectangle} The rectangle in local coordinates.
      */
     pageRectToLocalRect(rect) {
-        var origin = this._object.convertPoint_fromLayer_(NSMakePoint(rect.x, rect.y), null)
-        return new Rectangle(origin.x, origin.y, rect.width, rect.height)
+        let origin = this._object.convertPoint_fromLayer_(NSMakePoint(rect.x, rect.y), null);
+        return new Rectangle(origin.x, origin.y, rect.width, rect.height);
     }
-    
     
     /**
      * Adjust the group to fit its children.
      */
     adjustToFit() {
-        this._object.resizeToFitChildrenWithOption_(0)
+        this._object.resizeToFitChildrenWithOption_(0);
     }
-    
-    
-    
     
     /**
      * Add a new wrapped layer object to represent a Sketch layer.
@@ -105,18 +95,18 @@ export class Group extends Layer {
     _addWrappedLayerWithProperties(newLayer, properties, wrapper) {
         if (newLayer) {
             // add the Sketch object to this layer
-            var layer = this._object
-            layer.addLayers_(NSArray.arrayWithObject_(newLayer))
+            let layer = this._object;
+            layer.addLayers_(NSArray.arrayWithObject_(newLayer));
             
             // make a Javascript wrapper object for the new layer
-            var wrapper = this._document.wrapObject(newLayer)
+            let wrapper = this._document.wrapObject(newLayer);
             
             // apply properties, via the wrapper
-            for (var p in properties) {
-                wrapper[p] = properties[p]
+            for (let p in properties) {
+                wrapper[p] = properties[p];
             }
             
-            return wrapper
+            return wrapper;
         }
     }
     
@@ -128,13 +118,13 @@ export class Group extends Layer {
      * @return {Rectangle} The frame rectangle to use.
      */
     _frameForLayerWithProperties(properties) {
-        var frame = properties.frame
+        let frame = properties.frame;
         if (frame) {
-            delete properties["frame"]
+            delete properties["frame"];
         } else {
-            frame = new Rectangle(0, 0, 100, 100)
+            frame = new Rectangle(0, 0, 100, 100);
         }
-        return frame
+        return frame;
     }
     
     /**
@@ -142,24 +132,24 @@ export class Group extends Layer {
      * If the style wasn't supplied at all, we use the default one.
      */
     _styleForLayerWithProperties(properties) {
-        var style = properties.style
+        let style = properties.style;
         if (!style) {
-            style = new Style()
+            style = new Style();
         }
         
-        var fills = properties.fills
+        let fills = properties.fills;
         if (fills) {
-            delete properties["fills"]
-            style.fills = fills
+            delete properties["fills"];
+            style.fills = fills;
         }
         
-        var borders = properties.borders
+        let borders = properties.borders;
         if (borders) {
-            delete properties["borders"]
-            style.borders = borders
+            delete properties["borders"];
+            style.borders = borders;
         }
         
-        return style
+        return style;
     }
     
     /**
@@ -170,12 +160,12 @@ export class Group extends Layer {
      * @return {Shape} the new shape.
      */
     newShape(properties = {}) {
-        var frame = this._frameForLayerWithProperties(properties)
+        let frame = this._frameForLayerWithProperties(properties);
         // TODO: Eventually we want to distinguish between different shape sub-types here depending
         //       on what is set in properties ('frame', 'path', 'radius', etc), and to construct the
         //       appropriate layer type accordingly. For now we only make rectangles.
-        var newLayer = MSShapeGroup.shapeWithRect_(frame.asCGRect());
-        properties["style"] = this._styleForLayerWithProperties(properties)
+        let newLayer = MSShapeGroup.shapeWithRect_(frame.asCGRect());
+        properties["style"] = this._styleForLayerWithProperties(properties);
         
         return this._addWrappedLayerWithProperties(newLayer, properties, "Shape");
     }
@@ -188,8 +178,8 @@ export class Group extends Layer {
      * @return {Text} the new text layer.
      */
     newText(properties = {}) {
-        var frame = this._frameForLayerWithProperties(properties)
-        var newLayer = MSTextLayer.alloc().initWithFrame_(frame.asCGRect());
+        let frame = this._frameForLayerWithProperties(properties);
+        let newLayer = MSTextLayer.alloc().initWithFrame_(frame.asCGRect());
         newLayer.adjustFrameToFit();
         return this._addWrappedLayerWithProperties(newLayer, properties, "Text");
     }
@@ -202,11 +192,10 @@ export class Group extends Layer {
      * @return {Group} the new group.
      */
     newGroup(properties = {}) {
-        var frame = this._frameForLayerWithProperties(properties)
-        var newLayer = MSLayerGroup.alloc().initWithFrame_(frame.asCGRect());
+        let frame = this._frameForLayerWithProperties(properties);
+        let newLayer = MSLayerGroup.alloc().initWithFrame_(frame.asCGRect());
         return this._addWrappedLayerWithProperties(newLayer, properties, "Group");
     }
-    
     
     /**
      * Returns a newly created image layer, which has been added to this layer,
@@ -216,12 +205,10 @@ export class Group extends Layer {
      * @return {Image} the new image layer.
      */
     newImage(properties = {}) {
-        var frame = this._frameForLayerWithProperties(properties)
-        var newLayer = MSBitmapLayer.alloc().initWithFrame_(frame.asCGRect());
+        let frame = this._frameForLayerWithProperties(properties);
+        let newLayer = MSBitmapLayer.alloc().initWithFrame_(frame.asCGRect());
         return this._addWrappedLayerWithProperties(newLayer, properties, "Image");
     }
-    
-    
     
     /**
      * Return a list of tests to run for this class.
@@ -230,70 +217,70 @@ export class Group extends Layer {
      */
     static tests() {
         return {
-            "tests" : {
-                "testIterate" : function(tester) {
-                    var document = tester.newTestDocument()
-                    var page = document.selectedPage
-                    var group = page.newGroup()
-                    var text = page.newText()
+            tests : {
+                testIterate(tester) {
+                    let document = tester.newTestDocument();
+                    let page = document.selectedPage;
+                    let group = page.newGroup();
+                    let text = page.newText();
                     
-                    var iterations = 0
-                    var groups = 0
+                    let iterations = 0;
+                    let groups = 0;
                     page.iterate(function(layer) {
-                        iterations++
-                        if (layer.sketchObject == group.sketchObject) groups++
-                    })
-                    tester.assertEqual(iterations, 2)
-                    tester.assertEqual(groups, 1)
+                        iterations++;
+                        if (layer.sketchObject == group.sketchObject) { groups++; }
+                    });
+                    tester.assertEqual(iterations, 2);
+                    tester.assertEqual(groups, 1);
                 },
                 
-                "testIterateWithFilter" : function(tester) {
-                    var document = tester.newTestDocument()
-                    var page = document.selectedPage
-                    var group = page.newGroup()
-                    var text = page.newText()
+                testIterateWithFilter(tester) {
+                    let document = tester.newTestDocument();
+                    let page = document.selectedPage;
+                    let group = page.newGroup();
+                    let text = page.newText();
                     
-                    var iterations = 0
-                    var groups = 0
+                    let iterations = 0;
+                    let groups = 0;
                     page.iterateWithFilter("isGroup", function(layer) {
-                        iterations++
-                        if (layer.sketchObject == group.sketchObject) groups++
-                    })
-                    tester.assertEqual(iterations, 1)
-                    tester.assertEqual(groups, 1)
+                        iterations++;
+                        if (layer.sketchObject == group.sketchObject) { groups++; }
+                    });
+                    tester.assertEqual(iterations, 1);
+                    tester.assertEqual(groups, 1);
                 },
                 
-                "testPageToLocalRect" : function(tester) {
-                    var document = tester.newTestDocument()
-                    var page = document.selectedPage
-                    var group = page.newGroup({"frame" : new Rectangle(100, 100, 100, 100)})
-                    var local = group.pageRectToLocalRect(new Rectangle(125, 75, 50, 200))
-                    tester.assertEqual(local, new Rectangle(25, -25, 50, 200))
+                testPageToLocalRect(tester) {
+                    let document = tester.newTestDocument();
+                    let page = document.selectedPage;
+                    let group = page.newGroup({frame : new Rectangle(100, 100, 100, 100)});
+                    let local = group.pageRectToLocalRect(new Rectangle(125, 75, 50, 200));
+                    tester.assertEqual(local, new Rectangle(25, -25, 50, 200));
                 },
                 
-                "testAdjustToFit" : function(tester) {
-                    var document = tester.newTestDocument()
-                    var page = document.selectedPage
-                    var group = page.newGroup({"frame" : new Rectangle(100, 100, 100, 100)})
-                    var text = group.newShape({"frame" : new Rectangle(50, 50, 50, 50)})
-                    group.adjustToFit()
-                    var frame = group.frame
-                    tester.assertEqual(frame, new Rectangle(150, 150, 50, 50))
+                testAdjustToFit(tester) {
+                    let document = tester.newTestDocument();
+                    let page = document.selectedPage;
+                    let group = page.newGroup({frame : new Rectangle(100, 100, 100, 100)});
+                    let text = group.newShape({frame : new Rectangle(50, 50, 50, 50)});
+                    group.adjustToFit();
+                    let frame = group.frame;
+                    tester.assertEqual(frame, new Rectangle(150, 150, 50, 50));
                 },
                 
-                "testIsGroup" : function(tester) {
-                    var document = tester.newTestDocument()
-                    var page = document.selectedPage
-                    var group = page.newGroup()
-                    var text = page.newText()
-                    var artboard = page.newArtboard()
-                    tester.assertTrue(group.isGroup)
-                    tester.assertFalse(text.isGroup)
-                    tester.assertTrue(page.isGroup)       // pages are also groups
-                    tester.assertTrue(artboard.isGroup)   // artboards are also groups
+                testIsGroup(tester) {
+                    let document = tester.newTestDocument();
+                    let page = document.selectedPage;
+                    let group = page.newGroup();
+                    let text = page.newText();
+                    let artboard = page.newArtboard();
+                    tester.assertTrue(group.isGroup);
+                    tester.assertFalse(text.isGroup);
+                    tester.assertTrue(page.isGroup);       // pages are also groups
+                    tester.assertTrue(artboard.isGroup);   // artboards are also groups
                 },
                 
-            }
+            },
         };
     }
 }

@@ -5,14 +5,13 @@
 // All code (C) 2016 Bohemian Coding.
 // ********************************
 
-import { Layer } from './Layer'
-import { Style } from './Style'
+import { Layer } from "./Layer";
+import { Style } from "./Style";
 
 /**
  * Represents a shape layer (a rectangle, oval, path, etc).
  */
 export class Shape extends Layer {
-    
     
     /**
      * Make a new shape object.
@@ -21,9 +20,8 @@ export class Shape extends Layer {
      * @param {Document} document The document that the shape belongs to.
      */
     constructor(shape, document) {
-        super(shape, document)
+        super(shape, document);
     }
-    
     
     /**
      * Is this a shape layer?
@@ -36,16 +34,14 @@ export class Shape extends Layer {
         return true;
     }
     
-    
     /**
      * Return the style of the layer.
      *
      * @return {Style} The style of the layer.
      */
     get style() {
-        return new Style(this.sketchObject.style())
+        return new Style(this.sketchObject.style());
     }
-    
     
     /**
      * Set the style of the layer.
@@ -53,9 +49,8 @@ export class Shape extends Layer {
      * @param {Style} value The style settings to use for the layer.
      */
     set style(value) {
-        this.sketchObject.style = value.sketchObject
+        this.sketchObject.style = value.sketchObject;
     }
-    
     
     /**
      * Return a list of tests to run for this class.
@@ -64,15 +59,15 @@ export class Shape extends Layer {
      */
     static tests() {
         return {
-            "tests" : {
-                "testIsShape" : function(tester) {
-                    var document = tester.newTestDocument();
-                    var page = document.selectedPage;
-                    var shape = page.newShape();
+            tests : {
+                testIsShape(tester) {
+                    let document = tester.newTestDocument();
+                    let page = document.selectedPage;
+                    let shape = page.newShape();
                     tester.assertTrue(shape.isShape);
-                    tester.assertFalse(page.isShape)
+                    tester.assertFalse(page.isShape);
                 },
-            }
+            },
         };
     }
 }
