@@ -13,7 +13,6 @@ import { Style } from "./Style";
  * Represents a group of layers.
  */
 export class Group extends Layer {
-    
     /**
      * Make a new group object.
      *

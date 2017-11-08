@@ -12,7 +12,6 @@ import { Style } from "./Style";
  * Represents a shape layer (a rectangle, oval, path, etc).
  */
 export class Shape extends Layer {
-    
     /**
      * Make a new shape object.
      *
