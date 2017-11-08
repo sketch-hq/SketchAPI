@@ -6,8 +6,8 @@
 // ********************************
 
 import { Rectangle } from "./Rectangle";
-import { WrappedObject } from "./WrappedObject";
 import { TestSpecification } from "./Tester";
+import { WrappedObject } from "./WrappedObject";
 
 /**
  * Represents a Sketch layer.
