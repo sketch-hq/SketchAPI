@@ -5,7 +5,7 @@
 // All code (C) 2016 Bohemian Coding.
 // ********************************
 
-import { WrappedObject } from './WrappedObject'
+import { WrappedObject } from "./WrappedObject";
 
 /// A solid fill/border.
 const BCFillTypeColor    = 0;
@@ -18,7 +18,6 @@ const BCFillTypePattern  = 4;
 
 /// A noise fill/border.
 const BCFillTypeNoise    = 5;
-
 
 /**
  * Represents a Sketch layer style.
@@ -34,10 +33,10 @@ export class Style extends WrappedObject {
     
     constructor(style) {
         if (!style) {
-            style = MSDefaultStyle.defaultStyle()
+            style = MSDefaultStyle.defaultStyle();
         }
         
-        super(style)
+        super(style);
     }
     
     /**
@@ -45,10 +44,9 @@ export class Style extends WrappedObject {
      */
     
     colorFromString(value) {
-        var immutable = MSImmutableColor.colorWithSVGString_(value);
-        return MSColor.alloc().initWithImmutableObject_(immutable)
+        let immutable = MSImmutableColor.colorWithSVGString_(value);
+        return MSColor.alloc().initWithImmutableObject_(immutable);
     }
-    
     
     /**
      * Set the borders to use for this style.
@@ -67,19 +65,18 @@ export class Style extends WrappedObject {
      */
     
     set borders(value) {
-        var objects = [];
-        for (var b in value) {
-            var color = this.colorFromString(value[b]);
-            var border = MSStyleBorder.new();
+        let objects = [];
+        for (let b in value) {
+            let color = this.colorFromString(value[b]);
+            let border = MSStyleBorder.new();
             border.setColor_(color);
             border.setFillType_(BCFillTypeColor);
             border.enabled = true;
             
-            objects.push(border)
+            objects.push(border);
         }
-        this.sketchObject.setBorders_(objects)
+        this.sketchObject.setBorders_(objects);
     }
-    
     
     /**
      * Set the fills to use for this style.
@@ -99,19 +96,18 @@ export class Style extends WrappedObject {
      */
     
     set fills(value) {
-        var objects = [];
-        for (var b in value) {
-            var color = this.colorFromString(value[b]);
-            var fill = MSStyleFill.new();
+        let objects = [];
+        for (let b in value) {
+            let color = this.colorFromString(value[b]);
+            let fill = MSStyleFill.new();
             fill.setColor_(color);
             fill.setFillType_(BCFillTypeColor);
             fill.enabled = true;
             
-            objects.push(fill)
+            objects.push(fill);
         }
-        this.sketchObject.setFills_(objects)
+        this.sketchObject.setFills_(objects);
     }
-    
     
     /**
      * Return a list of tests to run for this class.
@@ -121,20 +117,20 @@ export class Style extends WrappedObject {
     
     static tests() {
         return {
-            "tests" : {
-                "testBorders" : function(tester) {
-                    var style = new Style();
+            tests : {
+                testBorders(tester) {
+                    let style = new Style();
                     style.borders = [ "#11223344", "#1234" ];
-                    tester.assertEqual(style.sketchObject.borders().count(), 2)
+                    tester.assertEqual(style.sketchObject.borders().count(), 2);
                 },
                 
-                "testFills" : function(tester) {
-                    var style = new Style();
+                testFills(tester) {
+                    let style = new Style();
                     style.borders = [ "#11223344", "#1234" ];
-                    tester.assertEqual(style.sketchObject.borders().count(), 2)
+                    tester.assertEqual(style.sketchObject.borders().count(), 2);
                 },
                 
-            }
+            },
         };
     }
     
