@@ -77,9 +77,9 @@ export class Document extends WrappedObject {
     get pages() {
         const result = [];
         const loop = this._object.pages().objectEnumerator();
-        const item;
-        while (item = loop.nextObject()) {
-            result.push(new Page(item, this));
+        let mutableItem;
+        while (mutableItem = loop.nextObject()) {
+            result.push(new Page(mutableItem, this));
         }
         return result;
     }
