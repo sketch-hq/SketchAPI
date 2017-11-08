@@ -121,10 +121,10 @@ export class Group extends Layer {
         const frame = properties.frame;
         if (frame) {
             delete properties["frame"];
+            return frame;
         } else {
-            frame = new Rectangle(0, 0, 100, 100);
+            return new Rectangle(0, 0, 100, 100);
         }
-        return frame;
     }
     
     /**
