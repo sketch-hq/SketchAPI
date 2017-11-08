@@ -61,7 +61,7 @@ export class Tester {
      * @param v2 The second value to compare.
      */
     assertEqual(v1, v2) {
-        let different = v1 != v2;
+        const different = v1 != v2;
         
         // if we're comparing two objects, try matching them as strings
         // (crude, and not guaranteed, but it will cover some basic cases)
@@ -118,7 +118,7 @@ export class Tester {
      * @return {Document} Test document.
      */
     newTestDocument() {
-        let document = new Document(MSDocumentData.new(), this._application);
+        const document = new Document(MSDocumentData.new(), this._application);
         return document;
     }
     
@@ -138,18 +138,18 @@ export class Tester {
      * @return {dictionary} Returns a dictionary indicating how many tests ran, and a list of the passed, failed, and crashed tests.
      */
     runUnitTests(specification, suiteName?) {
-        let suites = specification.suites;
-        for (let suite in suites) {
+        const suites = specification.suites;
+        for (const suite in suites) {
             this.runUnitTests(suites[suite], suite);
         }
         
-        let tests = specification.tests;
-        for (let name in tests) {
-            let test = tests[name];
+        const tests = specification.tests;
+        for (const name in tests) {
+            const test = tests[name];
             this._ran++;
             this._testFailures = [];
-            let result = test(this);
-            let fullName = suiteName ? suiteName + ": " + name: name;
+            const result = test(this);
+            const fullName = suiteName ? suiteName + ": " + name : name;
             if (this._testFailures.length > 0) {
                 this._failures.push({name: fullName, reasons: this._testFailures});
             } else {
