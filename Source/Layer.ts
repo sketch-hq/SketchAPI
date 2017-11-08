@@ -256,10 +256,7 @@ export class Layer extends WrappedObject {
             "output": "~/Documents/Sketch Exports",
         };
         
-        const merged = defaults;
-        for (const key of Object.keys(options)) {
-            merged[key] = options[key];
-        }
+        const merged = Object.assign(defaults, options);
         
         return merged;
     }
