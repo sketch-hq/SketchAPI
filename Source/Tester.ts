@@ -152,7 +152,7 @@ export class Tester {
      * @return {dictionary} Returns a dictionary indicating how many tests ran, and a list of the passed, failed, and crashed tests.
      */
     
-    runUnitTests(specification, suiteName) {
+    runUnitTests(specification, suiteName?) {
         var suites = specification.suites
         for (var suite in suites) {
             this.runUnitTests(suites[suite], suite)
