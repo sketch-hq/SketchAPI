@@ -75,9 +75,9 @@ export class Document extends WrappedObject {
      * @return {list} The pages.
      */
     get pages() {
-        let result = [];
-        let loop = this._object.pages().objectEnumerator();
-        let item;
+        const result = [];
+        const loop = this._object.pages().objectEnumerator();
+        const item;
         while (item = loop.nextObject()) {
             result.push(new Page(item, this));
         }
@@ -90,7 +90,7 @@ export class Document extends WrappedObject {
      * @return {Layer} A layer object, if one was found.
      */
     layerWithID(layer_id) {
-        let layer = this._object.documentData().layerWithID_(layer_id);
+        const layer = this._object.documentData().layerWithID_(layer_id);
         if (layer) {
             return new Layer(layer, this);
         }
@@ -107,7 +107,7 @@ export class Document extends WrappedObject {
         // That might not always be true though, which is why the JS API splits
         // them into separate functions.
         
-        let layer = this._object.documentData().layerWithID_(layer_name);
+        const layer = this._object.documentData().layerWithID_(layer_name);
         if (layer) {
             return new Layer(layer, this);
         }
@@ -124,7 +124,7 @@ export class Document extends WrappedObject {
     iterateWithNativeLayers(layers, filter, block) {
         // if we're given a string as a filter, treat it as a function
         // to call on the layer
-        let loopBlock = block;
+        const loopBlock = block;
         if (typeof filter === "string" || filter instanceof String) {
             loopBlock = function(layer) {
                 if (layer[filter]) {
@@ -139,10 +139,10 @@ export class Document extends WrappedObject {
             };
         }
         
-        let loop = layers.objectEnumerator();
-        let item;
+        const loop = layers.objectEnumerator();
+        const item;
         while (item = loop.nextObject()) {
-            let layer = this.wrapObject(item);
+            const layer = this.wrapObject(item);
             loopBlock(layer);
         }
     }
@@ -165,8 +165,8 @@ export class Document extends WrappedObject {
         return {
             tests : {
                 testPages(tester) {
-                    let document = tester.newTestDocument();
-                    let pages = document.pages;
+                    const document = tester.newTestDocument();
+                    const pages = document.pages;
                     
                     tester.assertEqual(pages.length, 1);
                     tester.assertEqual(pages[0].sketchObject, document.selectedPage.sketchObject);
@@ -174,23 +174,23 @@ export class Document extends WrappedObject {
                 },
                 
                 testSelectedLayers(tester) {
-                    let document = tester.newTestDocument();
-                    let selection = document.selectedLayers;
+                    const document = tester.newTestDocument();
+                    const selection = document.selectedLayers;
                     tester.assert(selection.isEmpty, "should have an empty selection");
                     
-                    let page = document.selectedPage;
-                    let group = page.newGroup({ name: "Test"});
+                    const page = document.selectedPage;
+                    const group = page.newGroup({ name: "Test"});
                     group.select();
                     
                     tester.assert(!selection.isEmpty, "should no longer have an empty selection");
                 },
                 
                 testLayerWithID(tester) {
-                    let document = tester.newTestDocument();
-                    let page = document.selectedPage;
-                    let group = page.newGroup({ name: "Test"});
-                    let id = group.id;
-                    let found = document.layerWithID(id);
+                    const document = tester.newTestDocument();
+                    const page = document.selectedPage;
+                    const group = page.newGroup({ name: "Test"});
+                    const id = group.id;
+                    const found = document.layerWithID(id);
                     tester.assertEqual(group.sketchObject, found.sketchObject);
                 },
                 
