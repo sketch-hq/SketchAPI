@@ -116,8 +116,7 @@ export class Text extends Layer {
         const result = raw;
         for (const key of Object.keys(NSTextAlignment)) {
             if (NSTextAlignment[key] === raw) {
-                result = key;
-                break;
+                return key;
             }
         }
         return result;
