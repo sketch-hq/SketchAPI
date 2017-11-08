@@ -264,7 +264,7 @@ export class Application extends WrappedObject {
      * Return a lookup table of known mappings between Sketch model classes
      * and our JS API wrapper classes.
      *
-     * @return {dictionary} A dictionary with keys for the Sketch Model classes, and values for the corresponding API wrapper classes.
+     * @return Object with keys for the Sketch Model classes, and values for the corresponding API wrapper classes.
      */
     wrapperMappings() {
         const mappings = {
@@ -306,7 +306,7 @@ export class Application extends WrappedObject {
      * We could do some fancy introspection here to derive the tests from
      * the class, but for now we're opting for the simple approach.
      *
-     * @return {dictionary} A dictionary containing the tests to run. Each key is the name of a test, each value is a function which takes a Tester instance.
+     * @return Object containing the tests to run. Each key is the name of a test, each value is a function which takes a Tester instance.
      */
     static tests() {
         return {
