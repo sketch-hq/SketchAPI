@@ -61,9 +61,9 @@ export class Shape extends Layer {
         return {
             tests : {
                 testIsShape(tester) {
-                    let document = tester.newTestDocument();
-                    let page = document.selectedPage;
-                    let shape = page.newShape();
+                    const document = tester.newTestDocument();
+                    const page = document.selectedPage;
+                    const shape = page.newShape();
                     tester.assertTrue(shape.isShape);
                     tester.assertFalse(page.isShape);
                 },
