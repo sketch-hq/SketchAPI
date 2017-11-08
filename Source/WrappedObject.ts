@@ -5,6 +5,8 @@
 // All code (C) 2016 Bohemian Coding.
 // ********************************
 
+import { TestSpecification } from "./Tester";
+
 /**
  * Base class for all objects that
  * wrap Sketch classes.
@@ -46,7 +48,7 @@ export class WrappedObject {
      *
      * @return Object containing the tests to run. Each key is the name of a test, each value is a function which takes a Tester instance.
      */
-    static tests(): { tests: { [index: string]: () => void } } {
+    static tests(): TestSpecification {
         return {
             tests: {
                 testSketchObject(tester) {
