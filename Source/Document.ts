@@ -5,10 +5,10 @@
 // All code (C) 2016 Bohemian Coding.
 // ********************************
 
-import { WrappedObject } from './WrappedObject'
-import { Layer } from './Layer'
-import { Page } from './Page'
-import { Selection } from './Selection'
+import { Layer } from "./Layer";
+import { Page } from "./Page";
+import { Selection } from "./Selection";
+import { WrappedObject } from "./WrappedObject";
 
 /**
  * A Sketch document.
@@ -27,7 +27,7 @@ export class Document extends WrappedObject {
      * If you do want to create a new document, you can do so with Application#newDocument.
      */
     constructor(document, application) {
-        super(document)
+        super(document);
         
         /**
          * The application that this document belongs to.
@@ -35,7 +35,7 @@ export class Document extends WrappedObject {
          * @type {Application}
          */
         
-        this._application = application
+        this._application = application;
     }
     
     /**
@@ -48,9 +48,8 @@ export class Document extends WrappedObject {
      * @return {WrappedObject} A javascript object (subclass of WrappedObject), which represents the Sketch object we were given.
      */
     wrapObject(sketchObject) {
-        return this._application.wrapObject(sketchObject, this)
+        return this._application.wrapObject(sketchObject, this);
     }
-    
     
     /**
      * The layers that the user has selected in the currently selected page.
@@ -67,7 +66,7 @@ export class Document extends WrappedObject {
      * @return {Page} A page object representing the page that the user is currently viewing.
      */
     get selectedPage() {
-        return new Page(this._object.currentPage(), this)
+        return new Page(this._object.currentPage(), this);
     }
     
     /**
@@ -76,9 +75,9 @@ export class Document extends WrappedObject {
      * @return {list} The pages.
      */
     get pages() {
-        var result = [];
-        var loop = this._object.pages().objectEnumerator()
-        var item;
+        let result = [];
+        let loop = this._object.pages().objectEnumerator();
+        let item;
         while (item = loop.nextObject()) {
             result.push(new Page(item, this));
         }
@@ -91,9 +90,10 @@ export class Document extends WrappedObject {
      * @return {Layer} A layer object, if one was found.
      */
     layerWithID(layer_id) {
-        var layer = this._object.documentData().layerWithID_(layer_id);
-        if (layer)
+        let layer = this._object.documentData().layerWithID_(layer_id);
+        if (layer) {
             return new Layer(layer, this);
+        }
     }
     
     /**
@@ -107,9 +107,10 @@ export class Document extends WrappedObject {
         // That might not always be true though, which is why the JS API splits
         // them into separate functions.
         
-        var layer = this._object.documentData().layerWithID_(layer_name);
-        if (layer)
+        let layer = this._object.documentData().layerWithID_(layer_name);
+        if (layer) {
             return new Layer(layer, this);
+        }
     }
     
     /**
@@ -123,25 +124,25 @@ export class Document extends WrappedObject {
     iterateWithNativeLayers(layers, filter, block) {
         // if we're given a string as a filter, treat it as a function
         // to call on the layer
-        var loopBlock = block
-        if (typeof filter === 'string' || filter instanceof String) {
+        let loopBlock = block;
+        if (typeof filter === "string" || filter instanceof String) {
             loopBlock = function(layer) {
                 if (layer[filter]) {
-                    block(layer)
+                    block(layer);
                 }
-            }
+            };
         } else if (filter) {
             loopBlock = function(layer) {
                 if (filter(layer)) {
-                    block(layer)
+                    block(layer);
                 }
-            }
+            };
         }
         
-        var loop = layers.objectEnumerator();
-        var item
+        let loop = layers.objectEnumerator();
+        let item;
         while (item = loop.nextObject()) {
-            var layer = this.wrapObject(item)
+            let layer = this.wrapObject(item);
             loopBlock(layer);
         }
     }
@@ -152,7 +153,7 @@ export class Document extends WrappedObject {
      * @param {Layer} layer The layer to center on.
      */
     centerOnLayer(layer) {
-        this._object.contentDrawView().centerRect_(layer._object.rect())
+        this._object.contentDrawView().centerRect_(layer._object.rect());
     }
     
     /**
@@ -162,38 +163,38 @@ export class Document extends WrappedObject {
      */
     static tests() {
         return {
-            "tests" : {
-                "testPages" : function(tester) {
-                    var document = tester.newTestDocument()
-                    var pages = document.pages
+            tests : {
+                testPages(tester) {
+                    let document = tester.newTestDocument();
+                    let pages = document.pages;
                     
-                    tester.assertEqual(pages.length, 1)
-                    tester.assertEqual(pages[0].sketchObject, document.selectedPage.sketchObject)
+                    tester.assertEqual(pages.length, 1);
+                    tester.assertEqual(pages[0].sketchObject, document.selectedPage.sketchObject);
                     
                 },
                 
-                "testSelectedLayers" : function(tester) {
-                    var document = tester.newTestDocument()
-                    var selection = document.selectedLayers
-                    tester.assert(selection.isEmpty, "should have an empty selection")
+                testSelectedLayers(tester) {
+                    let document = tester.newTestDocument();
+                    let selection = document.selectedLayers;
+                    tester.assert(selection.isEmpty, "should have an empty selection");
                     
-                    var page = document.selectedPage
-                    var group = page.newGroup({ 'name': "Test"})
-                    group.select()
+                    let page = document.selectedPage;
+                    let group = page.newGroup({ name: "Test"});
+                    group.select();
                     
-                    tester.assert(!selection.isEmpty, "should no longer have an empty selection")
+                    tester.assert(!selection.isEmpty, "should no longer have an empty selection");
                 },
                 
-                "testLayerWithID" : function(tester) {
-                    var document = tester.newTestDocument()
-                    var page = document.selectedPage
-                    var group = page.newGroup({ 'name': "Test"})
-                    var id = group.id
-                    var found = document.layerWithID(id)
-                    tester.assertEqual(group.sketchObject, found.sketchObject)
-                }
+                testLayerWithID(tester) {
+                    let document = tester.newTestDocument();
+                    let page = document.selectedPage;
+                    let group = page.newGroup({ name: "Test"});
+                    let id = group.id;
+                    let found = document.layerWithID(id);
+                    tester.assertEqual(group.sketchObject, found.sketchObject);
+                },
                 
-            }
+            },
         };
     }
 }
