@@ -87,8 +87,8 @@ export class Style extends WrappedObject {
      */
     set fills(values) {
         const objects = [];
-        for (const b in values) {
-            const color = this.colorFromString(values[b]);
+        for (const value of values) {
+            const color = this.colorFromString(value);
             const fill = MSStyleFill.new();
             fill.setColor_(color);
             fill.setFillType_(BCFillTypeColor);
