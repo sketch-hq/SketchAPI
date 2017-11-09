@@ -22,8 +22,9 @@ export class WrappedObject {
      * Return a new wrapped object for a given Sketch model object.
      *
      * @param {Object} object - The Sketch model object to wrap.
+     * @param document TODO how to handle document?
      */
-    constructor(object) {
+    constructor(object, document?) {
         this._object = object;
     }
     
