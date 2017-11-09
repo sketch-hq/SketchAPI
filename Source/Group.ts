@@ -89,10 +89,10 @@ export class Group extends Layer {
      *
      * @param {MSLayer} newLayer The underlying Sketch layer object.
      * @param {Object} properties The properties to apply.
-     * @param {string} wrapper The name of wrapper class to use.
+     * @param {string} wrapperName The name of wrapper class to use.
      * @return {Layer} The wrapped layer object.
      */
-    _addWrappedLayerWithProperties(newLayer, properties, wrapper) {
+    _addWrappedLayerWithProperties(newLayer, properties, wrapperName) {
         if (newLayer) {
             // add the Sketch object to this layer
             const layer = this._object;
