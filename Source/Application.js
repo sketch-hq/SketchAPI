@@ -21,30 +21,30 @@ import { Style } from './Style.js'
 import { DataSupplier } from './DataSupplier.js'
 
 /**
- Gives you access to Sketch, and provides access to:
- - the document model and the layer tree
- - metadata abound sketch itself
- - utilities for interacting with the user
- - access to the running plugin, it's resources and settings
+ * Gives you access to Sketch, and provides access to:
+ * - the document model and the layer tree
+ * - metadata abound sketch itself
+ * - utilities for interacting with the user
+ * - access to the running plugin, it's resources and settings
  */
 
 export class Application extends WrappedObject {
 
     /**
-     Construct a new Application object.
-     An instance of this class will be passed back to you when you
-     initialise the API, so you generally shouldn't need to make new ones.
-
-     @param context The context dictionary passed to the script when it was invoked.
-     @return A new Application object.
+     * Construct a new Application object.
+     * An instance of this class will be passed back to you when you
+     * initialise the API, so you generally shouldn't need to make new ones.
+     *
+     * @param context The context dictionary passed to the script when it was invoked.
+     * @return A new Application object.
      */
 
     constructor(context) {
         super(context)
 
         /**
-         Metadata about this version of Sketch.
-         @type {dictionary}
+         * Metadata about this version of Sketch.
+         * @type {dictionary}
          */
         this._metadata = MSApplicationMetadata.metadata()
       
@@ -69,9 +69,9 @@ export class Application extends WrappedObject {
     }
 
     /**
-     The version of this API.
-
-     @return A version string.
+     * The version of this API.
+     *
+     * @return A version string.
      */
 
     get api_version() {
@@ -79,14 +79,14 @@ export class Application extends WrappedObject {
     }
 
     /**
-     The context that the API was created in.
-     This is the traditional context argument that is
-     passed to all plugin scripts when they are run.
-
-     In general you should use the API to access Sketch
-     rather than interacting with the context directly.
-
-     @return A context dictionary.
+     * The context that the API was created in.
+     * This is the traditional context argument that is
+     * passed to all plugin scripts when they are run.
+     *
+     * In general you should use the API to access Sketch
+     * rather than interacting with the context directly.
+     *
+     * @return A context dictionary.
      */
 
     get context() {
@@ -95,9 +95,9 @@ export class Application extends WrappedObject {
 
 
     /**
-     The version of Sketch that is running.
-
-     @return The version as a string, eg "3.6".
+     * The version of Sketch that is running.
+     *
+     * @return The version as a string, eg "3.6".
      */
 
     get version() {
@@ -105,9 +105,9 @@ export class Application extends WrappedObject {
     }
 
     /**
-     The exact build of Sketch that is running.
-
-     @return The build number as a string, eg "15352".
+     * The exact build of Sketch that is running.
+     *
+     * @return The build number as a string, eg "15352".
      */
 
     get build() {
@@ -115,9 +115,9 @@ export class Application extends WrappedObject {
     }
 
     /**
-     Returns the full version of Sketch that is running
-
-     @return {string} Version and build number as a string, eg "3.6 (15352)".
+     * Returns the full version of Sketch that is running
+     *
+     * @return {string} Version and build number as a string, eg "3.6 (15352)".
      */
 
     get full_version() {
@@ -125,13 +125,13 @@ export class Application extends WrappedObject {
     }
 
     /**
-     Return the value of a global setting for a given key.
-     @param key The setting to look up.
-     @return The setting value.
-
-     This is equivalent to reading a setting for the currently
-     running version of Sketch using the `defaults` command line tool,
-     eg: defaults read com.bohemiancoding.sketch3 <key>
+     * Return the value of a global setting for a given key.
+     * @param key The setting to look up.
+     * @return The setting value.
+     *
+     * This is equivalent to reading a setting for the currently
+     * running version of Sketch using the `defaults` command line tool,
+     * eg: defaults read com.bohemiancoding.sketch3 <key>
      */
 
     settingForKey(key) {
@@ -139,14 +139,14 @@ export class Application extends WrappedObject {
     }
 
     /**
-     Set the value of a global setting for a given key.
-
-     @param key The setting to set.
-     @param value The value to set it to.
-
-     This is equivalent to writing a setting for the currently
-     running version of Sketch using the `defaults` command line tool,
-     eg: defaults write com.bohemiancoding.sketch3 <key> <value>
+     * Set the value of a global setting for a given key.
+     *
+     * @param key The setting to set.
+     * @param value The value to set it to.
+     *
+     * This is equivalent to writing a setting for the currently
+     * running version of Sketch using the `defaults` command line tool,
+     * eg: defaults write com.bohemiancoding.sketch3 <key> <value>
      */
 
     setSettingForKey(key, value) {
@@ -154,11 +154,11 @@ export class Application extends WrappedObject {
     }
 
     /**
-     Return a file URL pointing to a named resource in the plugin's Resources/
-     folder.
-
-     @param name The resource file name, including any file extension.
-     @return The resource location, in the form "file://path/to/resource".
+     * Return a file URL pointing to a named resource in the plugin's Resources/
+     * folder.
+     *
+     * @param name The resource file name, including any file extension.
+     * @return The resource location, in the form "file://path/to/resource".
      */
 
     resourceNamed(name) {
@@ -166,11 +166,11 @@ export class Application extends WrappedObject {
     }
 
     /**
-     Shows a simple input sheet which displays a message, and asks for a single string
-     input.
-     @param msg The prompt message to show.
-     @param initial The initial value of the input string.
-     @return The string that the user input.
+     * Shows a simple input sheet which displays a message, and asks for a single string
+     * input.
+     * @param msg The prompt message to show.
+     * @param initial The initial value of the input string.
+     * @return The string that the user input.
      */
 
     getStringFromUser(msg, initial) {
@@ -180,17 +180,17 @@ export class Application extends WrappedObject {
     }
 
     /**
-     Shows an input sheet which displays a popup with a series of options,
-     from which the user is asked to choose.
-
-     @param msg The prompt message to show.
-     @param items A list of option items.
-     @param selectedItemIndex The index of the item to select initially.
-     @return An array with two items: [responseCode, selection].
-
-     The result consists of a response code and a selection. The code will be
-     one of NSAlertFirstButtonReturn or NSAlertSecondButtonReturn.
-     The selection will be the integer index of the selected item.
+     * Shows an input sheet which displays a popup with a series of options,
+     * from which the user is asked to choose.
+     *
+     * @param msg The prompt message to show.
+     * @param items A list of option items.
+     * @param selectedItemIndex The index of the item to select initially.
+     * @return An array with two items: [responseCode, selection].
+     *
+     * The result consists of a response code and a selection. The code will be
+     * one of NSAlertFirstButtonReturn or NSAlertSecondButtonReturn.
+     * The selection will be the integer index of the selected item.
      */
 
     getSelectionFromUser(msg, items, selectedItemIndex) {
@@ -213,9 +213,9 @@ export class Application extends WrappedObject {
     }
 
     /**
-     Output a message to the log console.
-
-     @param {string} message The message to output.
+     * Output a message to the log console.
+     *
+     * @param {string} message The message to output.
      */
 
     log(message) {
@@ -223,10 +223,10 @@ export class Application extends WrappedObject {
     }
 
     /**
-     Assert that a given condition is true.
-     If the condition is false, throws an exception.
-
-     @param condition An expression that is expected to evaluate to true if everything is ok.
+     * Assert that a given condition is true.
+     * If the condition is false, throws an exception.
+     *
+     * @param condition An expression that is expected to evaluate to true if everything is ok.
      */
 
     assert(condition) {
@@ -236,14 +236,14 @@ export class Application extends WrappedObject {
     }
 
     /**
-     The selected document.
-
-     If the user invoked the script explicitly (for example by selecting a menu item),
-     this will be the document that they were working in at the time - ie the frontmost one.
-     If the script was invoked as an action handler, this will be the document that the action
-     occurred in.
-
-     @return A Document object.
+     * The selected document.
+     *
+     * If the user invoked the script explicitly (for example by selecting a menu item),
+     * this will be the document that they were working in at the time - ie the frontmost one.
+     * If the script was invoked as an action handler, this will be the document that the action
+     * occurred in.
+     *
+     * @return A Document object.
      */
 
     get selectedDocument() {
@@ -252,8 +252,8 @@ export class Application extends WrappedObject {
 
 
     /**
-     Create a new document and bring it to the front.
-     @return The new document.
+     * Create a new document and bring it to the front.
+     * @return The new document.
      */
 
     newDocument() {
@@ -280,12 +280,12 @@ export class Application extends WrappedObject {
     }
 
     /**
-     Show a small, temporary, message to the user.
-     The message appears at the bottom of the selected document,
-     and is visible for a short period of time. It should consist of a single
-     line of text.
-
-     @param {string} message The message to show.
+     * Show a small, temporary, message to the user.
+     * The message appears at the bottom of the selected document,
+     * and is visible for a short period of time. It should consist of a single
+     * line of text.
+     *
+     * @param {string} message The message to show.
      */
 
     message(message) {
@@ -293,13 +293,13 @@ export class Application extends WrappedObject {
     }
 
     /**
-     Show an alert with a custom title and message.
-
-     @param {string} title The title of the alert.
-     @param {string} message The text of the message.
-
-     The alert is modal, so it will stay around until the user dismisses it
-     by pressing the OK button.
+     * Show an alert with a custom title and message.
+     *
+     * @param {string} title The title of the alert.
+     * @param {string} message The text of the message.
+     *
+     * The alert is modal, so it will stay around until the user dismisses it
+     * by pressing the OK button.
      */
 
     alert(title, message) {
@@ -308,10 +308,10 @@ export class Application extends WrappedObject {
     }
 
     /**
-     Return a lookup table of known mappings between Sketch model classes
-     and our JS API wrapper classes.
-
-     @return {dictionary} A dictionary with keys for the Sketch Model classes, and values for the corresponding API wrapper classes.
+     * Return a lookup table of known mappings between Sketch model classes
+     * and our JS API wrapper classes.
+     *
+     * @return {dictionary} A dictionary with keys for the Sketch Model classes, and values for the corresponding API wrapper classes.
      */
 
     wrapperMappings() {
@@ -328,15 +328,15 @@ export class Application extends WrappedObject {
 
   
     /**
-     Return a wrapped version of a Sketch object.
-     We don't know about *all* Sketch object types, but
-     for some we will return a special subclass.
-     The fallback position is just to return an instance of WrappedObject.
-
-     @param {object} sketchObject The underlying sketch object that we're wrapping.
-     @param {Document} inDocument The wrapped document that this object is part of.
-     @return {WrappedObject} A javascript object (subclass of WrappedObject), which represents the Sketch object we were given.
-    */
+     * Return a wrapped version of a Sketch object.
+     * We don't know about *all* Sketch object types, but
+     * for some we will return a special subclass.
+     * The fallback position is just to return an instance of WrappedObject.
+     *
+     * @param {object} sketchObject The underlying sketch object that we're wrapping.
+     * @param {Document} inDocument The wrapped document that this object is part of.
+     * @return {WrappedObject} A javascript object (subclass of WrappedObject), which represents the Sketch object we were given.
+     */
 
     wrapObject(sketchObject, inDocument) {
       var mapping = this.wrapperMappings()
@@ -351,12 +351,12 @@ export class Application extends WrappedObject {
     }
 
     /**
-     Return a list of tests to run for this class.
-
-     We could do some fancy introspection here to derive the tests from
-     the class, but for now we're opting for the simple approach.
-
-     @return {dictionary} A dictionary containing the tests to run. Each key is the name of a test, each value is a function which takes a Tester instance.
+     * Return a list of tests to run for this class.
+     *
+     * We could do some fancy introspection here to derive the tests from
+     * the class, but for now we're opting for the simple approach.
+     *
+     * @return {dictionary} A dictionary containing the tests to run. Each key is the name of a test, each value is a function which takes a Tester instance.
      */
 
     static tests() {
@@ -397,13 +397,13 @@ export class Application extends WrappedObject {
     }
 
     /**
-     Run all of our internal unit tests.
-     Returns a dictionary indicating how many tests ran, passed, failed, and crashed,
-     and a list of more detailed information for each failure.
-
-     At some point we may switch to using Mocha or some other test framework, but for
-     now we want to be able to invoke the tests from the Sketch side or from a plugin
-     command, so it's simpler to use a simple test framework of our own devising.
+     * Run all of our internal unit tests.
+     * Returns a dictionary indicating how many tests ran, passed, failed, and crashed,
+     * and a list of more detailed information for each failure.
+     *
+     * At some point we may switch to using Mocha or some other test framework, but for
+     * now we want to be able to invoke the tests from the Sketch side or from a plugin
+     * command, so it's simpler to use a simple test framework of our own devising.
      */
 
     runUnitTests() {

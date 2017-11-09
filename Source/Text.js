@@ -42,17 +42,17 @@ const NSTextAlignment = {
 }
 
 /**
-Represents a text layer.
-*/
+ * Represents a text layer.
+ */
 
 export class Text extends Layer {
 
   /**
-  Make a new text object.
-
-  @param {MSTextLayer} text The underlying model object from Sketch.
-  @param {Document} document The document that the text layer belongs to.
-  */
+   * Make a new text object.
+   * 
+   * @param {MSTextLayer} text The underlying model object from Sketch.
+   * @param {Document} document The document that the text layer belongs to.
+   */
 
   constructor(text, document) {
     super(text, document)
@@ -60,12 +60,12 @@ export class Text extends Layer {
 
 
   /**
-  Is this a text layer?
-
-  All Layer objects respond to this method, but only text layers return true.
-
-  @return {bool} true for instances of Group, false for any other layer type.
-  */
+   * Is this a text layer?
+   * 
+   * All Layer objects respond to this method, but only text layers return true.
+   * 
+   * @return {bool} true for instances of Group, false for any other layer type.
+   */
 
   get isText() {
     return true
@@ -73,10 +73,10 @@ export class Text extends Layer {
 
 
   /**
-  The text of the layer.
-
-  @return {string} The layer text.
-  */
+   * The text of the layer.
+   * 
+   * @return {string} The layer text.
+   */
 
   get text() {
     return this._object.stringValue()
@@ -84,12 +84,12 @@ export class Text extends Layer {
 
 
   /**
-  Set the text of the layer.
-  If the layer hasn't explicitly been given a name, this will also change
-  the layer's name to the text value.
-
-  @param {string} value The text to use.
-  */
+   * Set the text of the layer.
+   * If the layer hasn't explicitly been given a name, this will also change
+   * the layer's name to the text value.
+   * 
+   * @param {string} value The text to use.
+   */
 
   set text(value) {
     var object = this.sketchObject
@@ -101,10 +101,10 @@ export class Text extends Layer {
 
 
   /**
-  Set the font of the layer to an NSFont object.
-
-  @param {NSFont} value The font to use.
-  */
+   * Set the font of the layer to an NSFont object.
+   * 
+   * @param {NSFont} value The font to use.
+   */
 
   set font(value) {
     this._object.font = value
@@ -112,21 +112,21 @@ export class Text extends Layer {
 
 
   /**
-  Set the font of the layer to the system font at a given size.
-
-  @param {number} size The system font size to use.
-  */
+   * Set the font of the layer to the system font at a given size.
+   * 
+   * @param {number} size The system font size to use.
+   */
 
   set systemFontSize(size) {
     this._object.font = NSFont.systemFontOfSize_(size)
   }
 
   /**
-  The alignment of the layer.
-  This will be one of the values: "left", "center", "right", "justified", "natural".
-
-  @return {string} The alignment mode.
-  */
+   * The alignment of the layer.
+   * This will be one of the values: "left", "center", "right", "justified", "natural".
+   * 
+   * @return {string} The alignment mode.
+   */
 
   get alignment() {
     var raw = this._object.textAlignment()
@@ -142,13 +142,13 @@ export class Text extends Layer {
 
 
   /**
-  Set the alignment of the layer.
-
-  The mode supplied can be a string or a number.
-  If it's a string, it should be one of the values: "left", "center", "right", "justified", "natural".
-
-  @param {string} mode The alignment mode to use.
-  */
+   * Set the alignment of the layer.
+   * 
+   * The mode supplied can be a string or a number.
+   * If it's a string, it should be one of the values: "left", "center", "right", "justified", "natural".
+   * 
+   * @param {string} mode The alignment mode to use.
+   */
 
   set alignment(mode) {
     var translated = NSTextAlignment[mode]
@@ -157,10 +157,10 @@ export class Text extends Layer {
 
 
   /**
-  Set the layer to be fixed width or variable width.
-
-  @param {bool} value Whether the layer should be fixed width (true) or variable width (false).
-  */
+   * Set the layer to be fixed width or variable width.
+   * 
+   * @param {bool} value Whether the layer should be fixed width (true) or variable width (false).
+   */
 
   set fixedWidth(value) {
     if (value) {
@@ -172,8 +172,8 @@ export class Text extends Layer {
 
 
   /**
-  Adjust the frame of the layer to fit its contents.
-  */
+   * Adjust the frame of the layer to fit its contents.
+   */
 
   adjustToFit() {
     this._object.adjustFrameToFit()
@@ -181,10 +181,10 @@ export class Text extends Layer {
 
 
   /**
-  Return a list of the text fragments for the text.
-
-  @return {array} The line fragments. Each one is a dictionary containing a rectangle, and a baseline offset.
-  */
+   * Return a list of the text fragments for the text.
+   * 
+   * @return {array} The line fragments. Each one is a dictionary containing a rectangle, and a baseline offset.
+   */
 
   get fragments() {
     var textLayer = this.sketchObject
@@ -218,10 +218,10 @@ export class Text extends Layer {
 
 
   /**
-  Set whether to use constant baseline line spacing mode.
-
-  @param {bool} value If true, we use constant baseline spacing mode. This is the default for new text layers in Sketch. If false, we use the legacy line spacing mode.
-  */
+   * Set whether to use constant baseline line spacing mode.
+   * 
+   * @param {bool} value If true, we use constant baseline spacing mode. This is the default for new text layers in Sketch. If false, we use the legacy line spacing mode.
+   */
 
   set useConstantBaselines(value) {
     var lineSpacingBehaviour = value ? BCTextLineSpacingBehaviourV3 : BCTextLineSpacingBehaviourV2
@@ -236,10 +236,10 @@ export class Text extends Layer {
 
 
   /**
-  Return a list of tests to run for this class.
-
-  @return {dictionary} A dictionary containing the tests to run. Each key is the name of a test, each value is a function which takes a Tester instance.
-  */
+   * Return a list of tests to run for this class.
+   * 
+   * @return {dictionary} A dictionary containing the tests to run. Each key is the name of a test, each value is a function which takes a Tester instance.
+   */
 
   static tests() {
     return {
