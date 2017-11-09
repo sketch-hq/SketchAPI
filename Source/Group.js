@@ -46,6 +46,18 @@ export class Group extends Layer {
   @return {dictionary} A dictionary containing the tests to run. Each key is the name of a test, each value is a function which takes a Tester instance.
   */
 
+  /**
+    Return the layers in the group.
+
+    @return {array} The selected layers.
+    */
+  get layers() {
+      var layers = [];
+      this.iterate(function(layer) {
+          layers.push(layer);
+      });  
+      return layers;
+  } 
 
   /**
   Perform a function for every sub-layer inside this one.
