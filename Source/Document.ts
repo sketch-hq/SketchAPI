@@ -126,13 +126,13 @@ export class Document extends WrappedObject {
         // to call on the layer
         const loopBlock = block;
         if (typeof filter === "string" || filter instanceof String) {
-            loopBlock = function(layer) {
+            loopBlock = (layer) => {
                 if (layer[filter]) {
                     block(layer);
                 }
             };
         } else if (filter) {
-            loopBlock = function(layer) {
+            loopBlock = (layer) => {
                 if (filter(layer)) {
                     block(layer);
                 }
