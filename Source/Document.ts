@@ -124,15 +124,15 @@ export class Document extends WrappedObject {
     iterateWithNativeLayers(layers, filter, block) {
         // if we're given a string as a filter, treat it as a function
         // to call on the layer
-        const loopBlock = block;
+        let mutableLoopBlock = block;
         if (typeof filter === "string" || filter instanceof String) {
-            loopBlock = (layer) => {
+            mutableLoopBlock = (layer) => {
                 if (layer[filter]) {
                     block(layer);
                 }
             };
         } else if (filter) {
-            loopBlock = (layer) => {
+            mutableLoopBlock = (layer) => {
                 if (filter(layer)) {
                     block(layer);
                 }
@@ -143,7 +143,7 @@ export class Document extends WrappedObject {
         let mutableItem;
         while (mutableItem = loop.nextObject()) {
             const layer = this.wrapObject(mutableItem);
-            loopBlock(layer);
+            mutableLoopBlock(layer);
         }
     }
     
