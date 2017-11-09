@@ -52,4 +52,4 @@ sketch.alert("Title", "message");
 
 */
 
-var __globals = this;
+const __globals = this;
