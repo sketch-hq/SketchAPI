@@ -26,3 +26,5 @@ declare const NSMakePoint: any;
 declare const NSArray: any;
 declare const NSImage: any;
 declare const MSImageData: any;
+declare const MSLayerMovement: any;
+declare const MSSelfContainedHighLevelExporter: any;
