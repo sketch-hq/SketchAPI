@@ -24,3 +24,5 @@ declare const __globals: any;
 declare const CGRectMake: any;
 declare const NSMakePoint: any;
 declare const NSArray: any;
+declare const NSImage: any;
+declare const NSImageData: any;
