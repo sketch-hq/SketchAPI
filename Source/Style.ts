@@ -6,6 +6,7 @@
 // ********************************
 
 import { WrappedObject } from "./WrappedObject";
+import { Tester } from "./Tester";
 
 /// A solid fill/border.
 const BCFillTypeColor    = 0;
@@ -107,13 +108,13 @@ export class Style extends WrappedObject {
     static tests() {
         return {
             tests: {
-                testBorders(tester) {
+                testBorders(tester: Tester) {
                     const style = new Style();
                     style.borders = [ "#11223344", "#1234" ];
                     tester.assertEqual(style.sketchObject.borders().count(), 2);
                 },
                 
-                testFills(tester) {
+                testFills(tester: Tester) {
                     const style = new Style();
                     style.borders = [ "#11223344", "#1234" ];
                     tester.assertEqual(style.sketchObject.borders().count(), 2);
