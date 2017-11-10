@@ -1,3 +1,4 @@
+declare const __globals: any;
 declare const MSApplicationMetadata: any;
 declare const NSUserDefaults: any;
 declare const MSModalInputSheet: any;
@@ -20,7 +21,6 @@ declare const NSFont: any;
 declare const CGRect: any;
 declare const NSURL: any;
 declare const MOBoxedObject: any;
-declare const __globals: any;
 declare const CGRectMake: any;
 declare const NSMakePoint: any;
 declare const NSArray: any;
