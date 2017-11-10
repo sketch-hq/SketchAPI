@@ -41,7 +41,7 @@ export class Layer extends WrappedObject {
      * @param {string} name The new name.
      */
     set name(name) {
-        this._object.setName_(value);
+        this._object.setName_(name);
     }
     
     /**
@@ -62,9 +62,9 @@ export class Layer extends WrappedObject {
      *
      * @param {Rectangle} frame The new frame of the layer.
      */
-    set frame(frame) {
+    set frame(frame: Rectangle) {
         const f = this._object.frame();
-        f.setRect_(NSMakeRect(value.x, value.y, value.width, value.height));
+        f.setRect_(NSMakeRect(frame.x, frame.y, frame.width, frame.height));
     }
     
     /**
@@ -223,9 +223,9 @@ export class Layer extends WrappedObject {
      * @param {Rectangle} rect The rectangle to convert.
      * @return {Rectangle} The converted rectangle expressed in page coordinates.
      */
-    localRectToPageRect(rect) {
-        const rect = this.sketchObject.convertRectToAbsoluteCoordinates(rect.asCGRect);
-        return new Rectangle(rect.x, rect.y, rect.width, rect.height);
+    localRectToPageRect(rect: Rectangle) {
+        const r = this.sketchObject.convertRectToAbsoluteCoordinates(rect.asCGRect);
+        return new Rectangle(r.x, r.y, r.width, r.height);
     }
     
     /**
@@ -234,7 +234,7 @@ export class Layer extends WrappedObject {
      * @param {Rectangle} rect The rectangle to convert.
      * @return {Rectangle} The converted rectangle expressed in the coordinate system of the parent layer.
      */
-    localRectToParentRect(rect) {
+    localRectToParentRect(rect: Rectangle) {
         const frame = this.frame;
         return new Rectangle(rect.x + frame.x, rect.y + frame.y, rect.width, rect.height);
     }
@@ -242,7 +242,7 @@ export class Layer extends WrappedObject {
     /**
      * Returns a list of export options with any missing ones replaced by default values.
      */
-    exportOptionsMergedWithDefaults(options) {
+    exportOptionsMergedWithDefaults(options: any) {
         const defaults = {
             "compact": false,
             "include-namespaces": false,
@@ -266,7 +266,7 @@ export class Layer extends WrappedObject {
      *
      * @param {Object} options Options indicating which layers to export, which sizes and formats to use, etc.
      */
-    export(options) {
+    export(options: any) {
         const merged = this.exportOptionsMergedWithDefaults(options);
         const exporter = MSSelfContainedHighLevelExporter.alloc().initWithOptions(merged);
         exporter.exportLayers([this.sketchObject]);
