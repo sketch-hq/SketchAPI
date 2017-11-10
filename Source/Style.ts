@@ -36,7 +36,7 @@ export class Style extends WrappedObject {
     /**
      * Given a string description of a color, return an MSColor.
      */
-    colorFromString(value) {
+    colorFromString(value: string) {
         const immutable = MSImmutableColor.colorWithSVGString_(value);
         return MSColor.alloc().initWithImmutableObject_(immutable);
     }
@@ -56,7 +56,7 @@ export class Style extends WrappedObject {
      *
      * @param {Array} values A list of colors - each one representing a border to create.
      */
-    set borders(values) {
+    set borders(values: any[]) {
         const objects = [];
         for (const value of values) {
             const color = this.colorFromString(value);
@@ -86,7 +86,7 @@ export class Style extends WrappedObject {
      * @param {Array} values A list of colors - each one representing a fill to create.
      *
      */
-    set fills(values) {
+    set fills(values: any[]) {
         const objects = [];
         for (const value of values) {
             const color = this.colorFromString(value);
