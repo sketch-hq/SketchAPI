@@ -30,5 +30,4 @@ function SketchAPIWithCapturedContext(context: SketchContext) {
 // HACK: expose the SketchAPIWithCapturedContext function globally
 // I suspect that there's a better way to do this, but I've
 // not yet figured it out.
-
 __globals.SketchAPIWithCapturedContext = SketchAPIWithCapturedContext;
