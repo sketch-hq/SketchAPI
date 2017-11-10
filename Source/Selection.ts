@@ -9,6 +9,7 @@ import { Layer } from "./Layer";
 import { WrappedObject } from "./WrappedObject";
 import { Page } from "./Page";
 import { Tester } from "./Tester";
+import { IterateBlock, IterateFilter } from "./Document";
 
 /**
  * Represents the layers that the user has selected.
@@ -58,10 +59,10 @@ export class Selection extends WrappedObject {
      *
      * @param {function(layer: Layer)} block The function to execute for each layer.
      */
-    iterateThenClear(block) {
+    iterateThenClear(block: IterateBlock) {
         const layers = this.nativeLayers;
         this.clear();
-        this._page._document.iterateWithNativeLayers(layers, null, block);
+        this._page._document.iterateWithNativeLayers(layers, undefined, block);
     }
     
     /**
@@ -70,7 +71,7 @@ export class Selection extends WrappedObject {
      * @param {function(layer: Layer)} filter Filter function called on each layer first to check whether it should be iterated.
      * @param {function(layer: Layer)} block The function to execute for each layer.
      */
-    iterateWithFilterThenClear(filter, block) {
+    iterateWithFilterThenClear(filter: IterateFilter, block: IterateBlock) {
         const layers = this.nativeLayers;
         this.clear();
         this._page._document.iterateWithNativeLayers(layers, filter, block);
@@ -81,8 +82,8 @@ export class Selection extends WrappedObject {
      *
      * @param {function(layer: Layer)} block The function to execute for each layer.
      */
-    iterate(block) {
-        this._page._document.iterateWithNativeLayers(this.nativeLayers, null, block);
+    iterate(block: IterateBlock) {
+        this._page._document.iterateWithNativeLayers(this.nativeLayers, undefined, block);
     }
     
     /**
@@ -91,7 +92,7 @@ export class Selection extends WrappedObject {
      * @param {function(layer: Layer)} filter Filter function called on each layer first to check whether it should be iterated.
      * @param {function(layer: Layer)} block The function to execute for each layer.
      */
-    iterateWithFilter(filter, block) {
+    iterateWithFilter(filter: IterateFilter, block: IterateBlock) {
         this._page._document.iterateWithNativeLayers(this.nativeLayers, filter, block);
     }
     

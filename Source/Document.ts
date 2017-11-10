@@ -12,6 +12,9 @@ import { WrappedObject } from "./WrappedObject";
 import { Application } from "./Application";
 import { Tester } from "./Tester";
 
+export type IterateFilter = string | ((layer: Layer) => void) | undefined;
+export type IterateBlock = ((layer: Layer) => void);
+
 /**
  * A Sketch document.
  */
@@ -121,7 +124,7 @@ export class Document extends WrappedObject {
      * @param {function(layer: Layer)} filter A filter function to call for each layer. If it returns false, the layer is skipped.
      * @param {function(layer: Layer)} block The function to execute for each layer.
      */
-    iterateWithNativeLayers(layers: any, filter: string | ((layer: Layer) => void) | undefined, block: (layer: Layer) => void) {
+    iterateWithNativeLayers(layers: any, filter: IterateFilter, block: IterateBlock) {
         // if we're given a string as a filter, treat it as a function
         // to call on the layer
         let mutableLoopBlock = block;

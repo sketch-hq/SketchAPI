@@ -9,7 +9,7 @@ import { Layer } from "./Layer";
 import { Rectangle } from "./Rectangle";
 import { Style } from "./Style";
 import { TestSpecification, Tester } from "./Tester";
-import { Document } from "./Document";
+import { Document, IterateBlock, IterateFilter } from "./Document";
 
 /**
  * Represents a group of layers.
@@ -47,7 +47,7 @@ export class Group extends Layer {
      *
      * @param {function(layer: Layer)} block The function to execute for each layer.
      */
-    iterate(block: (layer: Layer) => void) {
+    iterate(block: IterateBlock) {
         const layers = this._object.layers();
         this._document.iterateWithNativeLayers(layers, undefined, block);
     }
@@ -60,7 +60,7 @@ export class Group extends Layer {
      * @param {function(layer: Layer)} filter Filter function called on each layer first to check whether it should be iterated.
      * @param {function(layer: Layer)} block The function to execute for each layer.
      */
-    iterateWithFilter(filter: undefined | string | ((layer: Layer) => boolean), block: (layer: Layer) => void) {
+    iterateWithFilter(filter: IterateFilter, block: IterateBlock) {
         const layers = this._object.layers();
         this._document.iterateWithNativeLayers(layers, filter, block);
     }
