@@ -6,6 +6,8 @@
 // ********************************
 
 import { Group } from "./Group";
+import { Document } from "./Document";
+import { Tester } from "./Tester";
 
 /**
  * A Sketch artboard.
@@ -17,7 +19,7 @@ export class Artboard extends Group {
      * @param artboard {MSArtboardGroup} The underlying MSArtboardGroup model object from Sketch.
      * @param document The document that the artboard belongs to.
      */
-    constructor(artboard, document) {
+    constructor(artboard: typeof MSArtboardGroup, document: Document) {
         super(artboard, document);
     }
     
@@ -40,7 +42,7 @@ export class Artboard extends Group {
     static tests() {
         return {
             tests: {
-                testIsArtboard(tester) {
+                testIsArtboard(tester: Tester) {
                     const document = tester.newTestDocument();
                     const page = document.selectedPage;
                     const artboard = page.newArtboard({name: "Test"});
