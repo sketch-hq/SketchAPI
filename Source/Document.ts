@@ -16,6 +16,9 @@ import { Tester } from "./Tester";
  * A Sketch document.
  */
 export class Document extends WrappedObject {
+    /**
+     * The application that this document belongs to.
+     */
     _application: Application;
     
     /**
@@ -32,13 +35,6 @@ export class Document extends WrappedObject {
      */
     constructor(document: Document, application: Application) {
         super(document);
-        
-        /**
-         * The application that this document belongs to.
-         *
-         * @type {Application}
-         */
-        
         this._application = application;
     }
     
