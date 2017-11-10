@@ -7,6 +7,7 @@
 
 import { Layer } from "./Layer";
 import { Rectangle } from "./Rectangle";
+import { Tester } from "./Tester";
 
 /// Width is adjusted to fit the content.
 const BCTextBehaviourFlexibleWidth = 0;
@@ -214,7 +215,7 @@ export class Text extends Layer {
     static tests() {
         return {
             tests: {
-                testIsText(tester) {
+                testIsText(tester: Tester) {
                     const document = tester.newTestDocument();
                     const page = document.selectedPage;
                     const text = page.newText();
@@ -222,7 +223,7 @@ export class Text extends Layer {
                     tester.assertFalse(page.isText);
                 },
                 
-                testText(tester) {
+                testText(tester: Tester) {
                     const document = tester.newTestDocument();
                     const page = document.selectedPage;
                     const text = page.newText({text: "blah"});
@@ -231,7 +232,7 @@ export class Text extends Layer {
                     tester.assertEqual(text.text, "doodah");
                 },
                 
-                testAdjustToFit(tester) {
+                testAdjustToFit(tester: Tester) {
                     const document = tester.newTestDocument();
                     const page = document.selectedPage;
                     const text = page.newText({text: "blah", frame: new Rectangle(10, 10, 1000, 1000)});
@@ -239,7 +240,7 @@ export class Text extends Layer {
                     tester.assertEqual(text.frame, new Rectangle(10, 10, 23, 14));
                 },
                 
-                testAlignment(tester) {
+                testAlignment(tester: Tester) {
                     const document = tester.newTestDocument();
                     const page = document.selectedPage;
                     const text = page.newText({text: "blah", frame: new Rectangle(10, 10, 1000, 1000)});
