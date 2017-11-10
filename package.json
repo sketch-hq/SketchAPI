@@ -9,15 +9,13 @@
         "prestart": "npm run clean",
         "start": "npm run compile && npm run deploy",
         "poststart": "rm -Rf build/tmp",
-        
         "clean": "rm -Rf build && rm -Rf src_cjs && mkdir build && mkdir build/tmp",
         "compile": "tsc -p . && browserify src_cjs/API.js --outfile build/tmp/api.js && cat header.js build/tmp/api.js > build/api.js",
         "deploy": "cp build/api.js $npm_package_config_output",
-        
         "watch": "watch 'npm start' src"
     },
     "devDependencies": {
-        "browserify": "^14.4.0",
+        "browserify": "^14.5.0",
         "watch": "^1.0.2"
     },
     "dependencies": {}
