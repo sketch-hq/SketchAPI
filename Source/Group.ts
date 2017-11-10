@@ -8,19 +8,22 @@
 import { Layer } from "./Layer";
 import { Rectangle } from "./Rectangle";
 import { Style } from "./Style";
-import { TestSpecification } from "./Tester";
+import { TestSpecification, Tester } from "./Tester";
+import { Document } from "./Document";
 
 /**
  * Represents a group of layers.
  */
 export class Group extends Layer {
+    _document: Document;
+    
     /**
      * Make a new group object.
      *
      * @param {MSLayerGroup} group  The underlying model object from Sketch.
      * @param {Document} document The document that the group belongs to.
      */
-    constructor(group, document) {
+    constructor(group: typeof MSLayerGroup, document: Document) {
         super(group, document);
     }
     
@@ -46,9 +49,9 @@ export class Group extends Layer {
      *
      * @param {function(layer: Layer)} block The function to execute for each layer.
      */
-    iterate(block) {
+    iterate(block: (layer: Layer) => void) {
         const layers = this._object.layers();
-        this._document.iterateWithNativeLayers(layers, null, block);
+        this._document.iterateWithNativeLayers(layers, undefined, block);
     }
     
     /**
@@ -59,7 +62,7 @@ export class Group extends Layer {
      * @param {function(layer: Layer)} filter Filter function called on each layer first to check whether it should be iterated.
      * @param {function(layer: Layer)} block The function to execute for each layer.
      */
-    iterateWithFilter(filter, block) {
+    iterateWithFilter(filter: undefined | string | ((layer: Layer) => boolean), block: (layer: Layer) => void) {
         const layers = this._object.layers();
         this._document.iterateWithNativeLayers(layers, filter, block);
     }
@@ -70,7 +73,7 @@ export class Group extends Layer {
      * @param {Rectangle} rect The rectangle to convert.
      * @return {Rectangle} The rectangle in local coordinates.
      */
-    pageRectToLocalRect(rect) {
+    pageRectToLocalRect(rect: Rectangle) {
         const origin = this._object.convertPoint_fromLayer_(NSMakePoint(rect.x, rect.y), null);
         return new Rectangle(origin.x, origin.y, rect.width, rect.height);
     }
@@ -92,7 +95,7 @@ export class Group extends Layer {
      * @param {string} wrapperName The name of wrapper class to use.
      * @return {Layer} The wrapped layer object.
      */
-    _addWrappedLayerWithProperties(newLayer, properties, wrapperName) {
+    _addWrappedLayerWithProperties(newLayer: typeof MSLayer, properties: any, wrapperName: string) {
         if (newLayer) {
             // add the Sketch object to this layer
             const layer = this._object;
@@ -115,7 +118,7 @@ export class Group extends Layer {
      * @param {Object} properties The properties to use when looking for a frame value.
      * @return {Rectangle} The frame rectangle to use.
      */
-    _frameForLayerWithProperties(properties) {
+    _frameForLayerWithProperties(properties: any) {
         const frame = properties.frame;
         if (frame) {
             delete properties["frame"];
@@ -129,7 +132,7 @@ export class Group extends Layer {
      * Extract the style to use for a layer from some properties.
      * If the style wasn't supplied at all, we use the default one.
      */
-    _styleForLayerWithProperties(properties) {
+    _styleForLayerWithProperties(properties: any) {
         const style = properties.style ? properties.style : new Style();
         
         const fills = properties.fills;
@@ -154,7 +157,7 @@ export class Group extends Layer {
      * @param {Object} properties Properties to apply to the shape.
      * @return {Shape} the new shape.
      */
-    newShape(properties = {}) {
+    newShape(properties: any = {}) {
         const frame = this._frameForLayerWithProperties(properties);
         // TODO: Eventually we want to distinguish between different shape sub-types here depending
         //       on what is set in properties ('frame', 'path', 'radius', etc), and to construct the
@@ -213,7 +216,7 @@ export class Group extends Layer {
     static tests(): TestSpecification {
         return {
             tests: {
-                testIterate(tester) {
+                testIterate(tester: Tester) {
                     const document = tester.newTestDocument();
                     const page = document.selectedPage;
                     const group = page.newGroup();
@@ -229,7 +232,7 @@ export class Group extends Layer {
                     tester.assertEqual(mutableGroups, 1);
                 },
                 
-                testIterateWithFilter(tester) {
+                testIterateWithFilter(tester: Tester) {
                     const document = tester.newTestDocument();
                     const page = document.selectedPage;
                     const group = page.newGroup();
@@ -245,7 +248,7 @@ export class Group extends Layer {
                     tester.assertEqual(mutableGroups, 1);
                 },
                 
-                testPageToLocalRect(tester) {
+                testPageToLocalRect(tester: Tester) {
                     const document = tester.newTestDocument();
                     const page = document.selectedPage;
                     const group = page.newGroup({frame: new Rectangle(100, 100, 100, 100)});
@@ -253,7 +256,7 @@ export class Group extends Layer {
                     tester.assertEqual(local, new Rectangle(25, -25, 50, 200));
                 },
                 
-                testAdjustToFit(tester) {
+                testAdjustToFit(tester: Tester) {
                     const document = tester.newTestDocument();
                     const page = document.selectedPage;
                     const group = page.newGroup({frame: new Rectangle(100, 100, 100, 100)});
@@ -263,7 +266,7 @@ export class Group extends Layer {
                     tester.assertEqual(frame, new Rectangle(150, 150, 50, 50));
                 },
                 
-                testIsGroup(tester) {
+                testIsGroup(tester: Tester) {
                     const document = tester.newTestDocument();
                     const page = document.selectedPage;
                     const group = page.newGroup();
