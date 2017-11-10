@@ -19,4 +19,5 @@ declare const MSDocument: any;
 declare const NSFont: any;
 declare const CGRect: any;
 declare const NSURL: any;
+declare const MOBoxedObject: any;
 declare const __globals: any;

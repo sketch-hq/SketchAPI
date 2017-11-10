@@ -2,10 +2,10 @@ import { Application } from "./Application";
 
 export interface SketchContext {
     api(): Application;
-    command: {};
-    document: {};
-    plugin: {};
-    scriptPath: {};
-    scriptURL: {};
-    selection: any[];
+    command: typeof MOBoxedObject;
+    document: typeof MOBoxedObject;
+    plugin: typeof MOBoxedObject;
+    scriptPath: typeof MOBoxedObject;
+    scriptURL: typeof MOBoxedObject;
+    selection: Array<typeof MOBoxedObject>;
 }
