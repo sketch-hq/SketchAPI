@@ -33,3 +33,6 @@ declare const MSImmutableColor: any;
 declare const MSColor: any;
 declare const MSStyleBorder: any;
 declare const MSStyleFill: any;
+declare const MOPointer: any;
+declare const NSMakeRange: any;
+declare const NSMaxRange: any;
