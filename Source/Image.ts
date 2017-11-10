@@ -6,6 +6,8 @@
 // ********************************
 
 import { Layer } from "./Layer";
+import { Document } from "./Document";
+import { Tester } from "./Tester";
 
 /**
  * Represents an image layer.
@@ -17,7 +19,7 @@ export class Image extends Layer {
      * @param {MSBitmapLayer} layer The underlying model object from Sketch.
      * @param {Document} document The document that the bitmap layer belongs to.
      */
-    constructor(layer, document) {
+    constructor(layer: typeof MSBitmapLayer, document: Document) {
         super(layer, document);
     }
     
@@ -37,7 +39,7 @@ export class Image extends Layer {
      *
      * @param {NSURL} url The location of the image to use.
      */
-    set imageURL(url) {
+    set imageURL(url: typeof NSURL) {
         const image = NSImage.alloc().initWithContentsOfURL_(url);
         const imageData = MSImageData.alloc().initWithImage(image);
         this._object.setImage_(imageData);
@@ -51,7 +53,7 @@ export class Image extends Layer {
     static tests() {
         return {
             tests: {
-                testIsImage(tester) {
+                testIsImage(tester: Tester) {
                     const document = tester.newTestDocument();
                     const page = document.selectedPage;
                     const image = page.newImage();
