@@ -7,6 +7,7 @@
 
 import { Group } from "./Group";
 import { Selection } from "./Selection";
+import { Tester } from "./Tester";
 
 /**
  * Represents a Page in a Sketch document.
@@ -112,7 +113,7 @@ export class Page extends Group {
     static tests() {
         return {
             tests: {
-                testSelectedLayers(tester) {
+                testSelectedLayers(tester: Tester) {
                     const document = tester.newTestDocument();
                     const selection = document.selectedLayers;
                     tester.assert(selection.isEmpty, "should have an empty selection");
@@ -124,16 +125,16 @@ export class Page extends Group {
                     tester.assert(!selection.isEmpty, "should no longer have an empty selection");
                 },
                 
-                testLayerWithID(tester) {
+                testLayerWithID(tester: Tester) {
                     const document = tester.newTestDocument();
                     const page = document.selectedPage;
                     const group = page.newGroup({ name: "Test"});
                     const id = group.id;
                     const found = document.layerWithID(id);
-                    tester.assertEqual(group.sketchObject, found.sketchObject);
+                    tester.assertEqual(group.sketchObject, found && found.sketchObject);
                 },
                 
-                testIsPage(tester) {
+                testIsPage(tester: Tester) {
                     const document = tester.newTestDocument();
                     const page = document.selectedPage;
                     const image = page.newImage();
