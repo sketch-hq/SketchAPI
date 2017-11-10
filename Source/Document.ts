@@ -9,11 +9,15 @@ import { Layer } from "./Layer";
 import { Page } from "./Page";
 import { Selection } from "./Selection";
 import { WrappedObject } from "./WrappedObject";
+import { Application } from "./Application";
+import { Tester } from "./Tester";
 
 /**
  * A Sketch document.
  */
 export class Document extends WrappedObject {
+    _application: Application;
+    
     /**
      * Make a new document object.
      *
@@ -26,7 +30,7 @@ export class Document extends WrappedObject {
      *
      * If you do want to create a new document, you can do so with Application#newDocument.
      */
-    constructor(document, application) {
+    constructor(document: Document, application: Application) {
         super(document);
         
         /**
@@ -47,7 +51,7 @@ export class Document extends WrappedObject {
      * @param {object} sketchObject The underlying sketch object that we're wrapping.
      * @return {WrappedObject} A javascript object (subclass of WrappedObject), which represents the Sketch object we were given.
      */
-    wrapObject(sketchObject) {
+    wrapObject(sketchObject: any) {
         return this._application.wrapObject(sketchObject, this);
     }
     
@@ -89,7 +93,7 @@ export class Document extends WrappedObject {
      *
      * @return {Layer} A layer object, if one was found.
      */
-    layerWithID(layer_id) {
+    layerWithID(layer_id: string) {
         const layer = this._object.documentData().layerWithID_(layer_id);
         if (layer) {
             return new Layer(layer, this);
@@ -101,7 +105,7 @@ export class Document extends WrappedObject {
      *
      * @return {Layer} A layer object, if one was found.
      */
-    layerNamed(layer_name) {
+    layerNamed(layer_name: any) {
         // As it happens, layerWithID also matches names, so we can implement
         // this method in the same way as layerWithID.
         // That might not always be true though, which is why the JS API splits
@@ -121,13 +125,13 @@ export class Document extends WrappedObject {
      * @param {function(layer: Layer)} filter A filter function to call for each layer. If it returns false, the layer is skipped.
      * @param {function(layer: Layer)} block The function to execute for each layer.
      */
-    iterateWithNativeLayers(layers, filter, block) {
+    iterateWithNativeLayers(layers: any, filter: any, block: (layer: Layer) => void) {
         // if we're given a string as a filter, treat it as a function
         // to call on the layer
         let mutableLoopBlock = block;
-        if (typeof filter === "string" || filter instanceof String) {
+        if (typeof filter === "string") {
             mutableLoopBlock = (layer) => {
-                if (layer[filter]) {
+                if ((layer as any)[filter]) {
                     block(layer);
                 }
             };
@@ -152,7 +156,7 @@ export class Document extends WrappedObject {
      *
      * @param {Layer} layer The layer to center on.
      */
-    centerOnLayer(layer) {
+    centerOnLayer(layer: Layer) {
         this._object.contentDrawView().centerRect_(layer._object.rect());
     }
     
@@ -164,7 +168,7 @@ export class Document extends WrappedObject {
     static tests() {
         return {
             tests: {
-                testPages(tester) {
+                testPages(tester: Tester) {
                     const document = tester.newTestDocument();
                     const pages = document.pages;
                     
@@ -173,7 +177,7 @@ export class Document extends WrappedObject {
                     
                 },
                 
-                testSelectedLayers(tester) {
+                testSelectedLayers(tester: Tester) {
                     const document = tester.newTestDocument();
                     const selection = document.selectedLayers;
                     tester.assert(selection.isEmpty, "should have an empty selection");
@@ -185,13 +189,13 @@ export class Document extends WrappedObject {
                     tester.assert(!selection.isEmpty, "should no longer have an empty selection");
                 },
                 
-                testLayerWithID(tester) {
+                testLayerWithID(tester: Tester) {
                     const document = tester.newTestDocument();
                     const page = document.selectedPage;
                     const group = page.newGroup({ name: "Test"});
                     const id = group.id;
                     const found = document.layerWithID(id);
-                    tester.assertEqual(group.sketchObject, found.sketchObject);
+                    tester.assertEqual(group.sketchObject, found && found.sketchObject);
                 },
             },
         };
