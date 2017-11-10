@@ -232,7 +232,6 @@ export class Application extends WrappedObject {
         const app = NSDocumentController.sharedDocumentController();
         app.newDocument_(this);
         return new Document(app.currentDocument(), this);
-        
     }
     
     /**
