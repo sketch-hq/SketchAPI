@@ -6,6 +6,7 @@
 // ********************************
 
 import { Tester, TestSpecification } from "./Tester";
+import { Document } from "./Document";
 
 /**
  * Base class for all objects that
@@ -19,13 +20,19 @@ export class WrappedObject {
     _object: any;
     
     /**
+     * The document that this object belongs to.
+     */
+    _document?: Document;
+    
+    /**
      * Return a new wrapped object for a given Sketch model object.
      *
      * @param {Object} object - The Sketch model object to wrap.
      * @param document TODO how to handle document?
      */
-    constructor(object, document?) {
+    constructor(object: any, document?: Document) {
         this._object = object;
+        this._document = document;
     }
     
     /**
