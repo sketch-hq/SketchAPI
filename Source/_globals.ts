@@ -21,3 +21,6 @@ declare const CGRect: any;
 declare const NSURL: any;
 declare const MOBoxedObject: any;
 declare const __globals: any;
+declare const CGRectMake: any;
+declare const NSMakePoint: any;
+declare const NSArray: any;
