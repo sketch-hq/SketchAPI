@@ -8,6 +8,7 @@
 import { Layer } from "./Layer";
 import { Style } from "./Style";
 import { Tester } from "./Tester";
+import { Document } from "./Document";
 
 /**
  * Represents a shape layer (a rectangle, oval, path, etc).
@@ -19,7 +20,7 @@ export class Shape extends Layer {
      * @param {MSShapeGroup} shape The underlying model object from Sketch.
      * @param {Document} document The document that the shape belongs to.
      */
-    constructor(shape, document) {
+    constructor(shape: typeof MSShapeGroup, document: Document) {
         super(shape, document);
     }
     
