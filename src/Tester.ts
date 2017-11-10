@@ -8,8 +8,8 @@
 import { Document } from "./Document";
 import { Application } from "./Application";
 
-type Suites = any;
-type Tests = any;
+export type Suites = any;
+export type Tests = any;
 
 export interface TestSpecification {
     suites?: Suites;
