@@ -5,6 +5,7 @@
 // ********************************
 
 import { Application } from "./Application";
+import { SketchContext } from "./Context";
 
 /**
  * Return a function that captures the context.
@@ -16,7 +17,7 @@ import { Application } from "./Application";
  * of setup until context.api() is actually called -- thus
  * scripts which don't call it at all suffer minimal overhead.
  */
-function SketchAPIWithCapturedContext(context) {
+function SketchAPIWithCapturedContext(context: SketchContext) {
     return (() => {
 
       // The Application object effectively *is* the api -- all other

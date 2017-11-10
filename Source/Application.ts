@@ -18,6 +18,7 @@ import { Style } from "./Style";
 import { Tester } from "./Tester";
 import { Text } from "./Text";
 import { WrappedObject } from "./WrappedObject";
+import { SketchContext } from "./Context";
 
 /**
  * Gives you access to Sketch, and provides access to:
@@ -53,7 +54,7 @@ export class Application extends WrappedObject {
      * @param context The context dictionary passed to the script when it was invoked.
      * @return A new Application object.
      */
-    constructor(context) {
+    constructor(context: SketchContext) {
         super(context);
     }
     
@@ -116,7 +117,7 @@ export class Application extends WrappedObject {
      * running version of Sketch using the `defaults` command line tool,
      * eg: defaults read com.bohemiancoding.sketch3 <key>
      */
-    settingForKey(key) {
+    settingForKey(key: string) {
         return NSUserDefaults.standardUserDefaults().objectForKey_(key);
     }
     
@@ -130,7 +131,7 @@ export class Application extends WrappedObject {
      * running version of Sketch using the `defaults` command line tool,
      * eg: defaults write com.bohemiancoding.sketch3 <key> <value>
      */
-    setSettingForKey(key, value) {
+    setSettingForKey(key: string, value: any) {
         NSUserDefaults.standardUserDefaults().setObject_forKey_(value, key);
     }
     
@@ -141,7 +142,7 @@ export class Application extends WrappedObject {
      * @param name The resource file name, including any file extension.
      * @return The resource location, in the form "file://path/to/resource".
      */
-    resourceNamed(name) {
+    resourceNamed(name: string) {
         return this._object.plugin.urlForResourceNamed_(name);
     }
     
@@ -152,7 +153,7 @@ export class Application extends WrappedObject {
      * @param initial The initial value of the input string.
      * @return The string that the user input.
      */
-    getStringFromUser(msg, initial) {
+    getStringFromUser(msg: string, initial: string) {
         const panel = MSModalInputSheet.alloc().init();
         const result = panel.runPanelWithNibName_ofType_initialString_label_("MSModalInputSheet", 0, initial, msg);
         return result;
@@ -171,7 +172,7 @@ export class Application extends WrappedObject {
      * one of NSAlertFirstButtonReturn or NSAlertSecondButtonReturn.
      * The selection will be the integer index of the selected item.
      */
-    getSelectionFromUser(msg, items, selectedItemIndex = 0) {
+    getSelectionFromUser(msg: string, items: any, selectedItemIndex = 0) {
         const accessory = NSComboBox.alloc().initWithFrame(NSMakeRect(0, 0, 200, 25));
         accessory.addItemsWithObjectValues(items);
         accessory.selectItemAtIndex(selectedItemIndex);
@@ -193,7 +194,7 @@ export class Application extends WrappedObject {
      *
      * @param {string} message The message to output.
      */
-    log(message) {
+    log(message: string) {
         print(message);
     }
     
@@ -203,7 +204,7 @@ export class Application extends WrappedObject {
      *
      * @param condition An expression that is expected to evaluate to true if everything is ok.
      */
-    assert(condition) {
+    assert(condition: boolean) {
         if (!condition) {
             throw new Error("Assert failed!");
         }
@@ -242,7 +243,7 @@ export class Application extends WrappedObject {
      *
      * @param {string} message The message to show.
      */
-    message(message) {
+    message(message: string) {
         this._object.document.showMessage(message);
     }
     
@@ -255,7 +256,7 @@ export class Application extends WrappedObject {
      * The alert is modal, so it will stay around until the user dismisses it
      * by pressing the OK button.
      */
-    alert(title, message) {
+    alert(title: string, message: string) {
         const app = NSApplication.sharedApplication();
         app.displayDialog_withTitle(message, title);
     }
@@ -288,8 +289,8 @@ export class Application extends WrappedObject {
      * @param {Document} inDocument The wrapped document that this object is part of.
      * @return {WrappedObject} A javascript object (subclass of WrappedObject), which represents the Sketch object we were given.
      */
-    wrapObject(sketchObject, inDocument) {
-        const mapping = this.wrapperMappings();
+    wrapObject(sketchObject: any, inDocument: Document) {
+        const mapping = this.wrapperMappings() as {[i: string]: any};
         
         const jsClass = mapping[sketchObject.class()];
         if (jsClass) {
@@ -313,12 +314,12 @@ export class Application extends WrappedObject {
             /** @test {Application} */
             tests: {
                 /** @test {Application#api_version} */
-                testAPIVersion(tester) {
+                testAPIVersion(tester: Tester) {
                     tester.assertEqual(tester.application.api_version, "1.1");
                 },
                 
                 /** @test {Application#version} */
-                testApplicationVersion(tester) {
+                testApplicationVersion(tester: Tester) {
                     if (!MSApplicationMetadata.metadata().app.startsWith("com.bohemiancoding.sketch3")) {
                         // When invoked by the Objective-C unit tests, we know that the bundle's version will be
                         // set to 1.0 so it's ok to test it.
@@ -327,7 +328,7 @@ export class Application extends WrappedObject {
                 },
                 
                 /** @test {Application#wrapObject} */
-                testWrapObject(tester) {
+                testWrapObject(tester: Tester) {
                     const classesToTest = [MSLayerGroup, MSPage, MSArtboardGroup, MSShapeGroup, MSBitmapLayer, MSTextLayer];
                     const mappings = tester.application.wrapperMappings();
                     for (const classToTest of classesToTest) {
