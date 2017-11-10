@@ -22,7 +22,7 @@ export class WrappedObject {
     /**
      * The document that this object belongs to.
      */
-    _document?: Document;
+    _document: Document;
     
     /**
      * Return a new wrapped object for a given Sketch model object.
@@ -32,7 +32,9 @@ export class WrappedObject {
      */
     constructor(object: any, document?: Document) {
         this._object = object;
-        this._document = document;
+        if (document) {
+            this._document = document;
+        }
     }
     
     /**
