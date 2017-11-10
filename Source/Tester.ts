@@ -8,7 +8,6 @@
 import { Document } from "./Document";
 import { Application } from "./Application";
 
-// TODO no any type
 type Suites = any;
 type Tests = any;
 
