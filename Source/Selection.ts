@@ -7,18 +7,21 @@
 
 import { Layer } from "./Layer";
 import { WrappedObject } from "./WrappedObject";
+import { Page } from "./Page";
 import { Tester } from "./Tester";
 
 /**
  * Represents the layers that the user has selected.
  */
 export class Selection extends WrappedObject {
+    _page: Page;
+    
     /**
      * Make a new Selection object.
      *
      * @param {Page} page The page that the selection relates to.
      */
-    constructor(page) {
+    constructor(page: Page) {
         super(page._object);
         this._page = page;
     }
