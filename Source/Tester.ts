@@ -6,6 +6,7 @@
 // ********************************
 
 import { Document } from "./Document";
+import { Application } from "./Application";
 
 // TODO no any type
 type Suites = any;
@@ -29,7 +30,7 @@ export class Tester {
     _testFailures = [];
     
     /** @type {Application} The application that is running these tests. */
-    _application = application;
+    _application: Application;
     
     /** @type {number} The number of tests we've run. */
     _ran = 0;
@@ -44,8 +45,8 @@ export class Tester {
      * Make a new tester.
      *
      */
-    constructor(application) {
-        // nothing
+    constructor(application: Application) {
+        this._application = application;
     }
     
     /**
