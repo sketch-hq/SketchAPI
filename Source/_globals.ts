@@ -25,4 +25,4 @@ declare const CGRectMake: any;
 declare const NSMakePoint: any;
 declare const NSArray: any;
 declare const NSImage: any;
-declare const NSImageData: any;
+declare const MSImageData: any;
