@@ -6,7 +6,7 @@
 // ********************************
 
 import { Rectangle } from "./Rectangle";
-import { TestSpecification } from "./Tester";
+import { Tester, TestSpecification } from "./Tester";
 import { WrappedObject } from "./WrappedObject";
 
 /**
@@ -280,7 +280,7 @@ export class Layer extends WrappedObject {
     static tests(): TestSpecification {
         return {
             tests: {
-                testName(tester) {
+                testName(tester: Tester) {
                     const document = tester.newTestDocument();
                     const page = document.selectedPage;
                     page.name = "This is a page";
@@ -291,7 +291,7 @@ export class Layer extends WrappedObject {
                     tester.assertEqual(group2.name, "Group");
                 },
                 
-                testFrame(tester) {
+                testFrame(tester: Tester) {
                     const document = tester.newTestDocument();
                     const page = document.selectedPage;
                     const frame = new Rectangle(10, 10, 20, 20);
@@ -299,7 +299,7 @@ export class Layer extends WrappedObject {
                     tester.assertEqual(group.frame, frame);
                 },
                 
-                testDuplicate(tester) {
+                testDuplicate(tester: Tester) {
                     const document = tester.newTestDocument();
                     const page = document.selectedPage;
                     const group = page.newGroup();
@@ -308,7 +308,7 @@ export class Layer extends WrappedObject {
                     tester.assertEqual(page.sketchObject.layers().count(), 2);
                 },
                 
-                testRemove(tester) {
+                testRemove(tester: Tester) {
                     const document = tester.newTestDocument();
                     const page = document.selectedPage;
                     const group = page.newGroup();
@@ -317,7 +317,7 @@ export class Layer extends WrappedObject {
                     tester.assertEqual(page.sketchObject.layers().count(), 0);
                 },
                 
-                testSelection(tester) {
+                testSelection(tester: Tester) {
                     const document = tester.newTestDocument();
                     const page = document.selectedPage;
                     const group = page.newGroup();
@@ -344,14 +344,14 @@ export class Layer extends WrappedObject {
                     tester.assertEqual(page.selectedLayers.length, 2);
                 },
                 
-                testContainer(tester) {
+                testContainer(tester: Tester) {
                     const document = tester.newTestDocument();
                     const page = document.selectedPage;
                     const group = page.newGroup();
                     tester.assertEqual(group.container.sketchObject, page.sketchObject);
                 },
                 
-                testOrdering(tester) {
+                testOrdering(tester: Tester) {
                     const document = tester.newTestDocument();
                     const page = document.selectedPage;
                     const group1 = page.newGroup();
