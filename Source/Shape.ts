@@ -7,6 +7,7 @@
 
 import { Layer } from "./Layer";
 import { Style } from "./Style";
+import { Tester } from "./Tester";
 
 /**
  * Represents a shape layer (a rectangle, oval, path, etc).
@@ -59,7 +60,7 @@ export class Shape extends Layer {
     static tests() {
         return {
             tests: {
-                testIsShape(tester) {
+                testIsShape(tester: Tester) {
                     const document = tester.newTestDocument();
                     const page = document.selectedPage;
                     const shape = page.newShape();
