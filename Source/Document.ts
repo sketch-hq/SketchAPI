@@ -125,7 +125,7 @@ export class Document extends WrappedObject {
      * @param {function(layer: Layer)} filter A filter function to call for each layer. If it returns false, the layer is skipped.
      * @param {function(layer: Layer)} block The function to execute for each layer.
      */
-    iterateWithNativeLayers(layers: any, filter: any, block: (layer: Layer) => void) {
+    iterateWithNativeLayers(layers: any, filter: string | ((layer: Layer) => void) | undefined, block: (layer: Layer) => void) {
         // if we're given a string as a filter, treat it as a function
         // to call on the layer
         let mutableLoopBlock = block;
@@ -135,7 +135,7 @@ export class Document extends WrappedObject {
                     block(layer);
                 }
             };
-        } else if (filter) {
+        } else if (typeof filter === "function") {
             mutableLoopBlock = (layer) => {
                 if (filter(layer)) {
                     block(layer);
