@@ -7,6 +7,7 @@
 
 import { Group } from "./Group";
 import { Selection } from "./Selection";
+import { Document } from "./Document";
 import { Tester } from "./Tester";
 
 /**
@@ -19,9 +20,8 @@ export class Page extends Group {
      * @param {MSPage} page The underlying model object from Sketch.
      * @param document The document that the page belongs to.
      */
-    constructor(page, document) {
+    constructor(page: typeof MSPage, document: Document) {
         super(page, document);
-        this._document = document;
     }
     
     /**

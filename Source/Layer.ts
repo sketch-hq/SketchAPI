@@ -8,6 +8,7 @@
 import { Rectangle } from "./Rectangle";
 import { Tester, TestSpecification } from "./Tester";
 import { WrappedObject } from "./WrappedObject";
+import { Document } from "./Document";
 
 /**
  * Represents a Sketch layer.
@@ -19,11 +20,8 @@ export class Layer extends WrappedObject {
      * @param {MSLayer} layer The underlying model object from Sketch.
      * @param {Document} document The document that the layer belongs to.
      */
-    constructor(layer, document) {
-        super(layer);
-        
-        /** @type {Document} The document that this layer belongs to. */
-        this._document = document;
+    constructor(layer: typeof MSLayer, document: Document) {
+        super(layer, document);
     }
     
     /**
