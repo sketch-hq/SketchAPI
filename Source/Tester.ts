@@ -26,7 +26,7 @@ export interface TestSpecification {
  */
 export class Tester {
     /** @type {Array} List of failures in the currently running test. */
-    _testFailures = [];
+    _testFailures: string[] = [];
     
     /** @type {Application} The application that is running these tests. */
     _application: Application;
@@ -35,10 +35,10 @@ export class Tester {
     _ran = 0;
     
     /** @type {Array} The names of the tests that have passed. */
-    _passes = [];
+    _passes: string[] = [];
     
     /** @type {Array} Failure information for each test that has failed. */
-    _failures = [];
+    _failures: any[] = [];
     
     /**
      * Make a new tester.
@@ -55,7 +55,7 @@ export class Tester {
      * @param {boolean} condition The condition we're asserting.
      * @param {string} description A description of the test.
      */
-    assert(condition, description = "") {
+    assert(condition: boolean, description = "") {
         if (!condition) {
             this._testFailures.push(description);
         }
@@ -68,7 +68,7 @@ export class Tester {
      * @param v1 The first value to compare.
      * @param v2 The second value to compare.
      */
-    assertEqual(v1, v2) {
+    assertEqual(v1: any, v2: any) {
         let mutableDifferent = v1 !== v2;
         
         // if we're comparing two objects, try matching them as strings
@@ -92,7 +92,7 @@ export class Tester {
      *
      * @param v The value to check.
      */
-    assertTrue(v) {
+    assertTrue(v: any) {
         if (!v) {
             this._testFailures.push("expected true, got: " + v);
         }
@@ -104,7 +104,7 @@ export class Tester {
      *
      * @param v The value to check.
      */
-    assertFalse(v) {
+    assertFalse(v: any) {
         if (v) {
             this._testFailures.push("expected false, got: " + v);
         }
