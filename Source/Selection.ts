@@ -7,6 +7,7 @@
 
 import { Layer } from "./Layer";
 import { WrappedObject } from "./WrappedObject";
+import { Tester } from "./Tester";
 
 /**
  * Represents the layers that the user has selected.
@@ -106,12 +107,12 @@ export class Selection extends WrappedObject {
     static tests() {
         return {
             tests: {
-                testEmpty(tester) {
+                testEmpty(tester: Tester) {
                     const document = tester.newTestDocument();
                     tester.assert(document.selectedLayers.isEmpty, "selection should be empty");
                 },
                 
-                testClear(tester) {
+                testClear(tester: Tester) {
                     const document = tester.newTestDocument();
                     const group = document.selectedPage.newGroup();
                     group.select();
@@ -121,7 +122,7 @@ export class Selection extends WrappedObject {
                     tester.assert(selection.isEmpty, "selection should be empty");
                 },
                 
-                testIterate(tester) {
+                testIterate(tester: Tester) {
                     const document = tester.newTestDocument();
                     const group = document.selectedPage.newGroup();
                     const text = document.selectedPage.newText();
@@ -139,7 +140,7 @@ export class Selection extends WrappedObject {
                     tester.assertEqual(mutableGroups, 1);
                 },
                 
-                testIterateWithFilter(tester) {
+                testIterateWithFilter(tester: Tester) {
                     const document = tester.newTestDocument();
                     const group = document.selectedPage.newGroup();
                     const text = document.selectedPage.newText();
@@ -157,7 +158,7 @@ export class Selection extends WrappedObject {
                     tester.assertEqual(mutableGroups, 1);
                 },
                 
-                testIterateThenClear(tester) {
+                testIterateThenClear(tester: Tester) {
                     const document = tester.newTestDocument();
                     const group = document.selectedPage.newGroup();
                     group.select();
@@ -172,7 +173,7 @@ export class Selection extends WrappedObject {
                     tester.assert(selection.isEmpty, "selection should be empty");
                 },
                 
-                testIterateWithFilterThenClear(tester) {
+                testIterateWithFilterThenClear(tester: Tester) {
                     const document = tester.newTestDocument();
                     const group = document.selectedPage.newGroup();
                     group.select();
