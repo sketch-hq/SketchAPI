@@ -333,11 +333,11 @@ export class Application extends WrappedObject {
                     for (const classToTest of classesToTest) {
                         const frame = NSMakeRect(0, 0, 100, 100);
                         const object = classToTest.alloc().initWithFrame(frame);
-                        const mockDocument = {};
+                        const mockDocument: any = {};
                         const wrapped = tester.application.wrapObject(object, mockDocument);
                         tester.assertEqual(wrapped._object, object);
                         tester.assertEqual(wrapped._document, mockDocument);
-                        tester.assertEqual(wrapped.class, mappings[classToTest].class);
+                        tester.assertEqual(wrapped.class, (mappings as any)[classToTest].class);
                     }
                 },
             },
