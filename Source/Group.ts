@@ -15,8 +15,6 @@ import { Document } from "./Document";
  * Represents a group of layers.
  */
 export class Group extends Layer {
-    _document: Document;
-    
     /**
      * Make a new group object.
      *
