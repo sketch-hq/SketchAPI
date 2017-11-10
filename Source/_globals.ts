@@ -36,3 +36,4 @@ declare const MSStyleFill: any;
 declare const MOPointer: any;
 declare const NSMakeRange: any;
 declare const NSMaxRange: any;
+declare const MSDocumentData: any;
