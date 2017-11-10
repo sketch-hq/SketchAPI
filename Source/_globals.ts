@@ -28,3 +28,8 @@ declare const NSImage: any;
 declare const MSImageData: any;
 declare const MSLayerMovement: any;
 declare const MSSelfContainedHighLevelExporter: any;
+declare const MSDefaultStyle: any;
+declare const MSImmutableColor: any;
+declare const MSColor: any;
+declare const MSStyleBorder: any;
+declare const MSStyleFill: any;
