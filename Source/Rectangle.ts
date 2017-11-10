@@ -5,10 +5,36 @@
 // All code (C) 2016 Bohemian Coding.
 // ********************************
 
+import { Tester } from "./Tester";
+
 /**
  * Represents a rectangle.
  */
 export class Rectangle {
+    /**
+     * The x coordinate of the top-left corner of the rectangle.
+     * @type {number}
+     */
+    x: number;
+    
+    /**
+     * The y coordinate of the top-left corner of the rectangle.
+     * @type {number}
+     */
+    y: number;
+    
+    /**
+     * The width of the rectangle.
+     * @type {number}
+     */
+    width: number;
+    
+    /**
+     * The height of the rectangle.
+     * @type {number}
+     */
+    height: number;
+    
     /**
      * Return a new Rectangle object for a given x,y, width and height.
      *
@@ -18,34 +44,10 @@ export class Rectangle {
      * @param {number} height The height of the rectangle.
      * @return The new Rectangle object.
      */
-    constructor(x, y, width, height) {
-        
-        /**
-         * The x coordinate of the top-left corner of the rectangle.
-         * @type {number}
-         */
-        
+    constructor(x: number, y: number, width: number, height: number) {
         this.x = x;
-        
-        /**
-         * The y coordinate of the top-left corner of the rectangle.
-         * @type {number}
-         */
-        
         this.y = y;
-        
-        /**
-         * The width of the rectangle.
-         * @type {number}
-         */
-        
         this.width = width;
-        
-        /**
-         * The height of the rectangle.
-         * @type {number}
-         */
-        
         this.height = height;
     }
     
@@ -55,7 +57,7 @@ export class Rectangle {
      * @param {number} x The x offset to apply.
      * @param {number} y The y offset to apply.
      */
-    offset(x, y) {
+    offset(x: number, y: number) {
         this.x += x;
         this.y += y;
     }
@@ -86,7 +88,7 @@ export class Rectangle {
     static tests() {
         return {
             tests: {
-                testConstructor(tester) {
+                testConstructor(tester: Tester) {
                     const r = new Rectangle(1, 2, 3, 4);
                     tester.assertEqual(r.x, 1);
                     tester.assertEqual(r.y, 2);
@@ -94,7 +96,7 @@ export class Rectangle {
                     tester.assertEqual(r.height, 4);
                 },
                 
-                testOffset(tester) {
+                testOffset(tester: Tester) {
                     const r = new Rectangle(1, 2, 3, 4);
                     r.offset(10, 10);
                     tester.assertEqual(r.x, 11);
@@ -103,7 +105,7 @@ export class Rectangle {
                     tester.assertEqual(r.height, 4);
                 },
                 
-                testCGRect(tester) {
+                testCGRect(tester: Tester) {
                     const r = new Rectangle(1, 2, 3, 4);
                     const c = r.asCGRect();
                     tester.assertEqual(c.origin.x, 1);
