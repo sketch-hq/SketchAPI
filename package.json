@@ -4,31 +4,21 @@
     "author": "Sam Deane",
     "license": "MIT",
     "description": "Javascript API for Sketch",
-    "main": "Source/API.js",
-    "config": {
-        "output": "../SketchPluginManager/Source/SketchAPI.js"
-    },
+    "main": "src_cjs/API.js",
     "scripts": {
-        "clean": "rm -Rf build && mkdir build && mkdir build/tmp",
         "prestart": "npm run clean",
-        "compile": "babel Source --out-dir build/tmp && browserify build/tmp/API.js --outfile build/tmp/api.js && cat header.js build/tmp/api.js > build/api.js",
-        "deploy": "cp build/api.js $npm_package_config_output",
         "start": "npm run compile && npm run deploy",
         "poststart": "rm -Rf build/tmp",
-        "watch": "watch 'npm start' Source",
-        "test": "echo \"Error: no test specified\" && exit 1"
+        
+        "clean": "rm -Rf build && rm -Rf src_cjs && mkdir build && mkdir build/tmp",
+        "compile": "tsc -p . && browserify src_cjs/API.js --outfile build/tmp/api.js && cat header.js build/tmp/api.js > build/api.js",
+        "deploy": "cp build/api.js $npm_package_config_output",
+        
+        "watch": "watch 'npm start' src"
     },
     "devDependencies": {
-        "babel-cli": "^6.26.0",
-        "babel-preset-env": "^1.6.0",
-        "babel-preset-es2015": "^6.3.13",
         "browserify": "^14.4.0",
         "watch": "^1.0.2"
     },
-    "dependencies": {},
-    "babel": {
-        "presets": [
-            "es2015"
-        ]
-    }
+    "dependencies": {}
 }
