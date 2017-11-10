@@ -93,7 +93,7 @@ export class Page extends Group {
      *
      * @param {Object} options Options indicating which sizes and formats to use, etc.
      */
-    export(options) {
+    export(options: any) {
         const merged = this.exportOptionsMergedWithDefaults(options);
         const exporter = MSSelfContainedHighLevelExporter.alloc().initWithOptions(merged);
         exporter.exportPage(this.sketchObject);
@@ -104,7 +104,7 @@ export class Page extends Group {
      *
      * @param {Object} options Options indicating which layers to export, which sizes and formats to use, etc.
      */
-    exportArtboards(options) {
+    exportArtboards(options: any) {
         const merged = this.exportOptionsMergedWithDefaults(options);
         const exporter = MSSelfContainedHighLevelExporter.alloc().initWithOptions(merged);
         exporter.exportLayers(this.sketchObject.artboards());
