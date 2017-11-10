@@ -5,7 +5,7 @@
 // All code (C) 2016 Bohemian Coding.
 // ********************************
 
-import { TestSpecification } from "./Tester";
+import { Tester, TestSpecification } from "./Tester";
 
 /**
  * Base class for all objects that
@@ -52,12 +52,12 @@ export class WrappedObject {
     static tests(): TestSpecification {
         return {
             tests: {
-                testSketchObject(tester) {
+                testSketchObject(tester: Tester) {
                     const object = MSLayer.new();
                     const wrapped = new WrappedObject(object);
                     tester.assertEqual(wrapped.sketchObject, object);
                 },
-                testID(tester) {
+                testID(tester: Tester) {
                     const object = MSLayer.new();
                     const wrapped = new WrappedObject(object);
                     tester.assertEqual(wrapped.id, object.objectID());
