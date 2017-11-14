@@ -1,5 +1,17 @@
 # Sketch API
 
+## Write plugins for Sketch in TypeScript
+Prerequisites: install [Node.js](https://nodejs.org/en/download/) and [TypeScript](https://www.typescriptlang.org/#download-links).
+
+1. Install [HelloTypeScript.sketchplugin](https://github.com/pravdomil/SketchAPI/archive/typescript.zip)
+1. Open `HelloTypeScript.sketchplugin/Contents/Sketch`
+1. Install packages `npm i`
+1. Edit `hellots.ts` with your favourite TypeScript editor
+1. Compile `tsc -p .`
+1. Goto Sketch -> Plugins -> Hello TypeScript! 
+
+## Description
+
 This is a prototype Javascript API for Sketch.
 
 The intention is to make something which is:
