@@ -1,0 +1,17 @@
+{
+    "name" : "Hello TypeScript!",
+    "identifier" : "com.sketchapp.examples.hellots",
+    "version" : "1.0.0",
+    "description" : "",
+    "authorEmail" : "developers@sketchapp.com",
+    "author" : "You",
+    "commands" : [
+    {
+      "script" : "hellots.js",
+      "handler" : "onRun",
+      "shortcut" : "",
+      "name" : "Hello TypeScript!",
+      "identifier" : "hellots"
+    }
+  ]
+}

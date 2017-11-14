@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "module": "none",
+    "target": "es6",
+    "lib": ["es2016"],
+    "types": ["sketch-api"]
+  },
+  "exclude": [
+    "node_modules"
+  ]
+}

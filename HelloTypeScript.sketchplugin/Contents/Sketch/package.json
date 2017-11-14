@@ -1,0 +1,6 @@
+{
+  "name": "hellots",
+  "dependencies": {
+    "sketch-api": "pravdomil/sketch-api#typescript"
+  }
+}
