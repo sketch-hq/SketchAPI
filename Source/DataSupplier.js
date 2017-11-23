@@ -8,16 +8,14 @@
 import { WrappedObject } from './WrappedObject'
 
 /**
-  Sketch data supplier manager.
+ * Sketch data supplier manager.
  */
-
 export class DataSupplier extends WrappedObject {
   /**
-      Make a data supplier manager object.
-
-      @param {MSDataSupplierManager} dataSupplier The underlying data supplier manager object from Sketch.
-    */
-
+   * Make a data supplier manager object.
+   *
+   * @param {MSDataSupplierManager} dataSupplier The underlying data supplier manager object from Sketch.
+   */
   constructor(dataSupplier, application) {
     super(dataSupplier || AppController.sharedInstance.dataSupplierManager())
 
@@ -25,11 +23,11 @@ export class DataSupplier extends WrappedObject {
   }
 
   /**
-     Register some data with a name and the plugin it has come from.
-     @param {string} dataType The data type. Currently "public.text" or "public.image" are the only allowed values.
-     @param {string} dataName The data name, will be used as the menu item title for the data.
-     @param {array} data The data provided by the plugin immediately.
-    */
+   * Register some data with a name and the plugin it has come from.
+   * @param {string} dataType The data type. Currently "public.text" or "public.image" are the only allowed values.
+   * @param {string} dataName The data name, will be used as the menu item title for the data.
+   * @param {array} data The data provided by the plugin immediately.
+   */
   registerStaticSupplier(dataType, dataName, data) {
     const identifier = this._application.context.plugin.identifier()
     const commandIdentifier = this._application.context.command.identifier()
@@ -43,12 +41,12 @@ export class DataSupplier extends WrappedObject {
   }
 
   /**
-     Register a function to supply data on request.
-
-     @param {string} dataType The data type. Currently "public.text" or "public.image" are the only allowed values.
-     @param {string} dataName The data name, will be used as the menu item title for the data.
-     @param {string} dynamicDataKey The key to use to select the dynamic data to supply in onSupplyData.
-    */
+   * Register a function to supply data on request.
+   *
+   * @param {string} dataType The data type. Currently "public.text" or "public.image" are the only allowed values.
+   * @param {string} dataName The data name, will be used as the menu item title for the data.
+   * @param {string} dynamicDataKey The key to use to select the dynamic data to supply in onSupplyData.
+   */
   registerDynamicSupplier(dataType, dataName, dynamicDataKey) {
     const identifier = this._application.context.plugin.identifier()
     const commandIdentifier = this._application.context.command.identifier()
@@ -62,23 +60,17 @@ export class DataSupplier extends WrappedObject {
   }
 
   /**
-     Deregister any static data or dynamic data providers for a particular plugin. Typically called from the Shutdown method of the plugin.
-     */
+   * Deregister any static data or dynamic data providers for a particular plugin. Typically called from the Shutdown method of the plugin.
+   */
   deregisterDataSuppliers() {
     const identifier = this._application.context.plugin.identifier()
     this._object.deregisterDataSuppliersForPluginWithIdentifier_(identifier)
   }
 
   /**
-     When the plugin providing the dynamic data has finished generating the data, it will call this function with the data key and the data.
-     */
+   * When the plugin providing the dynamic data has finished generating the data, it will call this function with the data key and the data.
+   */
   supplyDataForKey(data, key) {
     this._object.supplyData_forKey_(data, key)
   }
-
-  /**
-     Return a list of tests to run for this class.
-
-     @return {dictionary} A dictionary containing the tests to run. Each key is the name of a test, each value is a function which takes a Tester instance.
-     */
 }

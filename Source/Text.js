@@ -8,82 +8,66 @@
 import { Layer } from './Layer'
 import { Rectangle } from './Rectangle'
 
-// Width is adjusted to fit the content.
-const BCTextBehaviourFlexibleWidth = 0
+const TextBehaviour = {
+  flexibleWidth: 0, // Width is adjusted to fit the content.
+  fixedWidth: 1, // Width is fixed.
+}
 
-// Width is fixed.
-const BCTextBehaviourFixedWidth = 1
-
-// Uses min & max line height on paragraph style
-const BCTextLineSpacingBehaviourV2 = 1
-
-// Uses MSConstantBaselineTypesetter for fixed line height
-const BCTextLineSpacingBehaviourV3 = 2
+const TextLineSpacingBehaviour = {
+  variable: 1, // Uses min & max line height on paragraph style
+  constantBaseline: 2, // Uses MSConstantBaselineTypesetter for fixed line height
+}
 
 // Mapping between text alignment names and values.
-const NSTextAlignment = {
-  // Visually left aligned
-  left: 0,
-
-  // Visually right aligned
-  right: 1,
-
-  // Visually centered
-  center: 2,
-
-  // Fully-justified. The last line in a paragraph is natural-aligned.
-  justified: 3,
-
-  // Indicates the default alignment for script
-  natural: 4,
+const TextAlignment = {
+  left: 0, // Visually left aligned
+  right: 1, // Visually right aligned
+  center: 2, // Visually centered
+  justified: 3, // Fully-justified. The last line in a paragraph is natural-aligned.
+  natural: 4, // Indicates the default alignment for script
 }
 
 /**
-Represents a text layer.
-*/
-
+ * Represents a text layer.
+ */
 export class Text extends Layer {
   /**
-  Make a new text object.
-
-  @param {MSTextLayer} text The underlying model object from Sketch.
-  @param {Document} document The document that the text layer belongs to.
-  */
-
+   * Make a new text object.
+   *
+   * @param {MSTextLayer} text The underlying model object from Sketch.
+   * @param {Document} document The document that the text layer belongs to.
+   */
   constructor(text, document) {
     super(text, document)
   }
 
   /**
-  Is this a text layer?
-
-  All Layer objects respond to this method, but only text layers return true.
-
-  @return {bool} true for instances of Group, false for any other layer type.
-  */
-
+   * Is this a text layer?
+   *
+   * All Layer objects respond to this method, but only text layers return true.
+   *
+   * @return {bool} true for instances of Group, false for any other layer type.
+   */
   get isText() {
     return true
   }
 
   /**
-  The text of the layer.
-
-  @return {string} The layer text.
-  */
-
+   * The text of the layer.
+   *
+   * @return {string} The layer text.
+   */
   get text() {
     return this._object.stringValue()
   }
 
   /**
-  Set the text of the layer.
-  If the layer hasn't explicitly been given a name, this will also change
-  the layer's name to the text value.
-
-  @param {string} value The text to use.
-  */
-
+   * Set the text of the layer.
+   * If the layer hasn't explicitly been given a name, this will also change
+   * the layer's name to the text value.
+   *
+   * @param {string} value The text to use.
+   */
   set text(value) {
     const object = this.sketchObject
     object.stringValue = value
@@ -93,86 +77,72 @@ export class Text extends Layer {
   }
 
   /**
-  Set the font of the layer to an NSFont object.
-
-  @param {NSFont} value The font to use.
-  */
-
+   * Set the font of the layer to an NSFont object.
+   *
+   * @param {NSFont} value The font to use.
+   */
   set font(value) {
     this._object.font = value
   }
 
   /**
-  Set the font of the layer to the system font at a given size.
-
-  @param {number} size The system font size to use.
-  */
-
+   * Set the font of the layer to the system font at a given size.
+   *
+   * @param {number} size The system font size to use.
+   */
   set systemFontSize(size) {
     this._object.font = NSFont.systemFontOfSize_(size)
   }
 
   /**
-  The alignment of the layer.
-  This will be one of the values: "left", "center", "right", "justified", "natural".
-
-  @return {string} The alignment mode.
-  */
-
+   * The alignment of the layer.
+   * This will be one of the values: "left", "center", "right", "justified", "natural".
+   *
+   * @return {string} The alignment mode.
+   */
   get alignment() {
     const raw = this._object.textAlignment()
-    let result = raw
-    for (const key in NSTextAlignment) {
-      if (NSTextAlignment[key] === raw) {
-        result = key
-        break
-      }
-    }
-    return result
+    return Object.keys(TextAlignment).find(key => key === raw) || raw
   }
 
   /**
-  Set the alignment of the layer.
-
-  The mode supplied can be a string or a number.
-  If it's a string, it should be one of the values: "left", "center", "right", "justified", "natural".
-
-  @param {string} mode The alignment mode to use.
-  */
-
+   * Set the alignment of the layer.
+   *
+   * The mode supplied can be a string or a number.
+   * If it's a string, it should be one of the values: "left", "center", "right", "justified", "natural".
+   *
+   * @param {string} mode The alignment mode to use.
+   */
   set alignment(mode) {
-    const translated = NSTextAlignment[mode]
+    const translated = TextAlignment[mode]
     this._object.textAlignment = translated || mode
   }
 
   /**
-  Set the layer to be fixed width or variable width.
-
-  @param {bool} value Whether the layer should be fixed width (true) or variable width (false).
-  */
-
+   * Set the layer to be fixed width or variable width.
+   *
+   * @param {bool} value Whether the layer should be fixed width (true) or variable width (false).
+   */
   set fixedWidth(value) {
     if (value) {
-      this._object.textBehaviour = BCTextBehaviourFixedWidth
+      this._object.textBehaviour = TextBehaviour.fixedWidth
     } else {
-      this._object.textBehaviour = BCTextBehaviourFlexibleWidth
+      this._object.textBehaviour = TextBehaviour.flexibleWidth
     }
   }
 
   /**
-  Adjust the frame of the layer to fit its contents.
-  */
-
+   * Adjust the frame of the layer to fit its contents.
+   */
   adjustToFit() {
     this._object.adjustFrameToFit()
   }
 
   /**
-  Return a list of the text fragments for the text.
-
-  @return {array} The line fragments. Each one is a dictionary containing a rectangle, and a baseline offset.
-  */
-
+   * Return a list of the text fragments for the text.
+   *
+   * @return {array} The line fragments. Each one is a dictionary containing a rectangle, and a baseline offset.
+   */
   get fragments() {
     const textLayer = this.sketchObject
     const storage = textLayer.immutableModelObject().createTextStorage()
@@ -218,15 +188,14 @@ export class Text extends Layer {
   }
 
   /**
-  Set whether to use constant baseline line spacing mode.
-
-  @param {bool} value If true, we use constant baseline spacing mode. This is the default for new text layers in Sketch. If false, we use the legacy line spacing mode.
-  */
-
+   * Set whether to use constant baseline line spacing mode.
+   *
+   * @param {bool} value If true, we use constant baseline spacing mode. This is the default for new text layers in Sketch. If false, we use the legacy line spacing mode.
+   */
   set useConstantBaselines(value) {
     const lineSpacingBehaviour = value
-      ? BCTextLineSpacingBehaviourV3
-      : BCTextLineSpacingBehaviourV2
+      ? TextLineSpacingBehaviour.constantBaseline
+      : TextLineSpacingBehaviour.variable
     const textLayer = this.sketchObject
     const initialBaselineOffset = textLayer.firstBaselineOffset()
     textLayer.lineSpacingBehaviour = lineSpacingBehaviour
@@ -237,11 +206,10 @@ export class Text extends Layer {
   }
 
   /**
-  Return a list of tests to run for this class.
-
-  @return {dictionary} A dictionary containing the tests to run. Each key is the name of a test, each value is a function which takes a Tester instance.
-  */
-
+   * Return a list of tests to run for this class.
+   *
+   * @return {dictionary} A dictionary containing the tests to run. Each key is the name of a test, each value is a function which takes a Tester instance.
+   */
   static tests() {
     return {
       tests: {
@@ -282,13 +250,13 @@ export class Text extends Layer {
           })
 
           // eslint-disable-next-line guard-for-in
-          for (const key in NSTextAlignment) {
+          for (const key in TextAlignment) {
             // test setting by name
             text.alignment = key
             tester.assertEqual(text.alignment, key)
 
             // test setting by value
-            text.alignment = NSTextAlignment[key]
+            text.alignment = TextAlignment[key]
             tester.assertEqual(text.alignment, key)
           }
         },

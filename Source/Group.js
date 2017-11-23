@@ -10,73 +10,61 @@ import { Rectangle } from './Rectangle'
 import { Style } from './Style'
 
 /**
-Represents a group of layers.
-*/
-
+ * Represents a group of layers.
+ */
 export class Group extends Layer {
   /**
-  Make a new group object.
-
-  @param {MSLayerGroup} group  The underlying model object from Sketch.
-  @param {Document} document The document that the group belongs to.
-  */
-
+   * Make a new group object.
+   *
+   * @param {MSLayerGroup} group  The underlying model object from Sketch.
+   * @param {Document} document The document that the group belongs to.
+   */
   constructor(group, document) {
     super(group, document)
   }
 
   /**
-  Is this an group?
-
-  All Layer objects respond to this method, but only Groups or things that inherit from groups return true.
-
-  @return {bool} true for instances of Group, false for any other layer type.
-  */
-
+   * Is this an group?
+   *
+   * All Layer objects respond to this method, but only Groups or things that inherit from groups return true.
+   *
+   * @return {bool} true for instances of Group, false for any other layer type.
+   */
   get isGroup() {
     return true
   }
 
   /**
-  Return a list of tests to run for this class.
-
-  @return {dictionary} A dictionary containing the tests to run. Each key is the name of a test, each value is a function which takes a Tester instance.
-  */
-
-  /**
-  Perform a function for every sub-layer inside this one.
-  The function will be passed a single argument each time it is
-  invoked - which will be an object representing the sub-layer.
-
-  @param {function(layer: Layer)} block The function to execute for each layer.
-  */
-
+   * Perform a function for every sub-layer inside this one.
+   * The function will be passed a single argument each time it is
+   * invoked - which will be an object representing the sub-layer.
+   *
+   * @param {function(layer: Layer)} block The function to execute for each layer.
+   */
   iterate(block) {
     const layers = this._object.layers()
     this._document.iterateWithNativeLayers(layers, null, block)
   }
 
   /**
-  Perform a function for every sub-layer inside this one that passes a filter.
-  The function will be passed a single argument each time it is
-  invoked - which will be an object representing the sub-layer.
-
-  @param {function(layer: Layer)} filter Filter function called on each layer first to check whether it should be iterated.
-  @param {function(layer: Layer)} block The function to execute for each layer.
-  */
-
+   * Perform a function for every sub-layer inside this one that passes a filter.
+   * The function will be passed a single argument each time it is
+   * invoked - which will be an object representing the sub-layer.
+   *
+   * @param {function(layer: Layer)} filter Filter function called on each layer first to check whether it should be iterated.
+   * @param {function(layer: Layer)} block The function to execute for each layer.
+   */
   iterateWithFilter(filter, block) {
     const layers = this._object.layers()
     this._document.iterateWithNativeLayers(layers, filter, block)
   }
 
   /**
-  Convert a rectangle in page coordinates to one relative to this container's coordinates.
-
-  @param {Rectangle} rect The rectangle to convert.
-  @return {Rectangle} The rectangle in local coordinates.
-  */
-
+   * Convert a rectangle in page coordinates to one relative to this container's coordinates.
+   *
+   * @param {Rectangle} rect The rectangle to convert.
+   * @return {Rectangle} The rectangle in local coordinates.
+   */
   pageRectToLocalRect(rect) {
     const origin = this._object.convertPoint_fromLayer_(
       NSMakePoint(rect.x, rect.y),
@@ -86,23 +74,21 @@ export class Group extends Layer {
   }
 
   /**
-  Adjust the group to fit its children.
-  */
-
+   * Adjust the group to fit its children.
+   */
   adjustToFit() {
     this._object.resizeToFitChildrenWithOption_(0)
   }
 
   /**
-    Add a new wrapped layer object to represent a Sketch layer.
-    Apply any supplied properties to the wrapper (which will apply
-    them in turn to the wrapped layer).
-
-    @param {MSLayer} newLayer The underlying Sketch layer object.
-    @param {dictionary} properties The properties to apply.
-    @return {Layer} The wrapped layer object.
-    */
-
+   * Add a new wrapped layer object to represent a Sketch layer.
+   * Apply any supplied properties to the wrapper (which will apply
+   * them in turn to the wrapped layer).
+   *
+   * @param {MSLayer} newLayer The underlying Sketch layer object.
+   * @param {dictionary} properties The properties to apply.
+   * @return {Layer} The wrapped layer object.
+   */
   _addWrappedLayerWithProperties(newLayer, properties) {
     if (newLayer) {
       // add the Sketch object to this layer
@@ -123,13 +109,12 @@ export class Group extends Layer {
   }
 
   /**
-    Extract the frame to use for a layer from some properties.
-    If the frame wasn't supplied in the properties, we return a default value instead.
-
-    @param {dictionary} properties The properties to use when looking for a frame value.
-    @return {Rectangle} The frame rectangle to use.
-    */
-
+   * Extract the frame to use for a layer from some properties.
+   * If the frame wasn't supplied in the properties, we return a default value instead.
+   *
+   * @param {dictionary} properties The properties to use when looking for a frame value.
+   * @return {Rectangle} The frame rectangle to use.
+   */
   _frameForLayerWithProperties(properties) {
     let { frame } = properties
     if (frame) {
@@ -141,10 +126,9 @@ export class Group extends Layer {
   }
 
   /**
-    Extract the style to use for a layer from some properties.
-    If the style wasn't supplied at all, we use the default one.
-    */
-
+   * Extract the style to use for a layer from some properties.
+   * If the style wasn't supplied at all, we use the default one.
+   */
   _styleForLayerWithProperties(properties) {
     let { style, fills, borders } = properties
     if (!style) {
@@ -165,13 +149,12 @@ export class Group extends Layer {
   }
 
   /**
-    Returns a newly created shape, which has been added to this layer,
-    and sets it up using the supplied properties.
-
-    @param {dictionary} properties Properties to apply to the shape.
-    @return {Shape} the new shape.
-    */
-
+   * Returns a newly created shape, which has been added to this layer,
+   * and sets it up using the supplied properties.
+   *
+   * @param {dictionary} properties Properties to apply to the shape.
+   * @return {Shape} the new shape.
+   */
   newShape(properties = {}) {
     const frame = this._frameForLayerWithProperties(properties)
     // TODO: Eventually we want to distinguish between different shape sub-types here depending
@@ -184,13 +167,12 @@ export class Group extends Layer {
   }
 
   /**
-    Returns a newly created text layer, which has been added to this layer,
-    and sets it up using the supplied properties.
-
-    @param {dictionary} properties Properties to apply to the text layer.
-    @return {Text} the new text layer.
-    */
-
+   * Returns a newly created text layer, which has been added to this layer,
+   * and sets it up using the supplied properties.
+   *
+   * @param {dictionary} properties Properties to apply to the text layer.
+   * @return {Text} the new text layer.
+   */
   newText(properties = {}) {
     const frame = this._frameForLayerWithProperties(properties)
     const newLayer = MSTextLayer.alloc().initWithFrame_(frame.asCGRect())
@@ -199,13 +181,12 @@ export class Group extends Layer {
   }
 
   /**
-    Returns a newly created group, which has been added to this layer,
-    and sets it up using the supplied properties.
-
-    @param {dictionary} properties Properties to apply to the group.
-    @return {Group} the new group.
-    */
-
+   * Returns a newly created group, which has been added to this layer,
+   * and sets it up using the supplied properties.
+   *
+   * @param {dictionary} properties Properties to apply to the group.
+   * @return {Group} the new group.
+   */
   newGroup(properties = {}) {
     const frame = this._frameForLayerWithProperties(properties)
     const newLayer = MSLayerGroup.alloc().initWithFrame_(frame.asCGRect())
@@ -213,12 +194,12 @@ export class Group extends Layer {
   }
 
   /**
-    Returns a newly created image layer, which has been added to this layer,
-    and sets it up using the supplied properties.
-
-    @param {dictionary} properties Properties to apply to the layer.
-    @return {Image} the new image layer.
-    */
+   * Returns a newly created image layer, which has been added to this layer,
+   * and sets it up using the supplied properties.
+   *
+   * @param {dictionary} properties Properties to apply to the layer.
+   * @return {Image} the new image layer.
+   */
 
   newImage(properties = {}) {
     const frame = this._frameForLayerWithProperties(properties)
@@ -227,11 +208,10 @@ export class Group extends Layer {
   }
 
   /**
-  Return a list of tests to run for this class.
-
-  @return {dictionary} A dictionary containing the tests to run. Each key is the name of a test, each value is a function which takes a Tester instance.
-  */
-
+   * Return a list of tests to run for this class.
+   *
+   * @return {dictionary} A dictionary containing the tests to run. Each key is the name of a test, each value is a function which takes a Tester instance.
+   */
   static tests() {
     return {
       tests: {

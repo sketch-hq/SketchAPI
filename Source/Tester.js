@@ -8,19 +8,17 @@
 import { Document } from './Document'
 
 /**
-    Very simple unit testing utility.
-
-
-    At some point we may switch to using Mocha or some other test framework, but for
-    now we want to be able to invoke the tests from the Sketch side or from a plugin
-    command, so it's simpler to use a simple test framework of our own devising.
-*/
-
+ * Very simple unit testing utility.
+ *
+ *
+ * At some point we may switch to using Mocha or some other test framework, but for
+ * now we want to be able to invoke the tests from the Sketch side or from a plugin
+ * command, so it's simpler to use a simple test framework of our own devising.
+ */
 export class Tester {
   /**
-     Make a new tester.
-     */
-
+   * Make a new tester.
+   */
   constructor(application) {
     /** @type {array} List of failures in the currently running test. */
     this._testFailures = []
@@ -39,13 +37,12 @@ export class Tester {
   }
 
   /**
-     Assert that a condition is true.
-     If the assertion fails, the failure is recorded for later reporting by the tester.
-
-     @param {bool} condition The condition we're asserting.
-     @param {string} description A description of the test.
-     */
-
+   * Assert that a condition is true.
+   * If the assertion fails, the failure is recorded for later reporting by the tester.
+   *
+   * @param {bool} condition The condition we're asserting.
+   * @param {string} description A description of the test.
+   */
   assert(condition, description) {
     if (!condition) {
       throw new Error(description || '')
@@ -53,13 +50,12 @@ export class Tester {
   }
 
   /**
-     Assert that two values are equal.
-     If the assertion fails, the failure is recorded for later reporting by the tester.
-
-     @param v1 The first value to compare.
-     @param v2 The second value to compare.
-    */
-
+   * Assert that two values are equal.
+   * If the assertion fails, the failure is recorded for later reporting by the tester.
+   *
+   * @param v1 The first value to compare.
+   * @param v2 The second value to compare.
+   */
   assertEqual(v1, v2) {
     let different = v1 != v2
 
@@ -79,12 +75,11 @@ export class Tester {
   }
 
   /**
-     Assert that a value is true.
-     If the assertion fails, the failure is recorded for later reporting by the tester.
-
-     @param v The value to check.
-    */
-
+   * Assert that a value is true.
+   * If the assertion fails, the failure is recorded for later reporting by the tester.
+   *
+   * @param v The value to check.
+   */
   assertTrue(v) {
     if (!v) {
       throw new Error(`expected true, got: ${v}`)
@@ -92,12 +87,11 @@ export class Tester {
   }
 
   /**
-     Assert that a value is false.
-     If the assertion fails, the failure is recorded for later reporting by the tester.
-
-     @param v The value to check.
-    */
-
+   * Assert that a value is false.
+   * If the assertion fails, the failure is recorded for later reporting by the tester.
+   *
+   * @param v The value to check.
+   */
   assertFalse(v) {
     if (v) {
       throw new Error(`expected false, got: ${v}`)
@@ -105,43 +99,40 @@ export class Tester {
   }
 
   /**
-        The application instance that we're running the tests for.
-        This is the instance associated with the script context that launched the tests.
-
-        @return {Application} The application object.
-     */
-
+   * The application instance that we're running the tests for.
+   * This is the instance associated with the script context that launched the tests.
+   *
+   *  @return {Application} The application object.
+   */
   get application() {
     return this._application
   }
 
   /**
-        Returns a new document to use in tests.
-
-        @return {Document} Test document.
-      */
-
+   * Returns a new document to use in tests.
+   *
+   * @return {Document} Test document.
+   */
   newTestDocument() {
     const document = new Document(MSDocumentData.new(), this._application)
     return document
   }
 
   /**
-     Run a collection of tests.
-
-     The method takes a dictionary describing the tests to run.
-     The dictionary can contain two keys:
-     - suites: this is a dictionary of sub-collections, each of which is recursively run by calling this method again.
-     - tests: this is a dictionary of test functions, each of which is executed.
-
-     The test functions are passed this tester object when they are executed, and should use the assertion methods on it
-     to perform tests.
-
-     @param {dictionary} specification A dictionary describing the tests to run. See discussion.
-     @param {string} suiteName The name of the suite, if we're running a sub-collection. This will be null for the top level tests.
-     @return {dictionary} Returns a dictionary indicating how many tests ran, and a list of the passed, failed, and crashed tests.
-     */
-
+   * Run a collection of tests.
+   *
+   * The method takes a dictionary describing the tests to run.
+   * The dictionary can contain two keys:
+   * - suites: this is a dictionary of sub-collections, each of which is recursively run by calling this method again.
+   * - tests: this is a dictionary of test functions, each of which is executed.
+   *
+   * The test functions are passed this tester object when they are executed, and should use the assertion methods on it
+   * to perform tests.
+   *
+   * @param {dictionary} specification A dictionary describing the tests to run. See discussion.
+   * @param {string} suiteName The name of the suite, if we're running a sub-collection. This will be null for the top level tests.
+   * @return {dictionary} Returns a dictionary indicating how many tests ran, and a list of the passed, failed, and crashed tests.
+   */
   runUnitTests(specification, suiteName) {
     const { suites = {}, tests = {} } = specification
 

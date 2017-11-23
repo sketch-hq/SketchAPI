@@ -9,17 +9,15 @@ import { WrappedObject } from './WrappedObject'
 import { Rectangle } from './Rectangle'
 
 /**
-Represents a Sketch layer.
-*/
-
+ * Represents a Sketch layer.
+ */
 export class Layer extends WrappedObject {
   /**
-  Make a new layer object.
-
-  @param {MSLayer} layer The underlying model object from Sketch.
-  @param {Document} document The document that the layer belongs to.
-  */
-
+   * Make a new layer object.
+   *
+   * @param {MSLayer} layer The underlying model object from Sketch.
+   * @param {Document} document The document that the layer belongs to.
+   */
   constructor(layer, document) {
     super(layer)
 
@@ -28,129 +26,118 @@ export class Layer extends WrappedObject {
   }
 
   /**
-  The name of the layer.
-
-  @return {string} The layer's name.
-  */
-
+   * The name of the layer.
+   *
+   * @return {string} The layer's name.
+   */
   get name() {
     return this._object.name()
   }
 
   /**
-  Set the name of the layer.
-
-  @param {string} name The new name.
-  */
-
+   * Set the name of the layer.
+   *
+   * @param {string} name The new name.
+   */
   set name(value) {
     this._object.setName_(value)
   }
 
   /**
-  The frame of the layer.
-  This is given in coordinates that are local to the parent of the layer.
-
-  @return {Rectangle} The layer's frame.
-  */
-
+   * The frame of the layer.
+   * This is given in coordinates that are local to the parent of the layer.
+   *
+   * @return {Rectangle} The layer's frame.
+   */
   get frame() {
     const f = this._object.frame()
     return new Rectangle(f.x(), f.y(), f.width(), f.height())
   }
 
   /**
-  Set the frame of the layer.
-  This will move and/or resize the layer as appropriate.
-  The new frame should be given in coordinates that are local to the parent of the layer.
-
-  @param {Rectangle} frame - The new frame of the layer.
-  */
-
+   * Set the frame of the layer.
+   * This will move and/or resize the layer as appropriate.
+   * The new frame should be given in coordinates that are local to the parent of the layer.
+   *
+   * @param {Rectangle} frame - The new frame of the layer.
+   */
   set frame(value) {
     const f = this._object.frame()
     f.setRect_(NSMakeRect(value.x, value.y, value.width, value.height))
   }
 
   /**
-  Is this a page?
-
-  All Layer objects respond to this method, but only pages return true.
-
-  @return {bool} true for instances of Group, false for any other layer type.
-  */
-
+   * Is this a page?
+   *
+   * All Layer objects respond to this method, but only pages return true.
+   *
+   * @return {bool} true for instances of Group, false for any other layer type.
+   */
   get isPage() {
     return false
   }
 
   /**
-  Is this an artboard?
-
-  All Layer objects respond to this method, but only Artboard objects return true.
-
-  @return true for instances of Artboard, false for any other layer type.
-  */
-
+   * Is this an artboard?
+   *
+   * All Layer objects respond to this method, but only Artboard objects return true.
+   *
+   * @return true for instances of Artboard, false for any other layer type.
+   */
   get isArtboard() {
     return false
   }
 
   /**
-  Is this a group?
-
-  All Layer objects respond to this method, but only Groups or things that inherit from groups return true.
-
-  @return {bool} true for instances of Group, false for any other layer type.
-  */
-
+   * Is this a group?
+   *
+   * All Layer objects respond to this method, but only Groups or things that inherit from groups return true.
+   *
+   * @return {bool} true for instances of Group, false for any other layer type.
+   */
   get isGroup() {
     return false
   }
 
   /**
-  Is this a text layer?
-
-  All Layer objects respond to this method, but only text layers return true.
-
-  @return {bool} true for instances of Group, false for any other layer type.
-  */
-
+   * Is this a text layer?
+   *
+   * All Layer objects respond to this method, but only text layers return true.
+   *
+   * @return {bool} true for instances of Group, false for any other layer type.
+   */
   get isText() {
     return false
   }
 
   /**
-  Is this a shape layer?
-
-  All Layer objects respond to this method, but only shape layers (rectangles, ovals, paths etc) return true.
-
-  @return {bool} true for instances of Group, false for any other layer type.
-  */
-
+   * Is this a shape layer?
+   *
+   * All Layer objects respond to this method, but only shape layers (rectangles, ovals, paths etc) return true.
+   *
+   * @return {bool} true for instances of Group, false for any other layer type.
+   */
   get isShape() {
     return false
   }
 
   /**
-  Is this an image layer?
-
-  All Layer objects respond to this method, but only image layers return true.
-
-  @return {bool} true for instances of Group, false for any other layer type.
-  */
-
+   * Is this an image layer?
+   *
+   * All Layer objects respond to this method, but only image layers return true.
+   *
+   * @return {bool} true for instances of Group, false for any other layer type.
+   */
   get isImage() {
     return false
   }
 
   /**
-  Duplicate this layer.
-  A new identical layer will be inserted into the parent of this layer.
-
-  @return {Layer} A new layer identical to this one.
-  */
-
+   * Duplicate this layer.
+   * A new identical layer will be inserted into the parent of this layer.
+   *
+   * @return {Layer} A new layer identical to this one.
+   */
   duplicate() {
     const object = this.sketchObject
     const duplicate = object.copy()
@@ -159,9 +146,8 @@ export class Layer extends WrappedObject {
   }
 
   /**
-  Remove this layer from its parent.
-  */
-
+   * Remove this layer from its parent.
+   */
   remove() {
     const parent = this._object.parentGroup()
     if (parent) {
@@ -170,94 +156,84 @@ export class Layer extends WrappedObject {
   }
 
   /**
-  Select the layer.
-  This will clear the previous selection. Use addToSelection() if you wish
-  to preserve the existing selection.
-  */
-
+   * Select the layer.
+   * This will clear the previous selection. Use addToSelection() if you wish
+   * to preserve the existing selection.
+   */
   select() {
     this._object.select_byExtendingSelection(true, false)
   }
 
   /**
-  Deselect this layer.
-  Any other layers that were previously selected will remain selected.
-  */
-
+   * Deselect this layer.
+   * Any other layers that were previously selected will remain selected.
+   */
   deselect() {
     this._object.select_byExtendingSelection(false, true)
   }
 
   /**
-  Add this layer to the selected layers.
-  Any other layers that were previously selected will remain selected.
-  */
-
+   * Add this layer to the selected layers.
+   * Any other layers that were previously selected will remain selected.
+   */
   addToSelection() {
     this._object.select_byExtendingSelection(true, true)
   }
 
   /**
-  Return the parent container of this layer.
-
-  @return {Group} The containing layer of this layer.
-  */
-
+   * Return the parent container of this layer.
+   *
+   * @return {Group} The containing layer of this layer.
+   */
   get container() {
     return this._document.wrapObject(this._object.parentGroup())
   }
 
   /**
-  Return the index of this layer in it's container.
-  The layer at the back of the container (visualy) will be layer 0. The layer at the front will be layer n - 1 (if there are n layers).
-
-  @return {number} The layer order.
-  */
-
+   * Return the index of this layer in it's container.
+   * The layer at the back of the container (visualy) will be layer 0. The layer at the front will be layer n - 1 (if there are n layers).
+   *
+   * @return {number} The layer order.
+   */
   get index() {
     const ourLayer = this.sketchObject
     return ourLayer.parentGroup().indexOfLayer_(ourLayer)
   }
 
   /**
-  Move this layer to the front of its container.
-  */
-
+   * Move this layer to the front of its container.
+   */
   moveToFront() {
     MSLayerMovement.moveToFront([this._object])
   }
 
   /**
-  Move this layer forward in its container.
-  */
-
+   * Move this layer forward in its container.
+   */
   moveForward() {
     MSLayerMovement.moveForward([this._object])
   }
 
   /**
-  Move this layer to the back of its container.
-  */
-
+   * Move this layer to the back of its container.
+   */
   moveToBack() {
     MSLayerMovement.moveToBack([this._object])
   }
 
   /**
-  Move this layer backwards in its container.
-  */
-
+   * Move this layer backwards in its container.
+   */
   moveBackward() {
     MSLayerMovement.moveBackward([this._object])
   }
 
   /**
-  Convert a rectangle in the coordinates that this layer uses to absolute (page) coordinates.
-
-  @param {Rectangle} rect The rectangle to convert.
-  @return {Rectangle} The converted rectangle expressed in page coordinates.
-  */
-
+   * Convert a rectangle in the coordinates that this layer uses to absolute (page) coordinates.
+   *
+   * @param {Rectangle} rect The rectangle to convert.
+   * @return {Rectangle} The converted rectangle expressed in page coordinates.
+   */
   localRectToPageRect(rect) {
     const _rect = this.sketchObject.convertRectToAbsoluteCoordinates(
       rect.asCGRect
@@ -266,12 +242,11 @@ export class Layer extends WrappedObject {
   }
 
   /**
-  Convert a rectangle in the coordinates that this layer uses to it's parent's coordinates.
-
-  @param {Rectangle} rect The rectangle to convert.
-  @return {Rectangle} The converted rectangle expressed in the coordinate system of the parent layer.
-  */
-
+   * Convert a rectangle in the coordinates that this layer uses to it's parent's coordinates.
+   *
+   * @param {Rectangle} rect The rectangle to convert.
+   * @return {Rectangle} The converted rectangle expressed in the coordinate system of the parent layer.
+   */
   localRectToParentRect(rect) {
     const { frame } = this
     return new Rectangle(
@@ -283,9 +258,8 @@ export class Layer extends WrappedObject {
   }
 
   /**
-  Returns a list of export options with any missing ones replaced by default values.
-  */
-
+   * Returns a list of export options with any missing ones replaced by default values.
+   */
   exportOptionsMergedWithDefaults(options) {
     const defaults = {
       compact: false,
@@ -304,11 +278,10 @@ export class Layer extends WrappedObject {
   }
 
   /**
-  Export this layer (and the ones below it), using the options supplied.
-
-  @param {dictionary} options Options indicating which layers to export, which sizes and formats to use, etc.
-  */
-
+   * Export this layer (and the ones below it), using the options supplied.
+   *
+   * @param {dictionary} options Options indicating which layers to export, which sizes and formats to use, etc.
+   */
   export(options) {
     const merged = this.exportOptionsMergedWithDefaults(options)
     const exporter = MSSelfContainedHighLevelExporter.alloc().initWithOptions(
@@ -318,11 +291,10 @@ export class Layer extends WrappedObject {
   }
 
   /**
-  Return a list of tests to run for this class.
-
-  @return {dictionary} A dictionary containing the tests to run. Each key is the name of a test, each value is a function which takes a Tester instance.
-  */
-
+   * Return a list of tests to run for this class.
+   *
+   * @return {dictionary} A dictionary containing the tests to run. Each key is the name of a test, each value is a function which takes a Tester instance.
+   */
   static tests() {
     return {
       tests: {
