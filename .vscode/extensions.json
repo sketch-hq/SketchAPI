@@ -1,0 +1,8 @@
+{
+  "recommendations": [
+    "dbaeumer.vscode-eslint",
+    "samverschueren.final-newline",
+    "DmitryDorofeev.empty-indent",
+    "esbenp.prettier-vscode"
+  ]
+}
