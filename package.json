@@ -1,37 +1,48 @@
 {
-    "name": "sketch-api",
-    "version": "1.1.0",
-    "author": "Sam Deane",
-    "license": "MIT",
-    "description": "Javascript API for Sketch",
-    "main": "Source/API.js",
-    "config": {
-        "output": "../SketchPluginManager/Source/SketchAPI.js"
-    },
-    "scripts": {
-        "build": "webpack",
-        "build:prod": "webpack -p --optimize-minimize",
-        "start": "npm run build",
-        "watch": "webpack --watch",
-        "test": "npm run lint",
-        "lint": "find . -name \"*.ts\" -o -name \"*.js\" | grep -v -f .gitignore | xargs eslint",
-        "prettier:base": "prettier --single-quote --trailing-comma es5 --no-semi --write",
-        "prettify": "find . -name \"*.ts\" -o -name \"*.js\" | grep -v -f .gitignore | xargs npm run prettier:base"
-    },
-    "devDependencies": {
-        "awesome-typescript-loader": "^3.4.0",
-        "eslint": "^4.11.0",
-        "eslint-config-airbnb-base": "^12.1.0",
-        "eslint-config-prettier": "^2.8.0",
-        "eslint-plugin-babel": "^4.1.2",
-        "eslint-plugin-import": "^2.8.0",
-        "eslint-plugin-prettier": "^2.3.1",
-        "eslint-plugin-typescript": "^0.8.0",
-        "prettier": "^1.8.2",
-        "source-map-loader": "^0.2.3",
-        "typescript": "^2.6.1",
-        "typescript-eslint-parser": "^9.0.0",
-        "webpack": "^3.8.1"
-    },
-    "dependencies": {}
+  "name": "sketch-api",
+  "version": "1.1.0",
+  "author": "Sam Deane",
+  "license": "MIT",
+  "description": "Javascript API for Sketch",
+  "main": "Source/API.js",
+  "config": {
+    "output": "../SketchPluginManager/Source/SketchAPI.js"
+  },
+  "scripts": {
+    "build": "webpack",
+    "build:prod": "webpack -p --optimize-minimize",
+    "start": "npm run build",
+    "watch": "webpack --watch",
+    "test": "npm run lint",
+    "lint":
+      "find . -name \"*.ts\" -o -name \"*.js\" | grep -v -f .gitignore | xargs eslint",
+    "prettier:base":
+      "prettier --single-quote --trailing-comma es5 --no-semi --write",
+    "prettify":
+      "find . -name \"*.ts\" -o -name \"*.js\" | grep -v -f .gitignore | xargs npm run prettier:base",
+    "lint-staged": "lint-staged"
+  },
+  "devDependencies": {
+    "awesome-typescript-loader": "^3.4.0",
+    "eslint": "^4.11.0",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-config-prettier": "^2.8.0",
+    "eslint-plugin-babel": "^4.1.2",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-prettier": "^2.3.1",
+    "eslint-plugin-typescript": "^0.8.0",
+    "lint-staged": "^5.0.0",
+    "pre-commit": "^1.2.2",
+    "prettier": "^1.8.2",
+    "source-map-loader": "^0.2.3",
+    "typescript": "^2.6.1",
+    "typescript-eslint-parser": "^9.0.0",
+    "webpack": "^3.8.1"
+  },
+  "dependencies": {},
+  "pre-commit": ["lint-staged"],
+  "lint-staged": {
+    "*.{js,ts}": ["npm run prettier:base", "eslint", "git add"],
+    "*.{md}": ["npm run prettier:base", "git add"]
+  }
 }
