@@ -118,6 +118,7 @@ export class Group extends Layer {
   _frameForLayerWithProperties(properties) {
     let { frame } = properties
     if (frame) {
+      // eslint-disable-next-line no-param-reassign
       delete properties.frame
     } else {
       frame = new Rectangle(0, 0, 100, 100)
@@ -130,10 +131,9 @@ export class Group extends Layer {
    * If the style wasn't supplied at all, we use the default one.
    */
   _styleForLayerWithProperties(properties) {
-    let { style, fills, borders } = properties
-    if (!style) {
-      style = new Style()
-    }
+    const { style = new Style(), fills, borders } = properties
+
+    /* eslint-disable no-param-reassign */
 
     if (fills) {
       delete properties.fills
@@ -144,6 +144,8 @@ export class Group extends Layer {
       delete properties.borders
       style.borders = borders
     }
+
+    /* eslint-enable */
 
     return style
   }
@@ -161,6 +163,7 @@ export class Group extends Layer {
     //       on what is set in properties ('frame', 'path', 'radius', etc), and to construct the
     //       appropriate layer type accordingly. For now we only make rectangles.
     const newLayer = MSShapeGroup.shapeWithRect_(frame.asCGRect())
+    // eslint-disable-next-line no-param-reassign
     properties.style = this._styleForLayerWithProperties(properties)
 
     return this._addWrappedLayerWithProperties(newLayer, properties, 'Shape')

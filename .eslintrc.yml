@@ -8,6 +8,42 @@ plugins:
   - babel
   - prettier
 
+globals:
+  NSFont: false
+  MOPointer: false
+  NSMakeRange: false
+  NSMaxRange: false
+  MSSelfContainedHighLevelExporter: false
+  MSLayerMovement: false
+  NSMakeRect: false
+  MSBitmapLayer: false
+  MSLayerGroup: false
+  MSTextLayer: false
+  MSShapeGroup: false
+  NSArray: false
+  NSMakePoint: false
+  CGRectMake: false
+  MSArtboardGroup: false
+  MSPage: false
+  MSApplicationMetadata: false
+  log: false
+  NSApplication: false
+  NSDocumentController: false
+  NSAlert: false
+  NSComboBox: false
+  NSUserDefaults: false
+  AppController: false
+  MSImageData: false
+  NSImage: false
+  MSModalInputSheet: false
+  MSStyleFill: false
+  MSStyleBorder: false
+  MSColor: false
+  MSImmutableColor: false
+  MSDefaultStyle: false
+  MSLayer: false
+  MSDocumentData: false
+
 rules:
   ###########
   # PLUGINS #
@@ -42,6 +78,7 @@ rules:
   no-underscore-dangle: off
   class-methods-use-this: warn
   no-useless-constructor: warn
+  eqeqeq: off
 
   ###########
   # SPECIAL #

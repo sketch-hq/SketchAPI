@@ -112,6 +112,7 @@ export class Application extends WrappedObject {
    *
    * @return {string} Version and build number as a string, eg "3.6 (15352)".
    */
+  // eslint-disable-next-line camelcase
   get full_version() {
     return `${this.version} (${this.build})`
   }
@@ -210,7 +211,7 @@ export class Application extends WrappedObject {
    * @param {string} message The message to output.
    */
   log(message) {
-    print(message)
+    log(message)
   }
 
   /**
@@ -324,7 +325,7 @@ export class Application extends WrappedObject {
 
     let JsClass = mapping[sketchObject.class()]
     if (!JsClass) {
-      print(`no mapped wrapper for ${sketchObject.class()}`)
+      log(`no mapped wrapper for ${sketchObject.class()}`)
       JsClass = WrappedObject
     }
 
