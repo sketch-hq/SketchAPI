@@ -5,14 +5,13 @@
 // All code (C) 2016 Bohemian Coding.
 // ********************************
 
-import { Layer } from './Layer.js'
+import { Layer } from './Layer'
 
 /**
   Represents an image layer.
  */
 
 export class Image extends Layer {
-
   /**
     Make a new image layer object.
 
@@ -33,7 +32,7 @@ export class Image extends Layer {
   */
 
   get isImage() {
-    return true;
+    return true
   }
 
   /**
@@ -43,29 +42,28 @@ export class Image extends Layer {
   */
 
   set imageURL(url) {
-    var image = NSImage.alloc().initWithContentsOfURL_(url)
-    var imageData = MSImageData.alloc().initWithImage(image)
+    const image = NSImage.alloc().initWithContentsOfURL_(url)
+    const imageData = MSImageData.alloc().initWithImage(image)
     this._object.setImage_(imageData)
   }
 
-    /**
+  /**
      Return a list of tests to run for this class.
 
      @return {dictionary} A dictionary containing the tests to run. Each key is the name of a test, each value is a function which takes a Tester instance.
      */
 
-    static tests() {
-        return {
-            "tests" : {
-              "testIsImage" : function(tester) {
-                var document = tester.newTestDocument()
-                var page = document.selectedPage
-                var image = page.newImage()
-                tester.assertTrue(image.isImage)
-                tester.assertFalse(page.isImage)
-              },
-            }
-        };
+  static tests() {
+    return {
+      tests: {
+        testIsImage(tester) {
+          const document = tester.newTestDocument()
+          const page = document.selectedPage
+          const image = page.newImage()
+          tester.assertTrue(image.isImage)
+          tester.assertFalse(page.isImage)
+        },
+      },
     }
-
+  }
 }

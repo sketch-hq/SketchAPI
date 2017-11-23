@@ -5,7 +5,7 @@
 // All code (C) 2016 Bohemian Coding.
 // ********************************
 
-import { Document } from './Document.js'
+import { Document } from './Document'
 
 /**
     Very simple unit testing utility.
@@ -17,31 +17,28 @@ import { Document } from './Document.js'
 */
 
 export class Tester {
-
-    /**
+  /**
      Make a new tester.
-
      */
 
-    constructor(application) {
-        /** @type {array} List of failures in the currently running test. */
-        this._testFailures = []
+  constructor(application) {
+    /** @type {array} List of failures in the currently running test. */
+    this._testFailures = []
 
-        /** @type {Application} The application that is running these tests. */
-        this._application = application
+    /** @type {Application} The application that is running these tests. */
+    this._application = application
 
-        /** @type {number} The number of tests we've run. */
-        this._ran = 0
+    /** @type {number} The number of tests we've run. */
+    this._ran = 0
 
-        /** @type {array} The names of the tests that have passed. */
-        this._passes = []
+    /** @type {array} The names of the tests that have passed. */
+    this._passes = []
 
-        /** @type {array} Failure information for each test that has failed. */
-        this._failures = []
+    /** @type {array} Failure information for each test that has failed. */
+    this._failures = []
+  }
 
-    }
-
-    /**
+  /**
      Assert that a condition is true.
      If the assertion fails, the failure is recorded for later reporting by the tester.
 
@@ -49,14 +46,13 @@ export class Tester {
      @param {string} description A description of the test.
      */
 
-    assert(condition, description) {
-        if (!condition) {
-            if (!description) description = ""
-            this._testFailures.push(description)
-        }
+  assert(condition, description) {
+    if (!condition) {
+      throw new Error(description || '')
     }
+  }
 
-    /**
+  /**
      Assert that two values are equal.
      If the assertion fails, the failure is recorded for later reporting by the tester.
 
@@ -64,79 +60,73 @@ export class Tester {
      @param v2 The second value to compare.
     */
 
-    assertEqual(v1, v2) {
-      var different = v1 != v2
+  assertEqual(v1, v2) {
+    let different = v1 != v2
 
-      // if we're comparing two objects, try matching them as strings
-      // (crude, and not guaranteed, but it will cover some basic cases)
-      if (different && (typeof v1 === 'object') && (typeof v2 === 'object')) {
-        if (v1.compare) {
-          different = v1.compare(v2)
-        } else {
-          different = v1.toString() != v2.toString()
-        }
-      }
-
-      if (different) {
-          this._testFailures.push(v1 + " != " + v2)
+    // if we're comparing two objects, try matching them as strings
+    // (crude, and not guaranteed, but it will cover some basic cases)
+    if (different && typeof v1 === 'object' && typeof v2 === 'object') {
+      if (v1.compare) {
+        different = v1.compare(v2)
+      } else {
+        different = v1.toString() !== v2.toString()
       }
     }
 
+    if (different) {
+      throw new Error(`${v1} != ${v2}`)
+    }
+  }
 
-    /**
+  /**
      Assert that a value is true.
      If the assertion fails, the failure is recorded for later reporting by the tester.
 
      @param v The value to check.
     */
 
-    assertTrue(v) {
-      if (!v) {
-        this._testFailures.push("expected true, got: " + v)
-      }
+  assertTrue(v) {
+    if (!v) {
+      throw new Error(`expected true, got: ${v}`)
     }
+  }
 
-
-
-    /**
+  /**
      Assert that a value is false.
      If the assertion fails, the failure is recorded for later reporting by the tester.
 
      @param v The value to check.
     */
 
-    assertFalse(v) {
-      if (v) {
-        this._testFailures.push("expected false, got: " + v)
-      }
+  assertFalse(v) {
+    if (v) {
+      throw new Error(`expected false, got: ${v}`)
     }
+  }
 
-
-    /**
+  /**
         The application instance that we're running the tests for.
         This is the instance associated with the script context that launched the tests.
 
         @return {Application} The application object.
      */
 
-    get application() {
-        return this._application
-    }
+  get application() {
+    return this._application
+  }
 
-
-    /**
+  /**
         Returns a new document to use in tests.
 
         @return {Document} Test document.
       */
 
-    newTestDocument() {
-      var document = new Document(MSDocumentData.new(), this._application)
-      return document
-    }
+  newTestDocument() {
+    const document = new Document(MSDocumentData.new(), this._application)
+    return document
+  }
 
-
-    /**
+  /**
      Run a collection of tests.
 
      The method takes a dictionary describing the tests to run.
@@ -152,32 +142,36 @@ export class Tester {
      @return {dictionary} Returns a dictionary indicating how many tests ran, and a list of the passed, failed, and crashed tests.
      */
 
-    runUnitTests(specification, suiteName) {
-        var suites = specification.suites
-        for (var suite in suites) {
-            this.runUnitTests(suites[suite], suite)
-        }
+  runUnitTests(specification, suiteName) {
+    const { suites = {}, tests = {} } = specification
 
-        var tests = specification.tests
-        for (var name in tests) {
-            var test = tests[name]
-            this._ran++;
-            this._testFailures = [];
-            var result = test(this);
-            var fullName = suiteName ? suiteName + " : " + name : name
-            if (this._testFailures.length > 0) {
-              this._failures.push({"name" : fullName, "reasons" : this._testFailures})
-            } else {
-              this._passes.push(fullName)
-            }
-        }
+    Object.keys(suites).forEach(suite => {
+      this.runUnitTests(suites[suite], suite)
+    })
 
-      return {
-        "ran" : this._ran,
-        "crashes" : [],
-        "failures" : this._failures,
-        "passes" : this._passes
-      };
+    Object.keys(tests).forEach(name => {
+      const test = tests[name]
+      this._ran += 1
+      this._testFailures = []
+      try {
+        test(this)
+      } catch (err) {
+        this._testFailures.push(err.message)
+      }
+
+      const fullName = suiteName ? `${suiteName} : ${name}` : name
+      if (this._testFailures.length > 0) {
+        this._failures.push({ name: fullName, reasons: this._testFailures })
+      } else {
+        this._passes.push(fullName)
+      }
+    })
+
+    return {
+      ran: this._ran,
+      crashes: [],
+      failures: this._failures,
+      passes: this._passes,
     }
-
+  }
 }

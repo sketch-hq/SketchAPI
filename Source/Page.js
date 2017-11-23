@@ -5,15 +5,14 @@
 // All code (C) 2016 Bohemian Coding.
 // ********************************
 
-import { Group } from './Group.js'
-import { Selection } from './Selection.js'
+import { Group } from './Group'
+import { Selection } from './Selection'
 
 /**
 Represents a Page in a Sketch document.
 */
 
 export class Page extends Group {
-
   /**
   Make a new page object.
 
@@ -26,7 +25,6 @@ export class Page extends Group {
     this._document = document
   }
 
-
   /**
   The layers that the user has selected.
 
@@ -34,7 +32,7 @@ export class Page extends Group {
   */
 
   get selectedLayers() {
-    return new Selection(this);
+    return new Selection(this)
   }
 
   /**
@@ -46,20 +44,8 @@ export class Page extends Group {
   */
 
   get isPage() {
-    return true;
+    return true
   }
-
-
-  /**
-  The layers that the user has selected.
-
-  @return {Selection} A selection object representing the layers that the user has selected.
-  */
-
-  get selectedLayers() {
-    return new Selection(this);
-  }
-
 
   /**
   Returns a newly created artboard, which has been added to this page,
@@ -70,16 +56,10 @@ export class Page extends Group {
   */
 
   newArtboard(properties = {}) {
-    var frame = this._frameForLayerWithProperties(properties)
-    var newLayer = MSArtboardGroup.alloc().initWithFrame_(frame.asCGRect());
-    return this._addWrappedLayerWithProperties(newLayer, properties, "Artboard");
+    const frame = this._frameForLayerWithProperties(properties)
+    const newLayer = MSArtboardGroup.alloc().initWithFrame_(frame.asCGRect())
+    return this._addWrappedLayerWithProperties(newLayer, properties, 'Artboard')
   }
-
-  /**
-  Return a list of tests to run for this class.
-
-  @return {dictionary} A dictionary containing the tests to run. Each key is the name of a test, each value is a function which takes a Tester instance.
-  */
 
   /**
   Export this page, using the options supplied.
@@ -97,11 +77,11 @@ export class Page extends Group {
   - scales: this should be a list of numbers; it will determine the sizes at which the layers are exported; defaults to "1"
   - formats: this should be a list of one or more of "png", "jpg", "svg", and "pdf"; defaults to "png" (see discussion below)
 
-  ### SVG options
+  ### SVG options
   - compact : if exporting as SVG, this option makes the output more compact; defaults to false.
   - include-namespaces : if exporting as SVG, this option includes extra attributes; defaults to false.
 
-  ### PNG options
+  ### PNG options
   - save-for-web : if exporting a PNG, this option removes metadata such as the colour profile from the exported file; defaults to false.
 
   ### JPG options
@@ -114,8 +94,10 @@ export class Page extends Group {
   */
 
   export(options) {
-    var merged = this.exportOptionsMergedWithDefaults(options)
-    var exporter = MSSelfContainedHighLevelExporter.alloc().initWithOptions(merged)
+    const merged = this.exportOptionsMergedWithDefaults(options)
+    const exporter = MSSelfContainedHighLevelExporter.alloc().initWithOptions(
+      merged
+    )
     exporter.exportPage(this.sketchObject)
   }
 
@@ -126,45 +108,54 @@ export class Page extends Group {
   */
 
   exportArtboards(options) {
-    var merged = this.exportOptionsMergedWithDefaults(options)
-    var exporter = MSSelfContainedHighLevelExporter.alloc().initWithOptions(merged)
+    const merged = this.exportOptionsMergedWithDefaults(options)
+    const exporter = MSSelfContainedHighLevelExporter.alloc().initWithOptions(
+      merged
+    )
     exporter.exportLayers(this.sketchObject.artboards())
   }
 
+  /**
+  Return a list of tests to run for this class.
+
+  @return {dictionary} A dictionary containing the tests to run. Each key is the name of a test, each value is a function which takes a Tester instance.
+  */
+
   static tests() {
     return {
-      "tests" : {
-        "testSelectedLayers" : function(tester) {
-          var document = tester.newTestDocument()
-          var selection = document.selectedLayers
-          tester.assert(selection.isEmpty, "should have an empty selection")
+      tests: {
+        testSelectedLayers(tester) {
+          const document = tester.newTestDocument()
+          const selection = document.selectedLayers
+          tester.assert(selection.isEmpty, 'should have an empty selection')
 
-          var page = document.selectedPage
-          var group = page.newGroup({ 'name': "Test"})
+          const page = document.selectedPage
+          const group = page.newGroup({ name: 'Test' })
           group.select()
 
-          tester.assert(!selection.isEmpty, "should no longer have an empty selection")
+          tester.assert(
+            !selection.isEmpty,
+            'should no longer have an empty selection'
+          )
         },
 
-        "testLayerWithID" : function(tester) {
-          var document = tester.newTestDocument()
-          var page = document.selectedPage
-          var group = page.newGroup({ 'name': "Test"})
-          var id = group.id
-          var found = document.layerWithID(id)
+        testLayerWithID(tester) {
+          const document = tester.newTestDocument()
+          const page = document.selectedPage
+          const group = page.newGroup({ name: 'Test' })
+          const { id } = group
+          const found = document.layerWithID(id)
           tester.assertEqual(group.sketchObject, found.sketchObject)
         },
 
-        "testIsPage" : function(tester) {
-          var document = tester.newTestDocument()
-          var page = document.selectedPage
-          var image = page.newImage()
+        testIsPage(tester) {
+          const document = tester.newTestDocument()
+          const page = document.selectedPage
+          const image = page.newImage()
           tester.assertTrue(page.isPage)
           tester.assertFalse(image.isPage)
         },
-
-      }
-    };
+      },
+    }
   }
-
 }

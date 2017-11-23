@@ -5,20 +5,20 @@
 // All code (C) 2016 Bohemian Coding.
 // ********************************
 
-import { WrappedObject } from './WrappedObject.js'
-import { Document } from './Document.js'
-import { Rectangle } from './Rectangle.js'
-import { Group } from './Group.js'
-import { Text } from './Text.js'
-import { Image } from './Image.js'
-import { Shape } from './Shape.js'
-import { Artboard } from './Artboard.js'
-import { Page } from './Page.js'
-import { Tester } from './Tester.js'
-import { Layer } from './Layer.js'
-import { Selection } from './Selection.js'
-import { Style } from './Style.js'
-import { DataSupplier } from './DataSupplier.js'
+import { WrappedObject } from './WrappedObject'
+import { Document } from './Document'
+import { Rectangle } from './Rectangle'
+import { Group } from './Group'
+import { Text } from './Text'
+import { Image } from './Image'
+import { Shape } from './Shape'
+import { Artboard } from './Artboard'
+import { Page } from './Page'
+import { Tester } from './Tester'
+import { Layer } from './Layer'
+import { Selection } from './Selection'
+import { Style } from './Style'
+import { DataSupplier } from './DataSupplier'
 
 /**
  Gives you access to Sketch, and provides access to:
@@ -29,8 +29,7 @@ import { DataSupplier } from './DataSupplier.js'
  */
 
 export class Application extends WrappedObject {
-
-    /**
+  /**
      Construct a new Application object.
      An instance of this class will be passed back to you when you
      initialise the API, so you generally shouldn't need to make new ones.
@@ -39,46 +38,46 @@ export class Application extends WrappedObject {
      @return A new Application object.
      */
 
-    constructor(context) {
-        super(context)
-
-        /**
-         Metadata about this version of Sketch.
-         @type {dictionary}
-         */
-        this._metadata = MSApplicationMetadata.metadata()
-      
-        if (this._metadata.app.startsWith("com.bohemiancoding.sketch3")) {
-          // We will only have an AppController when the app is Sketch not a test bundle.
-          this._appController = AppController.sharedInstance()
-        }
-  
-        // expose some classes
-        this.Application = Application
-        this.Rectangle = Rectangle
-        this.Document = Document
-        this.Group = Group
-        this.Text = Text
-        this.Image = Image
-        this.Shape = Shape
-        this.Artboard = Artboard
-        this.Page = Page
-        this.Selection = Selection
-        this.Style = Style
-        this.DataSupplier = DataSupplier
-    }
+  constructor(context) {
+    super(context)
 
     /**
+      Metadata about this version of Sketch.
+      @type {dictionary}
+     */
+    this._metadata = MSApplicationMetadata.metadata()
+
+    if (this._metadata.app.startsWith('com.bohemiancoding.sketch3')) {
+      // We will only have an AppController when the app is Sketch not a test bundle.
+      this._appController = AppController.sharedInstance()
+    }
+
+    // expose some classes
+    this.Application = Application
+    this.Rectangle = Rectangle
+    this.Document = Document
+    this.Group = Group
+    this.Text = Text
+    this.Image = Image
+    this.Shape = Shape
+    this.Artboard = Artboard
+    this.Page = Page
+    this.Selection = Selection
+    this.Style = Style
+    this.DataSupplier = DataSupplier
+  }
+
+  /**
      The version of this API.
 
      @return A version string.
      */
 
-    get api_version() {
-        return "1.1"
-    }
+  get api_version() {
+    return '1.1'
+  }
 
-    /**
+  /**
      The context that the API was created in.
      This is the traditional context argument that is
      passed to all plugin scripts when they are run.
@@ -89,42 +88,41 @@ export class Application extends WrappedObject {
      @return A context dictionary.
      */
 
-    get context() {
-        return this._object
-    }
+  get context() {
+    return this._object
+  }
 
-
-    /**
+  /**
      The version of Sketch that is running.
 
      @return The version as a string, eg "3.6".
      */
 
-    get version() {
-        return this._metadata['appVersion']
-    }
+  get version() {
+    return this._metadata.appVersion
+  }
 
-    /**
+  /**
      The exact build of Sketch that is running.
 
      @return The build number as a string, eg "15352".
      */
 
-    get build() {
-        return this._metadata['build']
-    }
+  get build() {
+    return this._metadata.build
+  }
 
-    /**
+  /**
      Returns the full version of Sketch that is running
 
      @return {string} Version and build number as a string, eg "3.6 (15352)".
      */
 
-    get full_version() {
-        return this.version + " (" + this.build + ")"
-    }
+  get full_version() {
+    return `${this.version} (${this.build})`
+  }
 
-    /**
+  /**
      Return the value of a global setting for a given key.
      @param key The setting to look up.
      @return The setting value.
@@ -134,11 +132,11 @@ export class Application extends WrappedObject {
      eg: defaults read com.bohemiancoding.sketch3 <key>
      */
 
-    settingForKey(key) {
-        return NSUserDefaults.standardUserDefaults().objectForKey_(key);
-    }
+  settingForKey(key) {
+    return NSUserDefaults.standardUserDefaults().objectForKey_(key)
+  }
 
-    /**
+  /**
      Set the value of a global setting for a given key.
 
      @param key The setting to set.
@@ -149,11 +147,11 @@ export class Application extends WrappedObject {
      eg: defaults write com.bohemiancoding.sketch3 <key> <value>
      */
 
-    setSettingForKey(key, value) {
-        NSUserDefaults.standardUserDefaults().setObject_forKey_(value, key)
-    }
+  setSettingForKey(key, value) {
+    NSUserDefaults.standardUserDefaults().setObject_forKey_(value, key)
+  }
 
-    /**
+  /**
      Return a file URL pointing to a named resource in the plugin's Resources/
      folder.
 
@@ -161,11 +159,11 @@ export class Application extends WrappedObject {
      @return The resource location, in the form "file://path/to/resource".
      */
 
-    resourceNamed(name) {
-        return this._object.plugin.urlForResourceNamed_(name)
-    }
+  resourceNamed(name) {
+    return this._object.plugin.urlForResourceNamed_(name)
+  }
 
-    /**
+  /**
      Shows a simple input sheet which displays a message, and asks for a single string
      input.
      @param msg The prompt message to show.
@@ -173,13 +171,18 @@ export class Application extends WrappedObject {
      @return The string that the user input.
      */
 
-    getStringFromUser(msg, initial) {
-        var panel = MSModalInputSheet.alloc().init()
-        var result = panel.runPanelWithNibName_ofType_initialString_label_("MSModalInputSheet", 0, initial, msg)
-        return result
-    }
+  getStringFromUser(msg, initial) {
+    const panel = MSModalInputSheet.alloc().init()
+    const result = panel.runPanelWithNibName_ofType_initialString_label_(
+      'MSModalInputSheet',
+      0,
+      initial,
+      msg
+    )
+    return result
+  }
 
-    /**
+  /**
      Shows an input sheet which displays a popup with a series of options,
      from which the user is asked to choose.
 
@@ -193,49 +196,49 @@ export class Application extends WrappedObject {
      The selection will be the integer index of the selected item.
      */
 
-    getSelectionFromUser(msg, items, selectedItemIndex) {
-        selectedItemIndex = selectedItemIndex || 0
+  getSelectionFromUser(msg, items, selectedItemIndex = 0) {
+    const accessory = NSComboBox.alloc().initWithFrame(
+      NSMakeRect(0, 0, 200, 25)
+    )
+    accessory.addItemsWithObjectValues(items)
+    accessory.selectItemAtIndex(selectedItemIndex)
 
-        var accessory = NSComboBox.alloc().initWithFrame(NSMakeRect(0,0,200,25))
-        accessory.addItemsWithObjectValues(items)
-        accessory.selectItemAtIndex(selectedItemIndex)
+    const alert = NSAlert.alloc().init()
+    alert.setMessageText(msg)
+    alert.addButtonWithTitle('OK')
+    alert.addButtonWithTitle('Cancel')
+    alert.setAccessoryView(accessory)
 
-        var alert = NSAlert.alloc().init()
-        alert.setMessageText(msg)
-        alert.addButtonWithTitle('OK')
-        alert.addButtonWithTitle('Cancel')
-        alert.setAccessoryView(accessory)
+    const responseCode = alert.runModal()
+    const sel = accessory.indexOfSelectedItem()
 
-        var responseCode = alert.runModal()
-        var sel = accessory.indexOfSelectedItem()
+    return [responseCode, sel]
+  }
 
-        return [responseCode, sel]
-    }
-
-    /**
+  /**
      Output a message to the log console.
 
      @param {string} message The message to output.
      */
 
-    log(message) {
-        print(message)
-    }
+  log(message) {
+    print(message)
+  }
 
-    /**
+  /**
      Assert that a given condition is true.
      If the condition is false, throws an exception.
 
      @param condition An expression that is expected to evaluate to true if everything is ok.
      */
 
-    assert(condition) {
-        if (!condition) {
-            throw "Assert failed!"
-        }
+  assert(condition) {
+    if (!condition) {
+      throw new Error('Assert failed!')
     }
+  }
 
-    /**
+  /**
      The selected document.
 
      If the user invoked the script explicitly (for example by selecting a menu item),
@@ -246,40 +249,39 @@ export class Application extends WrappedObject {
      @return A Document object.
      */
 
-    get selectedDocument() {
-        return new Document(this._object.document, this)
-    }
+  get selectedDocument() {
+    return new Document(this._object.document, this)
+  }
 
-
-    /**
+  /**
      Create a new document and bring it to the front.
      @return The new document.
      */
 
-    newDocument() {
-        var app = NSDocumentController.sharedDocumentController()
-        app.newDocument_(this)
-        return new Document(app.currentDocument(), this)
-    }
+  newDocument() {
+    const app = NSDocumentController.sharedDocumentController()
+    app.newDocument_(this)
+    return new Document(app.currentDocument(), this)
+  }
 
-    /**
+  /**
      Get the object that manages the data provided by plugins.
      @return The data manager object.
      */
 
-    dataManager() {
-        return new DataSupplier(this.appController.dataSupplierManager(), this)
-    }
+  dataManager() {
+    return new DataSupplier(this.appController.dataSupplierManager(), this)
+  }
 
-    /**
+  /**
      Get Sketch's AppController shared instance.
      @return The AppController shared instance.
      */
-    get appController() {
-        return this._appController
-    }
+  get appController() {
+    return this._appController
+  }
 
-    /**
+  /**
      Show a small, temporary, message to the user.
      The message appears at the bottom of the selected document,
      and is visible for a short period of time. It should consist of a single
@@ -288,11 +290,11 @@ export class Application extends WrappedObject {
      @param {string} message The message to show.
      */
 
-    message(message) {
-        this._object.document.showMessage(message)
-    }
+  message(message) {
+    this._object.document.showMessage(message)
+  }
 
-    /**
+  /**
      Show an alert with a custom title and message.
 
      @param {string} title The title of the alert.
@@ -302,32 +304,31 @@ export class Application extends WrappedObject {
      by pressing the OK button.
      */
 
-    alert(title, message) {
-        var app = NSApplication.sharedApplication()
-        app.displayDialog_withTitle(message, title)
-    }
+  alert(title, message) {
+    const app = NSApplication.sharedApplication()
+    app.displayDialog_withTitle(message, title)
+  }
 
-    /**
+  /**
      Return a lookup table of known mappings between Sketch model classes
      and our JS API wrapper classes.
 
      @return {dictionary} A dictionary with keys for the Sketch Model classes, and values for the corresponding API wrapper classes.
      */
 
-    wrapperMappings() {
-      var mappings = {
-        MSLayerGroup : Group,
-        MSPage : Page,
-        MSArtboardGroup : Artboard,
-        MSShapeGroup : Shape,
-        MSBitmapLayer : Image,
-        MSTextLayer : Text
-      }
-      return mappings
+  wrapperMappings() {
+    const mappings = {
+      MSLayerGroup: Group,
+      MSPage: Page,
+      MSArtboardGroup: Artboard,
+      MSShapeGroup: Shape,
+      MSBitmapLayer: Image,
+      MSTextLayer: Text,
     }
+    return mappings
+  }
 
-  
-    /**
+  /**
      Return a wrapped version of a Sketch object.
      We don't know about *all* Sketch object types, but
      for some we will return a special subclass.
@@ -338,19 +339,19 @@ export class Application extends WrappedObject {
      @return {WrappedObject} A javascript object (subclass of WrappedObject), which represents the Sketch object we were given.
     */
 
-    wrapObject(sketchObject, inDocument) {
-      var mapping = this.wrapperMappings()
+  wrapObject(sketchObject, inDocument) {
+    const mapping = this.wrapperMappings()
 
-      var jsClass = mapping[sketchObject.class()]
-      if (!jsClass) {
-        print("no mapped wrapper for " + sketchObject.class())
-        jsClass = WrappedObject
-      }
-
-      return new jsClass(sketchObject, inDocument)
+    let JsClass = mapping[sketchObject.class()]
+    if (!JsClass) {
+      print(`no mapped wrapper for ${sketchObject.class()}`)
+      JsClass = WrappedObject
     }
 
-    /**
+    return new JsClass(sketchObject, inDocument)
+  }
+
+  /**
      Return a list of tests to run for this class.
 
      We could do some fancy introspection here to derive the tests from
@@ -359,44 +360,54 @@ export class Application extends WrappedObject {
      @return {dictionary} A dictionary containing the tests to run. Each key is the name of a test, each value is a function which takes a Tester instance.
      */
 
-    static tests() {
-        return {
-            /** @test {Application} */
-            "tests" : {
-                /** @test {Application#api_version} */
-                testAPIVersion(tester) {
-                    tester.assertEqual(tester.application.api_version, "1.1")
-                },
+  static tests() {
+    return {
+      /** @test {Application} */
+      tests: {
+        /** @test {Application#api_version} */
+        testAPIVersion(tester) {
+          tester.assertEqual(tester.application.api_version, '1.1')
+        },
 
-                /** @test {Application#version} */
-                testApplicationVersion(tester) {
-                    if (!MSApplicationMetadata.metadata().app.startsWith("com.bohemiancoding.sketch3")) {
-                      // When invoked by the Objective-C unit tests, we know that the bundle's version will be
-                      // set to 1.0 so it's ok to test it.
-                      tester.assertEqual(tester.application.version, "1.0")
-                    }
-                },
+        /** @test {Application#version} */
+        testApplicationVersion(tester) {
+          if (
+            !MSApplicationMetadata.metadata().app.startsWith(
+              'com.bohemiancoding.sketch3'
+            )
+          ) {
+            // When invoked by the Objective-C unit tests, we know that the bundle's version will be
+            // set to 1.0 so it's ok to test it.
+            tester.assertEqual(tester.application.version, '1.0')
+          }
+        },
 
-                /** @test {Application#wrapObject} */
-                testWrapObject(tester) {
-                  var classesToTest = [MSLayerGroup, MSPage, MSArtboardGroup, MSShapeGroup, MSBitmapLayer, MSTextLayer]
-                  var mappings = tester.application.wrapperMappings()
-                  for (var index in classesToTest) {
-                    var classToTest = classesToTest[index]
-                    var frame = NSMakeRect(0, 0, 100, 100)
-                    var object = classToTest.alloc().initWithFrame(frame)
-                    var mockDocument = {}
-                    var wrapped = tester.application.wrapObject(object, mockDocument)
-                    tester.assertEqual(wrapped._object, object)
-                    tester.assertEqual(wrapped._document, mockDocument)
-                    tester.assertEqual(wrapped.class, mappings[classToTest].class)
-                  }
-                }
-            }
-        };
+        /** @test {Application#wrapObject} */
+        testWrapObject(tester) {
+          const classesToTest = [
+            MSLayerGroup,
+            MSPage,
+            MSArtboardGroup,
+            MSShapeGroup,
+            MSBitmapLayer,
+            MSTextLayer,
+          ]
+          const mappings = tester.application.wrapperMappings()
+          classesToTest.forEach(classToTest => {
+            const frame = NSMakeRect(0, 0, 100, 100)
+            const object = classToTest.alloc().initWithFrame(frame)
+            const mockDocument = {}
+            const wrapped = tester.application.wrapObject(object, mockDocument)
+            tester.assertEqual(wrapped._object, object)
+            tester.assertEqual(wrapped._document, mockDocument)
+            tester.assertEqual(wrapped.class, mappings[classToTest].class)
+          })
+        },
+      },
     }
+  }
 
-    /**
+  /**
      Run all of our internal unit tests.
      Returns a dictionary indicating how many tests ran, passed, failed, and crashed,
      and a list of more detailed information for each failure.
@@ -406,27 +417,26 @@ export class Application extends WrappedObject {
      command, so it's simpler to use a simple test framework of our own devising.
      */
 
-    runUnitTests() {
-        var tests = {
-            "suites" : {
-                "Application" : Application.tests(),
-                "Artboard" : Artboard.tests(),
-                "Document" : Document.tests(),
-                "Group" : Group.tests(),
-                "Image" : Image.tests(),
-                "Layer" : Layer.tests(),
-                "Page" : Page.tests(),
-                "Rectangle" : Rectangle.tests(),
-                "Selection" : Selection.tests(),
-                "Shape" : Shape.tests(),
-                "Text" : Text.tests(),
-                "WrappedObject" : WrappedObject.tests(),
-                "Style" : Style.tests()
-            }
-        }
-
-        var tester = new Tester(this);
-        return tester.runUnitTests(tests);
+  runUnitTests() {
+    const tests = {
+      suites: {
+        Application: Application.tests(),
+        Artboard: Artboard.tests(),
+        Document: Document.tests(),
+        Group: Group.tests(),
+        Image: Image.tests(),
+        Layer: Layer.tests(),
+        Page: Page.tests(),
+        Rectangle: Rectangle.tests(),
+        Selection: Selection.tests(),
+        Shape: Shape.tests(),
+        Text: Text.tests(),
+        WrappedObject: WrappedObject.tests(),
+        Style: Style.tests(),
+      },
     }
 
+    const tester = new Tester(this)
+    return tester.runUnitTests(tests)
+  }
 }

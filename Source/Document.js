@@ -5,10 +5,11 @@
 // All code (C) 2016 Bohemian Coding.
 // ********************************
 
-import { WrappedObject } from './WrappedObject.js'
-import { Layer } from './Layer.js'
-import { Page } from './Page.js'
-import { Selection } from './Selection.js'
+import { WrappedObject } from './WrappedObject'
+import { Layer } from './Layer'
+import { Page } from './Page'
+import { Selection } from './Selection'
+import { toArray } from './utils'
 
 /**
 A Sketch document.
@@ -54,7 +55,6 @@ export class Document extends WrappedObject {
     return this._application.wrapObject(sketchObject, this)
   }
 
-
   /**
   The layers that the user has selected in the currently selected page.
 
@@ -62,7 +62,7 @@ export class Document extends WrappedObject {
   */
 
   get selectedLayers() {
-    return new Selection(this.selectedPage);
+    return new Selection(this.selectedPage)
   }
 
   /**
@@ -82,13 +82,8 @@ export class Document extends WrappedObject {
   */
 
   get pages() {
-    var result = [];
-    var loop = this._object.pages().objectEnumerator()
-    var item;
-    while (item = loop.nextObject()) {
-      result.push(new Page(item, this));
-    }
-    return result;
+    const pages = toArray(this._object.pages())
+    return pages.map(page => new Page(page, this))
   }
 
   /**
@@ -97,10 +92,12 @@ export class Document extends WrappedObject {
   @return {Layer} A layer object, if one was found.
   */
 
-  layerWithID(layer_id) {
-    var layer = this._object.documentData().layerWithID_(layer_id);
-    if (layer)
-    return new Layer(layer, this);
+  layerWithID(layerId) {
+    const layer = this._object.documentData().layerWithID_(layerId)
+    if (layer) {
+      return new Layer(layer, this)
+    }
+    return undefined
   }
 
   /**
@@ -109,15 +106,17 @@ export class Document extends WrappedObject {
   @return {Layer} A layer object, if one was found.
   */
 
-  layerNamed(layer_name) {
+  layerNamed(layerName) {
     // As it happens, layerWithID also matches names, so we can implement
     // this method in the same way as layerWithID.
     // That might not always be true though, which is why the JS API splits
     // them into separate functions.
 
-    var layer = this._object.documentData().layerWithID_(layer_name);
-    if (layer)
-    return new Layer(layer, this);
+    const layer = this._object.documentData().layerWithID_(layerName)
+    if (layer) {
+      return new Layer(layer, this)
+    }
+    return undefined
   }
 
   /**
@@ -132,27 +131,25 @@ export class Document extends WrappedObject {
   iterateWithNativeLayers(layers, filter, block) {
     // if we're given a string as a filter, treat it as a function
     // to call on the layer
-    var loopBlock = block
+    let loopBlock = block
     if (typeof filter === 'string' || filter instanceof String) {
-        loopBlock = function(layer) {
-            if (layer[filter]) {
-                block(layer)
-            }
+      loopBlock = layer => {
+        if (layer[filter]) {
+          block(layer)
         }
+      }
     } else if (filter) {
-        loopBlock = function(layer) {
-            if (filter(layer)) {
-                block(layer)
-            }
+      loopBlock = layer => {
+        if (filter(layer)) {
+          block(layer)
         }
+      }
     }
 
-    var loop = layers.objectEnumerator();
-    var item
-    while (item = loop.nextObject()) {
-      var layer = this.wrapObject(item)
-      loopBlock(layer);
-    }
+    const loop = toArray(layers).forEach(item => {
+      const layer = this.wrapObject(item)
+      loopBlock(layer)
+    })
   }
 
   /**
@@ -173,39 +170,41 @@ export class Document extends WrappedObject {
 
   static tests() {
     return {
-      "tests" : {
-        "testPages" : function(tester) {
-          var document = tester.newTestDocument()
-          var pages = document.pages
-
+      tests: {
+        testPages(tester) {
+          const document = tester.newTestDocument()
+          const { pages } = document
           tester.assertEqual(pages.length, 1)
-          tester.assertEqual(pages[0].sketchObject, document.selectedPage.sketchObject)
-
+          tester.assertEqual(
+            pages[0].sketchObject,
+            document.selectedPage.sketchObject
+          )
         },
 
-        "testSelectedLayers" : function(tester) {
-          var document = tester.newTestDocument()
-          var selection = document.selectedLayers
-          tester.assert(selection.isEmpty, "should have an empty selection")
+        testSelectedLayers(tester) {
+          const document = tester.newTestDocument()
+          const selection = document.selectedLayers
+          tester.assert(selection.isEmpty, 'should have an empty selection')
 
-          var page = document.selectedPage
-          var group = page.newGroup({ 'name': "Test"})
+          const page = document.selectedPage
+          const group = page.newGroup({ name: 'Test' })
           group.select()
 
-          tester.assert(!selection.isEmpty, "should no longer have an empty selection")
+          tester.assert(
+            !selection.isEmpty,
+            'should no longer have an empty selection'
+          )
         },
 
-        "testLayerWithID" : function(tester) {
-          var document = tester.newTestDocument()
-          var page = document.selectedPage
-          var group = page.newGroup({ 'name': "Test"})
-          var id = group.id
-          var found = document.layerWithID(id)
+        testLayerWithID(tester) {
+          const document = tester.newTestDocument()
+          const page = document.selectedPage
+          const group = page.newGroup({ name: 'Test' })
+          const { id } = group
+          const found = document.layerWithID(id)
           tester.assertEqual(group.sketchObject, found.sketchObject)
-        }
-
-      }
-    };
+        },
+      },
+    }
   }
-
 }
