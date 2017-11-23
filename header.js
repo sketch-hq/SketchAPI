@@ -51,5 +51,3 @@ sketch.message("Hello mum!");
 sketch.alert("Title", "message");
 
 */
-
-var __globals = this;
