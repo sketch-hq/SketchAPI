@@ -102,7 +102,9 @@ export class Text extends Layer {
    */
   get alignment() {
     const raw = this._object.textAlignment()
-    return Object.keys(TextAlignment).find(key => key === raw) || raw
+    return (
+      Object.keys(TextAlignment).find(key => TextAlignment[key] === raw) || raw
+    )
   }
 
   /**
