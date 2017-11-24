@@ -5,7 +5,7 @@
 // All code (C) 2016 Bohemian Coding.
 // ********************************
 
-import { WrappedObject } from './WrappedObject'
+import { WrappedObject, DefinedPropertiesKey } from './WrappedObject'
 
 export const FillType = {
   color: 0, // A solid fill/border.
@@ -24,14 +24,26 @@ export class Style extends WrappedObject {
    *
    * @param {MSStyle} style The underlying model object from Sketch.
    */
-  constructor(style) {
-    super(style || MSDefaultStyle.defaultStyle())
+  constructor(style = {}) {
+    if (style.class && typeof style.class === 'function') {
+      log(
+        'using a constructor to box a native object is deprecated. Use `fromNative` instead'
+      )
+      return Style.fromNative(style)
+    }
+
+    if (!style.sketchObject) {
+      // eslint-disable-next-line no-param-reassign
+      style.sketchObject = MSDefaultStyle.defaultStyle()
+    }
+
+    super(style)
   }
 
   /**
    * Given a string description of a color, return an MSColor.
    */
-  colorFromString(value) {
+  static colorFromString(value) {
     const immutable = MSImmutableColor.colorWithSVGString_(value)
     return MSColor.alloc().initWithImmutableObject_(immutable)
   }
@@ -55,7 +67,7 @@ export class Style extends WrappedObject {
   set borders(values) {
     const objects = []
     values.forEach(value => {
-      const color = this.colorFromString(value)
+      const color = Style.colorFromString(value)
       const border = MSStyleBorder.new()
       border.setColor_(color)
       border.setFillType_(FillType.color)
@@ -85,7 +97,7 @@ export class Style extends WrappedObject {
   set fills(values) {
     const objects = []
     values.forEach(value => {
-      const color = this.colorFromString(value)
+      const color = Style.colorFromString(value)
       const fill = MSStyleFill.new()
       fill.setColor_(color)
       fill.setFillType_(FillType.color)
@@ -119,3 +131,6 @@ export class Style extends WrappedObject {
     }
   }
 }
+
+Style.FillType = FillType
+Style[DefinedPropertiesKey] = { ...WrappedObject[DefinedPropertiesKey] }

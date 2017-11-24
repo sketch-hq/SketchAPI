@@ -5,9 +5,16 @@
 // All code (C) 2016 Bohemian Coding.
 // ********************************
 
+import { DefinedPropertiesKey } from './WrappedObject'
 import { Layer } from './Layer'
 import { Rectangle } from './Rectangle'
 import { Style } from './Style'
+import { Types } from './enums'
+import { Factory } from './Factory'
+import { toArray } from './utils'
+import { wrapNativeObject, wrapObject } from './wrapNativeObject'
+
+import { iterateWithNativeLayers } from './deprecated-helpers'
 
 /**
  * Represents a group of layers.
@@ -19,8 +26,22 @@ export class Group extends Layer {
    * @param {MSLayerGroup} group  The underlying model object from Sketch.
    * @param {Document} document The document that the group belongs to.
    */
-  constructor(group, document) {
-    super(group, document)
+  constructor(group = {}, document) {
+    if (document) {
+      log(
+        'using a constructor to box a native object is deprecated. Use `fromNative` instead'
+      )
+      return Group.fromNative(group)
+    }
+
+    if (!group.sketchObject) {
+      // eslint-disable-next-line no-param-reassign
+      group.sketchObject = Factory.createNative(Group)
+        .alloc()
+        .initWithFrame(new Rectangle(0, 0, 100, 100).asCGRect())
+    }
+
+    super(group)
   }
 
   /**
@@ -42,8 +63,9 @@ export class Group extends Layer {
    * @param {function(layer: Layer)} block The function to execute for each layer.
    */
   iterate(block) {
+    log('iterate is deprecated, use `.layers.forEach` instead')
     const layers = this._object.layers()
-    this._document.iterateWithNativeLayers(layers, null, block)
+    iterateWithNativeLayers(layers, null, block)
   }
 
   /**
@@ -55,8 +77,11 @@ export class Group extends Layer {
    * @param {function(layer: Layer)} block The function to execute for each layer.
    */
   iterateWithFilter(filter, block) {
+    log(
+      'iterateWithFilter is deprecated, use `.layers.filter(...).forEach` instead'
+    )
     const layers = this._object.layers()
-    this._document.iterateWithNativeLayers(layers, filter, block)
+    iterateWithNativeLayers(layers, filter, block)
   }
 
   /**
@@ -96,7 +121,7 @@ export class Group extends Layer {
       layer.addLayers_(NSArray.arrayWithObject_(newLayer))
 
       // make a Javascript wrapper object for the new layer
-      const wrapper = this._document.wrapObject(newLayer)
+      const wrapper = wrapNativeObject(newLayer)
 
       // apply properties, via the wrapper
       Object.keys(properties).forEach(p => {
@@ -158,6 +183,7 @@ export class Group extends Layer {
    * @return {Shape} the new shape.
    */
   newShape(properties = {}) {
+    log('`newShape` is deprecated. Use `new Shape({parent: myGroup})` instead')
     const frame = this._frameForLayerWithProperties(properties)
     // TODO: Eventually we want to distinguish between different shape sub-types here depending
     //       on what is set in properties ('frame', 'path', 'radius', etc), and to construct the
@@ -177,6 +203,7 @@ export class Group extends Layer {
    * @return {Text} the new text layer.
    */
   newText(properties = {}) {
+    log('`newText` is deprecated. Use `new Text({parent: myGroup})` instead')
     const frame = this._frameForLayerWithProperties(properties)
     const newLayer = MSTextLayer.alloc().initWithFrame_(frame.asCGRect())
     newLayer.adjustFrameToFit()
@@ -191,6 +218,7 @@ export class Group extends Layer {
    * @return {Group} the new group.
    */
   newGroup(properties = {}) {
+    log('`newGroup` is deprecated. Use `new Group({parent: myGroup})` instead')
     const frame = this._frameForLayerWithProperties(properties)
     const newLayer = MSLayerGroup.alloc().initWithFrame_(frame.asCGRect())
     return this._addWrappedLayerWithProperties(newLayer, properties, 'Group')
@@ -205,6 +233,7 @@ export class Group extends Layer {
    */
 
   newImage(properties = {}) {
+    log('`newImage` is deprecated. Use `new Image({parent: myGroup})` instead')
     const frame = this._frameForLayerWithProperties(properties)
     const newLayer = MSBitmapLayer.alloc().initWithFrame_(frame.asCGRect())
     return this._addWrappedLayerWithProperties(newLayer, properties, 'Image')
@@ -293,3 +322,24 @@ export class Group extends Layer {
     }
   }
 }
+
+Group.type = Types.Group
+Group[DefinedPropertiesKey] = { ...Layer[DefinedPropertiesKey] }
+Factory.registerClass(Group, MSLayerGroup)
+
+Group.define('layers', {
+  exportable: false,
+  get() {
+    return toArray(this._object.layers()).map(wrapNativeObject)
+  },
+  set(layers) {
+    // remove the existing layers
+    toArray(this._object.layers()).forEach(l => l.removeFromParent())
+
+    toArray(layers)
+      .map(wrapObject)
+      .forEach(layer => {
+        layer.parent = this // eslint-disable-line
+      })
+  },
+})

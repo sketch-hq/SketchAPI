@@ -6,6 +6,18 @@
 
 import { Application } from './Application'
 
+import { Document } from './Document'
+import { Rectangle } from './Rectangle'
+import { Group } from './Group'
+import { Text } from './Text'
+import { Image } from './Image'
+import { Shape } from './Shape'
+import { Artboard } from './Artboard'
+import { Page } from './Page'
+
+import { Types } from './enums'
+import { wrapObject } from './wrapNativeObject'
+
 /**
  * Return a function that captures the context.
  * When called, this function will initialise the API
@@ -19,4 +31,21 @@ import { Application } from './Application'
 
 // The Application object effectively *is* the api -- all other
 // functions and objects can be accessed via it.
-module.exports = context => () => new Application(context)
+
+module.exports = context => {
+  const api = () => new Application(context)
+
+  api.Document = Document
+  api.Rectangle = Rectangle
+  api.Group = Group
+  api.Text = Text
+  api.Image = Image
+  api.Shape = Shape
+  api.Artboard = Artboard
+  api.Page = Page
+
+  api.Types = Types
+  api.fromNative = wrapObject
+
+  return api
+}

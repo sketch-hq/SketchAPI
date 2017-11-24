@@ -5,20 +5,22 @@
 // All code (C) 2016 Bohemian Coding.
 // ********************************
 
-import { WrappedObject } from './WrappedObject'
+import { toArray } from './utils'
+import { wrapNativeObject } from './wrapNativeObject'
+
+import { iterateWithNativeLayers } from './deprecated-helpers'
 
 /**
  * Represents the layers that the user has selected.
  */
-export class Selection extends WrappedObject {
+export class Selection {
   /**
    * Make a new Selection object.
    *
    * @param {Page} page The page that the selection relates to.
    */
   constructor(page) {
-    super(page._object)
-    this._page = page
+    this._object = page._object
   }
 
   /**
@@ -26,8 +28,10 @@ export class Selection extends WrappedObject {
    *
    * @return {array} The selected layers.
    * */
-  get nativeLayers() {
-    const layers = this._object.selectedLayers().layers()
+  get layers() {
+    const layers = toArray(this._object.selectedLayers().layers()).map(
+      wrapNativeObject
+    )
     return layers
   }
 
@@ -37,7 +41,7 @@ export class Selection extends WrappedObject {
    * @return {number} The number of layers that are selected.
    */
   get length() {
-    return this.nativeLayers.count()
+    return this.layers.length
   }
 
   /**
@@ -46,7 +50,7 @@ export class Selection extends WrappedObject {
    * @return {boolean} true if the selection is empty.
    */
   get isEmpty() {
-    return this.nativeLayers.count() === 0
+    return this.layers.length === 0
   }
 
   /**
@@ -55,9 +59,11 @@ export class Selection extends WrappedObject {
    * @param {function(layer: Layer)} block The function to execute for each layer.
    */
   iterateThenClear(block) {
-    const layers = this.nativeLayers
+    log(
+      '`iterateThenClear` is deprecated. Use `selection.layers.forEach(); selection.clear()`'
+    )
     this.clear()
-    this._page._document.iterateWithNativeLayers(layers, null, block)
+    iterateWithNativeLayers(this.layers, null, block)
   }
 
   /**
@@ -67,9 +73,11 @@ export class Selection extends WrappedObject {
    * @param {function(layer: Layer)} block The function to execute for each layer.
    */
   iterateWithFilterThenClear(filter, block) {
-    const layers = this.nativeLayers
+    log(
+      '`iterateWithFilterThenClear` is deprecated. Use `selection.layers.filter().forEach(); selection.clear()`'
+    )
     this.clear()
-    this._page._document.iterateWithNativeLayers(layers, filter, block)
+    iterateWithNativeLayers(this.layers, filter, block)
   }
 
   /**
@@ -78,7 +86,8 @@ export class Selection extends WrappedObject {
    * @param {function(layer: Layer)} block The function to execute for each layer.
    */
   iterate(block) {
-    this._page._document.iterateWithNativeLayers(this.nativeLayers, null, block)
+    log('`iterate` is deprecated. Use `selection.layers.forEach()`')
+    iterateWithNativeLayers(this.layers, null, block)
   }
 
   /**
@@ -88,18 +97,17 @@ export class Selection extends WrappedObject {
    * @param {function(layer: Layer)} block The function to execute for each layer.
    */
   iterateWithFilter(filter, block) {
-    this._page._document.iterateWithNativeLayers(
-      this.nativeLayers,
-      filter,
-      block
+    log(
+      '`iterateWithFilter` is deprecated. Use `selection.layers.filter().forEach()`'
     )
+    iterateWithNativeLayers(this.layers, filter, block)
   }
 
   /**
    * Clear the selection.
    */
   clear() {
-    this._page.sketchObject.changeSelectionBySelectingLayers(null)
+    this._object.changeSelectionBySelectingLayers(null)
   }
 
   /**

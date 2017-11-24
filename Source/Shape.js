@@ -5,8 +5,12 @@
 // All code (C) 2016 Bohemian Coding.
 // ********************************
 
+import { DefinedPropertiesKey } from './WrappedObject'
 import { Layer } from './Layer'
 import { Style } from './Style'
+import { Types } from './enums'
+import { Factory } from './Factory'
+import { Rectangle } from './Rectangle'
 
 /**
  * Represents a shape layer (a rectangle, oval, path, etc).
@@ -19,7 +23,21 @@ export class Shape extends Layer {
    * @param {Document} document The document that the shape belongs to.
    */
   constructor(shape, document) {
-    super(shape, document)
+    if (document) {
+      log(
+        'using a constructor to box a native object is deprecated. Use `fromNative` instead'
+      )
+      return Shape.fromNative(shape)
+    }
+
+    if (!shape.sketchObject) {
+      // eslint-disable-next-line no-param-reassign
+      shape.sketchObject = Factory.createNative(Shape)
+        .alloc()
+        .initWithFrame(new Rectangle(0, 0, 100, 100).asCGRect())
+    }
+
+    super(shape)
   }
 
   /**
@@ -31,24 +49,6 @@ export class Shape extends Layer {
    */
   get isShape() {
     return true
-  }
-
-  /**
-   * Return the style of the layer.
-   *
-   * @return {Style} The style of the layer.
-   */
-  get style() {
-    return new Style(this.sketchObject.style())
-  }
-
-  /**
-   * Set the style of the layer.
-   *
-   * @param {Style} value The style settings to use for the layer.
-   */
-  set style(value) {
-    this.sketchObject.style = value.sketchObject
   }
 
   /**
@@ -70,3 +70,16 @@ export class Shape extends Layer {
     }
   }
 }
+
+Shape.type = Types.Shape
+Shape[DefinedPropertiesKey] = { ...Layer[DefinedPropertiesKey] }
+Factory.registerClass(Shape, MSShapeGroup)
+
+Shape.define('style', {
+  get() {
+    return new Style(this._object.style())
+  },
+  set(style) {
+    this._object.style = style.sketchObject
+  },
+})

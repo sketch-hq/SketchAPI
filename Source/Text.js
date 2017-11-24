@@ -5,8 +5,11 @@
 // All code (C) 2016 Bohemian Coding.
 // ********************************
 
+import { DefinedPropertiesKey } from './WrappedObject'
 import { Layer } from './Layer'
 import { Rectangle } from './Rectangle'
+import { Types } from './enums'
+import { Factory } from './Factory'
 
 const TextBehaviour = {
   flexibleWidth: 0, // Width is adjusted to fit the content.
@@ -37,8 +40,24 @@ export class Text extends Layer {
    * @param {MSTextLayer} text The underlying model object from Sketch.
    * @param {Document} document The document that the text layer belongs to.
    */
-  constructor(text, document) {
-    super(text, document)
+  constructor(text = {}, document) {
+    if (document) {
+      log(
+        'using a constructor to box a native object is deprecated. Use `fromNative` instead'
+      )
+      return Text.fromNative(text)
+    }
+
+    if (!text.sketchObject) {
+      // eslint-disable-next-line no-param-reassign
+      text.sketchObject = Factory.createNative(Text)
+        .alloc()
+        .initWithFrame(new Rectangle(0, 0, 100, 100).asCGRect())
+    }
+
+    super(text)
+
+    this.adjustFrameToFit()
   }
 
   /**
@@ -50,30 +69,6 @@ export class Text extends Layer {
    */
   get isText() {
     return true
-  }
-
-  /**
-   * The text of the layer.
-   *
-   * @return {string} The layer text.
-   */
-  get text() {
-    return this._object.stringValue()
-  }
-
-  /**
-   * Set the text of the layer.
-   * If the layer hasn't explicitly been given a name, this will also change
-   * the layer's name to the text value.
-   *
-   * @param {string} value The text to use.
-   */
-  set text(value) {
-    const object = this.sketchObject
-    object.stringValue = value
-    if (!object.nameIsFixed()) {
-      object.name = value
-    }
   }
 
   /**
@@ -92,45 +87,6 @@ export class Text extends Layer {
    */
   set systemFontSize(size) {
     this._object.font = NSFont.systemFontOfSize_(size)
-  }
-
-  /**
-   * The alignment of the layer.
-   * This will be one of the values: "left", "center", "right", "justified", "natural".
-   *
-   * @return {string} The alignment mode.
-   */
-  get alignment() {
-    const raw = this._object.textAlignment()
-    return (
-      Object.keys(TextAlignment).find(key => TextAlignment[key] === raw) || raw
-    )
-  }
-
-  /**
-   * Set the alignment of the layer.
-   *
-   * The mode supplied can be a string or a number.
-   * If it's a string, it should be one of the values: "left", "center", "right", "justified", "natural".
-   *
-   * @param {string} mode The alignment mode to use.
-   */
-  set alignment(mode) {
-    const translated = TextAlignment[mode]
-    this._object.textAlignment = translated || mode
-  }
-
-  /**
-   * Set the layer to be fixed width or variable width.
-   *
-   * @param {bool} value Whether the layer should be fixed width (true) or variable width (false).
-   */
-  set fixedWidth(value) {
-    if (value) {
-      this._object.textBehaviour = TextBehaviour.fixedWidth
-    } else {
-      this._object.textBehaviour = TextBehaviour.flexibleWidth
-    }
   }
 
   /**
@@ -195,6 +151,9 @@ export class Text extends Layer {
    * @param {bool} value If true, we use constant baseline spacing mode. This is the default for new text layers in Sketch. If false, we use the legacy line spacing mode.
    */
   set useConstantBaselines(value) {
+    log(
+      '`useConstantBaselines` is deprecated. Use `lineSpacing = Text.LineSpacing.constantBaseline` instead'
+    )
     const lineSpacingBehaviour = value
       ? TextLineSpacingBehaviour.constantBaseline
       : TextLineSpacingBehaviour.variable
@@ -266,3 +225,91 @@ export class Text extends Layer {
     }
   }
 }
+
+Text.type = Types.Text
+Text[DefinedPropertiesKey] = { ...Layer[DefinedPropertiesKey] }
+Factory.registerClass(Text, MSTextLayer)
+
+Text.define('text', {
+  get() {
+    return String(this._object.stringValue())
+  },
+  /**
+   * Set the text of the layer.
+   * If the layer hasn't explicitly been given a name, this will also change
+   * the layer's name to the text value.
+   *
+   * @param {string} value The text to use.
+   */
+  set(value) {
+    const object = this.sketchObject
+    object.stringValue = value
+    if (!object.nameIsFixed()) {
+      object.name = value
+    }
+  },
+})
+
+Text.Alignment = TextAlignment
+Text.define('alignment', {
+  /**
+   * The alignment of the layer.
+   * This will be one of the values: "left", "center", "right", "justified", "natural".
+   *
+   * @return {string} The alignment mode.
+   */
+  get() {
+    const raw = this._object.textAlignment()
+    return (
+      Object.keys(TextAlignment).find(key => TextAlignment[key] === raw) || raw
+    )
+  },
+
+  /**
+   * Set the alignment of the layer.
+   *
+   * The mode supplied can be a string or a number.
+   * If it's a string, it should be one of the values: "left", "center", "right", "justified", "natural".
+   *
+   * @param {string} mode The alignment mode to use.
+   */
+  set(mode) {
+    const translated = TextAlignment[mode]
+    this._object.textAlignment = translated || mode
+  },
+})
+
+Text.LineSpacing = TextLineSpacingBehaviour
+Text.define('lineSpacing', {
+  get() {
+    const raw = this._object.lineSpacingBehaviour()
+    return (
+      Object.keys(TextLineSpacingBehaviour).find(
+        key => TextLineSpacingBehaviour[key] === raw
+      ) || raw
+    )
+  },
+  set(mode) {
+    const lineSpacingBehaviour = TextLineSpacingBehaviour[mode] || mode
+    const textLayer = this.sketchObject
+    const initialBaselineOffset = textLayer.firstBaselineOffset()
+    textLayer.lineSpacingBehaviour = lineSpacingBehaviour
+    const baselineOffset = textLayer.firstBaselineOffset()
+    const rect = this.frame
+    rect.y -= baselineOffset - initialBaselineOffset
+    this.frame = rect
+  },
+})
+
+Text.define('fixedWidth', {
+  get() {
+    return this._object.textBehaviour === TextBehaviour.fixedWidth
+  },
+  set(fixed) {
+    if (fixed) {
+      this._object.textBehaviour = TextBehaviour.fixedWidth
+    } else {
+      this._object.textBehaviour = TextBehaviour.flexibleWidth
+    }
+  },
+})

@@ -5,11 +5,14 @@
 // All code (C) 2016 Bohemian Coding.
 // ********************************
 
-import { WrappedObject } from './WrappedObject'
+import { WrappedObject, DefinedPropertiesKey } from './WrappedObject'
 import { Layer } from './Layer'
 import { Page } from './Page'
 import { Selection } from './Selection'
 import { toArray } from './utils'
+import { wrapNativeObject } from './wrapNativeObject'
+import { Types } from './enums'
+import { Factory } from './Factory'
 
 /**
  * A Sketch document.
@@ -27,15 +30,22 @@ export class Document extends WrappedObject {
    *
    * If you do want to create a new document, you can do so with Application#newDocument.
    */
-  constructor(document, application) {
-    super(document)
+  constructor(document = {}, application) {
+    if (application) {
+      log(
+        'using a constructor to box a native object is deprecated. Use `fromNative` instead'
+      )
+      return Document.fromNative(document)
+    }
 
-    /**
-     * The application that this document belongs to.
-     *
-     * @type {Application}
-     */
-    this._application = application
+    if (!document.sketchObject) {
+      const app = NSDocumentController.sharedDocumentController()
+      app.newDocument(Document)
+      // eslint-disable-next-line no-param-reassign
+      document.sketchObject = app.currentDocument()
+    }
+
+    super(document)
   }
 
   /**
@@ -48,7 +58,8 @@ export class Document extends WrappedObject {
    * @return {WrappedObject} A javascript object (subclass of WrappedObject), which represents the Sketch object we were given.
    */
   wrapObject(sketchObject) {
-    return this._application.wrapObject(sketchObject, this)
+    log('`document.wrapObject` is deprecated. Use `api.fromNative` instead')
+    return wrapNativeObject(sketchObject)
   }
 
   /**
@@ -66,7 +77,7 @@ export class Document extends WrappedObject {
    * @return {Page} A page object representing the page that the user is currently viewing.
    */
   get selectedPage() {
-    return new Page(this._object.currentPage(), this)
+    return Page.fromNative(this._object.currentPage())
   }
 
   /**
@@ -76,7 +87,7 @@ export class Document extends WrappedObject {
    */
   get pages() {
     const pages = toArray(this._object.pages())
-    return pages.map(page => new Page(page, this))
+    return pages.map(page => Page.fromNative(page))
   }
 
   /**
@@ -87,7 +98,7 @@ export class Document extends WrappedObject {
   layerWithID(layerId) {
     const layer = this._object.documentData().layerWithID_(layerId)
     if (layer) {
-      return new Layer(layer, this)
+      return Layer.fromNative(layer)
     }
     return undefined
   }
@@ -105,7 +116,7 @@ export class Document extends WrappedObject {
 
     const layer = this._object.documentData().layerWithID_(layerName)
     if (layer) {
-      return new Layer(layer, this)
+      return Layer.fromNative(layer)
     }
     return undefined
   }
@@ -119,6 +130,9 @@ export class Document extends WrappedObject {
    * @param {function(layer: Layer)} block The function to execute for each layer.
    */
   iterateWithNativeLayers(layers, filter, block) {
+    log(
+      '`iterateWithNativeLayers` is deprecated, use `.layers.forEach` instead'
+    )
     // if we're given a string as a filter, treat it as a function
     // to call on the layer
     let loopBlock = block
@@ -196,3 +210,7 @@ export class Document extends WrappedObject {
     }
   }
 }
+
+Document.type = Types.Document
+Document[DefinedPropertiesKey] = { ...WrappedObject[DefinedPropertiesKey] }
+Factory.registerClass(Document, MSDocument)

@@ -5,67 +5,14 @@
 // All code (C) 2016 Bohemian Coding.
 // ********************************
 
-import { WrappedObject } from './WrappedObject'
+import { WrappedObject, DefinedPropertiesKey } from './WrappedObject'
 import { Rectangle } from './Rectangle'
+import { wrapObject, wrapNativeObject } from './wrapNativeObject'
 
 /**
- * Represents a Sketch layer.
+ * Abstract class that represents a Sketch layer.
  */
 export class Layer extends WrappedObject {
-  /**
-   * Make a new layer object.
-   *
-   * @param {MSLayer} layer The underlying model object from Sketch.
-   * @param {Document} document The document that the layer belongs to.
-   */
-  constructor(layer, document) {
-    super(layer)
-
-    /** @type {Document} The document that this layer belongs to. */
-    this._document = document
-  }
-
-  /**
-   * The name of the layer.
-   *
-   * @return {string} The layer's name.
-   */
-  get name() {
-    return this._object.name()
-  }
-
-  /**
-   * Set the name of the layer.
-   *
-   * @param {string} name The new name.
-   */
-  set name(value) {
-    this._object.setName_(value)
-  }
-
-  /**
-   * The frame of the layer.
-   * This is given in coordinates that are local to the parent of the layer.
-   *
-   * @return {Rectangle} The layer's frame.
-   */
-  get frame() {
-    const f = this._object.frame()
-    return new Rectangle(f.x(), f.y(), f.width(), f.height())
-  }
-
-  /**
-   * Set the frame of the layer.
-   * This will move and/or resize the layer as appropriate.
-   * The new frame should be given in coordinates that are local to the parent of the layer.
-   *
-   * @param {Rectangle} frame - The new frame of the layer.
-   */
-  set frame(value) {
-    const f = this._object.frame()
-    f.setRect_(NSMakeRect(value.x, value.y, value.width, value.height))
-  }
-
   /**
    * Is this a page?
    *
@@ -74,6 +21,7 @@ export class Layer extends WrappedObject {
    * @return {bool} true for instances of Group, false for any other layer type.
    */
   get isPage() {
+    log('isPage is deprecated, check for type instead')
     return false
   }
 
@@ -85,6 +33,7 @@ export class Layer extends WrappedObject {
    * @return true for instances of Artboard, false for any other layer type.
    */
   get isArtboard() {
+    log('isArtboard is deprecated, check for type instead')
     return false
   }
 
@@ -96,6 +45,7 @@ export class Layer extends WrappedObject {
    * @return {bool} true for instances of Group, false for any other layer type.
    */
   get isGroup() {
+    log('isGroup is deprecated, check for type instead')
     return false
   }
 
@@ -107,6 +57,7 @@ export class Layer extends WrappedObject {
    * @return {bool} true for instances of Group, false for any other layer type.
    */
   get isText() {
+    log('isText is deprecated, check for type instead')
     return false
   }
 
@@ -118,6 +69,7 @@ export class Layer extends WrappedObject {
    * @return {bool} true for instances of Group, false for any other layer type.
    */
   get isShape() {
+    log('isShape is deprecated, check for type instead')
     return false
   }
 
@@ -129,6 +81,7 @@ export class Layer extends WrappedObject {
    * @return {bool} true for instances of Group, false for any other layer type.
    */
   get isImage() {
+    log('isImage is deprecated, check for type instead')
     return false
   }
 
@@ -142,7 +95,7 @@ export class Layer extends WrappedObject {
     const object = this.sketchObject
     const duplicate = object.copy()
     object.parentGroup().insertLayers_afterLayer_([duplicate], object)
-    return this._document.wrapObject(duplicate)
+    return wrapNativeObject(duplicate)
   }
 
   /**
@@ -178,26 +131,6 @@ export class Layer extends WrappedObject {
    */
   addToSelection() {
     this._object.select_byExtendingSelection(true, true)
-  }
-
-  /**
-   * Return the parent container of this layer.
-   *
-   * @return {Group} The containing layer of this layer.
-   */
-  get container() {
-    return this._document.wrapObject(this._object.parentGroup())
-  }
-
-  /**
-   * Return the index of this layer in it's container.
-   * The layer at the back of the container (visualy) will be layer 0. The layer at the front will be layer n - 1 (if there are n layers).
-   *
-   * @return {number} The layer order.
-   */
-  get index() {
-    const ourLayer = this.sketchObject
-    return ourLayer.parentGroup().indexOfLayer_(ourLayer)
   }
 
   /**
@@ -403,3 +336,85 @@ export class Layer extends WrappedObject {
     }
   }
 }
+
+Layer[DefinedPropertiesKey] = { ...WrappedObject[DefinedPropertiesKey] }
+
+Layer.define('index', {
+  exportable: false,
+  /**
+   * Return the index of this layer in it's container.
+   * The layer at the back of the container (visually) will be layer 0. The layer at the front will be layer n - 1 (if there are n layers).
+   *
+   * @return {number} The layer order.
+   */
+  get() {
+    const ourLayer = this.sketchObject
+    return ourLayer.parentGroup().indexOfLayer_(ourLayer)
+  },
+})
+
+Layer.define('parent', {
+  exportable: false,
+  /**
+   * Return the parent container of this layer.
+   *
+   * @return {Group} The containing layer of this layer.
+   */
+  get() {
+    return wrapNativeObject(this._object.parentGroup())
+  },
+  set(layer) {
+    layer = wrapObject(layer) // eslint-disable-line
+
+    if (this._object.parentGroup()) {
+      this._object.removeFromParent()
+    }
+
+    layer._object.addLayers([this._object])
+  },
+})
+
+Layer.define('frame', {
+  /**
+   * The frame of the layer.
+   * This is given in coordinates that are local to the parent of the layer.
+   *
+   * @return {Rectangle} The layer's frame.
+   */
+  get() {
+    const f = this._object.frame()
+    return new Rectangle(f.x(), f.y(), f.width(), f.height())
+  },
+
+  /**
+   * Set the frame of the layer.
+   * This will move and/or resize the layer as appropriate.
+   * The new frame should be given in coordinates that are local to the parent of the layer.
+   *
+   * @param {Rectangle} frame - The new frame of the layer.
+   */
+  set(value) {
+    const f = this._object.frame()
+    f.setRect(NSMakeRect(value.x, value.y, value.width, value.height))
+  },
+})
+
+Layer.define('name', {
+  /**
+   * The name of the layer.
+   *
+   * @return {string} The layer's name.
+   */
+  get() {
+    return String(this._object.name())
+  },
+
+  /**
+   * Set the name of the layer.
+   *
+   * @param {string} name The new name.
+   */
+  set(value) {
+    this._object.setName(value)
+  },
+})

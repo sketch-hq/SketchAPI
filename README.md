@@ -110,25 +110,29 @@ if (obj1.sketchObject == obj2.sketchObject) {
 Here's a very simple example script:
 
 ```javascript
-var sketch = context.api()
+const { Document, Group, Shape } = context.api
 
-log(sketch.api_version)
-log(sketch.version)
-log(sketch.build)
-log(sketch.full_version)
+const document = Document.fromNative(context.document)
+const page = document.selectedPage
 
-var document = sketch.selectedDocument
-var selection = document.selectedLayers
-var page = document.selectedPage
-
-var group = page.newGroup({
-  frame: new sketch.Rectangle(0, 0, 100, 100),
+const group = new Group({
+  frame: {
+    x: 0,
+    y: 0,
+    width: 100,
+    height: 100,
+  },
   name: 'Test',
+  parent: page,
 })
-var rect = group.newShape({ frame: new sketch.Rectangle(10, 10, 80, 80) })
+
+const rect = new Shape({ parent: group })
+
+group.select()
+rect.addToSelection()
 
 log(selection.isEmpty)
-selection.iterate(function(item) {
+selection.layers.forEach(function(item) {
   log(item.name)
 })
 
@@ -137,11 +141,6 @@ log(selection.isEmpty)
 
 group.select()
 rect.addToSelection()
-
-sketch.getStringFromUser('Test', 'default')
-sketch.getSelectionFromUser('Test', ['One', 'Two'], 1)
-sketch.message('Hello mum!')
-sketch.alert('Title', 'message')
 ```
 
 For more examples, we recommend checking out the

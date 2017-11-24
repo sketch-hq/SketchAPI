@@ -37,6 +37,7 @@ export class Application extends WrappedObject {
    * @return A new Application object.
    */
   constructor(context) {
+    log('using `api()` is deprecated. Use `api.X` directly')
     super(context)
 
     /**

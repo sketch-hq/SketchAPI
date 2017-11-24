@@ -8,3 +8,7 @@ export function toArray(object) {
   }
   return arr
 }
+
+export function isNativeObject(object) {
+  return object.class && typeof object.class === 'function'
+}

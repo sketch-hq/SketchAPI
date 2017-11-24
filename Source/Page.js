@@ -5,8 +5,12 @@
 // All code (C) 2016 Bohemian Coding.
 // ********************************
 
+import { DefinedPropertiesKey } from './WrappedObject'
 import { Group } from './Group'
 import { Selection } from './Selection'
+import { Rectangle } from './Rectangle'
+import { Types } from './enums'
+import { Factory } from './Factory'
 
 /**
  * Represents a Page in a Sketch document.
@@ -18,9 +22,22 @@ export class Page extends Group {
    * @param {MSPage} page The underlying model object from Sketch.
    * @param document The document that the page belongs to.
    */
-  constructor(page, document) {
+  constructor(page = {}, document) {
+    if (document) {
+      log(
+        'using a constructor to box a native object is deprecated. Use `fromNative` instead'
+      )
+      return Page.fromNative(page)
+    }
+
+    if (!page.sketchObject) {
+      // eslint-disable-next-line no-param-reassign
+      page.sketchObject = Factory.createNative(Page)
+        .alloc()
+        .initWithFrame(new Rectangle(0, 0, 100, 100).asCGRect())
+    }
+
     super(page)
-    this._document = document
   }
 
   /**
@@ -51,6 +68,9 @@ export class Page extends Group {
    * @return {Artboard} the new artboard.
    */
   newArtboard(properties = {}) {
+    log(
+      '`newArtboard` is deprecated. Use `new Artboard({parent: myGroup})` instead'
+    )
     const frame = this._frameForLayerWithProperties(properties)
     const newLayer = MSArtboardGroup.alloc().initWithFrame_(frame.asCGRect())
     return this._addWrappedLayerWithProperties(newLayer, properties, 'Artboard')
@@ -151,3 +171,7 @@ export class Page extends Group {
     }
   }
 }
+
+Page.type = Types.Page
+Page[DefinedPropertiesKey] = { ...Group[DefinedPropertiesKey] }
+Factory.registerClass(Page, MSPage)

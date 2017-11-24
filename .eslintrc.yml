@@ -43,6 +43,7 @@ globals:
   MSDefaultStyle: false
   MSLayer: false
   MSDocumentData: false
+  MSDocument: false
 
 rules:
   ###########
