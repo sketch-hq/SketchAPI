@@ -108,6 +108,11 @@ export class Layer extends WrappedObject {
     }
   }
 
+  get container() {
+    log('`container` is deprecated, use `parent` instead')
+    return this.parent
+  }
+
   /**
    * Select the layer.
    * This will clear the previous selection. Use addToSelection() if you wish

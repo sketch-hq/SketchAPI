@@ -133,13 +133,13 @@ export class WrappedObject {
       tests: {
         testSketchObject(tester) {
           const object = MSLayer.new()
-          const wrapped = new WrappedObject(object)
+          const wrapped = WrappedObject.fromNative(object)
           tester.assertEqual(wrapped.sketchObject, object)
         },
 
         testID(tester) {
           const object = MSLayer.new()
-          const wrapped = new WrappedObject(object)
+          const wrapped = WrappedObject.fromNative(object)
           tester.assertEqual(wrapped.id, object.objectID())
         },
       },

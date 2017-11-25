@@ -62,8 +62,8 @@ export class Selection {
     log(
       '`iterateThenClear` is deprecated. Use `selection.layers.forEach(); selection.clear()`'
     )
-    this.clear()
     iterateWithNativeLayers(this.layers, null, block)
+    this.clear()
   }
 
   /**
@@ -76,8 +76,8 @@ export class Selection {
     log(
       '`iterateWithFilterThenClear` is deprecated. Use `selection.layers.filter().forEach(); selection.clear()`'
     )
-    this.clear()
     iterateWithNativeLayers(this.layers, filter, block)
+    this.clear()
   }
 
   /**

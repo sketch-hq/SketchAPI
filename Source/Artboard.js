@@ -34,7 +34,7 @@ export class Artboard extends Group {
         .alloc()
         .initWithFrame(new Rectangle(0, 0, 100, 100).asCGRect())
     }
-    super(arboard)
+    super(artboard)
   }
 
   /**

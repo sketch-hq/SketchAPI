@@ -20,6 +20,8 @@ import { Selection } from './Selection'
 import { Style } from './Style'
 import { DataSupplier } from './DataSupplier'
 
+import { wrapNativeObject } from './wrapNativeObject'
+
 /**
  * Gives you access to Sketch, and provides access to:
  * - the document model and the layer tree
@@ -238,7 +240,7 @@ export class Application extends WrappedObject {
    * @return A Document object.
    */
   get selectedDocument() {
-    return new Document(this._object.document, this)
+    return Document.fromNative(this._object.document)
   }
 
   /**
@@ -246,9 +248,7 @@ export class Application extends WrappedObject {
    * @return The new document.
    */
   newDocument() {
-    const app = NSDocumentController.sharedDocumentController()
-    app.newDocument_(this)
-    return new Document(app.currentDocument(), this)
+    return new Document()
   }
 
   /**
@@ -322,15 +322,7 @@ export class Application extends WrappedObject {
    * @return {WrappedObject} A javascript object (subclass of WrappedObject), which represents the Sketch object we were given.
    */
   wrapObject(sketchObject, inDocument) {
-    const mapping = this.wrapperMappings()
-
-    let JsClass = mapping[sketchObject.class()]
-    if (!JsClass) {
-      log(`no mapped wrapper for ${sketchObject.class()}`)
-      JsClass = WrappedObject
-    }
-
-    return new JsClass(sketchObject, inDocument)
+    return wrapNativeObject(sketchObject)
   }
 
   /**
@@ -380,7 +372,6 @@ export class Application extends WrappedObject {
             const mockDocument = {}
             const wrapped = tester.application.wrapObject(object, mockDocument)
             tester.assertEqual(wrapped._object, object)
-            tester.assertEqual(wrapped._document, mockDocument)
             tester.assertEqual(wrapped.class, mappings[classToTest].class)
           })
         },

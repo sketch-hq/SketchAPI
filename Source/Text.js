@@ -57,7 +57,7 @@ export class Text extends Layer {
 
     super(text)
 
-    this.adjustFrameToFit()
+    this.adjustToFit()
   }
 
   /**
