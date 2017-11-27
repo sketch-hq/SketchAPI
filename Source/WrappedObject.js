@@ -66,6 +66,26 @@ export class WrappedObject {
   }
 
   /**
+   * Because the API objects are thin wrappers, they are created on demand and are
+   * thrown away regularly.
+   *
+   * No attempt is made to have a one-to-one correspondence between wrapper and model
+   * object - many wrapper instances may exist which point to the same model object.
+   *
+   * This is not the most efficient solution in some respects, but it's pragmatic and
+   * works well for simple cases.
+
+   * Because multiple wrappers might exist for a given model object, if you're
+   * testing two for equality, you should test the things that they wrap, rather than
+   * the wrapper objects themselves
+   * @param {WrappedObject} wrappedObject
+   * @return {Boolean} whether the objects are equal or not
+   */
+  isEqual(wrappedObject) {
+    return this.sketchObject == wrappedObject.sketchObject
+  }
+
+  /**
    * Define getter and setter for a property
    * The descriptor needs to at least define `get`
    * There are 2 additional fields in the descriptor that you can set: `importable` and `exportable`
