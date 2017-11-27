@@ -22,7 +22,7 @@ export class Shape extends Layer {
    * @param {MSShapeGroup} shape The underlying model object from Sketch.
    * @param {Document} document The document that the shape belongs to.
    */
-  constructor(shape, document) {
+  constructor(shape = {}, document) {
     if (document) {
       log(
         'using a constructor to box a native object is deprecated. Use `fromNative` instead'
