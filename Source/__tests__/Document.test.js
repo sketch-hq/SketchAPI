@@ -1,5 +1,7 @@
 import { assertEqual, assert } from './assert'
 
+import { Group } from '../Group'
+
 export const DocumentTests = {
   tests: {
     testPages(context, document) {
@@ -13,7 +15,7 @@ export const DocumentTests = {
       assert(selection.isEmpty, 'should have an empty selection')
 
       const page = document.selectedPage
-      const group = page.newGroup({ name: 'Test' })
+      const group = new Group({ name: 'Test', parent: page })
       group.select()
 
       assert(!selection.isEmpty, 'should no longer have an empty selection')
@@ -21,7 +23,7 @@ export const DocumentTests = {
 
     testLayerWithID(context, document) {
       const page = document.selectedPage
-      const group = page.newGroup({ name: 'Test' })
+      const group = new Group({ name: 'Test', parent: page })
       const { id } = group
       const found = document.layerWithID(id)
       assertEqual(group.sketchObject, found.sketchObject)

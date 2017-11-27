@@ -5,7 +5,6 @@
 // All code (C) 2016 Bohemian Coding.
 // ********************************
 
-import { WrappedObject } from './WrappedObject'
 import { Document } from './Document'
 import { Rectangle } from './Rectangle'
 import { Group } from './Group'
@@ -27,7 +26,7 @@ import { wrapNativeObject } from './wrapNativeObject'
  * - utilities for interacting with the user
  * - access to the running plugin, it's resources and settings
  */
-export class Application extends WrappedObject {
+export class Application {
   /**
    * Construct a new Application object.
    * An instance of this class will be passed back to you when you
@@ -38,7 +37,8 @@ export class Application extends WrappedObject {
    */
   constructor(context) {
     log('using `api()` is deprecated. Use `api.X` directly')
-    super(context)
+    this._object = context
+    this.sketchObject = context
 
     /**
      * Metadata about this version of Sketch.

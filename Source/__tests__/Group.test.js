@@ -1,13 +1,16 @@
 import { assertEqual, assertTrue, assertFalse } from './assert'
 
+import { Group } from '../Group'
+import { Text } from '../Text'
+import { Artboard } from '../Artboard'
 import { Rectangle } from '../Rectangle'
 
 export const GroupTests = {
   tests: {
     testIterate(context, document) {
       const page = document.selectedPage
-      const group = page.newGroup()
-      page.newText()
+      const group = new Group({ parent: page })
+      const text = new Text({ parent: page }) // eslint-disable-line
 
       let iterations = 0
       let groups = 0
@@ -67,6 +70,13 @@ export const GroupTests = {
       assertFalse(text.isGroup)
       assertTrue(page.isGroup) // pages are also groups
       assertTrue(artboard.isGroup) // artboards are also groups
+
+      const group2 = new Group({ parent: page })
+      const text2 = new Text({ parent: page })
+      const artboard2 = new Artboard({ parent: page })
+      assertTrue(group2.isGroup)
+      assertFalse(text2.isGroup)
+      assertTrue(artboard2.isGroup) // artboards are also groups
     },
   },
 }
