@@ -9,6 +9,8 @@ import { Page } from './Page'
 import { Selection } from './Selection'
 import { Style } from './Style'
 import { DataSupplier } from './DataSupplier'
+import * as Settings from './Settings'
+import * as UI from './UI'
 
 import { wrapNativeObject } from './wrapNativeObject'
 
@@ -116,7 +118,7 @@ export class Application {
    * eg: defaults read com.bohemiancoding.sketch3 <key>
    * */
   settingForKey(key) {
-    return NSUserDefaults.standardUserDefaults().objectForKey_(key)
+    return Settings.globalSettingForKey(key)
   }
 
   /**
@@ -130,7 +132,7 @@ export class Application {
    * eg: defaults write com.bohemiancoding.sketch3 <key> <value>
    */
   setSettingForKey(key, value) {
-    NSUserDefaults.standardUserDefaults().setObject_forKey_(value, key)
+    Settings.setGlobalSettingForKey(value, key)
   }
 
   /**
@@ -152,14 +154,7 @@ export class Application {
    * @return The string that the user input.
    */
   getStringFromUser(msg, initial) {
-    const panel = MSModalInputSheet.alloc().init()
-    const result = panel.runPanelWithNibName_ofType_initialString_label_(
-      'MSModalInputSheet',
-      0,
-      initial,
-      msg
-    )
-    return result
+    return UI.getStringFromUser(msg, initial)
   }
 
   /**
@@ -176,22 +171,7 @@ export class Application {
    * The selection will be the integer index of the selected item.
    */
   getSelectionFromUser(msg, items, selectedItemIndex = 0) {
-    const accessory = NSComboBox.alloc().initWithFrame(
-      NSMakeRect(0, 0, 200, 25)
-    )
-    accessory.addItemsWithObjectValues(items)
-    accessory.selectItemAtIndex(selectedItemIndex)
-
-    const alert = NSAlert.alloc().init()
-    alert.setMessageText(msg)
-    alert.addButtonWithTitle('OK')
-    alert.addButtonWithTitle('Cancel')
-    alert.setAccessoryView(accessory)
-
-    const responseCode = alert.runModal()
-    const sel = accessory.indexOfSelectedItem()
-
-    return [responseCode, sel]
+    return UI.getSelectionFromUser(msg, items, selectedItemIndex)
   }
 
   /**
@@ -254,7 +234,7 @@ export class Application {
    * @param {string} message The message to show.
    */
   message(message) {
-    this._object.document.showMessage(message)
+    UI.message(this._object.document, message)
   }
 
   /**
@@ -267,8 +247,7 @@ export class Application {
    * by pressing the OK button.
    */
   alert(title, message) {
-    const app = NSApplication.sharedApplication()
-    app.displayDialog_withTitle(message, title)
+    UI.alert(title, message)
   }
 
   /**
