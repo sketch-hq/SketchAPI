@@ -55,6 +55,12 @@ module.exports = context => {
   api.Types = Types
   api.fromNative = wrapObject
 
+  const metadata = MSApplicationMetadata.metadata()
+  api.version = {
+    sketch: metadata.appVersion,
+    api: process.env.API_VERSION,
+  }
+
   if (process.env.NODE_ENV !== 'production') {
     api.tests = require('./__tests__').runTests // eslint-disable-line
   }
