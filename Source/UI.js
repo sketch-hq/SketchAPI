@@ -1,13 +1,19 @@
+import { isNativeObject } from './utils'
 /**
  * Show a small, temporary, message to the user.
  * The message appears at the bottom of the selected document,
  * and is visible for a short period of time. It should consist of a single
  * line of text.
  *
+ * @param {Document} document The document in which we will show the message
  * @param {string} text The message to show.
  */
 export function message(document, text) {
-  document.showMessage(text)
+  if (isNativeObject(document)) {
+    document.showMessage(text)
+  } else {
+    document.sketchObject.showMessage(text)
+  }
 }
 
 /**
