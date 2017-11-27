@@ -1,9 +1,3 @@
-// ********************************
-// ## Sketch API.
-//
-// All code (C) 2016 Bohemian Coding.
-// ********************************
-
 import { Application } from './Application'
 
 import { DataSupplier } from './DataSupplier'

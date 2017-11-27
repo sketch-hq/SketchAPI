@@ -1,10 +1,3 @@
-// ********************************
-// # Rectangle.js
-// # Sketch Javascript API.
-//
-// All code (C) 2016 Bohemian Coding.
-// ********************************
-
 /**
  * Represents a rectangle.
  */

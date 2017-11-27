@@ -1,10 +1,3 @@
-// ********************************
-// # Selection.js
-// # Sketch Javascript API.
-//
-// All code (C) 2016 Bohemian Coding.
-// ********************************
-
 import { toArray } from './utils'
 import { wrapNativeObject } from './wrapNativeObject'
 

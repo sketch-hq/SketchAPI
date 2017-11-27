@@ -1,10 +1,3 @@
-// ********************************
-// # Application.js
-// # Sketch Javascript API.
-//
-// All code (C) 2016 Bohemian Coding.
-// ********************************
-
 import { Document } from './Document'
 import { Rectangle } from './Rectangle'
 import { Group } from './Group'

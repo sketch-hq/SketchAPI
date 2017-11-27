@@ -1,10 +1,3 @@
-// ********************************
-// # Page.js
-// # Sketch Javascript API.
-//
-// All code (C) 2016 Bohemian Coding.
-// ********************************
-
 import { DefinedPropertiesKey } from './WrappedObject'
 import { Group } from './Group'
 import { Selection } from './Selection'

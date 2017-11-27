@@ -1,9 +1,3 @@
-// ********************************
-// # WrappedObject.js
-// # Sketch Javascript API.
-//
-// All code (C) 2016 Bohemian Coding.
-// ********************************
 export const DefinedPropertiesKey = '_DefinedPropertiesKey'
 
 /**

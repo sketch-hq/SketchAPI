@@ -1,10 +1,3 @@
-// ********************************
-// # Group.js
-// # Sketch Javascript API.
-//
-// All code (C) 2016 Bohemian Coding.
-// ********************************
-
 import { DefinedPropertiesKey } from './WrappedObject'
 import { Layer } from './Layer'
 import { Rectangle } from './Rectangle'

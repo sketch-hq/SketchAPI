@@ -1,10 +1,3 @@
-// ********************************
-// # DataSupplier.js
-// # Sketch Javascript API.
-//
-// All code (C) 2017 Bohemian Coding.
-// ********************************
-
 /**
  * Sketch data supplier manager.
  * @param context The context dictionary passed to the script when it was invoked.

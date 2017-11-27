@@ -1,10 +1,3 @@
-// ********************************
-// # Layer.js
-// # Sketch Javascript API.
-//
-// All code (C) 2016 Bohemian Coding.
-// ********************************
-
 import { WrappedObject, DefinedPropertiesKey } from './WrappedObject'
 import { Rectangle } from './Rectangle'
 import { wrapObject, wrapNativeObject } from './wrapNativeObject'
