@@ -15,14 +15,12 @@ developers@sketchapp.com, or hack on the code and send us a pull request at
 https://github.com/BohemianCoding/SketchAPI.
 
 The API comes bundled inside Sketch, so no installation is required. You access
-it by obtaining a root "sketch" object via the context that's passed to your
+it by obtaining a root `api` object via the context that's passed to your
 script, like so:
 
 ```javascript
-var sketch = context.api()
+var api = context.api
 ```
-
-Calls to this object then give you access to the rest of the API.
 
 ## Overview
 
@@ -44,10 +42,7 @@ The layer hierarchy is deliberately simplified, with all shape layers being
 treated the same way. Thus there are currently wrapper classes for the following
 layer types: `Page`, `Artboard`, `Group`, `Shape`, `Text`, `Image`.
 
-On top of this sits a `Document` class for each document, and an `Application`
-class which is the root of the tree. It's an instance of this that you are given
-when you call `context.api()`, and it is this single object which gives you
-access to all the others.
+On top of this sits a `Document` class for each document.
 
 One or two important properties of layers are exposed directly in the wrappers.
 For example `name`, `id`, and `frame`. Over time, more properties will be
@@ -58,17 +53,16 @@ There is the beginning of a wrapper class `Style` for layer styles, but it's
 currently very simple. The plan here will be to allow a quick way to set up all
 the common properties of a style, in a way that is uniform and consistent.
 
-On the `Application` class there is also some support for more global tasks such
-as reading/writing preferences. This stuff will be expanded over time.
+On `api.Settings`, there is also some support for more global tasks such as
+reading/writing preferences.
 
-The application object also exposes some utility classes. Currently the main one
-of note is `Rectangle`, which is a javascript-native representation of a
-rectangle. The plan is to use this class consistently within the API, in order
-to try to mask the fact that the model itself uses a confusing mix of `NSRect`,
-`CGRect`, `MSRect` and `MSAbsoluteRect`! In time more utility classes may be
-added. In time, also, we hope to clean up the model to be more consistent, at
-which point `Rectangle` might just turn into a thin wrapper for one of the
-native types.
+The api object also exposes some utility classes. Currently the main one of note
+is `Rectangle`, which is a javascript-native representation of a rectangle. The
+plan is to use this class consistently within the API, in order to try to mask
+the fact that the model itself uses a confusing mix of `NSRect`, `CGRect`,
+`MSRect` and `MSAbsoluteRect`! In time more utility classes may be added. In
+time, also, we hope to clean up the model to be more consistent, at which point
+`Rectangle` might just turn into a thin wrapper for one of the native types.
 
 Finally, there is some crude support for interaction with the user via
 alerts/sheets and the messages area at the bottom of the canvas. This stuff is
@@ -100,7 +94,7 @@ the wrapper objects themselves:
 if (obj1 == obj2) {
   /* do stuff */
 } // this is probably not what you meant
-if (obj1.sketchObject == obj2.sketchObject) {
+if (obj1.isEqual(obj2.sketchObject)) {
   /* do stuff */
 } // this is better - both wrappers might represent the same object
 ```
@@ -110,26 +104,27 @@ if (obj1.sketchObject == obj2.sketchObject) {
 Here's a very simple example script:
 
 ```javascript
-const { Document, Group, Shape } = context.api
+var api = context.api
 
-const document = Document.fromNative(context.document)
-const page = document.selectedPage
+log(api.version.api)
+log(api.version.sketch)
 
-const group = new Group({
-  frame: {
-    x: 0,
-    y: 0,
-    width: 100,
-    height: 100,
-  },
-  name: 'Test',
+var document = api.fromNative(context.document)
+var selection = document.selectedLayers
+var page = document.selectedPage
+
+var Group = api.Group
+var Shape = api.Shape
+
+var group = new Group({
   parent: page,
+  frame: new sketch.Rectangle(0, 0, 100, 100),
+  name: 'Test',
 })
-
-const rect = new Shape({ parent: group })
-
-group.select()
-rect.addToSelection()
+var rect = new Shape({
+  parent: group,
+  frame: new Sketch.rectangle(10, 10, 80, 80),
+})
 
 log(selection.isEmpty)
 selection.layers.forEach(function(item) {
@@ -141,6 +136,14 @@ log(selection.isEmpty)
 
 group.select()
 rect.addToSelection()
+
+var outputString = api.UI.getStringFromUser('Test', 'default')
+var outputSelection = api.UI.getSelectionFromUser('Test', ['One', 'Two'], 1)
+api.UI.message(document, 'Hello mum!')
+api.UI.alert('Title', 'message')
+
+api.Settings.setSettingForKey(context, 'setting-to-remember', outputString)
+log(api.Settings.settingForKey(context, 'setting-to-remember'))
 ```
 
 For more examples, we recommend checking out the

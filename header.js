@@ -19,35 +19,46 @@ Comments and suggestions for this API are welcome - send them to developers@sket
 
 Example script:
 
-var sketch = context.api()
+var api = context.api
 
-log(sketch.api_version)
-log(sketch.version)
-log(sketch.build)
-log(sketch.full_version)
+log(api.version.api)
+log(api.version.sketch)
 
+var document = api.fromNative(context.document)
+var selection = document.selectedLayers
+var page = document.selectedPage
 
-var document = sketch.selectedDocument;
-var selection = document.selectedLayers;
-var page = document.selectedPage;
+var Group = api.Group
+var Shape = api.Shape
 
-var group = page.newGroup({frame: new sketch.Rectangle(0, 0, 100, 100), name:"Test"});
-var rect = group.newShape({frame: new Sketch.rectangle(10, 10, 80, 80)});
+var group = new Group({
+  parent: page,
+  frame: new sketch.Rectangle(0, 0, 100, 100),
+  name:"Test"
+})
+var rect = new Shape({
+  parent: group,
+  frame: new Sketch.rectangle(10, 10, 80, 80)
+})
 
-log(selection.isEmpty);
-selection.iterate(function(item) { log(item.name); } );
+log(selection.isEmpty)
+selection.layers.forEach(function(item) {
+  log(item.name)
+})
 
-selection.clear();
-log(selection.isEmpty);
+selection.clear()
+log(selection.isEmpty)
 
-group.select();
-rect.addToSelection();
+group.select()
+rect.addToSelection()
 
-sketch.getStringFromUser("Test", "default");
-sketch.getSelectionFromUser("Test", ["One", "Two"], 1);
-sketch.message("Hello mum!");
-sketch.alert("Title", "message");
+var outputString = api.UI.getStringFromUser("Test", "default");
+var outputSelection = api.UI.getSelectionFromUser("Test", ["One", "Two"], 1);
+api.UI.message(document, "Hello mum!");
+api.UI.alert("Title", "message");
 
+api.Settings.setSettingForKey(context, 'setting-to-remember', outputString)
+log(api.Settings.settingForKey(context, 'setting-to-remember'))
 ---
 
 The MIT License (MIT)
