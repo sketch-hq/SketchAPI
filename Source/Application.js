@@ -14,8 +14,6 @@ import { Image } from './Image'
 import { Shape } from './Shape'
 import { Artboard } from './Artboard'
 import { Page } from './Page'
-import { Tester } from './Tester'
-import { Layer } from './Layer'
 import { Selection } from './Selection'
 import { Style } from './Style'
 import { DataSupplier } from './DataSupplier'
@@ -305,10 +303,9 @@ export class Application extends WrappedObject {
    * The fallback position is just to return an instance of WrappedObject.
    *
    * @param {object} sketchObject The underlying sketch object that we're wrapping.
-   * @param {Document} inDocument The wrapped document that this object is part of.
    * @return {WrappedObject} A javascript object (subclass of WrappedObject), which represents the Sketch object we were given.
    */
-  wrapObject(sketchObject, inDocument) {
+  wrapObject(sketchObject) {
     return wrapNativeObject(sketchObject)
   }
 
