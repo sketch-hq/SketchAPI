@@ -91,12 +91,15 @@ testing two for equality, you should test the things that they wrap, rather than
 the wrapper objects themselves:
 
 ```javascript
+// this is probably not what you meant
 if (obj1 == obj2) {
   /* do stuff */
-} // this is probably not what you meant
+}
+
+// this is better - both wrappers might represent the same object
 if (obj1.isEqual(obj2.sketchObject)) {
   /* do stuff */
-} // this is better - both wrappers might represent the same object
+}
 ```
 
 ## Usage
