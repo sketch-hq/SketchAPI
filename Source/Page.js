@@ -127,49 +127,6 @@ export class Page extends Group {
     )
     exporter.exportLayers(this.sketchObject.artboards())
   }
-
-  /**
-   * Return a list of tests to run for this class.
-   *
-   * @return {dictionary} A dictionary containing the tests to run. Each key is the name of a test, each value is a function which takes a Tester instance.
-   */
-  static tests() {
-    return {
-      tests: {
-        testSelectedLayers(tester) {
-          const document = tester.newTestDocument()
-          const selection = document.selectedLayers
-          tester.assert(selection.isEmpty, 'should have an empty selection')
-
-          const page = document.selectedPage
-          const group = page.newGroup({ name: 'Test' })
-          group.select()
-
-          tester.assert(
-            !selection.isEmpty,
-            'should no longer have an empty selection'
-          )
-        },
-
-        testLayerWithID(tester) {
-          const document = tester.newTestDocument()
-          const page = document.selectedPage
-          const group = page.newGroup({ name: 'Test' })
-          const { id } = group
-          const found = document.layerWithID(id)
-          tester.assertEqual(group.sketchObject, found.sketchObject)
-        },
-
-        testIsPage(tester) {
-          const document = tester.newTestDocument()
-          const page = document.selectedPage
-          const image = page.newImage()
-          tester.assertTrue(page.isPage)
-          tester.assertFalse(image.isPage)
-        },
-      },
-    }
-  }
 }
 
 Page.type = Types.Page

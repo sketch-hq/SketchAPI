@@ -50,25 +50,6 @@ export class Shape extends Layer {
   get isShape() {
     return true
   }
-
-  /**
-   * Return a list of tests to run for this class.
-   *
-   * @return {dictionary} A dictionary containing the tests to run. Each key is the name of a test, each value is a function which takes a Tester instance.
-   */
-  static tests() {
-    return {
-      tests: {
-        testIsShape(tester) {
-          const document = tester.newTestDocument()
-          const page = document.selectedPage
-          const shape = page.newShape()
-          tester.assertTrue(shape.isShape)
-          tester.assertFalse(page.isShape)
-        },
-      },
-    }
-  }
 }
 
 Shape.type = Types.Shape

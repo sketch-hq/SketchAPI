@@ -51,5 +51,9 @@ module.exports = context => {
   api.Types = Types
   api.fromNative = wrapObject
 
+  if (process.env.NODE_ENV !== 'production') {
+    api.tests = require('./__tests__').runTests // eslint-disable-line
+  }
+
   return api
 }

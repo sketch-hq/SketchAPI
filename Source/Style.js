@@ -107,29 +107,6 @@ export class Style extends WrappedObject {
     })
     this.sketchObject.setFills_(objects)
   }
-
-  /**
-   * Return a list of tests to run for this class.
-   *
-   * @return {dictionary} A dictionary containing the tests to run. Each key is the name of a test, each value is a function which takes a Tester instance.
-   */
-  static tests() {
-    return {
-      tests: {
-        testBorders(tester) {
-          const style = new Style()
-          style.borders = ['#11223344', '#1234']
-          tester.assertEqual(style.sketchObject.borders().count(), 2)
-        },
-
-        testFills(tester) {
-          const style = new Style()
-          style.borders = ['#11223344', '#1234']
-          tester.assertEqual(style.sketchObject.borders().count(), 2)
-        },
-      },
-    }
-  }
 }
 
 Style.FillType = FillType

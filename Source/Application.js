@@ -312,89 +312,10 @@ export class Application extends WrappedObject {
     return wrapNativeObject(sketchObject)
   }
 
-  /**
-   * Return a list of tests to run for this class.
-   *
-   * We could do some fancy introspection here to derive the tests from
-   * the class, but for now we're opting for the simple approach.
-   *
-   * @return {dictionary} A dictionary containing the tests to run. Each key is the name of a test, each value is a function which takes a Tester instance.
-   */
-  static tests() {
-    return {
-      /** @test {Application} */
-      tests: {
-        /** @test {Application#api_version} */
-        testAPIVersion(tester) {
-          tester.assertEqual(tester.application.api_version, '1.1')
-        },
-
-        /** @test {Application#version} */
-        testApplicationVersion(tester) {
-          if (
-            !MSApplicationMetadata.metadata().app.startsWith(
-              'com.bohemiancoding.sketch3'
-            )
-          ) {
-            // When invoked by the Objective-C unit tests, we know that the bundle's version will be
-            // set to 1.0 so it's ok to test it.
-            tester.assertEqual(tester.application.version, '1.0')
-          }
-        },
-
-        /** @test {Application#wrapObject} */
-        testWrapObject(tester) {
-          const classesToTest = [
-            MSLayerGroup,
-            MSPage,
-            MSArtboardGroup,
-            MSShapeGroup,
-            MSBitmapLayer,
-            MSTextLayer,
-          ]
-          const mappings = tester.application.wrapperMappings()
-          classesToTest.forEach(classToTest => {
-            const frame = NSMakeRect(0, 0, 100, 100)
-            const object = classToTest.alloc().initWithFrame(frame)
-            const mockDocument = {}
-            const wrapped = tester.application.wrapObject(object, mockDocument)
-            tester.assertEqual(wrapped._object, object)
-            tester.assertEqual(wrapped.class, mappings[classToTest].class)
-          })
-        },
-      },
-    }
-  }
-
-  /**
-   * Run all of our internal unit tests.
-   * Returns a dictionary indicating how many tests ran, passed, failed, and crashed,
-   * and a list of more detailed information for each failure.
-   *
-   * At some point we may switch to using Mocha or some other test framework, but for
-   * now we want to be able to invoke the tests from the Sketch side or from a plugin
-   * command, so it's simpler to use a simple test framework of our own devising.
-   */
   runUnitTests() {
-    const tests = {
-      suites: {
-        Application: Application.tests(),
-        Artboard: Artboard.tests(),
-        Document: Document.tests(),
-        Group: Group.tests(),
-        Image: Image.tests(),
-        Layer: Layer.tests(),
-        Page: Page.tests(),
-        Rectangle: Rectangle.tests(),
-        Selection: Selection.tests(),
-        Shape: Shape.tests(),
-        Text: Text.tests(),
-        WrappedObject: WrappedObject.tests(),
-        Style: Style.tests(),
-      },
+    if (process.env.NODE_ENV !== 'production') {
+      return require('./__tests__').runTests(this._object) // eslint-disable-line
     }
-
-    const tester = new Tester(this)
-    return tester.runUnitTests(tests)
+    return 'no tests in production'
   }
 }

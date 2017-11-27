@@ -165,65 +165,6 @@ export class Text extends Layer {
     rect.y -= baselineOffset - initialBaselineOffset
     this.frame = rect
   }
-
-  /**
-   * Return a list of tests to run for this class.
-   *
-   * @return {dictionary} A dictionary containing the tests to run. Each key is the name of a test, each value is a function which takes a Tester instance.
-   */
-  static tests() {
-    return {
-      tests: {
-        testIsText(tester) {
-          const document = tester.newTestDocument()
-          const page = document.selectedPage
-          const text = page.newText()
-          tester.assertTrue(text.isText)
-          tester.assertFalse(page.isText)
-        },
-
-        testText(tester) {
-          const document = tester.newTestDocument()
-          const page = document.selectedPage
-          const text = page.newText({ text: 'blah' })
-          tester.assertEqual(text.text, 'blah')
-          text.text = 'doodah'
-          tester.assertEqual(text.text, 'doodah')
-        },
-
-        testAdjustToFit(tester) {
-          const document = tester.newTestDocument()
-          const page = document.selectedPage
-          const text = page.newText({
-            text: 'blah',
-            frame: new Rectangle(10, 10, 1000, 1000),
-          })
-          text.adjustToFit()
-          tester.assertEqual(text.frame, new Rectangle(10, 10, 23, 14))
-        },
-
-        testAlignment(tester) {
-          const document = tester.newTestDocument()
-          const page = document.selectedPage
-          const text = page.newText({
-            text: 'blah',
-            frame: new Rectangle(10, 10, 1000, 1000),
-          })
-
-          // eslint-disable-next-line guard-for-in
-          for (const key in TextAlignment) {
-            // test setting by name
-            text.alignment = key
-            tester.assertEqual(text.alignment, key)
-
-            // test setting by value
-            text.alignment = TextAlignment[key]
-            tester.assertEqual(text.alignment, key)
-          }
-        },
-      },
-    }
-  }
 }
 
 Text.type = Types.Text

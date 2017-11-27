@@ -47,25 +47,6 @@ export class Artboard extends Group {
   get isArtboard() {
     return true
   }
-
-  /**
-   * Return a list of tests to run for this class.
-   *
-   * @return {dictionary} A dictionary containing the tests to run. Each key is the name of a test, each value is a function which takes a Tester instance.
-   */
-  static tests() {
-    return {
-      tests: {
-        testIsArtboard(tester) {
-          const document = tester.newTestDocument()
-          const page = document.selectedPage
-          const artboard = page.newArtboard({ name: 'Test' })
-          tester.assertTrue(artboard.isArtboard)
-          tester.assertFalse(page.isArtboard)
-        },
-      },
-    }
-  }
 }
 
 Artboard.type = Types.Artboard

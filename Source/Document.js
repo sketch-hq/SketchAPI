@@ -164,51 +164,6 @@ export class Document extends WrappedObject {
   centerOnLayer(layer) {
     this._object.contentDrawView().centerRect_(layer._object.rect())
   }
-
-  /**
-   * Return a list of tests to run for this class.
-   *
-   * @return {dictionary} A dictionary containing the tests to run. Each key is the name of a test, each value is a function which takes a Tester instance.
-   */
-  static tests() {
-    return {
-      tests: {
-        testPages(tester) {
-          const document = tester.newTestDocument()
-          const { pages } = document
-          tester.assertEqual(pages.length, 1)
-          tester.assertEqual(
-            pages[0].sketchObject,
-            document.selectedPage.sketchObject
-          )
-        },
-
-        testSelectedLayers(tester) {
-          const document = tester.newTestDocument()
-          const selection = document.selectedLayers
-          tester.assert(selection.isEmpty, 'should have an empty selection')
-
-          const page = document.selectedPage
-          const group = page.newGroup({ name: 'Test' })
-          group.select()
-
-          tester.assert(
-            !selection.isEmpty,
-            'should no longer have an empty selection'
-          )
-        },
-
-        testLayerWithID(tester) {
-          const document = tester.newTestDocument()
-          const page = document.selectedPage
-          const group = page.newGroup({ name: 'Test' })
-          const { id } = group
-          const found = document.layerWithID(id)
-          tester.assertEqual(group.sketchObject, found.sketchObject)
-        },
-      },
-    }
-  }
 }
 
 Document.type = Types.Document
