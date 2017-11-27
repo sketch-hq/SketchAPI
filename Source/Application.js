@@ -48,11 +48,6 @@ export class Application extends WrappedObject {
      */
     this._metadata = MSApplicationMetadata.metadata()
 
-    if (this._metadata.app.startsWith('com.bohemiancoding.sketch3')) {
-      // We will only have an AppController when the app is Sketch not a test bundle.
-      this._appController = AppController.sharedInstance()
-    }
-
     // expose some classes
     this.Application = Application
     this.Rectangle = Rectangle
@@ -256,15 +251,7 @@ export class Application extends WrappedObject {
    * @return The data manager object.
    */
   dataManager() {
-    return new DataSupplier(this.appController.dataSupplierManager(), this)
-  }
-
-  /**
-   * Get Sketch's AppController shared instance.
-   * @return The AppController shared instance.
-   */
-  get appController() {
-    return this._appController
+    return new DataSupplier(this._object)
   }
 
   /**

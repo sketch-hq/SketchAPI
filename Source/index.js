@@ -6,6 +6,8 @@
 
 import { Application } from './Application'
 
+import { DataSupplier } from './DataSupplier'
+
 import { Document } from './Document'
 import { Rectangle } from './Rectangle'
 import { Group } from './Group'
@@ -43,6 +45,8 @@ module.exports = context => {
   api.Shape = Shape
   api.Artboard = Artboard
   api.Page = Page
+
+  api.DataSupplier = DataSupplier
 
   api.Types = Types
   api.fromNative = wrapObject

@@ -5,72 +5,64 @@
 // All code (C) 2017 Bohemian Coding.
 // ********************************
 
-import { WrappedObject } from './WrappedObject'
-
 /**
  * Sketch data supplier manager.
+ * @param context The context dictionary passed to the script when it was invoked.
  */
-export class DataSupplier extends WrappedObject {
-  /**
-   * Make a data supplier manager object.
-   *
-   * @param {MSDataSupplierManager} dataSupplier The underlying data supplier manager object from Sketch.
-   */
-  constructor(dataSupplier, application) {
-    super(dataSupplier || AppController.sharedInstance.dataSupplierManager())
+export function DataSupplier(context) {
+  const dataManager = AppController.sharedInstance.dataSupplierManager()
 
-    this._application = application
-  }
+  return {
+    /**
+     * Register some data with a name and the plugin it has come from.
+     * @param {string} dataType The data type. Currently "public.text" or "public.image" are the only allowed values.
+     * @param {string} dataName The data name, will be used as the menu item title for the data.
+     * @param {array} data The data provided by the plugin immediately.
+     */
+    registerStaticSupplier(dataType, dataName, data) {
+      const identifier = context.plugin.identifier()
+      const commandIdentifier = context.command.identifier()
+      dataManager.registerStaticData_withName_dataType_pluginIdentifier_commandIdentifier_(
+        data,
+        dataName,
+        dataType,
+        identifier,
+        commandIdentifier
+      )
+    },
 
-  /**
-   * Register some data with a name and the plugin it has come from.
-   * @param {string} dataType The data type. Currently "public.text" or "public.image" are the only allowed values.
-   * @param {string} dataName The data name, will be used as the menu item title for the data.
-   * @param {array} data The data provided by the plugin immediately.
-   */
-  registerStaticSupplier(dataType, dataName, data) {
-    const identifier = this._application.context.plugin.identifier()
-    const commandIdentifier = this._application.context.command.identifier()
-    this._object.registerStaticData_withName_dataType_pluginIdentifier_commandIdentifier_(
-      data,
-      dataName,
-      dataType,
-      identifier,
-      commandIdentifier
-    )
-  }
+    /**
+     * Register a function to supply data on request.
+     *
+     * @param {string} dataType The data type. Currently "public.text" or "public.image" are the only allowed values.
+     * @param {string} dataName The data name, will be used as the menu item title for the data.
+     * @param {string} dynamicDataKey The key to use to select the dynamic data to supply in onSupplyData.
+     */
+    registerDynamicSupplier(dataType, dataName, dynamicDataKey) {
+      const identifier = context.plugin.identifier()
+      const commandIdentifier = context.command.identifier()
+      dataManager.registerDynamicSupplier_withName_dataType_pluginIdentifier_commandIdentifier_(
+        dynamicDataKey,
+        dataName,
+        dataType,
+        identifier,
+        commandIdentifier
+      )
+    },
 
-  /**
-   * Register a function to supply data on request.
-   *
-   * @param {string} dataType The data type. Currently "public.text" or "public.image" are the only allowed values.
-   * @param {string} dataName The data name, will be used as the menu item title for the data.
-   * @param {string} dynamicDataKey The key to use to select the dynamic data to supply in onSupplyData.
-   */
-  registerDynamicSupplier(dataType, dataName, dynamicDataKey) {
-    const identifier = this._application.context.plugin.identifier()
-    const commandIdentifier = this._application.context.command.identifier()
-    this._object.registerDynamicSupplier_withName_dataType_pluginIdentifier_commandIdentifier_(
-      dynamicDataKey,
-      dataName,
-      dataType,
-      identifier,
-      commandIdentifier
-    )
-  }
+    /**
+     * Deregister any static data or dynamic data providers for a particular plugin. Typically called from the Shutdown method of the plugin.
+     */
+    deregisterDataSuppliers() {
+      const identifier = context.plugin.identifier()
+      dataManager.deregisterDataSuppliersForPluginWithIdentifier_(identifier)
+    },
 
-  /**
-   * Deregister any static data or dynamic data providers for a particular plugin. Typically called from the Shutdown method of the plugin.
-   */
-  deregisterDataSuppliers() {
-    const identifier = this._application.context.plugin.identifier()
-    this._object.deregisterDataSuppliersForPluginWithIdentifier_(identifier)
-  }
-
-  /**
-   * When the plugin providing the dynamic data has finished generating the data, it will call this function with the data key and the data.
-   */
-  supplyDataForKey(data, key) {
-    this._object.supplyData_forKey_(data, key)
+    /**
+     * When the plugin providing the dynamic data has finished generating the data, it will call this function with the data key and the data.
+     */
+    supplyDataForKey(data, key) {
+      dataManager.supplyData_forKey_(data, key)
+    },
   }
 }
