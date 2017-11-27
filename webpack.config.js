@@ -47,7 +47,7 @@ const config = {
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify(PRODUCTION ? 'production' : 'development'),
-        API_VERSION: process.env.npm_package_version,
+        API_VERSION: JSON.stringify(process.env.npm_package_version),
       },
     }),
     new webpack.BannerPlugin({
