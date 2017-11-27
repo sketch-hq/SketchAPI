@@ -15,6 +15,7 @@ import { LayerTests } from './Layer.test'
 import { PageTests } from './Page.test'
 import { RectangleTests } from './Rectangle.test'
 import { SelectionTests } from './Selection.test'
+import { SettingsTests } from './Settings.test'
 import { ShapeTests } from './Shape.test'
 import { StyleTests } from './Style.test'
 import { TextTests } from './Text.test'
@@ -49,6 +50,7 @@ export function runTests(context) {
       Page: PageTests,
       Rectangle: RectangleTests,
       Selection: SelectionTests,
+      Settings: SettingsTests,
       Shape: ShapeTests,
       Text: TextTests,
       WrappedObject: WrappedObjectTests,
