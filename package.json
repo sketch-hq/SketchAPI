@@ -4,7 +4,10 @@
   "author": "Sam Deane",
   "license": "MIT",
   "description": "Javascript API for Sketch",
-  "main": "Source/API.js",
+  "main": "exposed-npm-package.js",
+  "files": [
+    "exposed-npm-package.js"
+  ],
   "config": {
     "output": "../SketchPluginManager/Source/SketchAPI.js"
   },
