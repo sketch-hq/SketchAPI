@@ -3,7 +3,7 @@ import { Layer } from './Layer'
 import { Page } from './Page'
 import { Selection } from './Selection'
 import { toArray } from './utils'
-import { wrapNativeObject } from './wrapNativeObject'
+import { wrapNativeObject, wrapObject } from './wrapNativeObject'
 import { Types } from './enums'
 import { Factory } from './Factory'
 
@@ -155,7 +155,8 @@ export class Document extends WrappedObject {
    * @param {Layer} layer The layer to center on.
    */
   centerOnLayer(layer) {
-    this._object.contentDrawView().centerRect_(layer._object.rect())
+    const wrappedLayer = wrapObject(layer)
+    this._object.contentDrawView().centerRect_(wrappedLayer.sketchObject.rect())
   }
 }
 
