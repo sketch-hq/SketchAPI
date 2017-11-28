@@ -149,7 +149,7 @@ WrappedObject.define('id', {
    * @return {string} The id.
    */
   get() {
-    return this._object.objectID()
+    return String(this._object.objectID())
   },
 })
 
