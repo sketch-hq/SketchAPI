@@ -162,4 +162,4 @@ export class Document extends WrappedObject {
 
 Document.type = Types.Document
 Document[DefinedPropertiesKey] = { ...WrappedObject[DefinedPropertiesKey] }
-Factory.registerClass(Document, MSDocument)
+Factory.registerClass(Document, MSDocumentData)
