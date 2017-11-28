@@ -1,8 +1,7 @@
 # Sketch API
 
-This is a prototype Javascript API for Sketch.
-
-The intention is to make something which is:
+This is a prototype Javascript API for Sketch. It's still a work in progress,
+but the intention is to make something which is:
 
 * native Javascript
 * an easily understandable subset of the full internals of Sketch
@@ -10,9 +9,30 @@ The intention is to make something which is:
   unlike our internal API which we can and do change whenever we need to)
 * still allows you to drop down to our internal API when absolutely necessary.
 
-Comments and suggestions for this API are welcome - send them to
-developers@sketchapp.com, or hack on the code and send us a pull request at
-https://github.com/BohemianCoding/SketchAPI.
+The idea is to keep this API as lean-and-mean as possible. The main reason for
+that is that if we (Bohemian) are committing ourselves to making sure that we
+don't break it, then it's essential that doing so doesn't become an unmanageable
+task.
+
+> The API would be a very core layer which interfaces with Sketch itself. Even
+> with the small amount that I've done so far, I can definitely see the
+> temptation to broaden the API and add lots of convenience methods and/or
+> higher-level code that builds on the API. I think that's something that we
+> should do as a community, but it makes sense to try to keep it separate from
+> the core API effort. — @samdeane
+
+![api layers](https://cloud.githubusercontent.com/assets/206306/19645098/f7d3615c-99ea-11e6-962a-439fb553bf2d.png)
+
+There's no reason why we couldn't maintain two libraries, and have the utilities
+one _only_ work with calls to the _api_ one. That could have a lot more
+community input, and as long as it just calls the API, it should stay stable (if
+the API does!).
+
+Again, this is very much a work in progress, so comments and suggestions for
+this API are welcome - send them to developers@sketchapp.com, or open an issue
+to have a public discussion.
+
+## Installation
 
 The API comes bundled inside Sketch, so no installation is required. You access
 it by obtaining a global `SketchAPI` object:
