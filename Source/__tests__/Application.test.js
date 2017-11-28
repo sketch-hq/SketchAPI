@@ -1,11 +1,11 @@
-import { assertEqual } from './assert'
+import * as expect from 'expect'
 import { Application } from '../Application'
 
 export const ApplicationTests = {
   tests: {
     /** @test {Application#api_version} */
     testAPIVersion(context) {
-      assertEqual(new Application(context).api_version, '1.1')
+      expect(new Application(context).api_version).toBe('1.1')
     },
 
     /** @test {Application#version} */
@@ -17,7 +17,7 @@ export const ApplicationTests = {
       ) {
         // When invoked by the Objective-C unit tests, we know that the bundle's version will be
         // set to 1.0 so it's ok to test it.
-        assertEqual(new Application(context).version, '1.0')
+        expect(new Application(context).version).toBe('1.0')
       }
     },
 
@@ -38,8 +38,8 @@ export const ApplicationTests = {
         const object = classToTest.alloc().initWithFrame(frame)
         const mockDocument = {}
         const wrapped = application.wrapObject(object, mockDocument)
-        assertEqual(wrapped._object, object)
-        assertEqual(wrapped.class, mappings[classToTest].class)
+        expect(wrapped._object).toBe(object)
+        expect(wrapped.class).toBe(mappings[classToTest].class)
       })
     },
   },

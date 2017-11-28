@@ -4,21 +4,21 @@
 //
 // All code (C) 2016 Bohemian Coding.
 // ********************************
-import { Document } from '../Document'
+import { Document } from '../components/Document'
 
 import { ApplicationTests } from './Application.test'
-import { ArtboardTests } from './Artboard.test'
-import { DocumentTests } from './Document.test'
-import { GroupTests } from './Group.test'
-import { ImageTests } from './Image.test'
-import { LayerTests } from './Layer.test'
-import { PageTests } from './Page.test'
+import { ArtboardTests } from '../components/__tests__/Artboard.test'
+import { DocumentTests } from '../components/__tests__/Document.test'
+import { GroupTests } from '../components/__tests__/Group.test'
+import { ImageTests } from '../components/__tests__/Image.test'
+import { LayerTests } from '../components/__tests__/Layer.test'
+import { PageTests } from '../components/__tests__/Page.test'
 import { RectangleTests } from './Rectangle.test'
 import { SelectionTests } from './Selection.test'
-import { SettingsTests } from './Settings.test'
-import { ShapeTests } from './Shape.test'
+import { SettingsTests } from '../api/__tests__/Settings.test'
+import { ShapeTests } from '../components/__tests__/Shape.test'
 import { StyleTests } from './Style.test'
-import { TextTests } from './Text.test'
+import { TextTests } from '../components/__tests__/Text.test'
 import { WrappedObjectTests } from './WrappedObject.test'
 
 /**

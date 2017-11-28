@@ -1,8 +1,8 @@
-import { DefinedPropertiesKey } from './WrappedObject'
+import { DefinedPropertiesKey } from '../WrappedObject'
 import { Group } from './Group'
-import { Rectangle } from './Rectangle'
-import { Types } from './enums'
-import { Factory } from './Factory'
+import { Rectangle } from '../Rectangle'
+import { Types } from '../enums'
+import { Factory } from '../Factory'
 
 /**
  * A Sketch artboard.

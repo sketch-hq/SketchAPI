@@ -1,18 +1,18 @@
-import { assert, assertEqual } from './assert'
+import * as expect from 'expect'
 
 export const SelectionTests = {
   tests: {
     testEmpty(context, document) {
-      assert(document.selectedLayers.isEmpty, 'selection should be empty')
+      expect(document.selectedLayers.isEmpty).toBe(true)
     },
 
     testClear(context, document) {
       const group = document.selectedPage.newGroup()
       group.select()
       const selection = document.selectedLayers
-      assert(!selection.isEmpty, 'selection should not be empty')
+      expect(selection.isEmpty).toBe(false)
       selection.clear()
-      assert(selection.isEmpty, 'selection should be empty')
+      expect(selection.isEmpty).toBe(true)
     },
 
     testIterate(context, document) {
@@ -30,8 +30,8 @@ export const SelectionTests = {
           groups += 1
         }
       })
-      assertEqual(iterations, 2)
-      assertEqual(groups, 1)
+      expect(iterations).toBe(2)
+      expect(groups).toBe(1)
     },
 
     testIterateWithFilter(context, document) {
@@ -49,8 +49,8 @@ export const SelectionTests = {
           groups += 1
         }
       })
-      assertEqual(iterations, 1)
-      assertEqual(groups, 1)
+      expect(iterations).toBe(1)
+      expect(groups).toBe(1)
     },
 
     testIterateThenClear(context, document) {
@@ -59,12 +59,12 @@ export const SelectionTests = {
       const selection = document.selectedLayers
 
       let iterations = 0
-      assert(!selection.isEmpty, 'selection should not be empty')
+      expect(selection.isEmpty).toBe(false)
       selection.iterateThenClear(() => {
         iterations += 1
       })
-      assertEqual(iterations, 1)
-      assert(selection.isEmpty, 'selection should be empty')
+      expect(iterations).toBe(1)
+      expect(selection.isEmpty).toBe(true)
     },
 
     testIterateWithFilterThenClear(context, document) {
@@ -73,12 +73,12 @@ export const SelectionTests = {
       const selection = document.selectedLayers
 
       let iterations = 0
-      assert(!selection.isEmpty, 'selection should not be empty')
+      expect(selection.isEmpty).toBe(false)
       selection.iterateWithFilterThenClear('isText', () => {
         iterations += 1
       })
-      assertEqual(iterations, 0)
-      assert(selection.isEmpty, 'selection should be empty')
+      expect(iterations).toBe(0)
+      expect(selection.isEmpty).toBe(true)
     },
   },
 }

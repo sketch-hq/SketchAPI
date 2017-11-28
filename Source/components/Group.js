@@ -1,13 +1,13 @@
-import { DefinedPropertiesKey } from './WrappedObject'
+import { DefinedPropertiesKey } from '../WrappedObject'
 import { Layer } from './Layer'
-import { Rectangle } from './Rectangle'
-import { Style } from './Style'
-import { Types } from './enums'
-import { Factory } from './Factory'
-import { toArray } from './utils'
-import { wrapNativeObject, wrapObject } from './wrapNativeObject'
+import { Rectangle } from '../Rectangle'
+import { Style } from '../Style'
+import { Types } from '../enums'
+import { Factory } from '../Factory'
+import { toArray } from '../utils'
+import { wrapNativeObject, wrapObject } from '../wrapNativeObject'
 
-import { iterateWithNativeLayers } from './deprecated-helpers'
+import { iterateWithNativeLayers } from '../deprecated-helpers'
 
 /**
  * Represents a group of layers.

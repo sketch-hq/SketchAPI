@@ -1,4 +1,4 @@
-import { assertEqual } from './assert'
+import * as expect from 'expect'
 
 import { settingForKey, setSettingForKey } from '../Settings'
 
@@ -18,24 +18,21 @@ function madeupContextForTempScript(context) {
 export const SettingsTests = {
   tests: {
     nonExistingSettingsShouldReturnNull(context) {
-      assertEqual(
-        settingForKey(madeupContextForTempScript(context), 'non-existing-key'),
-        null
-      )
+      expect(
+        settingForKey(madeupContextForTempScript(context), 'non-existing-key')
+      ).toBe(null)
     },
 
     shouldSetABoolean(context) {
       setSettingForKey(madeupContextForTempScript(context), 'false-key', false)
-      assertEqual(
-        settingForKey(madeupContextForTempScript(context), 'false-key'),
-        false
-      )
+      expect(
+        settingForKey(madeupContextForTempScript(context), 'false-key')
+      ).toBe(false)
 
       setSettingForKey(madeupContextForTempScript(context), 'true-key', true)
-      assertEqual(
-        settingForKey(madeupContextForTempScript(context), 'true-key'),
-        true
-      )
+      expect(
+        settingForKey(madeupContextForTempScript(context), 'true-key')
+      ).toBe(true)
     },
 
     shouldSetAString(context) {
@@ -44,10 +41,9 @@ export const SettingsTests = {
         'string-key',
         'test'
       )
-      assertEqual(
-        settingForKey(madeupContextForTempScript(context), 'string-key'),
-        'test'
-      )
+      expect(
+        settingForKey(madeupContextForTempScript(context), 'string-key')
+      ).toBe('test')
     },
 
     shouldSetUndefined(context) {
@@ -56,15 +52,14 @@ export const SettingsTests = {
         'undefined-key',
         undefined
       )
-      assertEqual(
-        settingForKey(madeupContextForTempScript(context), 'undefined-key'),
-        undefined
-      )
+      expect(
+        settingForKey(madeupContextForTempScript(context), 'undefined-key')
+      ).toBe(undefined)
     },
 
     shouldSetObject(context) {
       setSettingForKey(context, 'object-key', { a: 1 })
-      assertEqual(settingForKey(context, 'object-key').a, 1)
+      expect(settingForKey(context, 'object-key')).toEqual({ a: 1 })
     },
   },
 }

@@ -1,4 +1,4 @@
-import { isNativeObject } from './utils'
+import { isNativeObject } from '../utils'
 /**
  * Show a small, temporary, message to the user.
  * The message appears at the bottom of the selected document,

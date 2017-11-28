@@ -1,16 +1,16 @@
-import { assert, assertEqual, assertFalse, assertTrue } from './assert'
+import * as expect from 'expect'
 
 export const PageTests = {
   tests: {
     testSelectedLayers(context, document) {
       const selection = document.selectedLayers
-      assert(selection.isEmpty, 'should have an empty selection')
+      expect(selection.isEmpty).toBe(true)
 
       const page = document.selectedPage
       const group = page.newGroup({ name: 'Test' })
       group.select()
 
-      assert(!selection.isEmpty, 'should no longer have an empty selection')
+      expect(selection.isEmpty).toBe(false)
     },
 
     testLayerWithID(context, document) {
@@ -18,14 +18,14 @@ export const PageTests = {
       const group = page.newGroup({ name: 'Test' })
       const { id } = group
       const found = document.layerWithID(id)
-      assertEqual(group.sketchObject, found.sketchObject)
+      expect(group.sketchObject).toBe(found.sketchObject)
     },
 
     testIsPage(context, document) {
       const page = document.selectedPage
       const image = page.newImage()
-      assertTrue(page.isPage)
-      assertFalse(image.isPage)
+      expect(page.isPage).toBe(true)
+      expect(image.isPage).toBe(false)
     },
   },
 }

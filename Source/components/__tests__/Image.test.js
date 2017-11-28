@@ -1,4 +1,4 @@
-import { assertFalse, assertTrue } from './assert'
+import * as expect from 'expect'
 
 import { Image } from '../Image'
 
@@ -7,11 +7,11 @@ export const ImageTests = {
     testIsImage(context, document) {
       const page = document.selectedPage
       const image = page.newImage()
-      assertTrue(image.isImage)
-      assertFalse(page.isImage)
+      expect(image.isImage).toBe(true)
+      expect(page.isImage).toBe(false)
 
       const image2 = new Image({ parent: page })
-      assertTrue(image2.isImage)
+      expect(image2.isImage).toBe(true)
     },
   },
 }

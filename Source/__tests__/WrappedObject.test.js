@@ -1,4 +1,4 @@
-import { assertEqual } from './assert'
+import * as expect from 'expect'
 
 import { WrappedObject } from '../WrappedObject'
 
@@ -7,13 +7,13 @@ export const WrappedObjectTests = {
     testSketchObject() {
       const object = MSLayer.new()
       const wrapped = WrappedObject.fromNative(object)
-      assertEqual(wrapped.sketchObject, object)
+      expect(wrapped.sketchObject).toBe(object)
     },
 
     testID() {
       const object = MSLayer.new()
       const wrapped = WrappedObject.fromNative(object)
-      assertEqual(wrapped.id, object.objectID())
+      expect(wrapped.id).toBe(String(object.objectID()))
     },
   },
 }

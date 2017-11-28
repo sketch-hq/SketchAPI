@@ -1,4 +1,4 @@
-import { assertFalse, assertTrue } from './assert'
+import * as expect from 'expect'
 
 import { Artboard } from '../Artboard'
 
@@ -7,12 +7,12 @@ export const ArtboardTests = {
     testIsArtboard(context, document) {
       const page = document.selectedPage
       const artboard = page.newArtboard({ name: 'Test' })
-      assertTrue(artboard.isArtboard)
-      assertFalse(page.isArtboard)
+      expect(artboard.isArtboard).toBe(true)
+      expect(page.isArtboard).toBe(false)
 
       const artboard2 = new Artboard({ name: 'Test2' })
-      assertTrue(artboard2.isArtboard)
-      assertTrue(artboard2.type === 'Artboard')
+      expect(artboard2.isArtboard).toBe(true)
+      expect(artboard2.type).toBe('Artboard')
     },
   },
 }

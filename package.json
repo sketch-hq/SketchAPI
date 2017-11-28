@@ -31,6 +31,7 @@
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-prettier": "^2.3.1",
     "eslint-plugin-typescript": "^0.8.0",
+    "expect": "^21.2.1",
     "lint-staged": "^5.0.0",
     "pre-commit": "^1.2.2",
     "prettier": "^1.8.2",

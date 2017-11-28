@@ -1,8 +1,8 @@
-import { DefinedPropertiesKey } from './WrappedObject'
+import { DefinedPropertiesKey } from '../WrappedObject'
 import { Layer } from './Layer'
-import { Rectangle } from './Rectangle'
-import { Types } from './enums'
-import { Factory } from './Factory'
+import { Rectangle } from '../Rectangle'
+import { Types } from '../enums'
+import { Factory } from '../Factory'
 
 /**
  * Represents an image layer.
