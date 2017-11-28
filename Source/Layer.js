@@ -2,7 +2,7 @@ import { WrappedObject, DefinedPropertiesKey } from './WrappedObject'
 import { Rectangle } from './Rectangle'
 import { wrapObject, wrapNativeObject } from './wrapNativeObject'
 
-const DEFAULT_EXPORT_OPTIONS = {
+export const DEFAULT_EXPORT_OPTIONS = {
   compact: false,
   'include-namespaces': false,
   compression: 1.0,

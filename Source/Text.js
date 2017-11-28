@@ -176,7 +176,7 @@ Text.define('text', {
    * @param {string} value The text to use.
    */
   set(value) {
-    const object = this.sketchObject
+    const object = this._object
     object.stringValue = value
     if (!object.nameIsFixed()) {
       object.name = value

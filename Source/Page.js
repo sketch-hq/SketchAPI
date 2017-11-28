@@ -4,6 +4,7 @@ import { Selection } from './Selection'
 import { Rectangle } from './Rectangle'
 import { Types } from './enums'
 import { Factory } from './Factory'
+import { DEFAULT_EXPORT_OPTIONS } from './Layer'
 
 /**
  * Represents a Page in a Sketch document.
@@ -101,7 +102,7 @@ export class Page extends Group {
    * @param {dictionary} options Options indicating which sizes and formats to use, etc.
    */
   export(options) {
-    const merged = this.exportOptionsMergedWithDefaults(options)
+    const merged = { ...DEFAULT_EXPORT_OPTIONS, ...options }
     const exporter = MSSelfContainedHighLevelExporter.alloc().initWithOptions(
       merged
     )
@@ -114,7 +115,7 @@ export class Page extends Group {
    * @param {dictionary} options Options indicating which layers to export, which sizes and formats to use, etc.
    */
   exportArtboards(options) {
-    const merged = this.exportOptionsMergedWithDefaults(options)
+    const merged = { ...DEFAULT_EXPORT_OPTIONS, ...options }
     const exporter = MSSelfContainedHighLevelExporter.alloc().initWithOptions(
       merged
     )
