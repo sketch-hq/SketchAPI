@@ -2,6 +2,19 @@ import { WrappedObject, DefinedPropertiesKey } from './WrappedObject'
 import { Rectangle } from './Rectangle'
 import { wrapObject, wrapNativeObject } from './wrapNativeObject'
 
+const DEFAULT_EXPORT_OPTIONS = {
+  compact: false,
+  'include-namespaces': false,
+  compression: 1.0,
+  'group-contents-only': false,
+  overwriting: false,
+  progressive: false,
+  'save-for-web': false,
+  'use-id-for-name': false,
+  trimmed: false,
+  output: '~/Documents/Sketch Exports',
+}
+
 /**
  * Abstract class that represents a Sketch layer.
  */
@@ -85,7 +98,7 @@ export class Layer extends WrappedObject {
    * @return {Layer} A new layer identical to this one.
    */
   duplicate() {
-    const object = this.sketchObject
+    const object = this._object
     const duplicate = object.copy()
     object.parentGroup().insertLayers_afterLayer_([duplicate], object)
     return wrapNativeObject(duplicate)
@@ -166,9 +179,7 @@ export class Layer extends WrappedObject {
    * @return {Rectangle} The converted rectangle expressed in page coordinates.
    */
   localRectToPageRect(rect) {
-    const _rect = this.sketchObject.convertRectToAbsoluteCoordinates(
-      rect.asCGRect
-    )
+    const _rect = this._object.convertRectToAbsoluteCoordinates(rect.asCGRect)
     return new Rectangle(_rect.x, _rect.y, _rect.width, _rect.height)
   }
 
@@ -189,32 +200,12 @@ export class Layer extends WrappedObject {
   }
 
   /**
-   * Returns a list of export options with any missing ones replaced by default values.
-   */
-  exportOptionsMergedWithDefaults(options) {
-    const defaults = {
-      compact: false,
-      'include-namespaces': false,
-      compression: 1.0,
-      'group-contents-only': false,
-      overwriting: false,
-      progressive: false,
-      'save-for-web': false,
-      'use-id-for-name': false,
-      trimmed: false,
-      output: '~/Documents/Sketch Exports',
-    }
-
-    return Object.assign(defaults, options)
-  }
-
-  /**
    * Export this layer (and the ones below it), using the options supplied.
    *
    * @param {dictionary} options Options indicating which layers to export, which sizes and formats to use, etc.
    */
   export(options) {
-    const merged = this.exportOptionsMergedWithDefaults(options)
+    const merged = { ...DEFAULT_EXPORT_OPTIONS, ...options }
     const exporter = MSSelfContainedHighLevelExporter.alloc().initWithOptions(
       merged
     )
@@ -234,7 +225,7 @@ Layer.define('index', {
    */
   get() {
     const ourLayer = this.sketchObject
-    return ourLayer.parentGroup().indexOfLayer_(ourLayer)
+    return parseInt(ourLayer.parentGroup().indexOfLayer_(ourLayer), 10)
   },
 })
 
