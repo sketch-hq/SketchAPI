@@ -19,7 +19,7 @@ Comments and suggestions for this API are welcome - send them to developers@sket
 
 Example script:
 
-var api = context.api
+var api = SketchAPI
 
 log(api.version.api)
 log(api.version.sketch)

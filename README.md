@@ -15,11 +15,10 @@ developers@sketchapp.com, or hack on the code and send us a pull request at
 https://github.com/BohemianCoding/SketchAPI.
 
 The API comes bundled inside Sketch, so no installation is required. You access
-it by obtaining a root `api` object via the context that's passed to your
-script, like so:
+it by obtaining a global `SketchAPI` object:
 
 ```javascript
-var api = context.api
+var api = SketchAPI
 ```
 
 ## Overview
@@ -107,7 +106,7 @@ if (obj1.isEqual(obj2.sketchObject)) {
 Here's a very simple example script:
 
 ```javascript
-var api = context.api
+var api = SketchAPI
 
 log(api.version.api)
 log(api.version.sketch)
