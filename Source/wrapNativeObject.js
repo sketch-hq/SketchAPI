@@ -1,6 +1,6 @@
 import { WrappedObject } from './WrappedObject'
 
-import { isNativeObject } from './utils'
+import { isNativeObject, isWrappedObject } from './utils'
 import { Factory } from './Factory'
 
 /**
@@ -26,7 +26,7 @@ export function wrapObject(object) {
   if (isNativeObject(object)) {
     return wrapNativeObject(object)
   }
-  if (object._isWrappedObject) {
+  if (isWrappedObject(object)) {
     return object
   }
 

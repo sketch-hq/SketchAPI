@@ -10,5 +10,9 @@ export function toArray(object) {
 }
 
 export function isNativeObject(object) {
-  return object.class && typeof object.class === 'function'
+  return object && object.class && typeof object.class === 'function'
+}
+
+export function isWrappedObject(object) {
+  return object && object._isWrappedObject
 }
