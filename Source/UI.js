@@ -5,10 +5,16 @@ import { isNativeObject } from './utils'
  * and is visible for a short period of time. It should consist of a single
  * line of text.
  *
- * @param {Document} document The document in which we will show the message
  * @param {string} text The message to show.
+ * @param [Document] document The document in which we will show the message
  */
-export function message(document, text) {
+export function message(text, document) {
+  if (!document) {
+    NSApplication.sharedApplication()
+      .orderedDocuments()
+      .firstObject()
+      .showMessage(text)
+  }
   if (isNativeObject(document)) {
     document.showMessage(text)
   } else {

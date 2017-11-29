@@ -234,7 +234,7 @@ export class Application {
    * @param {string} message The message to show.
    */
   message(message) {
-    UI.message(this._object.document, message)
+    UI.message(message, this._object.document)
   }
 
   /**
