@@ -46,7 +46,7 @@ export class DataSupplier extends WrappedObject {
      */
     deregisterDataSuppliers() {
       var identifier = this._application.context.plugin.identifier()
-      this._object.deregisterPluginDataSuppliersForPluginWithIdentifier_(identifier)
+      this._object.deregisterDataSuppliersForPluginWithIdentifier_(identifier)
     }
 
     /**
