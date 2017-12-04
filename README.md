@@ -195,23 +195,7 @@ Once that's ready, you can run:
 npm start
 ```
 
-to compile the library. By default, it will be saved to
-`../SketchPluginManager/Source/SketchAPI.js` (which is where the build process
-for Sketch expects to find it).
-
-Unless you're part of the Bohemian team and are actually building Sketch, you'll
-probably want to put it somewhere else. You can specify your own output path by
-running
-
-```
-npm config set sketch-api:output your/output/path/file.js
-```
-
-To restore the default setting, run
-
-```
-npm config delete sketch-api:output
-```
+to compile the library. By default, it will be saved to `./build/SketchAPI.js`.
 
 For your convenience, you can use
 

@@ -8,9 +8,6 @@
   "files": [
     "exposed-npm-package.js"
   ],
-  "config": {
-    "output": "../SketchPluginManager/Source/SketchAPI.js"
-  },
   "scripts": {
     "build": "webpack",
     "build:prod": "webpack -p --optimize-minimize",
