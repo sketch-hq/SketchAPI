@@ -284,9 +284,6 @@ export class Application {
   }
 
   runUnitTests() {
-    if (process.env.NODE_ENV !== 'production') {
-      return require('./__tests__').runTests(this._object) // eslint-disable-line
-    }
-    return 'no tests in production'
+    return 'the tests are run by a separate plugin now'
   }
 }

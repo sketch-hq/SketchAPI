@@ -29,7 +29,7 @@ import { WrappedObjectTests } from './WrappedObject.test'
  * now we want to be able to invoke the tests from the Sketch side or from a plugin
  * command, so it's simpler to use a simple test framework of our own devising.
  */
-export function runTests(context) {
+module.exports = function runTests(context) {
   /** @type {number} The number of tests we've run. */
   let _ran = 0
 

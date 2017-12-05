@@ -12,12 +12,14 @@ const OUTPUT_PATH = path.resolve(
   __dirname,
   IS_BC_BUILD ? '../SketchPluginManager/Source/' : './build'
 )
-const OUTPUT_FILE = 'SketchAPI.js'
 
 const config = {
-  entry: './Source/index.js',
+  entry: {
+    SketchAPI: './Source/index.js',
+    'SketchAPI.tests': './Source/__tests__/index.js',
+  },
   output: {
-    filename: OUTPUT_FILE,
+    filename: '[name].js',
     library: 'SketchAPI',
     path: OUTPUT_PATH,
   },
@@ -60,7 +62,7 @@ const config = {
 }
 
 if (!PRODUCTION) {
-  config.devtool = 'source-map'
+  // config.devtool = 'source-map'
 }
 
 module.exports = config

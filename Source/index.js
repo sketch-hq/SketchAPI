@@ -47,8 +47,4 @@ api.version = {
   api: process.env.API_VERSION,
 }
 
-if (process.env.NODE_ENV !== 'production') {
-  api.tests = require('./__tests__').runTests // eslint-disable-line
-}
-
 module.exports = api
