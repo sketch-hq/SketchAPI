@@ -1,4 +1,4 @@
-import * as expect from 'expect'
+import * as assert from 'proclaim'
 
 import { Artboard } from '../Artboard'
 
@@ -7,12 +7,12 @@ export const ArtboardTests = {
     testIsArtboard(context, document) {
       const page = document.selectedPage
       const artboard = page.newArtboard({ name: 'Test' })
-      expect(artboard.isArtboard).toBe(true)
-      expect(page.isArtboard).toBe(false)
+      assert.strictEqual(artboard.isArtboard, true)
+      assert.strictEqual(page.isArtboard, false)
 
       const artboard2 = new Artboard({ name: 'Test2' })
-      expect(artboard2.isArtboard).toBe(true)
-      expect(artboard2.type).toBe('Artboard')
+      assert.strictEqual(artboard2.isArtboard, true)
+      assert.strictEqual(artboard2.type, 'Artboard')
     },
   },
 }

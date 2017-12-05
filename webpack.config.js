@@ -14,12 +14,9 @@ const OUTPUT_PATH = path.resolve(
 )
 
 const config = {
-  entry: {
-    SketchAPI: './Source/index.js',
-    'SketchAPI.tests': './Source/__tests__/index.js',
-  },
+  entry: './Source/index.js',
   output: {
-    filename: '[name].js',
+    filename: 'SketchAPI.js',
     library: 'SketchAPI',
     path: OUTPUT_PATH,
   },

@@ -9,11 +9,13 @@
     "exposed-npm-package.js"
   ],
   "scripts": {
-    "build": "webpack",
-    "build:prod": "webpack -p --optimize-minimize",
+    "build": "npm run build:test && npm run build:api",
+    "build:test": "webpack --config=webpack.tests.config.js",
+    "build:api": "webpack -p --optimize-minimize",
     "start": "npm run build",
     "watch": "webpack --watch",
-    "test": "npm run lint",
+    "run-tests": "\"/Applications/Sketch.app/Contents/Resources/sketchtool/bin/sketchtool\" run ./.test-runner.sketchplugin api-tests --without-activating | node ./.test-runner.sketchplugin/Contents/Resources/report-tests-result.js",
+    "test": "npm run lint -- --quiet && npm run build:test && npm run run-tests",
     "lint": "find . -name \"*.ts\" -o -name \"*.js\" | grep -v -f .gitignore | xargs eslint",
     "prettier:base": "prettier --single-quote --trailing-comma es5 --no-semi --write",
     "prettify": "find . -name \"*.ts\" -o -name \"*.js\" | grep -v -f .gitignore | xargs npm run prettier:base",
@@ -28,17 +30,19 @@
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-prettier": "^2.3.1",
     "eslint-plugin-typescript": "^0.8.0",
-    "expect": "^21.2.1",
     "lint-staged": "^5.0.0",
     "pre-commit": "^1.2.2",
     "prettier": "^1.8.2",
+    "proclaim": "^3.5.0",
     "source-map-loader": "^0.2.3",
     "typescript": "^2.6.1",
     "typescript-eslint-parser": "^9.0.0",
-    "webpack": "^3.8.1"
+    "webpack": "^3.8.1",
+    "webpack-sources": "^1.1.0"
   },
   "dependencies": {},
   "pre-commit": [
+    "build",
     "lint-staged"
   ],
   "lint-staged": {

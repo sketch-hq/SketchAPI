@@ -1,4 +1,4 @@
-import * as expect from 'expect'
+import * as assert from 'proclaim'
 
 import { Style } from '../Style'
 
@@ -7,13 +7,13 @@ export const StyleTests = {
     testBorders() {
       const style = new Style()
       style.borders = ['#11223344', '#1234']
-      expect(style.sketchObject.borders().count()).toBe(2)
+      assert.strictEqual(style.sketchObject.borders().count(), 2)
     },
 
     testFills() {
       const style = new Style()
       style.borders = ['#11223344', '#1234']
-      expect(style.sketchObject.borders().count()).toBe(2)
+      assert.strictEqual(style.sketchObject.borders().count(), 2)
     },
   },
 }

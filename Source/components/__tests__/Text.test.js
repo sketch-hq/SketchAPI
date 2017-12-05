@@ -1,4 +1,4 @@
-import * as expect from 'expect'
+import * as assert from 'proclaim'
 
 import { Text } from '../Text'
 import { Rectangle } from '../../Rectangle'
@@ -8,16 +8,16 @@ export const TextTests = {
     testIsText(context, document) {
       const page = document.selectedPage
       const text = page.newText()
-      expect(text.isText).toBe(true)
-      expect(page.isText).toBe(false)
+      assert.strictEqual(text.isText, true)
+      assert.strictEqual(page.isText, false)
     },
 
     testText(context, document) {
       const page = document.selectedPage
       const text = page.newText({ text: 'blah' })
-      expect(text.text).toBe('blah')
+      assert.strictEqual(text.text, 'blah')
       text.text = 'doodah'
-      expect(text.text).toBe('doodah')
+      assert.strictEqual(text.text, 'doodah')
     },
 
     testAdjustToFit(context, document) {
@@ -27,7 +27,7 @@ export const TextTests = {
         frame: new Rectangle(10, 10, 1000, 1000),
       })
       text.adjustToFit()
-      expect(text.frame).toEqual(new Rectangle(10, 10, 23, 14))
+      assert.deepEqual(text.frame, new Rectangle(10, 10, 23, 14))
     },
 
     testAlignment(context, document) {
@@ -41,11 +41,11 @@ export const TextTests = {
       for (const key in Text.Alignment) {
         // test setting by name
         text.alignment = key
-        expect(text.alignment).toBe(key)
+        assert.strictEqual(text.alignment, key)
 
         // test setting by value
         text.alignment = Text.Alignment[key]
-        expect(text.alignment).toBe(key)
+        assert.strictEqual(text.alignment, key)
       }
     },
   },

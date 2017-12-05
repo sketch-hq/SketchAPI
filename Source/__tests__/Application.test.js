@@ -1,11 +1,11 @@
-import * as expect from 'expect'
+import * as assert from 'proclaim'
 import { Application } from '../Application'
 
 export const ApplicationTests = {
   tests: {
     /** @test {Application#api_version} */
     testAPIVersion(context) {
-      expect(new Application(context).api_version).toBe('1.1')
+      assert.strictEqual(new Application(context).api_version, '1.1')
     },
 
     /** @test {Application#version} */
@@ -17,7 +17,7 @@ export const ApplicationTests = {
       ) {
         // When invoked by the Objective-C unit tests, we know that the bundle's version will be
         // set to 1.0 so it's ok to test it.
-        expect(new Application(context).version).toBe('1.0')
+        assert.strictEqual(new Application(context).version, '1.0')
       }
     },
 
@@ -38,8 +38,8 @@ export const ApplicationTests = {
         const object = classToTest.alloc().initWithFrame(frame)
         const mockDocument = {}
         const wrapped = application.wrapObject(object, mockDocument)
-        expect(wrapped._object).toBe(object)
-        expect(wrapped.class).toBe(mappings[classToTest].class)
+        assert.strictEqual(wrapped._object, object)
+        assert.strictEqual(wrapped.class, mappings[classToTest].class)
       })
     },
   },

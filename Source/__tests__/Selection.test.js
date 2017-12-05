@@ -1,18 +1,18 @@
-import * as expect from 'expect'
+import * as assert from 'proclaim'
 
 export const SelectionTests = {
   tests: {
     testEmpty(context, document) {
-      expect(document.selectedLayers.isEmpty).toBe(true)
+      assert.ok(document.selectedLayers.isEmpty)
     },
 
     testClear(context, document) {
       const group = document.selectedPage.newGroup()
       group.select()
       const selection = document.selectedLayers
-      expect(selection.isEmpty).toBe(false)
+      assert.strictEqual(selection.isEmpty, false)
       selection.clear()
-      expect(selection.isEmpty).toBe(true)
+      assert.strictEqual(selection.isEmpty, true)
     },
 
     testIterate(context, document) {
@@ -30,8 +30,8 @@ export const SelectionTests = {
           groups += 1
         }
       })
-      expect(iterations).toBe(2)
-      expect(groups).toBe(1)
+      assert.strictEqual(iterations, 2)
+      assert.strictEqual(groups, 1)
     },
 
     testIterateWithFilter(context, document) {
@@ -49,8 +49,8 @@ export const SelectionTests = {
           groups += 1
         }
       })
-      expect(iterations).toBe(1)
-      expect(groups).toBe(1)
+      assert.strictEqual(iterations, 1)
+      assert.strictEqual(groups, 1)
     },
 
     testIterateThenClear(context, document) {
@@ -59,12 +59,12 @@ export const SelectionTests = {
       const selection = document.selectedLayers
 
       let iterations = 0
-      expect(selection.isEmpty).toBe(false)
+      assert.strictEqual(selection.isEmpty, false)
       selection.iterateThenClear(() => {
         iterations += 1
       })
-      expect(iterations).toBe(1)
-      expect(selection.isEmpty).toBe(true)
+      assert.strictEqual(iterations, 1)
+      assert.strictEqual(selection.isEmpty, true)
     },
 
     testIterateWithFilterThenClear(context, document) {
@@ -73,12 +73,12 @@ export const SelectionTests = {
       const selection = document.selectedLayers
 
       let iterations = 0
-      expect(selection.isEmpty).toBe(false)
+      assert.strictEqual(selection.isEmpty, false)
       selection.iterateWithFilterThenClear('isText', () => {
         iterations += 1
       })
-      expect(iterations).toBe(0)
-      expect(selection.isEmpty).toBe(true)
+      assert.strictEqual(iterations, 0)
+      assert.strictEqual(selection.isEmpty, true)
     },
   },
 }

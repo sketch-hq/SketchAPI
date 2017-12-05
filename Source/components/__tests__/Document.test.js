@@ -1,4 +1,4 @@
-import * as expect from 'expect'
+import * as assert from 'proclaim'
 
 import { Group } from '../Group'
 
@@ -6,19 +6,22 @@ export const DocumentTests = {
   tests: {
     testPages(context, document) {
       const { pages } = document
-      expect(pages.length).toBe(1)
-      expect(pages[0].sketchObject).toBe(document.selectedPage.sketchObject)
+      assert.strictEqual(pages.length, 1)
+      assert.strictEqual(
+        pages[0].sketchObject,
+        document.selectedPage.sketchObject
+      )
     },
 
     testSelectedLayers(context, document) {
       const selection = document.selectedLayers
-      expect(selection.isEmpty).toBe(true)
+      assert.strictEqual(selection.isEmpty, true)
 
       const page = document.selectedPage
       const group = new Group({ name: 'Test', parent: page })
       group.select()
 
-      expect(selection.isEmpty).toBe(false)
+      assert.strictEqual(selection.isEmpty, false)
     },
 
     testLayerWithID(context, document) {
@@ -26,7 +29,7 @@ export const DocumentTests = {
       const group = new Group({ name: 'Test', parent: page })
       const { id } = group
       const found = document.layerWithID(id)
-      expect(group.sketchObject).toBe(found.sketchObject)
+      assert.strictEqual(group.sketchObject, found.sketchObject)
     },
   },
 }

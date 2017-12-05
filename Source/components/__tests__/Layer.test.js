@@ -1,4 +1,4 @@
-import * as expect from 'expect'
+import * as assert from 'proclaim'
 
 import { Rectangle } from '../../Rectangle'
 
@@ -7,34 +7,34 @@ export const LayerTests = {
     testName(context, document) {
       const page = document.selectedPage
       page.name = 'This is a page'
-      expect(page.name).toBe('This is a page')
+      assert.strictEqual(page.name, 'This is a page')
       const group = page.newGroup({ name: 'blah' })
-      expect(group.name).toBe('blah')
+      assert.strictEqual(group.name, 'blah')
       const group2 = page.newGroup()
-      expect(group2.name).toBe('Group')
+      assert.strictEqual(group2.name, 'Group')
     },
 
     testFrame(context, document) {
       const page = document.selectedPage
       const frame = new Rectangle(10, 10, 20, 20)
       const group = page.newGroup({ frame })
-      expect(group.frame).toEqual(frame)
+      assert.deepEqual(group.frame, frame)
     },
 
     testDuplicate(context, document) {
       const page = document.selectedPage
       const group = page.newGroup()
-      expect(page.sketchObject.layers().count()).toBe(1)
+      assert.strictEqual(page.sketchObject.layers().count(), 1)
       group.duplicate()
-      expect(page.sketchObject.layers().count()).toBe(2)
+      assert.strictEqual(page.sketchObject.layers().count(), 2)
     },
 
     testRemove(context, document) {
       const page = document.selectedPage
       const group = page.newGroup()
-      expect(page.sketchObject.layers().count()).toBe(1)
+      assert.strictEqual(page.sketchObject.layers().count(), 1)
       group.remove()
-      expect(page.sketchObject.layers().count()).toBe(0)
+      assert.strictEqual(page.sketchObject.layers().count(), 0)
     },
 
     testSelection(context, document) {
@@ -42,31 +42,31 @@ export const LayerTests = {
       const group = page.newGroup()
 
       // start with nothing selected
-      expect(page.selectedLayers.isEmpty).toBe(true)
+      assert.strictEqual(page.selectedLayers.isEmpty, true)
 
       // select a layer
       group.select()
-      expect(page.selectedLayers.isEmpty).toBe(false)
+      assert.strictEqual(page.selectedLayers.isEmpty, false)
 
       // deselect it - should go back to nothing selected
       group.deselect()
-      expect(page.selectedLayers.isEmpty).toBe(true)
+      assert.strictEqual(page.selectedLayers.isEmpty, true)
 
       // select one layer then another - only the last should be selected
       const group2 = page.newGroup()
       group.select()
       group2.select()
-      expect(page.selectedLayers.length).toBe(1)
+      assert.strictEqual(page.selectedLayers.length, 1)
 
       // add a second layer to the selection - both should be selected
       group.addToSelection()
-      expect(page.selectedLayers.length).toBe(2)
+      assert.strictEqual(page.selectedLayers.length, 2)
     },
 
     testContainer(context, document) {
       const page = document.selectedPage
       const group = page.newGroup()
-      expect(group.container.sketchObject).toBe(page.sketchObject)
+      assert.strictEqual(group.container.sketchObject, page.sketchObject)
     },
 
     testOrdering(context, document) {
@@ -74,29 +74,29 @@ export const LayerTests = {
       const group1 = page.newGroup()
       const group2 = page.newGroup()
       const group3 = page.newGroup()
-      expect(group1.index).toBe(0)
-      expect(group2.index).toBe(1)
-      expect(group3.index).toBe(2)
+      assert.strictEqual(group1.index, 0)
+      assert.strictEqual(group2.index, 1)
+      assert.strictEqual(group3.index, 2)
 
       group1.moveToFront()
-      expect(group2.index).toBe(0)
-      expect(group3.index).toBe(1)
-      expect(group1.index).toBe(2)
+      assert.strictEqual(group2.index, 0)
+      assert.strictEqual(group3.index, 1)
+      assert.strictEqual(group1.index, 2)
 
       group3.moveToBack()
-      expect(group3.index).toBe(0)
-      expect(group2.index).toBe(1)
-      expect(group1.index).toBe(2)
+      assert.strictEqual(group3.index, 0)
+      assert.strictEqual(group2.index, 1)
+      assert.strictEqual(group1.index, 2)
 
       group2.moveForward()
-      expect(group3.index).toBe(0)
-      expect(group1.index).toBe(1)
-      expect(group2.index).toBe(2)
+      assert.strictEqual(group3.index, 0)
+      assert.strictEqual(group1.index, 1)
+      assert.strictEqual(group2.index, 2)
 
       group1.moveBackward()
-      expect(group1.index).toBe(0)
-      expect(group3.index).toBe(1)
-      expect(group2.index).toBe(2)
+      assert.strictEqual(group1.index, 0)
+      assert.strictEqual(group3.index, 1)
+      assert.strictEqual(group2.index, 2)
     },
   },
 }

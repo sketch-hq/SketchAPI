@@ -1,4 +1,4 @@
-import * as expect from 'expect'
+import * as assert from 'proclaim'
 
 import { Group } from '../Group'
 import { Text } from '../Text'
@@ -20,8 +20,8 @@ export const GroupTests = {
           groups += 1
         }
       })
-      expect(iterations).toBe(2)
-      expect(groups).toBe(1)
+      assert.strictEqual(iterations, 2)
+      assert.strictEqual(groups, 1)
     },
 
     testIterateWithFilter(context, document) {
@@ -37,8 +37,8 @@ export const GroupTests = {
           groups += 1
         }
       })
-      expect(iterations).toBe(1)
-      expect(groups).toBe(1)
+      assert.strictEqual(iterations, 1)
+      assert.strictEqual(groups, 1)
     },
 
     testPageToLocalRect(context, document) {
@@ -47,7 +47,7 @@ export const GroupTests = {
         frame: new Rectangle(100, 100, 100, 100),
       })
       const local = group.pageRectToLocalRect(new Rectangle(125, 75, 50, 200))
-      expect(local).toEqual(new Rectangle(25, -25, 50, 200))
+      assert.deepEqual(local, new Rectangle(25, -25, 50, 200))
     },
 
     testAdjustToFit(context, document) {
@@ -57,7 +57,7 @@ export const GroupTests = {
       })
       group.newShape({ frame: new Rectangle(50, 50, 50, 50) })
       group.adjustToFit()
-      expect(group.frame).toEqual(new Rectangle(150, 150, 50, 50))
+      assert.deepEqual(group.frame, new Rectangle(150, 150, 50, 50))
     },
 
     testIsGroup(context, document) {
@@ -65,17 +65,17 @@ export const GroupTests = {
       const group = page.newGroup()
       const text = page.newText()
       const artboard = page.newArtboard()
-      expect(group.isGroup).toBe(true)
-      expect(text.isGroup).toBe(false)
-      expect(page.isGroup).toBe(true) // pages are also groups
-      expect(artboard.isGroup).toBe(true) // artboards are also groups
+      assert.strictEqual(group.isGroup, true)
+      assert.strictEqual(text.isGroup, false)
+      assert.strictEqual(page.isGroup, true) // pages are also groups
+      assert.strictEqual(artboard.isGroup, true) // artboards are also groups
 
       const group2 = new Group({ parent: page })
       const text2 = new Text({ parent: page })
       const artboard2 = new Artboard({ parent: page })
-      expect(group2.isGroup).toBe(true)
-      expect(text2.isGroup).toBe(false)
-      expect(artboard2.isGroup).toBe(true) // artboards are also groups
+      assert.strictEqual(group2.isGroup, true)
+      assert.strictEqual(text2.isGroup, false)
+      assert.strictEqual(artboard2.isGroup, true) // artboards are also groups
     },
   },
 }

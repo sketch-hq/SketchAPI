@@ -30,14 +30,7 @@ import { WrappedObjectTests } from './WrappedObject.test'
  * command, so it's simpler to use a simple test framework of our own devising.
  */
 module.exports = function runTests(context) {
-  /** @type {number} The number of tests we've run. */
-  let _ran = 0
-
-  /** @type {array} The names of the tests that have passed. */
-  const _passes = []
-
-  /** @type {array} Failure information for each test that has failed. */
-  const _failures = []
+  const _tests = []
 
   const testSuites = {
     suites: {
@@ -82,30 +75,32 @@ module.exports = function runTests(context) {
 
     Object.keys(tests).forEach(name => {
       const test = tests[name]
-      _ran += 1
       /** @type {array} List of failures in the currently running test. */
-      const _testFailures = []
+      let _testFailure
       try {
         test(context, Document.fromNative(MSDocumentData.new()))
       } catch (err) {
-        _testFailures.push(err.message)
+        _testFailure = err
       }
 
-      const fullName = suiteName ? `${suiteName} : ${name}` : name
-      if (_testFailures.length > 0) {
-        _failures.push({ name: fullName, reasons: _testFailures })
+      if (_testFailure) {
+        _tests.push({
+          name,
+          type: 'failed',
+          suite: suiteName,
+          reason: _testFailure,
+        })
       } else {
-        _passes.push(fullName)
+        _tests.push({ name, type: 'passed', suite: suiteName })
       }
     })
 
-    return {
-      ran: _ran,
-      crashes: [],
-      failures: _failures,
-      passes: _passes,
-    }
+    return _tests
   }
 
-  return runUnitTests(testSuites)
+  const results = runUnitTests(testSuites)
+  log(`${results.length} tests ran.`)
+  log(`${results.filter(t => t.type === 'passed').length} tests succeeded.`)
+  log(`${results.filter(t => t.type === 'failed').length} tests failed.`)
+  log(`json results: ${JSON.stringify(results)}`)
 }
