@@ -9,7 +9,7 @@
     "exposed-npm-package.js"
   ],
   "scripts": {
-    "build": "npm run build:test && npm run build:api",
+    "build": "npm run build:test && npm run build:api && node ./copy-tests.js",
     "build:test": "webpack --config=webpack.tests.config.js",
     "build:api": "webpack -p --optimize-minimize",
     "start": "npm run build",
