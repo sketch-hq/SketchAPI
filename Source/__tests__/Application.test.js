@@ -4,7 +4,6 @@ import { Application } from '../Application'
 export const tests = {
   /** @test {Application#api_version} */
   testAPIVersion(context) {
-    log(typeof expect)
     expect(new Application(context).api_version).toBe('1.1')
   },
 
