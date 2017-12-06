@@ -1,5 +1,7 @@
 const path = require('path')
+const webpack = require('webpack') // eslint-disable-line
 const { ConcatSource } = require('webpack-sources') // eslint-disable-line
+const WebpackShellPlugin = require('webpack-shell-plugin') // eslint-disable-line
 const normalConfig = require('./webpack.config')
 
 const IS_WATCHING = !!process.argv.find(
@@ -13,12 +15,26 @@ const footer = `  exports(context);
 };
 `
 
-normalConfig.entry = './Source/__tests__/index.js'
+normalConfig.entry = './test-utils/generated-index.js'
 normalConfig.output = {
   filename: 'SketchAPI.tests.js',
   library: 'exports',
   path: path.resolve(__dirname, './.test-runner.sketchplugin/Contents/Sketch'),
 }
+
+// normalConfig.plugins.push(
+//   new WebpackShellPlugin({
+//     onBuildStart: [
+//       `node ${path.resolve(__dirname, './scripts/build-test-index.js')}`,
+//     ],
+//   })
+// )
+
+normalConfig.plugins.push(
+  new webpack.ProvidePlugin({
+    expect: [require.resolve('./test-utils/expect.js'), 'expect'],
+  })
+)
 
 normalConfig.plugins.push({
   // eslint-disable-next-line strict
@@ -45,12 +61,13 @@ normalConfig.plugins.push({
 })
 
 if (IS_WATCHING) {
-  const WebpackShellPlugin = require('webpack-shell-plugin') // eslint-disable-line
   normalConfig.plugins.push(
     new WebpackShellPlugin({
       onBuildExit: ['npm run run-tests'],
     })
   )
 }
+
+normalConfig.devtool = 'source-map'
 
 module.exports = normalConfig

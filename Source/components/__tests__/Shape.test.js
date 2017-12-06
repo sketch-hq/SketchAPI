@@ -1,12 +1,10 @@
-import * as assert from 'proclaim'
+/* globals expect */
 
-export const ShapeTests = {
-  tests: {
-    testIsShape(context, document) {
-      const page = document.selectedPage
-      const shape = page.newShape()
-      assert.strictEqual(shape.isShape, true)
-      assert.strictEqual(page.isShape, false)
-    },
+export const tests = {
+  testIsShape(context, document) {
+    const page = document.selectedPage
+    const shape = page.newShape()
+    expect(shape.isShape).toBe(true)
+    expect(page.isShape).toBe(false)
   },
 }

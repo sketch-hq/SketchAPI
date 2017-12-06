@@ -1,19 +1,17 @@
-import * as assert from 'proclaim'
+/* globals expect */
 
 import { WrappedObject } from '../WrappedObject'
 
-export const WrappedObjectTests = {
-  tests: {
-    testSketchObject() {
-      const object = MSLayer.new()
-      const wrapped = WrappedObject.fromNative(object)
-      assert.strictEqual(wrapped.sketchObject, object)
-    },
+export const tests = {
+  testSketchObject() {
+    const object = MSLayer.new()
+    const wrapped = WrappedObject.fromNative(object)
+    expect(wrapped.sketchObject).toBe(object)
+  },
 
-    testID() {
-      const object = MSLayer.new()
-      const wrapped = WrappedObject.fromNative(object)
-      assert.strictEqual(wrapped.id, String(object.objectID()))
-    },
+  testID() {
+    const object = MSLayer.new()
+    const wrapped = WrappedObject.fromNative(object)
+    expect(wrapped.id).toBe(String(object.objectID()))
   },
 }

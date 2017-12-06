@@ -1,18 +1,16 @@
-import * as assert from 'proclaim'
+/* globals expect */
 
 import { Artboard } from '../Artboard'
 
-export const ArtboardTests = {
-  tests: {
-    testIsArtboard(context, document) {
-      const page = document.selectedPage
-      const artboard = page.newArtboard({ name: 'Test' })
-      assert.strictEqual(artboard.isArtboard, true)
-      assert.strictEqual(page.isArtboard, false)
+export const tests = {
+  testIsArtboard(context, document) {
+    const page = document.selectedPage
+    const artboard = page.newArtboard({ name: 'Test' })
+    expect(artboard.isArtboard).toBe(true)
+    expect(page.isArtboard).toBe(false)
 
-      const artboard2 = new Artboard({ name: 'Test2' })
-      assert.strictEqual(artboard2.isArtboard, true)
-      assert.strictEqual(artboard2.type, 'Artboard')
-    },
+    const artboard2 = new Artboard({ name: 'Test2' })
+    expect(artboard2.isArtboard).toBe(true)
+    expect(artboard2.type).toBe('Artboard')
   },
 }

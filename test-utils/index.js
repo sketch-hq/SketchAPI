@@ -1,25 +1,17 @@
-// ********************************
-// # Tester.js
-// # Sketch Javascript API.
-//
-// All code (C) 2016 Bohemian Coding.
-// ********************************
-import { Document } from '../components/Document'
+import { Document } from '../Source/components/Document'
 
-import { ApplicationTests } from './Application.test'
-import { ArtboardTests } from '../components/__tests__/Artboard.test'
-import { DocumentTests } from '../components/__tests__/Document.test'
-import { GroupTests } from '../components/__tests__/Group.test'
-import { ImageTests } from '../components/__tests__/Image.test'
-import { LayerTests } from '../components/__tests__/Layer.test'
-import { PageTests } from '../components/__tests__/Page.test'
-import { RectangleTests } from './Rectangle.test'
-import { SelectionTests } from './Selection.test'
-import { SettingsTests } from '../api/__tests__/Settings.test'
-import { ShapeTests } from '../components/__tests__/Shape.test'
-import { StyleTests } from './Style.test'
-import { TextTests } from '../components/__tests__/Text.test'
-import { WrappedObjectTests } from './WrappedObject.test'
+// import { expect } from './expect'
+
+// // expose `expect` so that the tests can use it without requiring it all the time
+// // eslint-disable-next-line
+// const commonjsGlobal = typeof global !== 'undefined' ? global : this
+// commonjsGlobal.expect = commonjsGlobal.expect || expect
+
+/* eslint-disable */
+const importedSuites = {
+  /*{{IMPORTS}}*/
+}
+/* eslint-enable */
 
 /**
  * Very simple unit testing utility.
@@ -33,22 +25,7 @@ module.exports = function runTests(context) {
   const _tests = []
 
   const testSuites = {
-    suites: {
-      Application: ApplicationTests,
-      Artboard: ArtboardTests,
-      Document: DocumentTests,
-      Group: GroupTests,
-      Image: ImageTests,
-      Layer: LayerTests,
-      Page: PageTests,
-      Rectangle: RectangleTests,
-      Selection: SelectionTests,
-      Settings: SettingsTests,
-      Shape: ShapeTests,
-      Text: TextTests,
-      WrappedObject: WrappedObjectTests,
-      Style: StyleTests,
-    },
+    suites: importedSuites,
   }
 
   /**

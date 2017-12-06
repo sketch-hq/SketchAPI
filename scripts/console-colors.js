@@ -1,6 +1,6 @@
-var styles = {}
+const styles = {}
 
-var codes = {
+const codes = {
   reset: [0, 0],
 
   bold: [1, 22],
@@ -32,13 +32,11 @@ var codes = {
   bgWhite: [47, 49],
 }
 
-Object.keys(codes).forEach(function(key) {
-  var val = codes[key]
-  var open = '\u001b[' + val[0] + 'm'
-  var close = '\u001b[' + val[1] + 'm'
-  styles[key] = function(string) {
-    return open + string + close
-  }
+Object.keys(codes).forEach(key => {
+  const val = codes[key]
+  const open = `\u001b[${val[0]}m`
+  const close = `\u001b[${val[1]}m`
+  styles[key] = string => open + string + close
 })
 
 module.exports = styles

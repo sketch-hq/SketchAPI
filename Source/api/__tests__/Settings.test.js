@@ -1,4 +1,4 @@
-import * as assert from 'proclaim'
+/* globals expect */
 
 import { settingForKey, setSettingForKey } from '../Settings'
 
@@ -15,56 +15,45 @@ function madeupContextForTempScript(context) {
   return context
 }
 
-export const SettingsTests = {
-  tests: {
-    nonExistingSettingsShouldReturnNull(context) {
-      assert.strictEqual(
-        settingForKey(madeupContextForTempScript(context), 'non-existing-key'),
-        null
-      )
-    },
+export const tests = {
+  nonExistingSettingsShouldReturnNull(context) {
+    expect(
+      settingForKey(madeupContextForTempScript(context), 'non-existing-key')
+    ).toBe(null)
+  },
 
-    shouldSetABoolean(context) {
-      setSettingForKey(madeupContextForTempScript(context), 'false-key', false)
-      assert.strictEqual(
-        settingForKey(madeupContextForTempScript(context), 'false-key'),
-        false
-      )
+  shouldSetABoolean(context) {
+    setSettingForKey(madeupContextForTempScript(context), 'false-key', false)
+    expect(
+      settingForKey(madeupContextForTempScript(context), 'false-key')
+    ).toBe(false)
 
-      setSettingForKey(madeupContextForTempScript(context), 'true-key', true)
-      assert.strictEqual(
-        settingForKey(madeupContextForTempScript(context), 'true-key'),
-        true
-      )
-    },
+    setSettingForKey(madeupContextForTempScript(context), 'true-key', true)
+    expect(settingForKey(madeupContextForTempScript(context), 'true-key')).toBe(
+      true
+    )
+  },
 
-    shouldSetAString(context) {
-      setSettingForKey(
-        madeupContextForTempScript(context),
-        'string-key',
-        'test'
-      )
-      assert.strictEqual(
-        settingForKey(madeupContextForTempScript(context), 'string-key'),
-        'test'
-      )
-    },
+  shouldSetAString(context) {
+    setSettingForKey(madeupContextForTempScript(context), 'string-key', 'test')
+    expect(
+      settingForKey(madeupContextForTempScript(context), 'string-key')
+    ).toBe('test')
+  },
 
-    shouldSetUndefined(context) {
-      setSettingForKey(
-        madeupContextForTempScript(context),
-        'undefined-key',
-        undefined
-      )
-      assert.strictEqual(
-        settingForKey(madeupContextForTempScript(context), 'undefined-key'),
-        undefined
-      )
-    },
+  shouldSetUndefined(context) {
+    setSettingForKey(
+      madeupContextForTempScript(context),
+      'undefined-key',
+      undefined
+    )
+    expect(
+      settingForKey(madeupContextForTempScript(context), 'undefined-key')
+    ).toBe(undefined)
+  },
 
-    shouldSetObject(context) {
-      setSettingForKey(context, 'object-key', { a: 1 })
-      assert.deepEqual(settingForKey(context, 'object-key'), { a: 1 })
-    },
+  shouldSetObject(context) {
+    setSettingForKey(context, 'object-key', { a: 1 })
+    expect(settingForKey(context, 'object-key')).toEqual({ a: 1 })
   },
 }

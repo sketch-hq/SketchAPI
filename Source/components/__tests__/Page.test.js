@@ -1,31 +1,29 @@
-import * as assert from 'proclaim'
+/* globals expect */
 
-export const PageTests = {
-  tests: {
-    testSelectedLayers(context, document) {
-      const selection = document.selectedLayers
-      assert.strictEqual(selection.isEmpty, true)
+export const tests = {
+  testSelectedLayers(context, document) {
+    const selection = document.selectedLayers
+    expect(selection.isEmpty).toBe(true)
 
-      const page = document.selectedPage
-      const group = page.newGroup({ name: 'Test' })
-      group.select()
+    const page = document.selectedPage
+    const group = page.newGroup({ name: 'Test' })
+    group.select()
 
-      assert.strictEqual(selection.isEmpty, false)
-    },
+    expect(selection.isEmpty).toBe(false)
+  },
 
-    testLayerWithID(context, document) {
-      const page = document.selectedPage
-      const group = page.newGroup({ name: 'Test' })
-      const { id } = group
-      const found = document.layerWithID(id)
-      assert.strictEqual(group.sketchObject, found.sketchObject)
-    },
+  testLayerWithID(context, document) {
+    const page = document.selectedPage
+    const group = page.newGroup({ name: 'Test' })
+    const { id } = group
+    const found = document.layerWithID(id)
+    expect(group.sketchObject).toBe(found.sketchObject)
+  },
 
-    testIsPage(context, document) {
-      const page = document.selectedPage
-      const image = page.newImage()
-      assert.strictEqual(page.isPage, true)
-      assert.strictEqual(image.isPage, false)
-    },
+  testIsPage(context, document) {
+    const page = document.selectedPage
+    const image = page.newImage()
+    expect(page.isPage).toBe(true)
+    expect(image.isPage).toBe(false)
   },
 }

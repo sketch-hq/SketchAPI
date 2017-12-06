@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 
+/* eslint-disable prefer-template, no-console */
+
 // get the stdin
 const stdin = process.openStdin()
 let data = ''
@@ -15,13 +17,13 @@ function reportData() {
   }
   const json = JSON.parse(raw.replace('json results: ', ''))
 
-  var colors = require('./console-colors')
+  const colors = require('./console-colors') // eslint-disable-line
 
   let suites = []
 
   json.forEach(test => {
     if (!test.suite) {
-      test.suite = test.name
+      test.suite = test.name // eslint-disable-line
     }
     const existingSuite = suites.find(s => s.name === test.suite)
     if (existingSuite) {
@@ -36,13 +38,13 @@ function reportData() {
 
   suites.forEach(suite => {
     const failedTests = suite.tests.filter(t => t.type === 'failed')
-    suite.failed = failedTests
+    suite.failed = failedTests // eslint-disable-line
   })
 
   suites = suites
     .map(suite => {
       const failedTests = suite.tests.filter(t => t.type === 'failed')
-      suite.failed = failedTests
+      suite.failed = failedTests // eslint-disable-line
       return suite
     })
     .sort((a, b) => a.failed.length - b.failed.length)
@@ -58,7 +60,7 @@ function reportData() {
     console.log('')
     console.log(colors.bgRed(colors.white(' FAIL ')) + ' ' + suite.name)
 
-    suite.failed.forEach(function(failure) {
+    suite.failed.forEach(failure => {
       console.log('')
       console.log(colors.red('  ● ' + suite.name + ' › ' + failure.name))
       console.log('')
@@ -67,7 +69,7 @@ function reportData() {
     })
 
     console.log(suite.name)
-    suite.tests.forEach(function(test) {
+    suite.tests.forEach(test => {
       console.log(
         (test.type === 'passed' ? colors.green('  ✓') : colors.red('  ✖︎')) +
           ' ' +
