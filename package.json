@@ -14,7 +14,7 @@
     "build:api": "webpack -p --optimize-minimize",
     "start": "npm run build",
     "watch": "webpack --watch",
-    "run-tests": "\"/Applications/Sketch.app/Contents/Resources/sketchtool/bin/sketchtool\" run ./.test-runner.sketchplugin api-tests --without-activating | node ./.test-runner.sketchplugin/Contents/Resources/report-tests-result.js",
+    "run-tests": "\"${SKETCH_PATH:-/Applications/Sketch.app}/Contents/Resources/sketchtool/bin/sketchtool\" run ./.test-runner.sketchplugin api-tests --without-activating | node ./.test-runner.sketchplugin/Contents/Resources/report-tests-result.js",
     "test": "npm run lint -- --quiet && npm run build:test && npm run run-tests",
     "lint": "find . -name \"*.ts\" -o -name \"*.js\" | grep -v -f .gitignore | xargs eslint",
     "prettier:base": "prettier --single-quote --trailing-comma es5 --no-semi --write",
