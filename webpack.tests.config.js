@@ -2,16 +2,6 @@ const path = require('path')
 const { ConcatSource } = require('webpack-sources') // eslint-disable-line
 const normalConfig = require('./webpack.config')
 
-// // heuristic to know if we are inside the Sketch repo
-// const IS_BC_BUILD = /\/Modules\/SketchAPI$/.test(__dirname)
-
-// const OUTPUT_PATH = path.resolve(
-//   __dirname,
-//   IS_BC_BUILD
-//     ? '../SketchPluginManager/Tests/Data/PluginScriptTests'
-//     : './build'
-// )
-
 // We need to do a bit of magic to allow the es6 module syntax to work. Taken from skpm.
 const header = `var onRun = function (context) {`
 // exports is defined here by webpack
@@ -26,9 +16,7 @@ normalConfig.output = {
   path: path.resolve(__dirname, './.test-runner.sketchplugin/Contents/Sketch'),
 }
 
-// remove the header plugin
-
-normalConfig.plugins[1] = {
+normalConfig.plugins.push({
   // eslint-disable-next-line strict
   apply(compiler) {
     compiler.plugin('compilation', compilation => {
@@ -50,6 +38,6 @@ normalConfig.plugins[1] = {
       })
     })
   },
-}
+})
 
 module.exports = normalConfig

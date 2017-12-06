@@ -50,11 +50,6 @@ const config = {
         API_VERSION: JSON.stringify(process.env.npm_package_version),
       },
     }),
-    new webpack.BannerPlugin({
-      banner: fs.readFileSync(path.resolve(__dirname, './header.js'), 'utf-8'),
-      raw: true,
-      entryOnly: true,
-    }),
   ],
 }
 
