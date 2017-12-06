@@ -1,12 +1,5 @@
 import { Document } from '../Source/components/Document'
 
-// import { expect } from './expect'
-
-// // expose `expect` so that the tests can use it without requiring it all the time
-// // eslint-disable-next-line
-// const commonjsGlobal = typeof global !== 'undefined' ? global : this
-// commonjsGlobal.expect = commonjsGlobal.expect || expect
-
 /* eslint-disable */
 const importedSuites = {
   /*{{IMPORTS}}*/
