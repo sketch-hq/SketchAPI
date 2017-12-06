@@ -88,7 +88,7 @@ export class Application {
    * @return The version as a string, eg "3.6".
    */
   get version() {
-    return this._metadata.appVersion
+    return String(this._metadata.appVersion)
   }
 
   /**
