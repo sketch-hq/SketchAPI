@@ -217,6 +217,21 @@ defaults write com.bohemiancoding.sketch3 SketchAPILocation "/path/to/your/Sketc
 
 Sketch will then load the external .js file instead of the bundled version.
 
+### Testing
+
+To run the tests, you can use
+
+```
+npm run test
+npm run test:watch
+```
+
+If you want to run the tests with a specific version of Sketch, you can use
+
+```
+SKETCH_PATH=/path/to/sketch.app npm run test
+```
+
 ## Acknowledgements
 
 We would like to thank:

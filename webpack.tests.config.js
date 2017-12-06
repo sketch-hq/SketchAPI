@@ -2,6 +2,10 @@ const path = require('path')
 const { ConcatSource } = require('webpack-sources') // eslint-disable-line
 const normalConfig = require('./webpack.config')
 
+const IS_WATCHING = !!process.argv.find(
+  arg => arg === '-w' || arg === '--watch'
+)
+
 // We need to do a bit of magic to allow the es6 module syntax to work. Taken from skpm.
 const header = `var onRun = function (context) {`
 // exports is defined here by webpack
@@ -39,5 +43,14 @@ normalConfig.plugins.push({
     })
   },
 })
+
+if (IS_WATCHING) {
+  const WebpackShellPlugin = require('webpack-shell-plugin') // eslint-disable-line
+  normalConfig.plugins.push(
+    new WebpackShellPlugin({
+      onBuildExit: ['npm run run-tests'],
+    })
+  )
+}
 
 module.exports = normalConfig
