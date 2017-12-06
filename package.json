@@ -20,7 +20,8 @@
     "lint": "find . -name \"*.ts\" -o -name \"*.js\" | grep -v -f .gitignore | xargs eslint",
     "prettier:base": "prettier --single-quote --trailing-comma es5 --no-semi --write",
     "prettify": "find . -name \"*.ts\" -o -name \"*.js\" | grep -v -f .gitignore | xargs npm run prettier:base",
-    "lint-staged": "lint-staged"
+    "lint-staged": "lint-staged",
+    "postinstall": "node ./scripts/install-pre-commit.js"
   },
   "devDependencies": {
     "awesome-typescript-loader": "^3.4.0",
@@ -32,7 +33,7 @@
     "eslint-plugin-prettier": "^2.3.1",
     "eslint-plugin-typescript": "^0.8.0",
     "lint-staged": "^5.0.0",
-    "pre-commit": "git+https://github.com/observing/pre-commit.git",
+    "pre-commit": "^1.2.2",
     "prettier": "^1.8.2",
     "source-map-loader": "^0.2.3",
     "typescript": "^2.6.1",
