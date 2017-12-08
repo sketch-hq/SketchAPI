@@ -1,34 +1,60 @@
 {
-    "name": "sketch-api",
-    "version": "1.1.0",
-    "author": "Sam Deane",
-    "license": "MIT",
-    "description": "Javascript API for Sketch",
-    "main": "Source/API.js",
-    "config": {
-        "output": "../SketchPluginManager/Source/SketchAPI.js"
-    },
-    "scripts": {
-        "clean": "rm -Rf build && mkdir build && mkdir build/tmp",
-        "prestart": "npm run clean",
-        "compile": "babel Source --out-dir build/tmp && browserify build/tmp/API.js --outfile build/tmp/api.js && cat header.js build/tmp/api.js > build/api.js",
-        "deploy": "cp build/api.js $npm_package_config_output",
-        "start": "npm run compile && npm run deploy",
-        "poststart": "rm -Rf build/tmp",
-        "watch": "watch 'npm start' Source",
-        "test": "echo \"Error: no test specified\" && exit 1"
-    },
-    "devDependencies": {
-        "babel-cli": "^6.26.0",
-        "babel-preset-env": "^1.6.0",
-        "babel-preset-es2015": "^6.3.13",
-        "browserify": "^14.4.0",
-        "watch": "^1.0.2"
-    },
-    "dependencies": {},
-    "babel": {
-        "presets": [
-            "es2015"
-        ]
-    }
+  "name": "sketch-api",
+  "version": "1.1.0",
+  "author": "Sam Deane",
+  "license": "MIT",
+  "description": "Javascript API for Sketch",
+  "main": "Source/API.js",
+  "config": {
+    "output": "../SketchPluginManager/Source/SketchAPI.js"
+  },
+  "scripts": {
+    "build": "webpack",
+    "build:prod": "webpack -p --optimize-minimize",
+    "start": "npm run build",
+    "watch": "webpack --watch",
+    "test": "npm run lint",
+    "lint": "find . -name \"*.ts\" -o -name \"*.js\" | grep -v -f .gitignore | xargs eslint",
+    "prettier:base": "prettier --write",
+    "prettify": "find . -name \"*.ts\" -o -name \"*.js\" | grep -v -f .gitignore | xargs npm run prettier:base",
+    "lint-staged": "lint-staged"
+  },
+  "devDependencies": {
+    "awesome-typescript-loader": "^3.4.0",
+    "eslint": "^4.11.0",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-config-prettier": "^2.8.0",
+    "eslint-plugin-babel": "^4.1.2",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-prettier": "^2.3.1",
+    "eslint-plugin-typescript": "^0.8.0",
+    "lint-staged": "^5.0.0",
+    "pre-commit": "^1.2.2",
+    "prettier": "^1.8.2",
+    "source-map-loader": "^0.2.3",
+    "typescript": "^2.6.1",
+    "typescript-eslint-parser": "^9.0.0",
+    "webpack": "^3.8.1"
+  },
+  "dependencies": {},
+  "pre-commit": [
+    "lint-staged"
+  ],
+  "lint-staged": {
+    "*.{js,ts}": [
+      "npm run prettier:base",
+      "eslint",
+      "git add"
+    ],
+    "*.{md}": [
+      "npm run prettier:base",
+      "git add"
+    ]
+  },
+  "prettier": {
+    "proseWrap": false,
+    "singleQuote": true,
+    "trailingComma": "es5",
+    "semi": false
+  }
 }

@@ -4,10 +4,10 @@ This is a prototype Javascript API for Sketch.
 
 The intention is to make something which is:
 
-- native Javascript
-- an easily understandable subset of the full internals of Sketch
-- fully supported by Bohemian between releases (ie we try not to change it, unlike our internal API which we can and do change whenever we need to)
-- still allows you to drop down to our internal API when absolutely necessary.
+* native Javascript
+* an easily understandable subset of the full internals of Sketch
+* fully supported by Bohemian between releases (ie we try not to change it, unlike our internal API which we can and do change whenever we need to)
+* still allows you to drop down to our internal API when absolutely necessary.
 
 Comments and suggestions for this API are welcome - send them to developers@sketchapp.com, or hack on the code and send us a pull request at https://github.com/BohemianCoding/SketchAPI.
 
@@ -19,16 +19,15 @@ var sketch = context.api()
 
 Calls to this object then give you access to the rest of the API.
 
-
 ## Overview
 
 The API exposed is deliberately thin at the moment, and primarily covers the following areas:
 
-- obtaining the selected document, page, and layers
-- iterating over the selection
-- iterating over any page, artboard or group
-- finding layers by name or id
-- creating new layers
+* obtaining the selected document, page, and layers
+* iterating over the selection
+* iterating over any page, artboard or group
+* finding layers by name or id
+* creating new layers
 
 The approach taken is to wrap the native Sketch model objects inside javascript objects. These are thin wrappers, and contain no state - they just exist as a way to provide a cleaner and more stable coding interface to the underlying model.
 
@@ -42,10 +41,9 @@ There is the beginning of a wrapper class `Style` for layer styles, but it's cur
 
 On the `Application` class there is also some support for more global tasks such as reading/writing preferences. This stuff will be expanded over time.
 
-The application object also exposes some utility classes. Currently the main one of note is `Rectangle`, which is a javascript-native representation of a rectangle. The plan is to use this class consistently within the API, in order to try to mask the fact that the model itself uses a confusing mix of `NSRect`, `CGRect`,  `MSRect` and `MSAbsoluteRect`! In time more utility classes may be added. In time, also, we hope to clean up the model to be more consistent, at which point `Rectangle` might just turn into a thin wrapper for one of the native types.
+The application object also exposes some utility classes. Currently the main one of note is `Rectangle`, which is a javascript-native representation of a rectangle. The plan is to use this class consistently within the API, in order to try to mask the fact that the model itself uses a confusing mix of `NSRect`, `CGRect`, `MSRect` and `MSAbsoluteRect`! In time more utility classes may be added. In time, also, we hope to clean up the model to be more consistent, at which point `Rectangle` might just turn into a thin wrapper for one of the native types.
 
-Finally, there is some crude support for interaction with the user via alerts/sheets and the messages area at the bottom of the canvas. This stuff is *not* final, and is currently just a re-working of some of our original code snippets. Ideally we'd like to come up with a more powerful and cleaner API to allow your plugin to interact with the user in a way that is consistent and compatible with the way Sketch itself interacts. It will probably take some time for us to get to this stuff!
-
+Finally, there is some crude support for interaction with the user via alerts/sheets and the messages area at the bottom of the canvas. This stuff is _not_ final, and is currently just a re-working of some of our original code snippets. Ideally we'd like to come up with a more powerful and cleaner API to allow your plugin to interact with the user in a way that is consistent and compatible with the way Sketch itself interacts. It will probably take some time for us to get to this stuff!
 
 ## Performance and Identity
 
@@ -60,10 +58,16 @@ If you have a performance issue where you're iterating across very large numbers
 Because multiple wrappers might exist for a given model object, if you're testing two for equality, you should test the things that they wrap, rather than the wrapper objects themselves:
 
 ```javascript
-if (obj1 == obj2)                           { /* do stuff */ }    // this is probably not what you meant
-if (obj1.sketchObject == obj2.sketchObject) { /* do stuff */ }    // this is better - both wrappers might represent the same object
-```
+// this is probably not what you meant
+if (obj1 == obj2) {
+  /* do stuff */
+}
 
+// this is better - both wrappers might represent the same object
+if (obj1.sketchObject == obj2.sketchObject) {
+  /* do stuff */
+}
+```
 
 ## Usage
 
@@ -77,33 +81,36 @@ log(sketch.version)
 log(sketch.build)
 log(sketch.full_version)
 
+var document = sketch.selectedDocument
+var selection = document.selectedLayers
+var page = document.selectedPage
 
-var document = sketch.selectedDocument;
-var selection = document.selectedLayers;
-var page = document.selectedPage;
+var group = page.newGroup({
+  frame: new sketch.Rectangle(0, 0, 100, 100),
+  name: 'Test',
+})
+var rect = group.newShape({ frame: new sketch.Rectangle(10, 10, 80, 80) })
 
-var group = page.newGroup({frame: new sketch.Rectangle(0, 0, 100, 100), name:"Test"});
-var rect = group.newShape({frame: new sketch.Rectangle(10, 10, 80, 80)});
+log(selection.isEmpty)
+selection.iterate(function(item) {
+  log(item.name)
+})
 
-log(selection.isEmpty);
-selection.iterate(function(item) { log(item.name); } );
+selection.clear()
+log(selection.isEmpty)
 
-selection.clear();
-log(selection.isEmpty);
+group.select()
+rect.addToSelection()
 
-group.select();
-rect.addToSelection();
-
-sketch.getStringFromUser("Test", "default");
-sketch.getSelectionFromUser("Test", ["One", "Two"], 1);
-sketch.message("Hello mum!");
-sketch.alert("Title", "message");
+sketch.getStringFromUser('Test', 'default')
+sketch.getSelectionFromUser('Test', ['One', 'Two'], 1)
+sketch.message('Hello mum!')
+sketch.alert('Title', 'message')
 ```
 
 For more examples, we recommend checking out the [examples section of the developer website](http://developer.sketchapp.com/examples/).
 
 Happy coding!
-
 
 ## Development
 
@@ -155,12 +162,11 @@ defaults write com.bohemiancoding.sketch3 SketchAPILocation "/path/to/your/Sketc
 
 Sketch will then load the external .js file instead of the bundled version.
 
-
 ## Acknowledgements
 
 We would like to thank:
 
-- [Logan Collins](https://github.com/logancollins) for [Mocha](https://github.com/logancollins/Mocha), which powers Cocoascript.
-- [Gus Mueller](https://github.com/ccgus) for [Cocoascript](https://github.com/ccgus/CocoaScript), which powers our plugin engine.
-- [Andrey Shakhmin](https://github.com/turbobabr), for his inspiration during the [Hamburg Hackathon](http://designtoolshackday.com), where he showed us a clean way to use node modules inside Sketch.
-- The Sketch plugin community everywhere, for such awesome work.
+* [Logan Collins](https://github.com/logancollins) for [Mocha](https://github.com/logancollins/Mocha), which powers Cocoascript.
+* [Gus Mueller](https://github.com/ccgus) for [Cocoascript](https://github.com/ccgus/CocoaScript), which powers our plugin engine.
+* [Andrey Shakhmin](https://github.com/turbobabr), for his inspiration during the [Hamburg Hackathon](http://designtoolshackday.com), where he showed us a clean way to use node modules inside Sketch.
+* The Sketch plugin community everywhere, for such awesome work.
