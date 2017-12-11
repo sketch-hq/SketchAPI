@@ -18,7 +18,7 @@
     "watch": "webpack --watch",
     "test": "npm run lint",
     "lint": "find . -name \"*.ts\" -o -name \"*.js\" | grep -v -f .gitignore | xargs eslint",
-    "prettier:base": "prettier --single-quote --trailing-comma es5 --no-semi --write",
+    "prettier:base": "prettier --write",
     "prettify": "find . -name \"*.ts\" -o -name \"*.js\" | grep -v -f .gitignore | xargs npm run prettier:base",
     "lint-staged": "lint-staged"
   },
@@ -53,5 +53,11 @@
       "npm run prettier:base",
       "git add"
     ]
+  },
+  "prettier": {
+    "proseWrap": false,
+    "singleQuote": true,
+    "trailingComma": "es5",
+    "semi": false
   }
 }

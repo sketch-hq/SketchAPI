@@ -31,10 +31,10 @@ export function DataSupplier(context) {
      * @param {string} dataName The data name, will be used as the menu item title for the data.
      * @param {string} dynamicDataKey The key to use to select the dynamic data to supply in onSupplyData.
      */
-    registerDynamicSupplier(dataType, dataName, dynamicDataKey) {
+    registerPluginDataSupplier(dataType, dataName, dynamicDataKey) {
       const identifier = context.plugin.identifier()
       const commandIdentifier = context.command.identifier()
-      dataManager.registerDynamicSupplier_withName_dataType_pluginIdentifier_commandIdentifier_(
+      dataManager.registerPluginDataSupplier_withName_dataType_pluginIdentifier_commandIdentifier_(
         dynamicDataKey,
         dataName,
         dataType,
