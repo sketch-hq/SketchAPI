@@ -36,8 +36,8 @@ export function DataSupplier(context) {
     /**
      * When the plugin providing the dynamic data has finished generating the data, it will call this function with the data key and the data.
      */
-    supplyDataForKey(data, key) {
-      dataManager.supplyData_forKey_(data, key)
+    supplyData(data, key) {
+      dataManager.supplyData_forKey_(data, key || context.data.key)
     },
   }
 }
