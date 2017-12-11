@@ -78,14 +78,13 @@ Register some data with a name and a key.
 ```js
 // onSupplyKeyNeeded would be the handler for the `SupplyKey` action defined in the manifest.json
 export function onSupplyKeyNeeded(context) {
-  var key = context.data.key
   var count = context.data.count
 
   var dataSupplier = new SketchAPI.DataSupplier(context)
 
   var data = Array.from(Array(count)).map(i => 'foo')
 
-  dataSupplier.supplyDataForKey(data, key)
+  dataSupplier.supplyDataForKey(data)
 }
 ```
 
@@ -94,7 +93,6 @@ When the plugin providing the dynamic data has finished generating the data, it 
 | Parameter         | type     | Description                                                                                                                                                |
 | ----------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | data _(required)_ | String[] | The list of values to provide. In case of `public.image`, the string is the path to the image. It needs to have a length equal to the `context.data.count` |
-| key _(required)_  | String   | `context.data.key`.                                                                                                                                        |
 
 ## deregisterDataSuppliers
 

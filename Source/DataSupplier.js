@@ -7,24 +7,6 @@ export function DataSupplier(context) {
 
   return {
     /**
-     * Register some data with a name and the plugin it has come from.
-     * @param {string} dataType The data type. Currently "public.text" or "public.image" are the only allowed values.
-     * @param {string} dataName The data name, will be used as the menu item title for the data.
-     * @param {array} data The data provided by the plugin immediately.
-     */
-    registerStaticSupplier(dataType, dataName, data) {
-      const identifier = context.plugin.identifier()
-      const commandIdentifier = context.command.identifier()
-      dataManager.registerStaticData_withName_dataType_pluginIdentifier_commandIdentifier_(
-        data,
-        dataName,
-        dataType,
-        identifier,
-        commandIdentifier
-      )
-    },
-
-    /**
      * Register a function to supply data on request.
      *
      * @param {string} dataType The data type. Currently "public.text" or "public.image" are the only allowed values.
