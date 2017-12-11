@@ -27,7 +27,6 @@ import { wrapObject } from './wrapNativeObject'
 const api = context => () => new Application(context)
 
 api.Document = Document
-api.Rectangle = Rectangle
 api.Group = Group
 api.Text = Text
 api.Image = Image
@@ -39,6 +38,7 @@ api.DataSupplier = DataSupplier
 api.UI = UI
 api.Settings = Settings
 
+api.Rectangle = Rectangle
 api.Types = Types
 api.fromNative = wrapObject
 
