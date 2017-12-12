@@ -3,6 +3,7 @@ import { Layer } from './Layer'
 import { Rectangle } from './Rectangle'
 import { Types } from './enums'
 import { Factory } from './Factory'
+import { isNativeObject } from './utils'
 
 /**
  * Represents an image layer.
@@ -12,10 +13,9 @@ export class Image extends Layer {
    * Make a new image layer object.
    *
    * @param {MSBitmapLayer} layer The underlying model object from Sketch.
-   * @param {Document} document The document that the bitmap layer belongs to.
    */
-  constructor(layer = {}, document) {
-    if (document) {
+  constructor(layer = {}) {
+    if (isNativeObject(layer)) {
       log(
         'using a constructor to box a native object is deprecated. Use `fromNative` instead'
       )

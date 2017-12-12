@@ -1,4 +1,5 @@
 import { WrappedObject, DefinedPropertiesKey } from './WrappedObject'
+import { isNativeObject } from './utils'
 
 export const FillType = {
   color: 0, // A solid fill/border.
@@ -18,7 +19,7 @@ export class Style extends WrappedObject {
    * @param {MSStyle} style The underlying model object from Sketch.
    */
   constructor(style = {}) {
-    if (style.class && typeof style.class === 'function') {
+    if (isNativeObject(style)) {
       log(
         'using a constructor to box a native object is deprecated. Use `fromNative` instead'
       )

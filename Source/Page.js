@@ -5,6 +5,7 @@ import { Rectangle } from './Rectangle'
 import { Types } from './enums'
 import { Factory } from './Factory'
 import { DEFAULT_EXPORT_OPTIONS } from './Layer'
+import { isNativeObject } from './utils'
 
 /**
  * Represents a Page in a Sketch document.
@@ -14,10 +15,9 @@ export class Page extends Group {
    * Make a new page object.
    *
    * @param {MSPage} page The underlying model object from Sketch.
-   * @param document The document that the page belongs to.
    */
-  constructor(page = {}, document) {
-    if (document) {
+  constructor(page = {}) {
+    if (isNativeObject(page)) {
       log(
         'using a constructor to box a native object is deprecated. Use `fromNative` instead'
       )

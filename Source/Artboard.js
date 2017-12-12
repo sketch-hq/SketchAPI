@@ -3,6 +3,7 @@ import { Group } from './Group'
 import { Rectangle } from './Rectangle'
 import { Types } from './enums'
 import { Factory } from './Factory'
+import { isNativeObject } from './utils'
 
 /**
  * A Sketch artboard.
@@ -12,10 +13,9 @@ export class Artboard extends Group {
    * Make a new artboard.
    *
    * @param artboard {MSArtboardGroup} The underlying MSArtboardGroup model object from Sketch.
-   * @param document The document that the artboard belongs to.
    */
-  constructor(artboard = {}, document) {
-    if (document) {
+  constructor(artboard = {}) {
+    if (isNativeObject(artboard)) {
       log(
         'using a constructor to box a native object is deprecated. Use `fromNative` instead'
       )

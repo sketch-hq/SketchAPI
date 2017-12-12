@@ -4,6 +4,7 @@ import { Style } from './Style'
 import { Types } from './enums'
 import { Factory } from './Factory'
 import { Rectangle } from './Rectangle'
+import { isNativeObject } from './utils'
 
 /**
  * Represents a shape layer (a rectangle, oval, path, etc).
@@ -13,10 +14,9 @@ export class Shape extends Layer {
    * Make a new shape object.
    *
    * @param {MSShapeGroup} shape The underlying model object from Sketch.
-   * @param {Document} document The document that the shape belongs to.
    */
-  constructor(shape = {}, document) {
-    if (document) {
+  constructor(shape = {}) {
+    if (isNativeObject(shape)) {
       log(
         'using a constructor to box a native object is deprecated. Use `fromNative` instead'
       )
@@ -54,6 +54,12 @@ Shape.define('style', {
     return new Style(this._object.style())
   },
   set(style) {
-    this._object.style = style.sketchObject
+    if (isNativeObject(style)) {
+      this._object.style = style
+    } else if (!style || !style.sketchObject) {
+      this._object.style = new Style(style).sketchObject
+    } else {
+      this._object.style = style.sketchObject
+    }
   },
 })
