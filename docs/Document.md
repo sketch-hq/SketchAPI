@@ -3,18 +3,20 @@ title: Document
 order: 201
 section: components
 ---
+
 ```javascript
 var Document = SketchAPI.Document
 ```
+
 ```javascript
 import { Document } from 'sketch-api'
 ```
 
 A Sketch document.
 
-Properties | type | Description
---------- | ------- | -----------
-id | string | The unique ID of the document.
+| Properties | type   | Description                    |
+| ---------- | ------ | ------------------------------ |
+| id         | string | The unique ID of the document. |
 
 ## Creating a new document
 
@@ -69,9 +71,9 @@ if (layer) {
 
 A method to help find the first layer in this document which has the given id.
 
-Parameter | type | Description
---------- | ------- | -----------
-layerId _(required)_ | string | The ID of the layer to find
+| Parameter            | type   | Description                 |
+| -------------------- | ------ | --------------------------- |
+| layerId _(required)_ | string | The ID of the layer to find |
 
 ### Return
 
@@ -88,9 +90,9 @@ if (layer) {
 
 A method to help find the first layer in this document which has the given name.
 
-Parameter | type | Description
---------- | ------- | -----------
-name _(required)_ | string | The name of the layer to find
+| Parameter         | type   | Description                   |
+| ----------------- | ------ | ----------------------------- |
+| name _(required)_ | string | The name of the layer to find |
 
 ### Return
 
@@ -104,6 +106,6 @@ document.centerOnLayer(layer)
 
 A method to help center the view of the document window on a given layer.
 
-Parameter | type | Description
---------- | ------- | -----------
-layer _(required)_ | [Layer](#layer) | The layer to center the view onto
+| Parameter          | type            | Description                       |
+| ------------------ | --------------- | --------------------------------- |
+| layer _(required)_ | [Layer](#layer) | The layer to center the view onto |
