@@ -71,7 +71,7 @@ Register some data with a name and a key.
 | dataName _(required)_ | String | The data name, will be used as the menu item title for the data.                                   |
 | action _(required)_   | String | The name of the Action that will be dispatched when the user requests some data. See `supplyData`. |
 
-## supplyDataForKey
+## supplyData
 
 > Example
 
@@ -84,7 +84,7 @@ export function onSupplyKeyNeeded(context) {
 
   var data = Array.from(Array(count)).map(i => 'foo')
 
-  dataSupplier.supplyDataForKey(data)
+  dataSupplier.supplyData(data)
 }
 ```
 
