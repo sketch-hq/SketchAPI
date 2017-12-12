@@ -12,6 +12,7 @@ import { Image } from './Image'
 import { Shape } from './Shape'
 import { Artboard } from './Artboard'
 import { Page } from './Page'
+import { Style } from './Style'
 
 import { Types } from './enums'
 import { wrapObject } from './wrapNativeObject'
@@ -38,6 +39,7 @@ api.DataSupplier = DataSupplier
 api.UI = UI
 api.Settings = Settings
 
+api.Style = Style
 api.Rectangle = Rectangle
 api.Types = Types
 api.fromNative = wrapObject
