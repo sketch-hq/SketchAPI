@@ -16,9 +16,9 @@ An image layer. It is an instance of [Layer](#layer) so all the methods defined 
 
 | Properties | type                    | Description                                                                                     |
 | ---------- | ----------------------- | ----------------------------------------------------------------------------------------------- |
-| id         | string                  | The unique ID of the document.                                                                  |
+| id         | string                  | The unique ID of the Image.                                                                     |
 | name       | string                  | The name of the Image                                                                           |
-| parent     | [Group](#group)         | The group the image is in.                                                                      |
+| parent     | [Group](#group)         | The group the Image is in.                                                                      |
 | frame      | [Rectangle](#rectangle) | The frame of the Image. This is given in coordinates that are local to the parent of the layer. |
 | image      | NSImage                 | The actual image of the layer.                                                                  |
 

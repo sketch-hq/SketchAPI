@@ -16,8 +16,8 @@ A Sketch page. It is an instance of both [Layer](#layer) and [Group](#group) so 
 
 | Properties | type                    | Description                    |
 | ---------- | ----------------------- | ------------------------------ |
-| id         | string                  | The unique ID of the document. |
-| name       | string                  | The name of the Artboard       |
+| id         | string                  | The unique ID of the Page.     |
+| name       | string                  | The name of the Page           |
 | parent     | [Document](#document)   | The document the page is in.   |
 | layers     | [Layer](#layer)         | The layers that this page has. |
 | frame      | [Rectangle](#rectangle) | The frame of the page.         |

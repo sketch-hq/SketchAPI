@@ -16,8 +16,8 @@ A Sketch layer.
 
 | Properties | type                    | Description                                                                                     |
 | ---------- | ----------------------- | ----------------------------------------------------------------------------------------------- |
-| id         | string                  | The unique ID of the document.                                                                  |
-| name       | string                  | The name of the Group                                                                           |
+| id         | string                  | The unique ID of the Layer.                                                                     |
+| name       | string                  | The name of the Layer                                                                           |
 | parent     | [Group](#group)         | The group the layer is in.                                                                      |
 | frame      | [Rectangle](#rectangle) | The frame of the Layer. This is given in coordinates that are local to the parent of the layer. |
 
