@@ -12,29 +12,37 @@ export class Rectangle {
    * @return The new Rectangle object.
    */
   constructor(x, y, width, height) {
-    /**
-     * The x coordinate of the top-left corner of the rectangle.
-     * @type {number}
-     */
-    this.x = x
+    // if the argument is object
+    if (x && x.x) {
+      this.x = x.x
+      this.y = x.y
+      this.width = x.width
+      this.height = x.height
+    } else {
+      /**
+       * The x coordinate of the top-left corner of the rectangle.
+       * @type {number}
+       */
+      this.x = x
 
-    /**
-     * The y coordinate of the top-left corner of the rectangle.
-     * @type {number}
-     */
-    this.y = y
+      /**
+       * The y coordinate of the top-left corner of the rectangle.
+       * @type {number}
+       */
+      this.y = y
 
-    /**
-     * The width of the rectangle.
-     * @type {number}
-     */
-    this.width = width
+      /**
+       * The width of the rectangle.
+       * @type {number}
+       */
+      this.width = width
 
-    /**
-     * The height of the rectangle.
-     * @type {number}
-     */
-    this.height = height
+      /**
+       * The height of the rectangle.
+       * @type {number}
+       */
+      this.height = height
+    }
   }
 
   /**
@@ -46,6 +54,7 @@ export class Rectangle {
   offset(x, y) {
     this.x += x
     this.y += y
+    return this
   }
 
   /**

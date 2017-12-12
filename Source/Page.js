@@ -107,6 +107,7 @@ export class Page extends Group {
       merged
     )
     exporter.exportPage(this.sketchObject)
+    return this
   }
 
   /**
@@ -120,6 +121,7 @@ export class Page extends Group {
       merged
     )
     exporter.exportLayers(this.sketchObject.artboards())
+    return this
   }
 }
 

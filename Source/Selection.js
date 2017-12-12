@@ -34,7 +34,10 @@ export class Selection {
    * @return {number} The number of layers that are selected.
    */
   get length() {
-    return this.layers.length
+    return this._object
+      .selectedLayers()
+      .layers()
+      .count()
   }
 
   /**
@@ -43,7 +46,7 @@ export class Selection {
    * @return {boolean} true if the selection is empty.
    */
   get isEmpty() {
-    return this.layers.length === 0
+    return this.length === 0
   }
 
   /**
@@ -101,5 +104,6 @@ export class Selection {
    */
   clear() {
     this._object.changeSelectionBySelectingLayers(null)
+    return this
   }
 }
