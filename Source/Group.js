@@ -96,6 +96,7 @@ export class Group extends Layer {
    */
   adjustToFit() {
     this._object.resizeToFitChildrenWithOption_(0)
+    return this
   }
 
   /**

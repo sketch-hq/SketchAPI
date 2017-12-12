@@ -112,6 +112,7 @@ export class Layer extends WrappedObject {
     if (parent) {
       parent.removeLayer_(this._object)
     }
+    return this
   }
 
   get container() {
@@ -126,6 +127,7 @@ export class Layer extends WrappedObject {
    */
   select() {
     this._object.select_byExtendingSelection(true, false)
+    return this
   }
 
   /**
@@ -134,6 +136,7 @@ export class Layer extends WrappedObject {
    */
   deselect() {
     this._object.select_byExtendingSelection(false, true)
+    return this
   }
 
   /**
@@ -142,6 +145,7 @@ export class Layer extends WrappedObject {
    */
   addToSelection() {
     this._object.select_byExtendingSelection(true, true)
+    return this
   }
 
   /**
@@ -149,6 +153,7 @@ export class Layer extends WrappedObject {
    */
   moveToFront() {
     MSLayerMovement.moveToFront([this._object])
+    return this
   }
 
   /**
@@ -156,6 +161,7 @@ export class Layer extends WrappedObject {
    */
   moveForward() {
     MSLayerMovement.moveForward([this._object])
+    return this
   }
 
   /**
@@ -163,6 +169,7 @@ export class Layer extends WrappedObject {
    */
   moveToBack() {
     MSLayerMovement.moveToBack([this._object])
+    return this
   }
 
   /**
@@ -170,6 +177,7 @@ export class Layer extends WrappedObject {
    */
   moveBackward() {
     MSLayerMovement.moveBackward([this._object])
+    return this
   }
 
   /**
@@ -210,6 +218,7 @@ export class Layer extends WrappedObject {
       merged
     )
     exporter.exportLayers([this.sketchObject])
+    return this
   }
 }
 
@@ -224,7 +233,7 @@ Layer.define('index', {
    * @return {number} The layer order.
    */
   get() {
-    const ourLayer = this.sketchObject
+    const ourLayer = this._object
     return parseInt(ourLayer.parentGroup().indexOfLayer_(ourLayer), 10)
   },
 })
