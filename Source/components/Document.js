@@ -2,7 +2,7 @@ import { WrappedObject, DefinedPropertiesKey } from '../WrappedObject'
 import { Layer } from './Layer'
 import { Page } from './Page'
 import { Selection } from '../Selection'
-import { toArray } from '../utils'
+import { toArray, isNativeObject } from '../utils'
 import { wrapNativeObject, wrapObject } from '../wrapNativeObject'
 import { Types } from '../enums'
 import { Factory } from '../Factory'
@@ -15,7 +15,6 @@ export class Document extends WrappedObject {
    * Make a new document object.
    *
    * @param {MSDocument} document The underlying MSDocument object.
-   * @param {Application} application The application object.
    *
    * Note that constructing one of these doesn't actually create
    * a Sketch document. Instead you pass in the underlying MSDocument
@@ -23,8 +22,8 @@ export class Document extends WrappedObject {
    *
    * If you do want to create a new document, you can do so with Application#newDocument.
    */
-  constructor(document = {}, application) {
-    if (application) {
+  constructor(document = {}) {
+    if (isNativeObject(document)) {
       log(
         'using a constructor to box a native object is deprecated. Use `fromNative` instead'
       )

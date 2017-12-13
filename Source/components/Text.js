@@ -3,6 +3,7 @@ import { Layer } from './Layer'
 import { Rectangle } from '../Rectangle'
 import { Types } from '../enums'
 import { Factory } from '../Factory'
+import { isNativeObject } from '../utils'
 
 const TextBehaviour = {
   flexibleWidth: 0, // Width is adjusted to fit the content.
@@ -31,10 +32,9 @@ export class Text extends Layer {
    * Make a new text object.
    *
    * @param {MSTextLayer} text The underlying model object from Sketch.
-   * @param {Document} document The document that the text layer belongs to.
    */
-  constructor(text = {}, document) {
-    if (document) {
+  constructor(text = {}) {
+    if (isNativeObject(text)) {
       log(
         'using a constructor to box a native object is deprecated. Use `fromNative` instead'
       )
@@ -87,6 +87,7 @@ export class Text extends Layer {
    */
   adjustToFit() {
     this._object.adjustFrameToFit()
+    return this
   }
 
   /**
@@ -95,7 +96,7 @@ export class Text extends Layer {
    * @return {array} The line fragments. Each one is a dictionary containing a rectangle, and a baseline offset.
    */
   get fragments() {
-    const textLayer = this.sketchObject
+    const textLayer = this._object
     const storage = textLayer.immutableModelObject().createTextStorage()
     const layout = storage.layoutManagers().firstObject()
     const actualCharacterRangePtr = MOPointer.new()

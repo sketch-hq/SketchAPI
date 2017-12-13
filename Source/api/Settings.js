@@ -35,14 +35,11 @@ export function setGlobalSettingForKey(key, value) {
 const SUITE_PREFIX = 'plugin.sketch.'
 
 /**
- * Return the value of a global setting for a given key.
+ * Return the value of a plugin setting for a given key.
+ *
  * @param context The context dictionary passed to the script when it was invoked.
  * @param key The setting to look up.
  * @return The setting value.
- *
- * This is equivalent to reading a setting for the currently
- * running version of Sketch using the `defaults` command line tool,
- * eg: defaults read com.bohemiancoding.sketch3 <key>
  * */
 export function settingForKey(context, key) {
   const store = NSUserDefaults.alloc().initWithSuiteName(
@@ -62,10 +59,6 @@ export function settingForKey(context, key) {
  * @param context The context dictionary passed to the script when it was invoked.
  * @param key The setting to set.
  * @param value The value to set it to.
- *
- * This is equivalent to writing a setting for the currently
- * running version of Sketch using the `defaults` command line tool,
- * eg: defaults write com.bohemiancoding.sketch3 <key> <value>
  */
 export function setSettingForKey(context, key, value) {
   const store = NSUserDefaults.alloc().initWithSuiteName(

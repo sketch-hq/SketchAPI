@@ -12,29 +12,37 @@ export class Rectangle {
    * @return The new Rectangle object.
    */
   constructor(x, y, width, height) {
-    /**
-     * The x coordinate of the top-left corner of the rectangle.
-     * @type {number}
-     */
-    this.x = parseFloat(x)
+    // if the argument is object
+    if (x && x.x) {
+      this.x = parseFloat(x.x)
+      this.y = parseFloat(x.y)
+      this.width = parseFloat(x.width)
+      this.height = parseFloat(x.height)
+    } else {
+      /**
+       * The x coordinate of the top-left corner of the rectangle.
+       * @type {number}
+       */
+      this.x = parseFloat(x)
 
-    /**
-     * The y coordinate of the top-left corner of the rectangle.
-     * @type {number}
-     */
-    this.y = parseFloat(y)
+      /**
+       * The y coordinate of the top-left corner of the rectangle.
+       * @type {number}
+       */
+      this.y = parseFloat(y)
 
-    /**
-     * The width of the rectangle.
-     * @type {number}
-     */
-    this.width = parseFloat(width)
+      /**
+       * The width of the rectangle.
+       * @type {number}
+       */
+      this.width = parseFloat(width)
 
-    /**
-     * The height of the rectangle.
-     * @type {number}
-     */
-    this.height = parseFloat(height)
+      /**
+       * The height of the rectangle.
+       * @type {number}
+       */
+      this.height = parseFloat(height)
+    }
   }
 
   /**
@@ -46,6 +54,7 @@ export class Rectangle {
   offset(x, y) {
     this.x += parseFloat(x)
     this.y += parseFloat(y)
+    return this
   }
 
   /**

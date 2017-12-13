@@ -4,7 +4,7 @@ import { Rectangle } from '../Rectangle'
 import { Style } from '../Style'
 import { Types } from '../enums'
 import { Factory } from '../Factory'
-import { toArray } from '../utils'
+import { toArray, isNativeObject } from '../utils'
 import { wrapNativeObject, wrapObject } from '../wrapNativeObject'
 
 import { iterateWithNativeLayers } from '../deprecated-helpers'
@@ -17,10 +17,9 @@ export class Group extends Layer {
    * Make a new group object.
    *
    * @param {MSLayerGroup} group  The underlying model object from Sketch.
-   * @param {Document} document The document that the group belongs to.
    */
-  constructor(group = {}, document) {
-    if (document) {
+  constructor(group = {}) {
+    if (isNativeObject(group)) {
       log(
         'using a constructor to box a native object is deprecated. Use `fromNative` instead'
       )
@@ -96,6 +95,7 @@ export class Group extends Layer {
    */
   adjustToFit() {
     this._object.resizeToFitChildrenWithOption_(0)
+    return this
   }
 
   /**

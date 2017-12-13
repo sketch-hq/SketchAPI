@@ -1,3 +1,5 @@
+/* globals NSAlertFirstButtonReturn */
+
 import { isNativeObject } from '../utils'
 /**
  * Show a small, temporary, message to the user.
@@ -5,10 +7,16 @@ import { isNativeObject } from '../utils'
  * and is visible for a short period of time. It should consist of a single
  * line of text.
  *
- * @param {Document} document The document in which we will show the message
  * @param {string} text The message to show.
+ * @param [Document] document The document in which we will show the message
  */
-export function message(document, text) {
+export function message(text, document) {
+  if (!document) {
+    NSApplication.sharedApplication()
+      .orderedDocuments()
+      .firstObject()
+      .showMessage(text)
+  }
   if (isNativeObject(document)) {
     document.showMessage(text)
   } else {
@@ -42,10 +50,10 @@ export function getStringFromUser(msg, initial) {
   const result = panel.runPanelWithNibName_ofType_initialString_label_(
     'MSModalInputSheet',
     0,
-    initial,
+    initial || '',
     msg
   )
-  return result
+  return String(result)
 }
 
 /**
@@ -75,5 +83,5 @@ export function getSelectionFromUser(msg, items, selectedItemIndex = 0) {
   const responseCode = dialog.runModal()
   const sel = accessory.indexOfSelectedItem()
 
-  return [responseCode, sel]
+  return [responseCode, sel, responseCode === NSAlertFirstButtonReturn]
 }
