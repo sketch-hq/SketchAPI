@@ -1,3 +1,5 @@
+/* globals NSAlertFirstButtonReturn */
+
 import { isNativeObject } from './utils'
 /**
  * Show a small, temporary, message to the user.
@@ -48,10 +50,10 @@ export function getStringFromUser(msg, initial) {
   const result = panel.runPanelWithNibName_ofType_initialString_label_(
     'MSModalInputSheet',
     0,
-    initial,
+    initial || '',
     msg
   )
-  return result
+  return String(result)
 }
 
 /**
@@ -81,5 +83,5 @@ export function getSelectionFromUser(msg, items, selectedItemIndex = 0) {
   const responseCode = dialog.runModal()
   const sel = accessory.indexOfSelectedItem()
 
-  return [responseCode, sel]
+  return [responseCode, sel, responseCode === NSAlertFirstButtonReturn]
 }

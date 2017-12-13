@@ -87,6 +87,7 @@ export class Text extends Layer {
    */
   adjustToFit() {
     this._object.adjustFrameToFit()
+    return this
   }
 
   /**
@@ -95,7 +96,7 @@ export class Text extends Layer {
    * @return {array} The line fragments. Each one is a dictionary containing a rectangle, and a baseline offset.
    */
   get fragments() {
-    const textLayer = this.sketchObject
+    const textLayer = this._object
     const storage = textLayer.immutableModelObject().createTextStorage()
     const layout = storage.layoutManagers().firstObject()
     const actualCharacterRangePtr = MOPointer.new()
