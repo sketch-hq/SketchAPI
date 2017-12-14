@@ -17,7 +17,7 @@ const config = {
   entry: './Source/index.js',
   output: {
     filename: OUTPUT_FILE,
-    library: 'SketchAPI',
+    library: 'sketch',
     path: OUTPUT_PATH,
   },
   resolve: {

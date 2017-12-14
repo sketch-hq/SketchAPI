@@ -5,7 +5,7 @@ section: components
 ---
 
 ```javascript
-var Document = SketchAPI.Document
+var Document = sketch.Document
 ```
 
 ```javascript

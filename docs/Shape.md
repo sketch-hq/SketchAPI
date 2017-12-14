@@ -5,7 +5,7 @@ section: components
 ---
 
 ```javascript
-var Shape = SketchAPI.Shape
+var Shape = sketch.Shape
 ```
 
 ```javascript

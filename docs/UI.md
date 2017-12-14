@@ -5,7 +5,7 @@ section: API
 ---
 
 ```js
-var UI = SketchAPI.UI
+var UI = sketch.UI
 
 import { UI } from 'sketch-api'
 ```

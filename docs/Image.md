@@ -5,7 +5,7 @@ section: components
 ---
 
 ```javascript
-var Image = SketchAPI.Image
+var Image = sketch.Image
 ```
 
 ```javascript

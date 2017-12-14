@@ -5,7 +5,7 @@ section: Utils
 ---
 
 ```javascript
-var Style = SketchAPI.Style
+var Style = sketch.Style
 ```
 
 ```javascript

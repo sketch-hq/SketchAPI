@@ -15,10 +15,10 @@ Comments and suggestions for this API are welcome - send them to developers@sket
 
 ## Installation
 
-The API comes bundled inside Sketch, so no installation is required. You access it by obtaining a global `SketchAPI` object:
+The API comes bundled inside Sketch, so no installation is required. You access it by obtaining a global `sketch` object:
 
 ```javascript
-var api = SketchAPI
+var api = sketch
 ```
 
 ## Overview
@@ -41,7 +41,7 @@ One or two important properties of layers are exposed directly in the wrappers. 
 
 There is the beginning of a wrapper class `Style` for layer styles, but it's currently very simple. The plan here will be to allow a quick way to set up all the common properties of a style, in a way that is uniform and consistent.
 
-On `api.Settings`, there is also some support for more global tasks such as reading/writing preferences.
+On `sketch.Settings`, there is also some support for more global tasks such as reading/writing preferences.
 
 The api object also exposes some utility classes. Currently the main one of note is `Rectangle`, which is a javascript-native representation of a rectangle. The plan is to use this class consistently within the API, in order to try to mask the fact that the model itself uses a confusing mix of `NSRect`, `CGRect`, `MSRect` and `MSAbsoluteRect`! In time more utility classes may be added. In time, also, we hope to clean up the model to be more consistent, at which point `Rectangle` might just turn into a thin wrapper for one of the native types.
 
@@ -66,7 +66,7 @@ if (obj1 == obj2) {
 }
 
 // this is better - both wrappers might represent the same object
-if (obj1.isEqual(obj2.sketchObject)) {
+if (obj1.isEqual(obj2)) {
   /* do stuff */
 }
 ```
@@ -76,26 +76,25 @@ if (obj1.isEqual(obj2.sketchObject)) {
 Here's a very simple example script:
 
 ```javascript
-var api = SketchAPI
+log(sketch.version.api)
+log(sketch.version.sketch)
 
-log(api.version.api)
-log(api.version.sketch)
-
-var document = api.fromNative(context.document)
+var document = sketch.fromNative(context.document)
 var selection = document.selectedLayers
 var page = document.selectedPage
 
-var Group = api.Group
-var Shape = api.Shape
+var Group = sketch.Group
+var Shape = sketch.Shape
+var Rectangle = sketch.Rectangle
 
 var group = new Group({
   parent: page,
-  frame: new sketch.Rectangle(0, 0, 100, 100),
+  frame: new Rectangle(0, 0, 100, 100),
   name: 'Test',
 })
 var rect = new Shape({
   parent: group,
-  frame: new Sketch.rectangle(10, 10, 80, 80),
+  frame: new Rectangle(10, 10, 80, 80),
 })
 
 log(selection.isEmpty)
@@ -109,13 +108,13 @@ log(selection.isEmpty)
 group.select()
 rect.addToSelection()
 
-var outputString = api.UI.getStringFromUser('Test', 'default')
-var outputSelection = api.UI.getSelectionFromUser('Test', ['One', 'Two'], 1)
-api.UI.message(document, 'Hello mum!')
-api.UI.alert('Title', 'message')
+var outputString = sketch.UI.getStringFromUser('Test', 'default')
+var outputSelection = sketch.UI.getSelectionFromUser('Test', ['One', 'Two'], 1)
+sketch.UI.message('Hello mum!')
+sketch.UI.alert('Title', 'message')
 
-api.Settings.setSettingForKey(context, 'setting-to-remember', outputString)
-log(api.Settings.settingForKey(context, 'setting-to-remember'))
+sketch.Settings.setSettingForKey(context, 'setting-to-remember', outputString)
+log(sketch.Settings.settingForKey(context, 'setting-to-remember'))
 ```
 
 For more examples, we recommend checking out the [examples section of the developer website](http://developer.sketchapp.com/examples/).

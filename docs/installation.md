@@ -5,10 +5,10 @@ section: topics
 ---
 
 ```javascript
-var api = SketchAPI
+var api = sketch
 ```
 
-The API comes bundled inside Sketch, so no installation is required. You access it by obtaining a global `SketchAPI` object.
+The API comes bundled inside Sketch, so no installation is required. You access it by obtaining a global `sketch` object.
 
 ```javascript
 npm install sketch-api

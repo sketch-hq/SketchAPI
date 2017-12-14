@@ -5,7 +5,7 @@ section: API
 ---
 
 ```js
-var Settings = SketchAPI.Settings
+var Settings = sketch.Settings
 
 import { Settings } from 'sketch-api'
 ```
