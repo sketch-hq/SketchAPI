@@ -6,7 +6,7 @@ export const tests = {
   'should return the pages': (context, document) => {
     const { pages } = document
     expect(pages.length).toBe(1)
-    expect(pages[0].sketchObject).toBe(document.selectedPage.sketchObject)
+    expect(pages[0]).toWrapSameAs(document.selectedPage)
   },
 
   'should return the selected layers': (context, document) => {
@@ -14,9 +14,9 @@ export const tests = {
     expect(selection.isEmpty).toBe(true)
 
     const page = document.selectedPage
-    const group = new Group({ name: 'Test', parent: page })
-    group.select()
+    const group = new Group({ name: 'Test', parent: page, selected: true })
 
+    expect(group.selected).toBe(true)
     expect(selection.isEmpty).toBe(false)
   },
 
@@ -25,6 +25,6 @@ export const tests = {
     const group = new Group({ name: 'Test', parent: page })
     const { id } = group
     const found = document.getLayerWithID(id)
-    expect(group.sketchObject).toBe(found.sketchObject)
+    expect(group).toWrapSameAs(found)
   },
 }

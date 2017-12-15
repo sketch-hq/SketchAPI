@@ -52,8 +52,4 @@ const config = {
   ],
 }
 
-if (!PRODUCTION) {
-  // config.devtool = 'source-map'
-}
-
 module.exports = config

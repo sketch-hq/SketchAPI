@@ -44,34 +44,6 @@ export class Layer extends WrappedObject {
   }
 
   /**
-   * Select the layer.
-   * This will clear the previous selection. Use addToSelection() if you wish
-   * to preserve the existing selection.
-   */
-  select() {
-    this._object.select_byExtendingSelection(true, false)
-    return this
-  }
-
-  /**
-   * Deselect this layer.
-   * Any other layers that were previously selected will remain selected.
-   */
-  deselect() {
-    this._object.select_byExtendingSelection(false, true)
-    return this
-  }
-
-  /**
-   * Add this layer to the selected layers.
-   * Any other layers that were previously selected will remain selected.
-   */
-  addToSelection() {
-    this._object.select_byExtendingSelection(true, true)
-    return this
-  }
-
-  /**
    * Move this layer to the front of its container.
    */
   moveToFront() {
@@ -250,5 +222,24 @@ Layer.define('name', {
    */
   set(value) {
     this._object.setName(value)
+  },
+})
+
+Layer.define('selected', {
+  /**
+   * Wether the layer is selected or not.
+   *
+   * @return {Boolean} selected.
+   */
+  get() {
+    return !!this._object.isSelected()
+  },
+
+  set(value) {
+    if (value) {
+      this._object.select_byExtendingSelection(true, true)
+    } else {
+      this._object.select_byExtendingSelection(false, true)
+    }
   },
 })

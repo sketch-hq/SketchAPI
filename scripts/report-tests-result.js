@@ -1,6 +1,9 @@
 #!/usr/bin/env node
 
 /* eslint-disable prefer-template, no-console */
+process.env.FORCE_COLOR = true // forces chalk to output colors
+const chalk = require('chalk') // eslint-disable-line import/no-extraneous-dependencies
+const printErrorStack = require('../test-utils/print-error')
 
 // get the stdin
 const stdin = process.openStdin()
@@ -12,12 +15,10 @@ function reportData() {
 
   const raw = lines.find(l => JSON_RESULT_REGEX.test(l))
   if (!raw) {
-    console.log("Error: couldn't find the test results")
+    console.log(chalk.bgRed.white("Error: couldn't find the test results"))
     return
   }
   const json = JSON.parse(raw.replace('json results: ', ''))
-
-  const colors = require('./console-colors') // eslint-disable-line
 
   let suites = []
 
@@ -51,29 +52,30 @@ function reportData() {
 
   suites.forEach(suite => {
     if (!suite.failed.length) {
-      console.log(
-        colors.bgGreen(colors.white(' PASS ')) + ' ' + colors.dim(suite.name)
-      )
+      console.log(chalk.bgGreen.white(' PASS ') + ' ' + chalk.dim(suite.name))
       return
     }
 
     console.log('')
-    console.log(colors.bgRed(colors.white(' FAIL ')) + ' ' + suite.name)
+    console.log(chalk.bgRed.white(' FAIL ') + ' ' + suite.name)
 
     suite.failed.forEach(failure => {
       console.log('')
-      console.log(colors.red('  ● ' + suite.name + ' › ' + failure.name))
+      console.log(chalk.red('  ● ' + suite.name + ' › ' + failure.name))
       console.log('')
-      console.log(failure.reason)
+      if (failure.reason.stack) {
+        console.log(failure.reason.name + ': ' + failure.reason.message)
+        printErrorStack(failure.reason.stack)
+      }
       console.log('')
     })
 
     console.log(suite.name)
     suite.tests.forEach(test => {
       console.log(
-        (test.type === 'passed' ? colors.green('  ✓') : colors.red('  ✖︎')) +
+        (test.type === 'passed' ? chalk.green('  ✓') : chalk.red('  ✖︎')) +
           ' ' +
-          colors.dim(test.name)
+          chalk.dim(test.name)
       )
     })
   })
@@ -83,8 +85,8 @@ function reportData() {
   const failedSuites = suites.filter(s => s.failed.length).length
   console.log(
     'Test Suites: ' +
-      (passedSuites ? colors.green(passedSuites + ' passed, ') : '') +
-      (failedSuites ? colors.red(failedSuites + ' failed, ') : '') +
+      (passedSuites ? chalk.green(passedSuites + ' passed, ') : '') +
+      (failedSuites ? chalk.red(failedSuites + ' failed, ') : '') +
       suites.length +
       ' total'
   )
@@ -95,8 +97,8 @@ function reportData() {
   const failedTests = suites.reduce((prev, s) => prev + s.failed.length, 0)
   console.log(
     'Tests: ' +
-      (passedTests ? colors.green(passedTests + ' passed, ') : '') +
-      (failedTests ? colors.red(failedTests + ' failed, ') : '') +
+      (passedTests ? chalk.green(passedTests + ' passed, ') : '') +
+      (failedTests ? chalk.red(failedTests + ' failed, ') : '') +
       (passedTests + failedTests) +
       ' total'
   )

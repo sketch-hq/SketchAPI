@@ -10,11 +10,13 @@ export const tests = {
   'should clear the selection': (context, document) => {
     const group = new Group({
       parent: document.selectedPage,
+      selected: true,
     })
-    group.select()
     const selection = document.selectedLayers
+    expect(group.selected).toBe(true)
     expect(selection.isEmpty).toBe(false)
     selection.clear()
+    expect(group.selected).toBe(false)
     expect(selection.isEmpty).toBe(true)
   },
 
@@ -22,14 +24,16 @@ export const tests = {
     context,
     document
   ) => {
+    // eslint-disable-next-line
     const group = new Group({
       parent: document.selectedPage,
+      selected: true,
     })
+    // eslint-disable-next-line
     const text = new Text({
       parent: document.selectedPage,
+      selected: true,
     })
-    text.select()
-    group.addToSelection()
     const selection = document.selectedLayers
 
     expect(selection.length).toBe(2)
@@ -38,12 +42,13 @@ export const tests = {
   'should be able to go through the layers': (context, document) => {
     const group = new Group({
       parent: document.selectedPage,
+      selected: true,
     })
+    // eslint-disable-next-line
     const text = new Text({
       parent: document.selectedPage,
+      selected: true,
     })
-    text.select()
-    group.addToSelection()
     const selection = document.selectedLayers
 
     let iterations = 0

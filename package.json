@@ -25,6 +25,7 @@
   },
   "devDependencies": {
     "awesome-typescript-loader": "^3.4.0",
+    "chalk": "^2.3.0",
     "eslint": "^4.11.0",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-config-prettier": "^2.8.0",
@@ -35,6 +36,7 @@
     "lint-staged": "^5.0.0",
     "pre-commit": "^1.2.2",
     "prettier": "^1.8.2",
+    "source-map": "^0.6.1",
     "source-map-loader": "^0.2.3",
     "typescript": "^2.6.1",
     "typescript-eslint-parser": "^9.0.0",

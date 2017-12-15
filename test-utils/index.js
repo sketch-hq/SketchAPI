@@ -1,25 +1,48 @@
+/* globals MSDocumentData, log */
 import { Document } from '../Source/components/Document'
 
-/* eslint-disable */
-const importedSuites = {
-  /*{{IMPORTS}}*/
-}
-/* eslint-enable */
+function prepareStackTrace(stackTrace) {
+  let stack = stackTrace.split('\n')
+  stack = stack.map(s => s.replace(/\sg/, ''))
 
-/**
- * Very simple unit testing utility.
- *
- *
- * At some point we may switch to using Mocha or some other test framework, but for
- * now we want to be able to invoke the tests from the Sketch side or from a plugin
- * command, so it's simpler to use a simple test framework of our own devising.
- */
+  stack = stack.map(entry => {
+    let line = null
+    let column = null
+    let file = null
+    const split = entry.split('@')
+    let fn = split[0]
+    let filePath = split[1]
+
+    if (filePath) {
+      ;[filePath, line, column] = filePath.split(':')
+      file = filePath.split('/')
+      file = file[file.length - 1]
+    } else {
+      ;[filePath, line, column] = entry.split(':')
+      fn = null
+      file = filePath.split('/')
+      file = file[file.length - 1]
+    }
+    return {
+      fn,
+      file,
+      filePath,
+      line,
+      column,
+    }
+  })
+
+  return stack
+}
+
 module.exports = function runTests(context) {
-  const _tests = []
+  const testResults = []
 
   const testSuites = {
-    suites: importedSuites,
+    suites: {},
   }
+
+  /* {{IMPORTS}} */
 
   /**
    * Run a collection of tests.
@@ -36,36 +59,44 @@ module.exports = function runTests(context) {
    * @param {string} suiteName The name of the suite, if we're running a sub-collection. This will be null for the top level tests.
    * @return {dictionary} Returns a dictionary indicating how many tests ran, and a list of the passed, failed, and crashed tests.
    */
-  function runUnitTests(specification = {}, suiteName) {
+  function runUnitTests(specification = {}, suiteName = '') {
     const { suites = {}, tests = {} } = specification
 
     Object.keys(suites).forEach(suite => {
-      runUnitTests(suites[suite], suite)
+      runUnitTests(suites[suite], suiteName ? `${suiteName} > ${suite}` : suite)
     })
 
     Object.keys(tests).forEach(name => {
       const test = tests[name]
       /** @type {array} List of failures in the currently running test. */
-      let _testFailure
+      let testFailure
       try {
         test(context, Document.fromNative(MSDocumentData.new()))
       } catch (err) {
-        _testFailure = err
+        if (err instanceof Error) {
+          testFailure = {
+            message: err.message,
+            name: err.name,
+            stack: prepareStackTrace(err.stack),
+          }
+        } else {
+          testFailure = err
+        }
       }
 
-      if (_testFailure) {
-        _tests.push({
+      if (testFailure) {
+        testResults.push({
           name,
           type: 'failed',
           suite: suiteName,
-          reason: _testFailure,
+          reason: testFailure,
         })
       } else {
-        _tests.push({ name, type: 'passed', suite: suiteName })
+        testResults.push({ name, type: 'passed', suite: suiteName })
       }
     })
 
-    return _tests
+    return testResults
   }
 
   const results = runUnitTests(testSuites)

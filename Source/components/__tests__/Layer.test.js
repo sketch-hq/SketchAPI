@@ -3,7 +3,7 @@ import { Group } from '../Group'
 import { Rectangle } from '../../Rectangle'
 
 export const tests = {
-  testName(context, document) {
+  'should set the name of the layer': (context, document) => {
     // setting an existing name
     const page = document.selectedPage
     page.name = 'This is a page'
@@ -18,7 +18,7 @@ export const tests = {
     expect(group2.name).toBe('Group')
   },
 
-  testFrame() {
+  'should set the frame of the layer': () => {
     const frame = new Rectangle(10, 10, 20, 20)
     const group = new Group({ frame })
     expect(group.frame).toEqual(frame)
@@ -27,7 +27,7 @@ export const tests = {
     expect(group.frame).toEqual(newFrame)
   },
 
-  testDuplicate(context, document) {
+  'should duplicate the layer and add it as a sibling': (context, document) => {
     const page = document.selectedPage
     const group = new Group({ parent: page })
     expect(page.layers.length).toBe(1)
@@ -36,7 +36,7 @@ export const tests = {
     expect(result.type).toBe('Group')
   },
 
-  testRemove(context, document) {
+  'should remove the layer from its parent': (context, document) => {
     const page = document.selectedPage
     const group = new Group({
       parent: page,
@@ -44,55 +44,51 @@ export const tests = {
     expect(page.layers.length).toBe(1)
     const result = group.remove()
     expect(page.layers.length).toBe(0)
-    expect(result.sketchObject).toBe(group.sketchObject)
+    expect(result).toWrapSameAs(group)
   },
 
-  testSelection(context, document) {
+  'should select the layer': (context, document) => {
     const page = document.selectedPage
     const group = new Group({
       parent: page,
     })
 
     // start with nothing selected
+    expect(group.selected).toBe(false)
     expect(page.selectedLayers.isEmpty).toBe(true)
 
     // select a layer
-    let result = group.select()
+    group.selected = true
     expect(page.selectedLayers.isEmpty).toBe(false)
-    expect(result.sketchObject).toBe(group.sketchObject)
 
     // deselect it - should go back to nothing selected
-    result = group.deselect()
+    group.selected = false
     expect(page.selectedLayers.isEmpty).toBe(true)
-    expect(result.sketchObject).toBe(group.sketchObject)
 
-    // select one layer then another - only the last should be selected
+    // select one layer then another - they both should be selected
     const group2 = new Group({
       parent: page,
+      selected: true,
     })
-    group.select()
-    group2.select()
-    expect(page.selectedLayers.length).toBe(1)
-
-    // add a second layer to the selection - both should be selected
-    result = group.addToSelection()
+    group.selected = true
+    expect(group2.selected).toBe(true)
     expect(page.selectedLayers.length).toBe(2)
-    expect(result.sketchObject).toBe(group.sketchObject)
   },
 
-  testParent(context, document) {
+  'should be able to add the layer to a group': (context, document) => {
     const page = document.selectedPage
     const group = new Group({
       parent: page,
     })
-    expect(group.parent.sketchObject).toBe(page.sketchObject)
+    expect(group.parent).toWrapSameAs(page)
+    expect(group.parent.layers[0]).toWrapSameAs(group)
 
     const group2 = new Group()
     group2.parent = page
-    expect(group2.parent.sketchObject).toBe(page.sketchObject)
+    expect(group2.parent).toWrapSameAs(page)
   },
 
-  testOrdering(context, document) {
+  'should reorder the layers': (context, document) => {
     const page = document.selectedPage
     const group1 = new Group({
       parent: page,

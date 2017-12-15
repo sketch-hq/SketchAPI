@@ -223,7 +223,7 @@ class Matcher {
 
   toWrapSameAs(expected, msg) {
     try {
-      if (this.actual.sketchObject !== expected) {
+      if (this.actual.sketchObject !== expected.sketchObject) {
         fail(this.actual, expected, msg, 'toBe')
       }
     } catch (err) {

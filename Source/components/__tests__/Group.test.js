@@ -26,7 +26,10 @@ export const tests = {
     expect(groups).toBe(1)
   },
 
-  testPageToLocalRect(context, document) {
+  'should transform a rectangle in page coords to local coords': (
+    context,
+    document
+  ) => {
     const page = document.selectedPage
     const group = new Group({
       parent: page,
@@ -37,7 +40,7 @@ export const tests = {
     expect(local).toEqual(new Rectangle(25, -25, 50, 200))
   },
 
-  testAdjustToFit(context, document) {
+  'should adjust the frame to fit its layers': (context, document) => {
     const page = document.selectedPage
     const group = new Group({
       parent: page,
@@ -48,7 +51,7 @@ export const tests = {
       frame: new Rectangle(50, 50, 50, 50),
     })
     group.adjustToFit()
-    expect(shape.parent.sketchObject).toEqual(group.sketchObject)
+    expect(shape.parent).toWrapSameAs(group)
     expect(group.frame).toEqual(new Rectangle(150, 150, 50, 50))
   },
 
@@ -57,5 +60,20 @@ export const tests = {
 
     const group = new Group({ parent: page })
     expect(group.type).toBe('Group')
+  },
+
+  'should create a group with some layers': (context, document) => {
+    const page = document.selectedPage
+
+    const group = new Group({
+      parent: page,
+      layers: [
+        {
+          type: 'Text',
+          text: 'hello world',
+        },
+      ],
+    })
+    expect(group.layers[0].type).toBe('Text')
   },
 }

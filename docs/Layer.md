@@ -20,6 +20,7 @@ A Sketch layer.
 | name       | string                  | The name of the Layer                                                                           |
 | parent     | [Group](#group)         | The group the layer is in.                                                                      |
 | frame      | [Rectangle](#rectangle) | The frame of the Layer. This is given in coordinates that are local to the parent of the layer. |
+| selected   | Boolean                 | If the layer is selected.                                                                       |
 
 ## Creating a new layer
 
@@ -53,42 +54,6 @@ layer.remove()
 ```
 
 Remove this layer from its parent.
-
-### Returns
-
-The current layer (useful if you want to chain the calls).
-
-## select
-
-```javascript
-layer.select()
-```
-
-Select the layer. This will clear the previous selection. Use `layer.addToSelection()` if you wish to preserve the existing selection.
-
-### Returns
-
-The current layer (useful if you want to chain the calls).
-
-## deselect
-
-```javascript
-layer.select()
-```
-
-Deselect the layer. Any other layers that were previously selected will remain selected.
-
-### Returns
-
-The current layer (useful if you want to chain the calls).
-
-## addToSelection
-
-```javascript
-layer.addToSelection()
-```
-
-Add this layer to the selected layers. Any other layers that were previously selected will remain selected.
 
 ### Returns
 

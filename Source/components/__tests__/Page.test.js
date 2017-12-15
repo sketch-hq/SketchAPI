@@ -1,20 +1,25 @@
 /* globals expect */
 import { Group } from '../Group'
+import { Page } from '../Page'
 
 export const tests = {
-  testSelectedLayers(context, document) {
-    const selection = document.selectedLayers
+  'should return a Selection with the selected layers of the page': (
+    context,
+    document
+  ) => {
+    const page = document.selectedPage
+    const selection = page.selectedLayers
     expect(selection.isEmpty).toBe(true)
 
-    const page = document.selectedPage
-    const group = new Group({ parent: page, name: 'Test' })
-    group.select()
+    const group = new Group({ parent: page, name: 'Test', selected: true })
 
+    expect(group.selected).toBe(true)
     expect(selection.isEmpty).toBe(false)
   },
 
-  testIsPage(context, document) {
-    const page = document.selectedPage
+  'should create a page': (context, document) => {
+    const page = new Page({ parent: document })
     expect(page.type).toBe('Page')
+    expect(document.pages[1]).toWrapSameAs(page)
   },
 }

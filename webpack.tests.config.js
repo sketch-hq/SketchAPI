@@ -19,6 +19,7 @@ normalConfig.output = {
   filename: 'SketchAPI.tests.js',
   library: 'exports',
   path: path.resolve(__dirname, './.test-runner.sketchplugin/Contents/Sketch'),
+  devtoolModuleFilenameTemplate: '[absolute-resource-path]',
 }
 
 normalConfig.plugins.push(

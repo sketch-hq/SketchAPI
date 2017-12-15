@@ -5,6 +5,7 @@ import { Rectangle } from '../Rectangle'
 import { Types } from '../enums'
 import { Factory } from '../Factory'
 import { DEFAULT_EXPORT_OPTIONS } from './Layer'
+import { wrapNativeObject, wrapObject } from '../wrapNativeObject'
 
 /**
  * Represents a Page in a Sketch document.
@@ -36,46 +37,6 @@ export class Page extends Group {
   }
 
   /**
-   * Export this page, using the options supplied.
-   *
-   * @discussion
-   *
-   * You can specify a lot of different options for the exporting.
-   *
-   * ### General Options
-   *
-   * - use-id-for-name : normally the exported files are given the same names as the layers they represent, but if this options is true, then the layer ids are used instead; defaults to false.
-   * - output : this is the path of the folder where all exported files are placed; defaults to "~/Documents/Sketch Exports"
-   * - overwriting : if true, the exporter will overwrite any existing files with new ones; defaults to false.
-   * - trimmed: if true, any transparent space around the exported image will be trimmed; defaults to false.
-   * - scales: this should be a list of numbers; it will determine the sizes at which the layers are exported; defaults to "1"
-   * - formats: this should be a list of one or more of "png", "jpg", "svg", and "pdf"; defaults to "png" (see discussion below)
-   *
-   * ### SVG options
-   * - compact : if exporting as SVG, this option makes the output more compact; defaults to false.
-   * - include-namespaces : if exporting as SVG, this option includes extra attributes; defaults to false.
-   *
-   * ### PNG options
-   * - save-for-web : if exporting a PNG, this option removes metadata such as the colour profile from the exported file; defaults to false.
-   *
-   * ### JPG options
-   * - compression : if exporting a JPG, this option determines the level of compression, with 0 being the minimum, 1.0 the maximum; defaults to 1.0
-   * - progressive : if exporting a JPG, this option makes it progressive; defaults to false.
-   * - group-contents-only : false,
-   *
-   *
-   * @param {dictionary} options Options indicating which sizes and formats to use, etc.
-   */
-  export(options) {
-    const merged = { ...DEFAULT_EXPORT_OPTIONS, ...options }
-    const exporter = MSSelfContainedHighLevelExporter.alloc().initWithOptions(
-      merged
-    )
-    exporter.exportPage(this.sketchObject)
-    return this
-  }
-
-  /**
    * Export this layer (and the ones below it), using the options supplied.
    *
    * @param {dictionary} options Options indicating which layers to export, which sizes and formats to use, etc.
@@ -88,8 +49,99 @@ export class Page extends Group {
     exporter.exportLayers(this.sketchObject.artboards())
     return this
   }
+
+  /* OVERRIDES */
+  export(options) {
+    const merged = { ...DEFAULT_EXPORT_OPTIONS, ...options }
+    const exporter = MSSelfContainedHighLevelExporter.alloc().initWithOptions(
+      merged
+    )
+    exporter.exportPage(this.sketchObject)
+    return this
+  }
+
+  // eslint-disable-next-line
+  adjustToFit() {
+    // obviously doesn't do anything
+  }
+
+  duplicate() {
+    const object = this._object
+    const duplicate = object.copy()
+    object.documentData().insertPage_afterPage([duplicate], object)
+    return wrapNativeObject(duplicate)
+  }
+
+  remove() {
+    this._object
+      .documentData()
+      .removePages_detachInstances([this._object], true)
+    return this
+  }
+
+  moveToFront() {
+    // doesn't do anything
+    return this
+  }
+
+  moveToBack() {
+    // doesn't do anything
+    return this
+  }
+
+  moveForward() {
+    // doesn't do anything
+    return this
+  }
+
+  moveBackward() {
+    // doesn't do anything
+    return this
+  }
 }
 
 Page.type = Types.Page
 Page[DefinedPropertiesKey] = { ...Group[DefinedPropertiesKey] }
 Factory.registerClass(Page, MSPage)
+
+// override setting up the parent as it's needs to a be a Document
+Page.define('parent', {
+  exportable: false,
+  get() {
+    return wrapNativeObject(this._object.documentData())
+  },
+  set(document) {
+    document = wrapObject(document) // eslint-disable-line
+
+    if (this._object.documentData()) {
+      this._object
+        .documentData()
+        .removePages_detachInstances([this._object], false)
+    }
+
+    document._object.addPage(this._object)
+  },
+})
+
+Page.define('index', {
+  exportable: false,
+  get() {
+    const ourLayer = this._object
+    return parseInt(ourLayer.parentGroup().indexOfLayer_(ourLayer), 10)
+  },
+})
+
+Page.define('selected', {
+  get() {
+    return this._object.documentData().currentPage() == this._object
+  },
+
+  set(value) {
+    if (value) {
+      this._object.documentData().setCurrentPage(this._object)
+    } else {
+      // let's just select the first page, not sure what else we could do
+      this._object.documentData().setCurrentPageIndex(0)
+    }
+  },
+})

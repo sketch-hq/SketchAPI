@@ -16,13 +16,13 @@ function madeupContextForTempScript(context) {
 }
 
 export const tests = {
-  nonExistingSettingsShouldReturnNull(context) {
+  'non existing settings should return null': context => {
     expect(
       settingForKey(madeupContextForTempScript(context), 'non-existing-key')
     ).toBe(null)
   },
 
-  shouldSetABoolean(context) {
+  'should set a boolean': context => {
     setSettingForKey(madeupContextForTempScript(context), 'false-key', false)
     expect(
       settingForKey(madeupContextForTempScript(context), 'false-key')
@@ -34,14 +34,14 @@ export const tests = {
     )
   },
 
-  shouldSetAString(context) {
+  'should set a string': context => {
     setSettingForKey(madeupContextForTempScript(context), 'string-key', 'test')
     expect(
       settingForKey(madeupContextForTempScript(context), 'string-key')
     ).toBe('test')
   },
 
-  shouldSetUndefined(context) {
+  'should set undefined': context => {
     setSettingForKey(
       madeupContextForTempScript(context),
       'undefined-key',
@@ -52,7 +52,7 @@ export const tests = {
     ).toBe(undefined)
   },
 
-  shouldSetObject(context) {
+  'should set object': context => {
     setSettingForKey(context, 'object-key', { a: 1 })
     expect(settingForKey(context, 'object-key')).toEqual({ a: 1 })
   },
