@@ -20,78 +20,6 @@ export const DEFAULT_EXPORT_OPTIONS = {
  */
 export class Layer extends WrappedObject {
   /**
-   * Is this a page?
-   *
-   * All Layer objects respond to this method, but only pages return true.
-   *
-   * @return {bool} true for instances of Group, false for any other layer type.
-   */
-  get isPage() {
-    log('isPage is deprecated, check for type instead')
-    return false
-  }
-
-  /**
-   * Is this an artboard?
-   *
-   * All Layer objects respond to this method, but only Artboard objects return true.
-   *
-   * @return true for instances of Artboard, false for any other layer type.
-   */
-  get isArtboard() {
-    log('isArtboard is deprecated, check for type instead')
-    return false
-  }
-
-  /**
-   * Is this a group?
-   *
-   * All Layer objects respond to this method, but only Groups or things that inherit from groups return true.
-   *
-   * @return {bool} true for instances of Group, false for any other layer type.
-   */
-  get isGroup() {
-    log('isGroup is deprecated, check for type instead')
-    return false
-  }
-
-  /**
-   * Is this a text layer?
-   *
-   * All Layer objects respond to this method, but only text layers return true.
-   *
-   * @return {bool} true for instances of Group, false for any other layer type.
-   */
-  get isText() {
-    log('isText is deprecated, check for type instead')
-    return false
-  }
-
-  /**
-   * Is this a shape layer?
-   *
-   * All Layer objects respond to this method, but only shape layers (rectangles, ovals, paths etc) return true.
-   *
-   * @return {bool} true for instances of Group, false for any other layer type.
-   */
-  get isShape() {
-    log('isShape is deprecated, check for type instead')
-    return false
-  }
-
-  /**
-   * Is this an image layer?
-   *
-   * All Layer objects respond to this method, but only image layers return true.
-   *
-   * @return {bool} true for instances of Group, false for any other layer type.
-   */
-  get isImage() {
-    log('isImage is deprecated, check for type instead')
-    return false
-  }
-
-  /**
    * Duplicate this layer.
    * A new identical layer will be inserted into the parent of this layer.
    *
@@ -113,11 +41,6 @@ export class Layer extends WrappedObject {
       parent.removeLayer_(this._object)
     }
     return this
-  }
-
-  get container() {
-    log('`container` is deprecated, use `parent` instead')
-    return this.parent
   }
 
   /**

@@ -2,7 +2,7 @@
 import { Rectangle } from '../Rectangle'
 
 export const tests = {
-  testConstructor() {
+  'should create a rectangle': () => {
     const r = new Rectangle(1, 2, 3, 4)
     expect(r.x).toBe(1)
     expect(r.y).toBe(2)
@@ -10,7 +10,7 @@ export const tests = {
     expect(r.height).toBe(4)
   },
 
-  testOffset() {
+  'should offset a rectangle': () => {
     const r = new Rectangle(1, 2, 3, 4)
     r.offset(10, 10)
     expect(r.x).toBe(11)
@@ -19,7 +19,7 @@ export const tests = {
     expect(r.height).toBe(4)
   },
 
-  testCGRect() {
+  'should return a CGRect': () => {
     const r = new Rectangle(1, 2, 3, 4)
     const c = r.asCGRect()
     expect(parseInt(c.origin.x, 10)).toBe(1)

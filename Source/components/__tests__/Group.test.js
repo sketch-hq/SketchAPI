@@ -2,20 +2,23 @@
 
 import { Group } from '../Group'
 import { Text } from '../Text'
-import { Artboard } from '../Artboard'
+import { Shape } from '../Shape'
 import { Rectangle } from '../../Rectangle'
 
 export const tests = {
-  testIterate(context, document) {
+  'should return the layers and can iterate through them': (
+    context,
+    document
+  ) => {
     const page = document.selectedPage
     const group = new Group({ parent: page })
     const text = new Text({ parent: page }) // eslint-disable-line
 
     let iterations = 0
     let groups = 0
-    page.iterate(layer => {
+    page.layers.forEach(layer => {
       iterations += 1
-      if (layer.sketchObject == group.sketchObject) {
+      if (layer.isEqual(group)) {
         groups += 1
       }
     })
@@ -23,57 +26,36 @@ export const tests = {
     expect(groups).toBe(1)
   },
 
-  testIterateWithFilter(context, document) {
-    const page = document.selectedPage
-    const group = page.newGroup()
-    page.newText()
-
-    let iterations = 0
-    let groups = 0
-    page.iterateWithFilter('isGroup', layer => {
-      iterations += 1
-      if (layer.sketchObject == group.sketchObject) {
-        groups += 1
-      }
-    })
-    expect(iterations).toBe(1)
-    expect(groups).toBe(1)
-  },
-
   testPageToLocalRect(context, document) {
     const page = document.selectedPage
-    const group = page.newGroup({
+    const group = new Group({
+      parent: page,
       frame: new Rectangle(100, 100, 100, 100),
     })
+
     const local = group.pageRectToLocalRect(new Rectangle(125, 75, 50, 200))
     expect(local).toEqual(new Rectangle(25, -25, 50, 200))
   },
 
   testAdjustToFit(context, document) {
     const page = document.selectedPage
-    const group = page.newGroup({
+    const group = new Group({
+      parent: page,
       frame: new Rectangle(100, 100, 100, 100),
     })
-    group.newShape({ frame: new Rectangle(50, 50, 50, 50) })
+    const shape = new Shape({
+      parent: group,
+      frame: new Rectangle(50, 50, 50, 50),
+    })
     group.adjustToFit()
+    expect(shape.parent.sketchObject).toEqual(group.sketchObject)
     expect(group.frame).toEqual(new Rectangle(150, 150, 50, 50))
   },
 
-  testIsGroup(context, document) {
+  'should create a group': (context, document) => {
     const page = document.selectedPage
-    const group = page.newGroup()
-    const text = page.newText()
-    const artboard = page.newArtboard()
-    expect(group.isGroup).toBe(true)
-    expect(text.isGroup).toBe(false)
-    expect(page.isGroup).toBe(true) // pages are also groups
-    expect(artboard.isGroup).toBe(true) // artboards are also groups
 
-    const group2 = new Group({ parent: page })
-    const text2 = new Text({ parent: page })
-    const artboard2 = new Artboard({ parent: page })
-    expect(group2.isGroup).toBe(true)
-    expect(text2.isGroup).toBe(false)
-    expect(artboard2.isGroup).toBe(true) // artboards are also groups
+    const group = new Group({ parent: page })
+    expect(group.type).toBe('Group')
   },
 }

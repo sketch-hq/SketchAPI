@@ -1,78 +1,108 @@
 /* globals expect */
-
+import { Group } from '../Group'
 import { Rectangle } from '../../Rectangle'
 
 export const tests = {
   testName(context, document) {
+    // setting an existing name
     const page = document.selectedPage
     page.name = 'This is a page'
     expect(page.name).toBe('This is a page')
-    const group = page.newGroup({ name: 'blah' })
+
+    // setting a name when creating a component
+    const group = new Group({ name: 'blah' })
     expect(group.name).toBe('blah')
-    const group2 = page.newGroup()
+
+    // default name
+    const group2 = new Group()
     expect(group2.name).toBe('Group')
   },
 
-  testFrame(context, document) {
-    const page = document.selectedPage
+  testFrame() {
     const frame = new Rectangle(10, 10, 20, 20)
-    const group = page.newGroup({ frame })
+    const group = new Group({ frame })
     expect(group.frame).toEqual(frame)
+    const newFrame = new Rectangle(10, 10, 20, 20)
+    group.frame = newFrame
+    expect(group.frame).toEqual(newFrame)
   },
 
   testDuplicate(context, document) {
     const page = document.selectedPage
-    const group = page.newGroup()
-    expect(page.sketchObject.layers().count()).toBe(1)
-    group.duplicate()
-    expect(page.sketchObject.layers().count()).toBe(2)
+    const group = new Group({ parent: page })
+    expect(page.layers.length).toBe(1)
+    const result = group.duplicate()
+    expect(page.layers.length).toBe(2)
+    expect(result.type).toBe('Group')
   },
 
   testRemove(context, document) {
     const page = document.selectedPage
-    const group = page.newGroup()
-    expect(page.sketchObject.layers().count()).toBe(1)
-    group.remove()
-    expect(page.sketchObject.layers().count()).toBe(0)
+    const group = new Group({
+      parent: page,
+    })
+    expect(page.layers.length).toBe(1)
+    const result = group.remove()
+    expect(page.layers.length).toBe(0)
+    expect(result.sketchObject).toBe(group.sketchObject)
   },
 
   testSelection(context, document) {
     const page = document.selectedPage
-    const group = page.newGroup()
+    const group = new Group({
+      parent: page,
+    })
 
     // start with nothing selected
     expect(page.selectedLayers.isEmpty).toBe(true)
 
     // select a layer
-    group.select()
+    let result = group.select()
     expect(page.selectedLayers.isEmpty).toBe(false)
+    expect(result.sketchObject).toBe(group.sketchObject)
 
     // deselect it - should go back to nothing selected
-    group.deselect()
+    result = group.deselect()
     expect(page.selectedLayers.isEmpty).toBe(true)
+    expect(result.sketchObject).toBe(group.sketchObject)
 
     // select one layer then another - only the last should be selected
-    const group2 = page.newGroup()
+    const group2 = new Group({
+      parent: page,
+    })
     group.select()
     group2.select()
     expect(page.selectedLayers.length).toBe(1)
 
     // add a second layer to the selection - both should be selected
-    group.addToSelection()
+    result = group.addToSelection()
     expect(page.selectedLayers.length).toBe(2)
+    expect(result.sketchObject).toBe(group.sketchObject)
   },
 
-  testContainer(context, document) {
+  testParent(context, document) {
     const page = document.selectedPage
-    const group = page.newGroup()
-    expect(group.container.sketchObject).toBe(page.sketchObject)
+    const group = new Group({
+      parent: page,
+    })
+    expect(group.parent.sketchObject).toBe(page.sketchObject)
+
+    const group2 = new Group()
+    group2.parent = page
+    expect(group2.parent.sketchObject).toBe(page.sketchObject)
   },
 
   testOrdering(context, document) {
     const page = document.selectedPage
-    const group1 = page.newGroup()
-    const group2 = page.newGroup()
-    const group3 = page.newGroup()
+    const group1 = new Group({
+      parent: page,
+    })
+    const group2 = new Group({
+      parent: page,
+    })
+    const group3 = new Group({
+      parent: page,
+    })
     expect(group1.index).toBe(0)
     expect(group2.index).toBe(1)
     expect(group3.index).toBe(2)

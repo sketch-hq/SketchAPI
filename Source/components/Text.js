@@ -3,7 +3,6 @@ import { Layer } from './Layer'
 import { Rectangle } from '../Rectangle'
 import { Types } from '../enums'
 import { Factory } from '../Factory'
-import { isNativeObject } from '../utils'
 
 const TextBehaviour = {
   flexibleWidth: 0, // Width is adjusted to fit the content.
@@ -34,13 +33,6 @@ export class Text extends Layer {
    * @param {MSTextLayer} text The underlying model object from Sketch.
    */
   constructor(text = {}) {
-    if (isNativeObject(text)) {
-      log(
-        'using a constructor to box a native object is deprecated. Use `fromNative` instead'
-      )
-      return Text.fromNative(text)
-    }
-
     if (!text.sketchObject) {
       // eslint-disable-next-line no-param-reassign
       text.sketchObject = Factory.createNative(Text)
@@ -51,17 +43,6 @@ export class Text extends Layer {
     super(text)
 
     this.adjustToFit()
-  }
-
-  /**
-   * Is this a text layer?
-   *
-   * All Layer objects respond to this method, but only text layers return true.
-   *
-   * @return {bool} true for instances of Group, false for any other layer type.
-   */
-  get isText() {
-    return true
   }
 
   /**
@@ -137,27 +118,6 @@ export class Text extends Layer {
     }
 
     return fragments
-  }
-
-  /**
-   * Set whether to use constant baseline line spacing mode.
-   *
-   * @param {bool} value If true, we use constant baseline spacing mode. This is the default for new text layers in Sketch. If false, we use the legacy line spacing mode.
-   */
-  set useConstantBaselines(value) {
-    log(
-      '`useConstantBaselines` is deprecated. Use `lineSpacing = Text.LineSpacing.constantBaseline` instead'
-    )
-    const lineSpacingBehaviour = value
-      ? TextLineSpacingBehaviour.constantBaseline
-      : TextLineSpacingBehaviour.variable
-    const textLayer = this.sketchObject
-    const initialBaselineOffset = textLayer.firstBaselineOffset()
-    textLayer.lineSpacingBehaviour = lineSpacingBehaviour
-    const baselineOffset = textLayer.firstBaselineOffset()
-    const rect = this.frame
-    rect.y -= baselineOffset - initialBaselineOffset
-    this.frame = rect
   }
 }
 

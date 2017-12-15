@@ -4,24 +4,20 @@ import { Text } from '../Text'
 import { Rectangle } from '../../Rectangle'
 
 export const tests = {
-  testIsText(context, document) {
-    const page = document.selectedPage
-    const text = page.newText()
-    expect(text.isText).toBe(true)
-    expect(page.isText).toBe(false)
+  testIsText() {
+    const text = new Text()
+    expect(text.type).toBe('Text')
   },
 
-  testText(context, document) {
-    const page = document.selectedPage
-    const text = page.newText({ text: 'blah' })
+  testText() {
+    const text = new Text({ text: 'blah' })
     expect(text.text).toBe('blah')
     text.text = 'doodah'
     expect(text.text).toBe('doodah')
   },
 
-  testAdjustToFit(context, document) {
-    const page = document.selectedPage
-    const text = page.newText({
+  testAdjustToFit() {
+    const text = new Text({
       text: 'blah',
       frame: new Rectangle(10, 10, 1000, 1000),
     })
@@ -29,9 +25,8 @@ export const tests = {
     expect(text.frame).toEqual(new Rectangle(10, 10, 23, 14))
   },
 
-  testAlignment(context, document) {
-    const page = document.selectedPage
-    const text = page.newText({
+  testAlignment() {
+    const text = new Text({
       text: 'blah',
       frame: new Rectangle(10, 10, 1000, 1000),
     })

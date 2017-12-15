@@ -3,7 +3,6 @@ import { Layer } from './Layer'
 import { Rectangle } from '../Rectangle'
 import { Types } from '../enums'
 import { Factory } from '../Factory'
-import { isNativeObject } from '../utils'
 
 /**
  * Represents an image layer.
@@ -15,13 +14,6 @@ export class Image extends Layer {
    * @param {MSBitmapLayer} layer The underlying model object from Sketch.
    */
   constructor(layer = {}) {
-    if (isNativeObject(layer)) {
-      log(
-        'using a constructor to box a native object is deprecated. Use `fromNative` instead'
-      )
-      return Image.fromNative(layer)
-    }
-
     if (!layer.sketchObject) {
       // eslint-disable-next-line no-param-reassign
       layer.sketchObject = Factory.createNative(Image)
@@ -30,29 +22,6 @@ export class Image extends Layer {
     }
 
     super(layer)
-  }
-
-  /**
-   * Is this an image layer?
-   *
-   * All Layer objects respond to this method, but only image layers return true.
-   *
-   * @return {bool} true for instances of Image, false for any other layer type.
-   */
-  get isImage() {
-    return true
-  }
-
-  /**
-   * Set the layer's image to the contents of the image file at a given URL.
-   *
-   * @param {NSURL} url The location of the image to use.
-   */
-  set imageURL(url) {
-    log('`imageURL` is deprecated. Use `image` instead')
-    const image = NSImage.alloc().initWithContentsOfURL_(url)
-    const imageData = MSImageData.alloc().initWithImage(image)
-    this._object.setImage_(imageData)
   }
 }
 

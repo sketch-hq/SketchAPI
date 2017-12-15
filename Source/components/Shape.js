@@ -16,13 +16,6 @@ export class Shape extends Layer {
    * @param {MSShapeGroup} shape The underlying model object from Sketch.
    */
   constructor(shape = {}) {
-    if (isNativeObject(shape)) {
-      log(
-        'using a constructor to box a native object is deprecated. Use `fromNative` instead'
-      )
-      return Shape.fromNative(shape)
-    }
-
     if (!shape.sketchObject) {
       // eslint-disable-next-line no-param-reassign
       shape.sketchObject = Factory.createNative(Shape)
@@ -31,17 +24,6 @@ export class Shape extends Layer {
     }
 
     super(shape)
-  }
-
-  /**
-   * Is this a shape layer?
-   *
-   * All Layer objects respond to this method, but only shape layers (rectangles, ovals, paths etc) return true.
-   *
-   * @return {bool} true for instances of Group, false for any other layer type.
-   */
-  get isShape() {
-    return true
   }
 }
 

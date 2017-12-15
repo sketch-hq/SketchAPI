@@ -5,7 +5,6 @@ import { Rectangle } from '../Rectangle'
 import { Types } from '../enums'
 import { Factory } from '../Factory'
 import { DEFAULT_EXPORT_OPTIONS } from './Layer'
-import { isNativeObject } from '../utils'
 
 /**
  * Represents a Page in a Sketch document.
@@ -17,13 +16,6 @@ export class Page extends Group {
    * @param {MSPage} page The underlying model object from Sketch.
    */
   constructor(page = {}) {
-    if (isNativeObject(page)) {
-      log(
-        'using a constructor to box a native object is deprecated. Use `fromNative` instead'
-      )
-      return Page.fromNative(page)
-    }
-
     if (!page.sketchObject) {
       // eslint-disable-next-line no-param-reassign
       page.sketchObject = Factory.createNative(Page)
@@ -41,33 +33,6 @@ export class Page extends Group {
    */
   get selectedLayers() {
     return new Selection(this)
-  }
-
-  /**
-   * Is this a page?
-   *
-   * All Layer objects respond to this method, but only pages return true.
-   *
-   * @return {bool} true for instances of Group, false for any other layer type.
-   */
-  get isPage() {
-    return true
-  }
-
-  /**
-   * Returns a newly created artboard, which has been added to this page,
-   * and sets it up using the supplied properties.
-   *
-   * @param properties {dictionary} Properties to apply to the artboard.
-   * @return {Artboard} the new artboard.
-   */
-  newArtboard(properties = {}) {
-    log(
-      '`newArtboard` is deprecated. Use `new Artboard({parent: myGroup})` instead'
-    )
-    const frame = this._frameForLayerWithProperties(properties)
-    const newLayer = MSArtboardGroup.alloc().initWithFrame_(frame.asCGRect())
-    return this._addWrappedLayerWithProperties(newLayer, properties, 'Artboard')
   }
 
   /**

@@ -63,7 +63,7 @@ Return a [Selection](#selection) object.
 ## Find a layer by Id
 
 ```javascript
-var layer = document.layerWithID(layerId)
+var layer = document.getLayerWithID(layerId)
 if (layer) {
   // do something
 }
@@ -82,7 +82,7 @@ Return a [Layer](#layer) object or `undefined` if it's not found.
 ## Find a layer by name
 
 ```javascript
-var layer = document.layerNamed(name)
+var layer = document.getLayerNamed(name)
 if (layer) {
   // do something
 }

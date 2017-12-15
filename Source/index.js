@@ -1,5 +1,3 @@
-import { Application } from './Application'
-
 import { DataSupplier } from './api/DataSupplier'
 import * as UI from './api/UI'
 import * as Settings from './api/Settings'
@@ -18,15 +16,7 @@ import { Page } from './components/Page'
 import { Types } from './enums'
 import { wrapObject } from './wrapNativeObject'
 
-/**
- * Return a function that captures the context.
- * When called, this function will initialise the API
- * and return an Application object that provides access
- * to all API functions.
- */
-
-// remove this when we choose to drop support for `context.api()`
-const api = context => () => new Application(context)
+const api = {}
 
 api.Document = Document
 api.Group = Group

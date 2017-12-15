@@ -1,10 +1,9 @@
 /* globals expect */
+import { Shape } from '../Shape'
 
 export const tests = {
-  testIsShape(context, document) {
-    const page = document.selectedPage
-    const shape = page.newShape()
-    expect(shape.isShape).toBe(true)
-    expect(page.isShape).toBe(false)
+  testIsShape() {
+    const shape = new Shape()
+    expect(shape.type).toBe('Shape')
   },
 }

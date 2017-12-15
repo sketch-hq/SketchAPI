@@ -1,5 +1,5 @@
 import { WrappedObject, DefinedPropertiesKey } from './WrappedObject'
-import { isNativeObject, toArray } from './utils'
+import { toArray } from './utils'
 
 export const FillType = {
   color: 0, // A solid fill/border.
@@ -25,13 +25,6 @@ export class Style extends WrappedObject {
    * @param {MSStyle} style The underlying model object from Sketch.
    */
   constructor(style = {}) {
-    if (isNativeObject(style)) {
-      log(
-        'using a constructor to box a native object is deprecated. Use `fromNative` instead'
-      )
-      return Style.fromNative(style)
-    }
-
     if (!style.sketchObject) {
       // eslint-disable-next-line no-param-reassign
       style.sketchObject = MSDefaultStyle.defaultStyle()

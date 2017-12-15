@@ -1,12 +1,16 @@
 /* globals expect */
+import { Group } from '../components/Group'
+import { Text } from '../components/Text'
 
 export const tests = {
-  testEmpty(context, document) {
+  'an empty document should have an empty selection': (context, document) => {
     expect(document.selectedLayers.isEmpty).toBe(true)
   },
 
-  testClear(context, document) {
-    const group = document.selectedPage.newGroup()
+  'should clear the selection': (context, document) => {
+    const group = new Group({
+      parent: document.selectedPage,
+    })
     group.select()
     const selection = document.selectedLayers
     expect(selection.isEmpty).toBe(false)
@@ -14,69 +18,26 @@ export const tests = {
     expect(selection.isEmpty).toBe(true)
   },
 
-  testIterate(context, document) {
-    const group = document.selectedPage.newGroup()
-    const text = document.selectedPage.newText()
+  'should be able to go through the layers': (context, document) => {
+    const group = new Group({
+      parent: document.selectedPage,
+    })
+    const text = new Text({
+      parent: document.selectedPage,
+    })
     text.select()
     group.addToSelection()
     const selection = document.selectedLayers
 
     let iterations = 0
     let groups = 0
-    selection.iterate(layer => {
+    selection.layers.forEach(layer => {
       iterations += 1
-      if (layer.sketchObject == group.sketchObject) {
+      if (layer.isEqual(group)) {
         groups += 1
       }
     })
     expect(iterations).toBe(2)
     expect(groups).toBe(1)
-  },
-
-  testIterateWithFilter(context, document) {
-    const group = document.selectedPage.newGroup()
-    const text = document.selectedPage.newText()
-    text.select()
-    group.addToSelection()
-    const selection = document.selectedLayers
-
-    let iterations = 0
-    let groups = 0
-    selection.iterateWithFilter('isGroup', layer => {
-      iterations += 1
-      if (layer.sketchObject == group.sketchObject) {
-        groups += 1
-      }
-    })
-    expect(iterations).toBe(1)
-    expect(groups).toBe(1)
-  },
-
-  testIterateThenClear(context, document) {
-    const group = document.selectedPage.newGroup()
-    group.select()
-    const selection = document.selectedLayers
-
-    let iterations = 0
-    expect(selection.isEmpty).toBe(false)
-    selection.iterateThenClear(() => {
-      iterations += 1
-    })
-    expect(iterations).toBe(1)
-    expect(selection.isEmpty).toBe(true)
-  },
-
-  testIterateWithFilterThenClear(context, document) {
-    const group = document.selectedPage.newGroup()
-    group.select()
-    const selection = document.selectedLayers
-
-    let iterations = 0
-    expect(selection.isEmpty).toBe(false)
-    selection.iterateWithFilterThenClear('isText', () => {
-      iterations += 1
-    })
-    expect(iterations).toBe(0)
-    expect(selection.isEmpty).toBe(true)
   },
 }
