@@ -49,10 +49,10 @@ export class Style extends WrappedObject {
       // eslint-disable-next-line
       return (Math.round(v * 255) | (1 << 8)).toString(16).slice(1)
     }
-    const red = toHex(value.red)
-    const green = toHex(value.green)
-    const blue = toHex(value.blue)
-    const alpha = toHex(value.alpha)
+    const red = toHex(value.red())
+    const green = toHex(value.green())
+    const blue = toHex(value.blue())
+    const alpha = toHex(value.alpha())
     return `#${red}${green}${blue}${alpha}`
   }
 }
@@ -99,7 +99,7 @@ Style.define('borders', {
     const borders = toArray(this._object.borders())
     return borders.map(f => ({
       color: Style.colorToString(f.color()),
-      fill:
+      fillType:
         Object.keys(FillType).find(key => FillType[key] === f.fillType()) ||
         f.fillType(),
       position:

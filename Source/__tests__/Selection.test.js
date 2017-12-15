@@ -18,6 +18,23 @@ export const tests = {
     expect(selection.isEmpty).toBe(true)
   },
 
+  'should return the length without wrapping all the object': (
+    context,
+    document
+  ) => {
+    const group = new Group({
+      parent: document.selectedPage,
+    })
+    const text = new Text({
+      parent: document.selectedPage,
+    })
+    text.select()
+    group.addToSelection()
+    const selection = document.selectedLayers
+
+    expect(selection.length).toBe(2)
+  },
+
   'should be able to go through the layers': (context, document) => {
     const group = new Group({
       parent: document.selectedPage,
