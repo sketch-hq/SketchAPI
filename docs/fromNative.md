@@ -5,7 +5,7 @@ section: Utils
 ---
 
 ```javascript
-var document = SketchAPI.fromNative(context.document)
+var document = sketch.fromNative(context.document)
 ```
 
 ```javascript

@@ -6,7 +6,7 @@ hidden: true
 ---
 
 ```js
-var DataSupplier = SketchAPI.DataSupplier
+var DataSupplier = sketch.DataSupplier
 
 var dataSupplier = new DataSupplier(context)
 ```
@@ -28,7 +28,7 @@ Return a DataSupplier object with the following methods:
 ```js
 // onStartup would the handler for the `Startup` action defined in the manifest.json
 export function onStartup(context) {
-  var dataSupplier = new SketchAPI.DataSupplier(context)
+  var dataSupplier = new sketch.DataSupplier(context)
 
   dataSupplier.registerStaticSupplier('public.text', 'My Custom Data', [
     'foo',
@@ -53,7 +53,7 @@ Register some data with a name.
 ```js
 // onStartup would be the handler for the `Startup` action defined in the manifest.json
 export function onStartup(context) {
-  var dataSupplier = new SketchAPI.DataSupplier(context)
+  var dataSupplier = new sketch.DataSupplier(context)
 
   dataSupplier.registerPluginDataSupplier(
     'public.text',
@@ -80,7 +80,7 @@ Register some data with a name and a key.
 export function onSupplyKeyNeeded(context) {
   var count = context.data.count
 
-  var dataSupplier = new SketchAPI.DataSupplier(context)
+  var dataSupplier = new sketch.DataSupplier(context)
 
   var data = Array.from(Array(count)).map(i => 'foo')
 
@@ -101,7 +101,7 @@ When the plugin providing the dynamic data has finished generating the data, it 
 ```js
 // onShutdown would be the handler for the `Shutdown` action defined in the manifest.json
 export function onShutdown(context) {
-  var dataSupplier = new SketchAPI.DataSupplier(context)
+  var dataSupplier = new sketch.DataSupplier(context)
 
   dataSupplier.deregisterDataSuppliers()
 }

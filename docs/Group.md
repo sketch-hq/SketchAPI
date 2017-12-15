@@ -5,7 +5,7 @@ section: components
 ---
 
 ```javascript
-var Group = SketchAPI.Group
+var Group = sketch.Group
 ```
 
 ```javascript
@@ -33,7 +33,7 @@ var group = new Group({
   name: 'my name',
   layers: [
     {
-      type: SketchAPI.Types.Text,
+      type: sketch.Types.Text,
       text: 'Hello world',
     },
   ],

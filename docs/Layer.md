@@ -5,7 +5,7 @@ section: components
 ---
 
 ```javascript
-var Layer = SketchAPI.Layer
+var Layer = sketch.Layer
 ```
 
 ```javascript

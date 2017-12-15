@@ -5,7 +5,7 @@ section: components
 ---
 
 ```javascript
-var Artboard = SketchAPI.Artboard
+var Artboard = sketch.Artboard
 ```
 
 ```javascript

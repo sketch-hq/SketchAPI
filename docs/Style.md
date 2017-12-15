@@ -5,7 +5,7 @@ section: Utils
 ---
 
 ```javascript
-var Style = SketchAPI.Style
+var Style = sketch.Style
 ```
 
 ```javascript
@@ -29,16 +29,16 @@ shape.style.fills = [
 
 A utility class to represent the style of a shape.
 
-| Properties          | type                              | Description                                      |
-| ------------------- | --------------------------------- | ------------------------------------------------ |
-| fills               | Object[]                          | The fills of a shape.                            |
-| fills[x].color      | String                            | A rgba hex-string (`#000000ff` is opaque black). |
-| fills[x].fillType   | [FillType](#filltype)             | The type of the fill.                            |
-| borders             | Object[]                          | The borders of a shape.                          |
-| borders[x].color    | String                            | A rgba hex-string (`#000000ff` is opaque black). |
-| borders[x].fillType | [FillType](#filltype)             | The type of the fill of the border.              |
-| borders[x].position | [BorderPosition](#borderposition) | The position of the border.                      |
-| borders[x].width    | Number                            | The size of the border.                          |
+| Properties           | type                              | Description                                      |
+| -------------------- | --------------------------------- | ------------------------------------------------ |
+| fills                | Object[]                          | The fills of a shape.                            |
+| fills[x].color       | String                            | A rgba hex-string (`#000000ff` is opaque black). |
+| fills[x].fillType    | [FillType](#filltype)             | The type of the fill.                            |
+| borders              | Object[]                          | The borders of a shape.                          |
+| borders[x].color     | String                            | A rgba hex-string (`#000000ff` is opaque black). |
+| borders[x].fillType  | [FillType](#filltype)             | The type of the fill of the border.              |
+| borders[x].position  | [BorderPosition](#borderposition) | The position of the border.                      |
+| borders[x].thickness | Number                            | The thickness of the border.                     |
 
 ## FillType
 

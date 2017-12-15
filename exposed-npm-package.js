@@ -1,4 +1,4 @@
-/* globals SketchAPI */
+/* globals sketch */
 
 /**
  * We publish this file as a package (`sketch-api`) so that:
@@ -6,4 +6,4 @@
  *   - we can potentially publish types (TypeScript and flow) along with it later on
  */
 
-module.exports = SketchAPI
+module.exports = sketch

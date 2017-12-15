@@ -5,7 +5,7 @@ section: Utils
 ---
 
 ```javascript
-var Rectangle = SketchAPI.Page
+var Rectangle = sketch.Page
 ```
 
 ```javascript

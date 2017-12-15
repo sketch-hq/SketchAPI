@@ -113,7 +113,7 @@ Style.define('borders', {
         Object.keys(BorderPosition).find(
           key => BorderPosition[key] === f.position()
         ) || f.position(),
-      width: 0 + f.thickness(),
+      thickness: 0 + f.thickness(),
     }))
   },
   set(values) {
@@ -128,8 +128,8 @@ Style.define('borders', {
       } else {
         color = Style.colorFromString(value.color)
         fillType = FillType[value.fillType] || value.fillType
-        if (value.width) {
-          border.thickness = value.width
+        if (value.thickness) {
+          border.thickness = value.thickness
         }
         if (value.position) {
           border.position = BorderPosition[value.position] || value.position
