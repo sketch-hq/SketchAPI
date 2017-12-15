@@ -1,6 +1,6 @@
-import { WrappedObject, DefinedPropertiesKey } from './WrappedObject'
-import { Rectangle } from './Rectangle'
-import { wrapObject, wrapNativeObject } from './wrapNativeObject'
+import { WrappedObject, DefinedPropertiesKey } from '../WrappedObject'
+import { Rectangle } from '../Rectangle'
+import { wrapObject, wrapNativeObject } from '../wrapNativeObject'
 
 export const DEFAULT_EXPORT_OPTIONS = {
   compact: false,

@@ -1,16 +1,18 @@
-import { Document } from './Document'
+import { Document } from './components/Document'
+import { Group } from './components/Group'
+import { Text } from './components/Text'
+import { Image } from './components/Image'
+import { Shape } from './components/Shape'
+import { Artboard } from './components/Artboard'
+import { Page } from './components/Page'
+
 import { Rectangle } from './Rectangle'
-import { Group } from './Group'
-import { Text } from './Text'
-import { Image } from './Image'
-import { Shape } from './Shape'
-import { Artboard } from './Artboard'
-import { Page } from './Page'
 import { Selection } from './Selection'
 import { Style } from './Style'
-import { DataSupplier } from './DataSupplier'
-import * as Settings from './Settings'
-import * as UI from './UI'
+
+import { DataSupplier } from './api/DataSupplier'
+import * as Settings from './api/Settings'
+import * as UI from './api/UI'
 
 import { wrapNativeObject } from './wrapNativeObject'
 
@@ -86,7 +88,7 @@ export class Application {
    * @return The version as a string, eg "3.6".
    */
   get version() {
-    return this._metadata.appVersion
+    return String(this._metadata.appVersion)
   }
 
   /**
@@ -282,9 +284,6 @@ export class Application {
   }
 
   runUnitTests() {
-    if (process.env.NODE_ENV !== 'production') {
-      return require('./__tests__').runTests(this._object) // eslint-disable-line
-    }
-    return 'no tests in production'
+    return 'the tests are run by a separate plugin now'
   }
 }

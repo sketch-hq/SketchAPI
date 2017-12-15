@@ -1,9 +1,9 @@
-import { DefinedPropertiesKey } from './WrappedObject'
+import { DefinedPropertiesKey } from '../WrappedObject'
 import { Layer } from './Layer'
-import { Rectangle } from './Rectangle'
-import { Types } from './enums'
-import { Factory } from './Factory'
-import { isNativeObject } from './utils'
+import { Rectangle } from '../Rectangle'
+import { Types } from '../enums'
+import { Factory } from '../Factory'
+import { isNativeObject } from '../utils'
 
 /**
  * Represents an image layer.

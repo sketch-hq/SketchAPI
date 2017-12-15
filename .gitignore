@@ -1,3 +1,6 @@
 node_modules/
 build/
 .awcache/
+.test-runner.sketchplugin/Contents/Sketch/SketchAPI.tests.js
+.test-runner.sketchplugin/Contents/Sketch/SketchAPI.tests.js.map
+test-utils/generated-index.js

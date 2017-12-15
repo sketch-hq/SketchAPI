@@ -1,11 +1,11 @@
-import { WrappedObject, DefinedPropertiesKey } from './WrappedObject'
+import { WrappedObject, DefinedPropertiesKey } from '../WrappedObject'
 import { Layer } from './Layer'
 import { Page } from './Page'
-import { Selection } from './Selection'
-import { toArray, isNativeObject } from './utils'
-import { wrapNativeObject, wrapObject } from './wrapNativeObject'
-import { Types } from './enums'
-import { Factory } from './Factory'
+import { Selection } from '../Selection'
+import { toArray, isNativeObject } from '../utils'
+import { wrapNativeObject, wrapObject } from '../wrapNativeObject'
+import { Types } from '../enums'
+import { Factory } from '../Factory'
 
 /**
  * A Sketch document.

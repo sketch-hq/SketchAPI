@@ -14,34 +14,34 @@ export class Rectangle {
   constructor(x, y, width, height) {
     // if the argument is object
     if (x && x.x) {
-      this.x = x.x
-      this.y = x.y
-      this.width = x.width
-      this.height = x.height
+      this.x = parseFloat(x.x)
+      this.y = parseFloat(x.y)
+      this.width = parseFloat(x.width)
+      this.height = parseFloat(x.height)
     } else {
       /**
        * The x coordinate of the top-left corner of the rectangle.
        * @type {number}
        */
-      this.x = x
+      this.x = parseFloat(x)
 
       /**
        * The y coordinate of the top-left corner of the rectangle.
        * @type {number}
        */
-      this.y = y
+      this.y = parseFloat(y)
 
       /**
        * The width of the rectangle.
        * @type {number}
        */
-      this.width = width
+      this.width = parseFloat(width)
 
       /**
        * The height of the rectangle.
        * @type {number}
        */
-      this.height = height
+      this.height = parseFloat(height)
     }
   }
 
@@ -52,8 +52,8 @@ export class Rectangle {
    * @param {number} y The y offset to apply.
    */
   offset(x, y) {
-    this.x += x
-    this.y += y
+    this.x += parseFloat(x)
+    this.y += parseFloat(y)
     return this
   }
 

@@ -1,10 +1,10 @@
-import { DefinedPropertiesKey } from './WrappedObject'
+import { DefinedPropertiesKey } from '../WrappedObject'
 import { Layer } from './Layer'
-import { Style } from './Style'
-import { Types } from './enums'
-import { Factory } from './Factory'
-import { Rectangle } from './Rectangle'
-import { isNativeObject } from './utils'
+import { Style } from '../Style'
+import { Types } from '../enums'
+import { Factory } from '../Factory'
+import { Rectangle } from '../Rectangle'
+import { isNativeObject } from '../utils'
 
 /**
  * Represents a shape layer (a rectangle, oval, path, etc).

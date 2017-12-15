@@ -1,11 +1,11 @@
-import { DefinedPropertiesKey } from './WrappedObject'
+import { DefinedPropertiesKey } from '../WrappedObject'
 import { Group } from './Group'
-import { Selection } from './Selection'
-import { Rectangle } from './Rectangle'
-import { Types } from './enums'
-import { Factory } from './Factory'
+import { Selection } from '../Selection'
+import { Rectangle } from '../Rectangle'
+import { Types } from '../enums'
+import { Factory } from '../Factory'
 import { DEFAULT_EXPORT_OPTIONS } from './Layer'
-import { isNativeObject } from './utils'
+import { isNativeObject } from '../utils'
 
 /**
  * Represents a Page in a Sketch document.
