@@ -33,7 +33,7 @@ Factory.registerClass(Shape, MSShapeGroup)
 
 Shape.define('style', {
   get() {
-    return new Style(this._object.style())
+    return Style.fromNative(this._object.style())
   },
   set(style) {
     if (isNativeObject(style)) {
