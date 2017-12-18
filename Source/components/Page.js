@@ -68,7 +68,7 @@ export class Page extends Group {
   duplicate() {
     const object = this._object
     const duplicate = object.copy()
-    object.documentData().insertPage_afterPage([duplicate], object)
+    object.documentData().insertPage_afterPage(duplicate, object)
     return wrapNativeObject(duplicate)
   }
 

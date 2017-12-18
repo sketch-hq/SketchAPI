@@ -214,20 +214,20 @@ class Matcher {
   toWrap(expected, msg) {
     try {
       if (this.actual.sketchObject !== expected) {
-        fail(this.actual, expected, msg, 'toBe')
+        fail(this.actual, expected, msg, 'toWrap')
       }
     } catch (err) {
-      fail(this.actual, expected, err.message, 'toBe')
+      fail(this.actual, expected, err.message, 'toWrap')
     }
   }
 
   toWrapSameAs(expected, msg) {
     try {
       if (this.actual.sketchObject !== expected.sketchObject) {
-        fail(this.actual, expected, msg, 'toBe')
+        fail(this.actual, expected, msg, 'toWrapSameAs')
       }
     } catch (err) {
-      fail(this.actual, expected, err.message, 'toBe')
+      fail(this.actual, expected, err.message, 'toWrapSameAs')
     }
   }
 
