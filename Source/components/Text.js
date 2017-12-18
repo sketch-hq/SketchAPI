@@ -10,12 +10,25 @@ const TextBehaviour = {
 }
 
 const TextLineSpacingBehaviour = {
+  variable: 'variable', // Uses min & max line height on paragraph style
+  constantBaseline: 'constantBaseline', // Uses MSConstantBaselineTypesetter for fixed line height
+}
+
+export const TextLineSpacingBehaviourMap = {
   variable: 1, // Uses min & max line height on paragraph style
   constantBaseline: 2, // Uses MSConstantBaselineTypesetter for fixed line height
 }
 
 // Mapping between text alignment names and values.
 const TextAlignment = {
+  left: 'left', // Visually left aligned
+  right: 'right', // Visually right aligned
+  center: 'center', // Visually centered
+  justified: 'justified', // Fully-justified. The last line in a paragraph is natural-aligned.
+  natural: 'natural', // Indicates the default alignment for script
+}
+
+export const TextAlignmentMap = {
   left: 0, // Visually left aligned
   right: 1, // Visually right aligned
   center: 2, // Visually centered
@@ -156,7 +169,9 @@ Text.define('alignment', {
   get() {
     const raw = this._object.textAlignment()
     return (
-      Object.keys(TextAlignment).find(key => TextAlignment[key] === raw) || raw
+      Object.keys(TextAlignmentMap).find(
+        key => TextAlignmentMap[key] === raw
+      ) || raw
     )
   },
 
@@ -169,8 +184,9 @@ Text.define('alignment', {
    * @param {string} mode The alignment mode to use.
    */
   set(mode) {
-    const translated = TextAlignment[mode]
-    this._object.textAlignment = translated || mode
+    const translated = TextAlignmentMap[mode]
+    this._object.textAlignment =
+      typeof translated !== 'undefined' ? translated : mode
   },
 })
 
@@ -179,17 +195,21 @@ Text.define('lineSpacing', {
   get() {
     const raw = this._object.lineSpacingBehaviour()
     return (
-      Object.keys(TextLineSpacingBehaviour).find(
-        key => TextLineSpacingBehaviour[key] === raw
+      Object.keys(TextLineSpacingBehaviourMap).find(
+        key => TextLineSpacingBehaviourMap[key] === raw
       ) || raw
     )
   },
   set(mode) {
-    const lineSpacingBehaviour = TextLineSpacingBehaviour[mode] || mode
-    const textLayer = this.sketchObject
-    const initialBaselineOffset = textLayer.firstBaselineOffset()
+    const translated = TextLineSpacingBehaviourMap[mode]
+    const lineSpacingBehaviour =
+      typeof translated !== 'undefined' ? translated : mode
+
+    const textLayer = this._object
+    const layout = textLayer.immutableModelObject().textLayout()
+    const initialBaselineOffset = layout.firstBaselineOffset()
     textLayer.lineSpacingBehaviour = lineSpacingBehaviour
-    const baselineOffset = textLayer.firstBaselineOffset()
+    const baselineOffset = layout.firstBaselineOffset()
     const rect = this.frame
     rect.y -= baselineOffset - initialBaselineOffset
     this.frame = rect
