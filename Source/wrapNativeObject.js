@@ -30,5 +30,17 @@ export function wrapObject(object) {
     return object
   }
 
-  return Factory.create(object.type, object)
+  const { type, ...rest } = object
+
+  if (!type) {
+    throw new Error(
+      `You need to specify a "type" when creating a nested layer. Received: ${JSON.stringify(
+        object,
+        null,
+        2
+      )}`
+    )
+  }
+
+  return Factory.create(type, rest)
 }

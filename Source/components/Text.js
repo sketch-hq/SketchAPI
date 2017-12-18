@@ -218,7 +218,7 @@ Text.define('lineSpacing', {
 
 Text.define('fixedWidth', {
   get() {
-    return this._object.textBehaviour === TextBehaviour.fixedWidth
+    return this._object.textBehaviour() === TextBehaviour.fixedWidth
   },
   set(fixed) {
     if (fixed) {

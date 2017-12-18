@@ -34,7 +34,6 @@ export const tests = {
     // default to left
     expect(text.alignment).toBe(Text.Alignment.left)
 
-    // eslint-disable-next-line guard-for-in
     Object.keys(Text.Alignment).forEach(key => {
       // test setting by name
       text.alignment = key
@@ -52,10 +51,9 @@ export const tests = {
       frame: new Rectangle(10, 10, 1000, 1000),
     })
 
-    // default to left
+    // default to constant baseline
     expect(text.lineSpacing).toBe(Text.LineSpacing.constantBaseline)
 
-    // eslint-disable-next-line guard-for-in
     Object.keys(Text.LineSpacing).forEach(key => {
       // test setting by name
       text.lineSpacing = key
@@ -65,5 +63,19 @@ export const tests = {
       text.lineSpacing = TextLineSpacingBehaviourMap[key]
       expect(text.lineSpacing).toBe(Text.LineSpacing[key])
     })
+  },
+
+  'should fix the width': () => {
+    const text = new Text({
+      text: 'blah',
+      frame: new Rectangle(10, 10, 1000, 1000),
+    })
+
+    // default to true
+    expect(text.fixedWidth).toBe(false)
+
+    text.fixedWidth = true
+
+    expect(text.fixedWidth).toBe(true)
   },
 }
