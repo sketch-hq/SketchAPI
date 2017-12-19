@@ -89,7 +89,7 @@ test('should get the fills', () => {
 test('should convert hex string to MSColor', () => {
   // #rrggbbaa
   const color = Style.colorFromString('#11223344')
-  expect(color).toBeNative('MSColor')
+  expect(color).toBeInstanceOf(MSColor)
   expect(Math.round(color.red() * 255)).toBe(17)
   expect(Math.round(color.blue() * 255)).toBe(51)
   expect(Math.round(color.green() * 255)).toBe(34)
