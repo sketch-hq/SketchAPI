@@ -10,7 +10,7 @@ if (IS_BC_BUILD) {
     .createReadStream(
       path.join(
         __dirname,
-        '../.test-runner.sketchplugin/Contents/Sketch/SketchAPI.tests.js'
+        '../node_modules/@skpm/test-runner/test-runner.sketchplugin/Contents/Sketch/compiled-tests.js'
       )
     )
     .pipe(
