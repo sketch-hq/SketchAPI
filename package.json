@@ -10,13 +10,13 @@
   ],
   "scripts": {
     "build": "npm run build:test && npm run build:api && node ./scripts/copy-tests.js",
-    "build:test": "node ./scripts/build-test-index.js && webpack --config=webpack.tests.config.js",
+    "build:test": "skpm-test --build-only",
     "build:api": "webpack -p --optimize-minimize",
     "start": "npm run build",
     "watch": "webpack --watch",
-    "run-tests": "\"${SKETCH_PATH:-/Applications/Sketch.app}/Contents/Resources/sketchtool/bin/sketchtool\" run ./.test-runner.sketchplugin api-tests --without-activating | node ./scripts/report-tests-result.js",
-    "test": "npm run lint -- --quiet && npm run build:test && npm run run-tests",
-    "test:watch": "npm run build:test -- --watch",
+    "run-tests": "skpm-test --app=latest",
+    "test": "npm run lint -- --quiet && npm run run-tests",
+    "test:watch": "npm run run-tests -- --watch",
     "lint": "find . -name \"*.ts\" -o -name \"*.js\" | grep -v -f .gitignore | xargs eslint",
     "prettier:base": "prettier --write",
     "prettify": "find . -name \"*.ts\" -o -name \"*.js\" | grep -v -f .gitignore | xargs npm run prettier:base",
@@ -24,8 +24,8 @@
     "postinstall": "node ./scripts/install-pre-commit.js"
   },
   "devDependencies": {
+    "@skpm/test-runner": "^0.1.15",
     "awesome-typescript-loader": "^3.4.0",
-    "chalk": "^2.3.0",
     "eslint": "^4.11.0",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-config-prettier": "^2.8.0",
@@ -36,13 +36,9 @@
     "lint-staged": "^5.0.0",
     "pre-commit": "^1.2.2",
     "prettier": "^1.8.2",
-    "source-map": "^0.6.1",
-    "source-map-loader": "^0.2.3",
     "typescript": "^2.6.1",
     "typescript-eslint-parser": "^9.0.0",
-    "webpack": "^3.8.1",
-    "webpack-shell-plugin": "^0.5.0",
-    "webpack-sources": "^1.1.0"
+    "webpack": "^3.8.1"
   },
   "dependencies": {},
   "pre-commit": [
