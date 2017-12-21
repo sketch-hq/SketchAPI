@@ -6,4 +6,7 @@ export const Types = {
   Image: 'Image',
   Text: 'Text',
   Document: 'Document',
+  SymbolMaster: 'SymbolMaster',
+  SymbolInstance: 'SymbolInstance',
+  Override: 'Override',
 }

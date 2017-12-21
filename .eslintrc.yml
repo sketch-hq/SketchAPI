@@ -43,6 +43,9 @@ globals:
   MSDefaultStyle: false
   MSLayer: false
   MSDocumentData: false
+  MSSymbolMaster: false
+  MSSymbolInstance: false
+  MSAvailableOverride: false
 
 rules:
   ###########

@@ -7,7 +7,12 @@ export const DefinedPropertiesKey = '_DefinedPropertiesKey'
 export class WrappedObject {
   constructor(options) {
     this._object = options.sketchObject
-    this.type = this.constructor.type
+
+    Object.defineProperty(this, 'type', {
+      enumerable: true,
+      value: this.constructor.type,
+    })
+
     const propertyList = this.constructor[DefinedPropertiesKey]
 
     Object.keys(options).forEach(k => {
@@ -59,7 +64,12 @@ export class WrappedObject {
       if (!propertyList[k].exportable) {
         return
       }
-      json[k] = this[k]
+      const value = this[k]
+      if (value && typeof value.toJSON === 'function') {
+        json[k] = value.toJSON()
+      } else {
+        json[k] = value
+      }
     })
 
     return json
