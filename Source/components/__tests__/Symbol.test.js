@@ -85,3 +85,53 @@ test('should be able to set overrides', (context, document) => {
     isDefault: false,
   })
 })
+
+test(
+  'should create a symbol master with a nested symbol',
+  (context, document) => {
+    // build the first symbol master
+    const { master: nestedMaster, text } = createSymbolMaster(document)
+
+    const artboard = new Artboard({
+      name: 'Test2',
+      parent: document.selectedPage,
+    })
+    const text2 = new Text({
+      text: 'Test value 2',
+    })
+    const nestedInstance = nestedMaster.createNewInstance()
+    artboard.layers = [nestedInstance, text2]
+
+    const master = SymbolMaster.fromArtboard(artboard)
+
+    const instance = master.createNewInstance()
+
+    // add the instance to the page
+    document.selectedPage.layers = document.selectedPage.layers.concat(instance)
+    expect(instance.overrides.length).toBe(3)
+    expect(instance.overrides[0].toJSON()).toEqual({
+      id: `${nestedInstance.id}_symbolID`,
+      path: nestedInstance.id,
+      property: 'symbolID',
+      symbolOverride: true,
+      value: nestedInstance.symbolId,
+      isDefault: true,
+    })
+    expect(instance.overrides[1].toJSON()).toEqual({
+      id: `${text2.id}_stringValue`,
+      path: text2.id,
+      property: 'stringValue',
+      symbolOverride: false,
+      value: 'Test value 2',
+      isDefault: true,
+    })
+    expect(instance.overrides[2].toJSON()).toEqual({
+      id: `${nestedInstance.id}/${text.id}_stringValue`,
+      path: `${nestedInstance.id}/${text.id}`,
+      property: 'stringValue',
+      symbolOverride: false,
+      value: 'Test value',
+      isDefault: true,
+    })
+  }
+)
