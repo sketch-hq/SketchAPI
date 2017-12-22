@@ -4,7 +4,6 @@ import { Selection } from '../Selection'
 import { Rectangle } from '../Rectangle'
 import { Types } from '../enums'
 import { Factory } from '../Factory'
-import { DEFAULT_EXPORT_OPTIONS } from './Layer'
 import { wrapNativeObject, wrapObject } from '../wrapNativeObject'
 
 /**
@@ -36,30 +35,6 @@ export class Page extends Group {
    */
   get selectedLayers() {
     return new Selection(this)
-  }
-
-  /**
-   * Export this layer (and the ones below it), using the options supplied.
-   *
-   * @param {dictionary} options Options indicating which layers to export, which sizes and formats to use, etc. (See in ./Layer for more information)
-   */
-  exportArtboards(options) {
-    const merged = { ...DEFAULT_EXPORT_OPTIONS, ...options }
-    const exporter = MSSelfContainedHighLevelExporter.alloc().initWithOptions(
-      merged
-    )
-    exporter.exportLayers(this.sketchObject.artboards())
-    return this
-  }
-
-  /* OVERRIDES */
-  export(options) {
-    const merged = { ...DEFAULT_EXPORT_OPTIONS, ...options }
-    const exporter = MSSelfContainedHighLevelExporter.alloc().initWithOptions(
-      merged
-    )
-    exporter.exportPage(this.sketchObject)
-    return this
   }
 
   // eslint-disable-next-line
