@@ -5,7 +5,7 @@ export class Rectangle {
   /**
    * Return a new Rectangle object for a given x,y, width and height.
    *
-   * @param {number} x The x coordinate of the top-left corner of the rectangle.
+   * @param {number | Rectangle} x The x coordinate of the top-left corner of the rectangle. Or a Rectangle.
    * @param {number} y The y coordinate of the top-left corner of the rectangle.
    * @param {number} width The width of the rectangle.
    * @param {number} height The height of the rectangle.

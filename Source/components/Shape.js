@@ -13,7 +13,9 @@ export class Shape extends Layer {
   /**
    * Make a new shape object.
    *
-   * @param {MSShapeGroup} shape The underlying model object from Sketch.
+   * @param [Object] properties - The properties to set on the object as a JSON object.
+   *                              If `sketchObject` is provided, will wrap it.
+   *                              Otherwise, creates a new native object.
    */
   constructor(shape = {}) {
     if (!shape.sketchObject) {

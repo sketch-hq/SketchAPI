@@ -28,7 +28,7 @@ export class Layer extends WrappedObject {
   duplicate() {
     const object = this._object
     const duplicate = object.copy()
-    object.parentGroup().insertLayers_afterLayer_([duplicate], object)
+    object.parentGroup().insertLayers_afterLayer([duplicate], object)
     return wrapNativeObject(duplicate)
   }
 
@@ -38,7 +38,7 @@ export class Layer extends WrappedObject {
   remove() {
     const parent = this._object.parentGroup()
     if (parent) {
-      parent.removeLayer_(this._object)
+      parent.removeLayer(this._object)
     }
     return this
   }

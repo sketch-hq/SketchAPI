@@ -22,7 +22,9 @@ export class Style extends WrappedObject {
   /**
    * Make a new style object.
    *
-   * @param {MSStyle} style The underlying model object from Sketch.
+   * @param [Object] properties - The properties to set on the object as a JSON object.
+   *                              If `sketchObject` is provided, will wrap it.
+   *                              Otherwise, creates a new native object.
    */
   constructor(style = {}) {
     if (!style.sketchObject) {
