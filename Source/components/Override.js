@@ -13,7 +13,7 @@ Factory.registerClass(Override, MSAvailableOverride)
 
 Override.define('path', {
   get() {
-    return String(this._object.overridePoint().layerID())
+    return String(this._object.overridePoint().layerIDPath())
   },
 })
 
