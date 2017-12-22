@@ -50,7 +50,7 @@ export function getStringFromUser(msg, initial) {
   const result = panel.runPanelWithNibName_ofType_initialString_label_(
     'MSModalInputSheet',
     0,
-    initial || '',
+    String(typeof initial === 'undefined' ? '' : initial),
     msg
   )
   return String(result)
