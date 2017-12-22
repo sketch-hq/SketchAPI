@@ -76,7 +76,11 @@ SymbolInstance.define('symbolId', {
 SymbolInstance.define('master', {
   exportable: false,
   get() {
-    return wrapObject(this._object.symbolMaster())
+    const master = this._object.symbolMaster()
+    if (master) {
+      return wrapObject(this._object.symbolMaster())
+    }
+    return null
   },
   set(master) {
     const wrappedMaster = wrapObject(master)
