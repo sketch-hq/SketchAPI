@@ -69,7 +69,7 @@ SymbolInstance.define('symbolId', {
       .documentData()
       .symbolWithID(id)
 
-    this.parent = master
+    this.master = master
   },
 })
 
