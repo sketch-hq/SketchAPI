@@ -58,8 +58,7 @@ SymbolMaster.define('symbolId', {
   get() {
     return String(this._object.symbolID())
   },
-  // Set the symbolID property. This will tell the parent that something has changed, etc.
-  set(id) {
-    this._object.setSymbolID(id)
+  set() {
+    throw new Error('Changing the symbol ID of a SymbolMaster is forbidden.')
   },
 })
