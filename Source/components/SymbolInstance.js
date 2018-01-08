@@ -35,21 +35,12 @@ export class SymbolInstance extends Layer {
     return null
   }
 
-  // Returns a new SymbolInstance linked to this artboard, ready for inserting in the document
-  createNewInstance() {
-    return SymbolInstance.fromNative(this._object.newSymbolInstance())
-  }
-
-  // Returns all instances of the artboard in the document, on all pages
-  getAllInstances() {
-    return toArray(this._object.allInstances()).map(SymbolInstance.fromNative)
-  }
-
   setOverrideValue(override, value) {
     this._object.setValue_forOverridePoint(
       value,
       wrapObject(override).sketchObject.overridePoint()
     )
+    return this
   }
 }
 
@@ -113,6 +104,8 @@ SymbolInstance.define('overrides', {
     })
   },
   set() {
-    // not sure what to do here yet
+    throw new Error(
+      'Cannot set the overrides directly. Set the value of each overrides instead.'
+    )
   },
 })
