@@ -2,19 +2,6 @@ import { WrappedObject, DefinedPropertiesKey } from '../WrappedObject'
 import { Rectangle } from '../Rectangle'
 import { wrapObject, wrapNativeObject } from '../wrapNativeObject'
 
-export const DEFAULT_EXPORT_OPTIONS = {
-  compact: false,
-  'include-namespaces': false,
-  compression: 1.0,
-  'group-contents-only': false,
-  overwriting: false,
-  progressive: false,
-  'save-for-web': false,
-  'use-id-for-name': false,
-  trimmed: false,
-  output: '~/Documents/Sketch Exports',
-}
-
 /**
  * Abstract class that represents a Sketch layer.
  */
@@ -28,7 +15,7 @@ export class Layer extends WrappedObject {
   duplicate() {
     const object = this._object
     const duplicate = object.copy()
-    object.parentGroup().insertLayers_afterLayer_([duplicate], object)
+    object.parentGroup().insertLayers_afterLayer([duplicate], object)
     return wrapNativeObject(duplicate)
   }
 
@@ -38,7 +25,7 @@ export class Layer extends WrappedObject {
   remove() {
     const parent = this._object.parentGroup()
     if (parent) {
-      parent.removeLayer_(this._object)
+      parent.removeLayer(this._object)
     }
     return this
   }
@@ -100,46 +87,6 @@ export class Layer extends WrappedObject {
       rect.width,
       rect.height
     )
-  }
-
-  /**
-   * Export this layer, using the options supplied.
-   *
-   * @discussion
-   *
-   * You can specify a lot of different options for the exporting.
-   *
-   * ### General Options
-   *
-   * - use-id-for-name : normally the exported files are given the same names as the layers they represent, but if this options is true, then the layer ids are used instead; defaults to false.
-   * - output : this is the path of the folder where all exported files are placed; defaults to "~/Documents/Sketch Exports"
-   * - overwriting : if true, the exporter will overwrite any existing files with new ones; defaults to false.
-   * - trimmed: if true, any transparent space around the exported image will be trimmed; defaults to false.
-   * - scales: this should be a list of numbers; it will determine the sizes at which the layers are exported; defaults to "1"
-   * - formats: this should be a list of one or more of "png", "jpg", "svg", and "pdf"; defaults to "png" (see discussion below)
-   *
-   * ### SVG options
-   * - compact : if exporting as SVG, this option makes the output more compact; defaults to false.
-   * - include-namespaces : if exporting as SVG, this option includes extra attributes; defaults to false.
-   *
-   * ### PNG options
-   * - save-for-web : if exporting a PNG, this option removes metadata such as the colour profile from the exported file; defaults to false.
-   *
-   * ### JPG options
-   * - compression : if exporting a JPG, this option determines the level of compression, with 0 being the minimum, 1.0 the maximum; defaults to 1.0
-   * - progressive : if exporting a JPG, this option makes it progressive; defaults to false.
-   * - group-contents-only : false,
-   *
-   *
-   * @param {dictionary} options Options indicating which sizes and formats to use, etc.
-   */
-  export(options) {
-    const merged = { ...DEFAULT_EXPORT_OPTIONS, ...options }
-    const exporter = MSSelfContainedHighLevelExporter.alloc().initWithOptions(
-      merged
-    )
-    exporter.exportLayers([this.sketchObject])
-    return this
   }
 }
 

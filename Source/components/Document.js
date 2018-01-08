@@ -13,13 +13,9 @@ export class Document extends WrappedObject {
   /**
    * Make a new document object.
    *
-   * @param {MSDocument} document The underlying MSDocument object.
-   *
-   * Note that constructing one of these doesn't actually create
-   * a Sketch document. Instead you pass in the underlying MSDocument
-   * that this object represents.
-   *
-   * If you do want to create a new document, you can do so with Application#newDocument.
+   * @param [Object] properties - The properties to set on the object as a JSON object.
+   *                              If `sketchObject` is provided, will wrap it.
+   *                              Otherwise, creates a new native object.
    */
   constructor(document = {}) {
     if (!document.sketchObject) {
@@ -53,7 +49,7 @@ export class Document extends WrappedObject {
   /**
    * Returns a list of the pages in this document.
    *
-   * @return {list} The pages.
+   * @return {[Page]} The pages.
    */
   get pages() {
     const pages = toArray(this._object.pages())

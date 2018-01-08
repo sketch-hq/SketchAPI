@@ -1,6 +1,7 @@
 import { DataSupplier } from './api/DataSupplier'
 import * as UI from './api/UI'
 import * as Settings from './api/Settings'
+import { exportObject } from './api/export'
 
 import { Rectangle } from './Rectangle'
 import { Style } from './Style'
@@ -33,6 +34,7 @@ api.SymbolInstance = SymbolInstance
 api.DataSupplier = DataSupplier
 api.UI = UI
 api.Settings = Settings
+api.export = exportObject
 
 api.Style = Style
 api.Rectangle = Rectangle

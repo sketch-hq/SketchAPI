@@ -15,7 +15,7 @@ export class Selection {
   }
 
   /**
-   * Return the native Sketch layers in the selection.
+   * Return the wrapped Sketch layers in the selection.
    *
    * @return {array} The selected layers.
    * */
