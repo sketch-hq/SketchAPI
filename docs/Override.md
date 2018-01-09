@@ -5,14 +5,10 @@ section: components
 ---
 
 ```javascript
-var Override = sketch.Override
+var overrides = symbolInstance.overrides
 ```
 
-```javascript
-import { Override } from 'sketch-api'
-```
-
-A [Symbol](https://www.sketchapp.com/docs/symbols/) override.
+A [Symbol](https://www.sketchapp.com/docs/symbols/) override. This component is not exposed, it is only returns when accessing the `overrides` of a [Symbol Instance](#symbol-instance).
 
 | Properties     | type    | Description                                                                                                                      |
 | -------------- | ------- | -------------------------------------------------------------------------------------------------------------------------------- |
