@@ -26,8 +26,20 @@ test('should create a symbol master from an artboard', (context, document) => {
   const { master } = createSymbolMaster(document)
   expect(master.type).toBe('SymbolMaster')
 
-  expect(document.getLayerNamed).toBeDefined()
   expect(document.getSymbolMasterWithID(master.symbolId)).toEqual(master)
+})
+
+test('should replace a symbol master by an artboard', (context, document) => {
+  // build the symbol master
+  const { master } = createSymbolMaster(document)
+  expect(master.type).toBe('SymbolMaster')
+
+  expect(document.getSymbolMasterWithID(master.symbolId)).toEqual(master)
+
+  const artboard = master.toArtboard()
+
+  expect(document.getSymbolMasterWithID(master.symbolId)).toBe(undefined)
+  expect(artboard.type).toBe('Artboard')
 })
 
 test('should create a symbol instance from a master', (context, document) => {
@@ -47,43 +59,6 @@ test('should create a symbol instance from a master', (context, document) => {
   document.selectedPage.layers = document.selectedPage.layers.concat(instance)
   expect(master.getAllInstances()).toEqual([instance])
   expect(instance.master).toEqual(master)
-})
-
-test('should have overrides', (context, document) => {
-  const { master, text } = createSymbolMaster(document)
-  const instance = master.createNewInstance()
-  document.selectedPage.layers = document.selectedPage.layers.concat(instance)
-
-  expect(instance.overrides.length).toBe(1)
-  const override = instance.overrides[0]
-  expect(override.toJSON()).toEqual({
-    id: `${text.id}_stringValue`,
-    path: text.id,
-    property: 'stringValue',
-    symbolOverride: false,
-    value: 'Test value',
-    isDefault: true,
-  })
-})
-
-test('should be able to set overrides', (context, document) => {
-  const { master, text } = createSymbolMaster(document)
-  const instance = master.createNewInstance()
-  document.selectedPage.layers = document.selectedPage.layers.concat(instance)
-
-  expect(instance.overrides.length).toBe(1)
-  const override = instance.overrides[0]
-  override.value = 'overridden'
-
-  expect(instance.overrides.length).toBe(1)
-  expect(instance.overrides[0].toJSON()).toEqual({
-    id: `${text.id}_stringValue`,
-    path: text.id,
-    property: 'stringValue',
-    symbolOverride: false,
-    value: 'overridden',
-    isDefault: false,
-  })
 })
 
 test(
@@ -135,39 +110,3 @@ test(
     })
   }
 )
-
-test('should change a nested symbol', (context, document) => {
-  // build the first symbol master
-  const { master: nestedMaster } = createSymbolMaster(document)
-  const { master: nestedMaster2 } = createSymbolMaster(document)
-
-  const artboard = new Artboard({
-    name: 'Test2',
-    parent: document.selectedPage,
-  })
-  const text2 = new Text({
-    text: 'Test value 2',
-  })
-  const nestedInstance = nestedMaster.createNewInstance()
-  artboard.layers = [nestedInstance, text2]
-
-  const master = SymbolMaster.fromArtboard(artboard)
-
-  const instance = master.createNewInstance()
-
-  // add the instance to the page
-  document.selectedPage.layers = document.selectedPage.layers.concat(instance)
-  expect(instance.overrides.length).toBe(3)
-
-  const override = instance.overrides[0]
-  override.value = nestedMaster2.symbolId
-
-  expect(instance.overrides[0].toJSON()).toEqual({
-    id: `${nestedInstance.id}_symbolID`,
-    path: nestedInstance.id,
-    property: 'symbolID',
-    symbolOverride: true,
-    value: nestedMaster2.symbolId,
-    isDefault: false,
-  })
-})
