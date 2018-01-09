@@ -46,6 +46,8 @@ globals:
   MSSymbolMaster: false
   MSSymbolInstance: false
   MSAvailableOverride: false
+  NSData: false
+  NSDataBase64DecodingIgnoreUnknownCharacters: false
 
 rules:
   ###########

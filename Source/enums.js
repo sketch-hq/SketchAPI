@@ -9,4 +9,5 @@ export const Types = {
   SymbolMaster: 'SymbolMaster',
   SymbolInstance: 'SymbolInstance',
   Override: 'Override',
+  ImageData: 'ImageData',
 }
