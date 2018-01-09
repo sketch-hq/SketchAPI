@@ -49,16 +49,20 @@ SymbolInstance[DefinedPropertiesKey] = { ...Layer[DefinedPropertiesKey] }
 Factory.registerClass(SymbolInstance, MSSymbolInstance)
 
 SymbolInstance.define('symbolId', {
+  depends: 'parent',
   get() {
     return String(this._object.symbolID())
   },
   set(id) {
     // we need to find the symbol master and change the master,
     // it's not enough to just call `this._object.setSymbolID`
-    const master = this._object
-      .parentPage()
-      .documentData()
-      .symbolWithID(id)
+    const parentPage = this._object.parentPage()
+    if (!parentPage) {
+      throw new Error(
+        'A symbol instance needs to be inserted in a page before setting the symbolId'
+      )
+    }
+    const master = parentPage.documentData().symbolWithID(id)
 
     this.master = master
   },
@@ -71,7 +75,7 @@ SymbolInstance.define('master', {
     if (master) {
       return wrapObject(this._object.symbolMaster())
     }
-    return null
+    return null // this is a bit weird, if the instance is not inserted in the document, symbolMaster will be null
   },
   set(master) {
     const wrappedMaster = wrapObject(master)

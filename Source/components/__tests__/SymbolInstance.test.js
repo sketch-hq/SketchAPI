@@ -1,7 +1,7 @@
 /* globals expect, test */
 /* eslint-disable no-param-reassign */
 
-import { SymbolMaster, Text, Artboard } from '../../'
+import { SymbolMaster, Text, Artboard, SymbolInstance } from '../../'
 
 function createSymbolMaster(document) {
   const artboard = new Artboard({
@@ -20,6 +20,39 @@ function createSymbolMaster(document) {
     artboard,
   }
 }
+
+test(
+  'should create a instance by setting the master property',
+  (context, document) => {
+    const { master } = createSymbolMaster(document)
+    const instance = new SymbolInstance({
+      master,
+    })
+    expect(instance.type).toBe('SymbolInstance')
+    expect(instance.master).toBe(null)
+    // by default, it's not anywhere in the document
+    expect(master.getAllInstances()).toEqual([])
+
+    // add the instance to the page
+    document.selectedPage.layers = document.selectedPage.layers.concat(instance)
+    expect(master.getAllInstances()).toEqual([instance])
+    expect(instance.master).toEqual(master)
+  }
+)
+
+test(
+  'should create a instance by setting the symbolId property',
+  (context, document) => {
+    const { master } = createSymbolMaster(document)
+    const instance = new SymbolInstance({
+      symbolId: master.symbolId,
+      parent: document.selectedPage,
+    })
+    expect(instance.type).toBe('SymbolInstance')
+    expect(master.getAllInstances()).toEqual([instance])
+    expect(instance.master).toEqual(master)
+  }
+)
 
 test('should have overrides', (context, document) => {
   const { master, text } = createSymbolMaster(document)

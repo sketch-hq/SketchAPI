@@ -13,19 +13,40 @@ export class WrappedObject {
       value: this.constructor.type,
     })
 
+    this._setProperties(options)
+  }
+
+  _setProperties(options) {
     const propertyList = this.constructor[DefinedPropertiesKey]
 
-    Object.keys(options).forEach(k => {
-      if (!propertyList[k]) {
-        log(`no idea what to do with "${k}" in ${this.type}`)
-        return
-      }
+    Object.keys(options)
+      .sort((a, b) => {
+        if (
+          propertyList[a] &&
+          propertyList[a].depends &&
+          propertyList[a].depends === b
+        ) {
+          return 1
+        } else if (
+          propertyList[b] &&
+          propertyList[b].depends &&
+          propertyList[b].depends === a
+        ) {
+          return -1
+        }
+        return 0
+      })
+      .forEach(k => {
+        if (!propertyList[k]) {
+          log(`no idea what to do with "${k}" in ${this.type}`)
+          return
+        }
 
-      if (!propertyList[k].importable) {
-        return
-      }
-      this[k] = options[k]
-    })
+        if (!propertyList[k].importable) {
+          return
+        }
+        this[k] = options[k]
+      })
   }
 
   /**
@@ -39,20 +60,8 @@ export class WrappedObject {
     })
   }
 
-  update(json) {
-    const propertyList = this.constructor[DefinedPropertiesKey]
-
-    Object.keys(json).forEach(k => {
-      if (!propertyList[k]) {
-        log(`no idea what to do with "${k}" in ${this.type}`)
-        return
-      }
-
-      if (!propertyList[k].importable) {
-        return
-      }
-      this[k] = json[k]
-    })
+  update(json = {}) {
+    this._setProperties(json)
   }
 
   toJSON() {
