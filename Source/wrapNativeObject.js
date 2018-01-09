@@ -23,6 +23,10 @@ export function wrapNativeObject(nativeObject) {
 }
 
 export function wrapObject(object) {
+  if (!object) {
+    return object
+  }
+
   if (isNativeObject(object)) {
     return wrapNativeObject(object)
   }
