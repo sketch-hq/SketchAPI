@@ -4,7 +4,6 @@ import { Selection } from '../Selection'
 import { Rectangle } from '../Rectangle'
 import { Types } from '../enums'
 import { Factory } from '../Factory'
-import { DEFAULT_EXPORT_OPTIONS } from './Layer'
 import { wrapNativeObject, wrapObject } from '../wrapNativeObject'
 
 /**
@@ -14,7 +13,9 @@ export class Page extends Group {
   /**
    * Make a new page object.
    *
-   * @param {MSPage} page The underlying model object from Sketch.
+   * @param [Object] properties - The properties to set on the object as a JSON object.
+   *                              If `sketchObject` is provided, will wrap it.
+   *                              Otherwise, creates a new native object.
    */
   constructor(page = {}) {
     if (!page.sketchObject) {
@@ -34,30 +35,6 @@ export class Page extends Group {
    */
   get selectedLayers() {
     return new Selection(this)
-  }
-
-  /**
-   * Export this layer (and the ones below it), using the options supplied.
-   *
-   * @param {dictionary} options Options indicating which layers to export, which sizes and formats to use, etc.
-   */
-  exportArtboards(options) {
-    const merged = { ...DEFAULT_EXPORT_OPTIONS, ...options }
-    const exporter = MSSelfContainedHighLevelExporter.alloc().initWithOptions(
-      merged
-    )
-    exporter.exportLayers(this.sketchObject.artboards())
-    return this
-  }
-
-  /* OVERRIDES */
-  export(options) {
-    const merged = { ...DEFAULT_EXPORT_OPTIONS, ...options }
-    const exporter = MSSelfContainedHighLevelExporter.alloc().initWithOptions(
-      merged
-    )
-    exporter.exportPage(this.sketchObject)
-    return this
   }
 
   // eslint-disable-next-line

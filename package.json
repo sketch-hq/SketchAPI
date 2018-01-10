@@ -21,10 +21,10 @@
     "prettier:base": "prettier --write",
     "prettify": "find . -name \"*.ts\" -o -name \"*.js\" | grep -v -f .gitignore | xargs npm run prettier:base",
     "lint-staged": "lint-staged",
-    "postinstall": "node ./scripts/install-pre-commit.js"
+    "postinstall": "node ./scripts/install-pre-commit.js && node ./scripts/inject-new-api-in-tester.js"
   },
   "devDependencies": {
-    "@skpm/test-runner": "^0.1.15",
+    "@skpm/test-runner": "^0.1.19",
     "awesome-typescript-loader": "^3.4.0",
     "eslint": "^4.11.0",
     "eslint-config-airbnb-base": "^12.1.0",

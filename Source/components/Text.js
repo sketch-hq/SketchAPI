@@ -43,7 +43,9 @@ export class Text extends Layer {
   /**
    * Make a new text object.
    *
-   * @param {MSTextLayer} text The underlying model object from Sketch.
+   * @param [Object] properties - The properties to set on the object as a JSON object.
+   *                              If `sketchObject` is provided, will wrap it.
+   *                              Otherwise, creates a new native object.
    */
   constructor(text = {}) {
     if (!text.sketchObject) {

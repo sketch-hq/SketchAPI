@@ -13,7 +13,9 @@ export class Group extends Layer {
   /**
    * Make a new group object.
    *
-   * @param {MSLayerGroup} group  The underlying model object from Sketch.
+   * @param [Object] properties - The properties to set on the object as a JSON object.
+   *                              If `sketchObject` is provided, will wrap it.
+   *                              Otherwise, creates a new native object.
    */
   constructor(group = {}) {
     if (!group.sketchObject) {
