@@ -8,3 +8,11 @@ export function toArray(object) {
   }
   return arr
 }
+
+export function isNativeObject(object) {
+  return object && object.class && typeof object.class === 'function'
+}
+
+export function isWrappedObject(object) {
+  return object && object._isWrappedObject
+}

@@ -1,17 +1,17 @@
-// ********************************
-// # Style.js
-// # Sketch Javascript API.
-//
-// All code (C) 2016 Bohemian Coding.
-// ********************************
-
-import { WrappedObject } from './WrappedObject'
+import { WrappedObject, DefinedPropertiesKey } from './WrappedObject'
+import { toArray } from './utils'
 
 export const FillType = {
   color: 0, // A solid fill/border.
   gradient: 1, // A gradient fill/border.
   pattern: 4, // A pattern fill/border.
   noise: 5, // A noise fill/border.
+}
+export const BorderPosition = {
+  Center: 0,
+  Inside: 1,
+  Outside: 2,
+  Both: 3, // This is Sketch internal option - don't use it.
 }
 
 /**
@@ -22,100 +22,120 @@ export class Style extends WrappedObject {
   /**
    * Make a new style object.
    *
-   * @param {MSStyle} style The underlying model object from Sketch.
+   * @param [Object] properties - The properties to set on the object as a JSON object.
+   *                              If `sketchObject` is provided, will wrap it.
+   *                              Otherwise, creates a new native object.
    */
-  constructor(style) {
-    super(style || MSDefaultStyle.defaultStyle())
+  constructor(style = {}) {
+    if (!style.sketchObject) {
+      // eslint-disable-next-line no-param-reassign
+      style.sketchObject = MSDefaultStyle.defaultStyle()
+    }
+
+    super(style)
   }
 
   /**
    * Given a string description of a color, return an MSColor.
    */
-  colorFromString(value) {
+  static colorFromString(value) {
     const immutable = MSImmutableColor.colorWithSVGString_(value)
     return MSColor.alloc().initWithImmutableObject_(immutable)
   }
 
   /**
-   * Set the borders to use for this style.
-   *
-   * The value provided is a list of items, with each one representing a style.
-   *
-   * Currently these values can only be strings with css-style color specifications
-   * such as #ffee33 (alpha values are supported too, so #aabbccdd is valid).
-   *
-   * These strings are used to create simple borders.
-   *
-   * In the future the intention is to also support dictionaries allowing gradients
-   * and other more complex border parameters to be specified.
-   *
-   * @param {array} values A list of colors - each one representing a border to create.
-   *
+   * Given a MSColor, return string description of a color.
    */
-  set borders(values) {
-    const objects = []
-    values.forEach(value => {
-      const color = this.colorFromString(value)
-      const border = MSStyleBorder.new()
-      border.setColor_(color)
-      border.setFillType_(FillType.color)
-      border.enabled = true
-
-      objects.push(border)
-    })
-    this.sketchObject.setBorders_(objects)
+  static colorToString(value) {
+    function toHex(v) {
+      // eslint-disable-next-line
+      return (Math.round(v * 255) | (1 << 8)).toString(16).slice(1)
+    }
+    const red = toHex(value.red())
+    const green = toHex(value.green())
+    const blue = toHex(value.blue())
+    const alpha = toHex(value.alpha())
+    return `#${red}${green}${blue}${alpha}`
   }
+}
 
-  /**
-   * Set the fills to use for this style.
-   *
-   * The value provided is a list of items, with each one representing a style.
-   *
-   * Currently these values can only be strings with css-style color specifications
-   * such as #ffee33 (alpha values are supported too, so #aabbccdd is valid).
-   *
-   * These strings are used to create simple fills.
-   *
-   * In the future the intention is to also support dictionaries allowing gradients
-   * and other more complex fill parameters to be specified.
-   *
-   * @param {array} values A list of colors - each one representing a fill to create.
-   *
-   */
-  set fills(values) {
+Style[DefinedPropertiesKey] = { ...WrappedObject[DefinedPropertiesKey] }
+
+Style.FillType = FillType
+Style.define('fills', {
+  get() {
+    const fills = toArray(this._object.fills())
+    return fills.map(f => ({
+      color: Style.colorToString(f.color()),
+      fill:
+        Object.keys(FillType).find(key => FillType[key] === f.fillType()) ||
+        f.fillType(),
+    }))
+  },
+  set(values) {
     const objects = []
     values.forEach(value => {
-      const color = this.colorFromString(value)
       const fill = MSStyleFill.new()
-      fill.setColor_(color)
-      fill.setFillType_(FillType.color)
+      let color
+      let fillType
+      if (typeof value === 'string') {
+        color = Style.colorFromString(value)
+        fillType = FillType.color
+      } else {
+        color = Style.colorFromString(value.color)
+        fillType = FillType[value.fillType] || value.fillType
+      }
+      fill.color = color
+      fill.fillType = fillType
       fill.enabled = true
 
       objects.push(fill)
     })
-    this.sketchObject.setFills_(objects)
-  }
+    this._object.setFills_(objects)
+  },
+})
 
-  /**
-   * Return a list of tests to run for this class.
-   *
-   * @return {dictionary} A dictionary containing the tests to run. Each key is the name of a test, each value is a function which takes a Tester instance.
-   */
-  static tests() {
-    return {
-      tests: {
-        testBorders(tester) {
-          const style = new Style()
-          style.borders = ['#11223344', '#1234']
-          tester.assertEqual(style.sketchObject.borders().count(), 2)
-        },
+Style.BorderPosition = BorderPosition
+Style.define('borders', {
+  get() {
+    const borders = toArray(this._object.borders())
+    return borders.map(f => ({
+      color: Style.colorToString(f.color()),
+      fillType:
+        Object.keys(FillType).find(key => FillType[key] === f.fillType()) ||
+        f.fillType(),
+      position:
+        Object.keys(BorderPosition).find(
+          key => BorderPosition[key] === f.position()
+        ) || f.position(),
+      thickness: 0 + f.thickness(),
+    }))
+  },
+  set(values) {
+    const objects = []
+    values.forEach(value => {
+      const border = MSStyleBorder.new()
+      let color
+      let fillType
+      if (typeof value === 'string') {
+        color = Style.colorFromString(value)
+        fillType = FillType.color
+      } else {
+        color = Style.colorFromString(value.color)
+        fillType = FillType[value.fillType] || value.fillType
+        if (value.thickness) {
+          border.thickness = value.thickness
+        }
+        if (value.position) {
+          border.position = BorderPosition[value.position] || value.position
+        }
+      }
+      border.color = color
+      border.fillType = fillType
+      border.enabled = true
 
-        testFills(tester) {
-          const style = new Style()
-          style.borders = ['#11223344', '#1234']
-          tester.assertEqual(style.sketchObject.borders().count(), 2)
-        },
-      },
-    }
-  }
-}
+      objects.push(border)
+    })
+    this._object.setBorders_(objects)
+  },
+})

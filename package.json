@@ -1,25 +1,30 @@
 {
   "name": "sketch-api",
-  "version": "1.1.0",
+  "version": "2.0.0",
   "author": "Sam Deane",
   "license": "MIT",
   "description": "Javascript API for Sketch",
-  "main": "Source/API.js",
-  "config": {
-    "output": "../SketchPluginManager/Source/SketchAPI.js"
-  },
+  "main": "exposed-npm-package.js",
+  "files": [
+    "exposed-npm-package.js"
+  ],
   "scripts": {
-    "build": "webpack",
-    "build:prod": "webpack -p --optimize-minimize",
+    "build": "npm run build:test && npm run build:api && node ./scripts/copy-tests.js",
+    "build:test": "skpm-test --build-only",
+    "build:api": "webpack -p --optimize-minimize",
     "start": "npm run build",
     "watch": "webpack --watch",
-    "test": "npm run lint",
+    "run-tests": "skpm-test",
+    "test": "npm run lint -- --quiet && npm run run-tests",
+    "test:watch": "npm run run-tests -- --watch",
     "lint": "find . -name \"*.ts\" -o -name \"*.js\" | grep -v -f .gitignore | xargs eslint",
     "prettier:base": "prettier --write",
     "prettify": "find . -name \"*.ts\" -o -name \"*.js\" | grep -v -f .gitignore | xargs npm run prettier:base",
-    "lint-staged": "lint-staged"
+    "lint-staged": "lint-staged",
+    "postinstall": "node ./scripts/install-pre-commit.js && node ./scripts/inject-new-api-in-tester.js"
   },
   "devDependencies": {
+    "@skpm/test-runner": "^0.1.19",
     "awesome-typescript-loader": "^3.4.0",
     "eslint": "^4.11.0",
     "eslint-config-airbnb-base": "^12.1.0",
@@ -31,13 +36,13 @@
     "lint-staged": "^5.0.0",
     "pre-commit": "^1.2.2",
     "prettier": "^1.8.2",
-    "source-map-loader": "^0.2.3",
     "typescript": "^2.6.1",
     "typescript-eslint-parser": "^9.0.0",
     "webpack": "^3.8.1"
   },
   "dependencies": {},
   "pre-commit": [
+    "build",
     "lint-staged"
   ],
   "lint-staged": {

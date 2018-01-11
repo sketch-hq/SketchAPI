@@ -1,22 +1,45 @@
-// ********************************
-// ## Sketch API.
-//
-// All code (C) 2016 Bohemian Coding.
-// ********************************
+import { DataSupplier } from './api/DataSupplier'
+import * as UI from './api/UI'
+import * as Settings from './api/Settings'
+import { exportObject } from './api/export'
 
-import { Application } from './Application'
+import { Rectangle } from './Rectangle'
+import { Style } from './Style'
 
-/**
- * Return a function that captures the context.
- * When called, this function will initialise the API
- * and return an Application object that provides access
- * to all API functions.
- *
- * We do it like this to defer having to perform a lot
- * of setup until context.api() is actually called -- thus
- * scripts which don't call it at all suffer minimal overhead.
- */
+import { Document } from './components/Document'
+import { Group } from './components/Group'
+import { Text } from './components/Text'
+import { Image } from './components/Image'
+import { Shape } from './components/Shape'
+import { Artboard } from './components/Artboard'
+import { Page } from './components/Page'
 
-// The Application object effectively *is* the api -- all other
-// functions and objects can be accessed via it.
-module.exports = context => () => new Application(context)
+import { Types } from './enums'
+import { wrapObject } from './wrapNativeObject'
+
+const api = {}
+
+api.Document = Document
+api.Group = Group
+api.Text = Text
+api.Image = Image
+api.Shape = Shape
+api.Artboard = Artboard
+api.Page = Page
+
+api.DataSupplier = DataSupplier
+api.UI = UI
+api.Settings = Settings
+api.export = exportObject
+
+api.Style = Style
+api.Rectangle = Rectangle
+api.Types = Types
+api.fromNative = wrapObject
+
+api.version = {
+  sketch: MSApplicationMetadata.metadata().appVersion,
+  api: process.env.API_VERSION,
+}
+
+module.exports = api

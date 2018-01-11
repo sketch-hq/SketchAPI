@@ -79,6 +79,7 @@ rules:
   class-methods-use-this: warn
   no-useless-constructor: warn
   eqeqeq: off
+  strict: off
 
   ###########
   # SPECIAL #

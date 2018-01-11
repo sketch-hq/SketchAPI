@@ -1,8 +1,6 @@
 # Sketch API
 
-This is a prototype Javascript API for Sketch.
-
-The intention is to make something which is:
+This is a prototype Javascript API for Sketch. It's still a work in progress, but the intention is to make something which is:
 
 * native Javascript
 * an easily understandable subset of the full internals of Sketch
@@ -15,13 +13,13 @@ This API is a very core layer which interfaces with Sketch itself. It's intentio
 
 Comments and suggestions for this API are welcome - send them to developers@sketchapp.com, or [file an issue](https://github.com/BohemianCoding/SketchAPI/issues) to discuss it.
 
-The API comes bundled inside Sketch, so no installation is required. You access it by obtaining a root "sketch" object via the context that's passed to your script, like so:
+## Installation
+
+The API comes bundled inside Sketch, so no installation is required. You access it by obtaining a global `sketch` object:
 
 ```javascript
-var sketch = context.api()
+var api = sketch
 ```
-
-Calls to this object then give you access to the rest of the API.
 
 ## Overview
 
@@ -37,15 +35,15 @@ The approach taken is to wrap the native Sketch model objects inside javascript 
 
 The layer hierarchy is deliberately simplified, with all shape layers being treated the same way. Thus there are currently wrapper classes for the following layer types: `Page`, `Artboard`, `Group`, `Shape`, `Text`, `Image`.
 
-On top of this sits a `Document` class for each document, and an `Application` class which is the root of the tree. It's an instance of this that you are given when you call `context.api()`, and it is this single object which gives you access to all the others.
+On top of this sits a `Document` class for each document.
 
 One or two important properties of layers are exposed directly in the wrappers. For example `name`, `id`, and `frame`. Over time, more properties will be exposed this way, but for now you will often have to drop down to interrogating the underlying model object: `layer.sketchObject.`.
 
 There is the beginning of a wrapper class `Style` for layer styles, but it's currently very simple. The plan here will be to allow a quick way to set up all the common properties of a style, in a way that is uniform and consistent.
 
-On the `Application` class there is also some support for more global tasks such as reading/writing preferences. This stuff will be expanded over time.
+On `sketch.Settings`, there is also some support for more global tasks such as reading/writing preferences.
 
-The application object also exposes some utility classes. Currently the main one of note is `Rectangle`, which is a javascript-native representation of a rectangle. The plan is to use this class consistently within the API, in order to try to mask the fact that the model itself uses a confusing mix of `NSRect`, `CGRect`, `MSRect` and `MSAbsoluteRect`! In time more utility classes may be added. In time, also, we hope to clean up the model to be more consistent, at which point `Rectangle` might just turn into a thin wrapper for one of the native types.
+The api object also exposes some utility classes. Currently the main one of note is `Rectangle`, which is a javascript-native representation of a rectangle. The plan is to use this class consistently within the API, in order to try to mask the fact that the model itself uses a confusing mix of `NSRect`, `CGRect`, `MSRect` and `MSAbsoluteRect`! In time more utility classes may be added. In time, also, we hope to clean up the model to be more consistent, at which point `Rectangle` might just turn into a thin wrapper for one of the native types.
 
 Finally, there is some crude support for interaction with the user via alerts/sheets and the messages area at the bottom of the canvas. This stuff is _not_ final, and is currently just a re-working of some of our original code snippets. Ideally we'd like to come up with a more powerful and cleaner API to allow your plugin to interact with the user in a way that is consistent and compatible with the way Sketch itself interacts. It will probably take some time for us to get to this stuff!
 
@@ -68,7 +66,7 @@ if (obj1 == obj2) {
 }
 
 // this is better - both wrappers might represent the same object
-if (obj1.sketchObject == obj2.sketchObject) {
+if (obj1.isEqual(obj2)) {
   /* do stuff */
 }
 ```
@@ -78,25 +76,29 @@ if (obj1.sketchObject == obj2.sketchObject) {
 Here's a very simple example script:
 
 ```javascript
-var sketch = context.api()
+log(sketch.version.api)
+log(sketch.version.sketch)
 
-log(sketch.api_version)
-log(sketch.version)
-log(sketch.build)
-log(sketch.full_version)
-
-var document = sketch.selectedDocument
+var document = sketch.fromNative(context.document)
 var selection = document.selectedLayers
 var page = document.selectedPage
 
-var group = page.newGroup({
-  frame: new sketch.Rectangle(0, 0, 100, 100),
+var Group = sketch.Group
+var Shape = sketch.Shape
+var Rectangle = sketch.Rectangle
+
+var group = new Group({
+  parent: page,
+  frame: new Rectangle(0, 0, 100, 100),
   name: 'Test',
 })
-var rect = group.newShape({ frame: new sketch.Rectangle(10, 10, 80, 80) })
+var rect = new Shape({
+  parent: group,
+  frame: new Rectangle(10, 10, 80, 80),
+})
 
 log(selection.isEmpty)
-selection.iterate(function(item) {
+selection.layers.forEach(function(item) {
   log(item.name)
 })
 
@@ -106,10 +108,13 @@ log(selection.isEmpty)
 group.select()
 rect.addToSelection()
 
-sketch.getStringFromUser('Test', 'default')
-sketch.getSelectionFromUser('Test', ['One', 'Two'], 1)
-sketch.message('Hello mum!')
-sketch.alert('Title', 'message')
+var outputString = sketch.UI.getStringFromUser('Test', 'default')
+var outputSelection = sketch.UI.getSelectionFromUser('Test', ['One', 'Two'], 1)
+sketch.UI.message('Hello mum!')
+sketch.UI.alert('Title', 'message')
+
+sketch.Settings.setSettingForKey(context, 'setting-to-remember', outputString)
+log(sketch.Settings.settingForKey(context, 'setting-to-remember'))
 ```
 
 For more examples, we recommend checking out the [examples section of the developer website](http://developer.sketchapp.com/examples/).
@@ -134,19 +139,7 @@ Once that's ready, you can run:
 npm start
 ```
 
-to compile the library. By default, it will be saved to `../SketchPluginManager/Source/SketchAPI.js` (which is where the build process for Sketch expects to find it).
-
-Unless you're part of the Bohemian team and are actually building Sketch, you'll probably want to put it somewhere else. You can specify your own output path by running
-
-```
-npm config set sketch-api:output your/output/path/file.js
-```
-
-To restore the default setting, run
-
-```
-npm config delete sketch-api:output
-```
+to compile the library. By default, it will be saved to `./build/SketchAPI.js`.
 
 For your convenience, you can use
 
@@ -165,6 +158,21 @@ defaults write com.bohemiancoding.sketch3 SketchAPILocation "/path/to/your/Sketc
 ```
 
 Sketch will then load the external .js file instead of the bundled version.
+
+### Testing
+
+To run the tests, you can use
+
+```
+npm run test
+npm run test:watch
+```
+
+If you want to run the tests with a specific version of Sketch, you can use
+
+```
+SKETCH_PATH=/path/to/sketch.app npm run test
+```
 
 ## Acknowledgements
 
