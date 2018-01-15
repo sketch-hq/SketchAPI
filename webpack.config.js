@@ -16,7 +16,7 @@ const config = {
   entry: './Source/index.js',
   output: {
     filename: 'SketchAPI.js',
-    library: 'sketch',
+    libraryTarget: 'commonjs2',
     path: OUTPUT_PATH,
   },
   resolve: {
