@@ -5,11 +5,8 @@ section: Utils
 ---
 
 ```javascript
+var sketch = require('sketch-api')
 var document = sketch.fromNative(context.document)
-```
-
-```javascript
-import { fromNative } from 'sketch-api'
 ```
 
 A utility function to get a wrapped object from a native Sketch model object.

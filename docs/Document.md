@@ -5,11 +5,7 @@ section: components
 ---
 
 ```javascript
-var Document = sketch.Document
-```
-
-```javascript
-import { Document } from 'sketch-api'
+var Document = require('sketch-api').Document
 ```
 
 A Sketch document.

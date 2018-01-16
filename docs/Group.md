@@ -5,11 +5,7 @@ section: components
 ---
 
 ```javascript
-var Group = sketch.Group
-```
-
-```javascript
-import { Group } from 'sketch-api'
+var Group = require('sketch-api').Group
 ```
 
 A group of layers. It is also an instance of [Layer](#layer) so all the methods defined there are available.

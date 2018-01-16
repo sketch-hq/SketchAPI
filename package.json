@@ -1,13 +1,10 @@
 {
   "name": "sketch-api",
+  "private": "true",
   "version": "2.0.0",
   "author": "Sam Deane",
   "license": "MIT",
   "description": "Javascript API for Sketch",
-  "main": "exposed-npm-package.js",
-  "files": [
-    "exposed-npm-package.js"
-  ],
   "scripts": {
     "build": "npm run build:test && npm run build:api && node ./scripts/copy-tests.js",
     "build:test": "skpm-test --build-only",

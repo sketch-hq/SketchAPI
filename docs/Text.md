@@ -5,11 +5,7 @@ section: components
 ---
 
 ```javascript
-var Text = sketch.Text
-```
-
-```javascript
-import { Text } from 'sketch-api'
+var Text = require('sketch-api').Text
 ```
 
 An text layer. It is an instance of [Layer](#layer) so all the methods defined there are available.

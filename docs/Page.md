@@ -5,11 +5,7 @@ section: components
 ---
 
 ```javascript
-var Page = sketch.Page
-```
-
-```javascript
-import { Page } from 'sketch-api'
+var Page = require('sketch-api').Page
 ```
 
 A Sketch page. It is an instance of both [Layer](#layer) and [Group](#group) so all the methods defined there are available.

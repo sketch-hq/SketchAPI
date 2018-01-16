@@ -6,7 +6,7 @@ hidden: true
 ---
 
 ```js
-var DataSupplier = sketch.DataSupplier
+var DataSupplier = require('sketch-api').DataSupplier
 
 var dataSupplier = new DataSupplier(context)
 ```
@@ -26,9 +26,11 @@ Return a DataSupplier object with the following methods:
 > Example
 
 ```js
+var DataSupplier = require('sketch-api').DataSupplier
+
 // onStartup would the handler for the `Startup` action defined in the manifest.json
 export function onStartup(context) {
-  var dataSupplier = new sketch.DataSupplier(context)
+  var dataSupplier = new DataSupplier(context)
 
   dataSupplier.registerStaticSupplier('public.text', 'My Custom Data', [
     'foo',
@@ -51,9 +53,11 @@ Register some data with a name.
 > Example
 
 ```js
+var DataSupplier = require('sketch-api').DataSupplier
+
 // onStartup would be the handler for the `Startup` action defined in the manifest.json
 export function onStartup(context) {
-  var dataSupplier = new sketch.DataSupplier(context)
+  var dataSupplier = new DataSupplier(context)
 
   dataSupplier.registerPluginDataSupplier(
     'public.text',
@@ -76,11 +80,13 @@ Register some data with a name and a key.
 > Example
 
 ```js
+var DataSupplier = require('sketch-api').DataSupplier
+
 // onSupplyKeyNeeded would be the handler for the `SupplyKey` action defined in the manifest.json
 export function onSupplyKeyNeeded(context) {
   var count = context.data.count
 
-  var dataSupplier = new sketch.DataSupplier(context)
+  var dataSupplier = new DataSupplier(context)
 
   var data = Array.from(Array(count)).map(i => 'foo')
 
@@ -99,9 +105,11 @@ When the plugin providing the dynamic data has finished generating the data, it 
 > Example
 
 ```js
+var DataSupplier = require('sketch-api').DataSupplier
+
 // onShutdown would be the handler for the `Shutdown` action defined in the manifest.json
 export function onShutdown(context) {
-  var dataSupplier = new sketch.DataSupplier(context)
+  var dataSupplier = new DataSupplier(context)
 
   dataSupplier.deregisterDataSuppliers()
 }

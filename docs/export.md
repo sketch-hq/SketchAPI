@@ -5,6 +5,7 @@ section: Utils
 ---
 
 ```javascript
+var sketch = require('sketch-api')
 sketch.export(layer, {
   formats: 'svg',
 })

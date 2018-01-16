@@ -5,9 +5,7 @@ section: API
 ---
 
 ```js
-var Settings = sketch.Settings
-
-import { Settings } from 'sketch-api'
+var Settings = require('sketch-api').Settings
 ```
 
 A set of functions to handle user settings. The settings are persisted when the user closes Sketch.
