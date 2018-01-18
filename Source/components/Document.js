@@ -114,3 +114,15 @@ export class Document extends WrappedObject {
 Document.type = Types.Document
 Document[DefinedPropertiesKey] = { ...WrappedObject[DefinedPropertiesKey] }
 Factory.registerClass(Document, MSDocumentData)
+
+// override getting the id to make sure it's fine if we have an MSDocument
+Document.define('id', {
+  exportable: true,
+  importable: false,
+  get() {
+    if (!this._object.objectID) {
+      return String(this._object.documentData().objectID())
+    }
+    return String(this._object.objectID())
+  },
+})
