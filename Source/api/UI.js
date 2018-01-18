@@ -16,8 +16,7 @@ export function message(text, document) {
       .orderedDocuments()
       .firstObject()
       .showMessage(text)
-  }
-  if (isNativeObject(document)) {
+  } else if (isNativeObject(document)) {
     document.showMessage(text)
   } else {
     document.sketchObject.showMessage(text)
