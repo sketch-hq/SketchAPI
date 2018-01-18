@@ -107,6 +107,7 @@ Layer.define('index', {
 })
 
 Layer.define('parent', {
+  enumerable: false,
   exportable: false,
   /**
    * Return the parent container of this layer.

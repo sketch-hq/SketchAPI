@@ -13,10 +13,10 @@ export class WrappedObject {
       value: this.constructor.type,
     })
 
-    this._setProperties(options)
+    this.update(options)
   }
 
-  _setProperties(options) {
+  update(options = {}) {
     const propertyList = this.constructor[DefinedPropertiesKey]
 
     Object.keys(options)
@@ -58,10 +58,6 @@ export class WrappedObject {
     return new this({
       sketchObject,
     })
-  }
-
-  update(json = {}) {
-    this._setProperties(json)
   }
 
   toJSON() {
@@ -158,6 +154,14 @@ export class WrappedObject {
 }
 
 WrappedObject[DefinedPropertiesKey] = {}
+
+WrappedObject.define('type', {
+  exportable: true,
+  importable: false,
+  get() {
+    return this.type
+  },
+})
 
 WrappedObject.define('id', {
   exportable: true,

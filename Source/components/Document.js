@@ -29,24 +29,6 @@ export class Document extends WrappedObject {
   }
 
   /**
-   * The layers that the user has selected in the currently selected page.
-   *
-   * @return {Selection} A selection object representing the layers that the user has selected in the currently selected page.
-   */
-  get selectedLayers() {
-    return new Selection(this.selectedPage)
-  }
-
-  /**
-   * The current page that the user has selected.
-   *
-   * @return {Page} A page object representing the page that the user is currently viewing.
-   */
-  get selectedPage() {
-    return Page.fromNative(this._object.currentPage())
-  }
-
-  /**
    * Returns a list of the pages in this document.
    *
    * @return {[Page]} The pages.
@@ -124,5 +106,33 @@ Document.define('id', {
       return String(this._object.documentData().objectID())
     }
     return String(this._object.objectID())
+  },
+})
+
+/**
+ * The layers that the user has selected in the currently selected page.
+ *
+ * @return {Selection} A selection object representing the layers that the user has selected in the currently selected page.
+ */
+Document.define('selectedLayers', {
+  enumerable: false,
+  exportable: false,
+  importable: false,
+  get() {
+    return new Selection(this.selectedPage)
+  },
+})
+
+/**
+ * The current page that the user has selected.
+ *
+ * @return {Page} A page object representing the page that the user is currently viewing.
+ */
+Document.define('selectedPage', {
+  enumerable: false,
+  exportable: false,
+  importable: false,
+  get() {
+    return Page.fromNative(this._object.currentPage())
   },
 })

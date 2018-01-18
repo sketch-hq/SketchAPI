@@ -70,6 +70,7 @@ SymbolInstance.define('symbolId', {
 
 SymbolInstance.define('master', {
   exportable: false,
+  enumerable: false,
   get() {
     const master = this._object.symbolMaster()
     if (master) {
