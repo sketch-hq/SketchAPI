@@ -24,6 +24,8 @@ function createSymbolMaster(document) {
 test('should create a symbol master from an artboard', (context, document) => {
   // build the symbol master
   const { master } = createSymbolMaster(document)
+  // check that a master can be logged
+  log(master)
   expect(master.type).toBe('SymbolMaster')
 
   expect(document.getSymbolMasterWithID(master.symbolId)).toEqual(master)
@@ -85,6 +87,7 @@ test(
     document.selectedPage.layers = document.selectedPage.layers.concat(instance)
     expect(instance.overrides.length).toBe(3)
     expect(instance.overrides[0].toJSON()).toEqual({
+      type: 'Override',
       id: `${nestedInstance.id}_symbolID`,
       path: nestedInstance.id,
       property: 'symbolID',
@@ -93,6 +96,7 @@ test(
       isDefault: true,
     })
     expect(instance.overrides[1].toJSON()).toEqual({
+      type: 'Override',
       id: `${text2.id}_stringValue`,
       path: text2.id,
       property: 'stringValue',
@@ -101,6 +105,7 @@ test(
       isDefault: true,
     })
     expect(instance.overrides[2].toJSON()).toEqual({
+      type: 'Override',
       id: `${nestedInstance.id}/${text.id}_stringValue`,
       path: `${nestedInstance.id}/${text.id}`,
       property: 'stringValue',

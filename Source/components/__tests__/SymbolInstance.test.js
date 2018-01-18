@@ -28,6 +28,8 @@ test(
     const instance = new SymbolInstance({
       master,
     })
+    // check that an instance can be logged
+    log(instance)
     expect(instance.type).toBe('SymbolInstance')
     expect(instance.master).toBe(null)
     // by default, it's not anywhere in the document
@@ -62,6 +64,7 @@ test('should have overrides', (context, document) => {
   expect(instance.overrides.length).toBe(1)
   const override = instance.overrides[0]
   expect(override.toJSON()).toEqual({
+    type: 'Override',
     id: `${text.id}_stringValue`,
     path: text.id,
     property: 'stringValue',

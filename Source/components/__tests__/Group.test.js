@@ -58,6 +58,8 @@ test('should create a group', (context, document) => {
   const page = document.selectedPage
 
   const group = new Group({ parent: page })
+  // check that a group can be logged
+  log(group)
   expect(group.type).toBe('Group')
 })
 

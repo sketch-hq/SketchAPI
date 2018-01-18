@@ -28,10 +28,13 @@ test('should be able to set overrides', (context, document) => {
 
   expect(instance.overrides.length).toBe(1)
   const override = instance.overrides[0]
+  // check that an override can be logged
+  log(override)
   override.value = 'overridden'
 
   expect(instance.overrides.length).toBe(1)
   expect(instance.overrides[0].toJSON()).toEqual({
+    type: 'Override',
     id: `${text.id}_stringValue`,
     path: text.id,
     property: 'stringValue',
@@ -68,6 +71,7 @@ test('should change a nested symbol', (context, document) => {
   override.value = nestedMaster2.symbolId
 
   expect(instance.overrides[0].toJSON()).toEqual({
+    type: 'Override',
     id: `${nestedInstance.id}_symbolID`,
     path: nestedInstance.id,
     property: 'symbolID',

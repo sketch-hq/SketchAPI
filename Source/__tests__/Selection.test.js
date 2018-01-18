@@ -15,6 +15,8 @@ test('should clear the selection', (context, document) => {
     selected: true,
   })
   const selection = document.selectedLayers
+  // check that a selection can be logged
+  log(selection)
   expect(group.selected).toBe(true)
   expect(selection.isEmpty).toBe(false)
   selection.clear()

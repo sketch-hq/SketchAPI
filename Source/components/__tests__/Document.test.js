@@ -2,6 +2,11 @@
 
 import { Group } from '../Group'
 
+test('should be able to log a document', (context, document) => {
+  log(document)
+  expect(true).toBe(true)
+})
+
 test('should return the pages', (context, document) => {
   const { pages } = document
   expect(pages.length).toBe(1)
