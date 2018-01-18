@@ -46,6 +46,11 @@ globals:
   MSSymbolMaster: false
   MSSymbolInstance: false
   MSAvailableOverride: false
+  MSAssetLibrary: false
+  MSDocument: false
+  NSURL: false
+  NSSaveToOperation: false
+  MSAssetLibraryControllerAddStatusOK: false
 
 rules:
   ###########

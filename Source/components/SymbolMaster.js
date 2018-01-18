@@ -48,6 +48,15 @@ export class SymbolMaster extends Artboard {
   getAllInstances() {
     return toArray(this._object.allInstances()).map(wrapObject)
   }
+
+  getLibrary() {
+    const libraryController = AppController.sharedInstance().librariesController()
+    const lib = libraryController.libraryForSymbol(this._object)
+    if (!lib) {
+      return null
+    }
+    return wrapObject(lib)
+  }
 }
 
 SymbolMaster.type = Types.SymbolMaster

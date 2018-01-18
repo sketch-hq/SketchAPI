@@ -26,3 +26,15 @@ test('should look for a layer by its id', (context, document) => {
   const found = document.getLayerWithID(id)
   expect(found).toEqual(group)
 })
+
+test(
+  'should throw an error when trying to save because we cannot save a MSDocumentData',
+  (context, document) => {
+    try {
+      document.save('~/Desktop/test.sketch')
+      expect(false).toBe(true)
+    } catch (err) {
+      expect(err.message).toBe('Cannot save this document')
+    }
+  }
+)

@@ -100,6 +100,10 @@ export class Document extends WrappedObject {
     return undefined
   }
 
+  getSymbols() {
+    return toArray(this._object.allSymbols()).map(wrapObject)
+  }
+
   /**
    * Center the view of the document window on a given layer.
    *
@@ -109,8 +113,40 @@ export class Document extends WrappedObject {
     const wrappedLayer = wrapObject(layer)
     this._object.contentDrawView().centerRect_(wrappedLayer.sketchObject.rect())
   }
+
+  save(path) {
+    if (
+      !this._object.writeToURL_ofType_forSaveOperation_originalContentsURL_error
+    ) {
+      // we only have an MSDocumentData instead of a MSDocument
+      throw new Error('Cannot save this document')
+    }
+    const error = MOPointer.alloc().init()
+
+    const url = typeof path === 'string' ? NSURL.URLWithString(path) : path
+    const oldUrl = NSURL.URLWithString('not used')
+
+    this._object.writeToURL_ofType_forSaveOperation_originalContentsURL_error(
+      url,
+      0,
+      NSSaveToOperation,
+      oldUrl,
+      error
+    )
+
+    if (error) {
+      throw new Error(error.description)
+    }
+
+    return this
+  }
 }
 
 Document.type = Types.Document
 Document[DefinedPropertiesKey] = { ...WrappedObject[DefinedPropertiesKey] }
 Factory.registerClass(Document, MSDocumentData)
+
+// also register MSDocument if it exists
+if (typeof MSDocument !== 'undefined') {
+  Factory.registerClass(Document, MSDocument)
+}
