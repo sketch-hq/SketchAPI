@@ -8,7 +8,7 @@ section: components
 var overrides = symbolInstance.overrides
 ```
 
-A [Symbol](https://www.sketchapp.com/docs/symbols/) override. This component is not exposed, it is only returns when accessing the `overrides` of a [Symbol Instance](#symbol-instance).
+A [Symbol](https://www.sketchapp.com/docs/symbols/) override. This component is not exposed, it is only returned when accessing the `overrides` of a [Symbol Instance](#symbol-instance).
 
 | Properties     | type    | Description                                                                                                                      |
 | -------------- | ------- | -------------------------------------------------------------------------------------------------------------------------------- |
