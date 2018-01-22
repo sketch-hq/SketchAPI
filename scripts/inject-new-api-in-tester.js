@@ -11,11 +11,25 @@ const templatePath = path.join(
   '../node_modules/@skpm/test-runner/test-runner.sketchplugin/Contents/Sketch/tests-template.js'
 )
 
-const indexJS = fs
+const template = fs
   .readFileSync(templatePath, 'utf8')
   .replace(
     "Document = require('sketch-api')",
     `Document = require('${path.join(__dirname, '../Source/')}')`
   )
 
-fs.writeFileSync(templatePath, indexJS, 'utf8')
+fs.writeFileSync(templatePath, template, 'utf8')
+
+const asyncTemplatePath = path.join(
+  __dirname,
+  '../node_modules/@skpm/test-runner/test-runner.sketchplugin/Contents/Sketch/async-tests-template.js'
+)
+
+const asyncTemplate = fs
+  .readFileSync(asyncTemplatePath, 'utf8')
+  .replace(
+    "sketch = require('sketch-api')",
+    `sketch = require('${path.join(__dirname, '../Source/')}')`
+  )
+
+fs.writeFileSync(templatePath, asyncTemplate, 'utf8')
