@@ -1,6 +1,7 @@
 import { DefinedPropertiesKey, WrappedObject } from '../WrappedObject'
 import { Types } from '../enums'
 import { Factory } from '../Factory'
+import { ImageData } from './ImageData'
 
 /**
  * An MSAvailableOverride. This is not exposed, only used by SymbolInstance
@@ -39,10 +40,18 @@ Override.define('symbolOverride', {
 
 Override.define('value', {
   get() {
+    const value = this._object.currentValue()
+    if (this.property === 'image') {
+      return ImageData.fromNative(value)
+    }
     return String(this._object.currentValue())
   },
   set(value) {
     // __symbolInstance is set when building the Override
+    if (this.property === 'image') {
+      this.__symbolInstance.setOverrideValue(this, ImageData.from(value))
+      return
+    }
     this.__symbolInstance.setOverrideValue(this, value)
   },
 })
