@@ -5,7 +5,7 @@ section: components
 ---
 
 ```javascript
-var Image = require('sketch-api').Image
+var Image = require('sketch/dom').Image
 ```
 
 An image layer. It is an instance of [Layer](#layer) so all the methods defined there are available.

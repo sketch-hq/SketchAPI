@@ -5,7 +5,7 @@ section: components
 ---
 
 ```javascript
-var Layer = require('sketch-api').Layer
+var Layer = require('sketch/dom').Layer
 ```
 
 A Sketch layer.

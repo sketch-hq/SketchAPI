@@ -5,7 +5,7 @@ section: Utils
 ---
 
 ```javascript
-var fiber = sketch.createFiber()
+var fiber = require('sketch/async').createFiber()
 longRunningTask(function(err, result) {
   fiber.cleanup()
   // you can continue working synchronously here

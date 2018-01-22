@@ -9,16 +9,22 @@ const IS_BC_BUILD = /\/Modules\/SketchAPI$/.test(__dirname)
 
 const OUTPUT_PATH = path.resolve(
   __dirname,
-  IS_BC_BUILD ? '../SketchPluginManager/Source/' : './build'
+  IS_BC_BUILD ? '../SketchPluginManager/Source/api/' : './build'
 )
 
-const config = {
-  entry: './Source/index.js',
-  output: {
-    filename: 'SketchAPI.js',
-    libraryTarget: 'commonjs2',
-    path: OUTPUT_PATH,
+const ENTRIES = [
+  { entry: './Source/index.js', output: 'SketchAPI.js' },
+  { entry: './Source/async/index.js', output: 'SketchAPI_async.js' },
+  {
+    entry: './Source/data-supplier/index.js',
+    output: 'SketchAPI_data-supplier.js',
   },
+  { entry: './Source/dom/index.js', output: 'SketchAPI_dom.js' },
+  { entry: './Source/settings/index.js', output: 'SketchAPI_settings.js' },
+  { entry: './Source/ui/index.js', output: 'SketchAPI_ui.js' },
+]
+
+const config = {
   resolve: {
     // Add '.ts' as resolvable extensions.
     extensions: ['.ts', '.js', '.json'],
@@ -49,4 +55,16 @@ const config = {
   ],
 }
 
-module.exports = config
+module.exports = ENTRIES.map(({ entry, output }) => ({
+  ...config,
+  ...{
+    entry,
+    output: {
+      filename: output,
+      libraryTarget: 'commonjs2',
+      path: OUTPUT_PATH,
+    },
+  },
+}))
+
+module.exports.config = config

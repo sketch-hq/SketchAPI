@@ -5,7 +5,7 @@ section: components
 ---
 
 ```javascript
-var Artboard = require('sketch-api').Artboard
+var Artboard = require('sketch/dom').Artboard
 ```
 
 A Sketch artboard. It is an instance of both [Layer](#layer) and [Group](#group) so all the methods defined there are available.

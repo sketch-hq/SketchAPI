@@ -5,7 +5,7 @@ section: Utils
 ---
 
 ```javascript
-var sketch = require('sketch-api')
+var sketch = require('sketch/dom')
 var document = sketch.fromNative(context.document)
 ```
 

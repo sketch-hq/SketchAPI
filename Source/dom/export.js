@@ -1,5 +1,5 @@
-import { isWrappedObject } from '../utils'
-import { Types } from '../enums'
+import { isWrappedObject } from './utils'
+import { Types } from './enums'
 
 export const DEFAULT_EXPORT_OPTIONS = {
   compact: false,

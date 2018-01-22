@@ -6,7 +6,7 @@ hidden: true
 ---
 
 ```js
-var DataSupplier = require('sketch-api').DataSupplier
+var DataSupplier = require('sketch/data-supplier')
 
 var dataSupplier = new DataSupplier(context)
 ```
@@ -26,7 +26,7 @@ Return a DataSupplier object with the following methods:
 > Example
 
 ```js
-var DataSupplier = require('sketch-api').DataSupplier
+var DataSupplier = require('sketch/data-supplier')
 
 // onStartup would the handler for the `Startup` action defined in the manifest.json
 export function onStartup(context) {
@@ -53,7 +53,7 @@ Register some data with a name.
 > Example
 
 ```js
-var DataSupplier = require('sketch-api').DataSupplier
+var DataSupplier = require('sketch/data-supplier')
 
 // onStartup would be the handler for the `Startup` action defined in the manifest.json
 export function onStartup(context) {
@@ -80,7 +80,7 @@ Register some data with a name and a key.
 > Example
 
 ```js
-var DataSupplier = require('sketch-api').DataSupplier
+var DataSupplier = require('sketch/data-supplier')
 
 // onSupplyKeyNeeded would be the handler for the `SupplyKey` action defined in the manifest.json
 export function onSupplyKeyNeeded(context) {
@@ -105,7 +105,7 @@ When the plugin providing the dynamic data has finished generating the data, it 
 > Example
 
 ```js
-var DataSupplier = require('sketch-api').DataSupplier
+var DataSupplier = require('sketch/data-supplier')
 
 // onShutdown would be the handler for the `Shutdown` action defined in the manifest.json
 export function onShutdown(context) {

@@ -5,7 +5,7 @@ section: Utils
 ---
 
 ```javascript
-var Style = require('sketch-api').Style
+var Style = require('sketch/dom').Style
 ```
 
 ```javascript
