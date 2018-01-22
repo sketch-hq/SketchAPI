@@ -48,6 +48,7 @@ globals:
   MSAvailableOverride: false
   NSData: false
   NSDataBase64DecodingIgnoreUnknownCharacters: false
+  MSDocument: false
 
 rules:
   ###########

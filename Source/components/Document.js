@@ -97,6 +97,11 @@ Document.type = Types.Document
 Document[DefinedPropertiesKey] = { ...WrappedObject[DefinedPropertiesKey] }
 Factory.registerClass(Document, MSDocumentData)
 
+// also register MSDocument if it exists
+if (typeof MSDocument !== 'undefined') {
+  Factory.registerClass(Document, MSDocument)
+}
+
 // override getting the id to make sure it's fine if we have an MSDocument
 Document.define('id', {
   exportable: true,
