@@ -1,5 +1,6 @@
 import { WrappedObject, DefinedPropertiesKey } from './WrappedObject'
 import { toArray } from './utils'
+import { Types } from './enums'
 
 export const FillType = {
   color: 0, // A solid fill/border.
@@ -59,6 +60,7 @@ export class Style extends WrappedObject {
   }
 }
 
+Style.type = Types.Style
 Style[DefinedPropertiesKey] = { ...WrappedObject[DefinedPropertiesKey] }
 
 Style.FillType = FillType

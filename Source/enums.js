@@ -3,6 +3,7 @@ export const Types = {
   Page: 'Page',
   Artboard: 'Artboard',
   Shape: 'Shape',
+  Style: 'Style',
   Image: 'Image',
   Text: 'Text',
   Document: 'Document',

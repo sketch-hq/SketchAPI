@@ -70,7 +70,14 @@ export class WrappedObject {
         return
       }
       const value = this[k]
-      if (value && typeof value.toJSON === 'function') {
+      if (value && Array.isArray(value)) {
+        json[k] = value.map(x => {
+          if (x && typeof x.toJSON === 'function') {
+            return x.toJSON()
+          }
+          return x
+        })
+      } else if (value && typeof value.toJSON === 'function') {
         json[k] = value.toJSON()
       } else {
         json[k] = value
