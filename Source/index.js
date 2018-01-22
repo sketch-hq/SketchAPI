@@ -1,6 +1,7 @@
 import { DataSupplier } from './api/DataSupplier'
 import * as UI from './api/UI'
 import * as Settings from './api/Settings'
+import { createFiber } from './api/async'
 import { exportObject } from './api/export'
 
 import { Rectangle } from './Rectangle'
@@ -30,6 +31,7 @@ api.Page = Page
 api.DataSupplier = DataSupplier
 api.UI = UI
 api.Settings = Settings
+api.createFiber = createFiber
 api.export = exportObject
 
 api.Style = Style
