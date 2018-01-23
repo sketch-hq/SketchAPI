@@ -5,6 +5,8 @@ import { Rectangle } from '../../Rectangle'
 
 test('should create a Text layer', () => {
   const text = new Text()
+  // check that a text can be logged
+  log(text)
   expect(text.type).toBe('Text')
 })
 

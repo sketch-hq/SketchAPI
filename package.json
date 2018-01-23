@@ -32,7 +32,7 @@
     "eslint-plugin-typescript": "^0.8.0",
     "lint-staged": "^5.0.0",
     "pre-commit": "^1.2.2",
-    "prettier": "^1.8.2",
+    "prettier": "^1.9.2",
     "typescript": "^2.6.1",
     "typescript-eslint-parser": "^9.0.0",
     "webpack": "^3.8.1"
@@ -54,7 +54,7 @@
     ]
   },
   "prettier": {
-    "proseWrap": false,
+    "proseWrap": "never",
     "singleQuote": true,
     "trailingComma": "es5",
     "semi": false

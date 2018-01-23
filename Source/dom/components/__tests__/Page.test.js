@@ -6,6 +6,8 @@ test(
   'should return a Selection with the selected layers of the page',
   (context, document) => {
     const page = document.selectedPage
+    // check that an artboard can be logged
+    log(page)
     const selection = page.selectedLayers
     expect(selection.isEmpty).toBe(true)
 

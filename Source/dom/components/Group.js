@@ -56,7 +56,6 @@ Group[DefinedPropertiesKey] = { ...Layer[DefinedPropertiesKey] }
 Factory.registerClass(Group, MSLayerGroup)
 
 Group.define('layers', {
-  exportable: false,
   get() {
     return toArray(this._object.layers()).map(wrapNativeObject)
   },

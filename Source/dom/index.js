@@ -10,6 +10,8 @@ import { Image } from './components/Image'
 import { Shape } from './components/Shape'
 import { Artboard } from './components/Artboard'
 import { Page } from './components/Page'
+import { SymbolMaster } from './components/SymbolMaster'
+import { SymbolInstance } from './components/SymbolInstance'
 
 import { Types } from './enums'
 import { wrapObject } from './wrapNativeObject'
@@ -23,6 +25,8 @@ api.Image = Image
 api.Shape = Shape
 api.Artboard = Artboard
 api.Page = Page
+api.SymbolMaster = SymbolMaster
+api.SymbolInstance = SymbolInstance
 
 api.export = exportObject
 

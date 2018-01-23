@@ -3,6 +3,8 @@
 import { Artboard } from '../Artboard'
 
 test('should create an artboard', () => {
-  const artboard2 = new Artboard({ name: 'Test2' })
-  expect(artboard2.type).toBe('Artboard')
+  const artboard = new Artboard({ name: 'Test' })
+  // check that an artboard can be logged
+  log(artboard)
+  expect(artboard.type).toBe('Artboard')
 })

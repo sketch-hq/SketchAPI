@@ -3,6 +3,8 @@ import { Rectangle } from '../Rectangle'
 
 test('should create a rectangle', () => {
   const r = new Rectangle(1, 2, 3, 4)
+  // check that a rectangle can be logged
+  log(r)
   expect(r.x).toBe(1)
   expect(r.y).toBe(2)
   expect(r.width).toBe(3)

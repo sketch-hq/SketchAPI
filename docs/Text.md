@@ -8,7 +8,7 @@ section: components
 var Text = require('sketch/dom').Text
 ```
 
-An text layer. It is an instance of [Layer](#layer) so all the methods defined there are available.
+A text layer. It is an instance of [Layer](#layer) so all the methods defined there are available.
 
 | Properties  | type                        | Description                                                                                    |
 | ----------- | --------------------------- | ---------------------------------------------------------------------------------------------- |

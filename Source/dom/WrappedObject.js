@@ -7,20 +7,46 @@ export const DefinedPropertiesKey = '_DefinedPropertiesKey'
 export class WrappedObject {
   constructor(options) {
     this._object = options.sketchObject
-    this.type = this.constructor.type
+
+    Object.defineProperty(this, 'type', {
+      enumerable: true,
+      value: this.constructor.type,
+    })
+
+    this.update(options)
+  }
+
+  update(options = {}) {
     const propertyList = this.constructor[DefinedPropertiesKey]
 
-    Object.keys(options).forEach(k => {
-      if (!propertyList[k]) {
-        log(`no idea what to do with "${k}" in ${this.type}`)
-        return
-      }
+    Object.keys(options)
+      .sort((a, b) => {
+        if (
+          propertyList[a] &&
+          propertyList[a].depends &&
+          propertyList[a].depends === b
+        ) {
+          return 1
+        } else if (
+          propertyList[b] &&
+          propertyList[b].depends &&
+          propertyList[b].depends === a
+        ) {
+          return -1
+        }
+        return 0
+      })
+      .forEach(k => {
+        if (!propertyList[k]) {
+          log(`no idea what to do with "${k}" in ${this.type}`)
+          return
+        }
 
-      if (!propertyList[k].importable) {
-        return
-      }
-      this[k] = options[k]
-    })
+        if (!propertyList[k].importable) {
+          return
+        }
+        this[k] = options[k]
+      })
   }
 
   /**
@@ -34,22 +60,6 @@ export class WrappedObject {
     })
   }
 
-  update(json) {
-    const propertyList = this.constructor[DefinedPropertiesKey]
-
-    Object.keys(json).forEach(k => {
-      if (!propertyList[k]) {
-        log(`no idea what to do with "${k}" in ${this.type}`)
-        return
-      }
-
-      if (!propertyList[k].importable) {
-        return
-      }
-      this[k] = json[k]
-    })
-  }
-
   toJSON() {
     const propertyList = this.constructor[DefinedPropertiesKey]
 
@@ -59,7 +69,19 @@ export class WrappedObject {
       if (!propertyList[k].exportable) {
         return
       }
-      json[k] = this[k]
+      const value = this[k]
+      if (value && Array.isArray(value)) {
+        json[k] = value.map(x => {
+          if (x && typeof x.toJSON === 'function') {
+            return x.toJSON()
+          }
+          return x
+        })
+      } else if (value && typeof value.toJSON === 'function') {
+        json[k] = value.toJSON()
+      } else {
+        json[k] = value
+      }
     })
 
     return json
@@ -139,6 +161,14 @@ export class WrappedObject {
 }
 
 WrappedObject[DefinedPropertiesKey] = {}
+
+WrappedObject.define('type', {
+  exportable: true,
+  importable: false,
+  get() {
+    return this.type
+  },
+})
 
 WrappedObject.define('id', {
   exportable: true,

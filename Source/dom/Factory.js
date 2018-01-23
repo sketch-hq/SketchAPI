@@ -3,9 +3,11 @@ export const Factory = {
   _nativeToBox: {},
   _typeToNative: {},
   registerClass(boxedClass, nativeClass) {
-    this._typeToBox[boxedClass.type] = boxedClass
+    if (!this._typeToBox[boxedClass.type]) {
+      this._typeToBox[boxedClass.type] = boxedClass
+      this._typeToNative[boxedClass.type] = nativeClass
+    }
     this._nativeToBox[String(nativeClass.class())] = boxedClass
-    this._typeToNative[boxedClass.type] = nativeClass
   },
   create(type, props) {
     const _type = type && type.type ? type.type : type

@@ -5,6 +5,8 @@ import { Style } from '../Style'
 test('should set the borders', () => {
   // setting the borders after creation
   const style = new Style()
+  // check that a style can be logged
+  log(style)
   style.borders = ['#11223344', '#1234']
   expect(style.sketchObject.borders().count()).toBe(2)
 

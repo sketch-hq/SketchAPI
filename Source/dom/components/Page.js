@@ -28,15 +28,6 @@ export class Page extends Group {
     super(page)
   }
 
-  /**
-   * The layers that the user has selected.
-   *
-   * @return {Selection} A selection object representing the layers that the user has selected.
-   */
-  get selectedLayers() {
-    return new Selection(this)
-  }
-
   // eslint-disable-next-line
   adjustToFit() {
     // obviously doesn't do anything
@@ -83,6 +74,7 @@ Factory.registerClass(Page, MSPage)
 
 // override setting up the parent as it's needs to a be a Document
 Page.define('parent', {
+  enumerable: false,
   exportable: false,
   get() {
     return wrapNativeObject(this._object.documentData())
@@ -120,5 +112,19 @@ Page.define('selected', {
       // let's just select the first page, not sure what else we could do
       this._object.documentData().setCurrentPageIndex(0)
     }
+  },
+})
+
+/**
+ * The layers that the user has selected.
+ *
+ * @return {Selection} A selection object representing the layers that the user has selected.
+ */
+Page.define('selectedLayers', {
+  enumerable: false,
+  exportable: false,
+  importable: false,
+  get() {
+    return new Selection(this)
   },
 })

@@ -74,4 +74,13 @@ export class Rectangle {
   toString() {
     return `{${this.x}, ${this.y}, ${this.width}, ${this.height}}`
   }
+
+  toJSON() {
+    return {
+      x: this.x,
+      y: this.y,
+      width: this.width,
+      height: this.height,
+    }
+  }
 }
