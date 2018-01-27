@@ -1,4 +1,4 @@
-function toArray(array) {
+export function toArray(array) {
     let index = 0;
     return {
         [Symbol.iterator]() {
