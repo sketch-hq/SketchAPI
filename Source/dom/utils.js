@@ -1,4 +1,4 @@
-function toArray(array: NSArray) {
+function toArray(array) {
     array[Symbol.iterator] = function* () {
         let index = 0;
         return {
@@ -11,6 +11,7 @@ function toArray(array: NSArray) {
             }
         };
     };
+    return array
 }
 
 export function isNativeObject(object) {
