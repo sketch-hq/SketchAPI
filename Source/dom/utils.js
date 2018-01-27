@@ -1,12 +1,19 @@
-export function toArray(object) {
-  if (Array.isArray(object)) {
-    return object
-  }
-  const arr = []
-  for (let j = 0; j < (object || []).length; j += 1) {
-    arr.push(object.objectAtIndex(j))
-  }
-  return arr
+export function toArray(array) {
+    let index = 0;
+    return {
+        [Symbol.iterator]() {
+            return {
+                next() {
+                    if (index < 0 || index >= array.count()) {
+                        return { value: undefined, done: true };
+                    }
+                    
+                    const value = array.objectAtIndex(index);
+                    return { value, done: false };
+                }
+            };
+        }
+    };
 }
 
 export function isNativeObject(object) {
