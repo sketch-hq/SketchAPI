@@ -96,28 +96,60 @@ export class Document extends WrappedObject {
     this._object.contentDrawView().centerRect_(wrappedLayer.sketchObject.rect())
   }
 
+  static open(path) {
+    const app = NSDocumentController.sharedDocumentController()
+
+    let document
+
+    if (!path) {
+      app.openDocument()
+
+      document = app.currentDocument()
+    } else {
+      const url = typeof path === 'string' ? NSURL.fileURLWithPath(path) : path
+      const error = MOPointer.alloc().init()
+
+      document = app.openDocumentWithContentsOfURL_display_error(
+        url,
+        true,
+        error
+      )
+
+      if (error.value() !== null) {
+        throw new Error(error.value())
+      }
+    }
+
+    return Document.fromNative(document)
+  }
+
   save(path) {
-    if (
-      !this._object.writeToURL_ofType_forSaveOperation_originalContentsURL_error
-    ) {
+    let msdocument = this._object
+    const saveMethod =
+      'writeToURL_ofType_forSaveOperation_originalContentsURL_error'
+    if (!msdocument[saveMethod]) {
       // we only have an MSDocumentData instead of a MSDocument
+      // let's try to get back to the MSDocument
+      msdocument = this._object.delegate()
+    }
+
+    if (!msdocument[saveMethod]) {
       throw new Error('Cannot save this document')
     }
+
     const error = MOPointer.alloc().init()
 
-    const url = typeof path === 'string' ? NSURL.URLWithString(path) : path
-    const oldUrl = NSURL.URLWithString('not used')
+    if (!path) {
+      msdocument.saveDocument()
+    } else {
+      const url = typeof path === 'string' ? NSURL.fileURLWithPath(path) : path
+      const oldUrl = NSURL.URLWithString('not used')
 
-    this._object.writeToURL_ofType_forSaveOperation_originalContentsURL_error(
-      url,
-      0,
-      NSSaveToOperation,
-      oldUrl,
-      error
-    )
+      msdocument[saveMethod](url, 0, NSSaveToOperation, oldUrl, error)
 
-    if (error) {
-      throw new Error(error.description)
+      if (error.value() !== null) {
+        throw new Error(error.value())
+      }
     }
 
     return this
