@@ -5,11 +5,7 @@ section: Utils
 ---
 
 ```javascript
-var Rectangle = sketch.Page
-```
-
-```javascript
-import { Rectangle } from 'sketch-api'
+var Rectangle = require('sketch/dom').Page
 ```
 
 ```javascript

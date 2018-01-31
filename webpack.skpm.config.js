@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 
 // used for tests
-const normalConfig = require('./webpack.config')
+const normalConfig = require('./webpack.config').config
 
 module.exports = config => {
   config.resolve = normalConfig.resolve

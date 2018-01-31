@@ -1,7 +1,7 @@
 /*
  * `skpm-test` uses `sketch-api` to generate a new Document.
  * This is unfortunate since we are the one providing Document.
- * So we need to replace `require('sketch-api')` by `require(./Source)`
+ * So we need to replace `require('sketch')` by `require(./Source)`
  */
 const fs = require('fs')
 const path = require('path')
@@ -14,7 +14,7 @@ const templatePath = path.join(
 const template = fs
   .readFileSync(templatePath, 'utf8')
   .replace(
-    "Document = require('sketch-api')",
+    "Document = require('sketch')",
     `Document = require('${path.join(__dirname, '../Source/')}')`
   )
 
@@ -28,8 +28,8 @@ const asyncTemplatePath = path.join(
 const asyncTemplate = fs
   .readFileSync(asyncTemplatePath, 'utf8')
   .replace(
-    "sketch = require('sketch-api')",
+    "sketch = require('sketch')",
     `sketch = require('${path.join(__dirname, '../Source/')}')`
   )
 
-fs.writeFileSync(templatePath, asyncTemplate, 'utf8')
+fs.writeFileSync(asyncTemplatePath, asyncTemplate, 'utf8')

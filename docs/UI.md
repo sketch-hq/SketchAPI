@@ -5,9 +5,7 @@ section: API
 ---
 
 ```js
-var UI = sketch.UI
-
-import { UI } from 'sketch-api'
+var UI = require('sketch/ui')
 ```
 
 A set of functions to show some user interfaces. The set is small on _purpose_. Any more complex UI should be provided by third party libraries and doesn't need to be in the core.
