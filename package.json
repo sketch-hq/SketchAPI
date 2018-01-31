@@ -1,20 +1,17 @@
 {
   "name": "sketch-api",
+  "private": "true",
   "version": "2.0.0",
   "author": "Sam Deane",
   "license": "MIT",
   "description": "Javascript API for Sketch",
-  "main": "exposed-npm-package.js",
-  "files": [
-    "exposed-npm-package.js"
-  ],
   "scripts": {
     "build": "npm run build:test && npm run build:api && node ./scripts/copy-tests.js",
-    "build:test": "skpm-test --build-only",
+    "build:test": "skpm-test --enable-async --build-only",
     "build:api": "webpack -p --optimize-minimize",
     "start": "npm run build",
     "watch": "webpack --watch",
-    "run-tests": "skpm-test",
+    "run-tests": "skpm-test --app=xcode --enable-async",
     "test": "npm run lint -- --quiet && npm run run-tests",
     "test:watch": "npm run run-tests -- --watch",
     "lint": "find . -name \"*.ts\" -o -name \"*.js\" | grep -v -f .gitignore | xargs eslint",
@@ -24,7 +21,7 @@
     "postinstall": "node ./scripts/install-pre-commit.js && node ./scripts/inject-new-api-in-tester.js"
   },
   "devDependencies": {
-    "@skpm/test-runner": "^0.1.19",
+    "@skpm/test-runner": "^0.1.28",
     "awesome-typescript-loader": "^3.4.0",
     "eslint": "^4.11.0",
     "eslint-config-airbnb-base": "^12.1.0",
@@ -35,7 +32,7 @@
     "eslint-plugin-typescript": "^0.8.0",
     "lint-staged": "^5.0.0",
     "pre-commit": "^1.2.2",
-    "prettier": "^1.8.2",
+    "prettier": "^1.9.2",
     "typescript": "^2.6.1",
     "typescript-eslint-parser": "^9.0.0",
     "webpack": "^3.8.1"
@@ -57,7 +54,7 @@
     ]
   },
   "prettier": {
-    "proseWrap": false,
+    "proseWrap": "never",
     "singleQuote": true,
     "trailingComma": "es5",
     "semi": false

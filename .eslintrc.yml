@@ -51,6 +51,8 @@ globals:
   NSURL: false
   NSSaveToOperation: false
   MSAssetLibraryControllerAddStatusOK: false
+  NSData: false
+  NSDataBase64DecodingIgnoreUnknownCharacters: false
 
 rules:
   ###########
