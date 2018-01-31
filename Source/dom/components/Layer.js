@@ -118,10 +118,20 @@ Layer.define('parent', {
     return wrapNativeObject(this._object.parentGroup())
   },
   set(layer) {
-    layer = wrapObject(layer) // eslint-disable-line
-
     if (this._object.parentGroup()) {
       this._object.removeFromParent()
+    }
+
+    layer = wrapObject(layer) // eslint-disable-line
+
+    if (!layer) {
+      // we want to remove the layer from its parent
+      // without adding it somewhere else right away
+      return
+    }
+
+    if (!layer._object || typeof layer._object.addLayers !== 'function') {
+      throw new Error(`This object cannot accept layers: ${layer}`)
     }
 
     layer._object.addLayers([this._object])
