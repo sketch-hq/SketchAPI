@@ -15,11 +15,29 @@ Comments and suggestions for this API are welcome - send them to developers@sket
 
 ## Installation
 
-The API comes bundled inside Sketch, so no installation is required. You access it by obtaining a global `sketch` object:
+The API comes bundled inside Sketch, so no installation is required. You access it by obtaining a root "sketch" object via the context that's passed to your script, like so:
 
 ```javascript
-var api = sketch
+var sketch = context.api()
 ```
+
+
+Sketch API
+This is a prototype Javascript API for Sketch.
+
+The intention is to make something which is:
+
+native Javascript
+an easily understandable subset of the full internals of Sketch
+fully supported by Bohemian between releases (ie we try not to change it, unlike our internal API which we can and do change whenever we need to)
+still allows you to drop down to our internal API when absolutely necessary.
+Comments and suggestions for this API are welcome - send them to developers@sketchapp.com, or hack on the code and send us a pull request at https://github.com/BohemianCoding/SketchAPI.
+
+The API comes bundled inside Sketch, so no installation is required. You access it by obtaining a root "sketch" object via the context that's passed to your script, like so:
+
+var sketch = context.api()
+
+Calls to this object then give you access to the rest of the API.
 
 ## Overview
 
