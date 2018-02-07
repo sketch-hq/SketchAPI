@@ -18,7 +18,7 @@ Comments and suggestions for this API are welcome - send them to developers@sket
 The API comes bundled inside Sketch, so no installation is required. You access it by obtaining a global `sketch` object:
 
 ```javascript
-var api = sketch
+var api = require('sketch')
 ```
 
 ## Overview
@@ -76,6 +76,7 @@ if (obj1.isEqual(obj2)) {
 Here's a very simple example script:
 
 ```javascript
+var sketch = require('sketch')
 log(sketch.version.api)
 log(sketch.version.sketch)
 

@@ -1,5 +1,5 @@
 ---
-title: Settings
+title: UI
 order: 302
 section: API
 ---
