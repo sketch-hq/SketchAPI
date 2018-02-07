@@ -19,7 +19,9 @@ export class Library extends WrappedObject {
 
   static getLibraries() {
     const libraryController = AppController.sharedInstance().librariesController()
-    return toArray(libraryController.libraries()).map(Library.fromNative)
+    return toArray(libraryController.libraries()).map(
+      Library.fromNative.bind(Library)
+    )
   }
 
   static createLibraryFromDocument(document, path) {
@@ -56,13 +58,45 @@ export class Library extends WrappedObject {
   }
 
   get document() {
-    if (!this._object.document && !this._object.loadSynchronously()) {
+    if (!this._object.document() && !this._object.loadSynchronously()) {
       throw new Error(`could not get the document: ${this._object.status}`)
     }
-    return Document.fromNative(this._object.document)
+    return Document.fromNative(this._object.document())
   }
 }
 
 Library.type = Types.Library
 Library[DefinedPropertiesKey] = { ...WrappedObject[DefinedPropertiesKey] }
 Factory.registerClass(Library, MSAssetLibrary)
+
+Library.define('id', {
+  exportable: true,
+  importable: false,
+  get() {
+    return String(this._object.libraryID())
+  },
+})
+
+Library.define('name', {
+  exportable: true,
+  importable: false,
+  get() {
+    return String(this._object.name())
+  },
+})
+
+Library.define('valid', {
+  exportable: true,
+  importable: false,
+  get() {
+    return !!this._object.valid()
+  },
+})
+
+Library.define('enabled', {
+  exportable: true,
+  importable: false,
+  get() {
+    return !!this._object.enabled()
+  },
+})

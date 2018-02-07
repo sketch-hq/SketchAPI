@@ -12,6 +12,7 @@ import { Artboard } from './components/Artboard'
 import { Page } from './components/Page'
 import { SymbolMaster } from './components/SymbolMaster'
 import { SymbolInstance } from './components/SymbolInstance'
+import { Library } from './components/Library'
 
 import { Types } from './enums'
 import { wrapObject } from './wrapNativeObject'
@@ -27,6 +28,7 @@ api.Artboard = Artboard
 api.Page = Page
 api.SymbolMaster = SymbolMaster
 api.SymbolInstance = SymbolInstance
+api.Library = Library
 
 api.export = exportObject
 

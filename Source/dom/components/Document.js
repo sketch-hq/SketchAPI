@@ -179,6 +179,23 @@ Document.define('id', {
   },
 })
 
+Document.define('pages', {
+  get() {
+    const pages = toArray(this._object.pages())
+    return pages.map(page => Page.fromNative(page))
+  },
+  set(pages) {
+    // remove the existing pages
+    this._object.removePages_detachInstances(this._object.pages(), true)
+
+    toArray(pages)
+      .map(wrapObject)
+      .forEach(page => {
+        page.parent = this // eslint-disable-line
+      })
+  },
+})
+
 /**
  * The layers that the user has selected in the currently selected page.
  *
