@@ -1,0 +1,17 @@
+{
+    "name" : "Hello World!",
+    "identifier" : "com.sketchapp.examples.helloworld",
+    "version" : "1.0.2",
+    "description" : "Pretty much the smallest example Sketch Plugin you could have.",
+    "authorEmail" : "sam@sketchapp.com",
+    "author" : "Sam Deane",
+    "commands" : [
+    {
+      "script" : "hello-world.js",
+      "handler" : "onRun",
+      "shortcut" : "",
+      "name" : "Hello World!",
+      "identifier" : "helloworld"
+    }
+  ]
+}

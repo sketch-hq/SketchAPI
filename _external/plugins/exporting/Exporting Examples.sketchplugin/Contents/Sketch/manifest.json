@@ -1,0 +1,31 @@
+{
+    "name" : "Exporting Examples",
+    "identifier" : "com.sketchapp.examples.exporter",
+    "version" : "1.0",
+    "description" : "Examples showing how to export things from a plugin.",
+    "authorEmail" : "sam@sketchapp.com",
+    "author" : "Sam Deane",
+    "commands" : [
+    {
+      "script" : "exporting.js",
+      "handler" : "onExportLayers",
+      "shortcut" : "",
+      "name" : "Export Selected Layers",
+      "identifier" : "exportLayers"
+    },
+    {
+      "script" : "exporting.js",
+      "handler" : "onExportPage",
+      "shortcut" : "",
+      "name" : "Export Page",
+      "identifier" : "exportPage"
+    },
+    {
+      "script" : "exporting.js",
+      "handler" : "onExportArtboards",
+      "shortcut" : "",
+      "name" : "Export Artboards",
+      "identifier" : "exportArtboards"
+    }
+  ]
+}

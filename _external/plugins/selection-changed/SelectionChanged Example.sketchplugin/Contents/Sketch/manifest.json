@@ -1,0 +1,18 @@
+{
+  "name" : "SelectionChanged Example",
+  "description" : "Example plugin which handles the SelectionChanged action.",
+  "version" : "1.0",
+  "identifier" : "com.sketchapp.examples.selection-changed",
+  "author" : "Sam Deane",
+  "authorEmail" : "sam@sketchapp.com",
+  "commands" : [
+    {
+      "script" : "selection-changed.js",
+      "handlers" : {
+        "actions" : {
+           "SelectionChanged.finish" : "onSelectionChanged",
+           }
+          },
+    }
+  ],
+}
