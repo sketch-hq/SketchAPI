@@ -1,3 +1,9 @@
 node_modules/
 build/
 .awcache/
+_vendor
+_site
+.sass-cache
+_external
+.jekyll-metadata
+temp-sketchAPI-copy/
