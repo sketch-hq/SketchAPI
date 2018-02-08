@@ -4,7 +4,8 @@ BRANCH_TO_DEPLOY=develop
 
 SKETCH_API_REPO=https://github.com/BohemianCoding/SketchAPI
 TEMP_DOCS_FOLDER=./temp-sketchAPI-copy
-DEPLOYED_DOCS_FOLDER=./_api-references
+DEPLOYED_API_DOCS_FOLDER=./_api-references
+DEPLOYED_GUIDES_DOCS_FOLDER=./_guides
 
 # copying the docs to an ignored temp folder so that we can keep it while switching branches
 echo "Getting the latest changes..."
@@ -19,7 +20,8 @@ git pull
 
 # update it with the latest changes
 echo "Applying the latest changes..."
-cp -r $TEMP_DOCS_FOLDER $DEPLOYED_DOCS_FOLDER
+cp -r $TEMP_DOCS_FOLDER/api $DEPLOYED_API_DOCS_FOLDER
+cp -r $TEMP_DOCS_FOLDER/guides $DEPLOYED_GUIDES_DOCS_FOLDER
 rm -rf $TEMP_DOCS_FOLDER
 
 # commit and push
