@@ -6,11 +6,21 @@
       </h1>
       <span class="nav-toggle">Menu</span>
       <ul>
-        <li><a href="/guides/" {% if page.url contains '/guides/' %} class="active"{% endif %}>Guides</a></li>
-        <li><a href="/examples/" {% if page.url contains '/examples/' %} class="active"{% endif %}>Examples</a></li>
-        <li><a href="/reference/" {% if page.url contains '/reference/' %} class="active"{% endif %}>Reference</a></li>
-        <li><a href="/resources/" {% if page.url contains '/resources/' %} class="active"{% endif %}>Resources</a></li>
-        <li><a href="/blog/" {% if page.url contains '/blog/' %} class="active"{% endif %}>Blog</a></li>
+        <li>
+          <a href="/guides/" {% if page.url contains '/guides/' %} class="active" {% endif %}>Guides</a>
+        </li>
+        <li>
+          <a href="https://github.com/BohemianCoding/SketchAPI/tree/develop/examples">Examples</a>
+        </li>
+        <li>
+          <a href="/reference/" {% if page.url contains '/reference/' %} class="active" {% endif %}>Reference</a>
+        </li>
+        <li>
+          <a href="/resources/" {% if page.url contains '/resources/' %} class="active" {% endif %}>Resources</a>
+        </li>
+        <li>
+          <a href="/blog/" {% if page.url contains '/blog/' %} class="active" {% endif %}>Blog</a>
+        </li>
       </ul>
     </nav>
   </div>

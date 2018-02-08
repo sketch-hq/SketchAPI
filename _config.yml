@@ -49,9 +49,6 @@ collections:
   posts:
     output: true
     permalink: /blog/:path/
-  generated-plugins:
-    output: true
-    permalink: /examples/plugins/:path/
   api-references: # this comes from the SketchAPI repo
     output: false
 
@@ -80,11 +77,6 @@ defaults:
     values:
       layout: "sidebar-page"
       script: "/js/search.js"
-  -
-    scope:
-      type: "generated-plugins"
-    values:
-      layout: "docco-page"
   -
     scope:
       type: "posts"
