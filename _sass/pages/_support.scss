@@ -1,0 +1,162 @@
+/* @group Support page */
+/* Search Field */
+.support form {
+  margin: -0.5em;
+  margin-bottom: 1em;
+  input[type=text],
+  input[type=search] {
+    border: none;
+    padding: 0.3rem 1rem;
+    background: #eee url(/static/images/icons/loupe.svg) 0.5rem center no-repeat;
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    border-radius: $radius-normal;
+    font-size: 0.9rem;
+    text-align: center;
+    // Animate
+    transition: all 0.4s ease;
+  }
+  input:focus {
+    text-align: left;
+    background: $background-light url(/static/images/icons/loupe.svg) -2rem center no-repeat;
+  }
+}
+
+// TODO play with it a little bit more
+// @include tablet-and-above {
+//   section.sidebar {
+//     min-height: calc(100% - 172px);
+//   }
+//
+//   section.sidebar .wrapper {
+//     min-height: 100%;
+//   }
+//
+//   .support aside {
+//     position: relative;
+//     min-height: 100%;
+//   }
+//
+//   .support aside > nav {
+//     overflow: auto;
+//     max-height: calc(100% - 3rem);
+//     width: 100%;
+//     position: absolute;
+//   }
+//
+//   /* Let's get this party started */
+//   .support aside > nav::-webkit-scrollbar {
+//     width: 0.25rem; //4px
+//   }
+//
+//   /* Track */
+//   .support aside > nav::-webkit-scrollbar-track {
+//     border-radius: 0.5rem; //8px
+//     background: $divider-dark;
+//   }
+//
+//   /* Handle */
+//   .support aside > nav::-webkit-scrollbar-thumb {
+//     background: $border-dark;
+//     border-radius: .375rem; //6px
+//   }
+//
+//   .support aside > nav::-webkit-scrollbar-thumb:window-inactive {
+//     background: $divider-dark;
+//   }
+// }
+
+/*FAQ page*/
+.faq-home h2,
+.faq-home section:last-child {
+  margin-top: 2.8125rem; /*45px*/
+  margin-bottom: 0;
+  padding-top:  2.8125rem; /*45px*/
+  border-width: 1px 0 0;
+  border-image: linear-gradient(90deg,
+    hsla(0, 0%, 90%, 0),
+    hsla(0, 0%, 90%, 1) 50%,
+    hsla(0, 0%, 90%, 0) 100%) 5%;
+}
+
+.faq-home section:first-child h2:first-child {
+  margin-top: 0;
+  padding-top: 0;
+  border: 0;
+}
+
+.faq-home .help h3 {
+  display: inline-block;
+  margin: 0 1rem 0 0;
+  font-weight: 400;
+}
+
+.faq-home .help .button {
+  padding: .5rem 1.25rem;
+  border-radius: 5px;
+}
+
+.support img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Pagination in documentation & developer pages */
+.support-pagination {
+  margin-top: 3rem; /*48px*/
+  padding-top: 3rem;
+  border-width: 1px 0 0;
+  border-image: linear-gradient(90deg,
+    hsla(0, 0%, 90%, 0),
+    hsla(0, 0%, 90%, 1) 50%,
+    hsla(0, 0%, 90%, 0) 100%) 5%;
+}
+
+.support-pagination > a {
+  display: inline-block;
+  font-size: 1rem;
+  width: 50%;
+  padding: 1rem; //Fitts
+  margin: -1rem !important;
+}
+
+.support-pagination > a > span {
+  display: inline-block;
+  vertical-align: middle;
+  max-width: 80%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.support-pagination > .prev::before,
+.support-pagination > .next::after {
+  font-family: "Source Code Pro", Consolas, Menlo, monospace;
+  display: inline-block;
+  vertical-align: text-top;
+}
+
+.support-pagination > .prev {
+  float: left;
+    &::before {
+      content: "\2190\0020";
+      padding-right: .375rem;
+    }
+}
+
+  @include tablet-and-above {
+    //Hanging punctuation
+    .support-pagination > .prev::before {
+      margin-left: -1em;
+    }
+  }
+
+.support-pagination > .next {
+  float: right;
+  text-align: right;
+  &::after {
+    content: "\0020\2192";
+    padding-left: .375rem;
+  }
+}

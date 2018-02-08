@@ -1,0 +1,189 @@
+---
+name: hello-world
+title: Hello World
+summary: This is an extremely simple plugin example, which illustrates how to add a menu command to the Plugins menu and execute some code when it is selected. 
+---
+  <div id="container">
+    
+    <ul class="sections">
+      
+      <li id="title">
+        <div class="annotation"><h1>Hello World</h1></div>
+      </li>
+      
+      
+      
+      <li id="section-1">
+        <div class="annotation">
+          
+          <div class="pilwrap ">
+            <a class="pilcrow" href="#section-1">&#182;</a>
+          </div>
+          <p>Hello World, by Sam Deane — Source code available at <a href="https://github.com/BohemianCoding/plugins.examples.hello-world">GitHub</a></p>
+<p>This is an extremely simple plugin example, which illustrates how to add a menu command to the Plugins menu
+and execute some code when it is selected.</p>
+
+        </div>
+        
+      </li>
+      
+      
+      <li id="section-2">
+        <div class="annotation">
+          
+          <div class="pilwrap ">
+            <a class="pilcrow" href="#section-2">&#182;</a>
+          </div>
+          <h2 id="layout">Layout</h2>
+<p>The first thing to do when making a plugin is to setup the folder structure, which should
+look something like this:</p>
+<pre><code>   MyPlugin.sketchplugin/
+     Contents/
+       Sketch/
+         manifest.json
+         hello-world.js
+</code></pre><h2 id="manifest">Manifest</h2>
+<p>The plugin needs a <code>manifest.json</code> file. This tells Sketch which menu items your plugin supplies,
+as well as giving some general information about the plugin such as its name, author, and so on.</p>
+<p>A single plugin can supply multiple menu items, and each one can execute different code,
+or they can all share code. In our case though, we just have one command.</p>
+<pre><code class="lang-json">{
+    <span class="hljs-attr">"name"</span> : <span class="hljs-string">"Hello World!"</span>,
+    <span class="hljs-attr">"identifier"</span> : <span class="hljs-string">"com.sketchapp.examples.helloworld"</span>,
+    <span class="hljs-attr">"version"</span> : <span class="hljs-string">"1.0"</span>,
+    <span class="hljs-attr">"description"</span> : <span class="hljs-string">"Pretty much the smallest example Sketch Plugin you could have."</span>,
+    <span class="hljs-attr">"authorEmail"</span> : <span class="hljs-string">"sam@sketchapp.com"</span>,
+    <span class="hljs-attr">"author"</span> : <span class="hljs-string">"Sam Deane"</span>,
+    <span class="hljs-attr">"commands"</span> : [
+    {
+      <span class="hljs-attr">"script"</span> : <span class="hljs-string">"hello-world.js"</span>,
+      <span class="hljs-attr">"handler"</span> : <span class="hljs-string">"onRun"</span>,
+      <span class="hljs-attr">"shortcut"</span> : <span class="hljs-string">""</span>,
+      <span class="hljs-attr">"name"</span> : <span class="hljs-string">"Hello World!"</span>,
+      <span class="hljs-attr">"identifier"</span> : <span class="hljs-string">"helloworld"</span>
+    }
+  ]
+}
+</code></pre>
+
+        </div>
+        
+      </li>
+      
+      
+      <li id="section-3">
+        <div class="annotation">
+          
+          <div class="pilwrap ">
+            <a class="pilcrow" href="#section-3">&#182;</a>
+          </div>
+          <h2 id="code">Code</h2>
+<h3 id="defining-the-run-handler">Defining The Run Handler</h3>
+<p>In the manifest, we told Sketch that every time the “Hello World!” menu is selected,
+we want to execute  a javascript handler called <code>onRun</code>.</p>
+<p>So now we need to put some code into the <code>hello-world.js</code> file to implement that command.</p>
+
+        </div>
+        
+        <div class="content"><div class='highlight'><pre>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">onRun</span>(<span class="hljs-params">context</span>) </span>{</pre></div></div>
+        
+      </li>
+      
+      
+      <li id="section-4">
+        <div class="annotation">
+          
+          <div class="pilwrap ">
+            <a class="pilcrow" href="#section-4">&#182;</a>
+          </div>
+          <p>We are passed a context variable when we’re run.
+We use this to get hold of a javascript object
+which we can use in turn to manipulate Sketch.</p>
+
+        </div>
+        
+        <div class="content"><div class='highlight'><pre>  <span class="hljs-keyword">var</span> sketch = context.api()</pre></div></div>
+        
+      </li>
+      
+      
+      <li id="section-5">
+        <div class="annotation">
+          
+          <div class="pilwrap ">
+            <a class="pilcrow" href="#section-5">&#182;</a>
+          </div>
+          <p>Next we want to extract the selected page of the selected (front-most) document</p>
+
+        </div>
+        
+        <div class="content"><div class='highlight'><pre>  <span class="hljs-keyword">var</span> <span class="hljs-built_in">document</span> = sketch.selectedDocument
+  <span class="hljs-keyword">var</span> page = <span class="hljs-built_in">document</span>.selectedPage</pre></div></div>
+        
+      </li>
+      
+      
+      <li id="section-6">
+        <div class="annotation">
+          
+          <div class="pilwrap ">
+            <a class="pilcrow" href="#section-6">&#182;</a>
+          </div>
+          <p>Now let’s create a new text layer, using a large font, and a traditional value…</p>
+
+        </div>
+        
+        <div class="content"><div class='highlight'><pre>  <span class="hljs-keyword">var</span> layer = page.newText({alignment: NSTextAlignmentCenter, systemFontSize: <span class="hljs-number">36</span>, text:<span class="hljs-string">"Hello World"</span>})</pre></div></div>
+        
+      </li>
+      
+      
+      <li id="section-7">
+        <div class="annotation">
+          
+          <div class="pilwrap ">
+            <a class="pilcrow" href="#section-7">&#182;</a>
+          </div>
+          <p>…resize it so that the text just fits…</p>
+
+        </div>
+        
+        <div class="content"><div class='highlight'><pre>  layer.adjustToFit()</pre></div></div>
+        
+      </li>
+      
+      
+      <li id="section-8">
+        <div class="annotation">
+          
+          <div class="pilwrap ">
+            <a class="pilcrow" href="#section-8">&#182;</a>
+          </div>
+          <p>Finally, lets center the view on our new layer
+so that we can see where it is.</p>
+
+        </div>
+        
+        <div class="content"><div class='highlight'><pre>  <span class="hljs-built_in">document</span>.centerOnLayer(layer)
+};</pre></div></div>
+        
+      </li>
+      
+      
+      <li id="section-9">
+        <div class="annotation">
+          
+          <div class="pilwrap ">
+            <a class="pilcrow" href="#section-9">&#182;</a>
+          </div>
+          <p>And that’s it. Job done.</p>
+<p>Obviously this is only the tip of the iceberg. Check out some of the other examples to see what else can be done.</p>
+<p>If you have questions, comments or any feedback, ping us at <a href="&#109;&#x61;&#x69;&#x6c;&#116;&#x6f;&#58;&#x64;&#x65;&#x76;&#101;&#108;&#111;&#x70;&#x65;&#x72;&#x40;&#115;&#107;&#101;&#116;&#x63;&#104;&#x61;&#x70;&#x70;&#x2e;&#99;&#111;&#x6d;">&#x64;&#x65;&#x76;&#101;&#108;&#111;&#x70;&#x65;&#x72;&#x40;&#115;&#107;&#101;&#116;&#x63;&#104;&#x61;&#x70;&#x70;&#x2e;&#99;&#111;&#x6d;</a>!</p>
+
+        </div>
+        
+      </li>
+      
+    </ul>
+  </div>

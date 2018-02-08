@@ -1,0 +1,29 @@
+<script src="//ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="/js/fontfaceobserver.standalone.js"></script>
+<script src="/js/main.js"></script>
+{% if page.slate %}
+<!-- TODO: find a way to compile and minify those -->
+<script src="/js/slate_lib_energize.js"></script>
+<script src="/js/slate_lib_imagesloaded.min.js"></script>
+<script src="/js/slate_app_generate-toc.js"></script>
+<script src="/js/slate_app_toc.js"></script>
+<script src="/js/slate_app_lang.js"></script>
+<script>
+  $(function() {
+    generateToc($('#content'));
+    loadToc($('#toc'), '.toc-link', '.toc-list-h2', 10);
+    setupLanguages($('#content').data('languages'));
+    $('.content').imagesLoaded( function() {
+      window.recacheHeights();
+      window.refreshToc();
+    });
+  });
+
+  window.onpopstate = function() {
+    activateLanguage(getLanguageFromQueryString());
+  };
+</script>
+<script src="/js/lunr.min.js"></script>
+<script src="/js/slate_lib_jquery.highlight.js"></script>
+<script src="/js/slate_app_search.js"></script>
+{% endif %}

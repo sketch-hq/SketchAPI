@@ -1,0 +1,46 @@
+.sidebar-main-content section h2:first-child {
+  padding-top: 3rem;
+}
+
+.sidebar-main-content {
+  color: $text-dark;
+}
+
+// Avoid images overflowing the content
+.sidebar-main-content img {
+  max-width: 100%;
+  height: auto;
+}
+
+.sidebar aside ol,
+.sidebar aside ul,
+.sidebar aside:not(.toc-nav) li,
+.sidebar aside p {
+  margin-bottom: 1rem;
+}
+
+// External links
+.content a[href^="http://"]:not([href*="sketchapp.com"]):not([href*="bohemiancoding.com"]):not(.card),
+.content a[href^="https://"]:not([href*="sketchapp.com"]):not([href*="bohemiancoding.com"]):not(.card) {
+  white-space: nowrap;
+}
+
+.content a[href^="http://"]:not([href*="sketchapp.com"]):not([href*="bohemiancoding.com"]):not(.card):after,
+.content a[href^="https://"]:not([href*="sketchapp.com"]):not([href*="bohemiancoding.com"]):not(.card):after {
+   content: "\21F1"; //⇱
+   display: inline-block;
+   margin-left: .25rem;
+   font-size: .75em;
+   vertical-align: top;
+   transform: scaleX(-1); //Flipping, as this char doesn't exist that way
+}
+
+.sidebar .sketch-news-learn h2 a::after {
+  content: none !important;
+}
+
+@include tablet-and-above {
+  .sidebar .sketch-news-learn .input-group {
+    width: 50%;
+  }
+}

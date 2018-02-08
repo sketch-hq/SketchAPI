@@ -1,0 +1,122 @@
+---
+layout: base
+---
+<section class="sidebar">
+  <div class="wrapper">
+    <div class="row">
+      <aside class="col span-3 toc-nav" role="complementary">
+        <header>
+          <h1 class="h3 nav-toggle">Contents</h1>
+          <span class="search-toggle ir">Search</span>
+        </header>
+        <nav role="navigation">
+          <ol>
+            {% if page.url contains '/guides/' %}
+              {% assign guides = site.guides | sort:"order" %}
+              <li>
+                <h2>Getting Started</h2>
+                <ol>
+                  {% for guide in guides %}
+                    {% if guide.order < 200 %}
+                      <li><a href="{{guide.url}}" {% if page.url == guide.url %} class="active"{% endif %}>{{guide.title}}</a></li>
+                    {% endif %}
+                  {% endfor %}
+                </ol>
+              </li>
+              <li>
+                <h2>Advanced</h2>
+                <ol>
+                  {% for guide in guides %}
+                    {% if guide.order >= 200 %}
+                      <li><a href="{{guide.url}}" {% if page.url == guide.url %} class="active"{% endif %}>{{guide.title}}</a></li>
+                    {% endif %}
+                  {% endfor %}
+                </ol>
+              </li>
+            {% endif %}
+            {% if page.url contains '/code/' %}
+                {% assign examples = site.code-examples | sort:"order" %}
+                {% for example in examples %}
+                  <li><a href="{{example.url}}" {% if page.url == example.url %} class="active"{% endif %}>{{example.title}}</a></li>
+                {% endfor %}
+            {% endif %}
+            {% if page.url contains '/class/' %}
+              <li>
+                <h2>Classes</h2>
+                <ol>
+                  {% assign classes = site.classes | sort:"title"%}
+                  {% for class in classes %}
+                  <li><a href="{{class.url}}" {% if page.url == class.url %} class="active"{% endif %}>{{ class.title }}</a></li>
+                  {% endfor %}
+                </ol>
+              </li>
+            {% endif %}
+            {% if page.url contains '/action/' %}
+              <li>
+                <h2>Actions</h2>
+                <ol>
+                  {% assign actions = site.actions | sort:"title"%}
+                  {% for action in actions %}
+                  <li><a href="{{action.url}}" {% if page.url == action.url %} class="active"{% endif %}>{{ action.title }}</a></li>
+                  {% endfor %}
+                </ol>
+              </li>
+            {% endif %}
+          </ol>
+        </nav>
+      </aside>
+      <article class="content col span-9" role="main">
+        <h1>{{ page.title }}</h1>
+        {{ content }}
+
+        {% if page.inherits or page.rels %}
+        <footer>
+          <h1 class="visuallyhidden">Related content</h1>
+          {% if page.inherits %}
+          <h2 class="h5">Inherits from:</h2>
+          <ul>
+            {% for inherit in page.inherits %}
+            <li><a href="/reference/{{inherit}}/">{{ inherit }}</a></li>
+            {% endfor %}
+          </ul>
+          {% endif %}
+
+          {% if page.rels %}
+          <h2 class="h5">Related classes:</h2>
+          <ul>
+            {% for rel in page.rels %}
+            <li><a href="/reference/class/{{rel}}/">{{ rel }}</a></li>
+            {% endfor %}
+          </ul>
+          {% endif %}
+
+          {% if page.pages %}
+          <h2 class="h5">Related content:</h2>
+          <ul>
+            {% for rel in page.pages %}
+            <li><a href="{{rel.path}}">{{ rel.name }}</a></li>
+            {% endfor %}
+          </ul>
+          {% endif %}
+
+        </footer>
+        {% endif %}
+
+        {% comment %}
+        <div>
+          {% if page.previous != nil %}
+          Previous
+          {% endif %}
+
+          {% if page.next %}
+          Next
+          {% endif %}
+        </div>
+        {% endcomment %}
+
+        {% include contribute.html %}
+      </div>
+      </article>
+    </div>
+  </div>
+</section>

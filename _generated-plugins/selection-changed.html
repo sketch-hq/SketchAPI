@@ -1,0 +1,275 @@
+---
+name: selection-changed
+title: Selection Changed
+summary: This example plugin illustrates how to listen for the SelectionChanged action, and to do something whenever the user changes the selection. 
+---
+  <div id="container">
+    
+    <ul class="sections">
+      
+      <li id="title">
+        <div class="annotation"><h1>Selection Changed</h1></div>
+      </li>
+      
+      
+      
+      <li id="section-1">
+        <div class="annotation">
+          
+          <div class="pilwrap ">
+            <a class="pilcrow" href="#section-1">&#182;</a>
+          </div>
+          <p>Selection Changed, by Sam Deane — Source code available at <a href="https://github.com/BohemianCoding/plugins.examples.selection-changed">GitHub</a></p>
+<p>This example plugin illustrates how to listen for the SelectionChanged action, and to
+do something whenever the user changes the selection.</p>
+
+        </div>
+        
+      </li>
+      
+      
+      <li id="section-2">
+        <div class="annotation">
+          
+          <div class="pilwrap ">
+            <a class="pilcrow" href="#section-2">&#182;</a>
+          </div>
+          <h2 id="layout">Layout</h2>
+<p>The first thing to do when making a plugin is to setup the folder structure, which should
+look something like this:</p>
+<pre><code>   MyPlugin.sketchplugin/
+     Contents/
+       Sketch/
+         manifest.json
+         script.js
+</code></pre><h2 id="manifest">Manifest</h2>
+<p>The plugin needs a manifest.json file. This tells Sketch which commands your plugin supplies,
+as well as giving some general information about the plugin such as its name, author, and so on.</p>
+<p>For each command, the manifest lists the menu entry we want (if any), and the actions that it
+listens for. In our case, we don’t want to add a menu item, but we do want to list for
+one action: <code>SelectionChanged</code>.</p>
+<pre><code>{
+  <span class="hljs-string">"name"</span> : <span class="hljs-string">"SelectionChanged Example"</span>,
+  <span class="hljs-string">"description"</span> : <span class="hljs-string">"Example plugin which illustrates how to handle the SelectionChanged action."</span>,
+  <span class="hljs-string">"version"</span> : <span class="hljs-string">"1.0"</span>,
+  <span class="hljs-string">"identifier"</span> : <span class="hljs-string">"com.bohemiancoding.examples.selection-changed"</span>,
+  <span class="hljs-string">"author"</span> : <span class="hljs-string">"Sam Deane"</span>,
+  <span class="hljs-string">"authorEmail"</span> : <span class="hljs-string">"sam@bohemiancoding.com"</span>,
+  <span class="hljs-string">"commands"</span> : [
+    {
+      <span class="hljs-string">"script"</span> : <span class="hljs-string">"script.js"</span>,
+      <span class="hljs-string">"handlers"</span> : {
+        <span class="hljs-string">"actions"</span> : {
+           <span class="hljs-string">"SelectionChanged.finish"</span> : <span class="hljs-string">"onSelectionChanged"</span>,
+           }
+          },
+    }
+  ],
+  <span class="hljs-string">"menu"</span> : {
+    <span class="hljs-string">"items"</span> : [
+    ],
+  },
+}
+</code></pre>
+        </div>
+        
+      </li>
+      
+      
+      <li id="section-3">
+        <div class="annotation">
+          
+          <div class="pilwrap ">
+            <a class="pilcrow" href="#section-3">&#182;</a>
+          </div>
+          <h2 id="code">Code</h2>
+<h3 id="defining-the-action-handler">Defining The Action Handler</h3>
+<p>In the manifest, we told Sketch that every time the <code>SelectionChanged</code> action finishes, we want it
+to run the onSelectionChanged handler in our <code>selection-changed.js</code> script file.</p>
+<p>So now we need to put some code into the <code>selection-changed.js</code> file to define that handler and make it do something useful.</p>
+
+        </div>
+        
+        <div class="content"><div class='highlight'><pre>
+
+<span class="hljs-keyword">var</span> onSelectionChanged = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">context</span>) </span>{</pre></div></div>
+        
+      </li>
+      
+      
+      <li id="section-4">
+        <div class="annotation">
+          
+          <div class="pilwrap ">
+            <a class="pilcrow" href="#section-4">&#182;</a>
+          </div>
+          <h3 id="extracting-context-information">Extracting Context Information</h3>
+<p>Whenever sketch calls a handler in one of our plugins, it passes in a single context argument.
+This dictionary is our connection with Sketch itself, and contains all the information that
+we need to work out which document was open, perform whatever task we want to on it, and so on.</p>
+<p>When we’re being called in response to an action occurring, the context will contain
+an actionContext property with additional information about the action, so that’s the first
+thing that we want to retrieve:</p>
+
+        </div>
+        
+        <div class="content"><div class='highlight'><pre>
+    action = context.actionContext;</pre></div></div>
+        
+      </li>
+      
+      
+      <li id="section-5">
+        <div class="annotation">
+          
+          <div class="pilwrap ">
+            <a class="pilcrow" href="#section-5">&#182;</a>
+          </div>
+          <p>The context information for each action will be different. For the SelectionChanged action,
+we are passed three interesting values: which document the selection has changed in,
+what the old selection was, what the new selection is (or will be).</p>
+
+        </div>
+        
+      </li>
+      
+      
+      <li id="section-6">
+        <div class="annotation">
+          
+          <div class="pilwrap ">
+            <a class="pilcrow" href="#section-6">&#182;</a>
+          </div>
+          <p>For our purposes, we can ignore the old selection, but we need the other two values.</p>
+
+        </div>
+        
+        <div class="content"><div class='highlight'><pre>
+    <span class="hljs-built_in">document</span> = action.document;
+    selection = action.newSelection;</pre></div></div>
+        
+      </li>
+      
+      
+      <li id="section-7">
+        <div class="annotation">
+          
+          <div class="pilwrap ">
+            <a class="pilcrow" href="#section-7">&#182;</a>
+          </div>
+          <h3 id="performing-our-code">Performing Our Code</h3>
+<p>Now for the meat of the plugin. What we want it to do is to show a small message at the bottom
+of the canvas, showing how many items the user has selected. If there are no items, the message
+area should be hidden.</p>
+
+        </div>
+        
+      </li>
+      
+      
+      <li id="section-8">
+        <div class="annotation">
+          
+          <div class="pilwrap ">
+            <a class="pilcrow" href="#section-8">&#182;</a>
+          </div>
+          <p>So first let’s get the selection count.</p>
+
+        </div>
+        
+        <div class="content"><div class='highlight'><pre>    count = selection.count();
+    <span class="hljs-keyword">if</span> (count == <span class="hljs-number">0</span>) {</pre></div></div>
+        
+      </li>
+      
+      
+      <li id="section-9">
+        <div class="annotation">
+          
+          <div class="pilwrap ">
+            <a class="pilcrow" href="#section-9">&#182;</a>
+          </div>
+          <p>If nothing is selected, we just want to hide any previous message that might have been shown.</p>
+
+        </div>
+        
+        <div class="content"><div class='highlight'><pre>        <span class="hljs-built_in">document</span>.hideMessage();
+
+    } <span class="hljs-keyword">else</span> {</pre></div></div>
+        
+      </li>
+      
+      
+      <li id="section-10">
+        <div class="annotation">
+          
+          <div class="pilwrap ">
+            <a class="pilcrow" href="#section-10">&#182;</a>
+          </div>
+          <p>If one or more items are selected, we want to show a message.
+We check for a single item and handle that as a special case so that we can get the wording correct.</p>
+
+        </div>
+        
+        <div class="content"><div class='highlight'><pre>
+        <span class="hljs-keyword">if</span> (count == <span class="hljs-number">1</span>) {</pre></div></div>
+        
+      </li>
+      
+      
+      <li id="section-11">
+        <div class="annotation">
+          
+          <div class="pilwrap ">
+            <a class="pilcrow" href="#section-11">&#182;</a>
+          </div>
+          <p>For a single item, we don’t want an “s” on the end.</p>
+
+        </div>
+        
+        <div class="content"><div class='highlight'><pre>            message = <span class="hljs-string">"1 layer selected."</span>
+        } <span class="hljs-keyword">else</span> {</pre></div></div>
+        
+      </li>
+      
+      
+      <li id="section-12">
+        <div class="annotation">
+          
+          <div class="pilwrap ">
+            <a class="pilcrow" href="#section-12">&#182;</a>
+          </div>
+          <p>For multiple items we want to show the count, and use an “s” for a plural.</p>
+
+        </div>
+        
+        <div class="content"><div class='highlight'><pre>            message = count + <span class="hljs-string">" layers selected."</span>
+        }</pre></div></div>
+        
+      </li>
+      
+      
+      <li id="section-13">
+        <div class="annotation">
+          
+          <div class="pilwrap ">
+            <a class="pilcrow" href="#section-13">&#182;</a>
+          </div>
+          <p>Finally, show the actual message to the user.</p>
+<p>This is intended to be a simple example, so we’re making use of an existing
+facility (<code>showMessage</code>) that is really intended for flashing up temporary messages for the user.</p>
+<p>Arguably there would be better ways of displaying the information, but that would result
+in a much more complicated example – so let’s worry about one thing at a time!</p>
+
+        </div>
+        
+        <div class="content"><div class='highlight'><pre>
+        <span class="hljs-built_in">document</span>.showMessage(message);
+    }
+
+};</pre></div></div>
+        
+      </li>
+      
+    </ul>
+  </div>

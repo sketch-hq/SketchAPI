@@ -1,0 +1,62 @@
+/* @group Main Footer */
+body > section + footer {
+  background-color: $background-light;
+}
+
+  .sections-inverted > section + footer {
+    background-color: $background-light-dark;
+  }
+
+body > section:nth-of-type(even):last-of-type + footer {
+  background-color: $background-light-dark;
+}
+
+  .sections-inverted > section:nth-of-type(even):last-of-type + footer {
+    background-color: $background-light;
+  }
+
+.main-footer small {
+  font-size: 1rem;
+  line-height: 1.5;
+  vertical-align: middle;
+	color: $text-dark-low;
+}
+
+.main-footer a {
+  color: $text-dark-low;
+}
+
+@include tablet-and-above {
+  .main-footer {
+    text-align: right;
+  }
+
+	.main-footer > .wrapper {
+	  padding: 3rem 0; /*48px*/
+    overflow: hidden; //easy auto clearing
+	}
+
+  .main-footer small {
+    float: left;
+  }
+
+  .main-footer ul {
+    display: inline-block;
+    vertical-align: middle;
+    float: right;
+  }
+
+  .main-footer li {
+    margin-left: 2rem; /*32px*/
+  }
+}
+
+@include tablet-and-below {
+  .main-footer small,
+  .main-footer a {
+    display: block;
+    margin: 0 -1rem 0 0;
+    padding: 1rem 0;
+    border-bottom: 1px solid $divider-dark;
+  }
+}

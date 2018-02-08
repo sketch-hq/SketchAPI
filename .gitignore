@@ -1,9 +1,11 @@
 node_modules/
 build/
 .awcache/
-_vendor
 _site
 .sass-cache
-_external
+node_modules
+_vendor
 .jekyll-metadata
+_wip
+.bundle
 temp-sketchAPI-copy/
