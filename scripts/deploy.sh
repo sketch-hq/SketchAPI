@@ -20,6 +20,8 @@ git pull origin $PUBLISH_BRANCH
 
 # update it with the latest changes
 echo "Applying the latest changes..."
+rm -rf $DEPLOYED_API_DOCS_FOLDER
+rm -rf $DEPLOYED_GUIDES_DOCS_FOLDER
 cp -r $TEMP_DOCS_FOLDER/api $DEPLOYED_API_DOCS_FOLDER
 cp -r $TEMP_DOCS_FOLDER/guides $DEPLOYED_GUIDES_DOCS_FOLDER
 rm -rf $TEMP_DOCS_FOLDER
