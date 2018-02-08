@@ -15,7 +15,7 @@
     "run-tests": "skpm-test --app=xcode --enable-async",
     "test": "npm run lint -- --quiet && npm run run-tests",
     "test:watch": "npm run run-tests -- --watch",
-    "lint": "find . -name \"*.ts\" -o -name \"*.js\" | grep -v -f .gitignore | xargs eslint",
+    "lint": "find . -name \"*.ts\" -o -name \"*.js\" | grep -v -f .gitignore | grep -v examples | xargs eslint",
     "prettier:base": "prettier --write",
     "prettify": "find . -name \"*.ts\" -o -name \"*.js\" | grep -v -f .gitignore | xargs npm run prettier:base",
     "lint-staged": "lint-staged",

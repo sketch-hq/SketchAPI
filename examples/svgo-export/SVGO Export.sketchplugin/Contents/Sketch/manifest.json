@@ -1,0 +1,20 @@
+{
+    "name" : "SVGO Export",
+    "description" : "Uses SVGO to compress exported SVG assets.\nNote: it needs svgo installed somewhere on your path!",
+    "version" : "1.0",
+    "identifier" : "com.sketchapp.examples.svgo-export",
+    "author" : "Ale Muñoz",
+    "authorEmail" : "ale@sketchapp.com",
+    "commands" : [
+    {
+      "name" : "SVGO Export",
+      "identifier" : "svgo-export",
+      "script" : "svgo-export.js",
+      "handlers" : {
+        "actions" : {
+          "ExportSlices": "onExportSlices"
+        }
+      },
+    }
+    ],
+}
