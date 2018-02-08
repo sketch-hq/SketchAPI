@@ -16,7 +16,7 @@ cp -r ./docs $TEMP_DOCS_FOLDER
 echo "Switching to gh-pages..."
 git fetch
 git checkout $PUBLISH_BRANCH
-git pull
+git pull origin $PUBLISH_BRANCH
 
 # update it with the latest changes
 echo "Applying the latest changes..."
@@ -27,7 +27,7 @@ rm -rf $TEMP_DOCS_FOLDER
 # commit and push
 echo "Publishing the changes..."
 git add .
-git commit -m 'publish new version of the docs :tada:'
+git commit -m 'publish new version of the docs :tada:' -n
 git push
 
 # go back to previous state
