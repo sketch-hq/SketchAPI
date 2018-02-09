@@ -1,6 +1,6 @@
 # Selection Changed
 
-This is an example Sketch plugin which demonstrates how to register for and respond to the SelectionChanged action.
+This example plugin illustrates how to listen for the `SelectionChanged` action, and to do something whenever the user changes the selection.
 
 _It was created using `skpm`. For a detailed explanation on how things work, checkout the [skpm Readme](https://github.com/skpm/skpm/blob/master/README.md)._
 

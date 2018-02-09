@@ -1,6 +1,6 @@
 # Hello World
 
-This example plugin for [Sketch](https://www.sketchapp.com) demonstrates how to create a new layer.
+This is an extremely simple plugin example, which illustrates how to add a menu command to the Plugins menu and execute some code when it is selected.
 
 _It was created using `skpm`. For a detailed explanation on how things work, checkout the [skpm Readme](https://github.com/skpm/skpm/blob/master/README.md)._
 

@@ -1,0 +1,47 @@
+{
+  "identifier": "com.sketchapp.examples.text-utilities",
+  "compatibleVersion": 3,
+  "bundleVersion": 1,
+  "commands": [
+    {
+      "script": "./text-utilities.js",
+      "handler": "onAddBoth",
+      "name": "Add Line Fragments & Baselines",
+      "identifier": "fragmentsandbaselines"
+    },
+    {
+      "script": "./text-utilities.js",
+      "handler": "onAddBaselines",
+      "name": "Add Baselines",
+      "identifier": "baselines"
+    },
+    {
+      "script": "./text-utilities.js",
+      "handler": "onAddLineFragments",
+      "name": "Add Line Fragments",
+      "identifier": "fragments"
+    },
+    {
+      "script": "./text-utilities.js",
+      "handler": "onUseLegacyBaselines",
+      "name": "Use Legacy Typesetter",
+      "identifier": "legacyTypesetter"
+    },
+    {
+      "script": "./text-utilities.js",
+      "handler": "onUseConstantBaselines",
+      "name": "Use Constant Baselines Typesetter",
+      "identifier": "constantBaselinesTypesetter"
+    }
+  ],
+  "menu": {
+    "items": [
+      "baselines",
+      "fragments",
+      "fragmentsandbaselines",
+      "-",
+      "legacyTypesetter",
+      "constantBaselinesTypesetter"
+    ]
+  }
+}

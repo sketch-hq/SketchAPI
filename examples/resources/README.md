@@ -1,6 +1,6 @@
 # Resources
 
-An example plugin which contains embedded resource files. Note the `skpm.assets` field in the [package.json](https://github.com/BohemianCoding/SketchAPI/tree/develop/examples/resources/package.json) which is telling `skpm` to bundle all the files in the ["assets" folder](https://github.com/BohemianCoding/SketchAPI/tree/develop/examples/resources/assets) into the plugin.
+This is a simple example, which illustrates how to bundle resource files along with your Plugin, and access them from your code. Note the `skpm.assets` field in the [package.json](https://github.com/BohemianCoding/SketchAPI/tree/develop/examples/resources/package.json) which is telling `skpm` to bundle all the files in the ["assets" folder](https://github.com/BohemianCoding/SketchAPI/tree/develop/examples/resources/assets) into the plugin.
 
 _This plugin was created using `skpm`. For a detailed explanation on how things work, checkout the [skpm Readme](https://github.com/skpm/skpm/blob/master/README.md)._
 
