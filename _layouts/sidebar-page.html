@@ -34,12 +34,6 @@ layout: base
                 </ol>
               </li>
             {% endif %}
-            {% if page.url contains '/code/' %}
-                {% assign examples = site.code-examples | sort:"order" %}
-                {% for example in examples %}
-                  <li><a href="{{example.url}}" {% if page.url == example.url %} class="active"{% endif %}>{{example.title}}</a></li>
-                {% endfor %}
-            {% endif %}
             {% if page.url contains '/class/' %}
               <li>
                 <h2>Classes</h2>

@@ -13,8 +13,7 @@ The API itself is still under development, and should not be regarded as complet
 
 It's getting there however, and if you're starting to work on new plugins, you may want to consider trying it out.
 
-Over the next few releases we'll be developing the API further, updating all of our existing [plugin examples](/examples/) to use the API, and also adding some new examples.
-
+Over the next few releases we'll be developing the API further, updating all of our existing [plugin examples](https://github.com/BohemianCoding/SketchAPI/tree/develop/examples/) to use the API, and also adding some new examples.
 
 ## NSAppTransportSecurity
 
@@ -24,7 +23,6 @@ Until now we've disabled this feature, but soon we will enable it.
 
 Unless your plugin requests content from web pages, it should be unaffected by this change.
 
-If however you *do* fetch data or resources from web pages, you will need to change over to using `https:` in your URLs.
+If however you _do_ fetch data or resources from web pages, you will need to change over to using `https:` in your URLs.
 
 We also suggest that everyone changes to using `https:` for any URLs specified in the plugin's manifest file. Future versions of Sketch may use these URLs.
-

@@ -37,7 +37,7 @@ We're going to add a new handler, for the `OpenDocument` action:
 We're telling our plugin that we want to run the `onOpenDocument` function when a document is open, so let's add that in `my-action-listener.js`:
 
 ```js
-export function onOpenDocument (context) {
+export function onOpenDocument(context) {
   context.document.showMessage('Document Opened')
 }
 ```
@@ -67,4 +67,4 @@ Again, if there's any event you'd like to see added to the list, let us know and
 If you'd like to read more generally about the Action API, try these topics:
 
 * [Action API Reference](/reference/action/) - Learn about the full list of available actions.
-* [Additional Plugin Examples](/examples/) - Take a look at our list of example plugin projects.
+* [Additional Plugin Examples](https://github.com/BohemianCoding/SketchAPI/tree/develop/examples/) - Take a look at our list of example plugin projects.

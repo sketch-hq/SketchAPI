@@ -13,24 +13,24 @@ If you just want to use an existing plugin, see the [Plugin Directory](https://s
 
 Plugins in Sketch can do anything a user can do (and even more!). For example:
 
-- Select layers inside a document, based on complex rules
-- Manipulate layer properties
-- Create new layers
-- Export assets in all supported formats
-- Interact with the user (ask for input, display output)
-- Get data from external files and web services
-- Interact with the clipboard
-- Manipulate Sketch’s environment (editing guides, zoom, etc…)
-- Automate existing features by calling menu options from plugins
-- [design specs](https://github.com/utom/sketch-measure)
-- [content generation](https://github.com/timuric/Content-generator-sketch-plugin)
-- [perspective transformations](https://github.com/jamztang/MagicMirror)
+* Select layers inside a document, based on complex rules
+* Manipulate layer properties
+* Create new layers
+* Export assets in all supported formats
+* Interact with the user (ask for input, display output)
+* Get data from external files and web services
+* Interact with the clipboard
+* Manipulate Sketch’s environment (editing guides, zoom, etc…)
+* Automate existing features by calling menu options from plugins
+* [design specs](https://github.com/utom/sketch-measure)
+* [content generation](https://github.com/timuric/Content-generator-sketch-plugin)
+* [perspective transformations](https://github.com/jamztang/MagicMirror)
 
 The easiest way to see Sketch plugins in action is via the [Plugin Directory](https://sketchapp.com/extensions/plugins/). You can browse for useful plugins, install them to try them out and get an idea how you might extend Sketch for your own design scenarios.
 
 ### Writing an Extension
 
-We created a small tool-chain which makes it very easy to create a new plugin. It’s great for [starting out](/guides/first-plugin) and you can also find existing plugin [examples](/examples/).
+We created a small tool-chain which makes it very easy to create a new plugin. It’s great for [starting out](/guides/first-plugin) and you can also find existing plugin [examples](https://github.com/BohemianCoding/SketchAPI/tree/develop/examples/).
 
 Extensions are written in JavaScript. Sketch offers a small REPL-like console in which you can experiment with its API before diving into building your plugin.
 
@@ -48,10 +48,10 @@ Lots of great community ideas for Sketch features are better implemented as plug
 
 ## Next steps
 
-- [Your First plugin](/guides/first-plugin) - Try creating a simple Hello World plugin.
-- [Extension API](/reference/) - Learn about the Sketch extensibility APIs.
-- [Extension Examples](/examples/) - A list of extension samples you can review and build.
-- [Developer Forum](http://sketchplugins.com) - A forum where plugin developers share their knowledge about all things Sketch.
+* [Your First plugin](/guides/first-plugin) - Try creating a simple Hello World plugin.
+* [Extension API](/reference/) - Learn about the Sketch extensibility APIs.
+* [Extension Examples](https://github.com/BohemianCoding/SketchAPI/tree/develop/examples/) - A list of extension samples you can review and build.
+* [Developer Forum](http://sketchplugins.com) - A forum where plugin developers share their knowledge about all things Sketch.
 
 ### Help us improve
 
