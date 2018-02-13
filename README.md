@@ -80,7 +80,7 @@ var sketch = require('sketch')
 log(sketch.version.api)
 log(sketch.version.sketch)
 
-var document = sketch.fromNative(context.document)
+var document = sketch.getSelectedDocument()
 var selection = document.selectedLayers
 var page = document.selectedPage
 

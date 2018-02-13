@@ -28,6 +28,20 @@ export class Document extends WrappedObject {
     super(document)
   }
 
+  static getDocuments() {
+    const app = NSDocumentController.sharedDocumentController()
+    return toArray(app.documents()).map(doc => Document.fromNative(doc))
+  }
+
+  static getSelectedDocument() {
+    const app = NSDocumentController.sharedDocumentController()
+    const nativeDocument = app.currentDocument()
+    if (!nativeDocument) {
+      return undefined
+    }
+    return Document.fromNative(nativeDocument)
+  }
+
   /**
    * Returns a list of the pages in this document.
    *
