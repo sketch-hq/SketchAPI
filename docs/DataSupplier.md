@@ -7,19 +7,7 @@ hidden: true
 
 ```js
 var DataSupplier = require('sketch/data-supplier')
-
-var dataSupplier = new DataSupplier(context)
 ```
-
-Sketch data supplier manager.
-
-| Parameter            | type    | Description                                                  |
-| -------------------- | ------- | ------------------------------------------------------------ |
-| context _(required)_ | Context | The context object passed to the script when it was invoked. |
-
-### Return
-
-Return a DataSupplier object with the following methods:
 
 ## registerStaticSupplier
 
@@ -29,10 +17,8 @@ Return a DataSupplier object with the following methods:
 var DataSupplier = require('sketch/data-supplier')
 
 // onStartup would the handler for the `Startup` action defined in the manifest.json
-export function onStartup(context) {
-  var dataSupplier = new DataSupplier(context)
-
-  dataSupplier.registerStaticSupplier('public.text', 'My Custom Data', [
+export function onStartup() {
+  DataSupplier.registerStaticSupplier('public.text', 'My Custom Data', [
     'foo',
     'bar',
     'baz',
@@ -56,10 +42,8 @@ Register some data with a name.
 var DataSupplier = require('sketch/data-supplier')
 
 // onStartup would be the handler for the `Startup` action defined in the manifest.json
-export function onStartup(context) {
-  var dataSupplier = new DataSupplier(context)
-
-  dataSupplier.registerPluginDataSupplier(
+export function onStartup() {
+  DataSupplier.registerPluginDataSupplier(
     'public.text',
     'My Custom Data',
     'SupplyKey'
@@ -85,12 +69,11 @@ var DataSupplier = require('sketch/data-supplier')
 // onSupplyKeyNeeded would be the handler for the `SupplyKey` action defined in the manifest.json
 export function onSupplyKeyNeeded(context) {
   var count = context.data.count
-
-  var dataSupplier = new DataSupplier(context)
+  var key = context.data.key
 
   var data = Array.from(Array(count)).map(i => 'foo')
 
-  dataSupplier.supplyData(data)
+  DataSupplier.supplyData(key, data)
 }
 ```
 
@@ -98,6 +81,7 @@ When the plugin providing the dynamic data has finished generating the data, it 
 
 | Parameter         | type     | Description                                                                                                                                                |
 | ----------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| key _(required)_  | String   | Should be equal to `context.data.key`                                                                                                                      |
 | data _(required)_ | String[] | The list of values to provide. In case of `public.image`, the string is the path to the image. It needs to have a length equal to the `context.data.count` |
 
 ## deregisterDataSuppliers
@@ -108,10 +92,8 @@ When the plugin providing the dynamic data has finished generating the data, it 
 var DataSupplier = require('sketch/data-supplier')
 
 // onShutdown would be the handler for the `Shutdown` action defined in the manifest.json
-export function onShutdown(context) {
-  var dataSupplier = new DataSupplier(context)
-
-  dataSupplier.deregisterDataSuppliers()
+export function onShutdown() {
+  DataSupplier.deregisterDataSuppliers()
 }
 ```
 

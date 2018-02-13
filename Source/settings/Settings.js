@@ -37,13 +37,12 @@ const SUITE_PREFIX = 'plugin.sketch.'
 /**
  * Return the value of a plugin setting for a given key.
  *
- * @param context The context dictionary passed to the script when it was invoked.
  * @param key The setting to look up.
  * @return The setting value.
  * */
-export function settingForKey(context, key) {
+export function settingForKey(key) {
   const store = NSUserDefaults.alloc().initWithSuiteName(
-    `${SUITE_PREFIX}${context.plugin.identifier()}`
+    `${SUITE_PREFIX}${__command.pluginBundle().identifier()}`
   )
   const value = store.objectForKey_(key)
 
@@ -56,13 +55,12 @@ export function settingForKey(context, key) {
 /**
  * Set the value of a global setting for a given key.
  *
- * @param context The context dictionary passed to the script when it was invoked.
  * @param key The setting to set.
  * @param value The value to set it to.
  */
-export function setSettingForKey(context, key, value) {
+export function setSettingForKey(key, value) {
   const store = NSUserDefaults.alloc().initWithSuiteName(
-    `${SUITE_PREFIX}${context.plugin.identifier()}`
+    `${SUITE_PREFIX}${__command.pluginBundle().identifier()}`
   )
   store.setObject_forKey_(JSON.stringify(value) || 'undefined', key)
 }
