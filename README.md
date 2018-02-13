@@ -81,7 +81,6 @@ log(sketch.version.api)
 log(sketch.version.sketch)
 
 var document = sketch.getSelectedDocument()
-var selection = document.selectedLayers
 var page = document.selectedPage
 
 var Group = sketch.Group
@@ -92,11 +91,14 @@ var group = new Group({
   parent: page,
   frame: new Rectangle(0, 0, 100, 100),
   name: 'Test',
+  selected: true,
 })
 var rect = new Shape({
   parent: group,
   frame: new Rectangle(10, 10, 80, 80),
 })
+
+var selection = document.selectedLayers
 
 log(selection.isEmpty)
 selection.layers.forEach(function(item) {
@@ -106,8 +108,8 @@ selection.layers.forEach(function(item) {
 selection.clear()
 log(selection.isEmpty)
 
-group.select()
-rect.addToSelection()
+rect.selected = true
+log(selection.isEmpty)
 
 var outputString = sketch.UI.getStringFromUser('Test', 'default')
 var outputSelection = sketch.UI.getSelectionFromUser('Test', ['One', 'Two'], 1)
