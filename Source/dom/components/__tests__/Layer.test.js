@@ -125,3 +125,38 @@ test('should reorder the layers', (context, document) => {
   expect(group3.index).toBe(1)
   expect(group2.index).toBe(2)
 })
+
+test('should convert rect to different coord system', (context, document) => {
+  const page = document.selectedPage
+  const group = new Group({
+    parent: page,
+    frame: {
+      x: 100,
+      y: 50,
+      width: 10,
+      height: 10,
+    },
+  })
+
+  const parentRect = group.localRectToParentRect(
+    new Rectangle({ x: 10, y: 10, width: 10, height: 10 })
+  )
+
+  expect(parentRect.toJSON()).toEqual({
+    x: 110,
+    y: 60,
+    width: 10,
+    height: 10,
+  })
+
+  const pageRect = group.localRectToPageRect(
+    new Rectangle({ x: 10, y: 10, width: 10, height: 10 })
+  )
+
+  expect(pageRect.toJSON()).toEqual({
+    x: 110,
+    y: 60,
+    width: 10,
+    height: 10,
+  })
+})
