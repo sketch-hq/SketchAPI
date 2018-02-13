@@ -116,8 +116,8 @@ var outputSelection = sketch.UI.getSelectionFromUser('Test', ['One', 'Two'], 1)
 sketch.UI.message('Hello mum!')
 sketch.UI.alert('Title', 'message')
 
-sketch.Settings.setSettingForKey(context, 'setting-to-remember', outputString)
-log(sketch.Settings.settingForKey(context, 'setting-to-remember'))
+sketch.Settings.setSettingForKey('setting-to-remember', outputString)
+log(sketch.Settings.settingForKey('setting-to-remember'))
 ```
 
 For more examples, we recommend checking out the [examples section of the developer website](http://developer.sketchapp.com/examples/).
