@@ -1,3 +1,5 @@
+import { isWrappedObject } from '../dom/utils'
+
 function getPluginIdentifier() {
   if (!__command.pluginBundle()) {
     throw new Error(
@@ -35,10 +37,13 @@ export function globalSettingForKey(key) {
  * eg: defaults write com.bohemiancoding.sketch3 <key> <value>
  */
 export function setGlobalSettingForKey(key, value) {
-  NSUserDefaults.standardUserDefaults().setObject_forKey_(
-    JSON.stringify(value) || 'undefined',
-    key
-  )
+  const store = NSUserDefaults.standardUserDefaults()
+  const stringifiedValue = JSON.stringify(value)
+  if (!stringifiedValue) {
+    store.removeObjectForKey(key)
+  } else {
+    store.setObject_forKey_(stringifiedValue, key)
+  }
 }
 
 const SUITE_PREFIX = 'plugin.sketch.'
@@ -71,5 +76,50 @@ export function setSettingForKey(key, value) {
   const store = NSUserDefaults.alloc().initWithSuiteName(
     `${SUITE_PREFIX}${getPluginIdentifier()}`
   )
-  store.setObject_forKey_(JSON.stringify(value) || 'undefined', key)
+  const stringifiedValue = JSON.stringify(value)
+  if (!stringifiedValue) {
+    store.removeObjectForKey(key)
+  } else {
+    store.setObject_forKey_(stringifiedValue, key)
+  }
+}
+
+export function layerSettingForKey(layer, key) {
+  const value = __command.valueForKey_onLayer(
+    key,
+    isWrappedObject(layer) ? layer.sketchObject : layer
+  )
+
+  if (typeof value === 'undefined' || value == 'undefined') {
+    return undefined
+  }
+  return JSON.parse(value)
+}
+
+export function setLayerSettingForKey(layer, key, value) {
+  __command.setValue_forKey_onLayer(
+    JSON.stringify(value),
+    key,
+    isWrappedObject(layer) ? layer.sketchObject : layer
+  )
+}
+
+export function documentSettingForKey(document, key) {
+  const value = __command.valueForKey_onDocument(
+    key,
+    isWrappedObject(document) ? document.sketchObject : document
+  )
+
+  if (typeof value === 'undefined' || value == 'undefined') {
+    return undefined
+  }
+  return JSON.parse(value)
+}
+
+export function setDocumentSettingForKey(document, key, value) {
+  __command.setValue_forKey_onDocument(
+    JSON.stringify(value),
+    key,
+    isWrappedObject(document) ? document.sketchObject : document
+  )
 }
