@@ -1,3 +1,12 @@
+function getPluginIdentifier() {
+  if (!__command.pluginBundle()) {
+    throw new Error(
+      'It seems that the command is not running in a plugin. Bundle your command in a plugin to use the Settings API.'
+    )
+  }
+  return __command.pluginBundle().identifier()
+}
+
 /**
  * Return the value of a global setting for a given key.
  * @param key The setting to look up.
@@ -42,7 +51,7 @@ const SUITE_PREFIX = 'plugin.sketch.'
  * */
 export function settingForKey(key) {
   const store = NSUserDefaults.alloc().initWithSuiteName(
-    `${SUITE_PREFIX}${__command.pluginBundle().identifier()}`
+    `${SUITE_PREFIX}${getPluginIdentifier()}`
   )
   const value = store.objectForKey_(key)
 
@@ -60,7 +69,7 @@ export function settingForKey(key) {
  */
 export function setSettingForKey(key, value) {
   const store = NSUserDefaults.alloc().initWithSuiteName(
-    `${SUITE_PREFIX}${__command.pluginBundle().identifier()}`
+    `${SUITE_PREFIX}${getPluginIdentifier()}`
   )
   store.setObject_forKey_(JSON.stringify(value) || 'undefined', key)
 }

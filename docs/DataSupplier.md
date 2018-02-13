@@ -9,32 +9,7 @@ hidden: true
 var DataSupplier = require('sketch/data-supplier')
 ```
 
-## registerStaticSupplier
-
-> Example
-
-```js
-var DataSupplier = require('sketch/data-supplier')
-
-// onStartup would the handler for the `Startup` action defined in the manifest.json
-export function onStartup() {
-  DataSupplier.registerStaticSupplier('public.text', 'My Custom Data', [
-    'foo',
-    'bar',
-    'baz',
-  ])
-}
-```
-
-Register some data with a name.
-
-| Parameter             | type     | Description                                                                                    |
-| --------------------- | -------- | ---------------------------------------------------------------------------------------------- |
-| dataType _(required)_ | String   | The data type. Currently `public.text` or `public.image` are the only allowed values.          |
-| dataName _(required)_ | String   | The data name, will be used as the menu item title for the data.                               |
-| data _(required)_     | String[] | The list of values to provide. In case of `public.image`, the string is the path to the image. |
-
-## registerPluginDataSupplier
+## registerDataSupplier
 
 > Example
 

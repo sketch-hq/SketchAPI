@@ -1,3 +1,12 @@
+function getPluginIdentifier() {
+  if (!__command.pluginBundle()) {
+    throw new Error(
+      'It seems that the command is not running in a plugin. Bundle your command in a plugin to use the DataSupplier API.'
+    )
+  }
+  return __command.pluginBundle().identifier()
+}
+
 /**
  * Register a function to supply data on request.
  *
@@ -5,9 +14,9 @@
  * @param {string} dataName The data name, will be used as the menu item title for the data.
  * @param {string} dynamicDataKey The key to use to select the dynamic data to supply in onSupplyData.
  */
-export function registerPluginDataSupplier(dataType, dataName, dynamicDataKey) {
+export function registerDataSupplier(dataType, dataName, dynamicDataKey) {
   const dataManager = AppController.sharedInstance.dataSupplierManager()
-  const identifier = __command.pluginBundle().identifier()
+  const identifier = getPluginIdentifier()
   const commandIdentifier = __command.identifier()
   dataManager.registerPluginDataSupplier_withName_dataType_pluginIdentifier_commandIdentifier_(
     dynamicDataKey,
@@ -23,7 +32,7 @@ export function registerPluginDataSupplier(dataType, dataName, dynamicDataKey) {
  */
 export function deregisterDataSuppliers() {
   const dataManager = AppController.sharedInstance.dataSupplierManager()
-  const identifier = __command.pluginBundle().identifier()
+  const identifier = getPluginIdentifier()
   dataManager.deregisterDataSuppliersForPluginWithIdentifier_(identifier)
 }
 
