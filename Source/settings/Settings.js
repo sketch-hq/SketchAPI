@@ -20,7 +20,7 @@ function getPluginIdentifier() {
  * */
 export function globalSettingForKey(key) {
   const value = NSUserDefaults.standardUserDefaults().objectForKey_(key)
-  if (typeof value === 'undefined' || value === 'undefined') {
+  if (typeof value === 'undefined' || value === 'undefined' || value === null) {
     return undefined
   }
   return JSON.parse(value)
@@ -60,7 +60,7 @@ export function settingForKey(key) {
   )
   const value = store.objectForKey_(key)
 
-  if (typeof value === 'undefined' || value == 'undefined') {
+  if (typeof value === 'undefined' || value == 'undefined' || value === null) {
     return undefined
   }
   return JSON.parse(value)
@@ -90,7 +90,7 @@ export function layerSettingForKey(layer, key) {
     isWrappedObject(layer) ? layer.sketchObject : layer
   )
 
-  if (typeof value === 'undefined' || value == 'undefined') {
+  if (typeof value === 'undefined' || value == 'undefined' || value === null) {
     return undefined
   }
   return JSON.parse(value)
@@ -110,7 +110,7 @@ export function documentSettingForKey(document, key) {
     isWrappedObject(document) ? document.sketchObject : document
   )
 
-  if (typeof value === 'undefined' || value == 'undefined') {
+  if (typeof value === 'undefined' || value == 'undefined' || value === null) {
     return undefined
   }
   return JSON.parse(value)

@@ -1,6 +1,13 @@
 /* globals expect, test */
-
-import { settingForKey, setSettingForKey } from '../Settings'
+import { Text } from '../../dom/components/Text'
+import {
+  settingForKey,
+  setSettingForKey,
+  setLayerSettingForKey,
+  layerSettingForKey,
+  setDocumentSettingForKey,
+  documentSettingForKey,
+} from '../Settings'
 
 function madeupPluginIdentifierForTempScript() {
   if (!__command.pluginBundle()) {
@@ -12,9 +19,9 @@ function madeupPluginIdentifierForTempScript() {
   }
 }
 
-test('non existing settings should return null', () => {
+test('non existing settings should return undefined', () => {
   madeupPluginIdentifierForTempScript()
-  expect(settingForKey('non-existing-key')).toBe(null)
+  expect(settingForKey('non-existing-key')).toBe(undefined)
 })
 
 test('should set a boolean', () => {
@@ -42,4 +49,15 @@ test('should set object', () => {
   madeupPluginIdentifierForTempScript()
   setSettingForKey('object-key', { a: 1 })
   expect(settingForKey('object-key')).toEqual({ a: 1 })
+})
+
+test('should set a setting on a layer', (context, document) => {
+  const layer = new Text({ parent: document.selectedPage })
+  setLayerSettingForKey(layer, 'object-key', { a: 1 })
+  expect(layerSettingForKey(layer, 'object-key')).toEqual({ a: 1 })
+})
+
+test('should set a setting on a document', (context, document) => {
+  setDocumentSettingForKey(document, 'object-key', { a: 1 })
+  expect(documentSettingForKey(document, 'object-key')).toEqual({ a: 1 })
 })
