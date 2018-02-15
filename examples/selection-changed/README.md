@@ -9,7 +9,7 @@ _It was created using `skpm`. For a detailed explanation on how things work, che
 Download the example or [clone the repo](https://github.com/BohemianCoding/SketchAPI):
 
 ```bash
-curl https://codeload.github.com/BohemianCoding/SketchAPI/tar.gz/master | tar -xz --strip=2 SketchAPI-master/examples/selection-changed
+curl https://codeload.github.com/BohemianCoding/SketchAPI/tar.gz/develop | tar -xz --strip=2 SketchAPI-develop/examples/selection-changed
 cd selection-changed
 ```
 

@@ -15,6 +15,13 @@ _This plugin was created using `skpm`. For a detailed explanation on how things 
 
 ## Usage
 
+Download the example or [clone the repo](https://github.com/BohemianCoding/SketchAPI):
+
+```bash
+curl https://codeload.github.com/BohemianCoding/SketchAPI/tar.gz/develop | tar -xz --strip=2 SketchAPI-develop/examples/text-utilities
+cd text-utilities
+```
+
 Install the dependencies
 
 ```bash
