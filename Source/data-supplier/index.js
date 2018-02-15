@@ -1,4 +1,4 @@
-import { DataSupplier } from './DataSupplier'
+import * as DataSupplier from './DataSupplier'
 
 const api = DataSupplier
 
