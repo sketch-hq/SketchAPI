@@ -10,7 +10,7 @@ export const AnimationType = {
   slideFromRight: 'slideFromRight',
   slideFromLeft: 'slideFromLeft',
   slideFromBottom: 'slideFromBottom',
-  slideFromRop: 'slideFromRop',
+  slideFromTop: 'slideFromTop',
   fade: 'fade',
 }
 
@@ -21,7 +21,7 @@ export const AnimationTypeMap = {
   slideFromRight: 0,
   slideFromLeft: 1,
   slideFromBottom: 2,
-  slideFromRop: 3,
+  slideFromTop: 3,
   fade: 4,
 }
 
