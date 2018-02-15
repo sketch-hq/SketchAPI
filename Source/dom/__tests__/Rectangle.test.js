@@ -37,6 +37,21 @@ test('should offset a rectangle', () => {
   expect(r.height).toBe(4)
 })
 
+test('should scale a rectangle', () => {
+  const r = new Rectangle(1, 2, 3, 4)
+  r.scale(10, 10)
+  expect(r.x).toBe(1)
+  expect(r.y).toBe(2)
+  expect(r.width).toBe(30)
+  expect(r.height).toBe(40)
+
+  r.scale(0.5)
+  expect(r.x).toBe(1)
+  expect(r.y).toBe(2)
+  expect(r.width).toBe(15)
+  expect(r.height).toBe(20)
+})
+
 test('should return a CGRect', () => {
   const r = new Rectangle(1, 2, 3, 4)
   const c = r.asCGRect()

@@ -14,6 +14,24 @@ A Sketch document.
 | ---------- | ------ | ------------------------------ |
 | id         | string | The unique ID of the document. |
 
+## Accessing the selected document
+
+```javascript
+var document = require('sketch/dom').getSelectedDocument()
+
+// also exposed on Document
+var document = Document.getSelectedDocument()
+```
+
+## Accessing all the opened documents
+
+```javascript
+var documents = require('sketch/dom').getDocuments()
+
+// also exposed on Document
+var documents = Document.getDocuments()
+```
+
 ## Creating a new document
 
 ```javascript
@@ -93,6 +111,22 @@ A method to help find the first layer in this document which has the given name.
 ### Return
 
 Return a [Layer](#layer) object or `undefined` if it's not found.
+
+## Find a Symbol Master
+
+```javascript
+var symbolMaster = document.getSymbolMasterWithID(symbolInstance.symbolId)
+```
+
+A method to help find a symbol master in the document.
+
+| Parameter             | type   | Description                                |
+| --------------------- | ------ | ------------------------------------------ |
+| symbolId _(required)_ | string | The symbol ID of the symbol master to find |
+
+### Return
+
+Return a [SymbolMaster](#symbolmaster) object or `undefined` if it's not found.
 
 ## Center on layer
 

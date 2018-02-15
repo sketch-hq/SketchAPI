@@ -57,6 +57,14 @@ export class Rectangle {
     return this
   }
 
+  scale(factorWidth, factorHeight) {
+    this.width *= parseFloat(factorWidth)
+    this.height *= parseFloat(
+      typeof factorHeight === 'undefined' ? factorWidth : factorHeight
+    )
+    return this
+  }
+
   /**
    * Return the Rectangle as a CGRect.
    *

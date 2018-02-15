@@ -69,8 +69,13 @@ export class Layer extends WrappedObject {
    * @return {Rectangle} The converted rectangle expressed in page coordinates.
    */
   localRectToPageRect(rect) {
-    const _rect = this._object.convertRectToAbsoluteCoordinates(rect.asCGRect)
-    return new Rectangle(_rect.x, _rect.y, _rect.width, _rect.height)
+    const _rect = this._object.convertRectToAbsoluteCoordinates(rect.asCGRect())
+    return new Rectangle(
+      _rect.origin.x,
+      _rect.origin.y,
+      _rect.size.width,
+      _rect.size.height
+    )
   }
 
   /**
