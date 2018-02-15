@@ -9,46 +9,86 @@ import {
   documentSettingForKey,
 } from '../Settings'
 
-function madeupPluginIdentifierForTempScript() {
-  if (!__command.pluginBundle()) {
-    __command.pluginBundle = {
-      identifier() {
-        return 'temp.script'
-      },
-    }
-  }
-}
-
 test('non existing settings should return undefined', () => {
-  madeupPluginIdentifierForTempScript()
-  expect(settingForKey('non-existing-key')).toBe(undefined)
+  if (!__command.pluginBundle()) {
+    try {
+      expect(settingForKey('non-existing-key')).toBe(undefined)
+      expect(false).toBe(true)
+    } catch (err) {
+      expect(err.message).toMatch(
+        'It seems that the command is not running in a plugin.'
+      )
+    }
+  } else {
+    expect(settingForKey('non-existing-key')).toBe(undefined)
+  }
 })
 
 test('should set a boolean', () => {
-  madeupPluginIdentifierForTempScript()
-  setSettingForKey('false-key', false)
-  expect(settingForKey('false-key')).toBe(false)
+  if (!__command.pluginBundle()) {
+    try {
+      setSettingForKey('false-key', false)
+      expect(false).toBe(true)
+    } catch (err) {
+      expect(err.message).toMatch(
+        'It seems that the command is not running in a plugin.'
+      )
+    }
+  } else {
+    setSettingForKey('false-key', false)
+    expect(settingForKey('false-key')).toBe(false)
 
-  setSettingForKey('true-key', true)
-  expect(settingForKey('true-key')).toBe(true)
+    setSettingForKey('true-key', true)
+    expect(settingForKey('true-key')).toBe(true)
+  }
 })
 
 test('should set a string', () => {
-  madeupPluginIdentifierForTempScript()
-  setSettingForKey('string-key', 'test')
-  expect(settingForKey('string-key')).toBe('test')
+  if (!__command.pluginBundle()) {
+    try {
+      setSettingForKey('string-key', 'test')
+      expect(false).toBe(true)
+    } catch (err) {
+      expect(err.message).toMatch(
+        'It seems that the command is not running in a plugin.'
+      )
+    }
+  } else {
+    setSettingForKey('string-key', 'test')
+    expect(settingForKey('string-key')).toBe('test')
+  }
 })
 
 test('should set undefined', () => {
-  madeupPluginIdentifierForTempScript()
-  setSettingForKey('undefined-key', undefined)
-  expect(settingForKey('undefined-key')).toBe(undefined)
+  if (!__command.pluginBundle()) {
+    try {
+      setSettingForKey('undefined-key', undefined)
+      expect(false).toBe(true)
+    } catch (err) {
+      expect(err.message).toMatch(
+        'It seems that the command is not running in a plugin.'
+      )
+    }
+  } else {
+    setSettingForKey('undefined-key', undefined)
+    expect(settingForKey('undefined-key')).toBe(undefined)
+  }
 })
 
 test('should set object', () => {
-  madeupPluginIdentifierForTempScript()
-  setSettingForKey('object-key', { a: 1 })
-  expect(settingForKey('object-key')).toEqual({ a: 1 })
+  if (!__command.pluginBundle()) {
+    try {
+      setSettingForKey('object-key', { a: 1 })
+      expect(false).toBe(true)
+    } catch (err) {
+      expect(err.message).toMatch(
+        'It seems that the command is not running in a plugin.'
+      )
+    }
+  } else {
+    setSettingForKey('object-key', { a: 1 })
+    expect(settingForKey('object-key')).toEqual({ a: 1 })
+  }
 })
 
 test('should set a setting on a layer', (context, document) => {
