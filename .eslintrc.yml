@@ -49,6 +49,7 @@ globals:
   NSData: false
   NSDataBase64DecodingIgnoreUnknownCharacters: false
   MSDocument: false
+  MSFlowConnection: false
 
 rules:
   ###########

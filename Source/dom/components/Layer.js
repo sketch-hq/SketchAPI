@@ -1,6 +1,7 @@
 import { WrappedObject, DefinedPropertiesKey } from '../WrappedObject'
 import { Rectangle } from '../Rectangle'
 import { wrapObject, wrapNativeObject } from '../wrapNativeObject'
+import { Flow } from './Flow'
 
 /**
  * Abstract class that represents a Sketch layer.
@@ -194,5 +195,18 @@ Layer.define('selected', {
     } else {
       this._object.select_byExtendingSelection(false, true)
     }
+  },
+})
+
+Layer.Flow = {
+  AnimationType: Flow.AnimationType,
+}
+Layer.define('flow', {
+  get() {
+    return wrapObject(this._object.flow())
+  },
+  set(_flow) {
+    const flow = Flow.from(_flow)
+    this._object.flow = flow.sketchObject
   },
 })
