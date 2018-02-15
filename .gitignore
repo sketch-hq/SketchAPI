@@ -8,3 +8,4 @@ _external
 .jekyll-metadata
 temp-sketchAPI-copy/
 .bundle
+examples/**/package-lock.json

@@ -1,0 +1,18 @@
+{
+  "identifier": "com.sketchapp.examples.selection-changed",
+  "compatibleVersion": 3,
+  "bundleVersion": 1,
+  "icon": "icon.png",
+  "commands": [
+    {
+      "name": "Selection Changed",
+      "identifier": "selection-changed",
+      "script": "./selection-changed.js",
+      "handlers": {
+        "actions": {
+          "SelectionChanged.finish": "onSelectionChanged"
+        }
+      }
+    }
+  ]
+}
