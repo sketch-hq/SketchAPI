@@ -198,9 +198,6 @@ Layer.define('selected', {
   },
 })
 
-Layer.Flow = {
-  AnimationType: Flow.AnimationType,
-}
 Layer.define('flow', {
   get() {
     return wrapObject(this._object.flow())

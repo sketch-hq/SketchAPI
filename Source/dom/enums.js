@@ -11,4 +11,5 @@ export const Types = {
   SymbolInstance: 'SymbolInstance',
   Override: 'Override',
   ImageData: 'ImageData',
+  Flow: 'Flow',
 }

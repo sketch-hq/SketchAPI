@@ -5,7 +5,7 @@ import { isWrappedObject, isNativeObject } from '../utils'
 import { wrapObject } from '../wrapNativeObject'
 
 // Mapping between animation type names and values.
-const AnimationType = {
+export const AnimationType = {
   none: 'none',
   slideFromRight: 'slideFromRight',
   slideFromLeft: 'slideFromLeft',
@@ -13,6 +13,8 @@ const AnimationType = {
   slideFromRop: 'slideFromRop',
   fade: 'fade',
 }
+
+export const BackTarget = 'back'
 
 export const AnimationTypeMap = {
   none: -1,
@@ -67,8 +69,6 @@ Flow.type = Types.Flow
 Flow[DefinedPropertiesKey] = { ...WrappedObject[DefinedPropertiesKey] }
 Factory.registerClass(Flow, MSFlowConnection)
 
-Flow.BackTarget = 'back'
-
 Flow.define('targetId', {
   get() {
     return String(this._object.destinationArtboardID())
@@ -83,21 +83,20 @@ Flow.define('target', {
   exportable: false,
   get() {
     const target = this._object.destinationArtboard()
-    if (target == Flow.BackTarget) {
-      return Flow.BackTarget
+    if (target == BackTarget) {
+      return BackTarget
     }
     return wrapObject(target)
   },
   set(target) {
-    if (target == Flow.BackTarget) {
-      this._object.destinationArtboardID = Flow.BackTarget
+    if (target == BackTarget) {
+      this._object.destinationArtboardID = BackTarget
       return
     }
     this._object.destinationArtboardID = wrapObject(target).id
   },
 })
 
-Flow.AnimationType = AnimationType
 Flow.define('animationType', {
   get() {
     const raw = this._object.animationType()
