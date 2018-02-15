@@ -1,0 +1,12 @@
+{
+  "identifier": "com.sketchapp.examples.helloworld",
+  "compatibleVersion": 3,
+  "bundleVersion": 1,
+  "commands": [
+    {
+      "script": "hello-world.js",
+      "name": "Hello World!",
+      "identifier": "helloworld"
+    }
+  ]
+}

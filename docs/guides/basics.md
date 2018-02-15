@@ -12,20 +12,16 @@ It contains one or more scripts. Each script defines one or more commands which 
 
 Plugin scripts are written using JavaScript.
 
-<div class="embed-container">
-  <iframe src="https://www.youtube.com/embed/TlSfoGN6WRw?rel=0&amp;showinfo=0&amp;color=white" frameborder="0" allowfullscreen=""></iframe>
-</div>
-
 ## Terminology
 
 Before we get any further, let’s define a bit of terminology.
 
-- *Plugin*: a collection of *Scripts*, *Commands* and other resources grouped together as a discrete unit
-- *Plugin Bundle*: the folder on disk containing the files that make up the *Plugin*
-- *Action*: something the user does (selecting a menu, or changing the document) which triggers a *Command*
-- *Command*: a Plugin can define more than one command; typically each one is associated with a different menu or keyboard shortcut, and causes a different *Handler* to be executed.
-- *Handler*: a function which executes some code to implement a *Command*.
-- *Script*: a JavaScript file containing one or more *Handlers* which implement one or more *Commands*.
+* _Plugin_: a collection of _Scripts_, _Commands_ and other resources grouped together as a discrete unit
+* _Plugin Bundle_: the folder on disk containing the files that make up the _Plugin_
+* _Action_: something the user does (selecting a menu, or changing the document) which triggers a _Command_
+* _Command_: a Plugin can define more than one command; typically each one is associated with a different menu or keyboard shortcut, and causes a different _Handler_ to be executed.
+* _Handler_: a function which executes some code to implement a _Command_.
+* _Script_: a JavaScript file containing one or more _Handlers_ which implement one or more _Commands_.
 
 ## How do I make a plugin?
 
@@ -36,7 +32,7 @@ The easiest way to get started with Plugins is to open Sketch, open a document a
 The smallest plugin example looks like this:
 
 ```js
-export default function (context) {
+export default function(context) {
   context.document.showMessage('Hello, world!')
 }
 ```

@@ -1,0 +1,6 @@
+{
+  "name": "svgo-export-assets",
+  "dependencies": {
+    "svgo": "^1.0.4"
+  }
+}
