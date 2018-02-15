@@ -35,6 +35,18 @@ Adjust the rectangle by offsetting it.
 
 Return this rectangle (useful if you want to chain the calls).
 
+## scale
+
+```javascript
+rect.scale(scaleWidth, scaleHeight)
+```
+
+Adjust the rectangle by scaling it. The `scaleHeight` argument can be ommited to apply the same factor on both the width and the height.
+
+### Return
+
+Return this rectangle (useful if you want to chain the calls).
+
 ## asCGRect
 
 ```javascript

@@ -80,8 +80,7 @@ var sketch = require('sketch')
 log(sketch.version.api)
 log(sketch.version.sketch)
 
-var document = sketch.fromNative(context.document)
-var selection = document.selectedLayers
+var document = sketch.getSelectedDocument()
 var page = document.selectedPage
 
 var Group = sketch.Group
@@ -92,11 +91,14 @@ var group = new Group({
   parent: page,
   frame: new Rectangle(0, 0, 100, 100),
   name: 'Test',
+  selected: true,
 })
 var rect = new Shape({
   parent: group,
   frame: new Rectangle(10, 10, 80, 80),
 })
+
+var selection = document.selectedLayers
 
 log(selection.isEmpty)
 selection.layers.forEach(function(item) {
@@ -106,16 +108,16 @@ selection.layers.forEach(function(item) {
 selection.clear()
 log(selection.isEmpty)
 
-group.select()
-rect.addToSelection()
+rect.selected = true
+log(selection.isEmpty)
 
 var outputString = sketch.UI.getStringFromUser('Test', 'default')
 var outputSelection = sketch.UI.getSelectionFromUser('Test', ['One', 'Two'], 1)
 sketch.UI.message('Hello mum!')
 sketch.UI.alert('Title', 'message')
 
-sketch.Settings.setSettingForKey(context, 'setting-to-remember', outputString)
-log(sketch.Settings.settingForKey(context, 'setting-to-remember'))
+sketch.Settings.setSettingForKey('setting-to-remember', outputString)
+log(sketch.Settings.settingForKey('setting-to-remember'))
 ```
 
 For more examples, we recommend checking out the [examples section of the developer website](http://developer.sketchapp.com/examples/).

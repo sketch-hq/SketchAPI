@@ -35,6 +35,9 @@ api.Rectangle = Rectangle
 api.Types = Types
 api.fromNative = wrapObject
 
+api.getDocuments = Document.getDocuments
+api.getSelectedDocument = Document.getSelectedDocument
+
 api.version = {
   sketch: MSApplicationMetadata.metadata().appVersion,
   api: process.env.API_VERSION,

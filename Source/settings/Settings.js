@@ -1,3 +1,14 @@
+import { isWrappedObject } from '../dom/utils'
+
+function getPluginIdentifier() {
+  if (!__command.pluginBundle()) {
+    throw new Error(
+      'It seems that the command is not running in a plugin. Bundle your command in a plugin to use the Settings API.'
+    )
+  }
+  return __command.pluginBundle().identifier()
+}
+
 /**
  * Return the value of a global setting for a given key.
  * @param key The setting to look up.
@@ -9,7 +20,7 @@
  * */
 export function globalSettingForKey(key) {
   const value = NSUserDefaults.standardUserDefaults().objectForKey_(key)
-  if (typeof value === 'undefined' || value === 'undefined') {
+  if (typeof value === 'undefined' || value === 'undefined' || value === null) {
     return undefined
   }
   return JSON.parse(value)
@@ -26,10 +37,13 @@ export function globalSettingForKey(key) {
  * eg: defaults write com.bohemiancoding.sketch3 <key> <value>
  */
 export function setGlobalSettingForKey(key, value) {
-  NSUserDefaults.standardUserDefaults().setObject_forKey_(
-    JSON.stringify(value) || 'undefined',
-    key
-  )
+  const store = NSUserDefaults.standardUserDefaults()
+  const stringifiedValue = JSON.stringify(value)
+  if (!stringifiedValue) {
+    store.removeObjectForKey(key)
+  } else {
+    store.setObject_forKey_(stringifiedValue, key)
+  }
 }
 
 const SUITE_PREFIX = 'plugin.sketch.'
@@ -37,17 +51,16 @@ const SUITE_PREFIX = 'plugin.sketch.'
 /**
  * Return the value of a plugin setting for a given key.
  *
- * @param context The context dictionary passed to the script when it was invoked.
  * @param key The setting to look up.
  * @return The setting value.
  * */
-export function settingForKey(context, key) {
+export function settingForKey(key) {
   const store = NSUserDefaults.alloc().initWithSuiteName(
-    `${SUITE_PREFIX}${context.plugin.identifier()}`
+    `${SUITE_PREFIX}${getPluginIdentifier()}`
   )
   const value = store.objectForKey_(key)
 
-  if (typeof value === 'undefined' || value == 'undefined') {
+  if (typeof value === 'undefined' || value == 'undefined' || value === null) {
     return undefined
   }
   return JSON.parse(value)
@@ -56,13 +69,57 @@ export function settingForKey(context, key) {
 /**
  * Set the value of a global setting for a given key.
  *
- * @param context The context dictionary passed to the script when it was invoked.
  * @param key The setting to set.
  * @param value The value to set it to.
  */
-export function setSettingForKey(context, key, value) {
+export function setSettingForKey(key, value) {
   const store = NSUserDefaults.alloc().initWithSuiteName(
-    `${SUITE_PREFIX}${context.plugin.identifier()}`
+    `${SUITE_PREFIX}${getPluginIdentifier()}`
   )
-  store.setObject_forKey_(JSON.stringify(value) || 'undefined', key)
+  const stringifiedValue = JSON.stringify(value)
+  if (!stringifiedValue) {
+    store.removeObjectForKey(key)
+  } else {
+    store.setObject_forKey_(stringifiedValue, key)
+  }
+}
+
+export function layerSettingForKey(layer, key) {
+  const value = __command.valueForKey_onLayer(
+    key,
+    isWrappedObject(layer) ? layer.sketchObject : layer
+  )
+
+  if (typeof value === 'undefined' || value == 'undefined' || value === null) {
+    return undefined
+  }
+  return JSON.parse(value)
+}
+
+export function setLayerSettingForKey(layer, key, value) {
+  __command.setValue_forKey_onLayer(
+    JSON.stringify(value),
+    key,
+    isWrappedObject(layer) ? layer.sketchObject : layer
+  )
+}
+
+export function documentSettingForKey(document, key) {
+  const value = __command.valueForKey_onDocument(
+    key,
+    isWrappedObject(document) ? document.sketchObject : document
+  )
+
+  if (typeof value === 'undefined' || value == 'undefined' || value === null) {
+    return undefined
+  }
+  return JSON.parse(value)
+}
+
+export function setDocumentSettingForKey(document, key, value) {
+  __command.setValue_forKey_onDocument(
+    JSON.stringify(value),
+    key,
+    isWrappedObject(document) ? document.sketchObject : document
+  )
 }

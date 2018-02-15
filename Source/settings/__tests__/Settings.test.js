@@ -1,57 +1,103 @@
 /* globals expect, test */
+import { Text } from '../../dom/components/Text'
+import {
+  settingForKey,
+  setSettingForKey,
+  setLayerSettingForKey,
+  layerSettingForKey,
+  setDocumentSettingForKey,
+  documentSettingForKey,
+} from '../Settings'
 
-import { settingForKey, setSettingForKey } from '../Settings'
-
-function madeupContextForTempScript(context) {
-  if (!context.plugin) {
-    // eslint-disable-next-line
-    context.plugin = {
-      identifier() {
-        return 'temp.script'
-      },
+test('non existing settings should return undefined', () => {
+  if (!__command.pluginBundle()) {
+    try {
+      expect(settingForKey('non-existing-key')).toBe(undefined)
+      expect(false).toBe(true)
+    } catch (err) {
+      expect(err.message).toMatch(
+        'It seems that the command is not running in a plugin.'
+      )
     }
+  } else {
+    expect(settingForKey('non-existing-key')).toBe(undefined)
   }
-
-  return context
-}
-
-test('non existing settings should return null', context => {
-  expect(
-    settingForKey(madeupContextForTempScript(context), 'non-existing-key')
-  ).toBe(null)
 })
 
-test('should set a boolean', context => {
-  setSettingForKey(madeupContextForTempScript(context), 'false-key', false)
-  expect(settingForKey(madeupContextForTempScript(context), 'false-key')).toBe(
-    false
-  )
+test('should set a boolean', () => {
+  if (!__command.pluginBundle()) {
+    try {
+      setSettingForKey('false-key', false)
+      expect(false).toBe(true)
+    } catch (err) {
+      expect(err.message).toMatch(
+        'It seems that the command is not running in a plugin.'
+      )
+    }
+  } else {
+    setSettingForKey('false-key', false)
+    expect(settingForKey('false-key')).toBe(false)
 
-  setSettingForKey(madeupContextForTempScript(context), 'true-key', true)
-  expect(settingForKey(madeupContextForTempScript(context), 'true-key')).toBe(
-    true
-  )
+    setSettingForKey('true-key', true)
+    expect(settingForKey('true-key')).toBe(true)
+  }
 })
 
-test('should set a string', context => {
-  setSettingForKey(madeupContextForTempScript(context), 'string-key', 'test')
-  expect(settingForKey(madeupContextForTempScript(context), 'string-key')).toBe(
-    'test'
-  )
+test('should set a string', () => {
+  if (!__command.pluginBundle()) {
+    try {
+      setSettingForKey('string-key', 'test')
+      expect(false).toBe(true)
+    } catch (err) {
+      expect(err.message).toMatch(
+        'It seems that the command is not running in a plugin.'
+      )
+    }
+  } else {
+    setSettingForKey('string-key', 'test')
+    expect(settingForKey('string-key')).toBe('test')
+  }
 })
 
-test('should set undefined', context => {
-  setSettingForKey(
-    madeupContextForTempScript(context),
-    'undefined-key',
-    undefined
-  )
-  expect(
-    settingForKey(madeupContextForTempScript(context), 'undefined-key')
-  ).toBe(undefined)
+test('should set undefined', () => {
+  if (!__command.pluginBundle()) {
+    try {
+      setSettingForKey('undefined-key', undefined)
+      expect(false).toBe(true)
+    } catch (err) {
+      expect(err.message).toMatch(
+        'It seems that the command is not running in a plugin.'
+      )
+    }
+  } else {
+    setSettingForKey('undefined-key', undefined)
+    expect(settingForKey('undefined-key')).toBe(undefined)
+  }
 })
 
-test('should set object', context => {
-  setSettingForKey(context, 'object-key', { a: 1 })
-  expect(settingForKey(context, 'object-key')).toEqual({ a: 1 })
+test('should set object', () => {
+  if (!__command.pluginBundle()) {
+    try {
+      setSettingForKey('object-key', { a: 1 })
+      expect(false).toBe(true)
+    } catch (err) {
+      expect(err.message).toMatch(
+        'It seems that the command is not running in a plugin.'
+      )
+    }
+  } else {
+    setSettingForKey('object-key', { a: 1 })
+    expect(settingForKey('object-key')).toEqual({ a: 1 })
+  }
+})
+
+test('should set a setting on a layer', (context, document) => {
+  const layer = new Text({ parent: document.selectedPage })
+  setLayerSettingForKey(layer, 'object-key', { a: 1 })
+  expect(layerSettingForKey(layer, 'object-key')).toEqual({ a: 1 })
+})
+
+test('should set a setting on a document', (context, document) => {
+  setDocumentSettingForKey(document, 'object-key', { a: 1 })
+  expect(documentSettingForKey(document, 'object-key')).toEqual({ a: 1 })
 })

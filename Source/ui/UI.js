@@ -62,16 +62,13 @@ export function getStringFromUser(msg, initial) {
  * @param msg The prompt message to show.
  * @param items A list of option items.
  * @param selectedItemIndex The index of the item to select initially.
- * @return An array with two items: [responseCode, selection].
- *
- * The result consists of a response code and a selection. The code will be
- * one of NSAlertFirstButtonReturn or NSAlertSecondButtonReturn.
- * The selection will be the integer index of the selected item.
+ * @return An array with three items: [responseCode, selection, ok].
  */
 export function getSelectionFromUser(msg, items, selectedItemIndex = 0) {
   const accessory = NSComboBox.alloc().initWithFrame(NSMakeRect(0, 0, 200, 25))
   accessory.addItemsWithObjectValues(items)
   accessory.selectItemAtIndex(selectedItemIndex)
+  accessory.editable = false
 
   const dialog = NSAlert.alloc().init()
   dialog.setMessageText(msg)
