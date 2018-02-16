@@ -50,6 +50,7 @@ globals:
   NSDataBase64DecodingIgnoreUnknownCharacters: false
   MSDocument: false
   MSFlowConnection: false
+  MSHotspotLayer: false
 
 rules:
   ###########

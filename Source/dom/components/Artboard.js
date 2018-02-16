@@ -29,3 +29,12 @@ export class Artboard extends Group {
 Artboard.type = Types.Artboard
 Artboard[DefinedPropertiesKey] = { ...Group[DefinedPropertiesKey] }
 Factory.registerClass(Artboard, MSArtboardGroup)
+
+Artboard.define('flowStartPoint', {
+  get() {
+    return !!this._object.isFlowHome()
+  },
+  set(isFlowStartHome) {
+    this._object.isFlowHome = isFlowStartHome
+  },
+})

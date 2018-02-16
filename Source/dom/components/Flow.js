@@ -114,10 +114,4 @@ Flow.define('animationType', {
 })
 
 // override the WrappedObject id
-Flow.define('id', {
-  exportable: false,
-  importable: false,
-  get() {
-    return undefined
-  },
-})
+delete Flow[DefinedPropertiesKey].id

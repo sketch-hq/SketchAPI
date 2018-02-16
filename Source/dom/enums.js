@@ -12,4 +12,5 @@ export const Types = {
   Override: 'Override',
   ImageData: 'ImageData',
   Flow: 'Flow',
+  HotSpot: 'HotSpot',
 }
