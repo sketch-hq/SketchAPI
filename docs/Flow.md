@@ -20,7 +20,7 @@ The prototyping action associated with a layer.
 
 ```javascript
 layer.flow = {
-  target: artboart,
+  target: artboard,
 }
 ```
 
@@ -28,7 +28,7 @@ You can create a action without specifying an animation type, it will use the de
 
 ```javascript
 layer.flow = {
-  targetId: artboart.id,
+  targetId: artboard.id,
 }
 ```
 
@@ -36,7 +36,7 @@ You can create a action by using the ID of an Artboard instead of the artboard.
 
 ```javascript
 layer.flow = {
-  target: artboart,
+  target: artboard,
   animationType: Flow.AnimationType.fade,
 }
 ```
