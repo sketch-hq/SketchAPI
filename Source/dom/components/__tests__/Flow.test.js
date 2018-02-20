@@ -89,14 +89,14 @@ test('should create a flow between a layer and an artboard with a specific anima
     parent: artboard,
     flow: {
       target: artboard2,
-      animationType: AnimationType.fade,
+      animationType: AnimationType.slideFromLeft,
     },
   })
 
   expect(rect.flow.toJSON()).toEqual({
     targetId: artboard2.id,
     type: 'Flow',
-    animationType: 'fade',
+    animationType: 'slideFromLeft',
   })
 })
 

@@ -11,7 +11,6 @@ export const AnimationType = {
   slideFromLeft: 'slideFromLeft',
   slideFromBottom: 'slideFromBottom',
   slideFromTop: 'slideFromTop',
-  fade: 'fade',
 }
 
 export const BackTarget = 'back'
@@ -22,7 +21,6 @@ export const AnimationTypeMap = {
   slideFromLeft: 1,
   slideFromBottom: 2,
   slideFromTop: 3,
-  fade: 4,
 }
 
 /**

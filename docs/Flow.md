@@ -37,7 +37,7 @@ You can create a action by using the ID of an Artboard instead of the artboard.
 ```javascript
 layer.flow = {
   target: artboard,
-  animationType: Flow.AnimationType.fade,
+  animationType: Flow.AnimationType.slideFromLeft,
 }
 ```
 
@@ -78,7 +78,7 @@ layer.flow = {
 ## AnimationType
 
 ```javascript
-Flow.AnimationType.fade
+Flow.AnimationType.slideFromLeft
 ```
 
 Enumeration of the animation types.
@@ -90,4 +90,3 @@ Enumeration of the animation types.
 | `slideFromRight`  | Slide from the right  |
 | `slideFromBottom` | Slide from the bottom |
 | `slideFromTop`    | Slide from the top    |
-| `fade`            | Fade in the opacity   |
