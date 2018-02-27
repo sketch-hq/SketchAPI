@@ -1,0 +1,16 @@
+{
+  "name": "core-modules",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@skpm/console": "^0.1.2",
+    "@skpm/events": "^0.1.1",
+    "@skpm/util": "^0.1.5"
+  }
+}
