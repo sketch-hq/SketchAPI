@@ -6,7 +6,7 @@ language_tabs:
   - javascript
 
 toc_footers:
-  - <a href='#'>Actions references</a>
+  - <a href='/reference/action/'>Actions references</a>
 
 slate: true
 ---
