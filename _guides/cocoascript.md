@@ -62,7 +62,7 @@ If you need more information about Cocoa, check the [Resources](/resources/) sec
 For some Obj-C selectors, you might need to pass a pointer. That doesn't exist in JavaScript so there is a global method to create one:
 
 ```js
-var ptr = MOPointer.alloc().init();
+var ptr = MOPointer.alloc().init()
 var ptrToSomething = MOPointer.alloc().initWithValue(something)
 ```
 
@@ -84,4 +84,4 @@ COScript.currentCOScript().shouldKeepAround = false
 
 ## Next Steps
 
-For more information about how the bridge really works, take a look at the [Mocha Readme](https://github.com/ccgus/CocoaScript), it is really complete (but requires some notion of Obj-C).
+For more information about how the bridge really works, take a look at the [Mocha Readme](https://github.com/logancollins/Mocha), it is really complete (but requires some notion of Obj-C).

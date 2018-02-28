@@ -17,6 +17,7 @@ A group of layers. It is also an instance of [Layer](#layer) so all the methods 
 | parent     | [Group](#group)         | The group the Group is in.                                                                      |
 | layers     | [Layer](#layer)         | The layers that this component groups together.                                                 |
 | frame      | [Rectangle](#rectangle) | The frame of the Group. This is given in coordinates that are local to the parent of the layer. |
+| flow       | [Flow](#flow)           | The prototyping action associated with the Group.                                               |
 
 ## Creating a new group
 

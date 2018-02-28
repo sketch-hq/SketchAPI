@@ -17,6 +17,7 @@ A Sketch layer.
 | parent     | [Group](#group)         | The group the layer is in.                                                                      |
 | frame      | [Rectangle](#rectangle) | The frame of the Layer. This is given in coordinates that are local to the parent of the layer. |
 | selected   | Boolean                 | If the layer is selected.                                                                       |
+| flow       | [Flow](#flow)           | The prototyping action associated with the layer.                                               |
 
 ## Creating a new layer
 

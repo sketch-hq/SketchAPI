@@ -20,6 +20,7 @@ A [Symbol](https://www.sketchapp.com/docs/symbols/) master. It is an instance of
 | name       | string                  | The name of the Symbol Master                                                                           |
 | parent     | [Group](#group)         | The group the Symbol Master is in.                                                                      |
 | frame      | [Rectangle](#rectangle) | The frame of the Symbol Master. This is given in coordinates that are local to the parent of the layer. |
+| flow       | [Flow](#flow)           | The prototyping action associated with the Symbol.                                                      |
 | symbolId   | String                  | The unique ID of the Symbol that the master and its instances share.                                    |
 
 ## Creating a new Symbol Master

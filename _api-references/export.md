@@ -16,7 +16,8 @@ sketch.export([layer, layer2])
 ```
 
 ```javascript
-sketch.export(page)
+const options = { scales: '1, 2, 3', formats: 'png, jpg' }
+sketch.export(page, options)
 ```
 
 ```javascript
@@ -27,7 +28,7 @@ Export an object, using the options supplied.
 
 | Parameter                      | type                            | Description                                                                                                                                      |
 | ------------------------------ | ------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
-| options                        | Layer / Layer[] / Page / Page[] | The object to export.                                                                                                                            |
+| objectToExport                 | Layer / Layer[] / Page / Page[] | The object to export.                                                                                                                            |
 | options                        | Object                          | Options indicating which sizes and formats to use, etc..                                                                                         |
 | options.output                 | String                          | this is the path of the folder where all exported files are placed (defaults to `"~/Documents/Sketch Exports"`).                                 |
 | options.formats                | String                          | Comma separated list of formats to export to (`png`, `jpg`, `svg` or `pdf`) (default to `"png"`).                                                |
