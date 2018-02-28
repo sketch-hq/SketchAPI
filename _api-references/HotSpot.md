@@ -1,6 +1,6 @@
 ---
 title: HotSpot
-order: 212
+order: 213
 section: components
 ---
 
