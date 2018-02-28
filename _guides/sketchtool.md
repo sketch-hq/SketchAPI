@@ -7,10 +7,6 @@ order: 600
 
 SketchTool is a command line utility that's bundled with Sketch, that allows you to perform some operations with Sketch documents, like inspecting them or exporting assets. It also lets you control Sketch from the command line to perform some actions.
 
-## License
-
-SketchTool is free to use, but it comes with _absolutely no warranty_. That being said, if you find any bugs or have any feature request, please send us [an email](mailto:mail@sketchapp.com) and we'll do our best to improve it.
-
 ## Installation
 
 SketchTool comes **bundled with Sketch** (and Sketch Beta). You can find it in `Sketch.app/Contents/Resources/sketchtool/bin/sketchtool`.
@@ -20,6 +16,8 @@ It is recommended that you use it from inside Sketch, and not copy it to another
 Note: SketchTool requires OSX 10.11 or higher.
 
 ### Important
+
+SketchTool is free to use, but it comes with absolutely no warranty. That being said, if you find any bugs or have any feature request, please send us an email and we'll do our best to improve it.
 
 SketchTool can only export a document if all the fonts that it uses have been installed on the system.
 
@@ -34,6 +32,7 @@ sketchtool help
 ```
 
 to see the help.
+
 
 Here are some examples of the things you can do with SketchTool
 
@@ -55,38 +54,42 @@ and you'll get something similar to this:
 
 ```json
 {
-  "commit": "b8111e3393c4ca1f2399ecfdfc1e9488029ebe7b",
-  "pagesAndArtboards": {
-    "E6890372-BE93-4E4C-ACD1-8F8B10862938": {
-      "name": "Page 1",
-      "artboards": {
-        "214B376A-C4A3-47A9-9B87-DFBC49A6EFE0": {
-          "name": "Artboard 2"
+  "commit" : "b8111e3393c4ca1f2399ecfdfc1e9488029ebe7b",
+  "pagesAndArtboards" : {
+    "E6890372-BE93-4E4C-ACD1-8F8B10862938" : {
+      "name" : "Page 1",
+      "artboards" : {
+        "214B376A-C4A3-47A9-9B87-DFBC49A6EFE0" : {
+          "name" : "Artboard 2"
         },
-        "F8FE177A-5D6D-4A37-8BD1-B246A83A9C21": {
-          "name": "Artboard 1"
+        "F8FE177A-5D6D-4A37-8BD1-B246A83A9C21" : {
+          "name" : "Artboard 1"
         }
       }
     }
   },
-  "version": 97,
-  "fonts": [],
-  "compatibilityVersion": 93,
-  "app": "com.bohemiancoding.sketch3",
-  "autosaved": 0,
-  "variant": "NONAPPSTORE",
-  "created": {
-    "commit": "b8111e3393c4ca1f2399ecfdfc1e9488029ebe7b",
-    "appVersion": "48.2",
-    "build": 47327,
-    "app": "com.bohemiancoding.sketch3",
-    "compatibilityVersion": 93,
-    "version": 97,
-    "variant": "NONAPPSTORE"
+  "version" : 97,
+  "fonts" : [
+
+  ],
+  "compatibilityVersion" : 93,
+  "app" : "com.bohemiancoding.sketch3",
+  "autosaved" : 0,
+  "variant" : "NONAPPSTORE",
+  "created" : {
+    "commit" : "b8111e3393c4ca1f2399ecfdfc1e9488029ebe7b",
+    "appVersion" : "48.2",
+    "build" : 47327,
+    "app" : "com.bohemiancoding.sketch3",
+    "compatibilityVersion" : 93,
+    "version" : 97,
+    "variant" : "NONAPPSTORE"
   },
-  "saveHistory": ["NONAPPSTORE.47327"],
-  "appVersion": "48.2",
-  "build": 47327
+  "saveHistory" : [
+    "NONAPPSTORE.47327"
+  ],
+  "appVersion" : "48.2",
+  "build" : 47327
 }
 ```
 
@@ -109,9 +112,10 @@ sketchtool export artboards path/to/document.sketch --formats=jpg
 ``
 
 You can export multiple formats at once:
-```
 
-sketchtool export artboards path/to/document.sketch --formats=jpg,png,svg ``
+```
+sketchtool export artboards path/to/document.sketch --formats=jpg,png,svg
+``
 
 To see which formats are supported by SketchTool, run `sketchtool list formats`.
 
