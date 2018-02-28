@@ -4,7 +4,7 @@ order: 101
 section: topics
 ---
 
-> ![api layers](https://cloud.githubusercontent.com/assets/206306/19645098/f7d3615c-99ea-11e6-962a-439fb553bf2d.png)
+> ![api layers](https://user-images.githubusercontent.com/3254314/36788487-bcf76abc-1c96-11e8-813f-d6340a1658c3.png)
 
 This is a prototype Javascript API for Sketch. It's still a work in progress, but the intention is to make something which is:
 
