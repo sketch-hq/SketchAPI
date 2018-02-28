@@ -13,6 +13,7 @@ import { Page } from './components/Page'
 import { SymbolMaster } from './components/SymbolMaster'
 import { SymbolInstance } from './components/SymbolInstance'
 
+import { AnimationType, BackTarget } from './components/Flow'
 import { Types } from './enums'
 import { wrapObject } from './wrapNativeObject'
 
@@ -27,6 +28,10 @@ api.Artboard = Artboard
 api.Page = Page
 api.SymbolMaster = SymbolMaster
 api.SymbolInstance = SymbolInstance
+api.Flow = {
+  AnimationType,
+  BackTarget,
+}
 
 api.export = exportObject
 

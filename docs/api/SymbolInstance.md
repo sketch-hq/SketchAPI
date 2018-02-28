@@ -20,6 +20,7 @@ A [Symbol](https://www.sketchapp.com/docs/symbols/) instance. It is an instance 
 | name       | string                         | The name of the Symbol Instance                                                                           |
 | parent     | [Group](#group)                | The group the Symbol Instance is in.                                                                      |
 | frame      | [Rectangle](#rectangle)        | The frame of the Symbol Instance. This is given in coordinates that are local to the parent of the layer. |
+| flow       | [Flow](#flow)                  | The prototyping action associated with the Symbol.                                                        |
 | symbolId   | String                         | The unique ID of the Symbol that the instance and its master share.                                       |
 | master     | [SymbolMaster](#symbol-master) | The Symbol master that the instance is linked to.                                                         |
 | overrides  | [Override](#symbol-override)[] | The array of the overrides to modify the instance.                                                        |

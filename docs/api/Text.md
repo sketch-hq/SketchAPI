@@ -16,6 +16,7 @@ A text layer. It is an instance of [Layer](#layer) so all the methods defined th
 | name        | string                      | The name of the Text                                                                           |
 | parent      | [Group](#group)             | The group the Text is in.                                                                      |
 | frame       | [Rectangle](#rectangle)     | The frame of the Text. This is given in coordinates that are local to the parent of the layer. |
+| flow        | [Flow](#flow)               | The prototyping action associated with the Text.                                               |
 | text        | String                      | The string value of the text layer.                                                            |
 | alignment   | [Alignment](#alignment)     | The alignment of the layer.                                                                    |
 | lineSpacing | [LineSpacing](#linespacing) | The line spacing of the layer.                                                                 |
