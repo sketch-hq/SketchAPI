@@ -31,3 +31,10 @@ test('should look for a layer by its id', (context, document) => {
   const found = document.getLayerWithID(id)
   expect(found).toEqual(group)
 })
+
+test('should look for a layer by its name', (context, document) => {
+  const page = document.selectedPage
+  const group = new Group({ name: 'Test', parent: page })
+  const found = document.getLayersNamed('Test')
+  expect(found).toEqual([group])
+})
