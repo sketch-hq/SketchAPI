@@ -1,6 +1,6 @@
 # SVGO Export
 
-This Plugin compresses SVG assets using SVGO right after they're exported from Sketchand shows how to hook into the `ExportSlices` action.
+This Plugin compresses SVG assets using SVGO right after they're exported from Sketch and shows how to hook into the `ExportSlices` action.
 
 _This plugin was created using `skpm`. For a detailed explanation on how things work, checkout the [skpm Readme](https://github.com/skpm/skpm/blob/master/README.md)._
 
