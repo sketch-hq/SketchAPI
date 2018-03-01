@@ -81,7 +81,7 @@ export class Document extends WrappedObject {
       )
       page = loopPages.nextObject()
     }
-    return toArray(filteredArray)
+    return toArray(filteredArray).map(wrapObject)
   }
 
   /**
