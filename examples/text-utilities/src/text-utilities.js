@@ -52,8 +52,12 @@ function addBaselines(layer, fragments) {
     const shape = new sketch.Shape({
       parent: group,
       frame: rect,
-      fills: ['#ff000090'],
-      borders: [],
+      style: {
+        fills: [
+          { color: '#ff000090', fillType: String(sketch.Style.FillType.color) },
+        ],
+        borders: [],
+      },
     })
   })
 }
@@ -80,8 +84,10 @@ function addLineFragments(layer, fragments) {
     const line = new sketch.Shape({
       parent: group,
       frame: localRect,
-      fills: [color],
-      borders: [],
+      style: {
+        fills: [{ color, fillType: String(sketch.Style.FillType.color) }],
+        borders: [],
+      },
     })
   })
 }
@@ -95,8 +101,8 @@ export function onAddLineFragments(context) {
   const document = sketch.fromNative(context.document)
 
   // Iterate over each text layer in the selection, calling our addLineFragments function
-  document.selectedLayers.forEach(layer => {
-    if (layer.type === sketch.Types.Text) {
+  document.selectedLayers.layers.forEach(layer => {
+    if (layer.type === String(sketch.Types.Text)) {
       addLineFragments(layer, layer.fragments)
     }
   })
@@ -106,8 +112,8 @@ export function onAddBaselines(context) {
   const document = sketch.fromNative(context.document)
 
   // Iterate over each text layer in the selection, calling our addBaselines function
-  document.selectedLayers.forEach(layer => {
-    if (layer.type === sketch.Types.Text) {
+  document.selectedLayers.layers.forEach(layer => {
+    if (layer.type === String(sketch.Types.Text)) {
       addBaselines(layer, layer.fragments)
     }
   })
@@ -117,8 +123,8 @@ export function onAddBoth(context) {
   const document = sketch.fromNative(context.document)
 
   // Iterate over each text layer in the selection, calling our addBaselines and addLineFragments functions
-  document.selectedLayers.forEach(layer => {
-    if (layer.type === sketch.Types.Text) {
+  document.selectedLayers.layers.forEach(layer => {
+    if (layer.type === String(sketch.Types.Text)) {
       const { fragments } = layer
       addLineFragments(layer, fragments)
       addBaselines(layer, fragments)
@@ -130,8 +136,8 @@ export function onUseLegacyBaselines(context) {
   const document = sketch.fromNative(context.document)
 
   // Iterate over each text layer in the selection, turning off constant baselines.
-  document.selectedLayers.forEach(layer => {
-    if (layer.type === sketch.Types.Text) {
+  document.selectedLayers.layers.forEach(layer => {
+    if (layer.type === String(sketch.Types.Text)) {
       layer.lineSpacing = sketch.Text.LineSpacing.variable
     }
   })
@@ -141,8 +147,8 @@ export function onUseConstantBaselines(context) {
   const document = sketch.fromNative(context.document)
 
   // Iterate over each text layer in the selection, turning on constant baselines.
-  document.selectedLayers.forEach(layer => {
-    if (layer.type === sketch.Types.Text) {
+  document.selectedLayers.layers.forEach(layer => {
+    if (layer.type === String(sketch.Types.Text)) {
       layer.lineSpacing = sketch.Text.LineSpacing.constantBaseline
     }
   })
