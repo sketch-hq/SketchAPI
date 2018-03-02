@@ -93,24 +93,24 @@ A method to help find the first layer in this document which has the given id.
 
 Return a [Layer](#layer) object or `undefined` if it's not found.
 
-## Find a layer by name
+## Find layers by name
 
 ```javascript
-var layer = document.getLayerNamed(name)
-if (layer) {
+var layers = document.getLayersNamed(name)
+if (layers.length) {
   // do something
 }
 ```
 
-A method to help find the first layer in this document which has the given name.
+A method to help find the layers in this document which have the given name.
 
-| Parameter         | type   | Description                   |
-| ----------------- | ------ | ----------------------------- |
-| name _(required)_ | string | The name of the layer to find |
+| Parameter         | type   | Description                    |
+| ----------------- | ------ | ------------------------------ |
+| name _(required)_ | string | The name of the layers to find |
 
 ### Return
 
-Return a [Layer](#layer) object or `undefined` if it's not found.
+Return an array of [Layer](#layer).
 
 ## Find a Symbol Master
 

@@ -5,7 +5,7 @@ section: Utils
 ---
 
 ```javascript
-var Rectangle = require('sketch/dom').Page
+var Rectangle = require('sketch/dom').Rectangle
 ```
 
 ```javascript
