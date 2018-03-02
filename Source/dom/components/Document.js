@@ -66,21 +66,22 @@ export class Document extends WrappedObject {
   }
 
   /**
-   * Find the first layer in this document which has the given name.
-   *
-   * @return {Layer} A layer object, if one was found.
+   * Find all the layers in this document which has the given name.
    */
-  getLayerNamed(layerName) {
-    // As it happens, layerWithID also matches names, so we can implement
-    // this method in the same way as layerWithID.
-    // That might not always be true though, which is why the JS API splits
-    // them into separate functions.
-
-    const layer = this._object.documentData().layerWithID(layerName)
-    if (layer) {
-      return wrapObject(layer)
+  getLayersNamed(layerName) {
+    // search all pages
+    let filteredArray = NSArray.array()
+    const loopPages = this._object.pages().objectEnumerator()
+    let page = loopPages.nextObject()
+    const predicate = NSPredicate.predicateWithFormat('name == %@', layerName)
+    while (page) {
+      const scope = page.children()
+      filteredArray = filteredArray.arrayByAddingObjectsFromArray(
+        scope.filteredArrayUsingPredicate(predicate)
+      )
+      page = loopPages.nextObject()
     }
-    return undefined
+    return toArray(filteredArray).map(wrapObject)
   }
 
   /**

@@ -52,6 +52,7 @@ globals:
   __command: false
   MSFlowConnection: false
   MSHotspotLayer: false
+  NSPredicate: false
 
 rules:
   ###########

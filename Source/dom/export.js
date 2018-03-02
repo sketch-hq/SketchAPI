@@ -89,7 +89,7 @@ export function exportObject(object, options) {
   } else if (isWrappedObject(object)) {
     // support a wrapped object
     if (object.type === Types.Page) {
-      exportNativePage([object.sketchObject])
+      exportNativePage(object.sketchObject)
     } else {
       exportNativeLayers([object.sketchObject])
     }
