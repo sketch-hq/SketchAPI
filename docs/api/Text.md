@@ -75,7 +75,7 @@ var fragments = text.fragments
 
 Returns a array of the text fragments for the text. Each one is a object containing a rectangle, and a baseline offset `{rect, baselineOffset}`.
 
-## FillType
+## Alignment
 
 ```javascript
 Text.Alignment.center
