@@ -4,11 +4,7 @@ order: 202
 section: components
 ---
 
-```javascript
-var Layer = require('sketch/dom').Layer
-```
-
-A Sketch layer.
+A Sketch layer. This is the base class for most of the Sketch components and defines methods to manipulate them..
 
 | Properties | type                    | Description                                                                                     |
 | ---------- | ----------------------- | ----------------------------------------------------------------------------------------------- |
@@ -18,19 +14,6 @@ A Sketch layer.
 | frame      | [Rectangle](#rectangle) | The frame of the Layer. This is given in coordinates that are local to the parent of the layer. |
 | selected   | Boolean                 | If the layer is selected.                                                                       |
 | flow       | [Flow](#flow)           | The prototyping action associated with the layer.                                               |
-
-## Creating a new layer
-
-```javascript
-new Layer()
-```
-
-```javascript
-var layer = new Layer({
-  name: 'my name',
-  parent: existingGroup,
-})
-```
 
 ## duplicate
 
