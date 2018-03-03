@@ -53,9 +53,7 @@ function addBaselines(layer, fragments) {
       parent: group,
       frame: rect,
       style: {
-        fills: [
-          { color: '#ff000090', fillType: String(sketch.Style.FillType.color) },
-        ],
+        fills: ['#ff000090'],
         borders: [],
       },
     })
@@ -85,7 +83,7 @@ function addLineFragments(layer, fragments) {
       parent: group,
       frame: localRect,
       style: {
-        fills: [{ color, fillType: String(sketch.Style.FillType.color) }],
+        fills: [color],
         borders: [],
       },
     })
