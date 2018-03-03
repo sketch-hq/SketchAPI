@@ -4,7 +4,7 @@ order: 202
 section: components
 ---
 
-A Sketch layer. This component is not exposed, it is only returned when create a new layer instance from component with extends from `Layer`, e.g., [Group](#group). And you can use some instance methods of the returned layer.
+A Sketch layer. This component is not exposed, it is only returned when create a new layer instance from component which extends from `Layer`, e.g., [Group](#group). And you can use some instance methods of the returned layer.
 
 | Properties | type                    | Description                                                                                     |
 | ---------- | ----------------------- | ----------------------------------------------------------------------------------------------- |
