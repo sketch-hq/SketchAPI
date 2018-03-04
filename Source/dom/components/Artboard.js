@@ -38,3 +38,6 @@ Artboard.define('flowStartPoint', {
     this._object.isFlowHome = isFlowStartHome
   },
 })
+
+// override the WrappedObject id
+delete Artboard[DefinedPropertiesKey].flow
