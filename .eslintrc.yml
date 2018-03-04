@@ -53,6 +53,7 @@ globals:
   MSFlowConnection: false
   MSHotspotLayer: false
   NSPredicate: false
+  NSOpenPanel: false
 
 rules:
   ###########
