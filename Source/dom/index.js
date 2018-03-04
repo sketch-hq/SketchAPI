@@ -12,6 +12,7 @@ import { Artboard } from './components/Artboard'
 import { Page } from './components/Page'
 import { SymbolMaster } from './components/SymbolMaster'
 import { SymbolInstance } from './components/SymbolInstance'
+import { HotSpot } from './components/HotSpot'
 
 import { AnimationType, BackTarget } from './components/Flow'
 import { Types } from './enums'
@@ -28,6 +29,7 @@ api.Artboard = Artboard
 api.Page = Page
 api.SymbolMaster = SymbolMaster
 api.SymbolInstance = SymbolInstance
+api.HotSpot = HotSpot
 api.Flow = {
   AnimationType,
   BackTarget,
