@@ -99,7 +99,7 @@ export function onAddLineFragments(context) {
   const document = sketch.fromNative(context.document)
 
   // Iterate over each text layer in the selection, calling our addLineFragments function
-  document.selectedLayers.layers.forEach(layer => {
+  document.selectedLayers.forEach(layer => {
     if (layer.type === String(sketch.Types.Text)) {
       addLineFragments(layer, layer.fragments)
     }
@@ -110,7 +110,7 @@ export function onAddBaselines(context) {
   const document = sketch.fromNative(context.document)
 
   // Iterate over each text layer in the selection, calling our addBaselines function
-  document.selectedLayers.layers.forEach(layer => {
+  document.selectedLayers.forEach(layer => {
     if (layer.type === String(sketch.Types.Text)) {
       addBaselines(layer, layer.fragments)
     }
@@ -121,7 +121,7 @@ export function onAddBoth(context) {
   const document = sketch.fromNative(context.document)
 
   // Iterate over each text layer in the selection, calling our addBaselines and addLineFragments functions
-  document.selectedLayers.layers.forEach(layer => {
+  document.selectedLayers.forEach(layer => {
     if (layer.type === String(sketch.Types.Text)) {
       const { fragments } = layer
       addLineFragments(layer, fragments)
@@ -134,7 +134,7 @@ export function onUseLegacyBaselines(context) {
   const document = sketch.fromNative(context.document)
 
   // Iterate over each text layer in the selection, turning off constant baselines.
-  document.selectedLayers.layers.forEach(layer => {
+  document.selectedLayers.forEach(layer => {
     if (layer.type === String(sketch.Types.Text)) {
       layer.lineSpacing = sketch.Text.LineSpacing.variable
     }
@@ -145,7 +145,7 @@ export function onUseConstantBaselines(context) {
   const document = sketch.fromNative(context.document)
 
   // Iterate over each text layer in the selection, turning on constant baselines.
-  document.selectedLayers.layers.forEach(layer => {
+  document.selectedLayers.forEach(layer => {
     if (layer.type === String(sketch.Types.Text)) {
       layer.lineSpacing = sketch.Text.LineSpacing.constantBaseline
     }

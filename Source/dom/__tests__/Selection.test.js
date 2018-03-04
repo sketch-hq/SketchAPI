@@ -66,3 +66,21 @@ test('should be able to go through the layers', (context, document) => {
   expect(iterations).toBe(2)
   expect(groups).toBe(1)
 })
+
+test('should define convenience array methods', (context, document) => {
+  // eslint-disable-next-line
+  const group = new Group({
+    parent: document.selectedPage,
+    selected: true,
+  })
+  // eslint-disable-next-line
+  const text = new Text({
+    parent: document.selectedPage,
+    selected: true,
+  })
+  const selection = document.selectedLayers
+
+  expect(selection.forEach).toBeDefined()
+  expect(selection.map).toBeDefined()
+  expect(selection.reduce).toBeDefined()
+})
