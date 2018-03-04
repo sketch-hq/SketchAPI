@@ -1,6 +1,6 @@
 /* globals NSAlertFirstButtonReturn */
 
-import { isNativeObject } from '../dom/utils'
+import { isNativeObject, toArray } from '../dom/utils'
 /**
  * Show a small, temporary, message to the user.
  * The message appears at the bottom of the selected document,
@@ -80,4 +80,23 @@ export function getSelectionFromUser(msg, items, selectedItemIndex = 0) {
   const sel = accessory.indexOfSelectedItem()
 
   return [responseCode, sel, responseCode === NSAlertFirstButtonReturn]
+}
+
+/**
+ * SHows a panel to choose images
+ *
+ * @export
+ * @param {boolean} [multiSelection=false] Whether to choose multi files
+ * @returns {string[]} An array of the selected files path
+ */
+export function getImageFromUser(multiSelection = false) {
+  const panel = NSOpenPanel.openPanel()
+
+  panel.canChooseFiles = true
+  panel.canChooseDirectories = false
+  panel.allowMultipleSelection = multiSelection
+  panel.setAllowedFileTypes(['jpg', 'jpeg', 'png', 'bmp'])
+  panel.runModal()
+
+  return toArray(panel.URLs())
 }
