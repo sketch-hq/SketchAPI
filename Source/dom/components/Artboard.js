@@ -24,6 +24,15 @@ export class Artboard extends Group {
     }
     super(artboard)
   }
+
+  /**
+   * Adjust the Artboard to fit its children.
+   * override the group's method
+   */
+  adjustToFit() {
+    this._object.resizeToFitChildren()
+    return this
+  }
 }
 
 Artboard.type = Types.Artboard
