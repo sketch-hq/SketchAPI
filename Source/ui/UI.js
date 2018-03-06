@@ -33,8 +33,13 @@ export function message(text, document) {
  * by pressing the OK button.
  */
 export function alert(title, text) {
-  const app = NSApplication.sharedApplication()
-  app.displayDialog_withTitle(text, title)
+  const dialog = NSAlert.alloc().init()
+  dialog.setMessageText(title)
+  dialog.setInformativeText(text)
+  if (__command.pluginBundle() && __command.pluginBundle().icon()) {
+    dialog.icon = __command.pluginBundle().icon()
+  }
+  return dialog.runModal()
 }
 
 /**
@@ -75,6 +80,9 @@ export function getSelectionFromUser(msg, items, selectedItemIndex = 0) {
   dialog.addButtonWithTitle('OK')
   dialog.addButtonWithTitle('Cancel')
   dialog.setAccessoryView(accessory)
+  if (__command.pluginBundle() && __command.pluginBundle().icon()) {
+    dialog.icon = __command.pluginBundle().icon()
+  }
 
   const responseCode = dialog.runModal()
   const sel = accessory.indexOfSelectedItem()
