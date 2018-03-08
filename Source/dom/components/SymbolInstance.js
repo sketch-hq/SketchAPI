@@ -37,19 +37,18 @@ export class SymbolInstance extends Layer {
   }
 
   setOverrideValue(override, value) {
-    const { property } = wrapObject(override)
-    const overridePoint = wrapObject(override).sketchObject.overridePoint()
-    if (property === 'image') {
+    const wrappedOverride = wrapObject(override)
+    const overridePoint = wrappedOverride.sketchObject.overridePoint()
+    if (wrappedOverride.property === 'image') {
       this._object.setValue_forOverridePoint(
         ImageData.from(value),
         overridePoint
       )
-      return this
-    } else if (property === 'stringValue') {
+    } else if (wrappedOverride.property === 'stringValue') {
       this._object.setValue_forOverridePoint(String(value), overridePoint)
-      return this
+    } else {
+      this._object.setValue_forOverridePoint(value, overridePoint)
     }
-    this._object.setValue_forOverridePoint(value, overridePoint)
     return this
   }
 }
