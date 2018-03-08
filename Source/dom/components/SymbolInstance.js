@@ -6,6 +6,7 @@ import { Factory } from '../Factory'
 import { wrapObject } from '../wrapNativeObject'
 import { toArray } from '../utils'
 import { Override } from './Override'
+import { ImageData } from './ImageData'
 
 /**
  * A Sketch symbol instance.
@@ -36,10 +37,19 @@ export class SymbolInstance extends Layer {
   }
 
   setOverrideValue(override, value) {
-    this._object.setValue_forOverridePoint(
-      value,
-      wrapObject(override).sketchObject.overridePoint()
-    )
+    const { property } = wrapObject(override)
+    const overridePoint = wrapObject(override).sketchObject.overridePoint()
+    if (property === 'image') {
+      this._object.setValue_forOverridePoint(
+        ImageData.from(value),
+        overridePoint
+      )
+      return this
+    } else if (property === 'stringValue') {
+      this._object.setValue_forOverridePoint(String(value), overridePoint)
+      return this
+    }
+    this._object.setValue_forOverridePoint(value, overridePoint)
     return this
   }
 }
