@@ -51,6 +51,9 @@ Override.define('value', {
     if (this.property === 'image') {
       this.__symbolInstance.setOverrideValue(this, ImageData.from(value))
       return
+    } else if (this.property === 'stringValue') {
+      this.__symbolInstance.setOverrideValue(this, String(value))
+      return
     }
     this.__symbolInstance.setOverrideValue(this, value)
   },
