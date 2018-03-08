@@ -75,6 +75,8 @@ layer.flow = {
 }
 ```
 
+`Flow.BackTarget` is a constant that you can set the target to in order to always take you back to the last Artboard you were looking at. When a Target has been set to `Flow.BackTarget`, the transition leading into it will be reversed on return.
+
 ## AnimationType
 
 ```javascript
