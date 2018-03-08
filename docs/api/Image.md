@@ -16,6 +16,7 @@ An image layer. It is an instance of [Layer](#layer) so all the methods defined 
 | name       | string                  | The name of the Image                                                                           |
 | parent     | [Group](#group)         | The group the Image is in.                                                                      |
 | frame      | [Rectangle](#rectangle) | The frame of the Image. This is given in coordinates that are local to the parent of the layer. |
+| flow       | [Flow](#flow)           | The prototyping action associated with the Image.                                               |
 | image      | [ImageData](#imagedata) | The actual image of the layer.                                                                  |
 
 ## Creating a new image

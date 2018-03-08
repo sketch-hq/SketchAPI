@@ -14,6 +14,16 @@ export class Selection {
     this._object = page._object
   }
 
+  forEach(fn) {
+    return this.layers.forEach(fn)
+  }
+  map(fn) {
+    return this.layers.map(fn)
+  }
+  reduce(fn, initial) {
+    return this.layers.reduce(fn, initial)
+  }
+
   /**
    * Return the wrapped Sketch layers in the selection.
    *

@@ -48,10 +48,6 @@ Override.define('value', {
   },
   set(value) {
     // __symbolInstance is set when building the Override
-    if (this.property === 'image') {
-      this.__symbolInstance.setOverrideValue(this, ImageData.from(value))
-      return
-    }
     this.__symbolInstance.setOverrideValue(this, value)
   },
 })

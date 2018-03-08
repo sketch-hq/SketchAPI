@@ -15,7 +15,7 @@ function getPluginIdentifier() {
  * @param {string} dynamicDataKey The key to use to select the dynamic data to supply in onSupplyData.
  */
 export function registerDataSupplier(dataType, dataName, dynamicDataKey) {
-  const dataManager = AppController.sharedInstance.dataSupplierManager()
+  const dataManager = AppController.sharedInstance().dataSupplierManager()
   const identifier = getPluginIdentifier()
   const commandIdentifier = __command.identifier()
   dataManager.registerPluginDataSupplier_withName_dataType_pluginIdentifier_commandIdentifier_(
@@ -31,7 +31,7 @@ export function registerDataSupplier(dataType, dataName, dynamicDataKey) {
  * Deregister any static data or dynamic data providers for a particular plugin. Typically called from the Shutdown method of the plugin.
  */
 export function deregisterDataSuppliers() {
-  const dataManager = AppController.sharedInstance.dataSupplierManager()
+  const dataManager = AppController.sharedInstance().dataSupplierManager()
   const identifier = getPluginIdentifier()
   dataManager.deregisterDataSuppliersForPluginWithIdentifier_(identifier)
 }
@@ -40,6 +40,6 @@ export function deregisterDataSuppliers() {
  * When the plugin providing the dynamic data has finished generating the data, it will call this function with the data key and the data.
  */
 export function supplyData(key, data) {
-  const dataManager = AppController.sharedInstance.dataSupplierManager()
+  const dataManager = AppController.sharedInstance().dataSupplierManager()
   dataManager.supplyData_forKey_(data, key)
 }

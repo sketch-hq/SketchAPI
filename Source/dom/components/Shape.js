@@ -6,6 +6,8 @@ import { Factory } from '../Factory'
 import { Rectangle } from '../Rectangle'
 import { isNativeObject } from '../utils'
 
+// TODO: set and modify path
+
 /**
  * Represents a shape layer (a rectangle, oval, path, etc).
  */
@@ -26,6 +28,10 @@ export class Shape extends Layer {
     }
 
     super(shape)
+
+    this.sketchObject.addLayer(
+      MSRectangleShape.alloc().initWithFrame(this.frame.asCGRect())
+    )
   }
 }
 

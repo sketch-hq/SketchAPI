@@ -101,7 +101,7 @@ var rect = new Shape({
 var selection = document.selectedLayers
 
 log(selection.isEmpty)
-selection.layers.forEach(function(item) {
+selection.forEach(function(item) {
   log(item.name)
 })
 
