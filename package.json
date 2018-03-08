@@ -12,6 +12,7 @@
     "start": "npm run build",
     "watch": "webpack --watch",
     "deploy:docs": "./scripts/deploy.sh",
+    "run-tests:no-variant": "skpm-test --enable-async",
     "run-tests": "skpm-test --app=xcode --enable-async",
     "test": "npm run lint -- --quiet && npm run run-tests",
     "test:watch": "npm run run-tests -- --watch",

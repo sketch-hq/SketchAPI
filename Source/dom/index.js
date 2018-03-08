@@ -1,7 +1,8 @@
 import { exportObject } from './export'
 
 import { Rectangle } from './Rectangle'
-import { Style } from './Style'
+
+import { Style } from './style/Style'
 
 import { Document } from './components/Document'
 import { Group } from './components/Group'

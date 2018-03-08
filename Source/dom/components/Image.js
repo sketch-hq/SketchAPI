@@ -1,5 +1,5 @@
 import { DefinedPropertiesKey } from '../WrappedObject'
-import { Layer } from './Layer'
+import { StyledLayer } from './StyledLayer'
 import { ImageData } from './ImageData'
 import { Rectangle } from '../Rectangle'
 import { Types } from '../enums'
@@ -9,7 +9,7 @@ import { wrapObject } from '../wrapNativeObject'
 /**
  * Represents an image layer.
  */
-export class Image extends Layer {
+export class Image extends StyledLayer {
   /**
    * Make a new image layer object.
    *
@@ -30,7 +30,7 @@ export class Image extends Layer {
 }
 
 Image.type = Types.Image
-Image[DefinedPropertiesKey] = { ...Layer[DefinedPropertiesKey] }
+Image[DefinedPropertiesKey] = { ...StyledLayer[DefinedPropertiesKey] }
 Factory.registerClass(Image, MSBitmapLayer)
 
 Image.define('image', {

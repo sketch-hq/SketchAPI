@@ -1,17 +1,15 @@
 import { DefinedPropertiesKey } from '../WrappedObject'
-import { Layer } from './Layer'
-import { Style } from '../Style'
+import { StyledLayer } from './StyledLayer'
 import { Types } from '../enums'
 import { Factory } from '../Factory'
 import { Rectangle } from '../Rectangle'
-import { isNativeObject } from '../utils'
 
 // TODO: set and modify path
 
 /**
  * Represents a shape layer (a rectangle, oval, path, etc).
  */
-export class Shape extends Layer {
+export class Shape extends StyledLayer {
   /**
    * Make a new shape object.
    *
@@ -36,20 +34,5 @@ export class Shape extends Layer {
 }
 
 Shape.type = Types.Shape
-Shape[DefinedPropertiesKey] = { ...Layer[DefinedPropertiesKey] }
+Shape[DefinedPropertiesKey] = { ...StyledLayer[DefinedPropertiesKey] }
 Factory.registerClass(Shape, MSShapeGroup)
-
-Shape.define('style', {
-  get() {
-    return Style.fromNative(this._object.style())
-  },
-  set(style) {
-    if (isNativeObject(style)) {
-      this._object.style = style
-    } else if (!style || !style.sketchObject) {
-      this._object.style = new Style(style).sketchObject
-    } else {
-      this._object.style = style.sketchObject
-    }
-  },
-})
