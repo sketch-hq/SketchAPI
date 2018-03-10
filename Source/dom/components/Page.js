@@ -88,7 +88,7 @@ Page.define('parent', {
         .removePages_detachInstances([this._object], false)
     }
 
-    document._object.addPage(this._object)
+    document._object.documentData().addPage(this._object)
   },
 })
 
