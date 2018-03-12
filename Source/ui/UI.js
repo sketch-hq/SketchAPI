@@ -1,6 +1,14 @@
 /* globals NSAlertFirstButtonReturn */
 
 import { isNativeObject } from '../dom/utils'
+
+function getPluginIcon() {
+  if (__command.pluginBundle() && __command.pluginBundle().icon()) {
+    return __command.pluginBundle().icon()
+  }
+  return NSImage.imageNamed('plugin_thumbnail')
+}
+
 /**
  * Show a small, temporary, message to the user.
  * The message appears at the bottom of the selected document,
@@ -36,9 +44,7 @@ export function alert(title, text) {
   const dialog = NSAlert.alloc().init()
   dialog.setMessageText(title)
   dialog.setInformativeText(text)
-  if (__command.pluginBundle() && __command.pluginBundle().icon()) {
-    dialog.icon = __command.pluginBundle().icon()
-  }
+  dialog.icon = getPluginIcon()
   return dialog.runModal()
 }
 
@@ -80,9 +86,7 @@ export function getSelectionFromUser(msg, items, selectedItemIndex = 0) {
   dialog.addButtonWithTitle('OK')
   dialog.addButtonWithTitle('Cancel')
   dialog.setAccessoryView(accessory)
-  if (__command.pluginBundle() && __command.pluginBundle().icon()) {
-    dialog.icon = __command.pluginBundle().icon()
-  }
+  dialog.icon = getPluginIcon()
 
   const responseCode = dialog.runModal()
   const sel = accessory.indexOfSelectedItem()
