@@ -64,7 +64,7 @@ Style.define('fills', {
         fill:
           Object.keys(FillType).find(key => FillType[key] === f.fillType()) ||
           f.fillType(),
-        enabled: f.enabled,
+        enabled: !!f.enabled,
       }
 
       if (color) {
@@ -126,7 +126,7 @@ Style.define('borders', {
             key => BorderPosition[key] === f.position()
           ) || f.position(),
         thickness: 0 + f.thickness(),
-        enabled: f.enabled,
+        enabled: !!f.enabled,
       }
 
       if (color) {
@@ -187,7 +187,7 @@ Style.define('shadows', {
       x: Number(s.offsetX()),
       y: Number(s.offsetY()),
       spread: Number(s.spread()),
-      enabled: s.enabled(),
+      enabled: !!s.enabled(),
     }))
   },
   set(values) {
@@ -233,7 +233,7 @@ Style.define('innerShadows', {
       x: Number(s.offsetX()),
       y: Number(s.offsetY()),
       spread: Number(s.spread()),
-      enabled: s.enabled(),
+      enabled: !!s.enabled(),
     }))
   },
   set(values) {
