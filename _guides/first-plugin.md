@@ -106,4 +106,4 @@ In this walk-through, we've seen a very simple plugin.
 If you'd like to read more generally about the plugin APIs, try these topics:
 
 * [Extension API Overview](/reference/) - Learn about the Sketch extensibility possibilities.
-* [Additional Plugin Examples](/examples/) - Take a look at our list of example plugin projects.
+* [Additional Plugin Examples](https://github.com/BohemianCoding/SketchAPI/tree/develop/examples) - Take a look at our list of example plugin projects.
