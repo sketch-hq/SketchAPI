@@ -26,15 +26,15 @@ Using it, you can write the logic of your Plugin in JavaScript, but can call the
 
 The basics are as follows:
 
-- you write your JavaScript code as you normally would
-- using the bridge, you can obtain Objective-C objects from the host application (in this case Sketch), or from the system itself
-- basic Objective-C objects that have a JavaScript equivalent (such as strings and numbers), can typically be used in the same way as their JS versions
-- you can read and write properties on custom Objective-C objects as you would in JS
-- you can call methods on custom Objective-C objects, using either the familiar JavaScript syntax, or the Objective-C square bracket syntax.
+* you write your JavaScript code as you normally would
+* using the bridge, you can obtain Objective-C objects from the host application (in this case Sketch), or from the system itself
+* basic Objective-C objects that have a JavaScript equivalent (such as strings and numbers), can typically be used in the same way as their JS versions
+* you can read and write properties on custom Objective-C objects as you would in JS
+* you can call methods on custom Objective-C objects, using either the familiar JavaScript syntax, or the Objective-C square bracket syntax.
 
 (See the [More On CocoaScript](/guides/cocoascript/) page for more details.)
 
-When your script is called by Sketch, you are passed some *context*, including the Objective-C objects representing the current Sketch document and selection.
+When your script is called by Sketch, you are passed some _context_, including the Objective-C objects representing the current Sketch document and selection.
 
 You can then read properties, perform calculations, and call methods on these objects, to accomplish your script’s purpose.
 
@@ -42,14 +42,14 @@ You can then read properties, perform calculations, and call methods on these ob
 
 When a user selects a Plugin menu command, Sketch looks up which handler (CocoaScript function) to call, and which script file to call it in.
 
-When the handler is called, it is passed a single *context* variable. This contains some important properties that you can use to access the objects that you’ll need.
+When the handler is called, it is passed a single _context_ variable. This contains some important properties that you can use to access the objects that you’ll need.
 
 For example, the selection property gives you a list of the selected layers in the current document:
 
 ```js
 var onRun = function(context) {
   var selection = context.selection
-  for (var i=0; i<selection.count(); i++) {
+  for (var i = 0; i < selection.count(); i++) {
     var layer = selection[i]
     log('layer ' + layer.name + ' is selected.')
   }
@@ -58,13 +58,12 @@ var onRun = function(context) {
 
 All Plugins in Sketch have access to the following default variables:
 
-- **command**: an [`MSPluginCommand`](/reference/class/MSPluginCommand/) object representing the script command currently executing
-- **document**: an [`MSDocument`](/reference/class/MSDocument/) object representing the current document
-- **plugin**: an [`MSPluginBundle`](/reference/class/MSPluginBundle/) object representing the plugin bundle containing the currently executing script
-- **scriptPath**: an `NSString` containing the full path to the currently executing script
-- **scriptURL**: like **scriptPath**, but as an NSURL object
-- **selection**, an `NSArray` of the layer(s) that are selected in the current document; each item of this array is an [`MSLayer`](/reference/class/MSLayer/) object
-
+* **command**: an [`MSPluginCommand`](/reference/class/MSPluginCommand/) object representing the script command currently executing
+* **document**: an [`MSDocument`](/reference/class/MSDocument/) object representing the current document
+* **plugin**: an [`MSPluginBundle`](/reference/class/MSPluginBundle/) object representing the plugin bundle containing the currently executing script
+* **scriptPath**: an `NSString` containing the full path to the currently executing script
+* **scriptURL**: like **scriptPath**, but as an NSURL object
+* **selection**, an `NSArray` of the layer(s) that are selected in the current document; each item of this array is an [`MSLayer`](/reference/class/MSLayer/) object
 
 ## Trying Out Scripts
 
