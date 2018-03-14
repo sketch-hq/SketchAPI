@@ -96,39 +96,3 @@ Move this layer backward in its parent.
 #### Returns
 
 The current layer (useful if you want to chain the calls).
-
-## localRectToPageRect
-
-```javascript
-var rectDefinedInPageCoordinates = layer.localRectToPageRect(
-  rectDefinedInLocalCoordinates
-)
-```
-
-Convert a rectangle in the coordinates that this layer uses to absolute (page) coordinates.
-
-| Parameters                                                           |                          |
-| -------------------------------------------------------------------- | ------------------------ |
-| rect<span class="arg-type">[Rectangle](#rectangle) - required</span> | The rectangle to convert |
-
-### Returns
-
-A [Rectangle](#rectangle) in page coordinates.
-
-## localRectToParentRect
-
-```javascript
-var rectDefinedInParentCoordinates = layer.localRectToParentRect(
-  rectDefinedInLocalCoordinates
-)
-```
-
-Convert a rectangle in the coordinates that this layer uses to its parent's coordinates.
-
-| Parameters                                                           |                          |
-| -------------------------------------------------------------------- | ------------------------ |
-| rect<span class="arg-type">[Rectangle](#rectangle) - required</span> | The rectangle to convert |
-
-### Returns
-
-A [Rectangle](#rectangle) in the layer's parent's coordinates.

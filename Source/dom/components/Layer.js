@@ -63,36 +63,25 @@ export class Layer extends WrappedObject {
     return this
   }
 
-  /**
-   * Convert a rectangle in the coordinates that this layer uses to absolute (page) coordinates.
-   *
-   * @param {Rectangle} rect The rectangle to convert.
-   * @return {Rectangle} The converted rectangle expressed in page coordinates.
-   */
+  // @deprecated
   localRectToPageRect(rect) {
-    const _rect = this._object.convertRectToAbsoluteCoordinates(rect.asCGRect())
-    return new Rectangle(
-      _rect.origin.x,
-      _rect.origin.y,
-      _rect.size.width,
-      _rect.size.height
+    console.warn(
+      'Layer.layerRectToPageRect(rect) is deprecated. Use rect.changeBasis({ from: layer }) instead'
     )
+    return rect.changeBasis({
+      from: this,
+    })
   }
 
-  /**
-   * Convert a rectangle in the coordinates that this layer uses to it's parent's coordinates.
-   *
-   * @param {Rectangle} rect The rectangle to convert.
-   * @return {Rectangle} The converted rectangle expressed in the coordinate system of the parent layer.
-   */
+  // @deprecated
   localRectToParentRect(rect) {
-    const { frame } = this
-    return new Rectangle(
-      rect.x + frame.x,
-      rect.y + frame.y,
-      rect.width,
-      rect.height
+    console.warn(
+      'Layer.localRectToParentRect(rect) is deprecated. Use rect.changeBasis({ from: layer, to: layer.parent }) instead'
     )
+    return rect.changeBasis({
+      from: this,
+      to: this.parent,
+    })
   }
 }
 

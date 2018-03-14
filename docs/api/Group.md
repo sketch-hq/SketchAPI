@@ -37,24 +37,6 @@ var group = new Group({
 })
 ```
 
-## pageRectToLocalRect
-
-```javascript
-var rectDefinedInGroupCoordinates = group.pageRectToLocalRect(
-  rectDefinedInPageCoordinates
-)
-```
-
-Convert a rectangle in page coordinates to one relative to this group's coordinates.
-
-| Parameters                                                           |                          |
-| -------------------------------------------------------------------- | ------------------------ |
-| rect<span class="arg-type">[Rectangle](#rectangle) - required</span> | The rectangle to convert |
-
-### Returns
-
-A [Rectangle](#rectangle) in local coordinates.
-
 ## Adjust to fit its children
 
 ```javascript

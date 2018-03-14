@@ -47,6 +47,25 @@ Adjust the rectangle by scaling it. The `scaleHeight` argument can be ommited to
 
 Return this rectangle (useful if you want to chain the calls).
 
+## Change the coordinates basis
+
+```javascript
+var newRect = rect.changeBasis({
+  from: layerA,
+  to: layerB,
+})
+```
+
+Each layer defines its own coordinates basis. You can change that basis from one layer to the other with `changeBasis`.
+
+| Parameters                                                 |                                                                   |
+| ---------------------------------------------------------- | ----------------------------------------------------------------- |
+| change<span class="arg-type">object</span>                 |                                                                   |
+| change.from<span class="arg-type">Layer / undefined</span> | The layer in which the rectangle's coordinates are expressed.     |
+| change.to<span class="arg-type">Layer / undefined</span>   | The layer in which the rectangle's coordinates will be expressed. |
+
+Both `from` and `to` can be ommited (but not at the same time) to change the basis from/to the Page coordinates.
+
 ## Get a `CGRect`
 
 ```javascript

@@ -28,18 +28,14 @@ export class Group extends Layer {
     super(group)
   }
 
-  /**
-   * Convert a rectangle in page coordinates to one relative to this container's coordinates.
-   *
-   * @param {Rectangle} rect The rectangle to convert.
-   * @return {Rectangle} The rectangle in local coordinates.
-   */
+  // @deprecated
   pageRectToLocalRect(rect) {
-    const origin = this._object.convertPoint_fromLayer_(
-      NSMakePoint(rect.x, rect.y),
-      null
+    console.warn(
+      'Group.pageRectToLocalRect(rect) is deprecated. Use rect.changeBasis({ to: group }) instead'
     )
-    return new Rectangle(origin.x, origin.y, rect.width, rect.height)
+    return rect.changeBasis({
+      to: this,
+    })
   }
 
   /**
