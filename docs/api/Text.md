@@ -73,7 +73,7 @@ Set the font of the text layer as the system font of the given size.
 var fragments = text.fragments
 ```
 
-Returns a array of the text fragments for the text. Each one is a object containing a rectangle, and a baseline offset `{rect, baselineOffset}`.
+Returns a array of the text fragments for the text. Each one is a object containing a rectangle, and a baseline offset and the range of the fragment `{rect, baselineOffset, range}`.
 
 ## `Text.Alignment`
 
