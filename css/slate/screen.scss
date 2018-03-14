@@ -8,7 +8,6 @@
 @import 'slate/variables';
 @import 'slate/icon-font';
 @import 'slate/syntax';
-// @import 'rtl'; // uncomment to switch to RTL format
 
 /*
 Copyright 2008-2013 Concur Technologies, Inc.
@@ -382,32 +381,27 @@ html, body {
     clear:both;
   }
 
-  h1 {
-    @extend %header-font;
+  h1, h2 {
+    font-weight: 300;
+    line-height: 32px;
+    color: #292e31;
     font-size: 25px;
-    padding-top: 0.5em;
-    padding-bottom: 0.5em;
-    margin-bottom: $h1-margin-bottom;
-    margin-top: 2em;
-    border-top: 1px solid #ccc;
-    border-bottom: 1px solid #ccc;
-    background-color: #fdfdfd;
+    padding-top: 50px;
+    padding-bottom: 20px;
+    margin: 0;
+  }
+
+  h1 {
+    margin-top: 90px;
+    border-top: 1px solid #f0f4f7;
+  }
+
+  h1:first-child {
+    margin-top: auto;
   }
 
   h1:first-child, div:first-child + h1 {
     border-top-width: 0;
-    margin-top: 0;
-  }
-
-  h2 {
-    @extend %header-font;
-    font-size: 19px;
-    margin-top: 4em;
-    margin-bottom: 0;
-    border-top: 1px solid #ccc;
-    padding-top: 1.2em;
-    padding-bottom: 1.2em;
-    background-image: linear-gradient(to bottom, rgba(#fff, 0.2), rgba(#fff, 0));
   }
 
   // h2s right after h1s should bump right up
@@ -437,35 +431,57 @@ html, body {
   table {
     margin-bottom: 1em;
     overflow: auto;
-    th,td {
+    display: table;
+    margin-right: 0% !important;
+    width: 50%;
+
+    th, td {
       text-align: left;
       vertical-align: top;
-      line-height: 1.6;
       code {
         white-space: nowrap;
       }
     }
 
     th {
-      padding: 5px 10px;
-      border-bottom: 1px solid #ccc;
+      padding: 5px 0 8px;
       vertical-align: bottom;
+      color: #939da3;
+      font-size: 12px;
+      font-weight: 500;
+      line-height: 18px;
+      text-transform: uppercase;
+      border-bottom: 1px solid #e1e8ed;
     }
 
     td {
-      padding: 10px;
+      padding: 17px 0;
+      border-bottom: 1px solid #f0f4f7;
+      line-height: 24px;
     }
 
-    tr:last-child {
-      border-bottom: 1px solid #ccc;
+    td:first-child {
+      text-align: right;
+      padding-right: 15px;
     }
 
-    tr:nth-child(odd)>td {
-      background-color: lighten($main-bg,4.2%);
+    td:last-child {
+      color: #4c555a;
+      line-height: 21px;
+      font-size: 14px;
     }
 
-    tr:nth-child(even)>td {
-      background-color: lighten($main-bg,2.4%);
+    tr:last-child td {
+      border-bottom: 1px solid #e1e8ed;
+    }
+
+    .arg-type {
+      display: block;
+      color: #939da3;
+      font-size: 12px;
+      font-weight: 500;
+      text-transform: none;
+      word-break: normal;
     }
   }
 
