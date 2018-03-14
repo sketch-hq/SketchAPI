@@ -25,13 +25,15 @@ export class Shape extends Layer {
       shape.sketchObject = Factory.createNative(Shape)
         .alloc()
         .initWithFrame(new Rectangle(0, 0, 100, 100).asCGRect())
+
+      super(shape)
+
+      this.sketchObject.addLayer(
+        MSRectangleShape.alloc().initWithFrame(this.frame.asCGRect())
+      )
+    } else {
+      super(shape)
     }
-
-    super(shape)
-
-    this.sketchObject.addLayer(
-      MSRectangleShape.alloc().initWithFrame(this.frame.asCGRect())
-    )
   }
 }
 
