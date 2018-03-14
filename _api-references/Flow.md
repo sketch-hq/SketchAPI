@@ -10,13 +10,13 @@ var Flow = require('sketch/dom').Flow
 
 The prototyping action associated with a layer.
 
-| Properties    | type                                      | Description                                                                                 |
-| ------------- | ----------------------------------------- | ------------------------------------------------------------------------------------------- |
-| target        | [Artboard](#artboard) / `Flow.BackTarget` | The target artboard of the action or `Flow.BackTarget` if the action is a back action       |
-| targetId      | `String` / `Flow.BackTarget`              | The ID of target artboard of the action or `Flow.BackTarget` if the action is a back action |
-| animationType | [AnimationType](#animationtype)           | The type of the animation.                                                                  |
+| Properties                                                                    |                                                                                             |
+| ----------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
+| target<span class="arg-type">[Artboard](#artboard) / `Flow.BackTarget`</span> | The target artboard of the action or `Flow.BackTarget` if the action is a back action       |
+| targetId<span class="arg-type">string / `Flow.BackTarget`</span>              | The ID of target artboard of the action or `Flow.BackTarget` if the action is a back action |
+| animationType<span class="arg-type">[AnimationType](#animationtype)</span>    | The type of the animation.                                                                  |
 
-## Creating a new prototyping action
+## Create a new prototyping action
 
 ```javascript
 layer.flow = {
@@ -51,7 +51,7 @@ layer.flow = {
 
 You can also create a back action.
 
-## `isBackAction`
+## Check if the action is a Back action
 
 ```javascript
 layer.flow.isBackAction()
@@ -59,7 +59,7 @@ layer.flow.isBackAction()
 
 Returns whether the prototyping action is a back action or not, eg. whether `layer.flow.target === Flow.BackTarget`.
 
-## `isValidConnection`
+## Check if the target is valid
 
 ```javascript
 layer.flow.isValidConnection()
@@ -77,7 +77,7 @@ layer.flow = {
 
 `Flow.BackTarget` is a constant that you can set the target to in order to always take you back to the last Artboard you were looking at. When a Target has been set to `Flow.BackTarget`, the transition leading into it will be reversed on return.
 
-## AnimationType
+## `Flow.AnimationType`
 
 ```javascript
 Flow.AnimationType.slideFromLeft
@@ -85,7 +85,7 @@ Flow.AnimationType.slideFromLeft
 
 Enumeration of the animation types.
 
-| Value             | description           |
+| Value             |                       |
 | ----------------- | --------------------- |
 | `none`            | No animation          |
 | `slideFromLeft`   | Slide from the left   |

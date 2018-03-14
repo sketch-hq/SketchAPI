@@ -16,38 +16,38 @@ var rectFromAnotherRect = new Rectangle(rect)
 
 A utility class to represent a rectangle. Contains some methods to make interacting with a rectangle easier.
 
-| Properties | type                | Description                                                                                         |
-| ---------- | ------------------- | --------------------------------------------------------------------------------------------------- |
-| x          | Number or Rectangle | The x coordinate of the top-left corner of the rectangle. Or an object with `{x, y, width, height}` |
-| y          | Number              | The y coordinate of the top-left corner of the rectangle.                                           |
-| width      | Number              | The width of the rectangle.                                                                         |
-| height     | Number              | The height of the rectangle.                                                                        |
+| Properties                                        |                                                                                                     |
+| ------------------------------------------------- | --------------------------------------------------------------------------------------------------- |
+| x<span class="arg-type">number / Rectangle</span> | The x coordinate of the top-left corner of the rectangle. Or an object with `{x, y, width, height}` |
+| y<span class="arg-type">number</span>             | The y coordinate of the top-left corner of the rectangle.                                           |
+| width<span class="arg-type">number</span>         | The width of the rectangle.                                                                         |
+| height<span class="arg-type">number</span>        | The height of the rectangle.                                                                        |
 
-## offset
+## Offset the rectangle
 
 ```javascript
-rect.offset(x, y)
+var newRect = rect.offset(x, y)
 ```
 
 Adjust the rectangle by offsetting it.
 
-### Return
+### Returns
 
 Return this rectangle (useful if you want to chain the calls).
 
-## scale
+## Scale the rectangle
 
 ```javascript
-rect.scale(scaleWidth, scaleHeight)
+var newRect = rect.scale(scaleWidth, scaleHeight)
 ```
 
 Adjust the rectangle by scaling it. The `scaleHeight` argument can be ommited to apply the same factor on both the width and the height.
 
-### Return
+### Returns
 
 Return this rectangle (useful if you want to chain the calls).
 
-## asCGRect
+## Get a `CGRect`
 
 ```javascript
 var cgRect = rect.asCGRect()

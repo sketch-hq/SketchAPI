@@ -9,7 +9,7 @@ hidden: true
 var DataSupplier = require('sketch/data-supplier')
 ```
 
-## registerDataSupplier
+## Register a Data Supplier
 
 > Example
 
@@ -28,13 +28,13 @@ export function onStartup() {
 
 Register some data with a name and a key.
 
-| Parameter             | type   | Description                                                                                        |
-| --------------------- | ------ | -------------------------------------------------------------------------------------------------- |
-| dataType _(required)_ | String | The data type. Currently `public.text` or `public.image` are the only allowed values.              |
-| dataName _(required)_ | String | The data name, will be used as the menu item title for the data.                                   |
-| action _(required)_   | String | The name of the Action that will be dispatched when the user requests some data. See `supplyData`. |
+| Parameters                                              |                                                                                                    |
+| ------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
+| dataType<span class="arg-type">string - required</span> | The data type. Currently `public.text` or `public.image` are the only allowed values.              |
+| dataName<span class="arg-type">string - required</span> | The data name, will be used as the menu item title for the data.                                   |
+| action<span class="arg-type">string - required</span>   | The name of the Action that will be dispatched when the user requests some data. See `supplyData`. |
 
-## supplyData
+## Supply some Data
 
 > Example
 
@@ -54,12 +54,12 @@ export function onSupplyKeyNeeded(context) {
 
 When the plugin providing the dynamic data has finished generating the data, it will call this function with the data key and the data.
 
-| Parameter         | type     | Description                                                                                                                                                |
-| ----------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| key _(required)_  | String   | Should be equal to `context.data.key`                                                                                                                      |
-| data _(required)_ | String[] | The list of values to provide. In case of `public.image`, the string is the path to the image. It needs to have a length equal to the `context.data.count` |
+| Parameters                                            |                                                                                                                                                            |
+| ----------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| key<span class="arg-type">string - required</span>    | Should be equal to `context.data.key`                                                                                                                      |
+| data<span class="arg-type">string[] - required</span> | The list of values to provide. In case of `public.image`, the string is the path to the image. It needs to have a length equal to the `context.data.count` |
 
-## deregisterDataSuppliers
+## Deregister your Data Suppliers
 
 > Example
 
