@@ -21,7 +21,7 @@ export class GradientStop {
     } else {
       nativeStop = MSGradientStop.stopWithPosition_color(
         object.position || 0,
-        Color.from(object.color)._object
+        Color.from(object.color || '#000000FF')._object
       )
     }
 

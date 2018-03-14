@@ -37,9 +37,7 @@ export class Gradient {
         )
       }
       if (object.to) {
-        nativeGradient.setTo(
-          CGPointMake(object.from.x || 0.5, object.from.y || 1)
-        )
+        nativeGradient.setTo(CGPointMake(object.to.x || 0.5, object.to.y || 1))
       }
       if (object.stops) {
         nativeGradient.setStops(

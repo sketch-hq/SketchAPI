@@ -168,27 +168,3 @@ test('should get the fills', () => {
     },
   ])
 })
-
-test('should convert hex string to MSColor', () => {
-  // #rrggbbaa
-  const color = Style.colorFromString('#11223344')
-  expect(color).toBeInstanceOf(MSColor)
-  expect(Math.round(color.red() * 255)).toBe(17)
-  expect(Math.round(color.blue() * 255)).toBe(51)
-  expect(Math.round(color.green() * 255)).toBe(34)
-  expect(Math.round(color.alpha() * 255)).toBe(68)
-
-  // #rrggbb
-  const color2 = Style.colorFromString('#112233')
-  expect(Math.round(color2.red() * 255)).toBe(17)
-  expect(Math.round(color2.blue() * 255)).toBe(51)
-  expect(Math.round(color2.green() * 255)).toBe(34)
-  expect(Math.round(color2.alpha() * 255)).toBe(255)
-
-  // #rgb
-  const color3 = Style.colorFromString('#123')
-  expect(Math.round(color3.red() * 255)).toBe(17)
-  expect(Math.round(color3.blue() * 255)).toBe(51)
-  expect(Math.round(color3.green() * 255)).toBe(34)
-  expect(Math.round(color3.alpha() * 255)).toBe(255)
-})
