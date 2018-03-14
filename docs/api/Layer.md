@@ -6,16 +6,16 @@ section: components
 
 A Sketch layer. This is the base class for most of the Sketch components and defines methods to manipulate them..
 
-| Properties | type                    | Description                                                                                     |
-| ---------- | ----------------------- | ----------------------------------------------------------------------------------------------- |
-| id         | string                  | The unique ID of the Layer.                                                                     |
-| name       | string                  | The name of the Layer                                                                           |
-| parent     | [Group](#group)         | The group the layer is in.                                                                      |
-| frame      | [Rectangle](#rectangle) | The frame of the Layer. This is given in coordinates that are local to the parent of the layer. |
-| selected   | Boolean                 | If the layer is selected.                                                                       |
-| flow       | [Flow](#flow)           | The prototyping action associated with the layer.                                               |
+| Properties                                                 |                                                                                                 |
+| ---------------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
+| id<span class="arg-type">string</span>                     | The unique ID of the Layer.                                                                     |
+| name<span class="arg-type">string</span>                   | The name of the Layer                                                                           |
+| parent<span class="arg-type">[Group](#group)</span>        | The group the layer is in.                                                                      |
+| frame<span class="arg-type">[Rectangle](#rectangle)</span> | The frame of the Layer. This is given in coordinates that are local to the parent of the layer. |
+| selected<span class="arg-type">boolean</span>              | If the layer is selected.                                                                       |
+| flow<span class="arg-type">[Flow](#flow)</span>            | The prototyping action associated with the layer.                                               |
 
-## duplicate
+## Duplicate the layer
 
 ```javascript
 var duplicatedLayer = layer.duplicate()
@@ -27,7 +27,7 @@ A new identical layer will be inserted into the parent of this layer.
 
 A new [Layer](#layer).
 
-## remove
+## Remove the layer
 
 ```javascript
 layer.remove()
@@ -39,7 +39,7 @@ Remove this layer from its parent.
 
 The current layer (useful if you want to chain the calls).
 
-## index
+## Get the position in the hierarchy
 
 ```javascript
 var index = layer.index
@@ -47,7 +47,9 @@ var index = layer.index
 
 The index of this layer in its parent. The layer at the back of the parent (visually) will be layer `0`. The layer at the front will be layer `n - 1` (if there are `n` layers).
 
-## moveToFront
+## Move the layer in the hierarchy
+
+### Move to the front
 
 ```javascript
 layer.moveToFront()
@@ -55,11 +57,11 @@ layer.moveToFront()
 
 Move this layer to the front of its parent.
 
-### Returns
+#### Returns
 
 The current layer (useful if you want to chain the calls).
 
-## moveForward
+### Move forward
 
 ```javascript
 layer.moveForward()
@@ -67,11 +69,11 @@ layer.moveForward()
 
 Move this layer forward in its parent.
 
-### Returns
+#### Returns
 
 The current layer (useful if you want to chain the calls).
 
-## moveToBack
+### Move to the back
 
 ```javascript
 layer.moveToBack()
@@ -79,11 +81,11 @@ layer.moveToBack()
 
 Move this layer to the back of its parent.
 
-### Returns
+#### Returns
 
 The current layer (useful if you want to chain the calls).
 
-## moveBackward
+### Move backward
 
 ```javascript
 layer.moveBackward()
@@ -91,7 +93,7 @@ layer.moveBackward()
 
 Move this layer backward in its parent.
 
-### Returns
+#### Returns
 
 The current layer (useful if you want to chain the calls).
 
@@ -105,9 +107,9 @@ var rectDefinedInPageCoordinates = layer.localRectToPageRect(
 
 Convert a rectangle in the coordinates that this layer uses to absolute (page) coordinates.
 
-| Parameter         | type                    | Description              |
-| ----------------- | ----------------------- | ------------------------ |
-| rect _(required)_ | [Rectangle](#rectangle) | The rectangle to convert |
+| Parameters                                                           |                          |
+| -------------------------------------------------------------------- | ------------------------ |
+| rect<span class="arg-type">[Rectangle](#rectangle) - required</span> | The rectangle to convert |
 
 ### Returns
 
@@ -123,9 +125,9 @@ var rectDefinedInParentCoordinates = layer.localRectToParentRect(
 
 Convert a rectangle in the coordinates that this layer uses to its parent's coordinates.
 
-| Parameter         | type                    | Description              |
-| ----------------- | ----------------------- | ------------------------ |
-| rect _(required)_ | [Rectangle](#rectangle) | The rectangle to convert |
+| Parameters                                                           |                          |
+| -------------------------------------------------------------------- | ------------------------ |
+| rect<span class="arg-type">[Rectangle](#rectangle) - required</span> | The rectangle to convert |
 
 ### Returns
 

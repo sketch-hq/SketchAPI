@@ -10,16 +10,16 @@ var Group = require('sketch/dom').Group
 
 A group of layers. It is also an instance of [Layer](#layer) so all the methods defined there are available.
 
-| Properties | type                    | Description                                                                                     |
-| ---------- | ----------------------- | ----------------------------------------------------------------------------------------------- |
-| id         | string                  | The unique ID of the Group.                                                                     |
-| name       | string                  | The name of the Group                                                                           |
-| parent     | [Group](#group)         | The group the Group is in.                                                                      |
-| layers     | [Layer](#layer)[]       | The layers that this component groups together.                                                 |
-| frame      | [Rectangle](#rectangle) | The frame of the Group. This is given in coordinates that are local to the parent of the layer. |
-| flow       | [Flow](#flow)           | The prototyping action associated with the Group.                                               |
+| Properties                                                 |                                                                                                 |
+| ---------------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
+| id<span class="arg-type">string</span>                     | The unique ID of the Group.                                                                     |
+| name<span class="arg-type">string</span>                   | The name of the Group                                                                           |
+| parent<span class="arg-type">[Group](#group)</span>        | The group the Group is in.                                                                      |
+| layers<span class="arg-type">[Layer](#layer)[]</span>      | The layers that this component groups together.                                                 |
+| frame<span class="arg-type">[Rectangle](#rectangle)</span> | The frame of the Group. This is given in coordinates that are local to the parent of the layer. |
+| flow<span class="arg-type">[Flow](#flow)</span>            | The prototyping action associated with the Group.                                               |
 
-## Creating a new group
+## Create a new group
 
 ```javascript
 new Group()
@@ -47,15 +47,15 @@ var rectDefinedInGroupCoordinates = group.pageRectToLocalRect(
 
 Convert a rectangle in page coordinates to one relative to this group's coordinates.
 
-| Parameter         | type                    | Description              |
-| ----------------- | ----------------------- | ------------------------ |
-| rect _(required)_ | [Rectangle](#rectangle) | The rectangle to convert |
+| Parameters                                                           |                          |
+| -------------------------------------------------------------------- | ------------------------ |
+| rect<span class="arg-type">[Rectangle](#rectangle) - required</span> | The rectangle to convert |
 
 ### Returns
 
 A [Rectangle](#rectangle) in local coordinates.
 
-## adjustToFit
+## Adjust to fit its children
 
 ```javascript
 group.adjustToFit()
