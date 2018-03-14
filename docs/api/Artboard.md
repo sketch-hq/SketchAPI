@@ -10,16 +10,16 @@ var Artboard = require('sketch/dom').Artboard
 
 A Sketch artboard. It is an instance of both [Layer](#layer) and [Group](#group) so all the methods defined there are available.
 
-| Properties     | type                    | Description                                                                                        |
-| -------------- | ----------------------- | -------------------------------------------------------------------------------------------------- |
-| id             | string                  | The unique ID of the Artboard.                                                                     |
-| name           | string                  | The name of the Artboard                                                                           |
-| parent         | [Page](#page)           | The page the Artboard is in.                                                                       |
-| layers         | [Layer](#layer)         | The layers that this component groups together.                                                    |
-| frame          | [Rectangle](#rectangle) | The frame of the Artboard. This is given in coordinates that are local to the parent of the layer. |
-| flowStartPoint | boolean                 | A Start Point allows you to choose where to start your prototype from.                             |
+| Properties                                                 |                                                                                                    |
+| ---------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
+| id<span class="arg-type">string</span>                     | The unique ID of the Artboard.                                                                     |
+| name<span class="arg-type">string</span>                   | The name of the Artboard                                                                           |
+| parent<span class="arg-type">[Page](#page)</span>          | The page the Artboard is in.                                                                       |
+| layers<span class="arg-type">[Layer](#layer)[]</span>      | The layers that this component groups together.                                                    |
+| frame<span class="arg-type">[Rectangle](#rectangle)</span> | The frame of the Artboard. This is given in coordinates that are local to the parent of the layer. |
+| flowStartPoint<span class="arg-type">boolean</span>        | A Start Point allows you to choose where to start your prototype from.                             |
 
-## Creating a new artboard
+## Create a new artboard
 
 ```javascript
 new Artboard()
