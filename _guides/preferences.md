@@ -20,8 +20,8 @@ defaults write ~/Library/Preferences/com.bohemiancoding.sketch3.plist "Plugin Ed
 
 and relaunch Sketch, you'll see a couple of new menu items:
 
-- Go to Preferences › Plugins and right click any of the listed Plugins. You'll see an 'Edit Code…' option that will launch your editor with the selected Plugin's code open.
-- Open the Plugins menu, and you'll see an 'Edit Plugins…' option, that will launch your editor with the whole 'Plugins' folder open.
+* Go to Preferences › Plugins and right click any of the listed Plugins. You'll see an 'Edit Code…' option that will launch your editor with the selected Plugin's code open.
+* Open the Plugins menu, and you'll see an 'Edit Plugins…' option, that will launch your editor with the whole 'Plugins' folder open.
 
 ## Tweak the 'Custom Plugin…' editor
 
@@ -49,7 +49,7 @@ defaults write ~/Library/Preferences/com.bohemiancoding.sketch3.plist scriptEdit
   <strong>Warning:</strong> This is an extremely expensive operation, and will impact Sketch’s performance. Please use this <em>on your development system only</em> and <strong>never enable this on a customer’s computer</strong>.
 </p>
 
-When working with the new [Action API](/reference/action/) you might want to listen to multiple events (specially when trying to find *which* event is the one you want to use).
+When working with the new [Action API](/reference/action/) you might want to listen to multiple events (specially when trying to find _which_ event is the one you want to use).
 
 To do that, use the `actionWildcardsAllowed` preference. If set to `YES`, scripts are allowed to register a wildcard handler for events. This is off by default, and it could have a bad effect on performance, so handle it with care.
 
@@ -75,7 +75,6 @@ Once you do that, you can tell your Plugin to call a method for every action by 
 
 For performance reasons, Sketch caches the contents of the Plugins folder. This is very convenient for users, since Plugins run very fast, but makes your life hard if you’re a developer. That’s why we added a preference to disable this caching mechanism and force Sketch to always reload a Plugin’s code from disk:
 
-
 ```shell
 defaults write ~/Library/Preferences/com.bohemiancoding.sketch3.plist AlwaysReloadScript -bool YES
 ```
@@ -85,3 +84,15 @@ If you enable this, as soon as you save your script it will be ready for testing
 Please note that this setting determines whether the source of the script is reloaded from disc whenever Sketch makes a new javascript context for the script. If it’s `NO`, the source is cached, if it’s `YES`, the source is always reloaded from disc.
 
 What it doesn’t do, however, is change when a new JavaScript context is made. For long-running scripts, the same context is held in memory (it has to be — the running script is using it) until the script exits. So if you’re testing a long-running script, you will still have to find a way to stop the script, so that the context gets thrown away (that usually means relaunching Sketch, or setting `coscript.setShouldKeepAround(false)`).
+
+## Inspect a WebView
+
+If your plugin is using a webview, chances are that you will need to inspect it at some point.
+
+To do so, you need to add the preference:
+
+```shell
+defaults write com.bohemiancoding.sketch3 WebKitDeveloperExtras -bool true
+```
+
+Then you can simply right-click on your webview and click on `Inspect`. The inspector should show up.
