@@ -23,18 +23,34 @@ shape.style.fills = [
 ]
 ```
 
-A utility class to represent the style of a shape.
+A utility class to represent the style of a Layer.
 
-| Properties           | type                              | Description                                      |
-| -------------------- | --------------------------------- | ------------------------------------------------ |
-| fills                | Object[]                          | The fills of a shape.                            |
-| fills[x].color       | String                            | A rgba hex-string (`#000000ff` is opaque black). |
-| fills[x].fillType    | [FillType](#filltype)             | The type of the fill.                            |
-| borders              | Object[]                          | The borders of a shape.                          |
-| borders[x].color     | String                            | A rgba hex-string (`#000000ff` is opaque black). |
-| borders[x].fillType  | [FillType](#filltype)             | The type of the fill of the border.              |
-| borders[x].position  | [BorderPosition](#borderposition) | The position of the border.                      |
-| borders[x].thickness | Number                            | The thickness of the border.                     |
+| Properties   | type                | Description                   |
+| ------------ | ------------------- | ----------------------------- |
+| fills        | [Fill](#fill)[]     | The fills of a Layer.         |
+| borders      | [Border](#border)[] | The borders of a Layer.       |
+| shadows      | [Shadow](#shadow)[] | The shadows of a Layer.       |
+| innerShadows | [Shadow](#shadow)[] | The inner shadows of a Layer. |
+
+## Fill
+
+```javascript
+shape.style.fills = [
+  {
+    color: '#c0ffee',
+    fillType: Style.FillType.color,
+  },
+]
+```
+
+An object that represent a Fill.
+
+| Properties | type                  | Description                                      |
+| ---------- | --------------------- | ------------------------------------------------ |
+| fillType   | [FillType](#filltype) | The type of the fill.                            |
+| color      | String                | A rgba hex-string (`#000000ff` is opaque black). |
+| gradient   | [Gradient](#gradient) | The gradient of the fill.                        |
+| enabled    | Boolean               | Wether the fill is active or not.                |
 
 ## FillType
 
@@ -51,6 +67,29 @@ Enumeration of the types of fill.
 | `pattern`  |
 | `noise`    |
 
+## Border
+
+```javascript
+shape.style.borders = [
+  {
+    color: '#c0ffee',
+    fillType: Style.FillType.color,
+    position: Style.BorderPosition.Inside,
+  },
+]
+```
+
+An object that represent a Border.
+
+| Properties | type                              | Description                                      |
+| ---------- | --------------------------------- | ------------------------------------------------ |
+| fillType   | [FillType](#filltype)             | The type of the fill of the border.              |
+| color      | String                            | A rgba hex-string (`#000000ff` is opaque black). |
+| gradient   | [Gradient](#gradient)             | The gradient of the fill.                        |
+| enabled    | Boolean                           | Wether the border is active or not.              |
+| position   | [BorderPosition](#borderposition) | The position of the border.                      |
+| thickness  | Number                            | The thickness of the border.                     |
+
 ## BorderPosition
 
 ```javascript
@@ -64,3 +103,34 @@ Enumeration of the positions of a border.
 | `Center`  |
 | `Inside`  |
 | `Outside` |
+
+## Shadow
+
+```javascript
+shape.style.shadows = [
+  {
+    color: '#c0ffee',
+    fillType: Style.FillType.color,
+  },
+]
+```
+
+```javascript
+shape.style.innerShadows = [
+  {
+    color: '#c0ffee',
+    fillType: Style.FillType.color,
+  },
+]
+```
+
+An object that represent a Fill.
+
+| Properties | type    | Description                                      |
+| ---------- | ------- | ------------------------------------------------ |
+| color      | String  | A rgba hex-string (`#000000ff` is opaque black). |
+| blur       | Number  | The blur radius of the shadow.                   |
+| x          | Number  | The horizontal offset of the shadow.             |
+| y          | Number  | The vertical offset of the shadow.               |
+| spread     | Number  | The spread of the shadow.                        |
+| enabled    | Boolean | Wether the fill is active or not.                |

@@ -15,9 +15,10 @@ A group of layers. It is also an instance of [Layer](#layer) so all the methods 
 | id         | string                  | The unique ID of the Group.                                                                     |
 | name       | string                  | The name of the Group                                                                           |
 | parent     | [Group](#group)         | The group the Group is in.                                                                      |
-| layers     | [Layer](#layer)         | The layers that this component groups together.                                                 |
 | frame      | [Rectangle](#rectangle) | The frame of the Group. This is given in coordinates that are local to the parent of the layer. |
 | flow       | [Flow](#flow)           | The prototyping action associated with the Group.                                               |
+| style      | [Style](#style)         | The style of the Group.                                                                         |
+| layers     | [Layer](#layer)         | The layers that this component groups together.                                                 |
 
 ## Creating a new group
 
