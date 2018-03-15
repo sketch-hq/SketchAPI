@@ -160,3 +160,19 @@ test('should convert rect to different coord system', (context, document) => {
     height: 10,
   })
 })
+
+test('should hide the layer', () => {
+  const group = new Group()
+  expect(group.hidden).toBe(false)
+
+  group.hidden = true
+  expect(group.hidden).toBe(true)
+})
+
+test('should lock the layer', () => {
+  const group = new Group()
+  expect(group.locked).toBe(false)
+
+  group.locked = true
+  expect(group.locked).toBe(true)
+})

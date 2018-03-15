@@ -1,6 +1,7 @@
 {
   "unreleased": [
-    "[Fixed] Creating a Rectangle with an Object having an `x` value of `0` now works as expected"
+    "[Fixed] Creating a Rectangle with an Object having an `x` value of `0` now works as expected",
+    "[New] Add `locked` and `hidden` property on Layer"
   ],
   "releases": {
     "49.1": [
