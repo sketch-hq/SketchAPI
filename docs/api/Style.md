@@ -25,12 +25,12 @@ shape.style.fills = [
 
 A utility class to represent the style of a Layer.
 
-| Properties   | type                | Description                   |
-| ------------ | ------------------- | ----------------------------- |
-| fills        | [Fill](#fill)[]     | The fills of a Layer.         |
-| borders      | [Border](#border)[] | The borders of a Layer.       |
-| shadows      | [Shadow](#shadow)[] | The shadows of a Layer.       |
-| innerShadows | [Shadow](#shadow)[] | The inner shadows of a Layer. |
+| Properties                                                    |                               |
+| ------------------------------------------------------------- | ----------------------------- |
+| fills<span class="arg-type">[Fill](#fill)[]</span>            | The fills of a Layer.         |
+| borders<span class="arg-type">[Border](#border)[]</span>      | The borders of a Layer.       |
+| shadows<span class="arg-type">[Shadow](#shadow)[]</span>      | The shadows of a Layer.       |
+| innerShadows<span class="arg-type">[Shadow](#shadow)[]</span> | The inner shadows of a Layer. |
 
 ## Fill
 
@@ -45,14 +45,14 @@ shape.style.fills = [
 
 An object that represent a Fill.
 
-| Properties | type                  | Description                                      |
-| ---------- | --------------------- | ------------------------------------------------ |
-| fillType   | [FillType](#filltype) | The type of the fill.                            |
-| color      | String                | A rgba hex-string (`#000000ff` is opaque black). |
-| gradient   | [Gradient](#gradient) | The gradient of the fill.                        |
-| enabled    | Boolean               | Wether the fill is active or not.                |
+| Properties                                                  |                                                  |
+| ----------------------------------------------------------- | ------------------------------------------------ |
+| fillType<span class="arg-type">[FillType](#filltype)</span> | The type of the fill.                            |
+| color<span class="arg-type">string</span>                   | A rgba hex-string (`#000000ff` is opaque black). |
+| gradient<span class="arg-type">[Gradient](#gradient)</span> | The gradient of the fill.                        |
+| enabled<span class="arg-type">boolean</span>                | Wether the fill is active or not.                |
 
-## FillType
+## `Style.FillType`
 
 ```javascript
 Style.FillType.color
@@ -81,16 +81,16 @@ shape.style.borders = [
 
 An object that represent a Border.
 
-| Properties | type                              | Description                                      |
-| ---------- | --------------------------------- | ------------------------------------------------ |
-| fillType   | [FillType](#filltype)             | The type of the fill of the border.              |
-| color      | String                            | A rgba hex-string (`#000000ff` is opaque black). |
-| gradient   | [Gradient](#gradient)             | The gradient of the fill.                        |
-| enabled    | Boolean                           | Wether the border is active or not.              |
-| position   | [BorderPosition](#borderposition) | The position of the border.                      |
-| thickness  | Number                            | The thickness of the border.                     |
+| Properties                                                              |                                                  |
+| ----------------------------------------------------------------------- | ------------------------------------------------ |
+| fillType<span class="arg-type">[FillType](#filltype)</span>             | The type of the fill of the border.              |
+| color<span class="arg-type">string</span>                               | A rgba hex-string (`#000000ff` is opaque black). |
+| gradient<span class="arg-type">[Gradient](#gradient)</span>             | The gradient of the fill.                        |
+| enabled<span class="arg-type">boolean</span>                            | Wether the border is active or not.              |
+| position<span class="arg-type">[BorderPosition](#borderposition)</span> | The position of the border.                      |
+| thickness<span class="arg-type">number</span>                           | The thickness of the border.                     |
 
-## BorderPosition
+## `Style.BorderPosition`
 
 ```javascript
 Style.BorderPosition.Center
@@ -126,11 +126,11 @@ shape.style.innerShadows = [
 
 An object that represent a Fill.
 
-| Properties | type    | Description                                      |
-| ---------- | ------- | ------------------------------------------------ |
-| color      | String  | A rgba hex-string (`#000000ff` is opaque black). |
-| blur       | Number  | The blur radius of the shadow.                   |
-| x          | Number  | The horizontal offset of the shadow.             |
-| y          | Number  | The vertical offset of the shadow.               |
-| spread     | Number  | The spread of the shadow.                        |
-| enabled    | Boolean | Wether the fill is active or not.                |
+| Properties                                   |                                                  |
+| -------------------------------------------- | ------------------------------------------------ |
+| color<span class="arg-type">string</span>    | A rgba hex-string (`#000000ff` is opaque black). |
+| blur<span class="arg-type">number</span>     | The blur radius of the shadow.                   |
+| x<span class="arg-type">number</span>        | The horizontal offset of the shadow.             |
+| y<span class="arg-type">number</span>        | The vertical offset of the shadow.               |
+| spread<span class="arg-type">number</span>   | The spread of the shadow.                        |
+| enabled<span class="arg-type">boolean</span> | Wether the fill is active or not.                |

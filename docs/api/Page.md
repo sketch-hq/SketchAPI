@@ -10,15 +10,15 @@ var Page = require('sketch/dom').Page
 
 A Sketch page. It is an instance of both [Layer](#layer) and [Group](#group) so all the methods defined there are available.
 
-| Properties | type                    | Description                    |
-| ---------- | ----------------------- | ------------------------------ |
-| id         | string                  | The unique ID of the Page.     |
-| name       | string                  | The name of the Page           |
-| parent     | [Document](#document)   | The document the page is in.   |
-| layers     | [Layer](#layer)         | The layers that this page has. |
-| frame      | [Rectangle](#rectangle) | The frame of the page.         |
+| Properties                                                 |                                |
+| ---------------------------------------------------------- | ------------------------------ |
+| id<span class="arg-type">string</span>                     | The unique ID of the Page.     |
+| name<span class="arg-type">string</span>                   | The name of the Page           |
+| parent<span class="arg-type">[Document](#document)</span>  | The document the page is in.   |
+| layers<span class="arg-type">[Layer](#layer)</span>        | The layers that this page has. |
+| frame<span class="arg-type">[Rectangle](#rectangle)</span> | The frame of the page.         |
 
-## Creating a new page
+## Create a new page
 
 ```javascript
 new Page()
@@ -30,7 +30,7 @@ new Artboard({
 })
 ```
 
-## Selected layers
+## Get the selected layers of the page
 
 ```javascript
 var selection = document.selectedLayers
@@ -38,6 +38,6 @@ var selection = document.selectedLayers
 
 A read-only property to get the layers that the user has selected in the page.
 
-### Return
+### Returns
 
 Return a [Selection](#selection) object.

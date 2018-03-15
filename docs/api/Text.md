@@ -10,20 +10,20 @@ var Text = require('sketch/dom').Text
 
 A text layer. It is an instance of [Layer](#layer) so all the methods defined there are available.
 
-| Properties  | type                        | Description                                                                                    |
-| ----------- | --------------------------- | ---------------------------------------------------------------------------------------------- |
-| id          | string                      | The unique ID of the Text.                                                                     |
-| name        | string                      | The name of the Text                                                                           |
-| parent      | [Group](#group)             | The group the Text is in.                                                                      |
-| frame       | [Rectangle](#rectangle)     | The frame of the Text. This is given in coordinates that are local to the parent of the layer. |
-| flow        | [Flow](#flow)               | The prototyping action associated with the Text.                                               |
-| style       | [Style](#style)             | The style of the Text.                                                                         |
-| text        | String                      | The string value of the text layer.                                                            |
-| alignment   | [Alignment](#alignment)     | The alignment of the text.                                                                     |
-| lineSpacing | [LineSpacing](#linespacing) | The line spacing of the text.                                                                  |
-| fixedWidth  | Boolean                     | Wether the layer should have a fixed width or a flexible width.                                |
+| Properties                                                           |                                                                                                |
+| -------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| id<span class="arg-type">string</span>                               | The unique ID of the Text.                                                                     |
+| name<span class="arg-type">string</span>                             | The name of the Text                                                                           |
+| parent<span class="arg-type">[Group](#group)</span>                  | The group the Text is in.                                                                      |
+| frame<span class="arg-type">[Rectangle](#rectangle)</span>           | The frame of the Text. This is given in coordinates that are local to the parent of the layer. |
+| flow<span class="arg-type">[Flow](#flow)</span>                      | The prototyping action associated with the Text.                                               |
+| style<span class="arg-type">[Style](#style)</span>                   | The style of the Text.                                                                         |
+| text<span class="arg-type">string</span>                             | The string value of the text layer.                                                            |
+| alignment<span class="arg-type">[Alignment](#alignment)</span>       | The alignment of the layer.                                                                    |
+| lineSpacing<span class="arg-type">[LineSpacing](#linespacing)</span> | The line spacing of the layer.                                                                 |
+| fixedWidth<span class="arg-type">boolean</span>                      | Wether the layer should have a fixed width or a flexible width.                                |
 
-## Creating a new Text
+## Create a new Text
 
 ```javascript
 var text = new Text({
@@ -32,7 +32,7 @@ var text = new Text({
 })
 ```
 
-## adjustToFit
+## Adjust to fit its value
 
 ```javascript
 text.adjustToFit()
@@ -52,9 +52,9 @@ text.font = myNSFont
 
 Set the font of the text layer.
 
-| Parameter         | type   | Description                        |
-| ----------------- | ------ | ---------------------------------- |
-| font _(required)_ | NSFont | The font to set on the Text layer. |
+| Parameters                                          |                                    |
+| --------------------------------------------------- | ---------------------------------- |
+| font<span class="arg-type">NSFont - required</span> | The font to set on the Text layer. |
 
 ## systemFontSize
 
@@ -64,9 +64,9 @@ text.systemFontSize = 16
 
 Set the font of the text layer as the system font of the given size.
 
-| Parameter              | type   | Description                  |
-| ---------------------- | ------ | ---------------------------- |
-| pointSize _(required)_ | number | The size of the font to set. |
+| Parameters                                               |                              |
+| -------------------------------------------------------- | ---------------------------- |
+| pointSize<span class="arg-type">number - required</span> | The size of the font to set. |
 
 ## fragments
 
@@ -74,9 +74,9 @@ Set the font of the text layer as the system font of the given size.
 var fragments = text.fragments
 ```
 
-Returns a array of the text fragments for the text. Each one is a object containing a rectangle, and a baseline offset `{rect, baselineOffset}`.
+Returns a array of the text fragments for the text. Each one is a object containing a rectangle, and a baseline offset and the range of the fragment `{rect, baselineOffset, range}`.
 
-## Alignment
+## `Text.Alignment`
 
 ```javascript
 Text.Alignment.center
@@ -84,7 +84,7 @@ Text.Alignment.center
 
 Enumeration of the alignments of the text.
 
-| Value     | description                                                       |
+| Value     |                                                                   |
 | --------- | ----------------------------------------------------------------- |
 | `left`    | Visually left aligned                                             |
 | `right`   | Visually right aligned                                            |
@@ -92,7 +92,7 @@ Enumeration of the alignments of the text.
 | `justify` | Fully-justified. The last line in a paragraph is natural-aligned. |
 | `natural` | Indicates the default alignment for script                        |
 
-## LineSpacing
+## `Text.LineSpacing`
 
 ```javascript
 Text.LineSpacing.constantBaseline
@@ -100,7 +100,7 @@ Text.LineSpacing.constantBaseline
 
 Enumeration of the line spacing behaviour for the text.
 
-| Value              | description                                             |
+| Value              |                                                         |
 | ------------------ | ------------------------------------------------------- |
 | `constantBaseline` | Uses min & max line height on paragraph style           |
 | `variable`         | Uses MSConstantBaselineTypesetter for fixed line height |

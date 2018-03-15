@@ -19,6 +19,14 @@ test('should create a rectangle using an object', () => {
   expect(r.height).toBe(4)
 })
 
+test('should create a rectangle using an object when x === 0 (#133)', () => {
+  const r = new Rectangle({ x: 0, y: 2, width: 3, height: 4 })
+  expect(r.x).toBe(0)
+  expect(r.y).toBe(2)
+  expect(r.width).toBe(3)
+  expect(r.height).toBe(4)
+})
+
 test('should create a rectangle using another rectangle', () => {
   const r2 = new Rectangle({ x: 1, y: 2, width: 3, height: 4 })
   const r = new Rectangle(r2)
