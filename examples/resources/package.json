@@ -1,0 +1,26 @@
+{
+  "name": "resources",
+  "description": "An example of a Plugin which contains bundled resources (an image, in this case).",
+  "author": "Mathieu Dutour <mathieu@bohemiancoding.com>",
+  "version": "2.0.0",
+  "engines": {
+    "sketch": ">=3.0"
+  },
+  "skpm": {
+    "name": "Resources",
+    "manifest": "src/manifest.json",
+    "main": "plugin.sketchplugin",
+    "assets": [
+      "assets/**/*"
+    ]
+  },
+  "scripts": {
+    "build": "skpm-build",
+    "watch": "skpm-build --watch",
+    "start": "skpm-build --watch --run",
+    "postinstall": "npm run build && skpm-link"
+  },
+  "devDependencies": {
+    "@skpm/builder": "^0.4.0"
+  }
+}

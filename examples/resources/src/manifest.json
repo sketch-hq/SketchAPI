@@ -1,0 +1,11 @@
+{
+  "compatibleVersion": 3,
+  "bundleVersion": 1,
+  "commands": [
+    {
+      "script": "resources.js",
+      "name": "Bundled Resources Example",
+      "identifier": "resources"
+    }
+  ]
+}

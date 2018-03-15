@@ -1,0 +1,17 @@
+{
+  "identifier": "com.sketchapp.examples.svgo-export",
+  "compatibleVersion": 3,
+  "bundleVersion": 1,
+  "commands": [
+    {
+      "name": "SVGO Export",
+      "identifier": "svgo-export",
+      "script": "./svgo-export.js",
+      "handlers": {
+        "actions": {
+          "ExportSlices": "onExportSlices"
+        }
+      }
+    }
+  ]
+}

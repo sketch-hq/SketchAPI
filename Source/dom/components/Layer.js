@@ -1,6 +1,7 @@
 import { WrappedObject, DefinedPropertiesKey } from '../WrappedObject'
 import { Rectangle } from '../Rectangle'
 import { wrapObject, wrapNativeObject } from '../wrapNativeObject'
+import { Flow } from './Flow'
 
 /**
  * Abstract class that represents a Sketch layer.
@@ -69,8 +70,13 @@ export class Layer extends WrappedObject {
    * @return {Rectangle} The converted rectangle expressed in page coordinates.
    */
   localRectToPageRect(rect) {
-    const _rect = this._object.convertRectToAbsoluteCoordinates(rect.asCGRect)
-    return new Rectangle(_rect.x, _rect.y, _rect.width, _rect.height)
+    const _rect = this._object.convertRectToAbsoluteCoordinates(rect.asCGRect())
+    return new Rectangle(
+      _rect.origin.x,
+      _rect.origin.y,
+      _rect.size.width,
+      _rect.size.height
+    )
   }
 
   /**
@@ -199,5 +205,15 @@ Layer.define('selected', {
     } else {
       this._object.select_byExtendingSelection(false, true)
     }
+  },
+})
+
+Layer.define('flow', {
+  get() {
+    return wrapObject(this._object.flow())
+  },
+  set(_flow) {
+    const flow = Flow.from(_flow)
+    this._object.flow = flow.sketchObject
   },
 })

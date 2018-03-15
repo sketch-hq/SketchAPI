@@ -13,7 +13,9 @@ import { Page } from './components/Page'
 import { SymbolMaster } from './components/SymbolMaster'
 import { SymbolInstance } from './components/SymbolInstance'
 import { Library } from './components/Library'
+import { HotSpot } from './components/HotSpot'
 
+import { AnimationType, BackTarget } from './components/Flow'
 import { Types } from './enums'
 import { wrapObject } from './wrapNativeObject'
 
@@ -29,6 +31,11 @@ api.Page = Page
 api.SymbolMaster = SymbolMaster
 api.SymbolInstance = SymbolInstance
 api.Library = Library
+api.HotSpot = HotSpot
+api.Flow = {
+  AnimationType,
+  BackTarget,
+}
 
 api.export = exportObject
 
@@ -36,6 +43,9 @@ api.Style = Style
 api.Rectangle = Rectangle
 api.Types = Types
 api.fromNative = wrapObject
+
+api.getDocuments = Document.getDocuments
+api.getSelectedDocument = Document.getSelectedDocument
 
 api.version = {
   sketch: MSApplicationMetadata.metadata().appVersion,

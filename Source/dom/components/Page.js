@@ -1,7 +1,6 @@
 import { DefinedPropertiesKey } from '../WrappedObject'
 import { Group } from './Group'
 import { Selection } from '../Selection'
-import { Rectangle } from '../Rectangle'
 import { Types } from '../enums'
 import { Factory } from '../Factory'
 import { wrapNativeObject, wrapObject } from '../wrapNativeObject'
@@ -22,7 +21,7 @@ export class Page extends Group {
       // eslint-disable-next-line no-param-reassign
       page.sketchObject = Factory.createNative(Page)
         .alloc()
-        .initWithFrame(new Rectangle(0, 0, 100, 100).asCGRect())
+        .init()
     }
 
     super(page)
@@ -88,9 +87,16 @@ Page.define('parent', {
         .removePages_detachInstances([this._object], false)
     }
 
-    document._object.addPage(this._object)
+    if (typeof document._object.addPage === 'function') {
+      document._object.addPage(this._object)
+    } else {
+      document._object.documentData().addPage(this._object)
+    }
   },
 })
+
+// override setting up a flow which doesn't make sense for a Page
+delete Page[DefinedPropertiesKey].flow
 
 Page.define('index', {
   exportable: false,

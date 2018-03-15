@@ -13,7 +13,7 @@ export class Rectangle {
    */
   constructor(x, y, width, height) {
     // if the argument is object
-    if (x && x.x) {
+    if (typeof x === "object" && typeof x.x === "number") {
       this.x = parseFloat(x.x)
       this.y = parseFloat(x.y)
       this.width = parseFloat(x.width)
@@ -54,6 +54,14 @@ export class Rectangle {
   offset(x, y) {
     this.x += parseFloat(x)
     this.y += parseFloat(y)
+    return this
+  }
+
+  scale(factorWidth, factorHeight) {
+    this.width *= parseFloat(factorWidth)
+    this.height *= parseFloat(
+      typeof factorHeight === 'undefined' ? factorWidth : factorHeight
+    )
     return this
   }
 

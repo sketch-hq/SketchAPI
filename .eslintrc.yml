@@ -53,6 +53,11 @@ globals:
   MSAssetLibraryControllerAddStatusOK: false
   NSData: false
   NSDataBase64DecodingIgnoreUnknownCharacters: false
+  __command: false
+  MSFlowConnection: false
+  MSHotspotLayer: false
+  NSPredicate: false
+  MSRectangleShape: false
 
 rules:
   ###########

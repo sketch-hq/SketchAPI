@@ -19,6 +19,14 @@ test('should create a rectangle using an object', () => {
   expect(r.height).toBe(4)
 })
 
+test('should create a rectangle using an object when x === 0 (#133)', () => {
+  const r = new Rectangle({ x: 0, y: 2, width: 3, height: 4 })
+  expect(r.x).toBe(0)
+  expect(r.y).toBe(2)
+  expect(r.width).toBe(3)
+  expect(r.height).toBe(4)
+})
+
 test('should create a rectangle using another rectangle', () => {
   const r2 = new Rectangle({ x: 1, y: 2, width: 3, height: 4 })
   const r = new Rectangle(r2)
@@ -35,6 +43,21 @@ test('should offset a rectangle', () => {
   expect(r.y).toBe(12)
   expect(r.width).toBe(3)
   expect(r.height).toBe(4)
+})
+
+test('should scale a rectangle', () => {
+  const r = new Rectangle(1, 2, 3, 4)
+  r.scale(10, 10)
+  expect(r.x).toBe(1)
+  expect(r.y).toBe(2)
+  expect(r.width).toBe(30)
+  expect(r.height).toBe(40)
+
+  r.scale(0.5)
+  expect(r.x).toBe(1)
+  expect(r.y).toBe(2)
+  expect(r.width).toBe(15)
+  expect(r.height).toBe(20)
 })
 
 test('should return a CGRect', () => {

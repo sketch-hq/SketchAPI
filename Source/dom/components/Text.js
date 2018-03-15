@@ -75,7 +75,7 @@ export class Text extends Layer {
    * @param {number} size The system font size to use.
    */
   set systemFontSize(size) {
-    this._object.font = NSFont.systemFontOfSize_(size)
+    this._object.setFont(NSFont.systemFontOfSize_(size))
   }
 
   /**

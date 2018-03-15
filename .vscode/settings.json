@@ -12,7 +12,17 @@
     "**/.DS_Store": true,
     "**/node_modules": true,
     "**/build": true,
-    "**/.awcache": true
+    "**/.awcache": true,
+    "**/_external": true,
+    "**/_reference": true,
+    "**/_site": true,
+    "**/_vendor": true,
+    "**/.bundle": true,
+    "**/.sass-cache": true,
+    "**/css": true,
+    "**/images": true,
+    "**/js": true,
+    ".jekyll-metadata": true
   },
   "editor.tabSize": 2,
   "files.trimTrailingWhitespace": true,
@@ -21,6 +31,6 @@
   "prettier.semi": false,
   "prettier.singleQuote": true,
   "prettier.trailingComma": "es5",
-  "prettier.proseWrap": false,
+  "prettier.proseWrap": "never",
   "editor.formatOnSave": true
 }

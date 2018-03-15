@@ -24,8 +24,29 @@ export class Artboard extends Group {
     }
     super(artboard)
   }
+
+  /**
+   * Adjust the Artboard to fit its children.
+   * override the group's method
+   */
+  adjustToFit() {
+    this._object.resizeToFitChildren()
+    return this
+  }
 }
 
 Artboard.type = Types.Artboard
 Artboard[DefinedPropertiesKey] = { ...Group[DefinedPropertiesKey] }
 Factory.registerClass(Artboard, MSArtboardGroup)
+
+Artboard.define('flowStartPoint', {
+  get() {
+    return !!this._object.isFlowHome()
+  },
+  set(isFlowStartHome) {
+    this._object.isFlowHome = isFlowStartHome
+  },
+})
+
+// override the WrappedObject id
+delete Artboard[DefinedPropertiesKey].flow
