@@ -4,7 +4,7 @@
 
 The following is a set of guidelines for contributing to the Sketch API. These are just guidelines, not rules. Use your best judgment, and feel free to propose changes to this document in a pull request.
 
-Note that the Sketch API is currently a beta, so everything is likely to change over time as we learn and refine how we work with the community.
+Note that the Sketch API is a work in progress, so everything is likely to change over time as we learn and refine how we work with the community.
 
 #### Table Of Contents
 
