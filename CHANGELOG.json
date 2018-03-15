@@ -1,0 +1,19 @@
+{
+  "unreleased": [
+    "[Fixed] Creating a Rectangle with an Object having an `x` value of `0` now works as expected"
+  ],
+  "releases": {
+    "49.1": [
+      "[New] Add `HotSpot` component",
+      "[New] Add convinient array methods to Selection",
+      "[Improved] A Shape is now created with a default rectangle path",
+      "[Fixed] Add a new Page with `new sketch.Page({ parent: document })`",
+      "[Fixed] Add `SymbolInstance.setOverrideValue()` method",
+      "[Fixed] `Artboard.adjustToFit()` now works as expected",
+      "[Fixed] Setting the stystem font size of a Text now works as expected",
+      "[Fixed] Exporting a Page now works as expected",
+      "[Fixed] `Document.getLayersNamed()` now works as expected"
+    ],
+    "49": ["[New] First release of the new API!"]
+  }
+}
