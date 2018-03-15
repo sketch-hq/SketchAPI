@@ -5,6 +5,11 @@ import { Gradient, GradientType } from './Gradient'
 import { Color, colorFromString, colorToString } from './Color'
 
 export const FillType = {
+  Color: 0, // A solid fill/border.
+  Gradient: 1, // A gradient fill/border.
+  Pattern: 4, // A pattern fill/border.
+  Noise: 5, // A noise fill/border.
+  /* @deprecated */
   color: 0, // A solid fill/border.
   gradient: 1, // A gradient fill/border.
   pattern: 4, // A pattern fill/border.
@@ -15,6 +20,39 @@ export const BorderPosition = {
   Inside: 1,
   Outside: 2,
   Both: 3, // This is Sketch internal option - don't use it.
+}
+
+export const BorderDecorationType = {
+  None: 0,
+  OpenArrow: 1,
+  ClosedArrow: 2,
+  Line: 3,
+}
+
+export const BlurType = {
+  Gaussian: 0,
+  Motion: 1,
+  Zoom: 2,
+  Background: 3,
+}
+
+export const BlendingMode = {
+  Normal: 0,
+  Darken: 1,
+  Multiply: 2,
+  ColorBurn: 3,
+  Lighten: 4,
+  Screen: 5,
+  ColorDodge: 6,
+  Overlay: 7,
+  SoftLight: 8,
+  HardLight: 9,
+  Difference: 10,
+  Exclusion: 11,
+  Hue: 12,
+  Saturation: 13,
+  Color: 14,
+  Luminosity: 15,
 }
 
 /**
@@ -51,6 +89,95 @@ Style.type = Types.Style
 Style[DefinedPropertiesKey] = { ...WrappedObject[DefinedPropertiesKey] }
 
 Style.GradientType = GradientType
+
+Style.define('opacity', {
+  get() {
+    return this._object.contextSettings().opacity()
+  },
+  set(opacity) {
+    this._object.contextSettings().setOpacity(opacity)
+  },
+})
+
+Style.BlendingMode = BlendingMode
+Style.define('blendingMode', {
+  get() {
+    const mode = this._object.contextSettings().blendMode()
+    return (
+      Object.keys(BlendingMode).find(key => BlendingMode[key] === mode) || mode
+    )
+  },
+  set(mode) {
+    this._object
+      .contextSettings()
+      .setBlendMode(BlendingMode[mode] || mode || BorderDecorationType.None)
+  },
+})
+
+Style.BorderDecorationType = BorderDecorationType
+Style.define('borderOptions', {
+  get() {
+    const startType = this._object.startDecorationType()
+    const endType = this._object.endDecorationType()
+    return {
+      startDecoration:
+        Object.keys(BorderDecorationType).find(
+          key => BorderDecorationType[key] === startType
+        ) || startType,
+      endDecoration:
+        Object.keys(BorderDecorationType).find(
+          key => BorderDecorationType[key] === endType
+        ) || endType,
+    }
+  },
+  set(borderOptions) {
+    if (typeof borderOptions.startDecoration !== 'undefined') {
+      this._object.setStartDecorationType(
+        BorderDecorationType[borderOptions.startDecoration] ||
+          borderOptions.startDecoration
+      )
+    }
+    if (typeof borderOptions.endDecoration !== 'undefined') {
+      this._object.setEndDecorationType(
+        BorderDecorationType[borderOptions.endDecoration] ||
+          borderOptions.endDecoration
+      )
+    }
+  },
+})
+
+Style.define('blur', {
+  get() {
+    const blur = this._object.blur()
+    const blurType = blur.type()
+    return {
+      center: {
+        x: blur.center().x,
+        y: blur.center().y,
+      },
+      motionAngle: blur.motionAngle(),
+      radius: blur.radius(),
+      enabled: !!blur.enabled,
+      type:
+        Object.keys(BlurType).find(key => BlurType[key] === blurType) ||
+        blurType,
+    }
+  },
+  set(blur) {
+    if (typeof blur.center !== 'undefined') {
+      this._object.blur().setCenter(CGPointMake(blur.center.x, blur.center.y))
+    }
+    if (typeof blur.motionAngle !== 'undefined') {
+      this._object.blur().setMotionAngle(blur.motionAngle)
+    }
+    if (typeof blur.radius !== 'undefined') {
+      this._object.blur().setRadius(blur.radius)
+    }
+    if (typeof blur.type !== 'undefined') {
+      this._object.blur().setType(BlurType[blur.type] || blur.type)
+    }
+  },
+})
 
 Style.FillType = FillType
 Style.define('fills', {
