@@ -6,8 +6,6 @@ section: Utils
 
 ```javascript
 var selection = document.selectedLayers
-
-selection.forEach(l => log(l.id))
 ```
 
 A utility class to represent the layers selection. Contains some methods to make interacting with a selection easier. All the properties are read-only.
@@ -21,7 +19,14 @@ A utility class to represent the layers selection. Contains some methods to make
 ## `map`, `forEach`, and `reduce`
 
 ```javascript
-selection.clear(x, y)
+selection.forEach(layer => log(layer.id))
+
+selection.map(layer => layer.id)
+
+selection.reduce((initial, layer) => {
+  initial += layer.name
+  return initial
+}, '')
 ```
 
 Even though a selection isn't an array, it defines `map`, `forEach` and `reduce` by just forwarding the arguments its layers. Those are just convenience methods to avoid getting the layers everytime.
@@ -29,7 +34,7 @@ Even though a selection isn't an array, it defines `map`, `forEach` and `reduce`
 ## Clear the selection
 
 ```javascript
-selection.clear(x, y)
+selection.clear()
 ```
 
 Clear the selection.
