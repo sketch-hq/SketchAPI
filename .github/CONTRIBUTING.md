@@ -77,12 +77,12 @@ Before creating enhancement suggestions, please check [this list](#before-submit
 
 Enhancement suggestions are tracked as [GitHub issues](https://guides.github.com/features/issues/).
 
-Simply create an issue on the [Kactus issue tracker](https://github.com/BohemianCoding/SketchAPI/issues) and provide the following information:
+Simply create an issue on the [Sketch issue tracker](https://github.com/BohemianCoding/SketchAPI/issues) and provide the following information:
 
 * **Use a clear and descriptive title** for the issue to identify the suggestion.
 * **Provide a step-by-step description of the suggested enhancement** in as much detail as possible. This additional context helps the maintainers to understand the enhancement from your perspective
 * **Explain why this enhancement would be useful** to Sketch plugin developers.
-* **Include screenshots and animated GIFs** if relevent to help you demonstrate the steps or point out the part of Sketch which the suggestion is related to. You can use [this tool](https://getkap.co) to record GIFs.
+* **Include screenshots and animated GIFs** if relevant to help you demonstrate the steps or point out the part of Sketch which the suggestion is related to. You can use [this tool](https://getkap.co) to record GIFs.
 * **List some plugins where this enhancement would be useful, if applicable.**
 
 ### Help Wanted
