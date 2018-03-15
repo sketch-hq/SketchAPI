@@ -11,10 +11,10 @@ var document = sketch.fromNative(context.document)
 
 A utility function to get a wrapped object from a native Sketch model object.
 
-| Properties | type                 | Description                             |
-| ---------- | -------------------- | --------------------------------------- |
-| object     | Native Sketch Object | The native Sketch model object to wrap. |
+| Parameters                                               |                                         |
+| -------------------------------------------------------- | --------------------------------------- |
+| object<span class="arg-type">Native Sketch Object</span> | The native Sketch model object to wrap. |
 
-### Return
+### Returns
 
 The wrapped object of the right type (you can check is type with `wrappedObject.type`), eg. a native document will be wrapped as a [Document](#document) while a native text layer will be wrapped as a [Text](#text).

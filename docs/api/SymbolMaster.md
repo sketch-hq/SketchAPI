@@ -5,25 +5,21 @@ section: components
 ---
 
 ```javascript
-var SymbolMaster = sketch.SymbolMaster
-```
-
-```javascript
-import { SymbolMaster } from 'sketch-api'
+var SymbolMaster = require('sketch/dom').SymbolMaster
 ```
 
 A [Symbol](https://www.sketchapp.com/docs/symbols/) master. It is an instance of [Artboard](#artboard) (hence of [Layer](#layer) and [Group](#group)) so all the methods defined there are available.
 
-| Properties | type                    | Description                                                                                             |
-| ---------- | ----------------------- | ------------------------------------------------------------------------------------------------------- |
-| id         | string                  | The unique ID of the Symbol Master object (not to be confused with `symbolId`).                         |
-| name       | string                  | The name of the Symbol Master                                                                           |
-| parent     | [Group](#group)         | The group the Symbol Master is in.                                                                      |
-| frame      | [Rectangle](#rectangle) | The frame of the Symbol Master. This is given in coordinates that are local to the parent of the layer. |
-| flow       | [Flow](#flow)           | The prototyping action associated with the Symbol.                                                      |
-| symbolId   | String                  | The unique ID of the Symbol that the master and its instances share.                                    |
+| Properties                                                 |                                                                                                         |
+| ---------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
+| id<span class="arg-type">string</span>                     | The unique ID of the Symbol Master object (not to be confused with `symbolId`).                         |
+| name<span class="arg-type">string</span>                   | The name of the Symbol Master                                                                           |
+| parent<span class="arg-type">[Group](#group)</span>        | The group the Symbol Master is in.                                                                      |
+| frame<span class="arg-type">[Rectangle](#rectangle)</span> | The frame of the Symbol Master. This is given in coordinates that are local to the parent of the layer. |
+| flow<span class="arg-type">[Flow](#flow)</span>            | The prototyping action associated with the Symbol.                                                      |
+| symbolId<span class="arg-type">string</span>               | The unique ID of the Symbol that the master and its instances share.                                    |
 
-## Creating a new Symbol Master
+## Create a new Symbol Master
 
 ```javascript
 var master = new SymbolMaster({
@@ -31,7 +27,7 @@ var master = new SymbolMaster({
 })
 ```
 
-## Creating a new Symbol Master from an Artboard
+## Create a new Symbol Master from an Artboard
 
 ```javascript
 var master = SymbolMaster.fromArtboard(artboard)
@@ -39,15 +35,15 @@ var master = SymbolMaster.fromArtboard(artboard)
 
 Replace the artboard with a symbol master.
 
-| Parameter             | type                  | Description                             |
-| --------------------- | --------------------- | --------------------------------------- |
-| artboard _(required)_ | [Artboard](#artboard) | The artboard to create the master from. |
+| Parameters                                                             |                                         |
+| ---------------------------------------------------------------------- | --------------------------------------- |
+| artboard<span class="arg-type">[Artboard](#artboard) - required</span> | The artboard to create the master from. |
 
 ### Returns
 
 A new SymbolMaster
 
-## toArtboard
+## Change to an Artboard
 
 ```javascript
 var artboard = master.toArtboard()
@@ -59,7 +55,7 @@ Replace the symbol master with an artboard and detach all its instances converti
 
 A new [Artboard](#artboard)
 
-## createNewInstance
+## Create a new Instance
 
 ```javascript
 var instance = master.createNewInstance()
@@ -71,7 +67,7 @@ Creates a new [SymbolInstance](#symbol-instance) linked to this master, ready fo
 
 A new [SymbolInstance](#symbol-instance)
 
-## getAllInstances
+## Get all the Instances
 
 ```javascript
 var instances = master.getAllInstances()
