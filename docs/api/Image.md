@@ -19,7 +19,7 @@ An image layer. It is an instance of [Layer](#layer) so all the methods defined 
 | flow<span class="arg-type">[Flow](#flow)</span>            | The prototyping action associated with the Image.                                               |
 | image<span class="arg-type">[ImageData](#imagedata)</span> | The actual image of the layer.                                                                  |
 
-## Create a new image
+## Create a new Image
 
 ```javascript
 var imageLayer = new Image({

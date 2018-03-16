@@ -19,7 +19,7 @@ A group of layers. It is also an instance of [Layer](#layer) so all the methods 
 | frame<span class="arg-type">[Rectangle](#rectangle)</span> | The frame of the Group. This is given in coordinates that are local to the parent of the layer. |
 | flow<span class="arg-type">[Flow](#flow)</span>            | The prototyping action associated with the Group.                                               |
 
-## Create a new group
+## Create a new Group
 
 ```javascript
 new Group()

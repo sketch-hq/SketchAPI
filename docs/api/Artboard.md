@@ -19,7 +19,7 @@ A Sketch artboard. It is an instance of both [Layer](#layer) and [Group](#group)
 | frame<span class="arg-type">[Rectangle](#rectangle)</span> | The frame of the Artboard. This is given in coordinates that are local to the parent of the layer. |
 | flowStartPoint<span class="arg-type">boolean</span>        | A Start Point allows you to choose where to start your prototype from.                             |
 
-## Create a new artboard
+## Create a new Artboard
 
 ```javascript
 new Artboard()

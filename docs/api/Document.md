@@ -14,7 +14,7 @@ A Sketch document.
 | -------------------------------------- | ------------------------------ |
 | id<span class="arg-type">string</span> | The unique ID of the document. |
 
-## Access the selected document
+## Access the selected Document
 
 ```javascript
 var document = require('sketch/dom').getSelectedDocument()
@@ -23,7 +23,7 @@ var document = require('sketch/dom').getSelectedDocument()
 var document = Document.getSelectedDocument()
 ```
 
-## Access all the opened documents
+## Access all the opened Documents
 
 ```javascript
 var documents = require('sketch/dom').getDocuments()
@@ -32,7 +32,7 @@ var documents = require('sketch/dom').getDocuments()
 var documents = Document.getDocuments()
 ```
 
-## Create a new document
+## Create a new Document
 
 ```javascript
 var document = new Document()
@@ -50,7 +50,7 @@ A read-only property to get the pages of the document.
 
 Returns an array of [pages](#page) present in the document.
 
-## Get the selected page
+## Get the selected Page
 
 ```javascript
 var page = document.selectedPage
@@ -62,7 +62,7 @@ A read-only property to get the current page that the user has selected.
 
 Return a [Page](#page) object.
 
-## Get the selected layers
+## Get the selected Layers
 
 ```javascript
 var selection = document.selectedLayers
@@ -74,7 +74,7 @@ A read-only property to get the layers that the user has selected in the current
 
 Return a [Selection](#selection) object.
 
-## Find a layer by Id
+## Find a Layer by Id
 
 ```javascript
 var layer = document.getLayerWithID(layerId)
@@ -93,7 +93,7 @@ A method to help find the first layer in this document which has the given id.
 
 Return a [Layer](#layer) object or `undefined` if it's not found.
 
-## Find layers by name
+## Find Layers by name
 
 ```javascript
 var layers = document.getLayersNamed(name)
@@ -128,7 +128,7 @@ A method to help find a symbol master in the document.
 
 Return a [SymbolMaster](#symbolmaster) object or `undefined` if it's not found.
 
-## Center on layer
+## Center on Layer
 
 ```javascript
 document.centerOnLayer(layer)
