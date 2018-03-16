@@ -22,7 +22,7 @@ export const BorderPosition = {
   Both: 3, // This is Sketch internal option - don't use it.
 }
 
-export const BorderDecorationType = {
+export const Arrowhead = {
   None: 0,
   OpenArrow: 1,
   ClosedArrow: 2,
@@ -53,6 +53,18 @@ export const BlendingMode = {
   Saturation: 13,
   Color: 14,
   Luminosity: 15,
+}
+
+export const LineEnd = {
+  Butt: 0,
+  Round: 1,
+  Projecting: 2,
+}
+
+export const LineJoin = {
+  Miter: 0,
+  Round: 1,
+  Bevel: 2,
 }
 
 /**
@@ -110,42 +122,66 @@ Style.define('blendingMode', {
   set(mode) {
     this._object
       .contextSettings()
-      .setBlendMode(BlendingMode[mode] || mode || BorderDecorationType.None)
+      .setBlendMode(BlendingMode[mode] || mode || BlendingMode.Normal)
   },
 })
 
-Style.BorderDecorationType = BorderDecorationType
+Style.Arrowhead = Arrowhead
+Style.LineEnd = LineEnd
+Style.LineJoin = LineJoin
 Style.define('borderOptions', {
   get() {
     const startType = this._object.startDecorationType()
     const endType = this._object.endDecorationType()
+    const lineCap = this._object.borderOptions().lineCapStyle()
+    const lineJoin = this._object.borderOptions().lineJoinStyle()
     return {
-      startDecoration:
-        Object.keys(BorderDecorationType).find(
-          key => BorderDecorationType[key] === startType
-        ) || startType,
-      endDecoration:
-        Object.keys(BorderDecorationType).find(
-          key => BorderDecorationType[key] === endType
-        ) || endType,
+      startArrowhead:
+        Object.keys(Arrowhead).find(key => Arrowhead[key] === startType) ||
+        startType,
+      endArrowhead:
+        Object.keys(Arrowhead).find(key => Arrowhead[key] === endType) ||
+        endType,
+      dashPattern: toArray(this._object.borderOptions().dashPattern()),
+      lineEnd:
+        Object.keys(LineEnd).find(key => LineEnd[key] === lineCap) || lineCap,
+      lineJoin:
+        Object.keys(LineJoin).find(key => LineJoin[key] === lineJoin) ||
+        lineJoin,
     }
   },
   set(borderOptions) {
-    if (typeof borderOptions.startDecoration !== 'undefined') {
+    if (typeof borderOptions.startArrowhead !== 'undefined') {
       this._object.setStartDecorationType(
-        BorderDecorationType[borderOptions.startDecoration] ||
-          borderOptions.startDecoration
+        Arrowhead[borderOptions.startArrowhead] || borderOptions.startArrowhead
       )
     }
-    if (typeof borderOptions.endDecoration !== 'undefined') {
+    if (typeof borderOptions.endArrowhead !== 'undefined') {
       this._object.setEndDecorationType(
-        BorderDecorationType[borderOptions.endDecoration] ||
-          borderOptions.endDecoration
+        Arrowhead[borderOptions.endArrowhead] || borderOptions.endArrowhead
       )
+    }
+    if (typeof borderOptions.dashPattern !== 'undefined') {
+      this._object.borderOptions().setDashPattern(borderOptions.dashPattern)
+    }
+    if (typeof borderOptions.lineEnd !== 'undefined') {
+      this._object
+        .borderOptions()
+        .setLineCapStyle(
+          LineEnd[borderOptions.lineEnd] || borderOptions.lineEnd
+        )
+    }
+    if (typeof borderOptions.lineJoin !== 'undefined') {
+      this._object
+        .borderOptions()
+        .setLineJoinStyle(
+          LineJoin[borderOptions.lineJoin] || borderOptions.lineJoin
+        )
     }
   },
 })
 
+Style.BlurType = BlurType
 Style.define('blur', {
   get() {
     const blur = this._object.blur()

@@ -63,6 +63,46 @@ Enumeration of the blending mode.
 | `Color`      |
 | `Luminosity` |
 
+## Blur
+
+```javascript
+shape.style.blur = {
+  center: {
+    x: 10,
+    y: 20,
+  },
+  type: Style.BlurType.Motion,
+  motionAngle: 10,
+}
+```
+
+An object that represent the blur of the layer.
+
+| Properties                                                   |                                                                   |
+| ------------------------------------------------------------ | ----------------------------------------------------------------- |
+| type<span class="arg-type">[BlurType](#styleblurtype)</span> | The type of the blur.                                             |
+| radius<span class="arg-type">number</span>                   | The radius of the blur.                                           |
+| motionAngle<span class="arg-type">number</span>              | The angle of the blur (only used when the blur type is `Motion`). |
+| center<span class="arg-type">object</span>                   | The center of the blur (only used when the blur type is `Zoom`.   |
+| center.x<span class="arg-type">number</span>                 | The horizontal coordinate of the center of the blur.              |
+| center.y<span class="arg-type">number</span>                 | The vertical coordinate of the center of the blur.                |
+| enabled<span class="arg-type">boolean</span>                 | Wether the fill is active or not.                                 |
+
+## `Style.BlurType`
+
+```javascript
+Style.BlurType.Background
+```
+
+Enumeration of the type of a blur.
+
+| Value        |                                                                 |
+| ------------ | --------------------------------------------------------------- |
+| `Gaussian`   | A common blur type that will accurately blur in all directions. |
+| `Motion`     | Blur only in one direction, giving the illusion of motion.      |
+| `Zoom`       | Will blur from one particular point out.                        |
+| `Background` | This will blur any content that appears behind the layer.       |
+
 ## Fill
 
 ```javascript
@@ -134,6 +174,67 @@ Enumeration of the positions of a border.
 | `Center`  |
 | `Inside`  |
 | `Outside` |
+
+## BorderOptions
+
+```javascript
+shape.style.borderOptions = {
+  dashPattern: [20, 5, 20, 5],
+}
+```
+
+An object that represent the options that the Borders of the Layer share.
+
+| Properties                                                               |                                                                                                                                                                                                                                                                                                    |
+| ------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| startArrowhead<span class="arg-type">[Arrowhead](#stylearrowhead)</span> | The type of the arrow head for the start of the path.                                                                                                                                                                                                                                              |
+| endArrowhead<span class="arg-type">[Arrowhead](#stylearrowhead)</span>   | The type of the arrow head for the start of the path.                                                                                                                                                                                                                                              |
+| dashPattern<span class="arg-type">number[]</span>                        | The dash pattern of the borders. For example, a dash pattern of 4-2 will draw the stroke for four pixels, put a two pixel gap, draw four more pixels and then so on. A dashed pattern of 5-4-3-2 will draw a stroke of 5 px, a gap of 4 px, then a stroke of 3 px, a gap of 2 px, and then repeat. |
+| lineEnd<span class="arg-type">[LineEnd](#stylelineend)</span>            | The type of the border ends (if visible).                                                                                                                                                                                                                                                          |
+| lineJoin<span class="arg-type">[LineJoin](#stylelinejoin)</span>         | The type of the border joins (if any).                                                                                                                                                                                                                                                             |
+
+## `Style.Arrowheads`
+
+```javascript
+Style.Arrowheads.OpenArrow
+```
+
+Enumeration of the positions of a border.
+
+| Value         |
+| ------------- |
+| `None`        |
+| `OpenArrow`   |
+| `ClosedArrow` |
+| `Line`        |
+
+## `Style.LineEnd`
+
+```javascript
+Style.LineEnd.Round
+```
+
+Enumeration of the positions of a border.
+
+| Value        |                                                                                    |
+| ------------ | ---------------------------------------------------------------------------------- |
+| `Butt`       | This is the default option that’ll draw the border right to the vector point.      |
+| `Round`      | Creates a rounded, semi-circular end to a path that extends past the vector point. |
+| `Projecting` | Similar to the rounded cap, but with a straight edges.                             |
+
+## `Style.LineJoin`
+
+```javascript
+Style.LineJoin.Miter
+```
+
+Enumeration of the positions of a border.
+
+| Value   |                                                                                          |
+| ------- | ---------------------------------------------------------------------------------------- |
+| `Miter` | This will simply create an angled, or pointy join. The default setting.                  |
+| `Round` | Creates a rounded corner for the border. The radius is relative to the border thickness. |
+| `Bevel` | This will create a chamfered edge on the border corner.                                  |
 
 ## Shadow
 
