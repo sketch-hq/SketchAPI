@@ -10,18 +10,18 @@ var Text = require('sketch/dom').Text
 
 A text layer. It is an instance of [Layer](#layer) so all the methods defined there are available.
 
-| Properties                                                           |                                                                                                |
-| -------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
-| id<span class="arg-type">string</span>                               | The unique ID of the Text.                                                                     |
-| name<span class="arg-type">string</span>                             | The name of the Text                                                                           |
-| parent<span class="arg-type">[Group](#group)</span>                  | The group the Text is in.                                                                      |
-| frame<span class="arg-type">[Rectangle](#rectangle)</span>           | The frame of the Text. This is given in coordinates that are local to the parent of the layer. |
-| flow<span class="arg-type">[Flow](#flow)</span>                      | The prototyping action associated with the Text.                                               |
-| style<span class="arg-type">[Style](#style)</span>                   | The style of the Text.                                                                         |
-| text<span class="arg-type">string</span>                             | The string value of the text layer.                                                            |
-| alignment<span class="arg-type">[Alignment](#alignment)</span>       | The alignment of the layer.                                                                    |
-| lineSpacing<span class="arg-type">[LineSpacing](#linespacing)</span> | The line spacing of the layer.                                                                 |
-| fixedWidth<span class="arg-type">boolean</span>                      | Wether the layer should have a fixed width or a flexible width.                                |
+| Properties                                                               |                                                                                                |
+| ------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------- |
+| id<span class="arg-type">string</span>                                   | The unique ID of the Text.                                                                     |
+| name<span class="arg-type">string</span>                                 | The name of the Text                                                                           |
+| parent<span class="arg-type">[Group](#group)</span>                      | The group the Text is in.                                                                      |
+| frame<span class="arg-type">[Rectangle](#rectangle)</span>               | The frame of the Text. This is given in coordinates that are local to the parent of the layer. |
+| flow<span class="arg-type">[Flow](#flow)</span>                          | The prototyping action associated with the Text.                                               |
+| style<span class="arg-type">[Style](#style)</span>                       | The style of the Text.                                                                         |
+| text<span class="arg-type">string</span>                                 | The string value of the text layer.                                                            |
+| alignment<span class="arg-type">[Alignment](#textalignment)</span>       | The alignment of the layer.                                                                    |
+| lineSpacing<span class="arg-type">[LineSpacing](#textlinespacing)</span> | The line spacing of the layer.                                                                 |
+| fixedWidth<span class="arg-type">boolean</span>                          | Wether the layer should have a fixed width or a flexible width.                                |
 
 ## Create a new Text
 
