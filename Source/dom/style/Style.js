@@ -107,7 +107,7 @@ Style.define('opacity', {
     return this._object.contextSettings().opacity()
   },
   set(opacity) {
-    this._object.contextSettings().setOpacity(opacity)
+    this._object.contextSettings().setOpacity(Math.min(Math.max(opacity, 0), 1))
   },
 })
 
@@ -142,7 +142,9 @@ Style.define('borderOptions', {
       endArrowhead:
         Object.keys(Arrowhead).find(key => Arrowhead[key] === endType) ||
         endType,
-      dashPattern: toArray(this._object.borderOptions().dashPattern()),
+      dashPattern: toArray(this._object.borderOptions().dashPattern()).map(
+        Number
+      ),
       lineEnd:
         Object.keys(LineEnd).find(key => LineEnd[key] === lineCap) || lineCap,
       lineJoin:
@@ -188,11 +190,11 @@ Style.define('blur', {
     const blurType = blur.type()
     return {
       center: {
-        x: blur.center().x,
-        y: blur.center().y,
+        x: Number(blur.center().x),
+        y: Number(blur.center().y),
       },
-      motionAngle: blur.motionAngle(),
-      radius: blur.radius(),
+      motionAngle: Number(blur.motionAngle()),
+      radius: Number(blur.radius()),
       enabled: !!blur.enabled,
       type:
         Object.keys(BlurType).find(key => BlurType[key] === blurType) ||
@@ -211,6 +213,9 @@ Style.define('blur', {
     }
     if (typeof blur.type !== 'undefined') {
       this._object.blur().setType(BlurType[blur.type] || blur.type)
+    }
+    if (typeof blur.enabled !== 'undefined') {
+      this._object.blur().enabled = blur.enabled
     }
   },
 })
@@ -350,7 +355,7 @@ Style.define('shadows', {
       x: Number(s.offsetX()),
       y: Number(s.offsetY()),
       spread: Number(s.spread()),
-      enabled: !!s.enabled(),
+      enabled: !!s.enabled,
     }))
   },
   set(values) {
@@ -363,7 +368,7 @@ Style.define('shadows', {
         shadow.color = color._object
       }
       if (value.blur) {
-        shadow.blur = value.blur
+        shadow.blurRadius = value.blur
       }
       if (value.x) {
         shadow.offsetX = value.x
@@ -396,7 +401,7 @@ Style.define('innerShadows', {
       x: Number(s.offsetX()),
       y: Number(s.offsetY()),
       spread: Number(s.spread()),
-      enabled: !!s.enabled(),
+      enabled: !!s.enabled,
     }))
   },
   set(values) {
@@ -409,7 +414,7 @@ Style.define('innerShadows', {
         shadow.color = color._object
       }
       if (value.blur) {
-        shadow.blur = value.blur
+        shadow.blurRadius = value.blur
       }
       if (value.x) {
         shadow.offsetX = value.x
