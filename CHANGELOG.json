@@ -1,6 +1,10 @@
 {
   "unreleased": [
-    "[Fixed] Creating a Rectangle with an Object having an `x` value of `0` now works as expected"
+    "[Fixed] Creating a Rectangle with an Object having an `x` value of `0` now works as expected",
+    "[New] Add `console` core module (accessed with `require('console')`",
+    "[New] Add `util` core module (accessed with `require('util')`",
+    "[New] Add `events` core module (accessed with `require('events')`",
+    "[New] Add `console` global"
   ],
   "releases": {
     "49.1": [
