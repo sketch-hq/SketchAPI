@@ -422,6 +422,12 @@ html, body {
     font-size: 10px;
   }
 
+  h2 > code, h3 > code, h4 > code {
+    font-size: inherit;
+    line-height: inherit;
+    font-family: inherit;
+  }
+
   hr {
     margin: 2em 0;
     border-top: 2px solid $examples-bg;
