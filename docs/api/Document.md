@@ -23,6 +23,10 @@ var document = require('sketch/dom').getSelectedDocument()
 var document = Document.getSelectedDocument()
 ```
 
+### Returns
+
+The selected Document or `undefined` if no document is opened.
+
 ## Access all the opened Documents
 
 ```javascript
@@ -31,6 +35,10 @@ var documents = require('sketch/dom').getDocuments()
 // also exposed on Document
 var documents = Document.getDocuments()
 ```
+
+### Returns
+
+An array of Documents.
 
 ## Create a new Document
 
