@@ -10,11 +10,11 @@ var Document = require('sketch/dom').Document
 
 A Sketch document.
 
-| Properties | type   | Description                    |
-| ---------- | ------ | ------------------------------ |
-| id         | string | The unique ID of the document. |
+| Properties                             |                                |
+| -------------------------------------- | ------------------------------ |
+| id<span class="arg-type">string</span> | The unique ID of the document. |
 
-## Accessing the selected document
+## Access the selected document
 
 ```javascript
 var document = require('sketch/dom').getSelectedDocument()
@@ -23,7 +23,7 @@ var document = require('sketch/dom').getSelectedDocument()
 var document = Document.getSelectedDocument()
 ```
 
-## Accessing all the opened documents
+## Access all the opened documents
 
 ```javascript
 var documents = require('sketch/dom').getDocuments()
@@ -32,13 +32,13 @@ var documents = require('sketch/dom').getDocuments()
 var documents = Document.getDocuments()
 ```
 
-## Creating a new document
+## Create a new document
 
 ```javascript
 var document = new Document()
 ```
 
-## Pages
+## Get the Pages
 
 ```javascript
 var pages = document.pages
@@ -46,11 +46,11 @@ var pages = document.pages
 
 A read-only property to get the pages of the document.
 
-### Return
+### Returns
 
 Returns an array of [pages](#page) present in the document.
 
-## Selected page
+## Get the selected page
 
 ```javascript
 var page = document.selectedPage
@@ -58,11 +58,11 @@ var page = document.selectedPage
 
 A read-only property to get the current page that the user has selected.
 
-### Return
+### Returns
 
 Return a [Page](#page) object.
 
-## Selected layers
+## Get the selected layers
 
 ```javascript
 var selection = document.selectedLayers
@@ -70,7 +70,7 @@ var selection = document.selectedLayers
 
 A read-only property to get the layers that the user has selected in the currently selected page.
 
-### Return
+### Returns
 
 Return a [Selection](#selection) object.
 
@@ -85,11 +85,11 @@ if (layer) {
 
 A method to help find the first layer in this document which has the given id.
 
-| Parameter            | type   | Description                 |
-| -------------------- | ------ | --------------------------- |
-| layerId _(required)_ | string | The ID of the layer to find |
+| Parameters                                              |                             |
+| ------------------------------------------------------- | --------------------------- |
+| layerId <span class="arg-type">string - required</span> | The ID of the layer to find |
 
-### Return
+### Returns
 
 Return a [Layer](#layer) object or `undefined` if it's not found.
 
@@ -104,11 +104,11 @@ if (layers.length) {
 
 A method to help find the layers in this document which have the given name.
 
-| Parameter         | type   | Description                    |
-| ----------------- | ------ | ------------------------------ |
-| name _(required)_ | string | The name of the layers to find |
+| Parameters                                          |                                |
+| --------------------------------------------------- | ------------------------------ |
+| name<span class="arg-type">string - required</span> | The name of the layers to find |
 
-### Return
+### Returns
 
 Return an array of [Layer](#layer).
 
@@ -120,11 +120,11 @@ var symbolMaster = document.getSymbolMasterWithID(symbolInstance.symbolId)
 
 A method to help find a symbol master in the document.
 
-| Parameter             | type   | Description                                |
-| --------------------- | ------ | ------------------------------------------ |
-| symbolId _(required)_ | string | The symbol ID of the symbol master to find |
+| Parameters                                              |                                            |
+| ------------------------------------------------------- | ------------------------------------------ |
+| symbolId<span class="arg-type">string - required</span> | The symbol ID of the symbol master to find |
 
-### Return
+### Returns
 
 Return a [SymbolMaster](#symbolmaster) object or `undefined` if it's not found.
 
@@ -136,6 +136,6 @@ document.centerOnLayer(layer)
 
 A method to help center the view of the document window on a given layer.
 
-| Parameter          | type            | Description                       |
-| ------------------ | --------------- | --------------------------------- |
-| layer _(required)_ | [Layer](#layer) | The layer to center the view onto |
+| Parameters                                                    |                                   |
+| ------------------------------------------------------------- | --------------------------------- |
+| layer<span class="arg-type">[Layer](#layer) - required</span> | The layer to center the view onto |

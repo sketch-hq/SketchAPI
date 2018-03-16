@@ -25,18 +25,18 @@ shape.style.fills = [
 
 A utility class to represent the style of a shape.
 
-| Properties           | type                              | Description                                      |
-| -------------------- | --------------------------------- | ------------------------------------------------ |
-| fills                | Object[]                          | The fills of a shape.                            |
-| fills[x].color       | String                            | A rgba hex-string (`#000000ff` is opaque black). |
-| fills[x].fillType    | [FillType](#filltype)             | The type of the fill.                            |
-| borders              | Object[]                          | The borders of a shape.                          |
-| borders[x].color     | String                            | A rgba hex-string (`#000000ff` is opaque black). |
-| borders[x].fillType  | [FillType](#filltype)             | The type of the fill of the border.              |
-| borders[x].position  | [BorderPosition](#borderposition) | The position of the border.                      |
-| borders[x].thickness | Number                            | The thickness of the border.                     |
+| Properties                                                                              |                                                  |
+| --------------------------------------------------------------------------------------- | ------------------------------------------------ |
+| fills<span class="arg-type">object[]</span>                                             | The fills of a shape.                            |
+| fills[x].color<span class="arg-type">string</span>                                      | A rgba hex-string (`#000000ff` is opaque black). |
+| fills[x].fillType<span class="arg-type">[FillType](#stylefilltype)</span>               | The type of the fill.                            |
+| borders<span class="arg-type">object[]</span>                                           | The borders of a shape.                          |
+| borders[x].color<span class="arg-type">string</span>                                    | A rgba hex-string (`#000000ff` is opaque black). |
+| borders[x].fillType<span class="arg-type">[FillType](#filltype)</span>                  | The type of the fill of the border.              |
+| borders[x].position<span class="arg-type">[BorderPosition](#styleborderposition)</span> | The position of the border.                      |
+| borders[x].thickness<span class="arg-type">number</span>                                | The thickness of the border.                     |
 
-## FillType
+## `Style.FillType`
 
 ```javascript
 Style.FillType.color
@@ -51,7 +51,7 @@ Enumeration of the types of fill.
 | `pattern`  |
 | `noise`    |
 
-## BorderPosition
+## `Style.BorderPosition`
 
 ```javascript
 Style.BorderPosition.Center

@@ -10,7 +10,7 @@ var Settings = require('sketch/settings')
 
 A set of functions to handle user settings. The settings are persisted when the user closes Sketch.
 
-## settingForKey
+## Get a plugin setting
 
 ```js
 var setting = Settings.settingForKey('my-key')
@@ -18,15 +18,15 @@ var setting = Settings.settingForKey('my-key')
 
 Return the value of a setting scoped to your plugin for a given key.
 
-| Parameter        | type   | Description             |
-| ---------------- | ------ | ----------------------- |
-| key _(required)_ | String | The setting to look up. |
+| Parameters                                         |                         |
+| -------------------------------------------------- | ----------------------- |
+| key<span class="arg-type">string - required</span> | The setting to look up. |
 
-### Return
+### Returns
 
 The setting that was stored for the given key. `undefined` if there was nothing.
 
-## setSettingForKey
+## Set a plugin setting
 
 ```js
 Settings.setSettingForKey('my-key', 0.1)
@@ -34,12 +34,12 @@ Settings.setSettingForKey('my-key', 0.1)
 
 Store a value of a setting scoped to your plugin for a given key.
 
-| Parameter          | type   | Description             |
-| ------------------ | ------ | ----------------------- |
-| key _(required)_   | String | The setting to set.     |
-| value _(required)_ | Any    | The value to set it to. |
+| Parameters                                         |                         |
+| -------------------------------------------------- | ----------------------- |
+| key<span class="arg-type">string - required</span> | The setting to set.     |
+| value<span class="arg-type">any - required</span>  | The value to set it to. |
 
-## globalSettingForKey
+## Get a Sketch setting
 
 ```js
 var setting = Settings.globalSettingForKey('my-key')
@@ -47,15 +47,15 @@ var setting = Settings.globalSettingForKey('my-key')
 
 Return the value of a Sketch setting for a given key.
 
-| Parameter        | type   | Description             |
-| ---------------- | ------ | ----------------------- |
-| key _(required)_ | String | The setting to look up. |
+| Parameters                                         |                         |
+| -------------------------------------------------- | ----------------------- |
+| key<span class="arg-type">string - required</span> | The setting to look up. |
 
-### Return
+### Returns
 
 The setting that was stored for the given key. `undefined` if there was nothing.
 
-## setGlobalSettingForKey
+## Set a Sketch setting
 
 ```js
 Settings.setGlobalSettingForKey('my-key', 0.1)
@@ -63,12 +63,12 @@ Settings.setGlobalSettingForKey('my-key', 0.1)
 
 Store a value of a Sketch setting for a given key.
 
-| Parameter          | type   | Description             |
-| ------------------ | ------ | ----------------------- |
-| key _(required)_   | String | The setting to set.     |
-| value _(required)_ | Any    | The value to set it to. |
+| Parameters                                         |                         |
+| -------------------------------------------------- | ----------------------- |
+| key<span class="arg-type">string - required</span> | The setting to set.     |
+| value<span class="arg-type">any - required</span>  | The value to set it to. |
 
-## layerSettingForKey
+## Get a Layer setting
 
 ```js
 var setting = Settings.layerSettingForKey(layer, 'my-key')
@@ -76,16 +76,16 @@ var setting = Settings.layerSettingForKey(layer, 'my-key')
 
 Return the value of a setting for a given key on a specific layer.
 
-| Parameter          | type            | Description                             |
-| ------------------ | --------------- | --------------------------------------- |
-| layer _(required)_ | [Layer](#layer) | The layer on which a setting is stored. |
-| key _(required)_   | String          | The setting to look up.                 |
+| Parameters                                                    |                                         |
+| ------------------------------------------------------------- | --------------------------------------- |
+| layer<span class="arg-type">[Layer](#layer) - required</span> | The layer on which a setting is stored. |
+| key<span class="arg-type">string - required</span>            | The setting to look up.                 |
 
-### Return
+### Returns
 
 The setting that was stored for the given key. `undefined` if there was nothing.
 
-## setLayerSettingForKey
+## Set a Layer setting
 
 ```js
 Settings.setLayerSettingForKey(layer, 'my-key', 0.1)
@@ -93,13 +93,13 @@ Settings.setLayerSettingForKey(layer, 'my-key', 0.1)
 
 Store a value of a setting for a given key on a specific layer.
 
-| Parameter          | type            | Description                            |
-| ------------------ | --------------- | -------------------------------------- |
-| layer _(required)_ | [Layer](#layer) | The layer on which the setting is set. |
-| key _(required)_   | String          | The setting to set.                    |
-| value _(required)_ | Any             | The value to set it to.                |
+| Parameters                                                    |                                        |
+| ------------------------------------------------------------- | -------------------------------------- |
+| layer<span class="arg-type">[Layer](#layer) - required</span> | The layer on which the setting is set. |
+| key<span class="arg-type">string - required</span>            | The setting to set.                    |
+| value<span class="arg-type">any - required</span>             | The value to set it to.                |
 
-## documentSettingForKey
+## Get a Document setting
 
 ```js
 var setting = Settings.layerSettingForKey(document, 'my-key')
@@ -107,16 +107,16 @@ var setting = Settings.layerSettingForKey(document, 'my-key')
 
 Return the value of a setting for a given key on a specific document.
 
-| Parameter             | type                  | Description                                |
-| --------------------- | --------------------- | ------------------------------------------ |
-| document _(required)_ | [Document](#document) | The document on which a setting is stored. |
-| key _(required)_      | String                | The setting to look up.                    |
+| Parameters                                                             | Description                                |
+| ---------------------------------------------------------------------- | ------------------------------------------ |
+| document<span class="arg-type">[Document](#document) - required</span> | The document on which a setting is stored. |
+| key<span class="arg-type">string - required</span>                     | The setting to look up.                    |
 
-### Return
+### Returns
 
 The setting that was stored for the given key. `undefined` if there was nothing.
 
-## setDocumentSettingForKey
+## Set a Layer setting
 
 ```js
 Settings.setDocumentSettingForKey(document, 'my-key', 0.1)
@@ -124,8 +124,8 @@ Settings.setDocumentSettingForKey(document, 'my-key', 0.1)
 
 Store a value of a setting for a given key on a specific document.
 
-| Parameter             | type                  | Description                               |
-| --------------------- | --------------------- | ----------------------------------------- |
-| document _(required)_ | [Document](#document) | The document on which the setting is set. |
-| key _(required)_      | String                | The setting to set.                       |
-| value _(required)_    | Any                   | The value to set it to.                   |
+| Parameters                                                             |                                           |
+| ---------------------------------------------------------------------- | ----------------------------------------- |
+| document<span class="arg-type">[Document](#document) - required</span> | The document on which the setting is set. |
+| key<span class="arg-type">string - required</span>                     | The setting to set.                       |
+| value<span class="arg-type">any - required</span>                      | The value to set it to.                   |
