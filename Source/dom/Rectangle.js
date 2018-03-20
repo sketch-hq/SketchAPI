@@ -13,7 +13,7 @@ export class Rectangle {
    */
   constructor(x, y, width, height) {
     // if the argument is object
-    if (typeof x === "object" && typeof x.x === "number") {
+    if (typeof x === 'object' && typeof x.x === 'number') {
       this.x = parseFloat(x.x)
       this.y = parseFloat(x.y)
       this.width = parseFloat(x.width)
