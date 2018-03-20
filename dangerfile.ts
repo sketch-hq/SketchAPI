@@ -54,7 +54,7 @@ if (corePackageChanged && !coreLockfileChanged) {
  * CHECK FOR TESTS
  */
 
-const hasTestChanges = danger.git.modified_files.filter(path =>
+const hasTestChanges = danger.git.modified_files.some(path =>
   TEST_REGEX.test(path)
 )
 
@@ -69,7 +69,7 @@ if (hasLibraryChanges && !hasTestChanges) {
  * CHECK FOR DOCS
  */
 
-const hasDocsChanges = danger.git.modified_files.filter(path =>
+const hasDocsChanges = danger.git.modified_files.some(path =>
   DOCS_REGEX.test(path)
 )
 
