@@ -38,7 +38,7 @@ export class WrappedObject {
       })
       .forEach(k => {
         if (!propertyList[k]) {
-          log(`no idea what to do with "${k}" in ${this.type}`)
+          console.warn(`no idea what to do with "${k}" in ${this.type}`)
           return
         }
 
