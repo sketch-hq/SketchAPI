@@ -24,6 +24,7 @@
   "devDependencies": {
     "@skpm/test-runner": "^0.2.0",
     "awesome-typescript-loader": "^3.4.0",
+    "danger": "^3.2.0",
     "eslint": "^4.11.0",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-config-prettier": "^2.8.0",
