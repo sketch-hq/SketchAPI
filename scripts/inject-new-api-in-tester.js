@@ -19,17 +19,3 @@ const template = fs
   )
 
 fs.writeFileSync(templatePath, template, 'utf8')
-
-const asyncTemplatePath = path.join(
-  __dirname,
-  '../node_modules/@skpm/test-runner/test-runner.sketchplugin/Contents/Sketch/async-tests-template.js'
-)
-
-const asyncTemplate = fs
-  .readFileSync(asyncTemplatePath, 'utf8')
-  .replace(
-    "sketch = require('sketch')",
-    `sketch = require('${path.join(__dirname, '../Source/')}')`
-  )
-
-fs.writeFileSync(asyncTemplatePath, asyncTemplate, 'utf8')
