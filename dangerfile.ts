@@ -1,4 +1,4 @@
-import { danger, warn } from 'danger' // eslint-disable-line
+import { danger, warn } from 'danger'
 
 const LIB_REGEX = /^Source\/.*\.js$/
 const TEST_REGEX = /(\/__tests__\/.*|(\\.|\/)(test|spec))\\.jsx?$/
