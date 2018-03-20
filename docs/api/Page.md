@@ -18,7 +18,7 @@ A Sketch page. It is an instance of both [Layer](#layer) and [Group](#group) so 
 | layers<span class="arg-type">[Layer](#layer)</span>        | The layers that this page has. |
 | frame<span class="arg-type">[Rectangle](#rectangle)</span> | The frame of the page.         |
 
-## Create a new page
+## Create a new Page
 
 ```javascript
 new Page()
@@ -30,7 +30,7 @@ new Artboard({
 })
 ```
 
-## Get the selected layers of the page
+## Get the selected Layers of the Page
 
 ```javascript
 var selection = document.selectedLayers

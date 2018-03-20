@@ -20,7 +20,7 @@ An image layer. It is an instance of [Layer](#layer) so all the methods defined 
 | style<span class="arg-type">[Style](#style)</span>         | The style of the Image.                                                                         |
 | image<span class="arg-type">[ImageData](#imagedata)</span> | The actual image of the layer.                                                                  |
 
-## Create a new image
+## Create a new Image
 
 ```javascript
 var imageLayer = new Image({

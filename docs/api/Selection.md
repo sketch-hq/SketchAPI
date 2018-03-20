@@ -31,7 +31,7 @@ selection.reduce((initial, layer) => {
 
 Even though a selection isn't an array, it defines `map`, `forEach` and `reduce` by just forwarding the arguments its layers. Those are just convenience methods to avoid getting the layers everytime.
 
-## Clear the selection
+## Clear the Selection
 
 ```javascript
 selection.clear()

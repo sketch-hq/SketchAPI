@@ -20,7 +20,7 @@ A group of layers. It is also an instance of [Layer](#layer) so all the methods 
 | style<span class="arg-type">[Style](#style)</span>         | The style of the Group.                                                                         |
 | layers<span class="arg-type">[Layer](#layer)[]</span>      | The layers that this component groups together.                                                 |
 
-## Create a new group
+## Create a new Group
 
 ```javascript
 new Group()
