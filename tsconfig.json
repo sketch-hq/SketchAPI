@@ -3,7 +3,7 @@
     "target": "es5",
     "module": "commonjs",
     "allowJs": true,
-    "lib": ["es5", "scripthost"],
+    "lib": ["es6", "scripthost"],
     "sourceMap": true,
     "strict": true
   }
