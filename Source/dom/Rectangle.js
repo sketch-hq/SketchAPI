@@ -12,37 +12,119 @@ export class Rectangle {
    * @return The new Rectangle object.
    */
   constructor(x, y, width, height) {
+    Object.defineProperty(this, '_x', {
+      enumerable: false,
+      writable: true,
+      value: x.x,
+    })
+    Object.defineProperty(this, '_y', {
+      enumerable: false,
+      writable: true,
+      value: x.x,
+    })
+    Object.defineProperty(this, '_width', {
+      enumerable: false,
+      writable: true,
+      value: x.x,
+    })
+    Object.defineProperty(this, '_height', {
+      enumerable: false,
+      writable: true,
+      value: x.x,
+    })
     // if the argument is object
     if (typeof x === 'object' && typeof x.x === 'number') {
-      this.x = parseFloat(x.x)
-      this.y = parseFloat(x.y)
-      this.width = parseFloat(x.width)
-      this.height = parseFloat(x.height)
+      this._x = parseFloat(x.x)
+      this._y = parseFloat(x.y)
+      this._width = parseFloat(x.width)
+      this._height = parseFloat(x.height)
     } else {
       /**
        * The x coordinate of the top-left corner of the rectangle.
        * @type {number}
        */
-      this.x = parseFloat(x)
+      this._x = parseFloat(x)
 
       /**
        * The y coordinate of the top-left corner of the rectangle.
        * @type {number}
        */
-      this.y = parseFloat(y)
+      this._y = parseFloat(y)
 
       /**
        * The width of the rectangle.
        * @type {number}
        */
-      this.width = parseFloat(width)
+      this._width = parseFloat(width)
 
       /**
        * The height of the rectangle.
        * @type {number}
        */
-      this.height = parseFloat(height)
+      this._height = parseFloat(height)
     }
+
+    Object.defineProperty(this, '_parent', {
+      enumerable: false,
+      writable: true,
+    })
+
+    Object.defineProperty(this, '_parentKey', {
+      enumerable: false,
+      writable: true,
+    })
+
+    Object.defineProperty(this, 'x', {
+      enumerable: true,
+      get() {
+        return this._x
+      },
+      set(_x) {
+        this._x = _x
+        if (this._parent && this._parentKey) {
+          this._parent[this._parentKey] = this
+        }
+      },
+    })
+
+    Object.defineProperty(this, 'y', {
+      enumerable: true,
+      get() {
+        return this._y
+      },
+      set(_y) {
+        this._y = _y
+        if (this._parent && this._parentKey) {
+          this._parent[this._parentKey] = this
+        }
+      },
+    })
+
+    Object.defineProperty(this, 'width', {
+      enumerable: true,
+      get() {
+        return this._width
+      },
+      set(_width) {
+        this._width = _width
+        if (this._parent && this._parentKey) {
+          this._parent[this._parentKey] = this
+        }
+      },
+    })
+
+    Object.defineProperty(this, 'height', {
+      enumerable: true,
+      get() {
+        return this._height
+      },
+      set(_height) {
+        this._height = _height
+        if (this._parent && this._parentKey) {
+          this._parent[this._parentKey] = this
+        }
+      },
+    })
   }
 
   /**
@@ -52,16 +134,22 @@ export class Rectangle {
    * @param {number} y The y offset to apply.
    */
   offset(x, y) {
-    this.x += parseFloat(x)
-    this.y += parseFloat(y)
+    this._x += parseFloat(x)
+    this._y += parseFloat(y)
+    if (this._parent && this._parentKey) {
+      this._parent[this._parentKey] = this
+    }
     return this
   }
 
   scale(factorWidth, factorHeight) {
-    this.width *= parseFloat(factorWidth)
-    this.height *= parseFloat(
+    this._width *= parseFloat(factorWidth)
+    this._height *= parseFloat(
       typeof factorHeight === 'undefined' ? factorWidth : factorHeight
     )
+    if (this._parent && this._parentKey) {
+      this._parent[this._parentKey] = this
+    }
     return this
   }
 
@@ -71,7 +159,7 @@ export class Rectangle {
    * @return {CGRect} The rectangle.
    */
   asCGRect() {
-    return CGRectMake(this.x, this.y, this.width, this.height)
+    return CGRectMake(this._x, this._y, this._width, this._height)
   }
 
   /**
@@ -80,15 +168,15 @@ export class Rectangle {
    * @return {string} Description of the rectangle.
    */
   toString() {
-    return `{${this.x}, ${this.y}, ${this.width}, ${this.height}}`
+    return `{${this._x}, ${this._y}, ${this._width}, ${this._height}}`
   }
 
   toJSON() {
     return {
-      x: this.x,
-      y: this.y,
-      width: this.width,
-      height: this.height,
+      x: this._x,
+      y: this._y,
+      width: this._width,
+      height: this._height,
     }
   }
 }

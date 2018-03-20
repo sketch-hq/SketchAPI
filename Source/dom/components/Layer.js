@@ -143,7 +143,10 @@ Layer.define('frame', {
    */
   get() {
     const f = this._object.frame()
-    return new Rectangle(f.x(), f.y(), f.width(), f.height())
+    const rect = new Rectangle(f.x(), f.y(), f.width(), f.height())
+    rect._parent = this
+    rect._parentKey = 'frame'
+    return rect
   },
 
   /**
