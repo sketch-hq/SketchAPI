@@ -1,9 +1,11 @@
-import { danger, fail, warn } from 'danger'
+import { danger, warn } from 'danger' // eslint-disable-line
+
+const LIB_REGEX = /^Source\/.*\.js$/
+const TEST_REGEX = /(\/__tests__\/.*|(\\.|\/)(test|spec))\\.jsx?$/
 
 /**
  * CHECK FOR CHANGELOG UPDATE
  */
-const LIB_REGEX = /^Source\/.*\.js$/
 
 const hasCHANGELOGChanges = danger.git.modified_files.some(
   path => path === 'CHANGELOG.json'
@@ -45,4 +47,19 @@ if (corePackageChanged && !coreLockfileChanged) {
     'Changes were made to core-modules/package.json, but not to core-modules/package-lock.json'
   const idea = 'Perhaps you need to run `cd core-modules && npm run install`?'
   warn(`${message} - <i>${idea}</i>`)
+}
+
+/**
+ * CHECK FOR TESTS
+ */
+
+const hasTestChanges = danger.git.modified_files.filter(path =>
+  TEST_REGEX.test(path)
+)
+
+// Warn if there are library changes, but not tests
+if (hasLibraryChanges && !hasTestChanges) {
+  warn(
+    "There are library changes, but not tests. That's OK as long as you're refactoring existing code"
+  )
 }
