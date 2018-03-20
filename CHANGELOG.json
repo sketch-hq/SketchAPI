@@ -4,7 +4,9 @@
     "[New] Add `console` core module (accessed with `require('console')`",
     "[New] Add `util` core module (accessed with `require('util')`",
     "[New] Add `events` core module (accessed with `require('events')`",
-    "[New] Add `console` global"
+    "[New] Add `console` global",
+    "[Improved] Add support for style on all the layers",
+    "[Improved] Add support for Shadows, Inner Shadows, opacity, blur, border options, blending mode, and gradients in Style"
   ],
   "releases": {
     "49.1": [
