@@ -1,7 +1,8 @@
 import { danger, warn } from 'danger'
 
 const LIB_REGEX = /^Source\/.*\.js$/
-const TEST_REGEX = /(\/__tests__\/.*|(\\.|\/)(test|spec))\\.jsx?$/
+const TEST_REGEX = /^Source\/.*\/__tests__\/.*\.test\.js?$/
+const DOCS_REGEX = /^docs\/api\/.*\.md$/
 
 /**
  * CHECK FOR CHANGELOG UPDATE
@@ -61,5 +62,20 @@ const hasTestChanges = danger.git.modified_files.filter(path =>
 if (hasLibraryChanges && !hasTestChanges) {
   warn(
     "There are library changes, but not tests. That's OK as long as you're refactoring existing code"
+  )
+}
+
+/**
+ * CHECK FOR DOCS
+ */
+
+const hasDocsChanges = danger.git.modified_files.filter(path =>
+  DOCS_REGEX.test(path)
+)
+
+// Warn if there are library changes, but not docs
+if (hasLibraryChanges && !hasDocsChanges) {
+  warn(
+    "There are library changes, but not docs. That's OK as long as you're refactoring existing code"
   )
 }
