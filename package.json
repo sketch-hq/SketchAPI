@@ -7,12 +7,12 @@
   "description": "Javascript API for Sketch",
   "scripts": {
     "build": "npm run build:test && npm run build:api && node ./scripts/copy-tests.js",
-    "build:test": "skpm-test --enable-async --build-only",
+    "build:test": "skpm-test --build-only",
     "build:api": "webpack -p --optimize-minimize",
     "start": "npm run build",
     "watch": "webpack --watch",
     "deploy:docs": "./scripts/deploy.sh",
-    "run-tests": "skpm-test --app=xcode --enable-async",
+    "run-tests": "skpm-test --app=xcode",
     "test": "npm run lint -- --quiet && npm run run-tests",
     "test:watch": "npm run run-tests -- --watch",
     "lint": "find . -name \"*.ts\" -o -name \"*.js\" | grep -v -f .gitignore | grep -v examples | xargs eslint",
@@ -22,8 +22,9 @@
     "postinstall": "node ./scripts/install-pre-commit.js && node ./scripts/inject-new-api-in-tester.js"
   },
   "devDependencies": {
-    "@skpm/test-runner": "^0.1.30",
+    "@skpm/test-runner": "^0.2.0",
     "awesome-typescript-loader": "^3.4.0",
+    "danger": "^3.2.0",
     "eslint": "^4.11.0",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-config-prettier": "^2.8.0",

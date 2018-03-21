@@ -19,7 +19,7 @@ An image layer. It is an instance of [Layer](#layer) so all the methods defined 
 | flow<span class="arg-type">[Flow](#flow)</span>            | The prototyping action associated with the Shape.                                               |
 | style<span class="arg-type">[Style](#style)</span>         | The style of the Shape.                                                                         |
 
-## Create a new shape
+## Create a new Shape
 
 ```javascript
 new Shape({
