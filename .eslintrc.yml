@@ -58,6 +58,9 @@ globals:
   MSHotspotLayer: false
   NSPredicate: false
   MSRectangleShape: false
+  MSSymbolMasterReference: false
+  MSShareableObjectReference: false
+  MSSharedStyleReference: false
 
 rules:
   ###########

@@ -51,7 +51,7 @@ export class SymbolMaster extends Artboard {
 
   getLibrary() {
     const libraryController = AppController.sharedInstance().librariesController()
-    const lib = libraryController.libraryForSymbol(this._object)
+    const lib = libraryController.libraryForShareableObject(this._object)
     if (!lib) {
       return null
     }

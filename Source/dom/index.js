@@ -46,6 +46,7 @@ api.fromNative = wrapObject
 
 api.getDocuments = Document.getDocuments
 api.getSelectedDocument = Document.getSelectedDocument
+api.getLibraries = Library.getLibraries
 
 api.version = {
   sketch: MSApplicationMetadata.metadata().appVersion,

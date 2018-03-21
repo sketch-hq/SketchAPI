@@ -4,6 +4,7 @@ import { toArray } from '../utils'
 import { Types } from '../enums'
 import { Factory } from '../Factory'
 import { wrapObject } from '../wrapNativeObject'
+import { ShareableObject } from './ShareableObject'
 
 /**
  * A Sketch Library.
@@ -57,11 +58,30 @@ export class Library extends WrappedObject {
     return Library.fromNative(lib)
   }
 
-  get document() {
+  getDocument() {
     if (!this._object.document() && !this._object.loadSynchronously()) {
       throw new Error(`could not get the document: ${this._object.status}`)
     }
     return Document.fromNative(this._object.document())
+  }
+
+  getSymbolReferences() {
+    try {
+      const document = this.getDocument()
+
+      return document
+        .getSymbols()
+        .map(s =>
+          ShareableObject.fromNative(
+            MSSymbolMasterReference.referenceForShareableObject_inLibrary(
+              s.sketchObject,
+              this._object
+            )
+          )
+        )
+    } catch (err) {
+      return []
+    }
   }
 }
 
@@ -73,7 +93,11 @@ Library.define('id', {
   exportable: true,
   importable: false,
   get() {
-    return String(this._object.libraryID())
+    const id = this._object.libraryID()
+    if (!id) {
+      return undefined
+    }
+    return String(id)
   },
 })
 
