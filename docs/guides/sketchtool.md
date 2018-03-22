@@ -109,13 +109,13 @@ will export all the artboards in the document, regardless of their exportable st
 
 ```
 sketchtool export artboards path/to/document.sketch --formats=jpg
-``
+```
 
 You can export multiple formats at once:
 
 ```
 sketchtool export artboards path/to/document.sketch --formats=jpg,png,svg
-``
+```
 
 To see which formats are supported by SketchTool, run `sketchtool list formats`.
 
