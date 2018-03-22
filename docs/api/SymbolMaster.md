@@ -74,3 +74,18 @@ var instances = master.getAllInstances()
 ```
 
 Returns an array of all instances of the symbol in the document, on all pages.
+
+## Get the Library it was defined in
+
+```javascript
+var originLibrary = master.getLibrary()
+```
+
+If the Symbol Master was imported from a library, the method can be used to:
+
+* know about it
+* get the library back
+
+### Returns
+
+The [Library](#library) the symbol was defined in, or `undefined` if it is a local symbol.

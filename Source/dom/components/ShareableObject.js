@@ -2,6 +2,7 @@ import { DefinedPropertiesKey, WrappedObject } from '../WrappedObject'
 import { Types } from '../enums'
 import { Factory } from '../Factory'
 import { wrapNativeObject } from '../wrapNativeObject'
+import { getDocumentData } from '../utils'
 
 const ObjectType = {
   Symbol: 0,
@@ -24,17 +25,7 @@ export class ShareableObject extends WrappedObject {
   importInDocument(document) {
     const libraryController = AppController.sharedInstance().librariesController()
 
-    let documentData = document
-
-    if (
-      document &&
-      document.sketchObject &&
-      document.sketchObject.documentData
-    ) {
-      documentData = document.sketchObject.documentData()
-    } else if (document && document.documentData) {
-      documentData = document.documentData()
-    }
+    const documentData = getDocumentData(document)
 
     const importedSymbol = libraryController
       .importShareableObjectReference_intoDocument(this._object, documentData)

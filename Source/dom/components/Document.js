@@ -43,16 +43,6 @@ export class Document extends WrappedObject {
   }
 
   /**
-   * Returns a list of the pages in this document.
-   *
-   * @return {[Page]} The pages.
-   */
-  get pages() {
-    const pages = toArray(this._object.pages())
-    return pages.map(page => Page.fromNative(page))
-  }
-
-  /**
    * Find the first layer in this document which has the given id.
    *
    * @return {Layer} A layer object, if one was found.

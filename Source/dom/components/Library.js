@@ -33,11 +33,11 @@ export class Library extends WrappedObject {
       /* eslint-enable */
     }
 
-    const libUrl = NSURL.fileURLWithPath(path)
+    const libUrl = typeof path === 'string' ? NSURL.fileURLWithPath(path) : path
 
     if (document) {
       const wrappedDocument = wrapObject(document)
-      wrappedDocument.save(libUrl)
+      wrappedDocument.save(path)
     }
 
     const libraryController = AppController.sharedInstance().librariesController()
@@ -47,8 +47,11 @@ export class Library extends WrappedObject {
       throw new Error(`could not add the library: ${status}`)
     }
 
+    // refresh the UI
+    libraryController.notifyLibraryChange(null)
+
     const lib = toArray(libraryController.userLibraries()).find(l =>
-      l.locationOnDisk.isEqual(libUrl)
+      l.locationOnDisk().isEqual(libUrl)
     )
 
     if (!lib) {
