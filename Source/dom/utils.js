@@ -1,3 +1,14 @@
+export function getDocumentData(document) {
+  let documentData = document
+
+  if (document && document.sketchObject && document.sketchObject.documentData) {
+    documentData = document.sketchObject.documentData()
+  } else if (document && document.documentData) {
+    documentData = document.documentData()
+  }
+  return documentData
+}
+
 export function toArray(object) {
   if (Array.isArray(object)) {
     return object
