@@ -11,6 +11,6 @@
   "dependencies": {
     "@skpm/console": "^0.1.2",
     "@skpm/events": "^0.1.1",
-    "@skpm/util": "^0.1.6"
+    "@skpm/util": "^0.1.8"
   }
 }
