@@ -184,3 +184,11 @@ A method to save a document to a specific path or ask the user to choose where t
 ### Returns
 
 Return the Document or throw an Error if it was not possible to save the document at the given path.
+
+## Close the Document
+
+```javascript
+document.close()
+```
+
+A method to close a document.

@@ -61,6 +61,14 @@ If you create a Library from an open Document, it will be saved to disk before b
 
 A new Library
 
+## Remove a Library
+
+```javascript
+library.remove()
+```
+
+A method to remove an existing library.
+
 ## Get the Library's Document
 
 ```javascript
