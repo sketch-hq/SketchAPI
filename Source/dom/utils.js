@@ -27,3 +27,11 @@ export function isNativeObject(object) {
 export function isWrappedObject(object) {
   return object && object._isWrappedObject
 }
+
+export function getURLFromPath(path) {
+  return typeof path === 'string'
+    ? NSURL.fileURLWithPath(
+        NSString.stringWithString(path).stringByExpandingTildeInPath()
+      )
+    : path
+}

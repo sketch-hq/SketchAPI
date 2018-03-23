@@ -1,7 +1,7 @@
 import { WrappedObject, DefinedPropertiesKey } from '../WrappedObject'
 import { Page } from './Page'
 import { Selection } from '../Selection'
-import { toArray } from '../utils'
+import { toArray, getURLFromPath } from '../utils'
 import { wrapObject } from '../wrapNativeObject'
 import { Types } from '../enums'
 import { Factory } from '../Factory'
@@ -20,9 +20,22 @@ export class Document extends WrappedObject {
   constructor(document = {}) {
     if (!document.sketchObject) {
       const app = NSDocumentController.sharedDocumentController()
-      app.newDocument(Document)
+
+      const error = MOPointer.alloc().init()
+
       // eslint-disable-next-line no-param-reassign
-      document.sketchObject = app.currentDocument()
+      document.sketchObject = app.openUntitledDocumentAndDisplay_error(
+        true,
+        error
+      )
+
+      if (error.value() !== null) {
+        throw new Error(error.value())
+      }
+
+      if (!document.sketchObject) {
+        throw new Error('could not create a new Document')
+      }
     }
 
     super(document)
@@ -111,7 +124,12 @@ export class Document extends WrappedObject {
 
       document = app.currentDocument()
     } else {
-      const url = typeof path === 'string' ? NSURL.fileURLWithPath(path) : path
+      const url = getURLFromPath(path)
+
+      if (app.documentForURL(url)) {
+        return Document.fromNative(app.documentForURL(url))
+      }
+
       const error = MOPointer.alloc().init()
 
       document = app.openDocumentWithContentsOfURL_display_error(
@@ -138,7 +156,7 @@ export class Document extends WrappedObject {
       msdocument = this._object.delegate()
     }
 
-    if (!msdocument[saveMethod]) {
+    if (!msdocument || !msdocument[saveMethod]) {
       throw new Error('Cannot save this document')
     }
 
@@ -147,7 +165,7 @@ export class Document extends WrappedObject {
     if (!path) {
       msdocument.saveDocument()
     } else {
-      const url = typeof path === 'string' ? NSURL.fileURLWithPath(path) : path
+      const url = getURLFromPath(path)
       const oldUrl = NSURL.URLWithString('not used')
 
       msdocument[saveMethod](url, 0, NSSaveToOperation, oldUrl, error)
@@ -158,6 +176,22 @@ export class Document extends WrappedObject {
     }
 
     return this
+  }
+
+  close() {
+    let msdocument = this._object
+
+    if (!msdocument.close) {
+      // we only have an MSDocumentData instead of a MSDocument
+      // let's try to get back to the MSDocument
+      msdocument = this._object.delegate()
+    }
+
+    if (!msdocument || !msdocument.close) {
+      throw new Error('Cannot close this document')
+    }
+
+    msdocument.close()
   }
 }
 
@@ -177,6 +211,9 @@ Document.define('id', {
   exportable: true,
   importable: false,
   get() {
+    if (!this._object) {
+      return undefined
+    }
     if (!this._object.objectID) {
       return String(this._object.documentData().objectID())
     }
@@ -186,6 +223,9 @@ Document.define('id', {
 
 Document.define('pages', {
   get() {
+    if (!this._object) {
+      return []
+    }
     const pages = toArray(this._object.pages())
     return pages.map(page => Page.fromNative(page))
   },

@@ -50,7 +50,6 @@ globals:
   MSDocument: false
   NSURL: false
   NSSaveToOperation: false
-  MSAssetLibraryControllerAddStatusOK: false
   NSData: false
   NSDataBase64DecodingIgnoreUnknownCharacters: false
   __command: false
@@ -61,6 +60,7 @@ globals:
   MSSymbolMasterReference: false
   MSShareableObjectReference: false
   MSSharedStyleReference: false
+  NSString: false
 
 rules:
   ###########

@@ -1,10 +1,17 @@
 import { WrappedObject, DefinedPropertiesKey } from '../WrappedObject'
 import { Document } from './Document'
-import { toArray } from '../utils'
+import { toArray, getURLFromPath } from '../utils'
 import { Types } from '../enums'
 import { Factory } from '../Factory'
 import { wrapObject } from '../wrapNativeObject'
 import { ShareableObject } from './ShareableObject'
+
+const AddStatus = {
+  0: 'ok',
+  1: 'the library has already been added',
+  2: 'the document is not in the new JSON format',
+  3: 'there was a problem reading the asset library file',
+}
 
 /**
  * A Sketch Library.
@@ -33,7 +40,7 @@ export class Library extends WrappedObject {
       /* eslint-enable */
     }
 
-    const libUrl = typeof path === 'string' ? NSURL.fileURLWithPath(path) : path
+    const libUrl = getURLFromPath(path)
 
     if (document) {
       const wrappedDocument = wrapObject(document)
@@ -43,8 +50,8 @@ export class Library extends WrappedObject {
     const libraryController = AppController.sharedInstance().librariesController()
     const status = libraryController.addAssetLibraryAtURL(libUrl)
 
-    if (status !== MSAssetLibraryControllerAddStatusOK) {
-      throw new Error(`could not add the library: ${status}`)
+    if (status !== 0) {
+      throw new Error(`Error while adding the library: ${AddStatus[status]}.`)
     }
 
     // refresh the UI
@@ -85,6 +92,11 @@ export class Library extends WrappedObject {
     } catch (err) {
       return []
     }
+  }
+
+  remove() {
+    const libraryController = AppController.sharedInstance().librariesController()
+    libraryController.removeAssetLibrary(this._object)
   }
 }
 
