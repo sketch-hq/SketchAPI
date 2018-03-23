@@ -5,7 +5,8 @@
     "[New] Add `util` core module (accessed with `require('util')`",
     "[New] Add `events` core module (accessed with `require('events')`",
     "[New] Add `console` global",
-    "[Fixed] Mutating a frame's Rectangle will change the frame"
+    "[Fixed] Mutating a frame's Rectangle will change the frame",
+    "[New] Add support for Libraries"
   ],
   "releases": {
     "49.1": [
