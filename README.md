@@ -171,11 +171,20 @@ npm run test
 npm run test:watch
 ```
 
+
 If you want to run the tests with a specific version of Sketch, you can use
 
 ```
 SKETCH_PATH=/path/to/sketch.app npm run test
 ```
+
+If you want to run the tests with a the xcode build version of Sketch, you can use
+
+```
+npm run testx
+npm run testx:watch
+```
+
 
 ## Acknowledgements
 
