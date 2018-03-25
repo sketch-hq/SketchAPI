@@ -16,7 +16,7 @@
     "run-tests": "skpm-test --app=xcode",
     "test": "npm run lint -- --quiet && npm run run-tests",
     "test:watch": "npm run run-tests -- --watch",
-    "test:no-variant": "npm run lint -- --quiet && npm run run-tests--no-variant",
+    "test:no-variant": "npm run lint -- --quiet && npm run run-tests-no-variant",
     "test:no-variant:watch": "npm run run-tests-no-variant -- --watch",
     "lint": "find . -name \"*.ts\" -o -name \"*.js\" | grep -v -f .gitignore | grep -v examples | xargs eslint",
     "prettier:base": "prettier --write",
