@@ -189,7 +189,7 @@ export class Rectangle {
    * @param {Layer} layerB The layer in which the rectangle's coordinates will be expressed.
    * @return {Rectangle} The converted rectangle expressed in the coordinate system of the layerB layer.
    */
-  changeBasis({ from, to }) {
+  changeBasis({ from, to } = {}) {
     const fromLayer = wrapObject(from)
     const toLayer = wrapObject(to)
     if (!fromLayer) {
