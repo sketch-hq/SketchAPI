@@ -66,6 +66,7 @@ rules:
   ###########
   # IMPORT
   import/prefer-default-export: off
+  import/no-extraneous-dependencies: off
   # TYPESCRIPT
   typescript/interface-name-prefix:
     - error

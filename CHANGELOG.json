@@ -6,7 +6,8 @@
     "[New] Add `events` core module (accessed with `require('events')`",
     "[New] Add `console` global",
     "[Improved] Add support for style on all the layers",
-    "[Improved] Add support for Shadows, Inner Shadows, opacity, blur, border options, blending mode, and gradients in Style"
+    "[Improved] Add support for Shadows, Inner Shadows, opacity, blur, border options, blending mode, and gradients in Style",
+    "[Fixed] Mutating a frame's Rectangle will change the frame"
   ],
   "releases": {
     "49.1": [

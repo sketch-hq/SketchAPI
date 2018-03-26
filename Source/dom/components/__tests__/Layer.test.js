@@ -26,6 +26,13 @@ test('should set the frame of the layer', () => {
   expect(group.frame).toEqual(newFrame)
 })
 
+test('mutating a frame should change the frame of a layer', () => {
+  const group = new Group()
+  expect(group.frame.width).toBe(100)
+  group.frame.width = 400
+  expect(group.frame.width).toBe(400)
+})
+
 test(
   'should duplicate the layer and add it as a sibling',
   (context, document) => {
