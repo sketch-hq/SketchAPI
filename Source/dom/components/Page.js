@@ -97,6 +97,8 @@ Page.define('parent', {
 
 // override setting up a flow which doesn't make sense for a Page
 delete Page[DefinedPropertiesKey].flow
+delete Page[DefinedPropertiesKey].locked
+delete Page[DefinedPropertiesKey].hidden
 
 Page.define('index', {
   exportable: false,

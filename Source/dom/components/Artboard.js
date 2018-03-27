@@ -50,3 +50,5 @@ Artboard.define('flowStartPoint', {
 
 // override the WrappedObject id
 delete Artboard[DefinedPropertiesKey].flow
+delete Artboard[DefinedPropertiesKey].locked
+delete Artboard[DefinedPropertiesKey].hidden
