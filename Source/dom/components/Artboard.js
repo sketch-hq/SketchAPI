@@ -41,6 +41,8 @@ Factory.registerClass(Artboard, MSArtboardGroup)
 
 delete Artboard[DefinedPropertiesKey].flow
 delete Artboard[DefinedPropertiesKey].style
+delete Artboard[DefinedPropertiesKey].locked
+delete Artboard[DefinedPropertiesKey].hidden
 
 Artboard.define('flowStartPoint', {
   get() {

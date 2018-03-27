@@ -106,7 +106,7 @@ A string specifying the author of the Plugin.
 
 An optional string specifying how to contact the Plugin author by email.
 
-#### `homagepa`
+#### `homepage`
 
 An optional string specifying an online resource for the user to find out more information or provide feedback for the Plugin.
 
