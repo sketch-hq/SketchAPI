@@ -133,7 +133,7 @@ Return an array of [Layer](#layer).
 var symbols = document.getSymbols()
 ```
 
-A method to gett all symbol masters defined in the document.
+A method to get all symbol masters defined in the document.
 
 ### Returns
 
