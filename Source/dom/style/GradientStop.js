@@ -1,11 +1,9 @@
+import { WrappedObject, DefinedPropertiesKey } from '../WrappedObject'
 import { isNativeObject } from '../utils'
 import { Color, colorToString } from './Color'
+import { Types } from '../enums'
 
-export class GradientStop {
-  constructor(nativeStop) {
-    this._object = nativeStop
-  }
-
+export class GradientStop extends WrappedObject {
   static from(object) {
     if (!object) {
       return undefined
@@ -25,13 +23,37 @@ export class GradientStop {
       )
     }
 
-    return new GradientStop(nativeStop)
-  }
-
-  toJSON() {
-    return {
-      position: Number(this._object.position()),
-      color: colorToString(this._object.color()),
-    }
+    return GradientStop.fromNative(nativeStop)
   }
 }
+
+GradientStop.type = Types.GradientStop
+GradientStop[DefinedPropertiesKey] = {}
+
+GradientStop.define('sketchObject', {
+  exportable: false,
+  enumerable: false,
+  importable: false,
+  get() {
+    return this._object
+  },
+})
+
+GradientStop.define('position', {
+  get() {
+    return Number(this._object.position())
+  },
+  set(position) {
+    this._object.setPosition(position)
+  },
+})
+
+GradientStop.define('color', {
+  get() {
+    return colorToString(this._object.color())
+  },
+  set(_color) {
+    const color = Color.from(_color)
+    this._object.color = color._object
+  },
+})

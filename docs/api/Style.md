@@ -78,15 +78,15 @@ shape.style.blur = {
 
 An object that represent the blur of the layer.
 
-| Properties                                                   |                                                                   |
-| ------------------------------------------------------------ | ----------------------------------------------------------------- |
-| type<span class="arg-type">[BlurType](#styleblurtype)</span> | The type of the blur.                                             |
-| radius<span class="arg-type">number</span>                   | The radius of the blur.                                           |
-| motionAngle<span class="arg-type">number</span>              | The angle of the blur (only used when the blur type is `Motion`). |
-| center<span class="arg-type">object</span>                   | The center of the blur (only used when the blur type is `Zoom`.   |
-| center.x<span class="arg-type">number</span>                 | The horizontal coordinate of the center of the blur.              |
-| center.y<span class="arg-type">number</span>                 | The vertical coordinate of the center of the blur.                |
-| enabled<span class="arg-type">boolean</span>                 | Wether the fill is active or not.                                 |
+| Properties                                                       |                                                                   |
+| ---------------------------------------------------------------- | ----------------------------------------------------------------- |
+| blurType<span class="arg-type">[BlurType](#styleblurtype)</span> | The type of the blur.                                             |
+| radius<span class="arg-type">number</span>                       | The radius of the blur.                                           |
+| motionAngle<span class="arg-type">number</span>                  | The angle of the blur (only used when the blur type is `Motion`). |
+| center<span class="arg-type">object</span>                       | The center of the blur (only used when the blur type is `Zoom`.   |
+| center.x<span class="arg-type">number</span>                     | The horizontal coordinate of the center of the blur.              |
+| center.y<span class="arg-type">number</span>                     | The vertical coordinate of the center of the blur.                |
+| enabled<span class="arg-type">boolean</span>                     | Wether the fill is active or not.                                 |
 
 ## `Style.BlurType`
 

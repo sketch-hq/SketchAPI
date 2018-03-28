@@ -12,7 +12,8 @@ StyledLayer[DefinedPropertiesKey] = { ...Layer[DefinedPropertiesKey] }
 
 StyledLayer.define('style', {
   get() {
-    return Style.fromNative(this._object.style())
+    const style = Style.fromNative(this._object.style())
+    return style
   },
   set(style) {
     if (isNativeObject(style)) {

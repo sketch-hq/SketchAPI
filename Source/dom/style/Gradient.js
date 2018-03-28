@@ -1,5 +1,8 @@
+import { WrappedObject, DefinedPropertiesKey } from '../WrappedObject'
 import { toArray, isNativeObject } from '../utils'
 import { GradientStop } from './GradientStop'
+import { Point } from '../Point'
+import { Types } from '../enums'
 
 export const GradientType = {
   Linear: 0,
@@ -7,11 +10,7 @@ export const GradientType = {
   Angular: 2,
 }
 
-export class Gradient {
-  constructor(nativeGradient) {
-    this._object = nativeGradient
-  }
-
+export class Gradient extends WrappedObject {
   static from(object) {
     if (!object) {
       return undefined
@@ -46,26 +45,68 @@ export class Gradient {
       }
     }
 
-    return new Gradient(nativeGradient)
-  }
-
-  toJSON() {
-    return {
-      gradientType:
-        Object.keys(GradientType).find(
-          key => GradientType[key] === this._object.gradientType()
-        ) || this._object.gradientType(),
-      from: {
-        x: Number(this._object.from().x),
-        y: Number(this._object.from().y),
-      },
-      to: {
-        x: Number(this._object.to().x),
-        y: Number(this._object.to().y),
-      },
-      stops: toArray(this._object.stops())
-        .map(GradientStop.from)
-        .map(g => g.toJSON()),
-    }
+    return Gradient.fromNative(nativeGradient)
   }
 }
+
+Gradient.type = Types.Gradient
+Gradient[DefinedPropertiesKey] = {}
+
+Gradient.define('sketchObject', {
+  exportable: false,
+  enumerable: false,
+  importable: false,
+  get() {
+    return this._object
+  },
+})
+
+Gradient.define('gradientType', {
+  get() {
+    return (
+      Object.keys(GradientType).find(
+        key => GradientType[key] === this._object.gradientType()
+      ) || this._object.gradientType()
+    )
+  },
+  set(gradientType) {
+    this._object.setGradientType(GradientType[gradientType] || gradientType)
+  },
+})
+
+Gradient.define('from', {
+  get() {
+    const point = new Point(this._object.from().x, this._object.from().y)
+    point._parent = this
+    point._parentKey = 'from'
+    return point
+  },
+  set(point) {
+    this._object.setFrom(CGPointMake(point.x || 0.5, point.y || 0))
+  },
+})
+
+Gradient.define('to', {
+  get() {
+    const point = new Point(this._object.to().x, this._object.to().y)
+    point._parent = this
+    point._parentKey = 'to'
+    return point
+  },
+  set(point) {
+    this._object.setFrom(CGPointMake(point.x || 0.5, point.y || 0))
+  },
+})
+
+Gradient.define('stops', {
+  get() {
+    return toArray(this._object.stops()).map(
+      GradientStop.from.bind(GradientStop)
+    )
+  },
+  set(stops) {
+    this._object.setStops(
+      stops.map(GradientStop.from.bind(GradientStop)).map(g => g._object)
+    )
+  },
+})
