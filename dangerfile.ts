@@ -15,7 +15,7 @@ function matchingTest(dir: string, name: string) {
 }
 
 function matchingDoc(dir: string, name: string) {
-  const docPath = path.join(dir.split('Source')[0], 'docs', 'api', `${name}.md`)
+  const docPath = path.join('docs', 'api', `${name}.md`)
   return touchedFiles.find(f => f === docPath)
 }
 
