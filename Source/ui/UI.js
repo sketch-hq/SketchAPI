@@ -3,7 +3,7 @@
 import { isNativeObject } from '../dom/utils'
 
 function getPluginAlertIcon() {
-  if (__command.pluginBundle() && __command.pluginBundle().icon()) {
+  if (__command.pluginBundle() && __command.pluginBundle().alertIcon()) {
     return __command.pluginBundle().alertIcon()
   }
   return NSImage.imageNamed('plugins')
