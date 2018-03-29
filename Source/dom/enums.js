@@ -14,5 +14,5 @@ export const Types = {
   ImageData: 'ImageData',
   Flow: 'Flow',
   HotSpot: 'HotSpot',
-  ShareableObject: 'ShareableObject',
+  ImportableObject: 'ImportableObject',
 }

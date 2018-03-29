@@ -1,5 +1,5 @@
 ---
-title: Shareable Object
+title: Importable Object
 order: 215
 section: components
 ---
@@ -22,7 +22,7 @@ An Object that can imported from a [Library](#library). All its properties are r
 var symbolMaster = symbolReference.importInDocument(document)
 ```
 
-You can import a Shareable Object to any document, even if it has already beenn imported.
+You can import an Importable Object to any document, even if it has already beenn imported.
 
 ### Returns
 
