@@ -84,11 +84,15 @@ The [Document](#document) that the Library references. It can throw an error if 
 ## Get the Symbols that can be imported
 
 ```javascript
-var symbolReferences = library.getSymbolReferences()
+var symbolReferences = library.getImportableSymbolReferencesForDocument(
+  document
+)
 ```
 
-To import a symbol from a Library, do **not** access its Document and look for the SymbolMaster directly. Instead, get the [Symbol References](#shareable-object) of the Library and use those to import them.
+To import a symbol from a Library, do **not** access its Document and look for the SymbolMaster directly. Instead, get the [Symbol References](#importable-object) of the Library and use those to import them.
+
+Those references depends on the document you want to import them into. For example if a document has already imported a symbol, it will reference the local version to keep all the instances in sync.
 
 ### Returns
 
-An array of [Shareable Object](#shareable-object) that represents the Symbols which you can import from the Library.
+An array of [Shareable Object](#importable-object) that represents the Symbols which you can import from the Library.

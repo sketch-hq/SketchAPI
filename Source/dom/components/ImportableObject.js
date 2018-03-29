@@ -33,6 +33,18 @@ export class ImportableObject extends WrappedObject {
 
     return wrapNativeObject(importedSymbol)
   }
+
+  syncLocalDocumentInstancesWithLibrary(document) {
+    const libraryController = AppController.sharedInstance().librariesController()
+
+    const documentData = getDocumentData(document)
+
+    libraryController.syncForeignObject_withMaster_fromLibrary(
+      this._object.foreignObjectCollectionInDocument(documentData),
+      this._object.shareableObject(),
+      this._object.sourceLibrary()
+    )
+  }
 }
 
 ImportableObject.type = Types.ImportableObject
