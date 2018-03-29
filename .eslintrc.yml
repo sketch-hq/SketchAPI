@@ -61,6 +61,8 @@ globals:
   MSShareableObjectReference: false
   MSSharedStyleReference: false
   NSString: false
+  MSForeignSymbolProvider: false
+  MSForeignObjectCollector: false
 
 rules:
   ###########

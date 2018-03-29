@@ -4,7 +4,7 @@ import { toArray, getURLFromPath } from '../utils'
 import { Types } from '../enums'
 import { Factory } from '../Factory'
 import { wrapObject } from '../wrapNativeObject'
-import { ShareableObject } from './ShareableObject'
+import { ImportableObject } from './ImportableObject'
 
 const AddStatus = {
   0: 'ok',
@@ -57,9 +57,7 @@ export class Library extends WrappedObject {
     // refresh the UI
     libraryController.notifyLibraryChange(null)
 
-    const lib = toArray(libraryController.userLibraries()).find(l =>
-      l.locationOnDisk().isEqual(libUrl)
-    )
+    const lib = libraryController.userLibraries().firstObject()
 
     if (!lib) {
       throw new Error('could not find the added library')
@@ -75,23 +73,24 @@ export class Library extends WrappedObject {
     return Document.fromNative(this._object.document())
   }
 
-  getSymbolReferences() {
-    try {
-      const document = this.getDocument()
+  getImportableSymbolReferencesForDocument(document) {
+    const provider = MSForeignSymbolProvider.alloc().initWithDocument(
+      wrapObject(document).sketchObject
+    )
+    const collector = MSForeignObjectCollector.alloc().initWithProvider(
+      provider
+    )
+    const shareableObjectRefsMap = collector.buildCollectionWithFilter(null)
+    const shareableObjectRefsForCurrentLib = toArray(
+      shareableObjectRefsMap
+    ).find(o => o.library && String(o.library.libraryID()) === this.id)
 
-      return document
-        .getSymbols()
-        .map(s =>
-          ShareableObject.fromNative(
-            MSSymbolMasterReference.referenceForShareableObject_inLibrary(
-              s.sketchObject,
-              this._object
-            )
-          )
-        )
-    } catch (err) {
+    if (!shareableObjectRefsForCurrentLib) {
       return []
     }
+    return toArray(shareableObjectRefsForCurrentLib.objectRefs).map(
+      ImportableObject.fromNative.bind(ImportableObject)
+    )
   }
 
   remove() {

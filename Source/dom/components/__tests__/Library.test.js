@@ -20,9 +20,13 @@ if (!isRunningOnJenkins()) {
   })
 
   test('should be able to get the list of symbols to be imported', () => {
+    const document = new Document()
     const libraries = Library.getLibraries()
     const lib = findValidLib(libraries)
-    expect(lib.getSymbolReferences()[0].type).toBe('ShareableObject')
+    expect(lib.getImportableSymbolReferencesForDocument(document)[0].type).toBe(
+      'ImportableObject'
+    )
+    document.close()
   })
 
   let lib
