@@ -63,14 +63,24 @@ if (corePackageChanged && !coreLockfileChanged) {
  * CHECK FOR TESTS
  */
 
+const ignoredFilesForTests = [
+  'async/index.js',
+  'data-supplier/index.js',
+  'dom/index.js',
+  'settings/index.js',
+  'ui/index.js',
+]
+
 // Warn if there are library changes, but not tests
 libraryChanges.forEach(change => {
+  const fileName = change.split('Source')[1]
+  if (ignoredFilesForTests.indexOf(fileName) >= 0) {
+    return
+  }
   const { dir, name } = path.parse(change)
   if (!matchingTest(dir, name)) {
     warn(
-      `\`${
-        change.split('Source')[1]
-      }\` changed, but not its tests. That's OK as long as you're refactoring.`
+      `\`${fileName}\` changed, but not its tests. That's OK as long as you're refactoring.`
     )
   }
 })
@@ -101,9 +111,7 @@ libraryChanges.forEach(change => {
   const { dir, name } = path.parse(change)
   if (!matchingDoc(dir, name)) {
     warn(
-      `\`${
-        change.split('Source')[1]
-      }\` changed, but not its doc. That's OK as long as you're refactoring.`
+      `\`${fileName}\` changed, but not its doc. That's OK as long as you're refactoring.`
     )
   }
 })
