@@ -77,8 +77,6 @@ Each layer defines its own system of coordinates (with its origin at the top lef
 
 Both `from` and `to` can be ommited (but not at the same time) to change the basis from/to the Page coordinates.
 
-If you want to explore the beautiful world of linear algebra from which the term `Basis` originates from, Khan Academy has some really nice [videos](https://www.khanacademy.org/math/linear-algebra/alternate-bases/change-of-basis/v/linear-algebra-change-of-basis-matrix).
-
 ## Get a `CGRect`
 
 ```javascript
