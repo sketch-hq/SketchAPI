@@ -39,6 +39,11 @@ Artboard.type = Types.Artboard
 Artboard[DefinedPropertiesKey] = { ...Group[DefinedPropertiesKey] }
 Factory.registerClass(Artboard, MSArtboardGroup)
 
+delete Artboard[DefinedPropertiesKey].flow
+delete Artboard[DefinedPropertiesKey].style
+delete Artboard[DefinedPropertiesKey].locked
+delete Artboard[DefinedPropertiesKey].hidden
+
 Artboard.define('flowStartPoint', {
   get() {
     return !!this._object.isFlowHome()
@@ -47,6 +52,3 @@ Artboard.define('flowStartPoint', {
     this._object.isFlowHome = isFlowStartHome
   },
 })
-
-// override the WrappedObject id
-delete Artboard[DefinedPropertiesKey].flow

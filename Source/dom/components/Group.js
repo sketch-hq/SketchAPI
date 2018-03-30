@@ -1,5 +1,5 @@
 import { DefinedPropertiesKey } from '../WrappedObject'
-import { Layer } from './Layer'
+import { StyledLayer } from './StyledLayer'
 import { Rectangle } from '../Rectangle'
 import { Types } from '../enums'
 import { Factory } from '../Factory'
@@ -9,7 +9,7 @@ import { wrapNativeObject, wrapObject } from '../wrapNativeObject'
 /**
  * Represents a group of layers.
  */
-export class Group extends Layer {
+export class Group extends StyledLayer {
   /**
    * Make a new group object.
    *
@@ -52,7 +52,7 @@ export class Group extends Layer {
 }
 
 Group.type = Types.Group
-Group[DefinedPropertiesKey] = { ...Layer[DefinedPropertiesKey] }
+Group[DefinedPropertiesKey] = { ...StyledLayer[DefinedPropertiesKey] }
 Factory.registerClass(Group, MSLayerGroup)
 
 Group.define('layers', {

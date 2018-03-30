@@ -6,7 +6,7 @@ function getPluginIcon() {
   if (__command.pluginBundle() && __command.pluginBundle().icon()) {
     return __command.pluginBundle().icon()
   }
-  return NSImage.imageNamed('plugin_thumbnail')
+  return NSImage.imageNamed('plugins')
 }
 
 /**

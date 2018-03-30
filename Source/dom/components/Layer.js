@@ -220,3 +220,21 @@ Layer.define('flow', {
     this._object.flow = flow.sketchObject
   },
 })
+
+Layer.define('hidden', {
+  get() {
+    return !this._object.isVisible()
+  },
+  set(hidden) {
+    this._object.setIsVisible(!hidden)
+  },
+})
+
+Layer.define('locked', {
+  get() {
+    return !!this._object.isLocked()
+  },
+  set(locked) {
+    this._object.setIsLocked(locked)
+  },
+})

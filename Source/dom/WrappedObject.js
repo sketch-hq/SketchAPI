@@ -4,9 +4,13 @@ export const DefinedPropertiesKey = '_DefinedPropertiesKey'
  * Base class for all objects that
  * wrap Sketch classes.
  */
+
 export class WrappedObject {
   constructor(options) {
-    this._object = options.sketchObject
+    Object.defineProperty(this, '_object', {
+      enumerable: false,
+      value: options.sketchObject,
+    })
 
     Object.defineProperty(this, 'type', {
       enumerable: true,

@@ -1,13 +1,16 @@
 {
   "unreleased": [
     "[Fixed] Creating a Rectangle with an Object having an `x` value of `0` now works as expected",
+    "[New] Add `locked` and `hidden` property on Layer"
     "[New] Add `console` core module (accessed with `require('console')`",
     "[New] Add `util` core module (accessed with `require('util')`",
     "[New] Add `events` core module (accessed with `require('events')`",
     "[New] Add `console` global",
-    "[Fixed] Mutating a frame's Rectangle will change the frame",
     "[New] Add support for Libraries",
-    "[New] Add `save`, `open`, and `close` method on Document"
+    "[New] Add `save`, `open`, and `close` method on Document",
+    "[Improved] Add support for style on all the layers",
+    "[Improved] Add support for Shadows, Inner Shadows, opacity, blur, border options, blending mode, and gradients in Style",
+    "[Fixed] Mutating a frame's Rectangle will change the frame"
   ],
   "releases": {
     "49.1": [
