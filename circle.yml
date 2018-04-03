@@ -41,7 +41,7 @@ jobs:
       - run: npm run lint
 
       # build and store the artifacts so that we can access them
-      - run: npm run build
+      - run: npm run build:api
       - run: aws s3 sync ~/repo/build/ s3://sketch-api/$CIRCLE_PR_NUMBER --region eu-west-1
 
       # check if the PR is "correct". See dangerfile.ts for more information
