@@ -120,6 +120,6 @@ libraryChanges.forEach(change => {
 
 markdown(
   `__To test the changes from the PR, replace \`require('sketch')\` by \`require('__pr-${
-    process.env.CIRCLE_BUILD_NUM
+    process.env.CIRCLE_PR_NUMBER
   }')\`__`
 )

@@ -34,7 +34,7 @@ jobs:
 
       # build and store the artifacts so that we can access them
       - run: npm run build
-      - run: aws s3 sync ~/repo/build/ s3://sketch-api/$CIRCLE_BUILD_NUM --region eu-west-1
+      - run: aws s3 sync ~/repo/build/ s3://sketch-api/$CIRCLE_PR_NUMBER --region eu-west-1
 
       # check if the PR is "correct". See dangerfile.ts for more information
       - run: ./node_modules/.bin/danger ci
