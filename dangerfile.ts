@@ -1,4 +1,4 @@
-import { danger, warn } from 'danger'
+import { danger, warn, markdown } from 'danger'
 
 const LIB_REGEX = /^Source\/.*\.js$/
 const TEST_REGEX = /^Source\/.*\/__tests__\/.*\.test\.js?$/
@@ -79,3 +79,9 @@ if (hasLibraryChanges && !hasDocsChanges) {
     "There are library changes, but not docs. That's OK as long as you're refactoring existing code"
   )
 }
+
+markdown(
+  `__To test the changes from the PR, replace \`require('sketch')\` by \`require('__pr-${
+    process.env.CIRCLE_BUILD_NUM
+  }')\`__`
+)
