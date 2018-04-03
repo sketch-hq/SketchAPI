@@ -1,19 +1,32 @@
+import * as path from 'path'
 import { danger, warn, markdown } from 'danger'
 
+const touchedFiles = danger.git.modified_files.concat(danger.git.created_files)
+
 const LIB_REGEX = /^Source\/.*\.js$/
-const TEST_REGEX = /^Source\/.*\/__tests__\/.*\.test\.js?$/
-const DOCS_REGEX = /^docs\/api\/.*\.md$/
+
+const libraryChanges = touchedFiles.filter(
+  filePath => LIB_REGEX.test(filePath) && filePath.indexOf('__tests__') === -1
+)
+
+function matchingTest(dir: string, name: string) {
+  const testPath = path.join(dir, '__tests__', `${name}.js`)
+  return touchedFiles.find(f => f === testPath)
+}
+
+function matchingDoc(dir: string, name: string) {
+  const docPath = path.join('docs', 'api', `${name}.md`)
+  return touchedFiles.find(f => f === docPath)
+}
 
 /**
  * CHECK FOR CHANGELOG UPDATE
  */
 
-const hasCHANGELOGChanges = danger.git.modified_files.some(
-  path => path === 'CHANGELOG.json'
+const hasCHANGELOGChanges = touchedFiles.some(
+  filePath => filePath === 'CHANGELOG.json'
 )
-const hasLibraryChanges = danger.git.modified_files.some(path =>
-  LIB_REGEX.test(path)
-)
+const hasLibraryChanges = libraryChanges.length > 0
 
 if (hasLibraryChanges && !hasCHANGELOGChanges) {
   warn('This pull request may need a CHANGELOG entry.')
@@ -22,11 +35,11 @@ if (hasLibraryChanges && !hasCHANGELOGChanges) {
 /**
  * CHECK FOR PACKAGE.JSON UPDATE
  */
-const packageChanged = danger.git.modified_files.some(
-  path => path === 'package.json'
+const packageChanged = touchedFiles.some(
+  filePath => filePath === 'package.json'
 )
-const lockfileChanged = danger.git.modified_files.some(
-  path => path === 'package-lock.json'
+const lockfileChanged = touchedFiles.some(
+  filePath => filePath === 'package-lock.json'
 )
 
 if (packageChanged && !lockfileChanged) {
@@ -36,11 +49,11 @@ if (packageChanged && !lockfileChanged) {
   warn(`${message} - <i>${idea}</i>`)
 }
 
-const corePackageChanged = danger.git.modified_files.some(
-  path => path === 'core-modules/package.json'
+const corePackageChanged = touchedFiles.some(
+  filePath => filePath === 'core-modules/package.json'
 )
-const coreLockfileChanged = danger.git.modified_files.some(
-  path => path === 'core-modules/package-lock.json'
+const coreLockfileChanged = touchedFiles.some(
+  filePath => filePath === 'core-modules/package-lock.json'
 )
 
 if (corePackageChanged && !coreLockfileChanged) {
@@ -54,31 +67,56 @@ if (corePackageChanged && !coreLockfileChanged) {
  * CHECK FOR TESTS
  */
 
-const hasTestChanges = danger.git.modified_files.some(path =>
-  TEST_REGEX.test(path)
-)
+const ignoredFilesForTests = [
+  'Source/async/index.js',
+  'Source/data-supplier/index.js',
+  'Source/dom/index.js',
+  'Source/settings/index.js',
+  'Source/ui/index.js',
+]
 
 // Warn if there are library changes, but not tests
-if (hasLibraryChanges && !hasTestChanges) {
-  warn(
-    "There are library changes, but not tests. That's OK as long as you're refactoring existing code"
-  )
-}
+libraryChanges.forEach(change => {
+  if (ignoredFilesForTests.indexOf(change) >= 0) {
+    return
+  }
+  const { dir, name } = path.parse(change)
+  if (!matchingTest(dir, name)) {
+    warn(
+      `\`${change}\` changed, but not its tests. That's OK as long as you're refactoring.`
+    )
+  }
+})
 
 /**
  * CHECK FOR DOCS
  */
 
-const hasDocsChanges = danger.git.modified_files.some(path =>
-  DOCS_REGEX.test(path)
-)
+const ignoredFilesForDocs = [
+  'Source/async/index.js',
+  'Source/data-supplier/index.js',
+  'Source/dom/enums.js',
+  'Source/dom/Factory.js',
+  'Source/dom/index.js',
+  'Source/dom/utils.js',
+  'Source/dom/wrapNativeObject.js',
+  'Source/dom/WrappedObject.js',
+  'Source/settings/index.js',
+  'Source/ui/index.js',
+]
 
 // Warn if there are library changes, but not docs
-if (hasLibraryChanges && !hasDocsChanges) {
-  warn(
-    "There are library changes, but not docs. That's OK as long as you're refactoring existing code"
-  )
-}
+libraryChanges.forEach(change => {
+  if (ignoredFilesForDocs.indexOf(change) >= 0) {
+    return
+  }
+  const { dir, name } = path.parse(change)
+  if (!matchingDoc(dir, name)) {
+    warn(
+      `\`${change}\` changed, but not its doc. That's OK as long as you're refactoring.`
+    )
+  }
+})
 
 markdown(
   `__To test the changes from the PR, replace \`require('sketch')\` by \`require('__pr-${
