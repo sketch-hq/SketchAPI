@@ -4,13 +4,7 @@ const webpack = require('webpack')
 const PRODUCTION =
   process.argv.indexOf('-p') !== -1 || process.env.NODE_ENV === 'production'
 
-// heuristic to know if we are inside the Sketch repo
-const IS_BC_BUILD = /\/Modules\/SketchAPI$/.test(__dirname)
-
-const OUTPUT_PATH = path.resolve(
-  __dirname,
-  IS_BC_BUILD ? '../SketchPluginManager/Source/api/' : './build'
-)
+const OUTPUT_PATH = path.resolve(__dirname, './build')
 
 const ENTRIES = [
   { entry: './Source/index.js', output: 'SketchAPI.js' },

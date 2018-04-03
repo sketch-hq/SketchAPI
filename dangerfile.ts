@@ -1,5 +1,5 @@
 import * as path from 'path'
-import { danger, warn } from 'danger'
+import { danger, warn, markdown } from 'danger'
 
 const touchedFiles = danger.git.modified_files.concat(danger.git.created_files)
 
@@ -117,3 +117,9 @@ libraryChanges.forEach(change => {
     )
   }
 })
+
+markdown(
+  `__To test the changes from the PR, replace \`require('sketch')\` by \`require('__pr')('${
+    process.env.CIRCLE_PR_NUMBER
+  }')\`__`
+)

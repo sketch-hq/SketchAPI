@@ -6,7 +6,6 @@ version: 2
 jobs:
   build:
     docker:
-      # specify the version you desire here
       - image: circleci/node:9.8
 
     working_directory: ~/repo
@@ -14,23 +13,36 @@ jobs:
     steps:
       - checkout
 
-      # Download and cache dependencies
+      # CIRCLE_PR_NUMBER is sometimes undefined so we take it from CIRCLE_PULL_REQUEST
+      - run:
+          name: Set PR number
+          command: |
+              echo 'export CIRCLE_PR_NUMBER="${CIRCLE_PR_NUMBER:-${CIRCLE_PULL_REQUEST##*/}}"' >> $BASH_ENV
+              source $BASH_ENV
+              echo $CIRCLE_PR_NUMBER
+
+      # Download the cached dependencies that correspond to the package.json
       - restore_cache:
           keys:
           - v1-dependencies-{{ checksum "package.json" }}
-          # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
 
+      # if we haven't found a cache, we need to run a npm install
+      # We also run it when we find one, just in case
       - run: npm install
+      - run: sudo apt-get -y -qq install awscli
 
+      # cache the dependencies for next time
       - save_cache:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
 
+      # Lint
       - run: npm run lint
 
+      # build and store the artifacts so that we can access them
+      - run: npm run build:api
+      - run: aws s3 sync ~/repo/build/ s3://sketch-api/$CIRCLE_PR_NUMBER --region eu-west-1
+
+      # check if the PR is "correct". See dangerfile.ts for more information
       - run: ./node_modules/.bin/danger ci
-
-
-
