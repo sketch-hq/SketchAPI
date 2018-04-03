@@ -21,6 +21,7 @@ jobs:
       # if we haven't found a cache, we need to run a npm install
       # We also run it when we find one, just in case
       - run: npm install
+      - run: sudo apt-get -y -qq install awscli
 
       # cache the dependencies for next time
       - save_cache:
