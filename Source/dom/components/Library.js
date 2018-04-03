@@ -53,15 +53,15 @@ export class Library extends WrappedObject {
     if (status !== 0) {
       throw new Error(`Error while adding the library: ${AddStatus[status]}.`)
     }
-
-    // refresh the UI
-    libraryController.notifyLibraryChange(null)
-
+    
     const lib = libraryController.userLibraries().firstObject()
 
     if (!lib) {
       throw new Error('could not find the added library')
     }
+
+    // refresh the UI
+    libraryController.notifyLibraryChange(lib)
 
     return Library.fromNative(lib)
   }
