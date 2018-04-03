@@ -51,9 +51,12 @@ ImportableObject.type = Types.ImportableObject
 ImportableObject[DefinedPropertiesKey] = {
   ...WrappedObject[DefinedPropertiesKey],
 }
-Factory.registerClass(ImportableObject, MSShareableObjectReference)
-Factory.registerClass(ImportableObject, MSSymbolMasterReference)
-Factory.registerClass(ImportableObject, MSSharedStyleReference)
+// need to check if we have MSShareableObjectReference because it won't be available on jenkins
+if (typeof MSShareableObjectReference !== 'undefined') {
+  Factory.registerClass(ImportableObject, MSShareableObjectReference)
+  Factory.registerClass(ImportableObject, MSSymbolMasterReference)
+  Factory.registerClass(ImportableObject, MSSharedStyleReference)
+}
 
 ImportableObject.define('id', {
   exportable: true,
