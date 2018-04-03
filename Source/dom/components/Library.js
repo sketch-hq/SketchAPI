@@ -53,7 +53,7 @@ export class Library extends WrappedObject {
     if (status !== 0) {
       throw new Error(`Error while adding the library: ${AddStatus[status]}.`)
     }
-    
+
     const lib = libraryController.userLibraries().firstObject()
 
     if (!lib) {
