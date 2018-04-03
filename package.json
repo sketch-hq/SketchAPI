@@ -45,7 +45,6 @@
   },
   "dependencies": {},
   "pre-commit": [
-    "build",
     "lint-staged"
   ],
   "lint-staged": {
