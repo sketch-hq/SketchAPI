@@ -1,12 +1,15 @@
 {
   "unreleased": [
     "[Fixed] Creating a Rectangle with an Object having an `x` value of `0` now works as expected",
+    "[New] Add `locked` and `hidden` property on Layer"
     "[New] Add `console` core module (accessed with `require('console')`",
     "[New] Add `util` core module (accessed with `require('util')`",
     "[New] Add `events` core module (accessed with `require('events')`",
     "[New] Add `console` global",
     "[Fixed] Mutating a frame's Rectangle will change the frame",
     "[Improved] Add `Rectangle.changeBasis` method and deprecate the specific implementations from Layer and Group"
+    "[Improved] Add support for style on all the layers",
+    "[Improved] Add support for Shadows, Inner Shadows, opacity, blur, border options, blending mode, and gradients in Style"
   ],
   "releases": {
     "49.1": [

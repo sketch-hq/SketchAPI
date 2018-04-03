@@ -17,6 +17,7 @@ A [Symbol](https://www.sketchapp.com/docs/symbols/) instance. It is an instance 
 | parent<span class="arg-type">[Group](#group)</span>                   | The group the Symbol Instance is in.                                                                      |
 | frame<span class="arg-type">[Rectangle](#rectangle) </span>           | The frame of the Symbol Instance. This is given in coordinates that are local to the parent of the layer. |
 | flow<span class="arg-type">[Flow](#flow)</span>                       | The prototyping action associated with the Symbol.                                                        |
+| style<span class="arg-type">[Style](#style)</span>                    | The style of the Symbol Instance.                                                                         |
 | symbolId<span class="arg-type">string</span>                          | The unique ID of the Symbol that the instance and its master share.                                       |
 | master<span class="arg-type">[SymbolMaster](#symbol-master)</span>    | The Symbol master that the instance is linked to.                                                         |
 | overrides<span class="arg-type">[Override](#symbol-override)[]</span> | The array of the overrides to modify the instance.                                                        |
