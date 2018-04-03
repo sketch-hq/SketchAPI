@@ -27,6 +27,7 @@
   },
   "devDependencies": {
     "@skpm/test-runner": "^0.2.0",
+    "@types/node": "^9.6.1",
     "awesome-typescript-loader": "^3.4.0",
     "danger": "^3.2.0",
     "eslint": "^4.11.0",
