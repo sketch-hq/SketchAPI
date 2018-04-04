@@ -101,7 +101,10 @@ export class Library extends WrappedObject {
 
 Library.type = Types.Library
 Library[DefinedPropertiesKey] = { ...WrappedObject[DefinedPropertiesKey] }
-Factory.registerClass(Library, MSAssetLibrary)
+// need to check if we have MSAssetLibrary because it won't be available on jenkins
+if (typeof MSAssetLibrary !== 'undefined') {
+  Factory.registerClass(Library, MSAssetLibrary)
+}
 
 Library.define('id', {
   exportable: true,
