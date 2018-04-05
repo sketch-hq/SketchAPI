@@ -1,7 +1,7 @@
 {
   "unreleased": [
     "[Fixed] Creating a Rectangle with an Object having an `x` value of `0` now works as expected",
-    "[New] Add `locked` and `hidden` property on Layer"
+    "[New] Add `locked` and `hidden` property on Layer",
     "[New] Add `console` core module (accessed with `require('console')`",
     "[New] Add `util` core module (accessed with `require('util')`",
     "[New] Add `events` core module (accessed with `require('events')`",
