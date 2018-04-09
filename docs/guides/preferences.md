@@ -89,7 +89,7 @@ What it doesn’t do, however, is change when a new JavaScript context is made. 
 
 If you find yourself in the latter category, of needing to restart long-running JavaScript contexts regularly during development, the unix utility [`entr`](http://entrproject.org/) may come in handy. Given a list of files on stdin, it will run a command (or restart a long-running process given `-r`) every time one of those files is modified:
 
-`find ./FB\ SketchKit.sketchplugin -name '*js' | entr -r /Applications/Sketch.app/Contents/MacOS/Sketch`
+`find /your/plugin/build/dest -name '*js' | entr -r /Applications/Sketch.app/Contents/MacOS/Sketch`
 
 #### In conjunction with webview JavaScript
 
