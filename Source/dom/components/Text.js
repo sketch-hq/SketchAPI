@@ -1,5 +1,5 @@
 import { DefinedPropertiesKey } from '../WrappedObject'
-import { Layer } from './Layer'
+import { StyledLayer } from './StyledLayer'
 import { Rectangle } from '../Rectangle'
 import { Types } from '../enums'
 import { Factory } from '../Factory'
@@ -39,7 +39,7 @@ export const TextAlignmentMap = {
 /**
  * Represents a text layer.
  */
-export class Text extends Layer {
+export class Text extends StyledLayer {
   /**
    * Make a new text object.
    *
@@ -137,7 +137,7 @@ export class Text extends Layer {
 }
 
 Text.type = Types.Text
-Text[DefinedPropertiesKey] = { ...Layer[DefinedPropertiesKey] }
+Text[DefinedPropertiesKey] = { ...StyledLayer[DefinedPropertiesKey] }
 Factory.registerClass(Text, MSTextLayer)
 
 Text.define('text', {

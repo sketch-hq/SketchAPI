@@ -1,5 +1,5 @@
 import { DefinedPropertiesKey } from '../WrappedObject'
-import { Layer } from './Layer'
+import { StyledLayer } from './StyledLayer'
 import { Rectangle } from '../Rectangle'
 import { Types } from '../enums'
 import { Factory } from '../Factory'
@@ -11,7 +11,7 @@ import { ImageData } from './ImageData'
 /**
  * A Sketch symbol instance.
  */
-export class SymbolInstance extends Layer {
+export class SymbolInstance extends StyledLayer {
   /**
    * Make a new symbol instance.
    */
@@ -54,7 +54,7 @@ export class SymbolInstance extends Layer {
 }
 
 SymbolInstance.type = Types.SymbolInstance
-SymbolInstance[DefinedPropertiesKey] = { ...Layer[DefinedPropertiesKey] }
+SymbolInstance[DefinedPropertiesKey] = { ...StyledLayer[DefinedPropertiesKey] }
 Factory.registerClass(SymbolInstance, MSSymbolInstance)
 
 SymbolInstance.define('symbolId', {

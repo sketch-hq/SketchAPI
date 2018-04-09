@@ -12,10 +12,10 @@
     "start": "npm run build",
     "watch": "webpack --watch",
     "deploy:docs": "./scripts/deploy.sh",
+    "run-tests:no-variant": "skpm-test",
     "run-tests": "skpm-test --app=xcode",
     "test": "npm run lint -- --quiet && npm run run-tests",
     "test:watch": "npm run run-tests -- --watch",
-    "run-tests:no-variant": "skpm-test",
     "test:no-variant": "npm run lint -- --quiet && npm run run-tests:no-variant",
     "test:no-variant:watch": "npm run run-tests:no-variant -- --watch",
     "lint": "find . -name \"*.ts\" -o -name \"*.js\" | grep -v -f .gitignore | grep -v examples | xargs eslint",
@@ -25,7 +25,8 @@
     "postinstall": "node ./scripts/install-pre-commit.js && node ./scripts/inject-new-api-in-tester.js"
   },
   "devDependencies": {
-    "@skpm/test-runner": "^0.2.0",
+    "@skpm/test-runner": "^0.2.3",
+    "@types/node": "^9.6.1",
     "awesome-typescript-loader": "^3.4.0",
     "danger": "^3.2.0",
     "eslint": "^4.11.0",

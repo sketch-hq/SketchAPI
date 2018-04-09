@@ -71,6 +71,12 @@ Page.type = Types.Page
 Page[DefinedPropertiesKey] = { ...Group[DefinedPropertiesKey] }
 Factory.registerClass(Page, MSPage)
 
+// override setting up a flow which doesn't make sense for a Page
+delete Page[DefinedPropertiesKey].flow
+delete Page[DefinedPropertiesKey].style
+delete Page[DefinedPropertiesKey].locked
+delete Page[DefinedPropertiesKey].hidden
+
 // override setting up the parent as it's needs to a be a Document
 Page.define('parent', {
   enumerable: false,
@@ -94,11 +100,6 @@ Page.define('parent', {
     }
   },
 })
-
-// override setting up a flow which doesn't make sense for a Page
-delete Page[DefinedPropertiesKey].flow
-delete Page[DefinedPropertiesKey].locked
-delete Page[DefinedPropertiesKey].hidden
 
 Page.define('index', {
   exportable: false,

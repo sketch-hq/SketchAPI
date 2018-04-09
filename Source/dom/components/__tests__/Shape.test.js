@@ -8,8 +8,8 @@ test('should create a new shape', () => {
   expect(shape.type).toBe('Shape')
 })
 
-test('should create a new shape with the default style', () => {
-  const shape = new Shape()
-  expect(shape.style.borders).toEqual([])
-  expect(shape.style.fills).toEqual([])
-})
+// test('should create a new shape with the default style', () => {
+//   const shape = new Shape()
+//   expect(shape.style.borders).toEqual([])
+//   expect(shape.style.fills).toEqual([])
+// })

@@ -1,3 +1,5 @@
+import { proxyProperty, initProxyProperties } from './utils'
+
 /**
  * Represents a rectangle.
  */
@@ -12,119 +14,20 @@ export class Rectangle {
    * @return The new Rectangle object.
    */
   constructor(x, y, width, height) {
-    Object.defineProperty(this, '_x', {
-      enumerable: false,
-      writable: true,
-      value: x.x,
-    })
-    Object.defineProperty(this, '_y', {
-      enumerable: false,
-      writable: true,
-      value: x.x,
-    })
-    Object.defineProperty(this, '_width', {
-      enumerable: false,
-      writable: true,
-      value: x.x,
-    })
-    Object.defineProperty(this, '_height', {
-      enumerable: false,
-      writable: true,
-      value: x.x,
-    })
+    initProxyProperties(this)
+
+    proxyProperty(this, 'x', parseFloat(x))
+    proxyProperty(this, 'y', parseFloat(y))
+    proxyProperty(this, 'width', parseFloat(width))
+    proxyProperty(this, 'height', parseFloat(height))
+
     // if the argument is object
     if (typeof x === 'object' && typeof x.x === 'number') {
       this._x = parseFloat(x.x)
       this._y = parseFloat(x.y)
       this._width = parseFloat(x.width)
       this._height = parseFloat(x.height)
-    } else {
-      /**
-       * The x coordinate of the top-left corner of the rectangle.
-       * @type {number}
-       */
-      this._x = parseFloat(x)
-
-      /**
-       * The y coordinate of the top-left corner of the rectangle.
-       * @type {number}
-       */
-      this._y = parseFloat(y)
-
-      /**
-       * The width of the rectangle.
-       * @type {number}
-       */
-      this._width = parseFloat(width)
-
-      /**
-       * The height of the rectangle.
-       * @type {number}
-       */
-      this._height = parseFloat(height)
     }
-
-    Object.defineProperty(this, '_parent', {
-      enumerable: false,
-      writable: true,
-    })
-
-    Object.defineProperty(this, '_parentKey', {
-      enumerable: false,
-      writable: true,
-    })
-
-    Object.defineProperty(this, 'x', {
-      enumerable: true,
-      get() {
-        return this._x
-      },
-      set(_x) {
-        this._x = _x
-        if (this._parent && this._parentKey) {
-          this._parent[this._parentKey] = this
-        }
-      },
-    })
-
-    Object.defineProperty(this, 'y', {
-      enumerable: true,
-      get() {
-        return this._y
-      },
-      set(_y) {
-        this._y = _y
-        if (this._parent && this._parentKey) {
-          this._parent[this._parentKey] = this
-        }
-      },
-    })
-
-    Object.defineProperty(this, 'width', {
-      enumerable: true,
-      get() {
-        return this._width
-      },
-      set(_width) {
-        this._width = _width
-        if (this._parent && this._parentKey) {
-          this._parent[this._parentKey] = this
-        }
-      },
-    })
-
-    Object.defineProperty(this, 'height', {
-      enumerable: true,
-      get() {
-        return this._height
-      },
-      set(_height) {
-        this._height = _height
-        if (this._parent && this._parentKey) {
-          this._parent[this._parentKey] = this
-        }
-      },
-    })
   }
 
   /**

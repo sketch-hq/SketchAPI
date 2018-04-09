@@ -5,6 +5,7 @@
     "allowJs": true,
     "lib": ["es6", "scripthost"],
     "sourceMap": true,
-    "strict": true
+    "strict": true,
+    "types": ["node"]
   }
 }

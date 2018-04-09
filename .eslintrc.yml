@@ -54,6 +54,11 @@ globals:
   MSHotspotLayer: false
   NSPredicate: false
   MSRectangleShape: false
+  MSStyleShadow: false
+  MSStyleInnerShadow: false
+  MSGradientStop: false
+  MSGradient: false
+  CGPointMake: false
 
 rules:
   ###########
