@@ -10,7 +10,7 @@ const libraryChanges = touchedFiles.filter(
 )
 
 function matchingTest(dir: string, name: string) {
-  const testPath = path.join(dir, '__tests__', `${name}.js`)
+  const testPath = path.join(dir, '__tests__', `${name}.test.js`)
   return touchedFiles.find(f => f === testPath)
 }
 
@@ -73,6 +73,8 @@ const ignoredFilesForTests = [
   'Source/dom/index.js',
   'Source/settings/index.js',
   'Source/ui/index.js',
+  'Source/test-utils.js',
+  'Source/index.js',
 ]
 
 // Warn if there are library changes, but not tests
@@ -103,6 +105,8 @@ const ignoredFilesForDocs = [
   'Source/dom/WrappedObject.js',
   'Source/settings/index.js',
   'Source/ui/index.js',
+  'Source/test-utils.js',
+  'Source/index.js',
 ]
 
 // Warn if there are library changes, but not docs
