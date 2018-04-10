@@ -85,6 +85,19 @@ Please note that this setting determines whether the source of the script is rel
 
 What it doesn’t do, however, is change when a new JavaScript context is made. For long-running scripts, the same context is held in memory (it has to be — the running script is using it) until the script exits. So if you’re testing a long-running script, you will still have to find a way to stop the script, so that the context gets thrown away (that usually means relaunching Sketch, or setting `coscript.setShouldKeepAround(false)`).
 
+### Always restarting sketch after changes to plugin JavaScript
+
+If you find yourself in the latter category, of needing to restart long-running JavaScript contexts regularly during development, the unix utility [`entr`](http://entrproject.org/) may come in handy. Given a list of files on stdin, it will run a command (or restart a long-running process given `-r`) every time one of those files is modified:
+
+`find /your/plugin/build/dest -name '*js' | entr -r /Applications/Sketch.app/Contents/MacOS/Sketch`
+
+#### In conjunction with webview JavaScript
+
+And if you so happen to also have webview JavaScript that doesn't require rebooting Sketch (because right-click + reload is fine), just make sure to avoid passing those files to `entr`:
+
+`find ... | grep -v 'web\.js' | entr ...`
+
+
 ## Inspect a WebView
 
 If your plugin is using a webview, chances are that you will need to inspect it at some point.
