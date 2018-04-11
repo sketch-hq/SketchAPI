@@ -21,9 +21,10 @@
     "postinstall": "cd assets && npm i && cd .. && npm run build && skpm-link"
   },
   "devDependencies": {
-    "@skpm/builder": "^0.4.0"
+    "@skpm/builder": "^0.5.1"
   },
   "dependencies": {
+    "@skpm/child_process": "^0.2.3",
     "sketch-utils": "^0.1.2"
   }
 }
