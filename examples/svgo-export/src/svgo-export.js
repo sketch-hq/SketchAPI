@@ -7,9 +7,61 @@
 // it was installed using `npm install --save sketch-utils`
 const toArray = require('sketch-utils/to-array')
 
+function getSVGOPath(context) {
+  return context.plugin.urlForResourceNamed('node_modules/svgo/bin/svgo').path()
+}
+
+// ### Helper Functions
+
+// Utility function to run a command line command with a set of arguments.
+function runCommand(command, args) {
+  const task = NSTask.alloc().init()
+  task.setLaunchPath_(command)
+  task.arguments = args
+  task.launch()
+  task.waitUntilExit()
+  return task.terminationStatus() == 0
+}
+
+function ensureSVGOExecutable(svgoPath) {
+  return runCommand('/bin/chmod', ['+x', svgoPath])
+}
+
+// This is the function where we call out to svgo to do the heavy lifting (i.e: compress all SVG files).
+//
+// The SVGO options are based on our experience working with Sketch's exported SVGs, and to the best of our knowledge
+// they shouldn't effect the rendering of your assets, just reduce their size.
+function optimizeFilesWithSVGO(svgoPath, filePaths) {
+  const args = [
+    '--disable=convertShapeToPath',
+    '--enable=removeTitle',
+    '--enable=removeDesc',
+    '--enable=removeDoctype',
+    '--enable=removeEmptyAttrs',
+    '--enable=removeUnknownsAndDefaults',
+    '--enable=removeUnusedNS',
+    '--enable=removeEditorsNSData',
+  ]
+  filePaths.forEach(path => args.push(`"${path}"`))
+  const fullCommand = `${svgoPath} ${args.join(' ')}`
+  return runCommand('/bin/bash', ['-l', '-c', fullCommand])
+}
+
+// Utility function to play a given system sound.
+function playSystemSound(sound) {
+  // The command line tool `afplay` does what we need - we just have to call it with the full path
+  // of a system sound.
+  return runCommand('/usr/bin/afplay', [`/System/Library/Sounds/${sound}.aiff`])
+}
+
+// Utility function to remove duplicates on an Array.
+function uniqueArray(arrArg) {
+  return arrArg.filter((elem, pos, arr) => arr.indexOf(elem) == pos)
+}
+
 // when the plugin starts, ensure we can run the svgo binary
-export function onStartup(context){
-  var svgoPath = getSVGOPath(context)
+export function onStartup(context) {
+  const svgoPath = getSVGOPath(context)
   ensureSVGOExecutable(svgoPath)
 }
 
@@ -34,8 +86,7 @@ export function onExportSlices(context) {
   const pathsToCompress = exportRequests
     .filter(currentExport => currentExport.request.format() == 'svg')
     .map(
-      currentExport =>
-        String(currentExport.path) // When we find an asset in SVG format, then we'll want to compress it
+      currentExport => String(currentExport.path) // When we find an asset in SVG format, then we'll want to compress it
     )
 
   if (pathsToCompress.length > 0) {
@@ -43,7 +94,7 @@ export function onExportSlices(context) {
     const paths = uniqueArray(pathsToCompress)
     let success = true
 
-    var svgoPath = getSVGOPath(context)
+    const svgoPath = getSVGOPath(context)
     success = optimizeFilesWithSVGO(svgoPath, paths)
 
     // Finally, make some noise to let the user know that we're done, and if everything went according to plan.
@@ -51,60 +102,6 @@ export function onExportSlices(context) {
     // The compression can take a while if you're exporting many assets, so it's a nice touch :-)
     playSystemSound(success ? 'Glass' : 'Basso')
   }
-}
-
-// ### Helper Functions
-
-// Utility function to run a command line command with a set of arguments.
-function runCommand(command, args) {
-  const task = NSTask.alloc().init()
-  task.setLaunchPath_(command)
-  task.arguments = args
-  task.launch()
-  task.waitUntilExit()
-  return task.terminationStatus() == 0
-}
-
-function getSVGOPath(context){
-  return context.plugin.urlForResourceNamed('node_modules/svgo/bin/svgo').path()
-}
-
-function ensureSVGOExecutable(svgoPath){
-  return runCommand('/bin/chmod', ['+x', svgoPath])
-}
-
-// This is the function where we call out to svgo to do the heavy lifting (i.e: compress all SVG files).
-//
-// The SVGO options are based on our experience working with Sketch's exported SVGs, and to the best of our knowledge
-// they shouldn't effect the rendering of your assets, just reduce their size.
-function optimizeFilesWithSVGO(svgoPath, filePaths) {
-  const args = [
-    '--disable=convertShapeToPath',
-    '--enable=removeTitle',
-    '--enable=removeDesc',
-    '--enable=removeDoctype',
-    '--enable=removeEmptyAttrs',
-    '--enable=removeUnknownsAndDefaults',
-    '--enable=removeUnusedNS',
-    '--enable=removeEditorsNSData'
-  ]
-  filePaths.forEach(function(path){
-    args.push('"' + path + '"')
-  })
-  var fullCommand = svgoPath + ' ' + args.join(' ')
-  return runCommand('/bin/bash', ['-l', '-c', fullCommand])
-}
-
-// Utility function to play a given system sound.
-function playSystemSound(sound) {
-  // The command line tool `afplay` does what we need - we just have to call it with the full path
-  // of a system sound.
-  return runCommand('/usr/bin/afplay', [`/System/Library/Sounds/${sound}.aiff`])
-}
-
-// Utility function to remove duplicates on an Array.
-function uniqueArray(arrArg) {
-  return arrArg.filter((elem, pos, arr) => arr.indexOf(elem) == pos)
 }
 
 // If you have questions, comments or any feedback, ping us at <developer@sketchapp.com>!
