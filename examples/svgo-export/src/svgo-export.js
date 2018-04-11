@@ -68,9 +68,9 @@ export function onExportSlices(context) {
 // The SVGO options are based on our experience working with Sketch's exported SVGs, and to the best of our knowledge
 // they shouldn't effect the rendering of your assets, just reduce their size.
 function optimizeFolderWithSVGO(context, folderPath) {
-  const pathToSVGO = context.plugin.urlForResourceNamed(
-    'node_modules/svgo/bin/svgo'
-  )
+  const pathToSVGO = context.plugin
+    .urlForResourceNamed('node_modules/svgo/bin/svgo')
+    .path()
   return execSync(
     `${pathToSVGO} --folder='${folderPath}' --pretty --disable=convertShapeToPath --enable=removeTitle --enable=removeDesc --enable=removeDoctype --enable=removeEmptyAttrs --enable=removeUnknownsAndDefaults --enable=removeUnusedNS --enable=removeEditorsNSData`
   )
