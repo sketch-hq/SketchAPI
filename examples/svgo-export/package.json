@@ -3,16 +3,14 @@
   "description": "Uses SVGO to compress exported SVG assets",
   "author": "Ale Muñoz <ale@sketchapp.com>",
   "version": "0.1.0",
+  "license" : "SEE LICENSE IN README.md",
   "engines": {
     "sketch": ">=3.0"
   },
   "skpm": {
     "name": "SVGO Export",
     "manifest": "src/manifest.json",
-    "main": "plugin.sketchplugin",
-    "assets": [
-      "assets/**/*"
-    ]
+    "main": "plugin.sketchplugin"
   },
   "scripts": {
     "build": "skpm-build",
@@ -21,7 +19,8 @@
     "postinstall": "cd assets && npm i && cd .. && npm run build && skpm-link"
   },
   "devDependencies": {
-    "@skpm/builder": "^0.4.0"
+    "@skpm/builder": "^0.4.0",
+    "copy-webpack-plugin": "^4.5.1"
   },
   "dependencies": {
     "sketch-utils": "^0.1.2"

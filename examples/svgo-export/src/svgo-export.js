@@ -7,6 +7,12 @@
 // it was installed using `npm install --save sketch-utils`
 const toArray = require('sketch-utils/to-array')
 
+// when the plugin starts, ensure we can run the svgo binary
+export function onStartup(context){
+  var svgoPath = getSVGOPath(context)
+  ensureSVGOExecutable(svgoPath)
+}
+
 // ### Main Handler
 // This is the handler we defined on `manifest.json` for the event (`ExportSlices.finish`). It will be passed a `context` object as a parameter.
 // `context.actionContext` is the action that has been triggered, and it looks like this:
@@ -29,7 +35,7 @@ export function onExportSlices(context) {
     .filter(currentExport => currentExport.request.format() == 'svg')
     .map(
       currentExport =>
-        String(currentExport.path.stringByDeletingLastPathComponent()) // When we find an asset in SVG format, then we'll want to compress the folder it's been exported to.
+        String(currentExport.path) // When we find an asset in SVG format, then we'll want to compress it
     )
 
   if (pathsToCompress.length > 0) {
@@ -37,17 +43,8 @@ export function onExportSlices(context) {
     const paths = uniqueArray(pathsToCompress)
     let success = true
 
-    // Now we run through each one...
-    paths.forEach(path => {
-      log(`Compressing SVG files in ${path}`)
-      // ...doing the export, and log the result to the console
-      if (optimizeFolderWithSVGO(context, path)) {
-        log('✅ compression ok')
-      } else {
-        log('❌ compression error')
-        success = false
-      }
-    })
+    var svgoPath = getSVGOPath(context)
+    success = optimizeFilesWithSVGO(svgoPath, paths)
 
     // Finally, make some noise to let the user know that we're done, and if everything went according to plan.
     //
@@ -61,28 +58,41 @@ export function onExportSlices(context) {
 // Utility function to run a command line command with a set of arguments.
 function runCommand(command, args) {
   const task = NSTask.alloc().init()
-  task.launchPath = command
+  task.setLaunchPath_(command)
   task.arguments = args
   task.launch()
   task.waitUntilExit()
   return task.terminationStatus() == 0
 }
 
-// This is the function where we call out to svgo to do the heavy lifting (i.e: compress all SVG files in a given folder).
-//
-// svgo is installed installed in the Resources folder of our plugin so we need to get it from there.
+function getSVGOPath(context){
+  return context.plugin.urlForResourceNamed('node_modules/svgo/bin/svgo').path()
+}
+
+function ensureSVGOExecutable(svgoPath){
+  return runCommand('/bin/chmod', ['+x', svgoPath])
+}
+
+// This is the function where we call out to svgo to do the heavy lifting (i.e: compress all SVG files).
 //
 // The SVGO options are based on our experience working with Sketch's exported SVGs, and to the best of our knowledge
 // they shouldn't effect the rendering of your assets, just reduce their size.
-function optimizeFolderWithSVGO(context, folderPath) {
-  const pathToSVGO = context.plugin.urlForResourceNamed(
-    'node_modules/.bin/svgo'
-  )
-  return runCommand('/bin/bash', [
-    '-l',
-    '-c',
-    `${pathToSVGO} --folder='${folderPath}' --pretty --disable=convertShapeToPath --enable=removeTitle --enable=removeDesc --enable=removeDoctype --enable=removeEmptyAttrs --enable=removeUnknownsAndDefaults --enable=removeUnusedNS --enable=removeEditorsNSData`,
-  ])
+function optimizeFilesWithSVGO(svgoPath, filePaths) {
+  const args = [
+    '--disable=convertShapeToPath',
+    '--enable=removeTitle',
+    '--enable=removeDesc',
+    '--enable=removeDoctype',
+    '--enable=removeEmptyAttrs',
+    '--enable=removeUnknownsAndDefaults',
+    '--enable=removeUnusedNS',
+    '--enable=removeEditorsNSData'
+  ]
+  filePaths.forEach(function(path){
+    args.push('"' + path + '"')
+  })
+  var fullCommand = svgoPath + ' ' + args.join(' ')
+  return runCommand('/bin/bash', ['-l', '-c', fullCommand])
 }
 
 // Utility function to play a given system sound.
