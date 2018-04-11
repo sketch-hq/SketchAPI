@@ -2,6 +2,9 @@
 //
 // This Plugin compresses SVG assets using SVGO right after they're exported from Sketch.
 
+// we will need to call an executable
+const { execSync } = require('@skpm/child_process')
+
 // we will also need a function to transform an NSArray into a proper JavaScript array
 // the `sketch-utils` package contains such a function so let's just use it.
 // it was installed using `npm install --save sketch-utils`
@@ -39,12 +42,12 @@ export function onExportSlices(context) {
 
     // Now we run through each one...
     paths.forEach(path => {
-      log(`Compressing SVG files in ${path}`)
+      console.log(`Compressing SVG files in ${path}`)
       // ...doing the export, and log the result to the console
       if (optimizeFolderWithSVGO(context, path)) {
-        log('✅ compression ok')
+        console.log('✅ compression ok')
       } else {
-        log('❌ compression error')
+        console.log('❌ compression error')
         success = false
       }
     })
@@ -58,16 +61,6 @@ export function onExportSlices(context) {
 
 // ### Helper Functions
 
-// Utility function to run a command line command with a set of arguments.
-function runCommand(command, args) {
-  const task = NSTask.alloc().init()
-  task.launchPath = command
-  task.arguments = args
-  task.launch()
-  task.waitUntilExit()
-  return task.terminationStatus() == 0
-}
-
 // This is the function where we call out to svgo to do the heavy lifting (i.e: compress all SVG files in a given folder).
 //
 // svgo is installed installed in the Resources folder of our plugin so we need to get it from there.
@@ -75,21 +68,19 @@ function runCommand(command, args) {
 // The SVGO options are based on our experience working with Sketch's exported SVGs, and to the best of our knowledge
 // they shouldn't effect the rendering of your assets, just reduce their size.
 function optimizeFolderWithSVGO(context, folderPath) {
-  const pathToSVGO = context.plugin.urlForResourceNamed(
-    'node_modules/.bin/svgo'
+  const pathToSVGO = context.plugin
+    .urlForResourceNamed('node_modules/svgo/bin/svgo')
+    .path()
+  return execSync(
+    `${pathToSVGO} --folder='${folderPath}' --pretty --disable=convertShapeToPath --enable=removeTitle --enable=removeDesc --enable=removeDoctype --enable=removeEmptyAttrs --enable=removeUnknownsAndDefaults --enable=removeUnusedNS --enable=removeEditorsNSData`
   )
-  return runCommand('/bin/bash', [
-    '-l',
-    '-c',
-    `${pathToSVGO} --folder='${folderPath}' --pretty --disable=convertShapeToPath --enable=removeTitle --enable=removeDesc --enable=removeDoctype --enable=removeEmptyAttrs --enable=removeUnknownsAndDefaults --enable=removeUnusedNS --enable=removeEditorsNSData`,
-  ])
 }
 
 // Utility function to play a given system sound.
 function playSystemSound(sound) {
   // The command line tool `afplay` does what we need - we just have to call it with the full path
   // of a system sound.
-  return runCommand('/usr/bin/afplay', [`/System/Library/Sounds/${sound}.aiff`])
+  return execSync(`/usr/bin/afplay /System/Library/Sounds/${sound}.aiff`)
 }
 
 // Utility function to remove duplicates on an Array.
