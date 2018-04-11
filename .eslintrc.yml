@@ -21,6 +21,7 @@ globals:
   MSTextLayer: false
   MSShapeGroup: false
   NSArray: false
+  NSTask: false
   NSMakePoint: false
   CGRectMake: false
   MSArtboardGroup: false
