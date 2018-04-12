@@ -2,9 +2,9 @@
 
 import { isNativeObject } from '../dom/utils'
 
-function getPluginIcon() {
-  if (__command.pluginBundle() && __command.pluginBundle().icon()) {
-    return __command.pluginBundle().icon()
+function getPluginAlertIcon() {
+  if (__command.pluginBundle() && __command.pluginBundle().alertIcon()) {
+    return __command.pluginBundle().alertIcon()
   }
   return NSImage.imageNamed('plugins')
 }
@@ -44,7 +44,7 @@ export function alert(title, text) {
   const dialog = NSAlert.alloc().init()
   dialog.setMessageText(title)
   dialog.setInformativeText(text)
-  dialog.icon = getPluginIcon()
+  dialog.icon = getPluginAlertIcon()
   return dialog.runModal()
 }
 
@@ -86,7 +86,7 @@ export function getSelectionFromUser(msg, items, selectedItemIndex = 0) {
   dialog.addButtonWithTitle('OK')
   dialog.addButtonWithTitle('Cancel')
   dialog.setAccessoryView(accessory)
-  dialog.icon = getPluginIcon()
+  dialog.icon = getPluginAlertIcon()
 
   const responseCode = dialog.runModal()
   const sel = accessory.indexOfSelectedItem()
