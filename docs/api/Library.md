@@ -30,36 +30,23 @@ var libraries = Library.getLibraries()
 
 An array of Libraries.
 
-## Create a new Library
+## Get a Library from a path
 
 ```javascript
-// create a library from a sketch file
-var library = Library.createLibraryFromDocument(
+var library = Library.getLibraryForDocumentAtPath(
   'path/to/existing/document.sketch'
-)
-
-// create a library from an open document
-var library = Library.createLibraryFromDocument(
-  document,
-  'path/where/the/document/will/be/saved.sketch'
 )
 ```
 
-You can create a new Library from:
+Get the library for a Sketch document. If the Document was already added as a Library, it will simply return it. If it is not already a Library, it will be added.
 
-* an existing Sketch file
-* an open Document
-
-If you create a Library from an open Document, it will be saved to disk before being added as a Library.
-
-| Parameters                                                  |                                                                            |
-| ----------------------------------------------------------- | -------------------------------------------------------------------------- |
-| document<span class="arg-type">[Document](#document)</span> | The Document to save to disk and add as a Library.                         |
-| path<span class="arg-type">string - required</span>         | The path of the Library. If `document` was passed, it will be saved there. |
+| Parameters                                          |                          |
+| --------------------------------------------------- | ------------------------ |
+| path<span class="arg-type">string - required</span> | The path of the Library. |
 
 ### Returns
 
-A new Library
+The existing Library at the path or a new Library from the document at the path.
 
 ## Remove a Library
 

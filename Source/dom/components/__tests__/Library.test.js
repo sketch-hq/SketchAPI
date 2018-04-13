@@ -46,8 +46,9 @@ if (!isRunningOnJenkins()) {
     })
     // eslint-disable-next-line
     const master = SymbolMaster.fromArtboard(artboard)
-    lib = Library.createLibraryFromDocument(
-      document,
+
+    document.save('~/Desktop/sketch-api-unit-tests-library.sketch')
+    lib = Library.getLibraryForDocumentAtPath(
       '~/Desktop/sketch-api-unit-tests-library.sketch'
     )
     libId = lib.id

@@ -32,22 +32,21 @@ export class Library extends WrappedObject {
     )
   }
 
-  static createLibraryFromDocument(document, path) {
-    if (typeof document === 'string' && !path) {
-      /* eslint-disable no-param-reassign */
-      path = document
-      document = undefined
-      /* eslint-enable */
-    }
-
+  static getLibraryForDocumentAtPath(path) {
     const libUrl = getURLFromPath(path)
 
-    if (document) {
-      const wrappedDocument = wrapObject(document)
-      wrappedDocument.save(path)
+    const libraryController = AppController.sharedInstance().librariesController()
+
+    // check if we already imported the library
+    const existingLibraries = libraryController.libraries()
+    for (let i = 0; i < existingLibraries.count(); i += 1) {
+      const existingLibrary = existingLibraries.objectAtIndex(i)
+      if (existingLibrary.locationOnDisk().isEqual(libUrl)) {
+        return Library.fromNative(existingLibrary)
+      }
     }
 
-    const libraryController = AppController.sharedInstance().librariesController()
+    // otherwise, let's add it
     const status = libraryController.addAssetLibraryAtURL(libUrl)
 
     if (status !== 0) {
