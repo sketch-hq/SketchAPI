@@ -32,7 +32,7 @@ if (!isRunningOnJenkins()) {
     expect(symbolRefs.length).toBe(1)
     expect(symbolRefs[0].id).toBe(master.symbolId)
 
-    const importedMaster = symbolRefs[0].importInDocument(document2)
+    const importedMaster = symbolRefs[0].import()
 
     expect(importedMaster.layers[0].text).toBe('Test value')
 
