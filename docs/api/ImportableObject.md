@@ -29,11 +29,3 @@ You can import an Importable Object to any document, even if it has already been
 ### Returns
 
 If the `objectType` of the Object is `Symbol`, it will return a [Symbol Master](#symbol-master) which will be linked to the Library (meaning that if the Library is updated, the [Symbol Instances](#symbol-instance) created from the Master will be updated as well).
-
-## Sync a local reference to the library version
-
-```javascript
-symbolReference.syncLocalDocumentInstancesWithLibrary(document)
-```
-
-If a [Library](#library) has some updates, you can synchronize the local instances to the Library's version and bypass the panel where the user chooses the updated to bring.

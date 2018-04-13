@@ -89,3 +89,15 @@ If the Symbol Master was imported from a library, the method can be used to:
 ### Returns
 
 The [Library](#library) the symbol was defined in, or `undefined` if it is a local symbol.
+
+## Sync the local reference with the library version
+
+```javascript
+const success = master.syncWithLibrary()
+```
+
+If a [Library](#library) has some updates, you can synchronize the local Symbol Master with the Library's version and bypass the panel where the user chooses the updated to bring.
+
+### Returns
+
+`true` if it succeed.
