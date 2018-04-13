@@ -1,6 +1,6 @@
 import { WrappedObject, DefinedPropertiesKey } from '../WrappedObject'
 import { Document } from './Document'
-import { toArray, getURLFromPath } from '../utils'
+import { toArray, getURLFromPath, getDocumentData } from '../utils'
 import { Types } from '../enums'
 import { Factory } from '../Factory'
 import { wrapObject } from '../wrapNativeObject'
@@ -88,9 +88,12 @@ export class Library extends WrappedObject {
     if (!shareableObjectRefsForCurrentLib) {
       return []
     }
-    return toArray(shareableObjectRefsForCurrentLib.objectRefs).map(
-      ImportableObject.fromNative.bind(ImportableObject)
-    )
+    const documentData = getDocumentData(document)
+    return toArray(shareableObjectRefsForCurrentLib.objectRefs).map(ref => {
+      const obj = ImportableObject.fromNative(ref)
+      obj._documentData = documentData
+      return obj
+    })
   }
 
   remove() {

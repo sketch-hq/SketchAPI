@@ -2,7 +2,6 @@ import { DefinedPropertiesKey, WrappedObject } from '../WrappedObject'
 import { Types } from '../enums'
 import { Factory } from '../Factory'
 import { wrapNativeObject } from '../wrapNativeObject'
-import { getDocumentData } from '../utils'
 
 const ObjectType = {
   Symbol: 0,
@@ -17,33 +16,30 @@ export class ImportableObject extends WrappedObject {
    */
   constructor(master = {}) {
     if (!master.sketchObject) {
-      throw new Error(`Cannot create a ShareableObject directly`)
+      throw new Error(`Cannot create a ImportableObject directly`)
     }
     super(master)
+
+    Object.defineProperty(this, '_documentData', {
+      enumerable: false,
+      writable: true,
+    })
   }
 
-  importInDocument(document) {
+  import() {
+    if (!this._documentData) {
+      throw new Error('missing document data')
+    }
     const libraryController = AppController.sharedInstance().librariesController()
 
-    const documentData = getDocumentData(document)
-
     const importedSymbol = libraryController
-      .importShareableObjectReference_intoDocument(this._object, documentData)
+      .importShareableObjectReference_intoDocument(
+        this._object,
+        this._documentData
+      )
       .localObject()
 
     return wrapNativeObject(importedSymbol)
-  }
-
-  syncLocalDocumentInstancesWithLibrary(document) {
-    const libraryController = AppController.sharedInstance().librariesController()
-
-    const documentData = getDocumentData(document)
-
-    libraryController.syncForeignObject_withMaster_fromLibrary(
-      this._object.foreignObjectCollectionInDocument(documentData),
-      this._object.shareableObject(),
-      this._object.sourceLibrary()
-    )
   }
 }
 

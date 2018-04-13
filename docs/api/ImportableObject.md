@@ -18,13 +18,13 @@ An Object that can imported from a [Library](#library). All its properties are r
 | objectType<span class="arg-type">string</span>           | The type of the Object. Will only be `Symbol` for now. |
 | library<span class="arg-type">[Library](#library)</span> | The Library the Object is part of.                     |
 
-## Import in a Document
+## Import in the Document
 
 ```javascript
-var symbolMaster = symbolReference.importInDocument(document)
+var symbolMaster = symbolReference.import()
 ```
 
-You can import an Importable Object to any document, even if it has already beenn imported.
+An Importable Object is linked to a Document so importing it will import it in the said Document.
 
 ### Returns
 
