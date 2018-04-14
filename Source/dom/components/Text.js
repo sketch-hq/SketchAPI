@@ -129,7 +129,7 @@ export class Text extends StyledLayer {
         baselineOffset,
         range: effectiveRange,
       })
-      currentLocation = NSMaxRange(effectiveRange) + 1
+      currentLocation = NSMaxRange(effectiveRange)
     }
 
     return fragments
