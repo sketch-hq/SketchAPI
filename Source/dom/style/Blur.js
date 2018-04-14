@@ -24,7 +24,7 @@ export class Blur extends WrappedObject {
       s.setType(BlurType[blur.blurType] || blur.blurType)
     }
     if (typeof blur.enabled !== 'undefined') {
-      s.enabled = blur.enabled // eslint-disable-line
+      s.isEnabled = blur.enabled // eslint-disable-line
     }
   }
 }
@@ -73,10 +73,10 @@ Blur.define('radius', {
 
 Blur.define('enabled', {
   get() {
-    return !!this._object.enabled
+    return !!this._object.isEnabled()
   },
   set(enabled) {
-    this._object.enabled = enabled
+    this._object.isEnabled = enabled
   },
 })
 

@@ -33,9 +33,9 @@ export class Fill extends WrappedObject {
     fill.fillType = FillType[value.fillType] || value.fillType || FillType.color
 
     if (typeof value.enabled === 'undefined') {
-      fill.enabled = true
+      fill.isEnabled = true
     } else {
-      fill.enabled = value.enabled
+      fill.isEnabled = value.enabled
     }
     return fill
   }
@@ -88,9 +88,9 @@ Fill.define('gradient', {
 
 Fill.define('enabled', {
   get() {
-    return !!this._object.enabled
+    return !!this._object.isEnabled()
   },
   set(enabled) {
-    this._object.enabled = enabled
+    this._object.isEnabled = enabled
   },
 })
