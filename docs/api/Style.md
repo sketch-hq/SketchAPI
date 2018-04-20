@@ -109,19 +109,19 @@ Enumeration of the type of a blur.
 shape.style.fills = [
   {
     color: '#c0ffee',
-    fillType: Style.FillType.Color,
+    fill: Style.FillType.Color,
   },
 ]
 ```
 
 An object that represent a Fill.
 
-| Properties                                                       |                                                  |
-| ---------------------------------------------------------------- | ------------------------------------------------ |
-| fillType<span class="arg-type">[FillType](#stylefilltype)</span> | The type of the fill.                            |
-| color<span class="arg-type">string</span>                        | A rgba hex-string (`#000000ff` is opaque black). |
-| gradient<span class="arg-type">[Gradient](#gradient)</span>      | The gradient of the fill.                        |
-| enabled<span class="arg-type">boolean</span>                     | Wether the fill is active or not.                |
+| Properties                                                   |                                                  |
+| ------------------------------------------------------------ | ------------------------------------------------ |
+| fill<span class="arg-type">[FillType](#stylefilltype)</span> | The type of the fill.                            |
+| color<span class="arg-type">string</span>                    | A rgba hex-string (`#000000ff` is opaque black). |
+| gradient<span class="arg-type">[Gradient](#gradient)</span>  | The gradient of the fill.                        |
+| enabled<span class="arg-type">boolean</span>                 | Wether the fill is active or not.                |
 
 ## `Style.FillType`
 

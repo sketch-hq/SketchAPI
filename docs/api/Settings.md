@@ -116,7 +116,7 @@ Return the value of a setting for a given key on a specific document.
 
 The setting that was stored for the given key. `undefined` if there was nothing.
 
-## Set a Layer setting
+## Set a Document setting
 
 ```js
 Settings.setDocumentSettingForKey(document, 'my-key', 0.1)

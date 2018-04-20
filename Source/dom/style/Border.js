@@ -45,9 +45,9 @@ export class Border extends WrappedObject {
       FillTypeMap[value.fillType] || value.fillType || FillTypeMap.color
 
     if (typeof value.enabled === 'undefined') {
-      border.enabled = true
+      border.isEnabled = true
     } else {
-      border.enabled = value.enabled
+      border.isEnabled = value.enabled
     }
     return border
   }
@@ -123,9 +123,9 @@ Border.define('thickness', {
 
 Border.define('enabled', {
   get() {
-    return !!this._object.enabled
+    return !!this._object.isEnabled()
   },
   set(enabled) {
-    this._object.enabled = enabled
+    this._object.isEnabled = enabled
   },
 })
