@@ -3,16 +3,23 @@ import { WrappedObject, DefinedPropertiesKey } from '../WrappedObject'
 import { Gradient } from './Gradient'
 import { Types } from '../enums'
 
-export const FillType = {
+export const FillTypeMap = {
   Color: 0, // A solid fill/border.
   Gradient: 1, // A gradient fill/border.
   Pattern: 4, // A pattern fill/border.
   Noise: 5, // A noise fill/border.
+}
+
+export const FillType = {
+  Color: 'Color', // A solid fill/border.
+  Gradient: 'Gradient', // A gradient fill/border.
+  Pattern: 'Pattern', // A pattern fill/border.
+  Noise: 'Noise', // A noise fill/border.
   /* @deprecated */
-  color: 0, // A solid fill/border.
-  gradient: 1, // A gradient fill/border.
-  pattern: 4, // A pattern fill/border.
-  noise: 5, // A noise fill/border.
+  color: 'Color', // A solid fill/border.
+  gradient: 'Gradient', // A gradient fill/border.
+  pattern: 'Pattern', // A pattern fill/border.
+  noise: 'Noise', // A noise fill/border.
 }
 
 export class Fill extends WrappedObject {
@@ -30,7 +37,8 @@ export class Fill extends WrappedObject {
       fill.gradient = gradient._object
     }
 
-    fill.fillType = FillType[value.fillType] || value.fillType || FillType.color
+    fill.fillType =
+      FillTypeMap[value.fillType] || value.fillType || FillType.color
 
     if (typeof value.enabled === 'undefined') {
       fill.isEnabled = true
@@ -56,13 +64,13 @@ Fill.define('sketchObject', {
 Fill.define('fill', {
   get() {
     return (
-      Object.keys(FillType).find(
-        key => FillType[key] === this._object.fillType()
+      Object.keys(FillTypeMap).find(
+        key => FillTypeMap[key] === this._object.fillType()
       ) || this._object.fillType()
     )
   },
   set(fillType) {
-    this._object.fillType = FillType[fillType] || fillType || FillType.color
+    this._object.fillType = FillTypeMap[fillType] || fillType || FillType.color
   },
 })
 

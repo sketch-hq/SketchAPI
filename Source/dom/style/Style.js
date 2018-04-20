@@ -9,7 +9,7 @@ import { Blur, BlurType } from './Blur'
 import { Fill, FillType } from './Fill'
 import { Border, BorderPosition } from './Border'
 
-export const BlendingMode = {
+const BlendingModeMap = {
   Normal: 0,
   Darken: 1,
   Multiply: 2,
@@ -26,6 +26,25 @@ export const BlendingMode = {
   Saturation: 13,
   Color: 14,
   Luminosity: 15,
+}
+
+const BlendingMode = {
+  Normal: 'Normal',
+  Darken: 'Darken',
+  Multiply: 'Multiply',
+  ColorBurn: 'ColorBurn',
+  Lighten: 'Lighten',
+  Screen: 'Screen',
+  ColorDodge: 'ColorDodge',
+  Overlay: 'Overlay',
+  SoftLight: 'SoftLight',
+  HardLight: 'HardLight',
+  Difference: 'Difference',
+  Exclusion: 'Exclusion',
+  Hue: 'Hue',
+  Saturation: 'Saturation',
+  Color: 'Color',
+  Luminosity: 'Luminosity',
 }
 
 /**
@@ -77,13 +96,14 @@ Style.define('blendingMode', {
   get() {
     const mode = this._object.contextSettings().blendMode()
     return (
-      Object.keys(BlendingMode).find(key => BlendingMode[key] === mode) || mode
+      Object.keys(BlendingModeMap).find(key => BlendingModeMap[key] === mode) ||
+      mode
     )
   },
   set(mode) {
     this._object
       .contextSettings()
-      .setBlendMode(BlendingMode[mode] || mode || BlendingMode.Normal)
+      .setBlendMode(BlendingModeMap[mode] || mode || BlendingModeMap.Normal)
   },
 })
 
