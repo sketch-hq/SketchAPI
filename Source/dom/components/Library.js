@@ -4,13 +4,25 @@ import { toArray, getURLFromPath, getDocumentData } from '../utils'
 import { Types } from '../enums'
 import { Factory } from '../Factory'
 import { wrapObject } from '../wrapNativeObject'
-import { ImportableObject } from './ImportableObject'
+import { ImportableObject, ImportableObjectType } from './ImportableObject'
 
 const AddStatus = {
   0: 'ok',
   1: 'the library has already been added',
   2: 'the document is not in the new JSON format',
   3: 'there was a problem reading the asset library file',
+}
+
+const LibraryTypeMap = {
+  0: 'Internal',
+  1: 'User', // Is this a library added by a user.
+  2: 'Remote', // Is this a library that can be updated using an appcast.
+}
+
+const LibraryType = {
+  Internal: 'Internal',
+  User: 'User',
+  Remote: 'Remote',
 }
 
 /**
@@ -108,6 +120,8 @@ if (typeof MSAssetLibrary !== 'undefined') {
   Factory.registerClass(Library, MSAssetLibrary)
 }
 
+Library.ImportableObjectType = ImportableObjectType
+
 Library.define('id', {
   exportable: true,
   importable: false,
@@ -141,5 +155,15 @@ Library.define('enabled', {
   importable: false,
   get() {
     return !!this._object.enabled()
+  },
+})
+
+Library.LibraryType = LibraryType
+Library.define('libraryType', {
+  exportable: true,
+  importable: false,
+  get() {
+    const type = this._object.libraryType()
+    return LibraryTypeMap[type] || type
   },
 })

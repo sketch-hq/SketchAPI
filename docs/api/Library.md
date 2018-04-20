@@ -8,14 +8,15 @@ section: components
 var Library = require('sketch/dom').Library
 ```
 
-A Sketch Library.
+A Sketch Library. All the properties are `read-only`.
 
-| Properties                                   |                                              |
-| -------------------------------------------- | -------------------------------------------- |
-| id<span class="arg-type">string</span>       | The unique ID of the Library.                |
-| name<span class="arg-type">string</span>     | The name of the Library.                     |
-| valid<span class="arg-type">boolean</span>   | If Sketch has been able to load the Library. |
-| enabled<span class="arg-type">boolean</span> | If the user has enabled the Library.         |
+| Properties                                                                  |                                              |
+| --------------------------------------------------------------------------- | -------------------------------------------- |
+| id<span class="arg-type">string</span>                                      | The unique ID of the Library.                |
+| name<span class="arg-type">string</span>                                    | The name of the Library.                     |
+| valid<span class="arg-type">boolean</span>                                  | If Sketch has been able to load the Library. |
+| enabled<span class="arg-type">boolean</span>                                | If the user has enabled the Library.         |
+| libraryType<span class="arg-type">[LibraryType](#librarylibrarytype)</span> | The type of Library.                         |
 
 ## Access all the Libraries
 
@@ -83,3 +84,17 @@ Those references depends on the document you want to import them into. For examp
 ### Returns
 
 An array of [Shareable Object](#importable-object) that represents the Symbols which you can import from the Library.
+
+## `Library.LibraryType`
+
+```javascript
+Library.LibraryType.User
+```
+
+Enumeration of the types of Library.
+
+| Value      |
+| ---------- |
+| `Internal` |
+| `User`     |
+| `Remote`   |
