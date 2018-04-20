@@ -64,7 +64,7 @@ export class SymbolMaster extends Artboard {
     if (!lib) {
       return false
     }
-    const { foreignObject } = this._object
+    const foreignObject = this._object.foreignObject()
     if (!foreignObject) {
       return false
     }
@@ -73,6 +73,20 @@ export class SymbolMaster extends Artboard {
       null,
       lib
     )
+    return true
+  }
+
+  unlinkFromLibrary() {
+    const libraryController = AppController.sharedInstance().librariesController()
+    const lib = libraryController.libraryForShareableObject(this._object)
+    if (!lib) {
+      return false
+    }
+    const foreignObject = this._object.foreignObject()
+    if (!foreignObject) {
+      return false
+    }
+    foreignObject.unlinkFromRemote()
     return true
   }
 }

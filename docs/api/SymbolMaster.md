@@ -100,4 +100,16 @@ If a [Library](#library) has some updates, you can synchronize the local Symbol 
 
 ### Returns
 
-`true` if it succeed.
+`true` if it succeeded.
+
+## Unlink the local reference from the library
+
+```javascript
+const success = master.unlinkFromLibrary()
+```
+
+You can unlink a Symbol Master from the Library it comes from and make it a local Symbol Master instead. It will be added to the `Symbols` Page.
+
+### Returns
+
+`true` if it succeeded.
