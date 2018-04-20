@@ -2,11 +2,18 @@ import { WrappedObject, DefinedPropertiesKey } from '../WrappedObject'
 import { Point } from '../Point'
 import { Types } from '../enums'
 
-export const BlurType = {
+const BlurTypeMap = {
   Gaussian: 0,
   Motion: 1,
   Zoom: 2,
   Background: 3,
+}
+
+export const BlurType = {
+  Gaussian: 'Gaussian',
+  Motion: 'Motion',
+  Zoom: 'Zoom',
+  Background: 'Background',
 }
 
 export class Blur extends WrappedObject {
@@ -21,7 +28,7 @@ export class Blur extends WrappedObject {
       s.setRadius(blur.radius)
     }
     if (typeof blur.blurType !== 'undefined') {
-      s.setType(BlurType[blur.blurType] || blur.blurType)
+      s.setType(BlurTypeMap[blur.blurType] || blur.blurType)
     }
     if (typeof blur.enabled !== 'undefined') {
       s.enabled = blur.enabled // eslint-disable-line
@@ -84,10 +91,11 @@ Blur.define('blurType', {
   get() {
     const blurType = this._object.type()
     return (
-      Object.keys(BlurType).find(key => BlurType[key] === blurType) || blurType
+      Object.keys(BlurTypeMap).find(key => BlurTypeMap[key] === blurType) ||
+      blurType
     )
   },
   set(type) {
-    this._object.setType(BlurType[type] || type)
+    this._object.setType(BlurTypeMap[type] || type)
   },
 })

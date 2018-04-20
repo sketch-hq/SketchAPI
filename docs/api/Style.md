@@ -126,7 +126,7 @@ An object that represent a Fill.
 ## `Style.FillType`
 
 ```javascript
-Style.FillType.color
+Style.FillType.Color
 ```
 
 Enumeration of the types of fill.
