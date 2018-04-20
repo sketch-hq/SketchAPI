@@ -3,11 +3,18 @@ import { Types } from '../enums'
 import { Factory } from '../Factory'
 import { wrapNativeObject } from '../wrapNativeObject'
 
-const ObjectType = {
+const ObjectTypeMap = {
   Symbol: 0,
   LayerStyle: 1,
   TextStyle: 2,
   Unknown: 3,
+}
+
+export const ImportableObjectType = {
+  Symbol: 'Symbol',
+  LayerStyle: 'LayerStyle',
+  TextStyle: 'TextStyle',
+  Unknown: 'Unknown',
 }
 
 export class ImportableObject extends WrappedObject {
@@ -30,16 +37,26 @@ export class ImportableObject extends WrappedObject {
     if (!this._documentData) {
       throw new Error('missing document data')
     }
+
+    let importedObject =
+      this._object.shareableObject && this._object.shareableObject()
+
+    if (importedObject && !this._object.sourceLibrary()) {
+      return wrapNativeObject(importedObject)
+    }
+
     const libraryController = AppController.sharedInstance().librariesController()
 
-    const importedSymbol = libraryController
-      .importShareableObjectReference_intoDocument(
-        this._object,
-        this._documentData
-      )
-      .localObject()
+    importedObject = libraryController.importShareableObjectReference_intoDocument(
+      this._object,
+      this._documentData
+    )
 
-    return wrapNativeObject(importedSymbol)
+    if (!importedObject) {
+      throw new Error('Could not import the Object')
+    }
+
+    return wrapNativeObject(importedObject.localObject())
   }
 }
 
@@ -66,12 +83,22 @@ ImportableObject.define('id', {
   },
 })
 
+ImportableObject.define('name', {
+  exportable: true,
+  importable: false,
+  get() {
+    return String(this._object.name())
+  },
+})
+
 ImportableObject.define('objectType', {
   exportable: true,
   importable: false,
   get() {
     const raw = this._object.shareableObjectType()
-    return Object.keys(ObjectType).find(key => ObjectType[key] === raw) || raw
+    return (
+      Object.keys(ObjectTypeMap).find(key => ObjectTypeMap[key] === raw) || raw
+    )
   },
 })
 
