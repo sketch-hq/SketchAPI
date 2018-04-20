@@ -1,7 +1,7 @@
 import { WrappedObject, DefinedPropertiesKey } from '../WrappedObject'
 import { Page } from './Page'
 import { Selection } from '../Selection'
-import { toArray, getURLFromPath } from '../utils'
+import { toArray, getURLFromPath, getDocumentData } from '../utils'
 import { wrapObject } from '../wrapNativeObject'
 import { Types } from '../enums'
 import { Factory } from '../Factory'
@@ -61,7 +61,8 @@ export class Document extends WrappedObject {
    * @return {Layer} A layer object, if one was found.
    */
   getLayerWithID(layerId) {
-    const layer = this._object.documentData().layerWithID(layerId)
+    const documentData = getDocumentData(this._object)
+    const layer = documentData.layerWithID(layerId)
     if (layer) {
       return wrapObject(layer)
     }
@@ -93,7 +94,8 @@ export class Document extends WrappedObject {
    * @return {SymbolMaster} A symbol master object, if one was found.
    */
   getSymbolMasterWithID(symbolId) {
-    const symbol = this._object.documentData().symbolWithID(symbolId)
+    const documentData = getDocumentData(this._object)
+    const symbol = documentData.symbolWithID(symbolId)
     if (symbol) {
       return wrapObject(symbol)
     }
@@ -101,7 +103,8 @@ export class Document extends WrappedObject {
   }
 
   getSymbols() {
-    return toArray(this._object.allSymbols()).map(wrapObject)
+    const documentData = getDocumentData(this._object)
+    return toArray(documentData.allSymbols()).map(wrapObject)
   }
 
   /**
