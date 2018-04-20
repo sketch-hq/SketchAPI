@@ -53,7 +53,8 @@ export class Library extends WrappedObject {
     const existingLibraries = libraryController.libraries()
     for (let i = 0; i < existingLibraries.count(); i += 1) {
       const existingLibrary = existingLibraries.objectAtIndex(i)
-      if (existingLibrary.locationOnDisk().isEqual(libUrl)) {
+      const location = existingLibrary.locationOnDisk()
+      if (location && location.isEqual(libUrl)) {
         return Library.fromNative(existingLibrary)
       }
     }
