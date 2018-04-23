@@ -3,12 +3,12 @@ import { Types } from '../enums'
 import { Factory } from '../Factory'
 import { wrapNativeObject } from '../wrapNativeObject'
 
-const ObjectTypeMap = {
-  Symbol: 0,
-  LayerStyle: 1,
-  TextStyle: 2,
-  Unknown: 3,
-}
+// const ObjectTypeMap = {
+//   Symbol: 0,
+//   LayerStyle: 1,
+//   TextStyle: 2,
+//   Unknown: 3,
+// }
 
 export const ImportableObjectType = {
   Symbol: 'Symbol',
@@ -42,7 +42,21 @@ export class ImportableObject extends WrappedObject {
       this._object.shareableObject && this._object.shareableObject()
 
     if (importedObject && !this._object.sourceLibrary()) {
-      return wrapNativeObject(importedObject)
+      switch (this.objectType) {
+        case ImportableObjectType.Symbol: {
+          const symbol = this._documentData.symbolWithID(
+            this._object.sharedObjectID()
+          )
+          if (symbol) {
+            return wrapNativeObject(symbol)
+          }
+          return undefined
+        }
+        default:
+          throw new Error(
+            'Cannot import an already imported object other than a Symbol'
+          )
+      }
     }
 
     const libraryController = AppController.sharedInstance().librariesController()
@@ -95,10 +109,11 @@ ImportableObject.define('objectType', {
   exportable: true,
   importable: false,
   get() {
-    const raw = this._object.shareableObjectType()
-    return (
-      Object.keys(ObjectTypeMap).find(key => ObjectTypeMap[key] === raw) || raw
-    )
+    return ImportableObjectType.Symbol
+    // const raw = this._object.shareableObject().shareableObjectType()
+    // return (
+    //   Object.keys(ObjectTypeMap).find(key => ObjectTypeMap[key] === raw) || raw
+    // )
   },
 })
 
