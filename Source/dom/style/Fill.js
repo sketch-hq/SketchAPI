@@ -38,7 +38,7 @@ export class Fill extends WrappedObject {
     }
 
     fill.fillType =
-      FillTypeMap[value.fillType] || value.fillType || FillType.color
+      FillTypeMap[value.fillType] || value.fillType || FillTypeMap.Color
 
     if (typeof value.enabled === 'undefined') {
       fill.isEnabled = true
@@ -70,7 +70,8 @@ Fill.define('fill', {
     )
   },
   set(fillType) {
-    this._object.fillType = FillTypeMap[fillType] || fillType || FillType.color
+    this._object.fillType =
+      FillTypeMap[fillType] || fillType || FillTypeMap.Color
   },
 })
 
