@@ -3,12 +3,12 @@ import { Types } from '../enums'
 import { Factory } from '../Factory'
 import { wrapNativeObject } from '../wrapNativeObject'
 
-// const ObjectTypeMap = {
-//   Symbol: 0,
-//   LayerStyle: 1,
-//   TextStyle: 2,
-//   Unknown: 3,
-// }
+const ObjectTypeMap = {
+  Symbol: 0,
+  LayerStyle: 1,
+  TextStyle: 2,
+  Unknown: 3,
+}
 
 export const ImportableObjectType = {
   Symbol: 'Symbol',
@@ -83,6 +83,8 @@ if (typeof MSShareableObjectReference !== 'undefined') {
   Factory.registerClass(ImportableObject, MSShareableObjectReference)
   Factory.registerClass(ImportableObject, MSSymbolMasterReference)
   Factory.registerClass(ImportableObject, MSSharedStyleReference)
+  Factory.registerClass(ImportableObject, MSSharedLayerReference)
+  Factory.registerClass(ImportableObject, MSSharedTextReference)
 }
 
 ImportableObject.define('id', {
@@ -109,11 +111,10 @@ ImportableObject.define('objectType', {
   exportable: true,
   importable: false,
   get() {
-    return ImportableObjectType.Symbol
-    // const raw = this._object.shareableObject().shareableObjectType()
-    // return (
-    //   Object.keys(ObjectTypeMap).find(key => ObjectTypeMap[key] === raw) || raw
-    // )
+    const raw = this._object.shareableObjectType()
+    return (
+      Object.keys(ObjectTypeMap).find(key => ObjectTypeMap[key] === raw) || raw
+    )
   },
 })
 

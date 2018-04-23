@@ -68,6 +68,8 @@ globals:
   MSGradientStop: false
   MSGradient: false
   CGPointMake: false
+  MSSharedLayerReference: false
+  MSSharedTextReference: false
 
 rules:
   ###########
