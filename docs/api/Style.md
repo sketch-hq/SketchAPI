@@ -201,12 +201,16 @@ Style.Arrowheads.OpenArrow
 
 Enumeration of the positions of a border.
 
-| Value         |
-| ------------- |
-| `None`        |
-| `OpenArrow`   |
-| `ClosedArrow` |
-| `Line`        |
+| Value          |
+| -------------- |
+| `None`         |
+| `OpenArrow`    |
+| `FilledArrow`  |
+| `Line`         |
+| `OpenCircle`   |
+| `FilledCircle` |
+| `OpenSquare`   |
+| `FilledSquare` |
 
 ## `Style.LineEnd`
 

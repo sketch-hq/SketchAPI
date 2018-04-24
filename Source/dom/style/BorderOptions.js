@@ -7,6 +7,10 @@ export const Arrowhead = {
   OpenArrow: 1,
   ClosedArrow: 2,
   Line: 3,
+  OpenCircle: 4,
+  FilledCircle: 5,
+  OpenSquare: 6,
+  FilledSquare: 7,
 }
 
 export const LineEnd = {
