@@ -102,7 +102,7 @@ Store a value of a setting for a given key on a specific layer.
 ## Get a Document setting
 
 ```js
-var setting = Settings.layerSettingForKey(document, 'my-key')
+var setting = Settings.documentSettingForKey(document, 'my-key')
 ```
 
 Return the value of a setting for a given key on a specific document.
