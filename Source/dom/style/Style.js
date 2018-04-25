@@ -47,6 +47,29 @@ const BlendingMode = {
   Luminosity: 'Luminosity',
 }
 
+const DEFAULT_STYLE = {
+  fills: [],
+  borders: [],
+  opacity: 1,
+  blendingMode: BlendingMode.Normal,
+  shadows: [],
+  innerShadows: [],
+  borderOptions: {
+    startArrowhead: Arrowhead.None,
+    endArrowhead: Arrowhead.None,
+    dashPattern: [],
+    lineEnd: LineEnd.Butt,
+    lineJoin: LineJoin.Miter,
+  },
+  blur: {
+    center: { x: 0.5, y: 0.5 },
+    motionAngle: 0,
+    radius: 10,
+    enabled: false,
+    blurType: BlurType.Gaussian,
+  },
+}
+
 /**
  * Represents a Sketch layer style.
  */
@@ -61,6 +84,8 @@ export class Style extends WrappedObject {
    */
   constructor(style = {}) {
     if (!style.sketchObject) {
+      // eslint-disable-next-line no-param-reassign
+      style = Object.assign({}, DEFAULT_STYLE, style)
       // eslint-disable-next-line no-param-reassign
       style.sketchObject = MSDefaultStyle.defaultStyle()
     }

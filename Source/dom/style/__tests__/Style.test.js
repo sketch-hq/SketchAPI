@@ -21,3 +21,9 @@ test('should change the blending mode', () => {
   style.blendingMode = Style.BlendingMode.Multiply
   expect(style.blendingMode).toBe('Multiply')
 })
+
+test('default style should not have any fills', () => {
+  // setting the fills after creation
+  const style = new Style()
+  expect(style.sketchObject.fills().count()).toBe(0)
+})
