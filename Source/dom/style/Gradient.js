@@ -32,8 +32,9 @@ export class Gradient extends WrappedObject {
     } else {
       nativeGradient = MSGradient.alloc().initBlankGradient()
       if (object.gradientType) {
+        const type = GradientTypeMap[object.gradientType]
         nativeGradient.setGradientType(
-          GradientTypeMap[object.gradientType] || object.gradientType
+          typeof type !== 'undefined' ? type : object.gradientType
         )
       }
       if (object.from) {
@@ -76,7 +77,10 @@ Gradient.define('gradientType', {
     )
   },
   set(gradientType) {
-    this._object.setGradientType(GradientTypeMap[gradientType] || gradientType)
+    const type = GradientTypeMap[gradientType]
+    this._object.setGradientType(
+      typeof type !== 'undefined' ? type : gradientType
+    )
   },
 })
 

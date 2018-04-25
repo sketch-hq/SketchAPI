@@ -37,8 +37,11 @@ export class Fill extends WrappedObject {
       fill.gradient = gradient._object
     }
 
+    const fillType = FillTypeMap[value.fillType]
     fill.fillType =
-      FillTypeMap[value.fillType] || value.fillType || FillTypeMap.Color
+      typeof fillType !== 'undefined'
+        ? fillType
+        : value.fillType || FillTypeMap.Color
 
     if (typeof value.enabled === 'undefined') {
       fill.isEnabled = true
@@ -70,8 +73,11 @@ Fill.define('fill', {
     )
   },
   set(fillType) {
+    const fillTypeMapped = FillTypeMap[fillType]
     this._object.fillType =
-      FillTypeMap[fillType] || fillType || FillTypeMap.Color
+      typeof fillTypeMapped !== 'undefined'
+        ? fillTypeMapped
+        : fillType || FillTypeMap.Color
   },
 })
 

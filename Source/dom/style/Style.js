@@ -49,25 +49,6 @@ const BlendingMode = {
 
 const DEFAULT_STYLE = {
   fills: [],
-  borders: [],
-  opacity: 1,
-  blendingMode: BlendingMode.Normal,
-  shadows: [],
-  innerShadows: [],
-  borderOptions: {
-    startArrowhead: Arrowhead.None,
-    endArrowhead: Arrowhead.None,
-    dashPattern: [],
-    lineEnd: LineEnd.Butt,
-    lineJoin: LineJoin.Miter,
-  },
-  blur: {
-    center: { x: 0.5, y: 0.5 },
-    motionAngle: 0,
-    radius: 10,
-    enabled: false,
-    blurType: BlurType.Gaussian,
-  },
 }
 
 /**
@@ -126,9 +107,10 @@ Style.define('blendingMode', {
     )
   },
   set(mode) {
+    const blendingMode = BlendingModeMap[mode]
     this._object
       .contextSettings()
-      .setBlendMode(BlendingModeMap[mode] || mode || BlendingModeMap.Normal)
+      .setBlendMode(typeof blendingMode !== 'undefined' ? blendingMode : mode)
   },
 })
 

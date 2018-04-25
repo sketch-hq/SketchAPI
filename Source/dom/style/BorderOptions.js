@@ -40,34 +40,56 @@ export const LineJoin = {
   Bevel: 'Bevel',
 }
 
+const BORDER_OPTIONS_DEFAULT = {
+  startArrowhead: Arrowhead.None,
+  endArrowhead: Arrowhead.None,
+  dashPattern: [],
+  lineEnd: LineEnd.Butt,
+  lineJoin: LineJoin.Miter,
+}
+
 export class BorderOptions extends WrappedObject {
   static updateNative(s, borderOptions) {
-    if (typeof borderOptions.startArrowhead !== 'undefined') {
+    const optionsWithDefault = Object.assign(
+      {},
+      BORDER_OPTIONS_DEFAULT,
+      borderOptions
+    )
+    if (typeof optionsWithDefault.startArrowhead !== 'undefined') {
+      const startArrowhead = ArrowheadMap[optionsWithDefault.startArrowhead]
       s.setStartDecorationType(
-        ArrowheadMap[borderOptions.startArrowhead] ||
-          borderOptions.startArrowhead
+        typeof startArrowhead !== 'undefined'
+          ? startArrowhead
+          : optionsWithDefault.startArrowhead
       )
     }
-    if (typeof borderOptions.endArrowhead !== 'undefined') {
+    if (typeof optionsWithDefault.endArrowhead !== 'undefined') {
+      const endArrowhead = ArrowheadMap[optionsWithDefault.endArrowhead]
       s.setEndDecorationType(
-        ArrowheadMap[borderOptions.endArrowhead] || borderOptions.endArrowhead
+        typeof endArrowhead !== 'undefined'
+          ? endArrowhead
+          : optionsWithDefault.endArrowhead
       )
     }
-    if (typeof borderOptions.dashPattern !== 'undefined') {
-      s.borderOptions().setDashPattern(borderOptions.dashPattern)
+    if (typeof optionsWithDefault.dashPattern !== 'undefined') {
+      s.borderOptions().setDashPattern(optionsWithDefault.dashPattern)
     }
-    if (typeof borderOptions.lineEnd !== 'undefined') {
+    if (typeof optionsWithDefault.lineEnd !== 'undefined') {
+      const lineEnd = LineEndMap[optionsWithDefault.lineEnd]
       s
         .borderOptions()
         .setLineCapStyle(
-          LineEndMap[borderOptions.lineEnd] || borderOptions.lineEnd
+          typeof lineEnd !== 'undefined' ? lineEnd : optionsWithDefault.lineEnd
         )
     }
-    if (typeof borderOptions.lineJoin !== 'undefined') {
+    if (typeof optionsWithDefault.lineJoin !== 'undefined') {
+      const lineJoin = LineJoinMap[optionsWithDefault.lineJoin]
       s
         .borderOptions()
         .setLineJoinStyle(
-          LineJoinMap[borderOptions.lineJoin] || borderOptions.lineJoin
+          typeof lineJoin !== 'undefined'
+            ? lineJoin
+            : optionsWithDefault.lineJoin
         )
     }
   }
@@ -94,7 +116,10 @@ BorderOptions.define('startArrowhead', {
     )
   },
   set(arrowhead) {
-    this._object.setStartDecorationType(ArrowheadMap[arrowhead] || arrowhead)
+    const arrowheadMapped = ArrowheadMap[arrowhead]
+    this._object.setStartDecorationType(
+      typeof arrowheadMapped !== 'undefined' ? arrowheadMapped : arrowhead
+    )
   },
 })
 
@@ -107,7 +132,10 @@ BorderOptions.define('endArrowhead', {
     )
   },
   set(arrowhead) {
-    this._object.setEndDecorationType(ArrowheadMap[arrowhead] || arrowhead)
+    const arrowheadMapped = ArrowheadMap[arrowhead]
+    this._object.setEndDecorationType(
+      typeof arrowheadMapped !== 'undefined' ? arrowheadMapped : arrowhead
+    )
   },
 })
 
@@ -129,7 +157,12 @@ BorderOptions.define('lineEnd', {
     )
   },
   set(lineEnd) {
-    this._object.borderOptions().setLineCapStyle(LineEndMap[lineEnd] || lineEnd)
+    const lineEndMapped = LineEndMap[lineEnd]
+    this._object
+      .borderOptions()
+      .setLineCapStyle(
+        typeof lineEndMapped !== 'undefined' ? lineEndMapped : lineEnd
+      )
   },
 })
 
@@ -142,8 +175,11 @@ BorderOptions.define('lineJoin', {
     )
   },
   set(lineJoin) {
+    const lineJoinMapped = LineJoinMap[lineJoin]
     this._object
       .borderOptions()
-      .setLineJoinStyle(LineJoinMap[lineJoin] || lineJoin)
+      .setLineJoinStyle(
+        typeof lineJoinMapped !== 'undefined' ? lineJoinMapped : lineJoin
+      )
   },
 })

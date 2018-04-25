@@ -17,7 +17,7 @@ test('should change the opacity', () => {
 
 test('should change the blending mode', () => {
   const style = new Style()
-  expect(style.blendingMode).toBe('Normal')
+  expect(style.blendingMode).toBe(Style.BlendingMode.Normal)
   style.blendingMode = Style.BlendingMode.Multiply
   expect(style.blendingMode).toBe('Multiply')
 })

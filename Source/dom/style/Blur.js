@@ -16,22 +16,36 @@ export const BlurType = {
   Background: 'Background',
 }
 
+const DEFAULT_BLUR = {
+  center: { x: 0.5, y: 0.5 },
+  motionAngle: 0,
+  radius: 10,
+  enabled: false,
+  blurType: BlurType.Gaussian,
+}
+
 export class Blur extends WrappedObject {
   static updateNative(s, blur) {
-    if (typeof blur.center !== 'undefined') {
-      s.setCenter(CGPointMake(blur.center.x, blur.center.y))
+    const blurWithDefault = Object.assign({}, DEFAULT_BLUR, blur)
+    if (typeof blurWithDefault.center !== 'undefined') {
+      s.setCenter(
+        CGPointMake(blurWithDefault.center.x, blurWithDefault.center.y)
+      )
     }
-    if (typeof blur.motionAngle !== 'undefined') {
-      s.setMotionAngle(blur.motionAngle)
+    if (typeof blurWithDefault.motionAngle !== 'undefined') {
+      s.setMotionAngle(blurWithDefault.motionAngle)
     }
-    if (typeof blur.radius !== 'undefined') {
-      s.setRadius(blur.radius)
+    if (typeof blurWithDefault.radius !== 'undefined') {
+      s.setRadius(blurWithDefault.radius)
     }
-    if (typeof blur.blurType !== 'undefined') {
-      s.setType(BlurTypeMap[blur.blurType] || blur.blurType)
+    if (typeof blurWithDefault.blurType !== 'undefined') {
+      const blurType = BlurTypeMap[blurWithDefault.blurType]
+      s.setType(
+        typeof blurType !== 'undefined' ? blurType : blurWithDefault.blurType
+      )
     }
-    if (typeof blur.enabled !== 'undefined') {
-      s.isEnabled = blur.enabled // eslint-disable-line
+    if (typeof blurWithDefault.enabled !== 'undefined') {
+      s.isEnabled = blurWithDefault.enabled // eslint-disable-line
     }
   }
 }
@@ -96,6 +110,7 @@ Blur.define('blurType', {
     )
   },
   set(type) {
-    this._object.setType(BlurTypeMap[type] || type)
+    const blurType = BlurTypeMap[type]
+    this._object.setType(typeof blurType !== 'undefined' ? blurType : type)
   },
 })

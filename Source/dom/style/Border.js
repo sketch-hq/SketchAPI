@@ -38,11 +38,16 @@ export class Border extends WrappedObject {
     }
 
     if (value.position) {
-      border.position = BorderPositionMap[value.position] || value.position
+      const position = BorderPositionMap[value.position]
+      border.position =
+        typeof position !== 'undefined' ? position : value.position
     }
 
+    const fillType = FillTypeMap[value.fillType]
     border.fillType =
-      FillTypeMap[value.fillType] || value.fillType || FillTypeMap.Color
+      typeof fillType !== 'undefined'
+        ? fillType
+        : value.fillType || FillTypeMap.Color
 
     if (typeof value.enabled === 'undefined') {
       border.isEnabled = true
@@ -74,8 +79,11 @@ Border.define('fillType', {
     )
   },
   set(fillType) {
+    const fillTypeMapped = FillTypeMap[fillType]
     this._object.fillType =
-      FillTypeMap[fillType] || fillType || FillTypeMap.Color
+      typeof fillTypeMapped !== 'undefined'
+        ? fillTypeMapped
+        : fillType || FillTypeMap.Color
   },
 })
 
@@ -88,7 +96,9 @@ Border.define('position', {
     )
   },
   set(position) {
-    this._object.position = BorderPositionMap[position] || position
+    const positionMapped = BorderPositionMap[position]
+    this._object.position =
+      typeof positionMapped !== 'undefined' ? positionMapped : position
   },
 })
 
