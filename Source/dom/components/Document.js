@@ -1,7 +1,7 @@
 import { WrappedObject, DefinedPropertiesKey } from '../WrappedObject'
 import { Page } from './Page'
 import { Selection } from '../Selection'
-import { toArray } from '../utils'
+import { toArray, getURLFromPath, getDocumentData } from '../utils'
 import { wrapObject } from '../wrapNativeObject'
 import { Types } from '../enums'
 import { Factory } from '../Factory'
@@ -20,9 +20,22 @@ export class Document extends WrappedObject {
   constructor(document = {}) {
     if (!document.sketchObject) {
       const app = NSDocumentController.sharedDocumentController()
-      app.newDocument(Document)
+
+      const error = MOPointer.alloc().init()
+
       // eslint-disable-next-line no-param-reassign
-      document.sketchObject = app.currentDocument()
+      document.sketchObject = app.openUntitledDocumentAndDisplay_error(
+        true,
+        error
+      )
+
+      if (error.value() !== null) {
+        throw new Error(error.value())
+      }
+
+      if (!document.sketchObject) {
+        throw new Error('could not create a new Document')
+      }
     }
 
     super(document)
@@ -43,22 +56,13 @@ export class Document extends WrappedObject {
   }
 
   /**
-   * Returns a list of the pages in this document.
-   *
-   * @return {[Page]} The pages.
-   */
-  get pages() {
-    const pages = toArray(this._object.pages())
-    return pages.map(page => Page.fromNative(page))
-  }
-
-  /**
    * Find the first layer in this document which has the given id.
    *
    * @return {Layer} A layer object, if one was found.
    */
   getLayerWithID(layerId) {
-    const layer = this._object.documentData().layerWithID(layerId)
+    const documentData = getDocumentData(this._object)
+    const layer = documentData.layerWithID(layerId)
     if (layer) {
       return wrapObject(layer)
     }
@@ -90,11 +94,17 @@ export class Document extends WrappedObject {
    * @return {SymbolMaster} A symbol master object, if one was found.
    */
   getSymbolMasterWithID(symbolId) {
-    const symbol = this._object.documentData().symbolWithID(symbolId)
+    const documentData = getDocumentData(this._object)
+    const symbol = documentData.symbolWithID(symbolId)
     if (symbol) {
       return wrapObject(symbol)
     }
     return undefined
+  }
+
+  getSymbols() {
+    const documentData = getDocumentData(this._object)
+    return toArray(documentData.allSymbols()).map(wrapObject)
   }
 
   /**
@@ -106,10 +116,92 @@ export class Document extends WrappedObject {
     const wrappedLayer = wrapObject(layer)
     this._object.contentDrawView().centerRect_(wrappedLayer.sketchObject.rect())
   }
+
+  static open(path) {
+    const app = NSDocumentController.sharedDocumentController()
+
+    let document
+
+    if (!path) {
+      app.openDocument()
+
+      document = app.currentDocument()
+    } else {
+      const url = getURLFromPath(path)
+
+      if (app.documentForURL(url)) {
+        return Document.fromNative(app.documentForURL(url))
+      }
+
+      const error = MOPointer.alloc().init()
+
+      document = app.openDocumentWithContentsOfURL_display_error(
+        url,
+        true,
+        error
+      )
+
+      if (error.value() !== null) {
+        throw new Error(error.value())
+      }
+    }
+
+    return Document.fromNative(document)
+  }
+
+  save(path) {
+    let msdocument = this._object
+    const saveMethod =
+      'writeToURL_ofType_forSaveOperation_originalContentsURL_error'
+    if (!msdocument[saveMethod]) {
+      // we only have an MSDocumentData instead of a MSDocument
+      // let's try to get back to the MSDocument
+      msdocument = this._object.delegate()
+    }
+
+    if (!msdocument || !msdocument[saveMethod]) {
+      throw new Error('Cannot save this document')
+    }
+
+    const error = MOPointer.alloc().init()
+
+    if (!path) {
+      msdocument.saveDocument()
+    } else {
+      const url = getURLFromPath(path)
+      const oldUrl = NSURL.URLWithString('not used')
+
+      msdocument[saveMethod](url, 0, NSSaveToOperation, oldUrl, error)
+
+      if (error.value() !== null) {
+        throw new Error(error.value())
+      }
+    }
+
+    return this
+  }
+
+  close() {
+    let msdocument = this._object
+
+    if (!msdocument.close) {
+      // we only have an MSDocumentData instead of a MSDocument
+      // let's try to get back to the MSDocument
+      msdocument = this._object.delegate()
+    }
+
+    if (!msdocument || !msdocument.close) {
+      throw new Error('Cannot close this document')
+    }
+
+    msdocument.close()
+  }
 }
 
 Document.type = Types.Document
-Document[DefinedPropertiesKey] = { ...WrappedObject[DefinedPropertiesKey] }
+Document[DefinedPropertiesKey] = {
+  ...WrappedObject[DefinedPropertiesKey],
+}
 Factory.registerClass(Document, MSDocumentData)
 
 // also register MSDocument if it exists
@@ -122,10 +214,33 @@ Document.define('id', {
   exportable: true,
   importable: false,
   get() {
+    if (!this._object) {
+      return undefined
+    }
     if (!this._object.objectID) {
       return String(this._object.documentData().objectID())
     }
     return String(this._object.objectID())
+  },
+})
+
+Document.define('pages', {
+  get() {
+    if (!this._object) {
+      return []
+    }
+    const pages = toArray(this._object.pages())
+    return pages.map(page => Page.fromNative(page))
+  },
+  set(pages) {
+    // remove the existing pages
+    this._object.removePages_detachInstances(this._object.pages(), true)
+
+    toArray(pages)
+      .map(wrapObject)
+      .forEach(page => {
+        page.parent = this // eslint-disable-line
+      })
   },
 })
 

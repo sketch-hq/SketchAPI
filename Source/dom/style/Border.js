@@ -42,7 +42,7 @@ export class Border extends WrappedObject {
     }
 
     border.fillType =
-      FillTypeMap[value.fillType] || value.fillType || FillTypeMap.color
+      FillTypeMap[value.fillType] || value.fillType || FillTypeMap.Color
 
     if (typeof value.enabled === 'undefined') {
       border.isEnabled = true

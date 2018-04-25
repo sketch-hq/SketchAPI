@@ -1,3 +1,14 @@
+export function getDocumentData(document) {
+  let documentData = document
+
+  if (document && document.sketchObject && document.sketchObject.documentData) {
+    documentData = document.sketchObject.documentData()
+  } else if (document && document.documentData) {
+    documentData = document.documentData()
+  }
+  return documentData
+}
+
 export function toArray(object) {
   if (Array.isArray(object)) {
     return object
@@ -15,6 +26,14 @@ export function isNativeObject(object) {
 
 export function isWrappedObject(object) {
   return object && object._isWrappedObject
+}
+
+export function getURLFromPath(path) {
+  return typeof path === 'string'
+    ? NSURL.fileURLWithPath(
+        NSString.stringWithString(path).stringByExpandingTildeInPath()
+      )
+    : path
 }
 
 export function initProxyProperties(object) {
@@ -81,6 +100,4 @@ export function proxyProperty(object, property, value, parser) {
       },
     })
   }
-
-  /* eslint-enable */
 }

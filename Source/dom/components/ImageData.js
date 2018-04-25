@@ -9,7 +9,7 @@ import { isWrappedObject, isNativeObject } from '../utils'
 export class ImageData extends WrappedObject {
   /**
    * can accept a wide range of input:
-   * - an wrapped ImageData
+   * - a wrapped ImageData
    * - a native NSImage
    * - a native NSURL
    * - a native MSImageData

@@ -1,4 +1,4 @@
-import { isWrappedObject } from '../dom/utils'
+import { isWrappedObject, getDocumentData } from '../dom/utils'
 
 function getPluginIdentifier() {
   if (!__command.pluginBundle()) {
@@ -105,10 +105,8 @@ export function setLayerSettingForKey(layer, key, value) {
 }
 
 export function documentSettingForKey(document, key) {
-  const value = __command.valueForKey_onDocument(
-    key,
-    isWrappedObject(document) ? document.sketchObject : document
-  )
+  const documentData = getDocumentData(document)
+  const value = __command.valueForKey_onDocument(key, documentData)
 
   if (typeof value === 'undefined' || value == 'undefined' || value === null) {
     return undefined
@@ -117,9 +115,6 @@ export function documentSettingForKey(document, key) {
 }
 
 export function setDocumentSettingForKey(document, key, value) {
-  __command.setValue_forKey_onDocument(
-    JSON.stringify(value),
-    key,
-    isWrappedObject(document) ? document.sketchObject : document
-  )
+  const documentData = getDocumentData(document)
+  __command.setValue_forKey_onDocument(JSON.stringify(value), key, documentData)
 }
