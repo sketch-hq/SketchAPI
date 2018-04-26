@@ -1,14 +1,21 @@
 import { Color, colorToString } from './Color'
 import { WrappedObject, DefinedPropertiesKey } from '../WrappedObject'
 import { Gradient } from './Gradient'
-import { FillType } from './Fill'
+import { FillTypeMap } from './Fill'
 import { Types } from '../enums'
 
-export const BorderPosition = {
+const BorderPositionMap = {
   Center: 0,
   Inside: 1,
   Outside: 2,
   Both: 3, // This is Sketch internal option - don't use it.
+}
+
+export const BorderPosition = {
+  Center: 'Center',
+  Inside: 'Inside',
+  Outside: 'Outside',
+  Both: 'Both', // This is Sketch internal option - don't use it.
 }
 
 export class Border extends WrappedObject {
@@ -31,16 +38,21 @@ export class Border extends WrappedObject {
     }
 
     if (value.position) {
-      border.position = BorderPosition[value.position] || value.position
+      const position = BorderPositionMap[value.position]
+      border.position =
+        typeof position !== 'undefined' ? position : value.position
     }
 
+    const fillType = FillTypeMap[value.fillType]
     border.fillType =
-      FillType[value.fillType] || value.fillType || FillType.color
+      typeof fillType !== 'undefined'
+        ? fillType
+        : value.fillType || FillTypeMap.Color
 
     if (typeof value.enabled === 'undefined') {
-      border.enabled = true
+      border.isEnabled = true
     } else {
-      border.enabled = value.enabled
+      border.isEnabled = value.enabled
     }
     return border
   }
@@ -61,26 +73,32 @@ Border.define('sketchObject', {
 Border.define('fillType', {
   get() {
     return (
-      Object.keys(FillType).find(
-        key => FillType[key] === this._object.fillType()
+      Object.keys(FillTypeMap).find(
+        key => FillTypeMap[key] === this._object.fillType()
       ) || this._object.fillType()
     )
   },
   set(fillType) {
-    this._object.fillType = FillType[fillType] || fillType || FillType.color
+    const fillTypeMapped = FillTypeMap[fillType]
+    this._object.fillType =
+      typeof fillTypeMapped !== 'undefined'
+        ? fillTypeMapped
+        : fillType || FillTypeMap.Color
   },
 })
 
 Border.define('position', {
   get() {
     return (
-      Object.keys(BorderPosition).find(
-        key => BorderPosition[key] === this._object.position()
+      Object.keys(BorderPositionMap).find(
+        key => BorderPositionMap[key] === this._object.position()
       ) || this._object.position()
     )
   },
   set(position) {
-    this._object.position = BorderPosition[position] || position
+    const positionMapped = BorderPositionMap[position]
+    this._object.position =
+      typeof positionMapped !== 'undefined' ? positionMapped : position
   },
 })
 
@@ -115,9 +133,9 @@ Border.define('thickness', {
 
 Border.define('enabled', {
   get() {
-    return !!this._object.enabled
+    return !!this._object.isEnabled()
   },
   set(enabled) {
-    this._object.enabled = enabled
+    this._object.isEnabled = enabled
   },
 })

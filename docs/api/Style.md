@@ -1,6 +1,6 @@
 ---
 title: Style
-order: 402
+order: 401
 section: Utils
 ---
 
@@ -18,7 +18,7 @@ var shape = new Shape({
 shape.style.fills = [
   {
     color: '#c0ffee',
-    fillType: Style.FillType.color,
+    fillType: Style.FillType.Color,
   },
 ]
 ```
@@ -109,34 +109,34 @@ Enumeration of the type of a blur.
 shape.style.fills = [
   {
     color: '#c0ffee',
-    fillType: Style.FillType.color,
+    fill: Style.FillType.Color,
   },
 ]
 ```
 
 An object that represent a Fill.
 
-| Properties                                                       |                                                  |
-| ---------------------------------------------------------------- | ------------------------------------------------ |
-| fillType<span class="arg-type">[FillType](#stylefilltype)</span> | The type of the fill.                            |
-| color<span class="arg-type">string</span>                        | A rgba hex-string (`#000000ff` is opaque black). |
-| gradient<span class="arg-type">[Gradient](#gradient)</span>      | The gradient of the fill.                        |
-| enabled<span class="arg-type">boolean</span>                     | Wether the fill is active or not.                |
+| Properties                                                   |                                                  |
+| ------------------------------------------------------------ | ------------------------------------------------ |
+| fill<span class="arg-type">[FillType](#stylefilltype)</span> | The type of the fill.                            |
+| color<span class="arg-type">string</span>                    | A rgba hex-string (`#000000ff` is opaque black). |
+| gradient<span class="arg-type">[Gradient](#gradient)</span>  | The gradient of the fill.                        |
+| enabled<span class="arg-type">boolean</span>                 | Wether the fill is active or not.                |
 
 ## `Style.FillType`
 
 ```javascript
-Style.FillType.color
+Style.FillType.Color
 ```
 
 Enumeration of the types of fill.
 
 | Value      |
 | ---------- |
-| `color`    |
-| `gradient` |
-| `pattern`  |
-| `noise`    |
+| `Color`    |
+| `Gradient` |
+| `Pattern`  |
+| `Noise`    |
 
 ## Border
 
@@ -144,7 +144,7 @@ Enumeration of the types of fill.
 shape.style.borders = [
   {
     color: '#c0ffee',
-    fillType: Style.FillType.color,
+    fillType: Style.FillType.Color,
     position: Style.BorderPosition.Inside,
   },
 ]
@@ -246,7 +246,7 @@ Enumeration of the positions of a border.
 shape.style.shadows = [
   {
     color: '#c0ffee',
-    fillType: Style.FillType.color,
+    blur: 3,
   },
 ]
 ```
@@ -255,12 +255,12 @@ shape.style.shadows = [
 shape.style.innerShadows = [
   {
     color: '#c0ffee',
-    fillType: Style.FillType.color,
+    blur: 3,
   },
 ]
 ```
 
-An object that represent a Fill.
+An object that represent a Shadow.
 
 | Properties                                   |                                                  |
 | -------------------------------------------- | ------------------------------------------------ |
@@ -270,3 +270,70 @@ An object that represent a Fill.
 | y<span class="arg-type">number</span>        | The vertical offset of the shadow.               |
 | spread<span class="arg-type">number</span>   | The spread of the shadow.                        |
 | enabled<span class="arg-type">boolean</span> | Wether the fill is active or not.                |
+
+## Gradient
+
+```javascript
+shape.style.fills = [
+  {
+    fillType: Style.FillType.Gradient,
+    gradient: {
+      gradientType: Style.GradientType.Linear,
+      from: {
+        x: 0,
+        y: 0,
+      },
+      to: {
+        x: 50,
+        y: 50,
+      },
+      stops: [
+        {
+          position: 0,
+          color: '#c0ffee',
+        },
+        {
+          position: 0.5,
+          color: '#0ff1ce',
+        },
+        {
+          position: 1,
+          color: '#bada55',
+        },
+      ],
+    },
+  },
+]
+```
+
+An object that represent a Gradient.
+
+| Properties                                                                   |                                           |
+| ---------------------------------------------------------------------------- | ----------------------------------------- |
+| gradientType<span class="arg-type">[GradientType](#stylegradienttype)</span> | The type of the Gradient.                 |
+| from<span class="arg-type">[Point](#point)</span>                            | The position of the start of the Gradient |
+| to<span class="arg-type">[Point](#point)</span>                              | The position of the end of the Gradient.  |
+| stops<span class="arg-type">[GradientStop](#gradientstop)[]</span>           | The different stops of the Gradient       |
+
+## `Style.GradientType`
+
+```javascript
+Style.GradientType.Radial
+```
+
+Enumeration of the type of a Gradient.
+
+| Value     |                                                                                                                                                               |
+| --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `Linear`  | Linear gradients tend to be the most common, where two colors will appear at opposite points of an object and will blend, or transition into each other.      |
+| `Radial`  | A radial gradient will create an effect where the transition between color stops will be in a circular pattern.                                               |
+| `Angular` | This effect allows you to create gradients that sweep around the circumference (measured by the maximum width or height of a layer) in a clockwise direction. |
+
+## Gradient Stops
+
+An object that represent a Gradient Stop. Each of colors of a Gradient are represented by a Stop. A Gradient can have as many Stops as you'd like.
+
+| Properties                                   |                                                                                                 |
+| -------------------------------------------- | ----------------------------------------------------------------------------------------------- |
+| position<span class="arg-type">number</span> | The position of the Stop. `0` represents the start of the gradient while `1` represent the end. |
+| color<span class="arg-type">string</span>    | The color of the Stop                                                                           |

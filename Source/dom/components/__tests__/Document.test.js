@@ -1,5 +1,6 @@
 /* globals expect, test */
-
+import { isRunningOnJenkins } from '../../../test-utils'
+import { Document } from '../Document'
 import { Group } from '../Group'
 
 test('should be able to log a document', (context, document) => {
@@ -38,3 +39,47 @@ test('should look for a layer by its name', (context, document) => {
   const found = document.getLayersNamed('Test')
   expect(found).toEqual([group])
 })
+
+// some tests cannot really run on jenkins because it doesn't have access to MSDocument
+if (!isRunningOnJenkins()) {
+  let _document
+  let documentId
+
+  test('should create a new document', () => {
+    _document = new Document()
+    documentId = _document.id
+    const documents = Document.getDocuments()
+    expect(_document.type).toBe('Document')
+    expect(documents.find(d => d.id === documentId)).toEqual(_document)
+  })
+
+  test('should save a file', () => {
+    const result = _document.save('~/Desktop/sketch-api-unit-tests.sketch')
+    expect(result).toBe(_document)
+  })
+
+  test('should close a file', () => {
+    _document.close()
+    const documents = Document.getDocuments()
+    expect(documents.find(d => d.id === documentId)).toBe(undefined)
+  })
+
+  test('should open a file', () => {
+    const document = Document.open('~/Desktop/sketch-api-unit-tests.sketch')
+    const documents = Document.getDocuments()
+    expect(documents.find(d => d.id === document.id)).toEqual(document)
+    // close it again because when watching the tests, it will open dozens of documents
+    document.close()
+  })
+
+  test('should fail to open a non-existing file', () => {
+    try {
+      Document.open('~/Desktop/non-existing-sketch-api-unit-tests.sketch')
+      expect(true).toBe(false)
+    } catch (err) {
+      expect(err.message).toMatch(
+        'couldn’t be opened because there is no such file'
+      )
+    }
+  })
+}

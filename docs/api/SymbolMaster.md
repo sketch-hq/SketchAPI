@@ -74,3 +74,42 @@ var instances = master.getAllInstances()
 ```
 
 Returns an array of all instances of the symbol in the document, on all pages.
+
+## Get the Library it was defined in
+
+```javascript
+var originLibrary = master.getLibrary()
+```
+
+If the Symbol Master was imported from a library, the method can be used to:
+
+* know about it
+* get the library back
+
+### Returns
+
+The [Library](#library) the symbol was defined in, or `undefined` if it is a local symbol.
+
+## Sync the local reference with the library version
+
+```javascript
+const success = master.syncWithLibrary()
+```
+
+If a [Library](#library) has some updates, you can synchronize the local Symbol Master with the Library's version and bypass the panel where the user chooses the updated to bring.
+
+### Returns
+
+`true` if it succeeded.
+
+## Unlink the local reference from the library
+
+```javascript
+const success = master.unlinkFromLibrary()
+```
+
+You can unlink a Symbol Master from the Library it comes from and make it a local Symbol Master instead. It will be added to the `Symbols` Page.
+
+### Returns
+
+`true` if it succeeded.

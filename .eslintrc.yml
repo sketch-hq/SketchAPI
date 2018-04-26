@@ -46,19 +46,30 @@ globals:
   MSSymbolMaster: false
   MSSymbolInstance: false
   MSAvailableOverride: false
+  MSAssetLibrary: false
+  MSDocument: false
+  NSURL: false
+  NSSaveToOperation: false
   NSData: false
   NSDataBase64DecodingIgnoreUnknownCharacters: false
-  MSDocument: false
   __command: false
   MSFlowConnection: false
   MSHotspotLayer: false
   NSPredicate: false
   MSRectangleShape: false
+  MSSymbolMasterReference: false
+  MSShareableObjectReference: false
+  MSSharedStyleReference: false
+  NSString: false
+  MSForeignSymbolProvider: false
+  MSForeignObjectCollector: false
   MSStyleShadow: false
   MSStyleInnerShadow: false
   MSGradientStop: false
   MSGradient: false
   CGPointMake: false
+  MSSharedLayerReference: false
+  MSSharedTextReference: false
 
 rules:
   ###########
@@ -67,6 +78,12 @@ rules:
   # IMPORT
   import/prefer-default-export: off
   import/no-extraneous-dependencies: off
+  import/no-unresolved:
+    - error
+    - commonjs: true
+      caseSensitive: true
+      ignore:
+        - '^sketch(\/|$)'
   # TYPESCRIPT
   typescript/interface-name-prefix:
     - error

@@ -106,6 +106,10 @@ A string specifying the author of the Plugin.
 
 An optional string specifying how to contact the Plugin author by email.
 
+#### `icon`
+
+The resource path to the icon for this Plugin. This is used in the Plugin list and when showing an alert from your plugin. Must be a 128x128 PNG.
+
 #### `homepage`
 
 An optional string specifying an online resource for the user to find out more information or provide feedback for the Plugin.

@@ -2,7 +2,7 @@ import { WrappedObject, DefinedPropertiesKey } from '../WrappedObject'
 import { toArray } from '../utils'
 import { Types } from '../enums'
 
-export const Arrowhead = {
+const ArrowheadMap = {
   None: 0,
   OpenArrow: 1,
   ClosedArrow: 2,
@@ -13,45 +13,87 @@ export const Arrowhead = {
   FilledSquare: 7,
 }
 
-export const LineEnd = {
+export const Arrowhead = {
+  None: 'None',
+  OpenArrow: 'OpenArrow',
+  ClosedArrow: 'ClosedArrow',
+  Line: 'Line',
+}
+
+const LineEndMap = {
   Butt: 0,
   Round: 1,
   Projecting: 2,
 }
 
-export const LineJoin = {
+export const LineEnd = {
+  Butt: 'Butt',
+  Round: 'Round',
+  Projecting: 'Projecting',
+}
+
+const LineJoinMap = {
   Miter: 0,
   Round: 1,
   Bevel: 2,
 }
 
+export const LineJoin = {
+  Miter: 'Mitter',
+  Round: 'Round',
+  Bevel: 'Bevel',
+}
+
+const BORDER_OPTIONS_DEFAULT = {
+  startArrowhead: Arrowhead.None,
+  endArrowhead: Arrowhead.None,
+  dashPattern: [],
+  lineEnd: LineEnd.Butt,
+  lineJoin: LineJoin.Miter,
+}
+
 export class BorderOptions extends WrappedObject {
   static updateNative(s, borderOptions) {
-    if (typeof borderOptions.startArrowhead !== 'undefined') {
+    const optionsWithDefault = Object.assign(
+      {},
+      BORDER_OPTIONS_DEFAULT,
+      borderOptions
+    )
+    if (typeof optionsWithDefault.startArrowhead !== 'undefined') {
+      const startArrowhead = ArrowheadMap[optionsWithDefault.startArrowhead]
       s.setStartDecorationType(
-        Arrowhead[borderOptions.startArrowhead] || borderOptions.startArrowhead
+        typeof startArrowhead !== 'undefined'
+          ? startArrowhead
+          : optionsWithDefault.startArrowhead
       )
     }
-    if (typeof borderOptions.endArrowhead !== 'undefined') {
+    if (typeof optionsWithDefault.endArrowhead !== 'undefined') {
+      const endArrowhead = ArrowheadMap[optionsWithDefault.endArrowhead]
       s.setEndDecorationType(
-        Arrowhead[borderOptions.endArrowhead] || borderOptions.endArrowhead
+        typeof endArrowhead !== 'undefined'
+          ? endArrowhead
+          : optionsWithDefault.endArrowhead
       )
     }
-    if (typeof borderOptions.dashPattern !== 'undefined') {
-      s.borderOptions().setDashPattern(borderOptions.dashPattern)
+    if (typeof optionsWithDefault.dashPattern !== 'undefined') {
+      s.borderOptions().setDashPattern(optionsWithDefault.dashPattern)
     }
-    if (typeof borderOptions.lineEnd !== 'undefined') {
+    if (typeof optionsWithDefault.lineEnd !== 'undefined') {
+      const lineEnd = LineEndMap[optionsWithDefault.lineEnd]
       s
         .borderOptions()
         .setLineCapStyle(
-          LineEnd[borderOptions.lineEnd] || borderOptions.lineEnd
+          typeof lineEnd !== 'undefined' ? lineEnd : optionsWithDefault.lineEnd
         )
     }
-    if (typeof borderOptions.lineJoin !== 'undefined') {
+    if (typeof optionsWithDefault.lineJoin !== 'undefined') {
+      const lineJoin = LineJoinMap[optionsWithDefault.lineJoin]
       s
         .borderOptions()
         .setLineJoinStyle(
-          LineJoin[borderOptions.lineJoin] || borderOptions.lineJoin
+          typeof lineJoin !== 'undefined'
+            ? lineJoin
+            : optionsWithDefault.lineJoin
         )
     }
   }
@@ -73,12 +115,15 @@ BorderOptions.define('startArrowhead', {
   get() {
     const startType = this._object.startDecorationType()
     return (
-      Object.keys(Arrowhead).find(key => Arrowhead[key] === startType) ||
+      Object.keys(ArrowheadMap).find(key => ArrowheadMap[key] === startType) ||
       startType
     )
   },
   set(arrowhead) {
-    this._object.setStartDecorationType(Arrowhead[arrowhead] || arrowhead)
+    const arrowheadMapped = ArrowheadMap[arrowhead]
+    this._object.setStartDecorationType(
+      typeof arrowheadMapped !== 'undefined' ? arrowheadMapped : arrowhead
+    )
   },
 })
 
@@ -86,11 +131,15 @@ BorderOptions.define('endArrowhead', {
   get() {
     const endType = this._object.endDecorationType()
     return (
-      Object.keys(Arrowhead).find(key => Arrowhead[key] === endType) || endType
+      Object.keys(ArrowheadMap).find(key => ArrowheadMap[key] === endType) ||
+      endType
     )
   },
   set(arrowhead) {
-    this._object.setEndDecorationType(Arrowhead[arrowhead] || arrowhead)
+    const arrowheadMapped = ArrowheadMap[arrowhead]
+    this._object.setEndDecorationType(
+      typeof arrowheadMapped !== 'undefined' ? arrowheadMapped : arrowhead
+    )
   },
 })
 
@@ -106,10 +155,18 @@ BorderOptions.define('dashPattern', {
 BorderOptions.define('lineEnd', {
   get() {
     const lineCap = this._object.borderOptions().lineCapStyle()
-    return Object.keys(LineEnd).find(key => LineEnd[key] === lineCap) || lineCap
+    return (
+      Object.keys(LineEndMap).find(key => LineEndMap[key] === lineCap) ||
+      lineCap
+    )
   },
   set(lineEnd) {
-    this._object.borderOptions().setLineCapStyle(LineEnd[lineEnd] || lineEnd)
+    const lineEndMapped = LineEndMap[lineEnd]
+    this._object
+      .borderOptions()
+      .setLineCapStyle(
+        typeof lineEndMapped !== 'undefined' ? lineEndMapped : lineEnd
+      )
   },
 })
 
@@ -117,12 +174,16 @@ BorderOptions.define('lineJoin', {
   get() {
     const lineJoin = this._object.borderOptions().lineJoinStyle()
     return (
-      Object.keys(LineJoin).find(key => LineJoin[key] === lineJoin) || lineJoin
+      Object.keys(LineJoinMap).find(key => LineJoinMap[key] === lineJoin) ||
+      lineJoin
     )
   },
   set(lineJoin) {
+    const lineJoinMapped = LineJoinMap[lineJoin]
     this._object
       .borderOptions()
-      .setLineJoinStyle(LineJoin[lineJoin] || lineJoin)
+      .setLineJoinStyle(
+        typeof lineJoinMapped !== 'undefined' ? lineJoinMapped : lineJoin
+      )
   },
 })
