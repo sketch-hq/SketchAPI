@@ -4,10 +4,16 @@ import { GradientStop } from './GradientStop'
 import { Point } from '../Point'
 import { Types } from '../enums'
 
-export const GradientType = {
+const GradientTypeMap = {
   Linear: 0,
   Radial: 1,
   Angular: 2,
+}
+
+export const GradientType = {
+  Linear: 'Linear',
+  Radial: 'Radial',
+  Angular: 'Angular',
 }
 
 export class Gradient extends WrappedObject {
@@ -26,8 +32,9 @@ export class Gradient extends WrappedObject {
     } else {
       nativeGradient = MSGradient.alloc().initBlankGradient()
       if (object.gradientType) {
+        const type = GradientTypeMap[object.gradientType]
         nativeGradient.setGradientType(
-          GradientType[object.gradientType] || object.gradientType
+          typeof type !== 'undefined' ? type : object.gradientType
         )
       }
       if (object.from) {
@@ -64,13 +71,16 @@ Gradient.define('sketchObject', {
 Gradient.define('gradientType', {
   get() {
     return (
-      Object.keys(GradientType).find(
-        key => GradientType[key] === this._object.gradientType()
+      Object.keys(GradientTypeMap).find(
+        key => GradientTypeMap[key] === this._object.gradientType()
       ) || this._object.gradientType()
     )
   },
   set(gradientType) {
-    this._object.setGradientType(GradientType[gradientType] || gradientType)
+    const type = GradientTypeMap[gradientType]
+    this._object.setGradientType(
+      typeof type !== 'undefined' ? type : gradientType
+    )
   },
 })
 

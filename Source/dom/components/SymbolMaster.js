@@ -48,6 +48,47 @@ export class SymbolMaster extends Artboard {
   getAllInstances() {
     return toArray(this._object.allInstances()).map(wrapObject)
   }
+
+  getLibrary() {
+    const libraryController = AppController.sharedInstance().librariesController()
+    const lib = libraryController.libraryForShareableObject(this._object)
+    if (!lib) {
+      return null
+    }
+    return wrapObject(lib)
+  }
+
+  syncWithLibrary() {
+    const libraryController = AppController.sharedInstance().librariesController()
+    const lib = libraryController.libraryForShareableObject(this._object)
+    if (!lib) {
+      return false
+    }
+    const foreignObject = this._object.foreignObject()
+    if (!foreignObject) {
+      return false
+    }
+    libraryController.syncForeignObject_withMaster_fromLibrary(
+      foreignObject,
+      null,
+      lib
+    )
+    return true
+  }
+
+  unlinkFromLibrary() {
+    const libraryController = AppController.sharedInstance().librariesController()
+    const lib = libraryController.libraryForShareableObject(this._object)
+    if (!lib) {
+      return false
+    }
+    const foreignObject = this._object.foreignObject()
+    if (!foreignObject) {
+      return false
+    }
+    foreignObject.unlinkFromRemote()
+    return true
+  }
 }
 
 SymbolMaster.type = Types.SymbolMaster

@@ -1,4 +1,5 @@
 /* globals expect, test */
+import { isRunningOnJenkins } from '../../test-utils'
 import { Text } from '../../dom/components/Text'
 import {
   settingForKey,
@@ -10,7 +11,7 @@ import {
 } from '../Settings'
 
 test('non existing settings should return undefined', () => {
-  if (!__command.pluginBundle()) {
+  if (isRunningOnJenkins()) {
     try {
       expect(settingForKey('non-existing-key')).toBe(undefined)
       expect(false).toBe(true)
@@ -25,7 +26,7 @@ test('non existing settings should return undefined', () => {
 })
 
 test('should set a boolean', () => {
-  if (!__command.pluginBundle()) {
+  if (isRunningOnJenkins()) {
     try {
       setSettingForKey('false-key', false)
       expect(false).toBe(true)
@@ -44,7 +45,7 @@ test('should set a boolean', () => {
 })
 
 test('should set a string', () => {
-  if (!__command.pluginBundle()) {
+  if (isRunningOnJenkins()) {
     try {
       setSettingForKey('string-key', 'test')
       expect(false).toBe(true)
@@ -60,7 +61,7 @@ test('should set a string', () => {
 })
 
 test('should set undefined', () => {
-  if (!__command.pluginBundle()) {
+  if (isRunningOnJenkins()) {
     try {
       setSettingForKey('undefined-key', undefined)
       expect(false).toBe(true)
@@ -76,7 +77,7 @@ test('should set undefined', () => {
 })
 
 test('should set object', () => {
-  if (!__command.pluginBundle()) {
+  if (isRunningOnJenkins()) {
     try {
       setSettingForKey('object-key', { a: 1 })
       expect(false).toBe(true)

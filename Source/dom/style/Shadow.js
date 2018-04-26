@@ -24,9 +24,9 @@ export class Shadow extends WrappedObject {
     }
 
     if (typeof value.enabled === 'undefined') {
-      shadow.enabled = true
+      shadow.isEnabled = true
     } else {
-      shadow.enabled = value.enabled
+      shadow.isEnabled = value.enabled
     }
     return shadow
   }
@@ -92,9 +92,9 @@ Shadow.define('color', {
 
 Shadow.define('enabled', {
   get() {
-    return !!this._object.enabled
+    return !!this._object.isEnabled()
   },
   set(enabled) {
-    this._object.enabled = enabled
+    this._object.isEnabled = enabled
   },
 })

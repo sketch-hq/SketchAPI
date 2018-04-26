@@ -10,9 +10,10 @@ var Document = require('sketch/dom').Document
 
 A Sketch document.
 
-| Properties                             |                                |
-| -------------------------------------- | ------------------------------ |
-| id<span class="arg-type">string</span> | The unique ID of the document. |
+| Properties                                         |                                |
+| -------------------------------------------------- | ------------------------------ |
+| id<span class="arg-type">string</span>             | The unique ID of the document. |
+| pages<span class="arg-type">[Page](#page)[]</span> | The pages of the document.     |
 
 ## Access the selected Document
 
@@ -25,9 +26,9 @@ var document = Document.getSelectedDocument()
 
 ### Returns
 
-The selected Document or `undefined` if no document is opened.
+The selected Document or `undefined` if no document is open.
 
-## Access all the opened Documents
+## Access all the open Documents
 
 ```javascript
 var documents = require('sketch/dom').getDocuments()
@@ -46,17 +47,23 @@ An array of Documents.
 var document = new Document()
 ```
 
-## Get the Pages
+## Open a Document
 
 ```javascript
-var pages = document.pages
+var document = Document.open()
+
+var document = Document.open('path/to/the/document.sketch')
 ```
 
-A read-only property to get the pages of the document.
+A method to open an existing sketch document or ask the user to open one.
+
+| Parameters                               |                                                                                         |
+| ---------------------------------------- | --------------------------------------------------------------------------------------- |
+| path<span class="arg-type">string</span> | The path to the document to open. If `undefined`, the user will be asked to select one. |
 
 ### Returns
 
-Returns an array of [pages](#page) present in the document.
+Return a Document or throw an Error if it was not possible to open to document at the given path.
 
 ## Get the selected Page
 
@@ -80,7 +87,7 @@ A read-only property to get the layers that the user has selected in the current
 
 ### Returns
 
-Return a [Selection](#selection) object.
+Returns a [Selection](#selection) object.
 
 ## Find a Layer by Id
 
@@ -93,9 +100,9 @@ if (layer) {
 
 A method to help find the first layer in this document which has the given id.
 
-| Parameters                                              |                             |
-| ------------------------------------------------------- | --------------------------- |
-| layerId <span class="arg-type">string - required</span> | The ID of the layer to find |
+| Parameters                                             |                             |
+| ------------------------------------------------------ | --------------------------- |
+| layerId<span class="arg-type">string - required</span> | The ID of the layer to find |
 
 ### Returns
 
@@ -119,6 +126,18 @@ A method to help find the layers in this document which have the given name.
 ### Returns
 
 Return an array of [Layer](#layer).
+
+## Get all the Symbol Masters
+
+```javascript
+var symbols = document.getSymbols()
+```
+
+A method to get all symbol masters defined in the document.
+
+### Returns
+
+Return an array of the [SymbolMaster](#symbolmaster) objects defined in the document.
 
 ## Find a Symbol Master
 
@@ -147,3 +166,29 @@ A method to help center the view of the document window on a given layer.
 | Parameters                                                    |                                   |
 | ------------------------------------------------------------- | --------------------------------- |
 | layer<span class="arg-type">[Layer](#layer) - required</span> | The layer to center the view onto |
+
+## Save the Document
+
+```javascript
+document.save()
+
+document.save('path/to/the/document.sketch')
+```
+
+A method to save a document to a specific path or ask the user to choose where to save it.
+
+| Parameters                               |                                                                                                  |
+| ---------------------------------------- | ------------------------------------------------------------------------------------------------ |
+| path<span class="arg-type">string</span> | The path where the document will be saved. If `undefined`, the user will be asked to select one. |
+
+### Returns
+
+Return the Document or throw an Error if it was not possible to save the document at the given path.
+
+## Close the Document
+
+```javascript
+document.close()
+```
+
+A method to close a document.

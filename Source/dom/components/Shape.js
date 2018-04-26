@@ -26,8 +26,11 @@ export class Shape extends StyledLayer {
 
       super(shape)
 
+      const frame = this._object.frame()
       this.sketchObject.addLayer(
-        MSRectangleShape.alloc().initWithFrame(this.frame.asCGRect())
+        MSRectangleShape.alloc().initWithFrame(
+          CGRectMake(0, 0, frame.width(), frame.height())
+        )
       )
     } else {
       super(shape)

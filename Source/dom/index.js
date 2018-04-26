@@ -13,6 +13,7 @@ import { Artboard } from './components/Artboard'
 import { Page } from './components/Page'
 import { SymbolMaster } from './components/SymbolMaster'
 import { SymbolInstance } from './components/SymbolInstance'
+import { Library } from './components/Library'
 import { HotSpot } from './components/HotSpot'
 
 import { AnimationType, BackTarget } from './components/Flow'
@@ -30,6 +31,7 @@ api.Artboard = Artboard
 api.Page = Page
 api.SymbolMaster = SymbolMaster
 api.SymbolInstance = SymbolInstance
+api.Library = Library
 api.HotSpot = HotSpot
 api.Flow = {
   AnimationType,
@@ -45,6 +47,7 @@ api.fromNative = wrapObject
 
 api.getDocuments = Document.getDocuments
 api.getSelectedDocument = Document.getSelectedDocument
+api.getLibraries = Library.getLibraries
 
 api.version = {
   sketch: MSApplicationMetadata.metadata().appVersion,

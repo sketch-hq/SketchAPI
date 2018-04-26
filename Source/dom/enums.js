@@ -14,10 +14,12 @@ export const Types = {
   Image: 'Image',
   Text: 'Text',
   Document: 'Document',
+  Library: 'Library',
   SymbolMaster: 'SymbolMaster',
   SymbolInstance: 'SymbolInstance',
   Override: 'Override',
   ImageData: 'ImageData',
   Flow: 'Flow',
   HotSpot: 'HotSpot',
+  ImportableObject: 'ImportableObject',
 }
