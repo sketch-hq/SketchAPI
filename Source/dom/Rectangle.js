@@ -1,3 +1,4 @@
+import { wrapObject } from './wrapNativeObject'
 import { proxyProperty, initProxyProperties } from './utils'
 
 /**
@@ -81,5 +82,42 @@ export class Rectangle {
       width: this._width,
       height: this._height,
     }
+  }
+
+  /**
+   * Convert a rectangle in the coordinates that a layer uses to another layer's coordinates.
+   *
+   * @param {Layer} layerA The layer in which the rectangle's coordinates are expressed.
+   * @param {Layer} layerB The layer in which the rectangle's coordinates will be expressed.
+   * @return {Rectangle} The converted rectangle expressed in the coordinate system of the layerB layer.
+   */
+  changeBasis({ from, to } = {}) {
+    const fromLayer = wrapObject(from)
+    const toLayer = wrapObject(to)
+    if (!fromLayer) {
+      if (
+        !toLayer ||
+        !toLayer.sketchObject ||
+        !toLayer.sketchObject.convertPoint_fromLayer
+      ) {
+        throw new Error(`Expected a Layer, got ${to}`)
+      }
+      const origin = toLayer.sketchObject.convertPoint_fromLayer(
+        NSMakePoint(this.x, this.y),
+        null
+      )
+      return new Rectangle(origin.x, origin.y, this.width, this.height)
+    }
+    if (
+      !fromLayer.sketchObject ||
+      !fromLayer.sketchObject.convertPoint_toLayer
+    ) {
+      throw new Error(`Expected a Layer, got ${from}`)
+    }
+    const origin = fromLayer.sketchObject.convertPoint_toLayer(
+      NSMakePoint(this.x, this.y),
+      toLayer ? toLayer.sketchObject : null
+    )
+    return new Rectangle(origin.x, origin.y, this.width, this.height)
   }
 }

@@ -1,5 +1,6 @@
 /* globals expect, test */
 import { Rectangle } from '../Rectangle'
+import { Group } from '../components/Group'
 
 test('should create a rectangle', () => {
   const r = new Rectangle(1, 2, 3, 4)
@@ -67,4 +68,37 @@ test('should return a CGRect', () => {
   expect(parseInt(c.origin.y, 10)).toBe(2)
   expect(parseInt(c.size.width, 10)).toBe(3)
   expect(parseInt(c.size.height, 10)).toBe(4)
+})
+
+test('should convert rect to different coord system', (context, document) => {
+  const page = document.selectedPage
+  const group = new Group({
+    parent: page,
+    frame: {
+      x: 100,
+      y: 50,
+      width: 10,
+      height: 10,
+    },
+  })
+
+  const rect = new Rectangle({ x: 10, y: 10, width: 10, height: 10 })
+
+  const parentRect = rect.changeBasis({ from: group, to: group.parent })
+
+  expect(parentRect.toJSON()).toEqual({
+    x: 110,
+    y: 60,
+    width: 10,
+    height: 10,
+  })
+
+  const pageRect = rect.changeBasis({ from: group })
+
+  expect(pageRect.toJSON()).toEqual({
+    x: 110,
+    y: 60,
+    width: 10,
+    height: 10,
+  })
 })
