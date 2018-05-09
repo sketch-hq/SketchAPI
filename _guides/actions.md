@@ -38,7 +38,7 @@ We're telling our plugin that we want to run the `onOpenDocument` function when 
 
 ```js
 export function onOpenDocument(context) {
-  context.document.showMessage('Document Opened')
+  context.actionContext.document.showMessage('Document Opened')
 }
 ```
 
@@ -46,7 +46,7 @@ Save everything, build the plugin and now whenever you open a document in Sketch
 
 ## Action Contexts
 
-When an action is triggered, Sketch can send the target function some information about the action itself (like the selected layers when the selection changes, or the current document when a new document is opened). We call that the Action Context, and you can access it from the `context` that is sent as a parameter of the target function using `context.actionContext`.
+When an action is triggered, Sketch can send the target function some information about the action itself (like the selected layers when the selection changes, or the current document when a new document is open). We call that the Action Context, and you can access it from the `context` that is sent as a parameter of the target function using `context.actionContext`.
 
 Keep in mind, though, that **not all actions set an Action Context yet**. In fact, most of them don't at the moment, so if you think there's something you'd like to access in an Action Context, send us a note and we'll add it as soon as possible.
 

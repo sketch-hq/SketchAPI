@@ -1,6 +1,6 @@
 ---
 title: Rectangle
-order: 401
+order: 403
 section: Utils
 ---
 
@@ -23,7 +23,7 @@ A utility class to represent a rectangle. Contains some methods to make interact
 | width<span class="arg-type">number</span>         | The width of the rectangle.                                                                         |
 | height<span class="arg-type">number</span>        | The height of the rectangle.                                                                        |
 
-## Offset the rectangle
+## Offset the Rectangle
 
 ```javascript
 var newRect = rect.offset(x, y)
@@ -35,7 +35,7 @@ Adjust the rectangle by offsetting it.
 
 Return this rectangle (useful if you want to chain the calls).
 
-## Scale the rectangle
+## Scale the Rectangle
 
 ```javascript
 var newRect = rect.scale(scaleWidth, scaleHeight)

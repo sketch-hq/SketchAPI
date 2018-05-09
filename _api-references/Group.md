@@ -15,11 +15,12 @@ A group of layers. It is also an instance of [Layer](#layer) so all the methods 
 | id<span class="arg-type">string</span>                     | The unique ID of the Group.                                                                     |
 | name<span class="arg-type">string</span>                   | The name of the Group                                                                           |
 | parent<span class="arg-type">[Group](#group)</span>        | The group the Group is in.                                                                      |
-| layers<span class="arg-type">[Layer](#layer)[]</span>      | The layers that this component groups together.                                                 |
 | frame<span class="arg-type">[Rectangle](#rectangle)</span> | The frame of the Group. This is given in coordinates that are local to the parent of the layer. |
 | flow<span class="arg-type">[Flow](#flow)</span>            | The prototyping action associated with the Group.                                               |
+| style<span class="arg-type">[Style](#style)</span>         | The style of the Group.                                                                         |
+| layers<span class="arg-type">[Layer](#layer)[]</span>      | The layers that this component groups together.                                                 |
 
-## Create a new group
+## Create a new Group
 
 ```javascript
 new Group()
