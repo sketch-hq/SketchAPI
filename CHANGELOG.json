@@ -1,6 +1,7 @@
 {
   "unreleased": [
-    "[Improved] Add `Rectangle.changeBasis` method and deprecate the specific implementations from Layer and Group"
+    "[Improved] Add `Rectangle.changeBasis` method and deprecate the specific implementations from Layer and Group",
+    "[Fixed] Add missing wrapper for some libraries"
   ],
   "releases": {
     "50": [
