@@ -70,6 +70,8 @@ globals:
   CGPointMake: false
   MSSharedLayerReference: false
   MSSharedTextReference: false
+  MSUserAssetLibrary: false
+  MSRemoteAssetLibrary: false
 
 rules:
   ###########

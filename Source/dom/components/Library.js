@@ -115,10 +115,15 @@ export class Library extends WrappedObject {
 }
 
 Library.type = Types.Library
-Library[DefinedPropertiesKey] = { ...WrappedObject[DefinedPropertiesKey] }
+Library[DefinedPropertiesKey] = {
+  ...WrappedObject[DefinedPropertiesKey],
+}
+
 // need to check if we have MSAssetLibrary because it won't be available on jenkins
 if (typeof MSAssetLibrary !== 'undefined') {
   Factory.registerClass(Library, MSAssetLibrary)
+  Factory.registerClass(Library, MSUserAssetLibrary)
+  Factory.registerClass(Library, MSRemoteAssetLibrary)
 }
 
 Library.ImportableObjectType = ImportableObjectType
