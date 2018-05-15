@@ -1,9 +1,10 @@
 {
-  "unreleased": [
-    "[Improved] Add `Rectangle.changeBasis` method and deprecate the specific implementations from Layer and Group",
-    "[Fixed] Add missing wrapper for some libraries"
-  ],
+  "unreleased": [],
   "releases": {
+    "50.1": [
+      "[Improved] Add `Rectangle.changeBasis` method and deprecate the specific implementations from Layer and Group",
+      "[Fixed] Add missing wrapper for some libraries"
+    ],
     "50": [
       "[Fixed] Creating a Rectangle with an Object having an `x` value of `0` now works as expected",
       "[New] Add `locked` and `hidden` property on Layer",
