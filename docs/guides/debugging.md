@@ -23,7 +23,7 @@ There are several options to see those logs:
 
 When a plugin is running, Sketch creates a JavaScript context associated to it. It is possible to inspect this context using Safari.
 
-In Safari, go to `Develop` > _`name of your machine`_ > `Automatically Show Web Inspector for JSContexts`. And you probably want to enable `Automatically Pause Connecting to JSContext` otherwise the inspector will closed before you can interact with it (the context is destroyed when the script has finished running).
+In Safari, go to `Develop` > _`name of your machine`_ > `Automatically Show Web Inspector for JSContexts`. And you probably want to enable `Automatically Pause Connecting to JSContext` otherwise the inspector will close before you can interact with it (the context is destroyed when the script has finished running).
 
 Now you can use breakpoints in your code, inspect the value of variables at runtime, etc.
 
