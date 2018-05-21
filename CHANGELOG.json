@@ -1,5 +1,7 @@
 {
-  "unreleased": [],
+  "unreleased": [
+    "[Fixed] Getting the importable objects from a Library would sometime returns the ones from another library that shares the same id"
+  ],
   "releases": {
     "50.1": [
       "[Improved] Add `Rectangle.changeBasis` method and deprecate the specific implementations from Layer and Group",
