@@ -1,6 +1,14 @@
 /* globals expect, test */
-import { isRunningOnJenkins } from '../../../test-utils'
-import { Library, Document, Artboard, Text, SymbolMaster } from '../../'
+import {
+  isRunningOnJenkins
+} from '../../../test-utils'
+import {
+  Library,
+  Document,
+  Artboard,
+  Text,
+  SymbolMaster
+} from '../../'
 
 function findValidLib(libs) {
   return libs.find(l => l.valid)
@@ -58,6 +66,18 @@ if (!isRunningOnJenkins()) {
 
     const libraries = Library.getLibraries()
     expect(libraries.find(d => d.id === libId)).toEqual(lib)
+  })
+
+  test('should disabled a library', () => {
+    expect(lib.enabled).toBe(true)
+    lib.enabled = false
+    expect(lib.enabled).toBe(false)
+    lib.enabled = true
+    expect(lib.enabled).toBe(true)
+  })
+
+  test('should get the lastModifiedAt date', () => {
+    expect(lib.lastModifiedAt instanceof Date).toBe(true)
   })
 
   test('should remove a library', () => {

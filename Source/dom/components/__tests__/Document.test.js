@@ -1,7 +1,13 @@
 /* globals expect, test */
-import { isRunningOnJenkins } from '../../../test-utils'
-import { Document } from '../Document'
-import { Group } from '../Group'
+import {
+  isRunningOnJenkins
+} from '../../../test-utils'
+import {
+  Document
+} from '../Document'
+import {
+  Group
+} from '../Group'
 
 test('should be able to log a document', (context, document) => {
   log(document)
@@ -9,7 +15,9 @@ test('should be able to log a document', (context, document) => {
 })
 
 test('should return the pages', (context, document) => {
-  const { pages } = document
+  const {
+    pages
+  } = document
   expect(pages.length).toBe(1)
   expect(pages[0]).toEqual(document.selectedPage)
 })
@@ -19,7 +27,11 @@ test('should return the selected layers', (context, document) => {
   expect(selection.isEmpty).toBe(true)
 
   const page = document.selectedPage
-  const group = new Group({ name: 'Test', parent: page, selected: true })
+  const group = new Group({
+    name: 'Test',
+    parent: page,
+    selected: true,
+  })
 
   expect(group.selected).not.toBe(false)
   expect(selection.isEmpty).toBe(false)
@@ -27,15 +39,23 @@ test('should return the selected layers', (context, document) => {
 
 test('should look for a layer by its id', (context, document) => {
   const page = document.selectedPage
-  const group = new Group({ name: 'Test', parent: page })
-  const { id } = group
+  const group = new Group({
+    name: 'Test',
+    parent: page,
+  })
+  const {
+    id
+  } = group
   const found = document.getLayerWithID(id)
   expect(found).toEqual(group)
 })
 
 test('should look for a layer by its name', (context, document) => {
   const page = document.selectedPage
-  const group = new Group({ name: 'Test', parent: page })
+  const group = new Group({
+    name: 'Test',
+    parent: page,
+  })
   const found = document.getLayersNamed('Test')
   expect(found).toEqual([group])
 })
@@ -53,9 +73,25 @@ if (!isRunningOnJenkins()) {
     expect(documents.find(d => d.id === documentId)).toEqual(_document)
   })
 
+  test('path should be undefined before saving it', () => {
+    expect(_document.path).toBe(undefined)
+  })
+
   test('should save a file', () => {
     const result = _document.save('~/Desktop/sketch-api-unit-tests.sketch')
     expect(result).toBe(_document)
+    expect(_document.path).toBe(String(NSString.stringWithString('~/Desktop/sketch-api-unit-tests.sketch').stringByExpandingTildeInPath()))
+  })
+
+  test('should save a file without specifying the path', () => {
+    const result = _document.save()
+    expect(result).toBe(_document)
+  })
+
+  test('should save a file to a specific path when setting the path', () => {
+    _document.path = '~/Desktop/sketch-api-unit-tests-2.sketch'
+    _document.save()
+    expect(_document.path).toBe(String(NSString.stringWithString('~/Desktop/sketch-api-unit-tests-2.sketch').stringByExpandingTildeInPath()))
   })
 
   test('should close a file', () => {

@@ -1,5 +1,8 @@
 {
   "unreleased": [
+    "[New] Add `path` property to Document",
+    "[New] Add `lastModifiedAt` property to Library",
+    "[New] Disable/Enable a Library by setting its `enabled` property",
     "[Fixed] Setting an image override on a symbol instance",
     "[Fixed] Saving a document without specifying a path would fail"
   ],

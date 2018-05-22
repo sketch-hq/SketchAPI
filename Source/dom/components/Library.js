@@ -1,10 +1,28 @@
-import { WrappedObject, DefinedPropertiesKey } from '../WrappedObject'
-import { Document } from './Document'
-import { toArray, getURLFromPath, getDocumentData } from '../utils'
-import { Types } from '../enums'
-import { Factory } from '../Factory'
-import { wrapObject } from '../wrapNativeObject'
-import { ImportableObject, ImportableObjectType } from './ImportableObject'
+import {
+  WrappedObject,
+  DefinedPropertiesKey
+} from '../WrappedObject'
+import {
+  Document
+} from './Document'
+import {
+  toArray,
+  getURLFromPath,
+  getDocumentData
+} from '../utils'
+import {
+  Types
+} from '../enums'
+import {
+  Factory
+} from '../Factory'
+import {
+  wrapObject
+} from '../wrapNativeObject'
+import {
+  ImportableObject,
+  ImportableObjectType
+} from './ImportableObject'
 
 const AddStatus = {
   0: 'ok',
@@ -157,10 +175,21 @@ Library.define('valid', {
 })
 
 Library.define('enabled', {
+  get() {
+    return !!this._object.enabled()
+  },
+
+  set(enabled) {
+    this._object.setEnabled(enabled)
+  },
+})
+
+Library.define('lastModifiedAt', {
   exportable: true,
   importable: false,
   get() {
-    return !!this._object.enabled()
+    const date = this._object.dateLastModified()
+    return new Date(date.timeIntervalSince1970() * 1000)
   },
 })
 

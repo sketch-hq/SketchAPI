@@ -177,9 +177,11 @@ document.save('path/to/the/document.sketch')
 
 A method to save a document to a specific path or ask the user to choose where to save it.
 
-| Parameters                               |                                                                                                  |
-| ---------------------------------------- | ------------------------------------------------------------------------------------------------ |
-| path<span class="arg-type">string</span> | The path where the document will be saved. If `undefined`, the user will be asked to select one. |
+| Parameters                                                          |                                                                                                  |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------ |
+| path<span class="arg-type">string</span>                            | The path where the document will be saved. If `undefined`, the user will be asked to select one. |
+| options<span class="arg-type">object</span>                         | The options for the save operation (only used when specifing a path).                            |
+| options.saveMode<span class="arg-type">[SaveMode](#savemode)</span> | The way to save the document.                                                                    |
 
 ### Returns
 
@@ -192,3 +194,17 @@ document.close()
 ```
 
 A method to close a document.
+
+## `Document.SaveMode`
+
+```javascript
+Document.SaveMode.SaveAs
+```
+
+Enumeration of the save mode.
+
+| Value    |                                                                                                                               |
+| -------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| `Save`   | Overwrites a document’s file with the document’s contents                                                                     |
+| `SaveAs` | Writes a document’s contents to a new file and then changes the document’s current location to point to the just-written file |
+| `SaveTo` | Writes a document’s contents to a new file without changing the document’s current location to point to the new file.         |

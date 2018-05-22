@@ -72,6 +72,8 @@ globals:
   MSSharedTextReference: false
   MSUserAssetLibrary: false
   MSRemoteAssetLibrary: false
+  NSSaveAsOperation: false
+  NSSaveOperation: false
 
 rules:
   ###########

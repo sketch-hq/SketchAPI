@@ -8,15 +8,16 @@ section: components
 var Library = require('sketch/dom').Library
 ```
 
-A Sketch Library. All the properties are `read-only`.
+A Sketch Library.
 
-| Properties                                                                  |                                              |
-| --------------------------------------------------------------------------- | -------------------------------------------- |
-| id<span class="arg-type">string</span>                                      | The unique ID of the Library.                |
-| name<span class="arg-type">string</span>                                    | The name of the Library.                     |
-| valid<span class="arg-type">boolean</span>                                  | If Sketch has been able to load the Library. |
-| enabled<span class="arg-type">boolean</span>                                | If the user has enabled the Library.         |
-| libraryType<span class="arg-type">[LibraryType](#librarylibrarytype)</span> | The type of Library.                         |
+| Properties                                                                             |                                                |
+| -------------------------------------------------------------------------------------- | ---------------------------------------------- |
+| id<span class="arg-type">string - readonly</span>                                      | The unique ID of the Library.                  |
+| name<span class="arg-type">string - readonly</span>                                    | The name of the Library.                       |
+| valid<span class="arg-type">boolean - readonly</span>                                  | If Sketch has been able to load the Library.   |
+| enabled<span class="arg-type">boolean</span>                                           | If the user has enabled the Library.           |
+| libraryType<span class="arg-type">[LibraryType](#librarylibrarytype) - readonly</span> | The type of Library.                           |
+| lastModifiedAt<span class="arg-type">Date - readonly</span>                            | The date at which the library was last updated |
 
 ## Access all the Libraries
 
