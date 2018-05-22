@@ -166,7 +166,7 @@ export class Document extends WrappedObject {
     const error = MOPointer.alloc().init()
 
     if (!path) {
-      msdocument.saveDocument()
+      msdocument.saveDocument(null)
     } else {
       const url = getURLFromPath(path)
       const oldUrl = NSURL.URLWithString('not used')
