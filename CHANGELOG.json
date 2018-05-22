@@ -1,7 +1,8 @@
 {
   "unreleased": [
     "[Fixed] Logging a MOStruct (such as NSRange for example) would error",
-    "[New] Add `os`, `path` and `timers` core modules"
+    "[New] Add `os`, `path` and `timers` core modules",
+    "[Fixed] Saving a document without specifying a path would fail"
   ],
   "releases": {
     "50.1": [
