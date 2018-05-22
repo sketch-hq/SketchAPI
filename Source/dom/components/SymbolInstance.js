@@ -41,7 +41,7 @@ export class SymbolInstance extends StyledLayer {
     const overridePoint = wrappedOverride.sketchObject.overridePoint()
     if (wrappedOverride.property === 'image') {
       this._object.setValue_forOverridePoint(
-        ImageData.from(value),
+        ImageData.from(value).sketchObject,
         overridePoint
       )
     } else if (wrappedOverride.property === 'stringValue') {
@@ -54,7 +54,9 @@ export class SymbolInstance extends StyledLayer {
 }
 
 SymbolInstance.type = Types.SymbolInstance
-SymbolInstance[DefinedPropertiesKey] = { ...StyledLayer[DefinedPropertiesKey] }
+SymbolInstance[DefinedPropertiesKey] = {
+  ...StyledLayer[DefinedPropertiesKey],
+}
 Factory.registerClass(SymbolInstance, MSSymbolInstance)
 
 SymbolInstance.define('symbolId', {

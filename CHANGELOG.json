@@ -1,6 +1,7 @@
 {
   "unreleased": [
     "[Fixed] Getting the importable objects from a Library would sometime returns the ones from another library that shares the same id",
+    "[Fixed] Setting an image override on a symbol instance",
     "[Fixed] Saving a document without specifying a path would fail"
   ],
   "releases": {
