@@ -18,7 +18,7 @@ var DataSupplier = require('sketch/data-supplier')
 
 // onStartup would be the handler for the `Startup` action defined in the manifest.json
 export function onStartup() {
-  DataSupplier.registerPluginDataSupplier(
+  DataSupplier.registerDataSupplier(
     'public.text',
     'My Custom Data',
     'SupplyKey'
