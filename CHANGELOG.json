@@ -1,5 +1,7 @@
 {
-  "unreleased": [],
+  "unreleased": [
+    "[Fixed] Saving a document without specifying a path would fail"
+  ],
   "releases": {
     "50.1": [
       "[Improved] Add `Rectangle.changeBasis` method and deprecate the specific implementations from Layer and Group",
