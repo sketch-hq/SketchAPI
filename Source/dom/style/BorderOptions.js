@@ -5,7 +5,7 @@ import { Types } from '../enums'
 const ArrowheadMap = {
   None: 0,
   OpenArrow: 1,
-  ClosedArrow: 2,
+  FilledArrow: 2,
   Line: 3,
   OpenCircle: 4,
   FilledCircle: 5,
@@ -16,8 +16,13 @@ const ArrowheadMap = {
 export const Arrowhead = {
   None: 'None',
   OpenArrow: 'OpenArrow',
-  ClosedArrow: 'ClosedArrow',
+  FilledArrow: 'FilledArrow',
+  ClosedArrow: 'FilledArrow', // deprecated
   Line: 'Line',
+  OpenCircle: 'OpenCircle',
+  FilledCircle: 'FilledCircle',
+  OpenSquare: 'OpenSquare',
+  FilledSquare: 'FilledSquare',
 }
 
 const LineEndMap = {
@@ -61,7 +66,7 @@ export class BorderOptions extends WrappedObject {
     )
     if (typeof optionsWithDefault.startArrowhead !== 'undefined') {
       const startArrowhead = ArrowheadMap[optionsWithDefault.startArrowhead]
-      s.setStartDecorationType(
+      s.setStartMarkerType(
         typeof startArrowhead !== 'undefined'
           ? startArrowhead
           : optionsWithDefault.startArrowhead
@@ -69,7 +74,7 @@ export class BorderOptions extends WrappedObject {
     }
     if (typeof optionsWithDefault.endArrowhead !== 'undefined') {
       const endArrowhead = ArrowheadMap[optionsWithDefault.endArrowhead]
-      s.setEndDecorationType(
+      s.setEndMarkerType(
         typeof endArrowhead !== 'undefined'
           ? endArrowhead
           : optionsWithDefault.endArrowhead
@@ -113,7 +118,7 @@ BorderOptions.define('sketchObject', {
 
 BorderOptions.define('startArrowhead', {
   get() {
-    const startType = this._object.startDecorationType()
+    const startType = this._object.startMarkerType()
     return (
       Object.keys(ArrowheadMap).find(key => ArrowheadMap[key] === startType) ||
       startType
@@ -121,7 +126,7 @@ BorderOptions.define('startArrowhead', {
   },
   set(arrowhead) {
     const arrowheadMapped = ArrowheadMap[arrowhead]
-    this._object.setStartDecorationType(
+    this._object.setStartMarkerType(
       typeof arrowheadMapped !== 'undefined' ? arrowheadMapped : arrowhead
     )
   },
@@ -129,7 +134,7 @@ BorderOptions.define('startArrowhead', {
 
 BorderOptions.define('endArrowhead', {
   get() {
-    const endType = this._object.endDecorationType()
+    const endType = this._object.endMarkerType()
     return (
       Object.keys(ArrowheadMap).find(key => ArrowheadMap[key] === endType) ||
       endType
@@ -137,7 +142,7 @@ BorderOptions.define('endArrowhead', {
   },
   set(arrowhead) {
     const arrowheadMapped = ArrowheadMap[arrowhead]
-    this._object.setEndDecorationType(
+    this._object.setEndMarkerType(
       typeof arrowheadMapped !== 'undefined' ? arrowheadMapped : arrowhead
     )
   },
