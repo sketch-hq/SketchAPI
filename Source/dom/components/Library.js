@@ -1,28 +1,10 @@
-import {
-  WrappedObject,
-  DefinedPropertiesKey
-} from '../WrappedObject'
-import {
-  Document
-} from './Document'
-import {
-  toArray,
-  getURLFromPath,
-  getDocumentData
-} from '../utils'
-import {
-  Types
-} from '../enums'
-import {
-  Factory
-} from '../Factory'
-import {
-  wrapObject
-} from '../wrapNativeObject'
-import {
-  ImportableObject,
-  ImportableObjectType
-} from './ImportableObject'
+import { WrappedObject, DefinedPropertiesKey } from '../WrappedObject'
+import { Document } from './Document'
+import { toArray, getURLFromPath, getDocumentData } from '../utils'
+import { Types } from '../enums'
+import { Factory } from '../Factory'
+import { wrapObject } from '../wrapNativeObject'
+import { ImportableObject, ImportableObjectType } from './ImportableObject'
 
 const AddStatus = {
   0: 'ok',

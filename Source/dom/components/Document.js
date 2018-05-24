@@ -1,26 +1,10 @@
-import {
-  WrappedObject,
-  DefinedPropertiesKey
-} from '../WrappedObject'
-import {
-  Page
-} from './Page'
-import {
-  Selection
-} from '../Selection'
-import {
-  toArray,
-  getURLFromPath
-} from '../utils'
-import {
-  wrapObject
-} from '../wrapNativeObject'
-import {
-  Types
-} from '../enums'
-import {
-  Factory
-} from '../Factory'
+import { WrappedObject, DefinedPropertiesKey } from '../WrappedObject'
+import { Page } from './Page'
+import { Selection } from '../Selection'
+import { toArray, getURLFromPath } from '../utils'
+import { wrapObject } from '../wrapNativeObject'
+import { Types } from '../enums'
+import { Factory } from '../Factory'
 
 export const SaveModeType = {
   Save: NSSaveOperation,
@@ -192,36 +176,48 @@ export class Document extends WrappedObject {
     return Document.fromNative(document)
   }
 
-  save(path, options) {
+  save(path, options, callback) {
+    /* eslint-disable no-param-reassign */
+    if (typeof options === 'function') {
+      callback = options
+      options = {}
+    } else if (typeof path === 'function') {
+      callback = path
+      options = {}
+      path = undefined
+    }
+    /* eslint-enable */
     const msdocument = this._getMSDocument()
-    const saveMethod =
-      'writeToURL_ofType_forSaveOperation_originalContentsURL_error'
-
+    const saveMethod = 'saveToURL_ofType_forSaveOperation_completionHandler'
     if (!msdocument || !msdocument[saveMethod]) {
-      throw new Error('Cannot save this document')
+      callback(new Error('Cannot save this document'), this)
+      return
     }
-
-    const error = MOPointer.alloc().init()
-
     if (!path && !this._tempURL) {
-      msdocument.saveDocument(null)
-    } else {
-      const url = getURLFromPath(path) || this._tempURL
-      const oldUrl = NSURL.URLWithString('not used')
-      const {
-        saveMode
-      } = options || {}
-      const nativeSaveMode =
-        SaveModeType[saveMode] || saveMode || NSSaveAsOperation
-
-      msdocument[saveMethod](url, 0, nativeSaveMode, oldUrl, error)
-
-      if (error.value() !== null) {
-        throw new Error(error.value())
+      try {
+        msdocument.saveDocument(null)
+        callback(null, this)
+      } catch (err) {
+        callback(err, this)
       }
+      return
     }
-
-    return this
+    const fiber = coscript.createFiber()
+    const url = getURLFromPath(path) || this._tempURL
+    const { saveMode } = options || {}
+    const nativeSaveMode =
+      SaveModeType[saveMode] || saveMode || NSSaveAsOperation
+    const that = this
+    msdocument[saveMethod](
+      url,
+      'com.bohemiancoding.sketch.drawing.single',
+      nativeSaveMode,
+      // eslint-disable-next-line
+      __mocha__.createBlock_function('v16@?0@"NSError"8', function(err) {
+        callback(err, that)
+        fiber.cleanup()
+      })
+    )
   }
 
   close() {
