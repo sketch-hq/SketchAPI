@@ -199,14 +199,18 @@ An object that represent the options that the Borders of the Layer share.
 Style.Arrowheads.OpenArrow
 ```
 
-Enumeration of the positions of a border.
+Enumeration of the type of the Arrowheads for line layers.
 
-| Value         |
-| ------------- |
-| `None`        |
-| `OpenArrow`   |
-| `ClosedArrow` |
-| `Line`        |
+| Value          |
+| -------------- |
+| `None`         |
+| `OpenArrow`    |
+| `FilledArrow`  |
+| `Line`         |
+| `OpenCircle`   |
+| `FilledCircle` |
+| `OpenSquare`   |
+| `FilledSquare` |
 
 ## `Style.LineEnd`
 
