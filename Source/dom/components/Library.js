@@ -78,6 +78,36 @@ export class Library extends WrappedObject {
     return Library.fromNative(lib)
   }
 
+  static getRemoteLibraryWithAppcast(appcast, callback) {
+    const libUrl =
+      typeof path === 'string' ? NSURL.URLWithString(appcast) : appcast
+
+    const libraryController = AppController.sharedInstance().librariesController()
+
+    // check if we already imported the library
+    const existingLibrary = libraryController.remoteLibraryWithAppcast(libUrl)
+    if (existingLibrary) {
+      callback(null, Library.fromNative(existingLibrary))
+      return
+    }
+
+    const fiber = coscript.createFiber()
+
+    // otherwise, let's add it
+    libraryController.addRemoteLibraryFromAppcastURL_withCompletionHandler(
+      libUrl,
+      // eslint-disable-next-line
+      __mocha__.createBlock_function('v24@?0@8@16', function(lib, err) {
+        if (!lib && err) {
+          callback(new Error(err.description()))
+        } else {
+          callback(null, Library.fromNative(lib))
+        }
+        fiber.cleanup()
+      })
+    )
+  }
+
   getDocument() {
     if (!this._object.document() && !this._object.loadSynchronously()) {
       throw new Error(`could not get the document: ${this._object.status}`)
