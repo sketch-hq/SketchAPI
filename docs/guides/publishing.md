@@ -50,45 +50,45 @@ The following Appcast example lists three different versions of the plugin. Each
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle"  xmlns:dc="http://purl.org/dc/elements/1.1/">
+<rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" xmlns:dc="http://purl.org/dc/elements/1.1/">
   <channel>
     <title>Hello World Sketch Test Plugin</title>
     <link>http://sparkle-project.org/files/sparkletestcast.xml</link>
     <description>Brilliant Hello World Plugin</description>
     <language>en</language>
-      <item>
-        <title>Version 1.1</title>
-        <description>
-          <![CDATA[
+    <item>
+      <title>Version 1.1</title>
+      <description>
+        <![CDATA[
             <ul>
               <li>Minor update v1.1</li>
             </ul>
           ]]>
-        </description>
-        <enclosure url="https://brillianthello.sketchplugins.com/files/HelloWorldSketchPluginTestv11.zip" sparkle:version="1.1" />
-      </item>
-      <item>
-        <title>Version 1.2</title>
-        <description>
-          <![CDATA[
+      </description>
+      <enclosure url="https://brillianthello.sketchplugins.com/files/HelloWorldSketchPluginTestv11.zip" sparkle:version="1.1"/>
+    </item>
+    <item>
+      <title>Version 1.2</title>
+      <description>
+        <![CDATA[
             <ul>
             <li>Minor update v1.2</li>
             </ul>
           ]]>
-        </description>
-        <enclosure url="https://brillianthello.sketchplugins.com/files/HelloWorldSketchPluginTestv12.zip" sparkle:version="1.2" />
-      </item>
-      <item>
-        <title>Version 2.0</title>
-        <description>
-          <![CDATA[
+      </description>
+      <enclosure url="https://brillianthello.sketchplugins.com/files/HelloWorldSketchPluginTestv12.zip" sparkle:version="1.2"/>
+    </item>
+    <item>
+      <title>Version 2.0</title>
+      <description>
+        <![CDATA[
             <ul>
             <li>Major update v2.0</li>
             </ul>
           ]]>
-        </description>
-        <enclosure url="https://brillianthello.sketchplugins.com/files/HelloWorldSketchPluginTestv20.zip" sparkle:version="2.0" />
-      </item>
+      </description>
+      <enclosure url="https://brillianthello.sketchplugins.com/files/HelloWorldSketchPluginTestv20.zip" sparkle:version="2.0"/>
+    </item>
   </channel>
 </rss>
 ```

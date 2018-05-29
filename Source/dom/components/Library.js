@@ -123,9 +123,18 @@ export class Library extends WrappedObject {
       provider
     )
     const shareableObjectRefsMap = collector.buildCollectionWithFilter(null)
+
+    const currentId = this.id
+    const currentName = this.name
+
     const shareableObjectRefsForCurrentLib = toArray(
       shareableObjectRefsMap
-    ).find(o => o.library && String(o.library.libraryID()) === this.id)
+    ).find(
+      o =>
+        o.library &&
+        String(o.library.libraryID()) === currentId &&
+        String(o.library.name()) === currentName
+    )
 
     if (!shareableObjectRefsForCurrentLib) {
       return []
