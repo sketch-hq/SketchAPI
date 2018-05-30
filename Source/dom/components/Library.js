@@ -79,8 +79,7 @@ export class Library extends WrappedObject {
   }
 
   static getRemoteLibraryWithAppcast(appcast, callback) {
-    const libUrl =
-      typeof path === 'string' ? NSURL.URLWithString(appcast) : appcast
+    const libUrl = NSURL.URLWithString(appcast)
 
     const libraryController = AppController.sharedInstance().librariesController()
 
