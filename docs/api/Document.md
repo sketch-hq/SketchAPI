@@ -202,6 +202,10 @@ A method to close a document.
 
 ```javascript
 Document.SaveMode.SaveAs
+
+document.save('path/to/the/document.sketch', {
+  saveMode: Document.SaveMode.SaveAs,
+})
 ```
 
 Enumeration of the save mode.
