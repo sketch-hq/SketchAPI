@@ -1,5 +1,8 @@
 {
   "unreleased": [
+    "[New] Add `path` property to Document",
+    "[New] Add `lastModifiedAt` property to Library",
+    "[New] Disable/Enable a Library by setting its `enabled` property",
     "[Fixed] Logging a MOStruct (such as NSRange for example) would error",
     "[New] Add `buffer`, `os`, `path` and `timers` core modules",
     "[Fixed] Getting the importable objects from a Library would sometime returns the ones from another library that shares the same id",

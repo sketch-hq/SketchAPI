@@ -1,10 +1,16 @@
 import { WrappedObject, DefinedPropertiesKey } from '../WrappedObject'
 import { Page } from './Page'
 import { Selection } from '../Selection'
-import { toArray, getURLFromPath, getDocumentData } from '../utils'
+import { toArray, getURLFromPath } from '../utils'
 import { wrapObject } from '../wrapNativeObject'
 import { Types } from '../enums'
 import { Factory } from '../Factory'
+
+export const SaveModeType = {
+  Save: NSSaveOperation,
+  SaveTo: NSSaveToOperation,
+  SaveAs: NSSaveAsOperation,
+}
 
 /**
  * A Sketch document.
@@ -41,6 +47,27 @@ export class Document extends WrappedObject {
     super(document)
   }
 
+  _getMSDocument() {
+    let msdocument = this._object
+    if (msdocument && String(msdocument.class()) === 'MSDocumentData') {
+      // we only have an MSDocumentData instead of a MSDocument
+      // let's try to get back to the MSDocument
+      msdocument = msdocument.delegate()
+    }
+
+    return msdocument
+  }
+
+  _getMSDocumentData() {
+    const msdocument = this._object
+
+    if (msdocument && String(msdocument.class()) === 'MSDocumentData') {
+      return msdocument
+    }
+
+    return msdocument.documentData()
+  }
+
   static getDocuments() {
     const app = NSDocumentController.sharedDocumentController()
     return toArray(app.documents()).map(doc => Document.fromNative(doc))
@@ -61,7 +88,7 @@ export class Document extends WrappedObject {
    * @return {Layer} A layer object, if one was found.
    */
   getLayerWithID(layerId) {
-    const documentData = getDocumentData(this._object)
+    const documentData = this._getMSDocumentData()
     const layer = documentData.layerWithID(layerId)
     if (layer) {
       return wrapObject(layer)
@@ -94,7 +121,7 @@ export class Document extends WrappedObject {
    * @return {SymbolMaster} A symbol master object, if one was found.
    */
   getSymbolMasterWithID(symbolId) {
-    const documentData = getDocumentData(this._object)
+    const documentData = this._getMSDocumentData()
     const symbol = documentData.symbolWithID(symbolId)
     if (symbol) {
       return wrapObject(symbol)
@@ -103,7 +130,7 @@ export class Document extends WrappedObject {
   }
 
   getSymbols() {
-    const documentData = getDocumentData(this._object)
+    const documentData = this._getMSDocumentData()
     return toArray(documentData.allSymbols()).map(wrapObject)
   }
 
@@ -149,46 +176,52 @@ export class Document extends WrappedObject {
     return Document.fromNative(document)
   }
 
-  save(path) {
-    let msdocument = this._object
-    const saveMethod =
-      'writeToURL_ofType_forSaveOperation_originalContentsURL_error'
-    if (!msdocument[saveMethod]) {
-      // we only have an MSDocumentData instead of a MSDocument
-      // let's try to get back to the MSDocument
-      msdocument = this._object.delegate()
+  save(path, options, callback) {
+    /* eslint-disable no-param-reassign */
+    if (typeof options === 'function') {
+      callback = options
+      options = {}
+    } else if (typeof path === 'function') {
+      callback = path
+      options = {}
+      path = undefined
     }
-
+    /* eslint-enable */
+    const msdocument = this._getMSDocument()
+    const saveMethod = 'saveToURL_ofType_forSaveOperation_completionHandler'
     if (!msdocument || !msdocument[saveMethod]) {
-      throw new Error('Cannot save this document')
+      callback(new Error('Cannot save this document'), this)
+      return
     }
-
-    const error = MOPointer.alloc().init()
-
-    if (!path) {
-      msdocument.saveDocument(null)
-    } else {
-      const url = getURLFromPath(path)
-      const oldUrl = NSURL.URLWithString('not used')
-
-      msdocument[saveMethod](url, 0, NSSaveToOperation, oldUrl, error)
-
-      if (error.value() !== null) {
-        throw new Error(error.value())
+    if (!path && !this._tempURL) {
+      try {
+        msdocument.saveDocument(null)
+        callback(null, this)
+      } catch (err) {
+        callback(err, this)
       }
+      return
     }
-
-    return this
+    const fiber = coscript.createFiber()
+    const url = getURLFromPath(path) || this._tempURL
+    const { saveMode } = options || {}
+    const nativeSaveMode =
+      SaveModeType[saveMode] || saveMode || NSSaveAsOperation
+    const that = this
+    msdocument[saveMethod](
+      url,
+      'com.bohemiancoding.sketch.drawing.single',
+      nativeSaveMode,
+      // eslint-disable-next-line
+      __mocha__.createBlock_function('v16@?0@"NSError"8', function(err) {
+        callback(err, that)
+        fiber.cleanup()
+      })
+    )
   }
 
   close() {
-    let msdocument = this._object
-
-    if (!msdocument.close) {
-      // we only have an MSDocumentData instead of a MSDocument
-      // let's try to get back to the MSDocument
-      msdocument = this._object.delegate()
-    }
+    const msdocument = this._getMSDocument()
 
     if (!msdocument || !msdocument.close) {
       throw new Error('Cannot close this document')
@@ -208,6 +241,8 @@ Factory.registerClass(Document, MSDocumentData)
 if (typeof MSDocument !== 'undefined') {
   Factory.registerClass(Document, MSDocument)
 }
+
+Document.SaveMode = SaveModeType
 
 // override getting the id to make sure it's fine if we have an MSDocument
 Document.define('id', {
@@ -269,5 +304,23 @@ Document.define('selectedPage', {
   importable: false,
   get() {
     return Page.fromNative(this._object.currentPage())
+  },
+})
+
+Document.define('path', {
+  get() {
+    const url = this._tempURL || this._getMSDocument().fileURL()
+    if (url) {
+      return String(url.absoluteString()).replace('file://', '')
+    }
+    return undefined
+  },
+
+  set(path) {
+    const url = getURLFromPath(path)
+    Object.defineProperty(this, '_tempURL', {
+      enumerable: false,
+      value: url,
+    })
   },
 })
