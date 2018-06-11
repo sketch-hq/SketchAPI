@@ -7,7 +7,8 @@
     "[New] Add `buffer`, `os`, `path` and `timers` core modules",
     "[Fixed] Getting the importable objects from a Library would sometime returns the ones from another library that shares the same id",
     "[Fixed] Setting an image override on a symbol instance",
-    "[Fixed] Saving a document without specifying a path would fail"
+    "[Fixed] Saving a document without specifying a path would fail",
+    "[Improved] console.log a wrapped object should be a lot faster on complex files"
   ],
   "releases": {
     "50.1": [
