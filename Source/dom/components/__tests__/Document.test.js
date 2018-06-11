@@ -19,7 +19,11 @@ test('should return the selected layers', (context, document) => {
   expect(selection.isEmpty).toBe(true)
 
   const page = document.selectedPage
-  const group = new Group({ name: 'Test', parent: page, selected: true })
+  const group = new Group({
+    name: 'Test',
+    parent: page,
+    selected: true,
+  })
 
   expect(group.selected).not.toBe(false)
   expect(selection.isEmpty).toBe(false)
@@ -27,7 +31,10 @@ test('should return the selected layers', (context, document) => {
 
 test('should look for a layer by its id', (context, document) => {
   const page = document.selectedPage
-  const group = new Group({ name: 'Test', parent: page })
+  const group = new Group({
+    name: 'Test',
+    parent: page,
+  })
   const { id } = group
   const found = document.getLayerWithID(id)
   expect(found).toEqual(group)
@@ -35,7 +42,10 @@ test('should look for a layer by its id', (context, document) => {
 
 test('should look for a layer by its name', (context, document) => {
   const page = document.selectedPage
-  const group = new Group({ name: 'Test', parent: page })
+  const group = new Group({
+    name: 'Test',
+    parent: page,
+  })
   const found = document.getLayersNamed('Test')
   expect(found).toEqual([group])
 })
@@ -53,9 +63,70 @@ if (!isRunningOnJenkins()) {
     expect(documents.find(d => d.id === documentId)).toEqual(_document)
   })
 
-  test('should save a file', () => {
-    const result = _document.save('~/Desktop/sketch-api-unit-tests.sketch')
-    expect(result).toBe(_document)
+  test('path should be undefined before saving it', () => {
+    expect(_document.path).toBe(undefined)
+  })
+
+  test('should save a file', () =>
+    new Promise((resolve, reject) => {
+      _document.save(
+        '~/Desktop/sketch-api-unit-tests.sketch',
+        (err, result) => {
+          if (err) {
+            return reject(err)
+          }
+          return resolve(result)
+        }
+      )
+    }).then(result => {
+      expect(result).toBe(_document)
+      expect(_document.path).toBe(
+        String(
+          NSString.stringWithString(
+            '~/Desktop/sketch-api-unit-tests.sketch'
+          ).stringByExpandingTildeInPath()
+        )
+      )
+    }))
+
+  test('should save a file without specifying the path', () =>
+    new Promise((resolve, reject) => {
+      _document.save((err, result) => {
+        if (err) {
+          return reject(err)
+        }
+        return resolve(result)
+      })
+    }).then(result => {
+      expect(result).toBe(_document)
+      expect(_document.path).toBe(
+        String(
+          NSString.stringWithString(
+            '~/Desktop/sketch-api-unit-tests.sketch'
+          ).stringByExpandingTildeInPath()
+        )
+      )
+    }))
+
+  test('should save a file to a specific path when setting the path', () => {
+    _document.path = '~/Desktop/sketch-api-unit-tests-2.sketch'
+    return new Promise((resolve, reject) => {
+      _document.save((err, result) => {
+        if (err) {
+          return reject(err)
+        }
+        return resolve(result)
+      })
+    }).then(result => {
+      expect(result).toBe(_document)
+      expect(_document.path).toBe(
+        String(
+          NSString.stringWithString(
+            '~/Desktop/sketch-api-unit-tests-2.sketch'
+          ).stringByExpandingTildeInPath()
+        )
+      )
+    })
   })
 
   test('should close a file', () => {

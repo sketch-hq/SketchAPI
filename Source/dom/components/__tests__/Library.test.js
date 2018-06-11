@@ -47,17 +47,35 @@ if (!isRunningOnJenkins()) {
     // eslint-disable-next-line
     const master = SymbolMaster.fromArtboard(artboard)
 
-    document.save('~/Desktop/sketch-api-unit-tests-library.sketch')
-    lib = Library.getLibraryForDocumentAtPath(
-      '~/Desktop/sketch-api-unit-tests-library.sketch'
+    return document.save(
+      '~/Desktop/sketch-api-unit-tests-library.sketch',
+      err => {
+        expect(err).toBe(undefined)
+
+        lib = Library.getLibraryForDocumentAtPath(
+          '~/Desktop/sketch-api-unit-tests-library.sketch'
+        )
+        libId = lib.id
+        expect(lib.type).toBe('Library')
+
+        document.close()
+
+        const libraries = Library.getLibraries()
+        expect(libraries.find(d => d.id === libId)).toEqual(lib)
+      }
     )
-    libId = lib.id
-    expect(lib.type).toBe('Library')
+  })
 
-    document.close()
+  test('should disabled a library', () => {
+    expect(lib.enabled).toBe(true)
+    lib.enabled = false
+    expect(lib.enabled).toBe(false)
+    lib.enabled = true
+    expect(lib.enabled).toBe(true)
+  })
 
-    const libraries = Library.getLibraries()
-    expect(libraries.find(d => d.id === libId)).toEqual(lib)
+  test('should get the lastModifiedAt date', () => {
+    expect(lib.lastModifiedAt instanceof Date).toBe(true)
   })
 
   test('should remove a library', () => {
