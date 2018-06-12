@@ -61,7 +61,7 @@ A method to remove an existing library.
 ## Get the Library's Document
 
 ```javascript
-var document = library.getDocument()
+var libDocument = library.getDocument()
 ```
 
 A library references a Sketch [Document](#document) and you can access it with this method.
@@ -73,6 +73,7 @@ The [Document](#document) that the Library references. It can throw an error if 
 ## Get the Symbols that can be imported
 
 ```javascript
+var document = sketch.getSelectedDocument()
 var symbolReferences = library.getImportableSymbolReferencesForDocument(
   document
 )
