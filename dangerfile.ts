@@ -64,15 +64,28 @@ if (corePackageChanged && !coreLockfileChanged) {
 }
 
 if (corePackageChanged || coreLockfileChanged) {
+  // eslint-disable-next-line
   const coreModules = require('./core-modules/package.json')
+  // eslint-disable-next-line
   const coreModulesLock = require('./core-modules/package-lock.json')
 
-  if (Object.keys(coreModules.dependencies).some(k => coreModules.dependencies[k].startWith('^'))) {
+  if (
+    Object.keys(coreModules.dependencies).some(k =>
+      coreModules.dependencies[k].startWith('^')
+    )
+  ) {
     fail('core-modules/package.json should only contain pinned dependencies')
   }
 
-  if (Object.keys(coreModules.dependencies).some(k => coreModules.dependencies[k] !== coreModulesLock.dependencies[k].version)) {
-    fail('core-modules/package.json and core-modules/package-lock.json are not in sync')
+  if (
+    Object.keys(coreModules.dependencies).some(
+      k =>
+        coreModules.dependencies[k] !== coreModulesLock.dependencies[k].version
+    )
+  ) {
+    fail(
+      'core-modules/package.json and core-modules/package-lock.json are not in sync'
+    )
   }
 }
 
