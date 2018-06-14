@@ -70,8 +70,8 @@ if (corePackageChanged || coreLockfileChanged) {
   const coreModulesLock = require('./core-modules/package-lock.json')
 
   if (
-    Object.keys(coreModules.dependencies).some(k =>
-      coreModules.dependencies[k].startWith('^')
+    Object.keys(coreModules.dependencies).some(
+      k => coreModules.dependencies[k][0] !== '^'
     )
   ) {
     fail('core-modules/package.json should only contain pinned dependencies')
