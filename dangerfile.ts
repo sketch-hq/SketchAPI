@@ -71,7 +71,7 @@ if (corePackageChanged || coreLockfileChanged) {
 
   if (
     Object.keys(coreModules.dependencies).some(
-      k => coreModules.dependencies[k][0] !== '^'
+      k => coreModules.dependencies[k][0] === '^'
     )
   ) {
     fail('core-modules/package.json should only contain pinned dependencies')
