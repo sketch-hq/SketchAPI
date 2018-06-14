@@ -8,6 +8,7 @@
     "[Fixed] Getting the importable objects from a Library would sometime returns the ones from another library that shares the same id",
     "[Fixed] Setting an image override on a symbol instance",
     "[Fixed] Saving a document without specifying a path would fail",
+    "[Fixed] Document.open() would fail when used without a path parameter",
     "[Improved] console.log a wrapped object should be a lot faster on complex files"
   ],
   "releases": {
