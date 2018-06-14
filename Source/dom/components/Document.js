@@ -150,9 +150,7 @@ export class Document extends WrappedObject {
     let document
 
     if (!path) {
-      app.openDocument()
-
-      document = app.currentDocument()
+      document = app.openUntitledDocumentAndDisplay_error(true,nil)
     } else {
       const url = getURLFromPath(path)
 
