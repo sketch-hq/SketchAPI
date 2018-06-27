@@ -41,3 +41,75 @@ test('should create a gradient with a specific from and to coordinates', () => {
     stops: [],
   })
 })
+
+test('should change the from', () => {
+  const gradient = Gradient.from({})
+  expect(gradient.toJSON()).toEqual({
+    gradientType: 'Linear',
+    from: { x: 0.5, y: 0 },
+    to: { x: 0.5, y: 1 },
+    stops: [],
+  })
+  gradient.from.x = 0.7
+  expect(gradient.toJSON()).toEqual({
+    gradientType: 'Linear',
+    from: { x: 0.7, y: 0 },
+    to: { x: 0.5, y: 1 },
+    stops: [],
+  })
+
+  gradient.from.y = 0.1
+  expect(gradient.toJSON()).toEqual({
+    gradientType: 'Linear',
+    from: { x: 0.7, y: 0.1 },
+    to: { x: 0.5, y: 1 },
+    stops: [],
+  })
+
+  gradient.from = {
+    x: 0.1,
+    y: 0.4,
+  }
+  expect(gradient.toJSON()).toEqual({
+    gradientType: 'Linear',
+    from: { x: 0.1, y: 0.4 },
+    to: { x: 0.5, y: 1 },
+    stops: [],
+  })
+})
+
+test('should change the to', () => {
+  const gradient = Gradient.from({})
+  expect(gradient.toJSON()).toEqual({
+    gradientType: 'Linear',
+    from: { x: 0.5, y: 0 },
+    to: { x: 0.5, y: 1 },
+    stops: [],
+  })
+  gradient.to.x = 0.7
+  expect(gradient.toJSON()).toEqual({
+    gradientType: 'Linear',
+    from: { x: 0.5, y: 0 },
+    to: { x: 0.7, y: 1 },
+    stops: [],
+  })
+
+  gradient.to.y = 0.1
+  expect(gradient.toJSON()).toEqual({
+    gradientType: 'Linear',
+    from: { x: 0.5, y: 0 },
+    to: { x: 0.7, y: 0.1 },
+    stops: [],
+  })
+
+  gradient.to = {
+    x: 0.1,
+    y: 0.4,
+  }
+  expect(gradient.toJSON()).toEqual({
+    gradientType: 'Linear',
+    from: { x: 0.5, y: 0 },
+    to: { x: 0.1, y: 0.4 },
+    stops: [],
+  })
+})

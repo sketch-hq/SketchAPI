@@ -10,7 +10,8 @@
     "[Fixed] Saving a document without specifying a path would fail",
     "[Improved] console.log a wrapped object should be a lot faster on complex files",
     "[Fixed] Opening a document without a path would fail",
-    "[New] Add method to add a remote library from an RSS feed"
+    "[New] Add method to add a remote library from an RSS feed",
+    "[Fixed] Setting the `to` of a gradient would actually change the `from`"
   ],
   "releases": {
     "50.1": [
