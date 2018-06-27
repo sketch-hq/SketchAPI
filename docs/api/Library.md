@@ -40,7 +40,7 @@ var library = Library.getLibraryForDocumentAtPath(
 )
 ```
 
-Get the library for a Sketch document. If the Document was already added as a Library, it will simply return it. If it is not already a Library, it will be added.
+Get the library for a local Sketch document. If the Document was already added as a Library, it will simply return it. If it is not already a Library, it will be added.
 
 | Parameters                                          |                          |
 | --------------------------------------------------- | ------------------------ |
@@ -49,6 +49,26 @@ Get the library for a Sketch document. If the Document was already added as a Li
 ### Returns
 
 The existing Library at the path or a new Library from the document at the path.
+
+## Get a remote Library from an RSS feed URL
+
+```javascript
+Library.getRemoteLibraryWithRSS(
+  'https://url/to/feed/rss.xml',
+  (err, library) => {
+    if (err) {
+      // oh no, failed to load the library
+    }
+  }
+)
+```
+
+Get the remote library for an RSS feed. If the RSS feed was already added as a Library, it will simply return it. If it is not already a Library, it will be added.
+
+| Parameters                                         |                                                                                                                                                     |
+| -------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
+| url<span class="arg-type">string - required</span> | The URL to the rss feed describing the versions of the library.                                                                                     |
+| callback<span class="arg-type">function</span>     | A function called after the library is added. It is called with an `Error` if adding the Library was unsuccessful and a `Library` (or `undefined`). |
 
 ## Remove a Library
 
