@@ -50,20 +50,28 @@ var document = new Document()
 ## Open a Document
 
 ```javascript
-var document = Document.open()
+// ask the user to select a document
+Document.open((err, document) => {
+  if (err) {
+    // oh no, we failed to open the document
+  }
+  // if the user cancel the opening, `document` will be `undefined`
+})
 
-var document = Document.open('path/to/the/document.sketch')
+// open a sketch document at the specified path
+Document.open('path/to/the/document.sketch', (err, document) => {
+  if (err) {
+    // oh no, we failed to open the document
+  }
+})
 ```
 
-A method to open an existing sketch document or ask the user to open one.
+A method to open an existing sketch document or ask the user to open one. The method is asynchronous so if you want to do something after the document is opening it, make sure that you pass a callback and continue your script there.
 
-| Parameters                               |                                                                                         |
-| ---------------------------------------- | --------------------------------------------------------------------------------------- |
-| path<span class="arg-type">string</span> | The path to the document to open. If `undefined`, the user will be asked to select one. |
-
-### Returns
-
-Return a Document or throw an Error if it was not possible to open to document at the given path.
+| Parameters                                     |                                                                                                                                                          |
+| ---------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| path<span class="arg-type">string</span>       | The path to the document to open. If `undefined`, the user will be asked to select one.                                                                  |
+| callback<span class="arg-type">function</span> | A function called after the document is opened. It is called with an `Error` if opening the Document was unsuccessful and a `Document` (or `undefined`). |
 
 ## Get the selected Page
 

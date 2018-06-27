@@ -76,6 +76,8 @@ globals:
   NSSaveOperation: false
   coscript: false
   __mocha__: false
+  NSOpenPanel: false
+  NSOKButton: false
 
 rules:
   ###########

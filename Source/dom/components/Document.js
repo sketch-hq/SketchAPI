@@ -144,36 +144,81 @@ export class Document extends WrappedObject {
     this._object.contentDrawView().centerRect_(wrappedLayer.sketchObject.rect())
   }
 
-  static open(path) {
-    const app = NSDocumentController.sharedDocumentController()
-
-    let document
-
-    if (!path) {
-      app.openDocument()
-
-      document = app.currentDocument()
-    } else {
-      const url = getURLFromPath(path)
-
-      if (app.documentForURL(url)) {
-        return Document.fromNative(app.documentForURL(url))
-      }
-
-      const error = MOPointer.alloc().init()
-
-      document = app.openDocumentWithContentsOfURL_display_error(
-        url,
-        true,
-        error
-      )
-
-      if (error.value() !== null) {
-        throw new Error(error.value())
-      }
+  static open(path, callback) {
+    if (typeof path === 'function') {
+      /* eslint-disable no-param-reassign */
+      callback = path
+      path = undefined
+      /* eslint-enable */
     }
 
-    return Document.fromNative(document)
+    const app = NSDocumentController.sharedDocumentController()
+
+    if (!path) {
+      const dialog = NSOpenPanel.openPanel()
+      dialog.allowedFileTypes = ['sketch']
+      dialog.canChooseFiles = true
+      dialog.canChooseDirectories = false
+      dialog.allowsMultipleSelection = false
+      const buttonClicked = dialog.runModal()
+      if (buttonClicked != NSOKButton) {
+        if (callback) {
+          callback(null, undefined)
+        }
+        return undefined
+      }
+
+      const url = dialog.URLs()[0]
+      const fiber = coscript.createFiber()
+
+      app.openDocumentWithContentsOfURL_display_completionHandler(
+        url,
+        true,
+        __mocha__.createBlock_function(
+          'v28@?0@"NSDocument"8c16@"NSError"20',
+          (_document, documentWasAlreadyOpen, err) => {
+            try {
+              callback(err, Document.fromNative(_document))
+              fiber.cleanup()
+            } catch (error) {
+              fiber.cleanup()
+              throw error
+            }
+          }
+        )
+      )
+
+      // return the current document to maintain backward compatibility
+      // but that's not the right document...
+      const document = app.currentDocument()
+      return Document.fromNative(document)
+    }
+
+    let document
+    const url = getURLFromPath(path)
+
+    if (app.documentForURL(url)) {
+      document = Document.fromNative(app.documentForURL(url))
+      if (callback) {
+        callback(null, document)
+      }
+      return document
+    }
+
+    const error = MOPointer.alloc().init()
+
+    document = app.openDocumentWithContentsOfURL_display_error(url, true, error)
+
+    if (error.value() !== null) {
+      throw new Error(error.value())
+    }
+
+    document = Document.fromNative(document)
+
+    if (callback) {
+      callback(null, document)
+    }
+    return document
   }
 
   save(path, options, callback) {
@@ -212,10 +257,14 @@ export class Document extends WrappedObject {
       url,
       'com.bohemiancoding.sketch.drawing.single',
       nativeSaveMode,
-      // eslint-disable-next-line
-      __mocha__.createBlock_function('v16@?0@"NSError"8', function(err) {
-        callback(err, that)
-        fiber.cleanup()
+      __mocha__.createBlock_function('v16@?0@"NSError"8', err => {
+        try {
+          callback(err, that)
+          fiber.cleanup()
+        } catch (error) {
+          fiber.cleanup()
+          throw error
+        }
       })
     )
   }
