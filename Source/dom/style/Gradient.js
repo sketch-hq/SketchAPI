@@ -104,7 +104,7 @@ Gradient.define('to', {
     return point
   },
   set(point) {
-    this._object.setFrom(CGPointMake(point.x || 0.5, point.y || 0))
+    this._object.setTo(CGPointMake(point.x || 0.5, point.y || 1))
   },
 })
 

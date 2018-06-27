@@ -8,7 +8,8 @@
     "[Fixed] Getting the importable objects from a Library would sometime returns the ones from another library that shares the same id",
     "[Fixed] Setting an image override on a symbol instance",
     "[Fixed] Saving a document without specifying a path would fail",
-    "[Improved] console.log a wrapped object should be a lot faster on complex files"
+    "[Improved] console.log a wrapped object should be a lot faster on complex files",
+    "[Fixed] Setting the `to` of a gradient would actually change the `from`"
   ],
   "releases": {
     "50.1": [
