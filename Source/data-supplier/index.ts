@@ -1,10 +1,7 @@
 import * as DataSupplier from './DataSupplier'
 
-const api = DataSupplier
-
-api.version = {
+module.exports = DataSupplier
+module.exports.version = {
   sketch: MSApplicationMetadata.metadata().appVersion,
   api: process.env.API_VERSION,
 }
-
-module.exports = api

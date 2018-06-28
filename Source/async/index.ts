@@ -1,10 +1,7 @@
-import * as UI from './UI'
+import * as Async from './async'
 
-const api = UI
-
-api.version = {
+module.exports = Async
+module.exports.version = {
   sketch: MSApplicationMetadata.metadata().appVersion,
   api: process.env.API_VERSION,
 }
-
-module.exports = api
