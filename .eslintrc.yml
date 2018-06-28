@@ -84,6 +84,7 @@ rules:
   # IMPORT
   import/prefer-default-export: off
   import/no-extraneous-dependencies: off
+  import/extensions: off
   import/no-unresolved:
     - error
     - commonjs: true
@@ -138,3 +139,11 @@ rules:
 
 parserOptions:
   sourceType: module
+
+settings:
+  import/resolver:
+    node:
+      extensions:
+        - .ts
+        - .js
+        - .json

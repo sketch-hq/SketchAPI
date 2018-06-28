@@ -14,11 +14,15 @@ function getPluginIdentifier() {
  * @param {string} dataName The data name, will be used as the menu item title for the data.
  * @param {string} dynamicDataKey The key to use to select the dynamic data to supply in onSupplyData.
  */
-export function registerDataSupplier(dataType, dataName, dynamicDataKey) {
+export function registerDataSupplier(
+  dataType: 'public.text' | 'public.image',
+  dataName: INSString | string,
+  dynamicDataKey: INSString | string
+) {
   const dataManager = AppController.sharedInstance().dataSupplierManager()
   const identifier = getPluginIdentifier()
   const commandIdentifier = __command.identifier()
-  dataManager.registerPluginDataSupplier_withName_dataType_pluginIdentifier_commandIdentifier_(
+  dataManager.registerPluginDataSupplier_withName_dataType_pluginIdentifier_commandIdentifier(
     dynamicDataKey,
     dataName,
     dataType,
@@ -33,13 +37,16 @@ export function registerDataSupplier(dataType, dataName, dynamicDataKey) {
 export function deregisterDataSuppliers() {
   const dataManager = AppController.sharedInstance().dataSupplierManager()
   const identifier = getPluginIdentifier()
-  dataManager.deregisterDataSuppliersForPluginWithIdentifier_(identifier)
+  dataManager.deregisterDataSuppliersForPluginWithIdentifier(identifier)
 }
 
 /**
  * When the plugin providing the dynamic data has finished generating the data, it will call this function with the data key and the data.
  */
-export function supplyData(key, data) {
+export function supplyData(
+  key: string | INSString,
+  data: Array<string | INSString>
+) {
   const dataManager = AppController.sharedInstance().dataSupplierManager()
-  dataManager.supplyData_forKey_(data, key)
+  dataManager.supplyData_forKey(data, key)
 }

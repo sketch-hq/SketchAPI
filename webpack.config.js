@@ -13,15 +13,15 @@ const OUTPUT_PATH = path.resolve(
 )
 
 const ENTRIES = [
-  { entry: './Source/index.js', output: 'SketchAPI.js' },
-  { entry: './Source/async/index.js', output: 'SketchAPI_async.js' },
+  { entry: './Source/index.ts', output: 'SketchAPI.js' },
+  { entry: './Source/async/index.ts', output: 'SketchAPI_async.js' },
   {
-    entry: './Source/data-supplier/index.js',
+    entry: './Source/data-supplier/index.ts',
     output: 'SketchAPI_data-supplier.js',
   },
   { entry: './Source/dom/index.js', output: 'SketchAPI_dom.js' },
-  { entry: './Source/settings/index.js', output: 'SketchAPI_settings.js' },
-  { entry: './Source/ui/index.js', output: 'SketchAPI_ui.js' },
+  { entry: './Source/settings/index.ts', output: 'SketchAPI_settings.js' },
+  { entry: './Source/ui/index.ts', output: 'SketchAPI_ui.js' },
 ]
 
 const config = {
