@@ -171,21 +171,19 @@ export class Document extends WrappedObject {
       const url = dialog.URLs()[0]
       const fiber = coscript.createFiber()
 
-      app.openDocumentWithContentsOfURL_display_completionHandler(
+      app.openDocumentWithContentsOfURL_display_context_callback(
         url,
         true,
-        __mocha__.createBlock_function(
-          'v28@?0@"NSDocument"8c16@"NSError"20',
-          (_document, documentWasAlreadyOpen, err) => {
-            try {
-              callback(err, Document.fromNative(_document))
-              fiber.cleanup()
-            } catch (error) {
-              fiber.cleanup()
-              throw error
-            }
+        coscript,
+        (_document, documentWasAlreadyOpen, err) => {
+          try {
+            callback(err, Document.fromNative(_document))
+            fiber.cleanup()
+          } catch (error) {
+            fiber.cleanup()
+            throw error
           }
-        )
+        }
       )
 
       // return the current document to maintain backward compatibility

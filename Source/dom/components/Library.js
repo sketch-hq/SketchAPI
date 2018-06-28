@@ -93,11 +93,12 @@ export class Library extends WrappedObject {
     const fiber = coscript.createFiber()
 
     // otherwise, let's add it
-    libraryController.addRemoteLibraryFromAppcastURL_withCompletionHandler(
+    libraryController.addRemoteLibraryFromAppcastURL_context_callback(
       libUrl,
-      __mocha__.createBlock_function('v24@?0@8@16', (lib, err) => {
+      coscript,
+      (lib, err) => {
         try {
-          if (!lib && err) {
+          if (err) {
             callback(new Error(err.description()))
           } else {
             callback(null, Library.fromNative(lib))
@@ -107,7 +108,7 @@ export class Library extends WrappedObject {
           fiber.cleanup()
           throw error
         }
-      })
+      }
     )
   }
 
