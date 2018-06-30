@@ -102,3 +102,26 @@ test('should set a setting on a document', (context, document) => {
   setDocumentSettingForKey(document, 'object-key', { a: 1 })
   expect(documentSettingForKey(document, 'object-key')).toEqual({ a: 1 })
 })
+
+// Failing with no access to NSObjects
+// test('should coerce NSString setting', (context, document) => {
+//   let str = NSString.alloc().initWithString("a setting")
+//   setDocumentSettingForKey(document, 'object-key', str)
+//   expect(documentSettingForKey(document, 'object-key')).toEqual("a setting")
+// })
+
+// test('should coerce NSNumber setting', (context, document) => {
+//   let num = NSNumber.numberWithBool(true)
+//   setDocumentSettingForKey(document, 'object-key', num)
+//   expect(documentSettingForKey(document, 'object-key')).toEqual(1)
+// })
+
+// test('should coerce NSDictionary setting', (context, document) => {
+//   let dict = NSMutableDictionary.new()
+//   dict.setObject_forKey(NSString.alloc().initWithString("value"), "str")
+//   dict.setObject_forKey(NSNumber.numberWithBool(true), "num")
+//   setDocumentSettingForKey(document, 'object-key', dict)
+//   let fetched = documentSettingForKey(document, 'object-key')
+//   expect(fetched["str"]).toEqual("a setting")
+//   expect(fetched["num"]).toEqual("a setting")
+// })
