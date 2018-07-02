@@ -12,30 +12,6 @@ function getPluginIdentifier() {
 }
 
 /**
- * Coerce common NSObjects to their JS counterparts
- * @param value Any value
- *
- * Converts NSDictionary, NSArray, NSStirng, and NSNumber to
- * native JS equivilents.
- */
-function coerceNSObject(value) {
-  if (value) {
-    if (util.isObject(value)) {
-      return util.toObject(value)
-    } else if (util.isArray(value)) {
-      return util.toArray(value)
-    } else if (util.isString(value)) {
-      return String(value)
-    } else if (util.isNumber(value)) {
-      return Number(value)
-    } else if (util.isBoolean && util.isBoolean(value)) {
-      return Boolean(Number(value))
-    }
-  }
-  return value
-}
-
-/**
  * Return the value of a global setting for a given key.
  * @param key The setting to look up.
  * @return The setting value.
@@ -64,7 +40,7 @@ export function globalSettingForKey(key) {
  */
 export function setGlobalSettingForKey(key, value) {
   const store = NSUserDefaults.standardUserDefaults()
-  const stringifiedValue = JSON.stringify(value)
+  const stringifiedValue = JSON.stringify(value, (k, v) => util.toJSObject(v))
   if (!stringifiedValue) {
     store.removeObjectForKey(key)
   } else {
@@ -102,11 +78,11 @@ export function setSettingForKey(key, value) {
   const store = NSUserDefaults.alloc().initWithSuiteName(
     `${SUITE_PREFIX}${getPluginIdentifier()}`
   )
-  const stringified = JSON.stringify(value, (k, v) => coerceNSObject(v))
-  if (!stringified) {
+  const stringifiedValue = JSON.stringify(value, (k, v) => util.toJSObject(v))
+  if (!stringifiedValue) {
     store.removeObjectForKey(key)
   } else {
-    store.setObject_forKey_(stringified, key)
+    store.setObject_forKey_(stringifiedValue, key)
   }
 }
 
@@ -123,9 +99,9 @@ export function layerSettingForKey(layer, key) {
 }
 
 export function setLayerSettingForKey(layer, key, value) {
-  const stringified = JSON.stringify(value, (k, v) => coerceNSObject(v))
+  const stringifiedValue = JSON.stringify(value, (k, v) => util.toJSObject(v))
   __command.setValue_forKey_onLayer(
-    stringified,
+    stringifiedValue,
     key,
     isWrappedObject(layer) ? layer.sketchObject : layer
   )
@@ -142,7 +118,8 @@ export function documentSettingForKey(document, key) {
 }
 
 export function setDocumentSettingForKey(document, key, value) {
+  log(util)
   const documentData = getDocumentData(document)
-  const stringified = JSON.stringify(value, (k, v) => coerceNSObject(v))
-  __command.setValue_forKey_onDocument(stringified, key, documentData)
+  const stringifiedValue = JSON.stringify(value, (k, v) => util.toJSObject(v))
+  __command.setValue_forKey_onDocument(stringifiedValue, key, documentData)
 }
