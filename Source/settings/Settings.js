@@ -1,5 +1,7 @@
 import { isWrappedObject, getDocumentData } from '../dom/utils'
 
+const util = require('util')
+
 function getPluginIdentifier() {
   if (!__command.pluginBundle()) {
     throw new Error(
@@ -9,93 +11,25 @@ function getPluginIdentifier() {
   return __command.pluginBundle().identifier()
 }
 
-// check if the argument is a native sketch object
-function getNativeClass(arg) {
-  try {
-    return (
-      arg &&
-      arg.isKindOfClass &&
-      typeof arg.class === 'function' &&
-      String(arg.class())
-    )
-  } catch (err) {
-    return undefined
-  }
-}
-
-const assimilatedArrays = [
-  'NSArray',
-  'NSMutableArray',
-  '__NSArrayM',
-  '__NSSingleObjectArrayI',
-  '__NSArray0',
-]
-function isNSArray(ar) {
-  const type = getNativeClass(ar)
-  return assimilatedArrays.indexOf(type) !== -1
-}
-
-const assimilatedStrings = [
-  'NSString',
-  '__NSCFString',
-  'NSTaggedPointerString',
-  '__NSCFConstantString',
-]
-function isNSString(arg) {
-  const type = getNativeClass(arg)
-  return assimilatedStrings.indexOf(type) !== -1
-}
-
-// Boolean NSNumbers are type __NSCFBoolean
-const assimilatedNumbers = ['__NSCFNumber', 'NSNumber', '__NSCFBoolean']
-function isNSNumber(arg) {
-  const type = getNativeClass(arg)
-  return assimilatedNumbers.indexOf(type) !== -1
-}
-
-const assimilatedDictionaries = [
-  'NSDictionary',
-  '__NSDictionaryM',
-  '__NSSingleEntryDictionaryI',
-  '__NSDictionaryI',
-  '__NSCFDictionary',
-]
-function isNSDictionary(arg) {
-  const type = getNativeClass(arg)
-  return assimilatedDictionaries.indexOf(type) !== -1
-}
-
 /**
  * Coerce common NSObjects to their JS counterparts
  * @param value Any value
  *
  * Converts NSDictionary, NSArray, NSStirng, and NSNumber to
  * native JS equivilents.
- * Deep conversions will be performed on Dictionaries and Arrays
  */
 function coerceNSObject(value) {
   if (value) {
-    if (isNSDictionary(value)) {
-      const dict = {}
-      const keys = value.allKeys()
-      for (let i = 0; i < keys.length; i += 1) {
-        const k = coerceNSObject(keys[i])
-        const v = coerceNSObject(value[k])
-        dict[k] = v
-      }
-      return dict
-    } else if (isNSArray(value)) {
-      const arr = []
-      const c = value.length
-      for (let i = 0; i < c; i += 1) {
-        const e = coerceNSObject(value[i])
-        arr.push(e)
-      }
-      return arr
-    } else if (isNSString(value)) {
+    if (util.isObject(value)) {
+      return util.toObject(value)
+    } else if (util.isArray(value)) {
+      return util.toArray(value)
+    } else if (util.isString(value)) {
       return String(value)
-    } else if (isNSNumber(value)) {
+    } else if (util.isNumber(value)) {
       return Number(value)
+    } else if (util.isBoolean && util.isBoolean(value)) {
+      return Boolean(Number(value))
     }
   }
   return value
