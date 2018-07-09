@@ -100,9 +100,9 @@ export class Rectangle {
         !toLayer.sketchObject ||
         !toLayer.sketchObject.convertPoint_fromLayer
       ) {
-        throw new Error(`Expected a Layer, got ${to}`)
+        throw new Error(`Expected a coordinate space, got ${to}`)
       }
-      const origin = toLayer.sketchObject.convertPoint_fromLayer(
+      const origin = toLayer.sketchObject.convertPoint_fromCoordinateSpace(
         NSMakePoint(this.x, this.y),
         null
       )
@@ -110,11 +110,11 @@ export class Rectangle {
     }
     if (
       !fromLayer.sketchObject ||
-      !fromLayer.sketchObject.convertPoint_toLayer
+      !fromLayer.sketchObject.convertPoint_toCoordinateSpace
     ) {
-      throw new Error(`Expected a Layer, got ${from}`)
+      throw new Error(`Expected a coordinate space, got ${from}`)
     }
-    const origin = fromLayer.sketchObject.convertPoint_toLayer(
+    const origin = fromLayer.sketchObject.convertPoint_toCoordinateSpace(
       NSMakePoint(this.x, this.y),
       toLayer ? toLayer.sketchObject : null
     )
