@@ -1,0 +1,20 @@
+{
+  "name": "core-modules",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@skpm/buffer": "0.1.0",
+    "@skpm/console": "0.1.6",
+    "@skpm/events": "0.1.1",
+    "@skpm/os": "0.1.1",
+    "@skpm/path": "0.1.0",
+    "@skpm/timers": "0.1.0",
+    "@skpm/util": "0.1.12"
+  }
+}

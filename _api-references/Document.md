@@ -50,20 +50,28 @@ var document = new Document()
 ## Open a Document
 
 ```javascript
-var document = Document.open()
+// ask the user to select a document
+Document.open((err, document) => {
+  if (err) {
+    // oh no, we failed to open the document
+  }
+  // if the user cancel the opening, `document` will be `undefined`
+})
 
-var document = Document.open('path/to/the/document.sketch')
+// open a sketch document at the specified path
+Document.open('path/to/the/document.sketch', (err, document) => {
+  if (err) {
+    // oh no, we failed to open the document
+  }
+})
 ```
 
-A method to open an existing sketch document or ask the user to open one.
+A method to open an existing sketch document or ask the user to open one. The method is asynchronous so if you want to do something after the document is opening it, make sure that you pass a callback and continue your script there.
 
-| Parameters                               |                                                                                         |
-| ---------------------------------------- | --------------------------------------------------------------------------------------- |
-| path<span class="arg-type">string</span> | The path to the document to open. If `undefined`, the user will be asked to select one. |
-
-### Returns
-
-Return a Document or throw an Error if it was not possible to open to document at the given path.
+| Parameters                                     |                                                                                                                                                          |
+| ---------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| path<span class="arg-type">string</span>       | The path to the document to open. If `undefined`, the user will be asked to select one.                                                                  |
+| callback<span class="arg-type">function</span> | A function called after the document is opened. It is called with an `Error` if opening the Document was unsuccessful and a `Document` (or `undefined`). |
 
 ## Get the selected Page
 
@@ -173,17 +181,22 @@ A method to help center the view of the document window on a given layer.
 document.save()
 
 document.save('path/to/the/document.sketch')
+
+document.save('path/to/the/document.sketch', err => {
+  if (err) {
+    // saving the document failed :(
+  }
+})
 ```
 
-A method to save a document to a specific path or ask the user to choose where to save it.
+A method to save a document to a specific path or ask the user to choose where to save it. The method is asynchronous so if you want to do something after the document is saved, make sure that you pass a callback and continue your script there.
 
-| Parameters                               |                                                                                                  |
-| ---------------------------------------- | ------------------------------------------------------------------------------------------------ |
-| path<span class="arg-type">string</span> | The path where the document will be saved. If `undefined`, the user will be asked to select one. |
-
-### Returns
-
-Return the Document or throw an Error if it was not possible to save the document at the given path.
+| Parameters                                                          |                                                                                                                      |
+| ------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- |
+| path<span class="arg-type">string</span>                            | The path where the document will be saved. If `undefined`, the user will be asked to select one.                     |
+| options<span class="arg-type">object</span>                         | The options for the save operation (only used when specifing a path).                                                |
+| options.saveMode<span class="arg-type">[SaveMode](#savemode)</span> | The way to save the document.                                                                                        |
+| callback<span class="arg-type">function</span>                      | A function called after the document is saved. It is called with an `Error` if saving the Document was unsuccessful. |
 
 ## Close the Document
 
@@ -192,3 +205,21 @@ document.close()
 ```
 
 A method to close a document.
+
+## `Document.SaveMode`
+
+```javascript
+Document.SaveMode.SaveAs
+
+document.save('path/to/the/document.sketch', {
+  saveMode: Document.SaveMode.SaveAs,
+})
+```
+
+Enumeration of the save mode.
+
+| Value    |                                                                                                                               |
+| -------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| `Save`   | Overwrites a document’s file with the document’s contents                                                                     |
+| `SaveAs` | Writes a document’s contents to a new file and then changes the document’s current location to point to the just-written file |
+| `SaveTo` | Writes a document’s contents to a new file without changing the document’s current location to point to the new file.         |

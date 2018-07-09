@@ -8,15 +8,16 @@ section: components
 var Library = require('sketch/dom').Library
 ```
 
-A Sketch Library. All the properties are `read-only`.
+A Sketch Library.
 
-| Properties                                                                  |                                              |
-| --------------------------------------------------------------------------- | -------------------------------------------- |
-| id<span class="arg-type">string</span>                                      | The unique ID of the Library.                |
-| name<span class="arg-type">string</span>                                    | The name of the Library.                     |
-| valid<span class="arg-type">boolean</span>                                  | If Sketch has been able to load the Library. |
-| enabled<span class="arg-type">boolean</span>                                | If the user has enabled the Library.         |
-| libraryType<span class="arg-type">[LibraryType](#librarylibrarytype)</span> | The type of Library.                         |
+| Properties                                                                             |                                                |
+| -------------------------------------------------------------------------------------- | ---------------------------------------------- |
+| id<span class="arg-type">string - readonly</span>                                      | The unique ID of the Library.                  |
+| name<span class="arg-type">string - readonly</span>                                    | The name of the Library.                       |
+| valid<span class="arg-type">boolean - readonly</span>                                  | If Sketch has been able to load the Library.   |
+| enabled<span class="arg-type">boolean</span>                                           | If the user has enabled the Library.           |
+| libraryType<span class="arg-type">[LibraryType](#librarylibrarytype) - readonly</span> | The type of Library.                           |
+| lastModifiedAt<span class="arg-type">Date - readonly</span>                            | The date at which the library was last updated |
 
 ## Access all the Libraries
 
@@ -39,7 +40,7 @@ var library = Library.getLibraryForDocumentAtPath(
 )
 ```
 
-Get the library for a Sketch document. If the Document was already added as a Library, it will simply return it. If it is not already a Library, it will be added.
+Get the library for a local Sketch document. If the Document was already added as a Library, it will simply return it. If it is not already a Library, it will be added.
 
 | Parameters                                          |                          |
 | --------------------------------------------------- | ------------------------ |
@@ -48,6 +49,26 @@ Get the library for a Sketch document. If the Document was already added as a Li
 ### Returns
 
 The existing Library at the path or a new Library from the document at the path.
+
+## Get a remote Library from an RSS feed URL
+
+```javascript
+Library.getRemoteLibraryWithRSS(
+  'https://url/to/feed/rss.xml',
+  (err, library) => {
+    if (err) {
+      // oh no, failed to load the library
+    }
+  }
+)
+```
+
+Get the remote library for an RSS feed. If the RSS feed was already added as a Library, it will simply return it. If it is not already a Library, it will be added.
+
+| Parameters                                         |                                                                                                                                                     |
+| -------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
+| url<span class="arg-type">string - required</span> | The URL to the rss feed describing the versions of the library.                                                                                     |
+| callback<span class="arg-type">function</span>     | A function called after the library is added. It is called with an `Error` if adding the Library was unsuccessful and a `Library` (or `undefined`). |
 
 ## Remove a Library
 
@@ -60,7 +81,7 @@ A method to remove an existing library.
 ## Get the Library's Document
 
 ```javascript
-var document = library.getDocument()
+var libDocument = library.getDocument()
 ```
 
 A library references a Sketch [Document](#document) and you can access it with this method.
@@ -72,6 +93,7 @@ The [Document](#document) that the Library references. It can throw an error if 
 ## Get the Symbols that can be imported
 
 ```javascript
+var document = sketch.getSelectedDocument()
 var symbolReferences = library.getImportableSymbolReferencesForDocument(
   document
 )
