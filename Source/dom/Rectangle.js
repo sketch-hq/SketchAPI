@@ -98,7 +98,7 @@ export class Rectangle {
       if (
         !toLayer ||
         !toLayer.sketchObject ||
-        !toLayer.sketchObject.convertPoint_fromLayer
+        !toLayer.sketchObject.convertPoint_fromCoordinateSpace
       ) {
         throw new Error(`Expected a coordinate space, got ${to}`)
       }
