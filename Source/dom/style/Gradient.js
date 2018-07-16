@@ -31,7 +31,7 @@ export class Gradient extends WrappedObject {
       }
     } else {
       nativeGradient = MSGradient.alloc().initBlankGradient()
-      if (object.gradientType) {
+      if (typeof object.gradientType !== 'undefined') {
         const type = GradientTypeMap[object.gradientType]
         nativeGradient.setGradientType(
           typeof type !== 'undefined' ? type : object.gradientType
@@ -39,11 +39,19 @@ export class Gradient extends WrappedObject {
       }
       if (object.from) {
         nativeGradient.setFrom(
-          CGPointMake(object.from.x || 0.5, object.from.y || 0)
+          CGPointMake(
+            typeof object.from.x !== 'undefined' ? object.from.x : 0.5,
+            typeof object.from.y !== 'undefined' ? object.from.y : 0
+          )
         )
       }
-      if (object.to) {
-        nativeGradient.setTo(CGPointMake(object.to.x || 0.5, object.to.y || 1))
+      if (typeof object.to !== 'undefined') {
+        nativeGradient.setTo(
+          CGPointMake(
+            typeof object.to.x !== 'undefined' ? object.to.x : 0.5,
+            typeof object.to.y !== 'undefined' ? object.to.y : 1
+          )
+        )
       }
       if (object.stops) {
         nativeGradient.setStops(
@@ -92,7 +100,12 @@ Gradient.define('from', {
     return point
   },
   set(point) {
-    this._object.setFrom(CGPointMake(point.x || 0.5, point.y || 0))
+    this._object.setFrom(
+      CGPointMake(
+        point.x !== 'undefined' ? point.x : 0.5,
+        point.y !== 'undefined' ? point.y : 0
+      )
+    )
   },
 })
 
@@ -104,7 +117,12 @@ Gradient.define('to', {
     return point
   },
   set(point) {
-    this._object.setTo(CGPointMake(point.x || 0.5, point.y || 1))
+    this._object.setTo(
+      CGPointMake(
+        point.x !== 'undefined' ? point.x : 0.5,
+        point.y !== 'undefined' ? point.y : 1
+      )
+    )
   },
 })
 

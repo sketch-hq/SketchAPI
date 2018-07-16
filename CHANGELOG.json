@@ -1,5 +1,7 @@
 {
-  "unreleased": [],
+  "unreleased": [
+    "[Fixed] Using 0 as a shadow's value shouldn't fall back to the default"
+  ],
   "releases": {
     "51": [
       "[New] Add `path` property to Document",

@@ -67,3 +67,30 @@ test('should get the shadows', () => {
     enabled: true,
   })
 })
+
+// https://github.com/BohemianCoding/SketchAPI/issues/230
+test('should set the shadows with 0 values', () => {
+  const style = new Style()
+  style.shadows = [
+    {
+      spread: 0,
+      blur: 0,
+      x: 1,
+      y: 0,
+      color: '#ebc100',
+    },
+  ]
+  style.innerShadows = [
+    {
+      spread: 0,
+      blur: 0,
+      x: 1,
+      y: 0,
+      color: '#ebc100',
+    },
+  ]
+  expect(style.shadows[0].blur).toBe(0)
+  expect(style.shadows[0].y).toBe(0)
+  expect(style.innerShadows[0].blur).toBe(0)
+  expect(style.innerShadows[0].y).toBe(0)
+})

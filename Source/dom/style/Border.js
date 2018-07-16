@@ -33,11 +33,11 @@ export class Border extends WrappedObject {
       border.gradient = gradient._object
     }
 
-    if (value.thickness) {
+    if (typeof value.thickness !== 'undefined') {
       border.thickness = value.thickness
     }
 
-    if (value.position) {
+    if (typeof value.position !== 'undefined') {
       const position = BorderPositionMap[value.position]
       border.position =
         typeof position !== 'undefined' ? position : value.position
