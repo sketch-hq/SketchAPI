@@ -105,3 +105,16 @@ test('should get the borders', () => {
     ],
   })
 })
+
+// https://github.com/BohemianCoding/SketchAPI/issues/230
+test('should set the borders with 0s', () => {
+  const style = new Style({
+    borders: [
+      {
+        color: '#11223344',
+        thickness: 0,
+      },
+    ],
+  })
+  expect(style.borders[0].thickness).toBe(0)
+})

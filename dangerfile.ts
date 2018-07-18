@@ -52,22 +52,10 @@ if (packageChanged && !lockfileChanged) {
 const corePackageChanged = touchedFiles.some(
   filePath => filePath === 'core-modules/package.json'
 )
-const coreLockfileChanged = touchedFiles.some(
-  filePath => filePath === 'core-modules/package-lock.json'
-)
 
-if (corePackageChanged && !coreLockfileChanged) {
-  const message =
-    'Changes were made to core-modules/package.json, but not to core-modules/package-lock.json'
-  const idea = 'Perhaps you need to run `cd core-modules && npm run install`?'
-  warn(`${message} - <i>${idea}</i>`)
-}
-
-if (corePackageChanged || coreLockfileChanged) {
+if (corePackageChanged) {
   // eslint-disable-next-line
   const coreModules = require('./core-modules/package.json')
-  // eslint-disable-next-line
-  const coreModulesLock = require('./core-modules/package-lock.json')
 
   if (
     Object.keys(coreModules.dependencies).some(
@@ -75,17 +63,6 @@ if (corePackageChanged || coreLockfileChanged) {
     )
   ) {
     fail('core-modules/package.json should only contain pinned dependencies')
-  }
-
-  if (
-    Object.keys(coreModules.dependencies).some(
-      k =>
-        coreModules.dependencies[k] !== coreModulesLock.dependencies[k].version
-    )
-  ) {
-    fail(
-      'core-modules/package.json and core-modules/package-lock.json are not in sync'
-    )
   }
 }
 

@@ -1,5 +1,8 @@
 {
-  "unreleased": [],
+  "unreleased": [
+    "[Fixed] Using 0 as a shadow's value shouldn't fall back to the default",
+    "[Fixed] Logging an NSArray would print an array of `undefined` instead of the proper items"
+  ],
   "releases": {
     "51": [
       "[New] Add `path` property to Document",
