@@ -1,11 +1,14 @@
 ---
 layout: null
 ---
-[{% for page in site.documents %}
+{%- assign guides = site.documents | where: "collection", "guides" -%}
+{%- assign actions = site.documents | where: "collection", "actions" -%}
+{%- assign pages = guides | concat: actions -%}
+[{% for page in pages %}
     {
       "id": {{ forloop.index0 }},
-      "url": "{{ page.url }}",
-      "title": "{{ page.title }}",
-      "body": "{{ page.content | strip_html | strip_newlines | remove:'"' }}"
+      "url": {{ page.url | jsonify }},
+      "title": {{ page.title | jsonify }},
+      "body": {{ page.content | markdownify | escape | jsonify }}
     }{% unless forloop.last %},{% endunless %}
 {% endfor %}]
