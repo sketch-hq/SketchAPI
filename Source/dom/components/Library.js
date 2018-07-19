@@ -119,10 +119,30 @@ export class Library extends WrappedObject {
     return Document.fromNative(this._object.document())
   }
 
-  getImportableSymbolReferencesForDocument(document) {
-    const provider = MSForeignSymbolProvider.alloc().initWithDocument(
-      wrapObject(document).sketchObject
-    )
+  getImportableReferencesForDocument(document, objectType) {
+    let provider
+    switch (objectType) {
+      case ImportableObjectType.Symbol:
+        provider = MSForeignSymbolProvider.alloc().initWithDocument(
+          wrapObject(document).sketchObject
+        )
+        break
+      case ImportableObjectType.LayerStyle:
+        provider = MSSharedLayerStyleProvider.alloc().initWithDocument(
+          wrapObject(document).sketchObject
+        )
+        break
+      case ImportableObjectType.TextStyle:
+        provider = MSSharedTextStyleProvider.alloc().initWithDocument(
+          wrapObject(document).sketchObject
+        )
+        break
+      default:
+        provider = MSForeignObjectProvider.alloc().initWithDocument(
+          wrapObject(document).sketchObject
+        )
+    }
+
     const collector = MSForeignObjectCollector.alloc().initWithProvider(
       provider
     )
@@ -149,6 +169,27 @@ export class Library extends WrappedObject {
       obj._documentData = documentData
       return obj
     })
+  }
+
+  getImportableSymbolReferencesForDocument(document) {
+    return this.getImportableReferencesForDocument(
+      document,
+      ImportableObjectType.Symbol
+    )
+  }
+
+  getImportableLayerStyleReferencesForDocument(document) {
+    return this.getImportableReferencesForDocument(
+      document,
+      ImportableObjectType.LayerStyle
+    )
+  }
+
+  getImportableTextStyleReferencesForDocument(document) {
+    return this.getImportableReferencesForDocument(
+      document,
+      ImportableObjectType.TextStyle
+    )
   }
 
   remove() {
