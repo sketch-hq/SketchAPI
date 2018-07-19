@@ -84,4 +84,20 @@ if (!isRunningOnJenkins()) {
     const libraries = Library.getLibraries()
     expect(libraries.find(d => d.id === libId)).toBe(undefined)
   })
+
+  test('should add a remote library', () =>
+    new Promise((resolve, reject) => {
+      Library.getRemoteLibraryWithRSS(
+        'https://client.sketch.cloud/v1/shares/PR8z1/rss',
+        (err, result) => {
+          if (err) {
+            return reject(err)
+          }
+          return resolve(result)
+        }
+      )
+    }).then(result => {
+      expect(result.libraryType).toBe(Library.LibraryType.Remote)
+      result.remove()
+    }))
 }
