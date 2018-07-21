@@ -29,6 +29,7 @@ cd my-plugin
 
 ## Running your plugin
 
+* Install npm modules: `npm install`
 * Build the plugin: `npm run build`
 * Launch Sketch, open a document
 * Choose `Plugins` > `my-plugin` > `My Command`
