@@ -47,10 +47,14 @@ if (!isRunningOnJenkins()) {
     // eslint-disable-next-line
     const master = SymbolMaster.fromArtboard(artboard)
 
-    return document.save(
-      '~/Desktop/sketch-api-unit-tests-library.sketch',
-      err => {
-        expect(err).toBe(undefined)
+    return new Promise((resolve, reject) => {
+      document.save('~/Desktop/sketch-api-unit-tests-library.sketch', err => {
+        if (err) {
+          reject(err)
+          return
+        }
+
+        document.close()
 
         lib = Library.getLibraryForDocumentAtPath(
           '~/Desktop/sketch-api-unit-tests-library.sketch'
@@ -58,12 +62,11 @@ if (!isRunningOnJenkins()) {
         libId = lib.id
         expect(lib.type).toBe('Library')
 
-        document.close()
-
         const libraries = Library.getLibraries()
         expect(libraries.find(d => d.id === libId)).toEqual(lib)
-      }
-    )
+        resolve()
+      })
+    })
   })
 
   test('should disabled a library', () => {
