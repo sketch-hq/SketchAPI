@@ -1,4 +1,4 @@
-const { SymbolMaster, Text, Artboard } = require('./dom')
+const { SymbolMaster, SharedStyle, Text, Artboard } = require('./dom')
 
 export function isRunningOnJenkins() {
   return !__command.pluginBundle()
@@ -19,5 +19,21 @@ export function createSymbolMaster(document: any) {
     master: SymbolMaster.fromArtboard(artboard),
     text,
     artboard,
+  }
+}
+
+export function createSharedStyle(document: any, Primitive: any) {
+  const object = new Primitive({
+    name: 'Test',
+    parent: document.selectedPage,
+  })
+
+  return {
+    sharedStyle: SharedStyle.fromStyle({
+      name: 'test shared style',
+      style: object.style,
+      document,
+    }),
+    object,
   }
 }

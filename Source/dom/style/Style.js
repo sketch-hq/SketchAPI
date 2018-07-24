@@ -1,5 +1,7 @@
 import { WrappedObject, DefinedPropertiesKey } from '../WrappedObject'
+import { Factory } from '../Factory'
 import { toArray } from '../utils'
+import { wrapObject } from '../wrapNativeObject'
 import { Types } from '../enums'
 import { GradientType } from './Gradient'
 import { colorFromString, colorToString } from './Color'
@@ -81,10 +83,26 @@ export class Style extends WrappedObject {
   static colorToString(value) {
     return colorToString(value)
   }
+
+  isOutOfSyncWithSharedStyle() {
+    const { sharedStyle, _object } = this
+    if (sharedStyle) {
+      return !!sharedStyle.sketchObject.isOutOfSyncWithInstance(_object)
+    }
+    return false
+  }
+
+  syncWithSharedStyle() {
+    const { sharedStyle, _object } = this
+    if (sharedStyle) {
+      _object.syncWithTemplateInstance(sharedStyle.style.sketchObject)
+    }
+  }
 }
 
 Style.type = Types.Style
 Style[DefinedPropertiesKey] = { ...WrappedObject[DefinedPropertiesKey] }
+Factory.registerClass(Style, MSStyle)
 
 Style.GradientType = GradientType
 
@@ -179,5 +197,58 @@ Style.define('innerShadows', {
   set(values) {
     const objects = values.map(Shadow.toNative.bind(Shadow, MSStyleInnerShadow))
     this._object.setInnerShadows(objects)
+  },
+})
+
+Style.define('sharedStyleId', {
+  get() {
+    if (this._object.sharedObjectID()) {
+      return String(this._object.sharedObjectID())
+    }
+    return null
+  },
+  set(newId) {
+    const documentData = this._object.documentData()
+    const container = documentData.sharedObjectContainerOfType(
+      this._object.type()
+    )
+
+    if (!newId) {
+      const currentSharedId = this._object.sharedObjectID()
+      if (currentSharedId) {
+        const currentSharedObject = container.sharedStyleWithID(currentSharedId)
+        currentSharedObject.unregisterInstance(this._object)
+      }
+    } else {
+      const sharedStyle = container.sharedStyleWithID(newId)
+      if (!sharedStyle) {
+        throw new Error('Seems like this shared style does not exists')
+      }
+      container.registerInstance_withSharedStyle(this._object, sharedStyle)
+    }
+  },
+})
+
+Style.define('sharedStyle', {
+  exportable: false,
+  enumerable: false,
+  get() {
+    const { sharedStyleId } = this
+    if (!sharedStyleId) {
+      return null
+    }
+    const documentData = this._object.documentData()
+    const container = documentData.sharedObjectContainerOfType(
+      this._object.type()
+    )
+    return wrapObject(container.sharedStyleWithID(sharedStyleId))
+  },
+  set(sharedStyle) {
+    if (!sharedStyle) {
+      this.sharedStyleId = undefined
+    } else {
+      const wrappedMaster = wrapObject(sharedStyle)
+      this.sharedStyleId = wrappedMaster.id
+    }
   },
 })
