@@ -1,5 +1,5 @@
 /* globals expect, test */
-import { isRunningOnJenkins } from '../../../test-utils'
+import { isRunningOnJenkins, createSymbolMaster } from '../../../test-utils'
 import { Document } from '../Document'
 import { Group } from '../Group'
 
@@ -48,6 +48,18 @@ test('should look for a layer by its name', (context, document) => {
   })
   const found = document.getLayersNamed('Test')
   expect(found).toEqual([group])
+})
+
+test('should look for a symbol by its symbolId', (context, document) => {
+  const { master } = createSymbolMaster(document)
+
+  expect(document.getSymbolMasterWithID(master.symbolId)).toEqual(master)
+})
+
+test('should list all the symbols', (context, document) => {
+  const { master } = createSymbolMaster(document)
+
+  expect(document.getSymbols()).toEqual([master])
 })
 
 // some tests cannot really run on jenkins because it doesn't have access to MSDocument

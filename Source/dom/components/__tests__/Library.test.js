@@ -47,23 +47,25 @@ if (!isRunningOnJenkins()) {
     // eslint-disable-next-line
     const master = SymbolMaster.fromArtboard(artboard)
 
-    return document.save(
-      '~/Desktop/sketch-api-unit-tests-library.sketch',
-      err => {
-        expect(err).toBe(undefined)
+    return new Promise((resolve, reject) => {
+      document.save('~/Desktop/sketch-api-unit-tests-library.sketch', err => {
+        if (err) {
+          return reject(err)
+        }
+        return resolve()
+      })
+    }).then(() => {
+      document.close()
 
-        lib = Library.getLibraryForDocumentAtPath(
-          '~/Desktop/sketch-api-unit-tests-library.sketch'
-        )
-        libId = lib.id
-        expect(lib.type).toBe('Library')
+      lib = Library.getLibraryForDocumentAtPath(
+        '~/Desktop/sketch-api-unit-tests-library.sketch'
+      )
+      libId = lib.id
+      expect(lib.type).toBe('Library')
 
-        document.close()
-
-        const libraries = Library.getLibraries()
-        expect(libraries.find(d => d.id === libId)).toEqual(lib)
-      }
-    )
+      const libraries = Library.getLibraries()
+      expect(libraries.find(d => d.id === libId)).toEqual(lib)
+    })
   })
 
   test('should disabled a library', () => {
@@ -84,4 +86,20 @@ if (!isRunningOnJenkins()) {
     const libraries = Library.getLibraries()
     expect(libraries.find(d => d.id === libId)).toBe(undefined)
   })
+
+  test('should add a remote library', () =>
+    new Promise((resolve, reject) => {
+      Library.getRemoteLibraryWithRSS(
+        'https://client.sketch.cloud/v1/shares/PR8z1/rss',
+        (err, result) => {
+          if (err) {
+            return reject(err)
+          }
+          return resolve(result)
+        }
+      )
+    }).then(result => {
+      expect(result.libraryType).toBe(Library.LibraryType.Remote)
+      result.remove()
+    }))
 }

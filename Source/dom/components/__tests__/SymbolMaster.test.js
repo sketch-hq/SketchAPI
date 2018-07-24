@@ -2,24 +2,7 @@
 /* eslint-disable no-param-reassign */
 
 import { SymbolMaster, Text, Artboard } from '../../'
-
-function createSymbolMaster(document) {
-  const artboard = new Artboard({
-    name: 'Test',
-    parent: document.selectedPage,
-  })
-  const text = new Text({
-    text: 'Test value',
-    parent: artboard,
-  })
-
-  // build the symbol master
-  return {
-    master: SymbolMaster.fromArtboard(artboard),
-    text,
-    artboard,
-  }
-}
+import { createSymbolMaster } from '../../../test-utils'
 
 test('should create a symbol master from an artboard', (context, document) => {
   // build the symbol master

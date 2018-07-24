@@ -78,6 +78,12 @@ globals:
   __mocha__: false
   NSOpenPanel: false
   NSOKButton: false
+  NSNull: false
+  MSSharedLayerStyleProvider: false
+  MSSharedTextStyleProvider: false
+  MSForeignObjectProvider: false
+  MSSharedStyle: false
+  MSStyle: false
 
 rules:
   ###########

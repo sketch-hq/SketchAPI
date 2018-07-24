@@ -1,25 +1,8 @@
 /* globals expect, test */
 /* eslint-disable no-param-reassign */
 
-import { SymbolMaster, Text, Artboard, SymbolInstance } from '../../'
-
-function createSymbolMaster(document) {
-  const artboard = new Artboard({
-    name: 'Test',
-    parent: document.selectedPage,
-  })
-  const text = new Text({
-    text: 'Test value',
-    parent: artboard,
-  })
-
-  // build the symbol master
-  return {
-    master: SymbolMaster.fromArtboard(artboard),
-    text,
-    artboard,
-  }
-}
+import { SymbolInstance } from '../../'
+import { createSymbolMaster } from '../../../test-utils'
 
 test(
   'should create a instance by setting the master property',

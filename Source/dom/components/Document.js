@@ -134,6 +134,18 @@ export class Document extends WrappedObject {
     return toArray(documentData.allSymbols()).map(wrapObject)
   }
 
+  getSharedLayerStyles() {
+    const documentData = this._getMSDocumentData()
+    return toArray(documentData.layerStyles().sharedStyles()).map(wrapObject)
+  }
+
+  getSharedTextStyles() {
+    const documentData = this._getMSDocumentData()
+    return toArray(documentData.layerTextStyles().sharedStyles()).map(
+      wrapObject
+    )
+  }
+
   /**
    * Center the view of the document window on a given layer.
    *
@@ -177,7 +189,11 @@ export class Document extends WrappedObject {
         coscript,
         (_document, documentWasAlreadyOpen, err) => {
           try {
-            callback(err, Document.fromNative(_document))
+            if (err && !err.isEqual(NSNull.null())) {
+              callback(new Error(err.description()))
+            } else {
+              callback(null, Document.fromNative(_document))
+            }
             fiber.cleanup()
           } catch (error) {
             fiber.cleanup()
@@ -251,19 +267,23 @@ export class Document extends WrappedObject {
     const nativeSaveMode =
       SaveModeType[saveMode] || saveMode || NSSaveAsOperation
     const that = this
-    msdocument[saveMethod](
+    msdocument.saveDocumentToURL_saveMode_context_callback(
       url,
-      'com.bohemiancoding.sketch.drawing.single',
       nativeSaveMode,
-      __mocha__.createBlock_function('v16@?0@"NSError"8', err => {
+      coscript,
+      err => {
         try {
-          callback(err, that)
+          if (err && !err.isEqual(NSNull.null())) {
+            callback(new Error(err.description()), that)
+          } else {
+            callback(null, that)
+          }
           fiber.cleanup()
         } catch (error) {
           fiber.cleanup()
           throw error
         }
-      })
+      }
     )
   }
 
@@ -356,7 +376,8 @@ Document.define('selectedPage', {
 
 Document.define('path', {
   get() {
-    const url = this._tempURL || this._getMSDocument().fileURL()
+    const url =
+      this._tempURL || (this._getMSDocument() || { fileURL() {} }).fileURL()
     if (url) {
       return String(url.absoluteString()).replace('file://', '')
     }

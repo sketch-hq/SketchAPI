@@ -18,32 +18,35 @@ if (!isRunningOnJenkins()) {
     })
     // eslint-disable-next-line
     const master = SymbolMaster.fromArtboard(artboard)
-    return document.save(
-      '~/Desktop/sketch-api-unit-tests-importable-objects.sketch',
-      err => {
-        expect(err).toBe(undefined)
+    return new Promise((resolve, reject) => {
+      document.save(
+        '~/Desktop/sketch-api-unit-tests-importable-objects.sketch',
+        err => {
+          if (err) {
+            return reject(err)
+          }
+          return resolve()
+        }
+      )
+    }).then(() => {
+      const lib = Library.getLibraryForDocumentAtPath(
+        '~/Desktop/sketch-api-unit-tests-importable-objects.sketch'
+      )
 
-        const lib = Library.getLibraryForDocumentAtPath(
-          '~/Desktop/sketch-api-unit-tests-importable-objects.sketch'
-        )
+      const document2 = new Document()
 
-        const document2 = new Document()
+      const symbolRefs = lib.getImportableSymbolReferencesForDocument(document2)
 
-        const symbolRefs = lib.getImportableSymbolReferencesForDocument(
-          document2
-        )
+      expect(symbolRefs.length).toBe(1)
+      expect(symbolRefs[0].id).toBe(master.symbolId)
 
-        expect(symbolRefs.length).toBe(1)
-        expect(symbolRefs[0].id).toBe(master.symbolId)
+      const importedMaster = symbolRefs[0].import()
 
-        const importedMaster = symbolRefs[0].import()
+      expect(importedMaster.layers[0].text).toBe('Test value')
 
-        expect(importedMaster.layers[0].text).toBe('Test value')
-
-        document.close()
-        document2.close()
-        lib.remove()
-      }
-    )
+      document.close()
+      document2.close()
+      lib.remove()
+    })
   })
 }

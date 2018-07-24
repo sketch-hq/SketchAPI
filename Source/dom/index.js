@@ -15,6 +15,7 @@ import { SymbolMaster } from './components/SymbolMaster'
 import { SymbolInstance } from './components/SymbolInstance'
 import { Library } from './components/Library'
 import { HotSpot } from './components/HotSpot'
+import { SharedStyle } from './components/SharedStyle'
 
 import { AnimationType, BackTarget } from './components/Flow'
 import { Types } from './enums'
@@ -29,6 +30,7 @@ api.Image = Image
 api.Shape = Shape
 api.Artboard = Artboard
 api.Page = Page
+api.SharedStyle = SharedStyle
 api.SymbolMaster = SymbolMaster
 api.SymbolInstance = SymbolInstance
 api.Library = Library
