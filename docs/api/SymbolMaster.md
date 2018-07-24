@@ -96,7 +96,7 @@ The [Library](#library) the symbol was defined in, or `null` if it is a local sy
 const success = master.syncWithLibrary()
 ```
 
-If a [Library](#library) has some updates, you can synchronize the local Symbol Master with the Library's version and bypass the panel where the user chooses the updated to bring.
+If a [Library](#library) has some updates, you can synchronize the local Symbol Master with the Library's version and bypass the panel where the user chooses the updates to bring.
 
 ### Returns
 
