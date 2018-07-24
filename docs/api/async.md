@@ -1,7 +1,7 @@
 ---
 title: async
-order: 407
-section: Utils
+order: 404
+section: API
 ---
 
 ```javascript

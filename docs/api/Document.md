@@ -1,7 +1,7 @@
 ---
 title: Document
 order: 201
-section: components
+section: models
 ---
 
 ```javascript
@@ -134,6 +134,30 @@ A method to help find the layers in this document which have the given name.
 ### Returns
 
 Return an array of [Layer](#layer).
+
+## Get all the Shared Layer Styles
+
+```javascript
+var symbols = document.getSharedLayerStyles()
+```
+
+A method to get all shared layer styles defined in the document.
+
+### Returns
+
+Return an array of the layer [SharedStyle](#sharedstyle) objects defined in the document.
+
+## Get all the Shared Text Styles
+
+```javascript
+var symbols = document.getSharedTextStyles()
+```
+
+A method to get all shared text styles defined in the document.
+
+### Returns
+
+Return an array of the text [SharedStyle](#sharedstyle) objects defined in the document.
 
 ## Get all the Symbol Masters
 

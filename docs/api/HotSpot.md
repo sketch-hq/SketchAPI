@@ -1,7 +1,7 @@
 ---
 title: HotSpot
-order: 213
-section: components
+order: 310
+section: layers
 ---
 
 ```javascript

@@ -1,7 +1,7 @@
 ---
 title: Selection
-order: 402
-section: Utils
+order: 207
+section: models
 ---
 
 ```javascript

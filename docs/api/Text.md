@@ -1,7 +1,7 @@
 ---
 title: Text
-order: 208
-section: components
+order: 307
+section: layers
 ---
 
 ```javascript

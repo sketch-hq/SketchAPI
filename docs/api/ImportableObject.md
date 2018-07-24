@@ -1,7 +1,7 @@
 ---
 title: Importable Object
-order: 215
-section: components
+order: 203
+section: models
 ---
 
 ```javascript

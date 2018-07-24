@@ -1,7 +1,7 @@
 ---
 title: Image
-order: 206
-section: components
+order: 306
+section: layers
 ---
 
 ```javascript
