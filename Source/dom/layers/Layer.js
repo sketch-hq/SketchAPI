@@ -1,7 +1,7 @@
 import { WrappedObject, DefinedPropertiesKey } from '../WrappedObject'
-import { Rectangle } from '../Rectangle'
+import { Rectangle } from '../models/Rectangle'
 import { wrapObject, wrapNativeObject } from '../wrapNativeObject'
-import { Flow } from './Flow'
+import { Flow } from '../models/Flow'
 
 /**
  * Abstract class that represents a Sketch layer.

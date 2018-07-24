@@ -1,6 +1,6 @@
 /* globals expect, test */
 
-import { Shape } from '../../'
+import { Shape } from '../..'
 import { createSharedStyle } from '../../../test-utils'
 import { Style } from '../Style'
 

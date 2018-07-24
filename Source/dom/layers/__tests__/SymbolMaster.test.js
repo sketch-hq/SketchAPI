@@ -1,7 +1,7 @@
 /* globals expect, test */
 /* eslint-disable no-param-reassign */
 
-import { SymbolMaster, Text, Artboard } from '../../'
+import { SymbolMaster, Text, Artboard } from '../..'
 import { createSymbolMaster } from '../../../test-utils'
 
 test('should create a symbol master from an artboard', (context, document) => {

@@ -1,7 +1,7 @@
 /* globals expect, test */
 /* eslint-disable no-param-reassign */
 
-import { SymbolMaster, Text, Artboard, Image } from '../../'
+import { SymbolMaster, Text, Artboard, Image } from '../..'
 
 // using a base64 image cause I'm not sure where and how to keep assets that would work with both local and jenkins tests
 const base64Image =

@@ -1,6 +1,6 @@
 /* globals expect, test */
-import { Artboard } from '../Artboard'
-import { Group } from '../Group'
+import { Artboard } from '../../layers/Artboard'
+import { Group } from '../../layers/Group'
 import { AnimationType, BackTarget } from '../Flow'
 
 test(

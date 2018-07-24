@@ -1,7 +1,7 @@
 /* globals expect, test */
 import { isRunningOnJenkins, createSymbolMaster } from '../../../test-utils'
 import { Document } from '../Document'
-import { Group } from '../Group'
+import { Group } from '../../layers/Group'
 
 test('should be able to log a document', (context, document) => {
   log(document)

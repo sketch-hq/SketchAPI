@@ -1,5 +1,5 @@
-import { toArray } from './utils'
-import { wrapNativeObject } from './wrapNativeObject'
+import { toArray } from '../utils'
+import { wrapNativeObject } from '../wrapNativeObject'
 
 /**
  * Represents the layers that the user has selected.

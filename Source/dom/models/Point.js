@@ -1,4 +1,4 @@
-import { proxyProperty, initProxyProperties } from './utils'
+import { proxyProperty, initProxyProperties } from '../utils'
 
 export class Point {
   constructor(x, y) {

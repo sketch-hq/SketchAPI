@@ -1,6 +1,6 @@
 import { DefinedPropertiesKey } from '../WrappedObject'
 import { Group } from './Group'
-import { Selection } from '../Selection'
+import { Selection } from '../models/Selection'
 import { Types } from '../enums'
 import { Factory } from '../Factory'
 import { wrapNativeObject, wrapObject } from '../wrapNativeObject'

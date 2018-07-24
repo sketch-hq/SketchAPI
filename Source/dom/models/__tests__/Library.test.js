@@ -1,6 +1,6 @@
 /* globals expect, test */
 import { isRunningOnJenkins } from '../../../test-utils'
-import { Library, Document, Artboard, Text, SymbolMaster } from '../../'
+import { Library, Document, Artboard, Text, SymbolMaster } from '../..'
 
 function findValidLib(libs) {
   return libs.find(l => l.valid)

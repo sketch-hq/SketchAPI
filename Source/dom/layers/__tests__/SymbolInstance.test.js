@@ -1,7 +1,7 @@
 /* globals expect, test */
 /* eslint-disable no-param-reassign */
 
-import { SymbolInstance } from '../../'
+import { SymbolInstance } from '../..'
 import { createSymbolMaster } from '../../../test-utils'
 
 test(

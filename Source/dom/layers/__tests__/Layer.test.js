@@ -1,6 +1,6 @@
 /* globals expect, test */
 import { Group } from '../Group'
-import { Rectangle } from '../../Rectangle'
+import { Rectangle } from '../../models/Rectangle'
 
 test('should set the name of the layer', (context, document) => {
   // setting an existing name

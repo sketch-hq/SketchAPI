@@ -1,5 +1,5 @@
 import { WrappedObject, DefinedPropertiesKey } from '../WrappedObject'
-import { Point } from '../Point'
+import { Point } from '../models/Point'
 import { Types } from '../enums'
 
 const BlurTypeMap = {

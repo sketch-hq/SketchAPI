@@ -1,12 +1,12 @@
 import { DefinedPropertiesKey } from '../WrappedObject'
 import { StyledLayer } from './StyledLayer'
-import { Rectangle } from '../Rectangle'
+import { Rectangle } from '../models/Rectangle'
 import { Types } from '../enums'
 import { Factory } from '../Factory'
 import { wrapObject } from '../wrapNativeObject'
 import { toArray } from '../utils'
-import { Override } from './Override'
-import { ImageData } from './ImageData'
+import { Override } from '../models/Override'
+import { ImageData } from '../models/ImageData'
 
 /**
  * A Sketch symbol instance.

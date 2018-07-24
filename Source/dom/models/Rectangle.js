@@ -1,5 +1,5 @@
-import { wrapObject } from './wrapNativeObject'
-import { proxyProperty, initProxyProperties } from './utils'
+import { wrapObject } from '../wrapNativeObject'
+import { proxyProperty, initProxyProperties } from '../utils'
 
 /**
  * Represents a rectangle.

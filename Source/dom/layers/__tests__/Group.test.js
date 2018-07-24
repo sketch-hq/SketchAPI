@@ -3,7 +3,7 @@
 import { Group } from '../Group'
 import { Text } from '../Text'
 import { Shape } from '../Shape'
-import { Rectangle } from '../../Rectangle'
+import { Rectangle } from '../../models/Rectangle'
 
 test(
   'should return the layers and can iterate through them',

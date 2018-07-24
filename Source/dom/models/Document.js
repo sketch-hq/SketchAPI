@@ -1,6 +1,6 @@
 import { WrappedObject, DefinedPropertiesKey } from '../WrappedObject'
-import { Page } from './Page'
-import { Selection } from '../Selection'
+import { Page } from '../layers/Page'
+import { Selection } from './Selection'
 import { toArray, getURLFromPath } from '../utils'
 import { wrapObject } from '../wrapNativeObject'
 import { Types } from '../enums'

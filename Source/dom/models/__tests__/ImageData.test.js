@@ -1,6 +1,6 @@
 /* globals expect, test */
 
-import { Image } from '../Image'
+import { Image } from '../../layers/Image'
 
 // using a base64 image cause I'm not sure where and how to keep assets that would work with both local and jenkins tests
 const base64Image =
