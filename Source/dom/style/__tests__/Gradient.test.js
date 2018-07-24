@@ -78,6 +78,7 @@ test('should change the from', () => {
   })
 })
 
+// https://github.com/BohemianCoding/SketchAPI/issues/216
 test('should change the to', () => {
   const gradient = Gradient.from({})
   expect(gradient.toJSON()).toEqual({
@@ -110,6 +111,26 @@ test('should change the to', () => {
     gradientType: 'Linear',
     from: { x: 0.5, y: 0 },
     to: { x: 0.1, y: 0.4 },
+    stops: [],
+  })
+})
+
+// https://github.com/BohemianCoding/SketchAPI/issues/230
+test('should create a gradient with a specific from and to coordinates including 0s', () => {
+  const gradient = Gradient.from({
+    from: {
+      x: 0,
+      y: 0,
+    },
+    to: {
+      x: 0,
+      y: 0,
+    },
+  })
+  expect(gradient.toJSON()).toEqual({
+    gradientType: 'Linear',
+    from: { x: 0, y: 0 },
+    to: { x: 0, y: 0 },
     stops: [],
   })
 })

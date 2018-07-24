@@ -10,16 +10,16 @@ export class Shadow extends WrappedObject {
     if (color) {
       shadow.color = color._object
     }
-    if (value.blur) {
+    if (typeof value.blur !== 'undefined') {
       shadow.blurRadius = value.blur
     }
-    if (value.x) {
+    if (typeof value.x !== 'undefined') {
       shadow.offsetX = value.x
     }
-    if (value.y) {
+    if (typeof value.y !== 'undefined') {
       shadow.offsetY = value.y
     }
-    if (value.spread) {
+    if (typeof value.spread !== 'undefined') {
       shadow.spread = value.spread
     }
 

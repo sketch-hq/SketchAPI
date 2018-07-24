@@ -78,6 +78,7 @@ globals:
   __mocha__: false
   NSOpenPanel: false
   NSOKButton: false
+  NSNull: false
 
 rules:
   ###########

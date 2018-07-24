@@ -98,7 +98,7 @@ export class Library extends WrappedObject {
       coscript,
       (lib, err) => {
         try {
-          if (err) {
+          if (err && !err.isEqual(NSNull.null())) {
             callback(new Error(err.description()))
           } else {
             callback(null, Library.fromNative(lib))
