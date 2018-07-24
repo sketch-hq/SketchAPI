@@ -50,22 +50,21 @@ if (!isRunningOnJenkins()) {
     return new Promise((resolve, reject) => {
       document.save('~/Desktop/sketch-api-unit-tests-library.sketch', err => {
         if (err) {
-          reject(err)
-          return
+          return reject(err)
         }
-
-        document.close()
-
-        lib = Library.getLibraryForDocumentAtPath(
-          '~/Desktop/sketch-api-unit-tests-library.sketch'
-        )
-        libId = lib.id
-        expect(lib.type).toBe('Library')
-
-        const libraries = Library.getLibraries()
-        expect(libraries.find(d => d.id === libId)).toEqual(lib)
-        resolve()
+        return resolve()
       })
+    }).then(() => {
+      document.close()
+
+      lib = Library.getLibraryForDocumentAtPath(
+        '~/Desktop/sketch-api-unit-tests-library.sketch'
+      )
+      libId = lib.id
+      expect(lib.type).toBe('Library')
+
+      const libraries = Library.getLibraries()
+      expect(libraries.find(d => d.id === libId)).toEqual(lib)
     })
   })
 

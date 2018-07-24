@@ -23,33 +23,30 @@ if (!isRunningOnJenkins()) {
         '~/Desktop/sketch-api-unit-tests-importable-objects.sketch',
         err => {
           if (err) {
-            reject(err)
-            return
+            return reject(err)
           }
-
-          const lib = Library.getLibraryForDocumentAtPath(
-            '~/Desktop/sketch-api-unit-tests-importable-objects.sketch'
-          )
-
-          const document2 = new Document()
-
-          const symbolRefs = lib.getImportableSymbolReferencesForDocument(
-            document2
-          )
-
-          expect(symbolRefs.length).toBe(1)
-          expect(symbolRefs[0].id).toBe(master.symbolId)
-
-          const importedMaster = symbolRefs[0].import()
-
-          expect(importedMaster.layers[0].text).toBe('Test value')
-
-          document.close()
-          document2.close()
-          lib.remove()
-          resolve()
+          return resolve()
         }
       )
+    }).then(() => {
+      const lib = Library.getLibraryForDocumentAtPath(
+        '~/Desktop/sketch-api-unit-tests-importable-objects.sketch'
+      )
+
+      const document2 = new Document()
+
+      const symbolRefs = lib.getImportableSymbolReferencesForDocument(document2)
+
+      expect(symbolRefs.length).toBe(1)
+      expect(symbolRefs[0].id).toBe(master.symbolId)
+
+      const importedMaster = symbolRefs[0].import()
+
+      expect(importedMaster.layers[0].text).toBe('Test value')
+
+      document.close()
+      document2.close()
+      lib.remove()
     })
   })
 }
