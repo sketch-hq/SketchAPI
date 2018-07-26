@@ -1,7 +1,10 @@
 /* globals expect, test */
-import { isRunningOnJenkins, createSymbolMaster } from '../../../test-utils'
-import { Document } from '../Document'
-import { Group } from '../../layers/Group'
+import {
+  isRunningOnJenkins,
+  createSymbolMaster,
+  createSharedStyle,
+} from '../../../test-utils'
+import { Document, Group, Shape, Text } from '../..'
 
 test('should be able to log a document', (context, document) => {
   log(document)
@@ -60,6 +63,32 @@ test('should list all the symbols', (context, document) => {
   const { master } = createSymbolMaster(document)
 
   expect(document.getSymbols()).toEqual([master])
+})
+
+test('should look for a shared layer style by its id', (context, document) => {
+  const { sharedStyle } = createSharedStyle(document, Shape)
+
+  expect(document.getSharedLayerStyleWithID(sharedStyle.id)).toEqual(
+    sharedStyle
+  )
+})
+
+test('should list all the shared layer styles', (context, document) => {
+  const { sharedStyle } = createSharedStyle(document, Shape)
+
+  expect(document.getSharedLayerStyles()).toEqual([sharedStyle])
+})
+
+test('should look for a shared text style by its id', (context, document) => {
+  const { sharedStyle } = createSharedStyle(document, Text)
+
+  expect(document.getSharedTextStyleWithID(sharedStyle.id)).toEqual(sharedStyle)
+})
+
+test('should list all the shared text styles', (context, document) => {
+  const { sharedStyle } = createSharedStyle(document, Text)
+
+  expect(document.getSharedTextStyles()).toEqual([sharedStyle])
 })
 
 // some tests cannot really run on jenkins because it doesn't have access to MSDocument

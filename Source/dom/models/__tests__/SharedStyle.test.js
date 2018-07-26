@@ -44,9 +44,8 @@ test(
 )
 
 test('should return all instances', (context, document) => {
-  const { sharedStyle } = createSharedStyle(document, Shape)
-  const style = sharedStyle.createNewInstance()
-  const style2 = sharedStyle.createNewInstance()
+  const { sharedStyle } = createSharedStyle(document, Shape) // 1st instance
+  const style = sharedStyle.createNewInstance() // 2nd instance
 
   // add styles to layers
   // eslint-disable-next-line
@@ -54,11 +53,6 @@ test('should return all instances', (context, document) => {
     parent: document.selectedPage,
     style,
   })
-  // eslint-disable-next-line
-  const shape2 = new Shape({
-    parent: document.selectedPage,
-    style: style2,
-  })
 
-  expect(sharedStyle.getAllInstances().length).toBe(3)
+  expect(sharedStyle.getAllInstances().length).toBe(2)
 })
