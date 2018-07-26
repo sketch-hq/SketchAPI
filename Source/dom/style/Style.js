@@ -10,6 +10,7 @@ import { BorderOptions, Arrowhead, LineEnd, LineJoin } from './BorderOptions'
 import { Blur, BlurType } from './Blur'
 import { Fill, FillType } from './Fill'
 import { Border, BorderPosition } from './Border'
+import { SharedStyleType } from '../models/SharedStyle'
 
 const BlendingModeMap = {
   Normal: 0,
@@ -208,24 +209,31 @@ Style.define('sharedStyleId', {
     return null
   },
   set(newId) {
-    const documentData = this._object.documentData()
-    const container = documentData.sharedObjectContainerOfType(
-      this._object.type()
-    )
+    const document = wrapObject(this._object.documentData())
+    const type = this._object.hasTextStyle()
+      ? SharedStyleType.Text
+      : SharedStyleType.Layer
 
-    if (!newId) {
-      const currentSharedId = this._object.sharedObjectID()
-      if (currentSharedId) {
-        const currentSharedObject = container.sharedStyleWithID(currentSharedId)
-        currentSharedObject.unregisterInstance(this._object)
+    const currentSharedId = this._object.sharedObjectID()
+    if (currentSharedId) {
+      const currentSharedObject = document._getSharedStyleWithIdAndType(
+        currentSharedId,
+        type
+      )
+      if (currentSharedObject) {
+        currentSharedObject.sketchObject.unregisterInstance(this._object)
       }
-    } else {
-      const sharedStyle = container.sharedStyleWithID(newId)
-      if (!sharedStyle) {
-        throw new Error('Seems like this shared style does not exists')
-      }
-      container.registerInstance_withSharedStyle(this._object, sharedStyle)
     }
+
+    if (newId) {
+      return
+    }
+
+    const sharedStyle = document._getSharedStyleWithIdAndType(newId, type)
+    if (!sharedStyle) {
+      throw new Error('Seems like this shared style does not exists')
+    }
+    sharedStyle.sketchObject.registerInstance(this._object)
   },
 })
 
@@ -237,11 +245,11 @@ Style.define('sharedStyle', {
     if (!sharedStyleId) {
       return null
     }
-    const documentData = this._object.documentData()
-    const container = documentData.sharedObjectContainerOfType(
-      this._object.type()
+    const document = wrapObject(this._object.documentData())
+    return document._getSharedStyleWithIdAndType(
+      sharedStyleId,
+      this._object.hasTextStyle() ? SharedStyleType.Text : SharedStyleType.Layer
     )
-    return wrapObject(container.sharedStyleWithID(sharedStyleId))
   },
   set(sharedStyle) {
     if (!sharedStyle) {

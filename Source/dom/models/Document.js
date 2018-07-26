@@ -5,6 +5,7 @@ import { toArray, getURLFromPath } from '../utils'
 import { wrapObject } from '../wrapNativeObject'
 import { Types } from '../enums'
 import { Factory } from '../Factory'
+import { SharedStyleType } from './SharedStyle'
 
 export const SaveModeType = {
   Save: NSSaveOperation,
@@ -134,16 +135,33 @@ export class Document extends WrappedObject {
     return toArray(documentData.allSymbols()).map(wrapObject)
   }
 
+  _getSharedStyleWithIdAndType(sharedId, type) {
+    const documentData = this._getMSDocumentData()
+    const sharedStyle = documentData[
+      type === SharedStyleType.Layer ? 'layerStyleWithID' : 'textStyleWithID'
+    ](sharedId)
+    if (sharedStyle) {
+      return wrapObject(sharedStyle)
+    }
+    return undefined
+  }
+
+  getSharedLayerStyleWithID(sharedId) {
+    return this._getSharedStyleWithIdAndType(sharedId, SharedStyleType.Layer)
+  }
+
   getSharedLayerStyles() {
     const documentData = this._getMSDocumentData()
-    return toArray(documentData.layerStyles().sharedStyles()).map(wrapObject)
+    return toArray(documentData.allLayerStyles()).map(wrapObject)
+  }
+
+  getSharedTextStyleWithID(sharedId) {
+    return this._getSharedStyleWithIdAndType(sharedId, SharedStyleType.Text)
   }
 
   getSharedTextStyles() {
     const documentData = this._getMSDocumentData()
-    return toArray(documentData.layerTextStyles().sharedStyles()).map(
-      wrapObject
-    )
+    return toArray(documentData.allTextStyles()).map(wrapObject)
   }
 
   /**

@@ -138,9 +138,7 @@ export class Library extends WrappedObject {
         )
         break
       default:
-        provider = MSForeignObjectProvider.alloc().initWithDocument(
-          wrapObject(document).sketchObject
-        )
+        throw new Error('Unknown object type')
     }
 
     const collector = MSForeignObjectCollector.alloc().initWithProvider(

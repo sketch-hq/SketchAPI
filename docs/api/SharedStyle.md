@@ -18,10 +18,12 @@ var sharedStyle = SharedStyle.fromStyle({
 
 A shared style (either a layer style or a text style).
 
-| Properties                                         |                                 |
-| -------------------------------------------------- | ------------------------------- |
-| name<span class="arg-type">string</span>           | The name of the Shared Style.   |
-| style<span class="arg-type">[Style](#style)</span> | The Style value that is shared. |
+| Properties                                                            |                                                   |
+| --------------------------------------------------------------------- | ------------------------------------------------- |
+| id<span class="arg-type">string</span>                                | The unique ID of the Shared Style.                |
+| type<span class="arg-type">[SharedStyleType](#sharedStyleType)</span> | The type of the Shared Style (`Layer` or `Text`). |
+| name<span class="arg-type">string</span>                              | The name of the Shared Style.                     |
+| style<span class="arg-type">[Style](#style)</span>                    | The Style value that is shared.                   |
 
 ## Create a new Shared Style from a Style
 
@@ -103,3 +105,16 @@ You can unlink a Shared Style from the Library it comes from and make it a local
 ### Returns
 
 `true` if it succeeded.
+
+## `SharedStyle.Type`
+
+```javascript
+SharedStyle.Type.Text
+```
+
+Enumeration of the type of Shared Style.
+
+| Value   |
+| ------- |
+| `Text`  |
+| `Layer` |

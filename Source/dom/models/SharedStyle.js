@@ -4,6 +4,15 @@ import { Factory } from '../Factory'
 import { wrapObject } from '../wrapNativeObject'
 import { toArray } from '../utils'
 
+const SharedStyleTypeMap = {
+  1: 'Layer',
+  2: 'Text',
+}
+export const SharedStyleType = {
+  Layer: 'Layer',
+  Text: 'Text',
+}
+
 /**
  * A Sketch shared style, either Text style or Layer Style.
  */
@@ -93,6 +102,13 @@ export class SharedStyle extends WrappedObject {
 SharedStyle.type = Types.SharedStyle
 SharedStyle[DefinedPropertiesKey] = { ...WrappedObject[DefinedPropertiesKey] }
 Factory.registerClass(SharedStyle, MSSharedStyle)
+
+SharedStyle.Type = SharedStyleType
+SharedStyle.define('type', {
+  get() {
+    return SharedStyleTypeMap[this._object.type()] || this._object.type()
+  },
+})
 
 SharedStyle.define('name', {
   get() {
