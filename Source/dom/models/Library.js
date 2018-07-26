@@ -255,6 +255,9 @@ Library.define('lastModifiedAt', {
   importable: false,
   get() {
     const date = this._object.dateLastModified()
+    if (!date) {
+      return undefined
+    }
     return new Date(date.timeIntervalSince1970() * 1000)
   },
 })

@@ -4,6 +4,7 @@
     "[Fixed] Logging an NSArray would print an array of `undefined` instead of the proper items",
     "[Fixed] Adding a remote library for the first time will now return the library instead of an error",
     "[Fixed] Adding a remote library will also download it right away",
+    "[Fixed] Printing a missing Library",
     "[New] Add support for SharedStyle"
   ],
   "releases": {
