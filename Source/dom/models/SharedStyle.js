@@ -57,6 +57,10 @@ export class SharedStyle extends WrappedObject {
     return toArray(this._object.allInstances()).map(wrapObject)
   }
 
+  getAllInstancesLayers() {
+    return toArray(this._object.allLayersInstances()).map(wrapObject)
+  }
+
   getLibrary() {
     const libraryController = AppController.sharedInstance().librariesController()
     const lib = libraryController.libraryForShareableObject(this._object)

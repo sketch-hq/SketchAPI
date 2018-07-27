@@ -67,6 +67,22 @@ var styles = sharedStyle.getAllInstances()
 
 Returns an array of all instances of the Shared Style in the document, on all pages.
 
+### Returns
+
+A [Style](#style) array.
+
+## Get all the Instances' Layers
+
+```javascript
+var layers = sharedStyle.getAllInstancesLayers()
+```
+
+Returns an array of all layers with a Style which is an instance of the Shared Style in the document, on all pages.
+
+### Returns
+
+A [Layer](#layer) array.
+
 ## Get the Library it was defined in
 
 ```javascript
@@ -75,8 +91,8 @@ var originLibrary = sharedStyle.getLibrary()
 
 If the SharedStyle was imported from a library, the method can be used to:
 
-* know about it
-* get the library back
+- know about it
+- get the library back
 
 ### Returns
 
