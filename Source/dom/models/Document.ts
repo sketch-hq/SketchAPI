@@ -16,7 +16,7 @@ export const SaveModeType = {
 /**
  * A Sketch document.
  */
-export class Document extends WrappedObject {
+export class Document extends WrappedObject<MSDocument | MSDocumentData> {
   /**
    * Make a new document object.
    *
@@ -24,7 +24,7 @@ export class Document extends WrappedObject {
    *                              If `sketchObject` is provided, will wrap it.
    *                              Otherwise, creates a new native object.
    */
-  constructor(document = {}) {
+  constructor(document: { sketchObject?: MSDocument | MSDocumentData } = {}) {
     if (!document.sketchObject) {
       const app = NSDocumentController.sharedDocumentController()
 
@@ -34,7 +34,7 @@ export class Document extends WrappedObject {
       document.sketchObject = app.openUntitledDocumentAndDisplay_error(
         true,
         error
-      )
+      ) as MSDocument
 
       if (error.value() !== null) {
         throw new Error(error.value())
@@ -48,8 +48,8 @@ export class Document extends WrappedObject {
     super(document)
   }
 
-  _getMSDocument() {
-    let msdocument = this._object
+  _getMSDocument(): MSDocument {
+    let msdocument = this.sketchObject
     if (msdocument && String(msdocument.class()) === 'MSDocumentData') {
       // we only have an MSDocumentData instead of a MSDocument
       // let's try to get back to the MSDocument
@@ -59,8 +59,8 @@ export class Document extends WrappedObject {
     return msdocument
   }
 
-  _getMSDocumentData() {
-    const msdocument = this._object
+  _getMSDocumentData(): MSDocumentData {
+    const msdocument = this.sketchObject
 
     if (msdocument && String(msdocument.class()) === 'MSDocumentData') {
       return msdocument
@@ -88,7 +88,7 @@ export class Document extends WrappedObject {
    *
    * @return {Layer} A layer object, if one was found.
    */
-  getLayerWithID(layerId) {
+  getLayerWithID(layerId: string) {
     const documentData = this._getMSDocumentData()
     const layer = documentData.layerWithID(layerId)
     if (layer) {
@@ -100,10 +100,10 @@ export class Document extends WrappedObject {
   /**
    * Find all the layers in this document which has the given name.
    */
-  getLayersNamed(layerName) {
+  getLayersNamed(layerName: string) {
     // search all pages
     let filteredArray = NSArray.array()
-    const loopPages = this._object.pages().objectEnumerator()
+    const loopPages = this.sketchObject.pages().objectEnumerator()
     let page = loopPages.nextObject()
     const predicate = NSPredicate.predicateWithFormat('name == %@', layerName)
     while (page) {
@@ -121,7 +121,7 @@ export class Document extends WrappedObject {
    *
    * @return {SymbolMaster} A symbol master object, if one was found.
    */
-  getSymbolMasterWithID(symbolId) {
+  getSymbolMasterWithID(symbolId: string) {
     const documentData = this._getMSDocumentData()
     const symbol = documentData.symbolWithID(symbolId)
     if (symbol) {

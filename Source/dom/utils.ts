@@ -1,34 +1,45 @@
-export function getDocumentData(document) {
+import { WrappedObject } from './WrappedObject'
+
+export function getDocumentData(
+  document: IMSDocument | IMSDocumentData | WrappedObject<any>
+): IMSDocumentData {
   let documentData = document
 
-  if (document && document.sketchObject && document.sketchObject.documentData) {
-    documentData = document.sketchObject.documentData()
-  } else if (document && document.documentData) {
-    documentData = document.documentData()
+  function isMSDocument(doc: any): doc is IMSDocument {
+    return doc && typeof doc.documentData !== 'undefined'
   }
-  return documentData
+
+  if (isWrappedObject(document)) {
+    if (document.sketchObject.documentData) {
+      return document.sketchObject.documentData()
+    }
+    throw new Error("Couldn't find the document data")
+  } else if (isMSDocument(document)) {
+    return document.documentData()
+  }
+  return document
 }
 
-export function toArray(object) {
+export function toArray<T>(object: T[] | INSArray<T>): T[] {
   if (Array.isArray(object)) {
     return object
   }
   const arr = []
   for (let j = 0; j < (object || []).length; j += 1) {
-    arr.push(object.objectAtIndex(j))
+    arr.push(object.objectAtIndex(j)!)
   }
   return arr
 }
 
-export function isNativeObject(object) {
+export function isNativeObject(object: any): boolean {
   return object && object.class && typeof object.class === 'function'
 }
 
-export function isWrappedObject(object) {
-  return object && object._isWrappedObject
+export function isWrappedObject(object: any): object is WrappedObject<any> {
+  return object && !!object._isWrappedObject
 }
 
-export function getURLFromPath(path) {
+export function getURLFromPath(path: string | INSURL): INSURL {
   return typeof path === 'string'
     ? NSURL.fileURLWithPath(
         NSString.stringWithString(path).stringByExpandingTildeInPath()
@@ -36,7 +47,7 @@ export function getURLFromPath(path) {
     : path
 }
 
-export function initProxyProperties(object) {
+export function initProxyProperties(object: any) {
   Object.defineProperty(object, '_parent', {
     enumerable: false,
     writable: true,
@@ -53,7 +64,12 @@ export function initProxyProperties(object) {
   })
 }
 
-export function proxyProperty(object, property, value, parser) {
+export function proxyProperty(
+  object: any,
+  property: string,
+  value: any,
+  parser?: (value: any) => any
+) {
   Object.defineProperty(object, `_${property}`, {
     enumerable: false,
     writable: true,
