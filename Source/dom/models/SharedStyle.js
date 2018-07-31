@@ -107,8 +107,8 @@ SharedStyle.type = Types.SharedStyle
 SharedStyle[DefinedPropertiesKey] = { ...WrappedObject[DefinedPropertiesKey] }
 Factory.registerClass(SharedStyle, MSSharedStyle)
 
-SharedStyle.Type = SharedStyleType
-SharedStyle.define('type', {
+SharedStyle.StyleType = SharedStyleType
+SharedStyle.define('styleType', {
   get() {
     return SharedStyleTypeMap[this._object.type()] || this._object.type()
   },
