@@ -1,22 +1,112 @@
-import { WrappedObject, DefinedPropertiesKey } from '../WrappedObject'
+import { WrappedObject, define } from '../WrappedObject'
 import { Page } from '../layers/Page'
 import { Selection } from './Selection'
 import { toArray, getURLFromPath } from '../utils'
 import { wrapObject } from '../wrapNativeObject'
 import { Types } from '../enums'
 import { Factory } from '../Factory'
-import { SharedStyleType } from './SharedStyle'
+import { SharedStyleType, SharedStyle } from './SharedStyle'
+import { Layer } from '../layers/Layer'
 
-export const SaveModeType = {
-  Save: NSSaveOperation,
-  SaveTo: NSSaveToOperation,
-  SaveAs: NSSaveAsOperation,
+export enum SaveModeType {
+  Save = NSSaveOperationType.NSSaveOperation,
+  SaveTo = NSSaveOperationType.NSSaveToOperation,
+  SaveAs = NSSaveOperationType.NSSaveAsOperation,
 }
 
 /**
  * A Sketch document.
  */
 export class Document extends WrappedObject<MSDocument | MSDocumentData> {
+  static type = Types.Document
+  static SaveMode = SaveModeType
+
+  // override getting the id to make sure it's fine if we have an MSDocument
+  @define<Document>({
+    exportable: true,
+    importable: false,
+    get() {
+      return String(this._getMSDocumentData().objectID())
+    },
+  })
+  readonly id!: string
+
+  @define<Document>({
+    get() {
+      if (!this.sketchObject) {
+        return []
+      }
+      const pages = toArray<MSPage>(this.sketchObject.pages())
+      return pages.map(page => Page.fromNative(page))
+    },
+    set(pages: Page[]) {
+      // remove the existing pages
+      this._getMSDocumentData().removePages_detachInstances(
+        this.sketchObject.pages(),
+        true
+      )
+
+      toArray(pages)
+        .map(wrapObject)
+        .forEach(page => {
+          page.parent = this // eslint-disable-line
+        })
+    },
+  })
+  pages!: Page[]
+
+  /**
+   * The layers that the user has selected in the currently selected page.
+   *
+   * @return {Selection} A selection object representing the layers that the user has selected in the currently selected page.
+   */
+  @define<Document>({
+    enumerable: false,
+    exportable: false,
+    importable: false,
+    get() {
+      return new Selection(this.selectedPage)
+    },
+  })
+  readonly selectedLayers!: Selection
+
+  /**
+   * The current page that the user has selected.
+   *
+   * @return {Page} A page object representing the page that the user is currently viewing.
+   */
+  @define<Document>({
+    enumerable: false,
+    exportable: false,
+    importable: false,
+    get() {
+      return Page.fromNative(this.sketchObject.currentPage())
+    },
+  })
+  readonly selectedPage!: Page
+
+  @define<Document>({
+    get() {
+      const url =
+        this._tempURL || (this._getMSDocument() || { fileURL() {} }).fileURL()
+      if (url) {
+        return String(url.absoluteString()).replace('file://', '')
+      }
+      return undefined
+    },
+
+    set(path) {
+      const url = getURLFromPath(path)
+      Object.defineProperty(this, '_tempURL', {
+        enumerable: false,
+        value: url,
+      })
+    },
+  })
+  path!: string
+
+  private _tempURL?: NSURL
+
   /**
    * Make a new document object.
    *
@@ -50,10 +140,10 @@ export class Document extends WrappedObject<MSDocument | MSDocumentData> {
 
   _getMSDocument(): MSDocument {
     let msdocument = this.sketchObject
-    if (msdocument && String(msdocument.class()) === 'MSDocumentData') {
+    if (msdocument && msdocument instanceof MSDocumentData) {
       // we only have an MSDocumentData instead of a MSDocument
       // let's try to get back to the MSDocument
-      msdocument = msdocument.delegate()
+      msdocument = msdocument.delegate() as MSDocument
     }
 
     return msdocument
@@ -62,7 +152,7 @@ export class Document extends WrappedObject<MSDocument | MSDocumentData> {
   _getMSDocumentData(): MSDocumentData {
     const msdocument = this.sketchObject
 
-    if (msdocument && String(msdocument.class()) === 'MSDocumentData') {
+    if (msdocument && msdocument instanceof MSDocumentData) {
       return msdocument
     }
 
@@ -71,7 +161,9 @@ export class Document extends WrappedObject<MSDocument | MSDocumentData> {
 
   static getDocuments() {
     const app = NSDocumentController.sharedDocumentController()
-    return toArray(app.documents()).map(doc => Document.fromNative(doc))
+    return toArray<MSDocument | MSDocumentData>(app.documents()).map(doc =>
+      Document.fromNative(doc)
+    )
   }
 
   static getSelectedDocument() {
@@ -80,13 +172,11 @@ export class Document extends WrappedObject<MSDocument | MSDocumentData> {
     if (!nativeDocument) {
       return undefined
     }
-    return Document.fromNative(nativeDocument)
+    return Document.fromNative(nativeDocument as MSDocument | MSDocumentData)
   }
 
   /**
    * Find the first layer in this document which has the given id.
-   *
-   * @return {Layer} A layer object, if one was found.
    */
   getLayerWithID(layerId: string) {
     const documentData = this._getMSDocumentData()
@@ -118,8 +208,6 @@ export class Document extends WrappedObject<MSDocument | MSDocumentData> {
 
   /**
    * Find the first symbol master in this document which has the given id.
-   *
-   * @return {SymbolMaster} A symbol master object, if one was found.
    */
   getSymbolMasterWithID(symbolId: string) {
     const documentData = this._getMSDocumentData()
@@ -135,7 +223,10 @@ export class Document extends WrappedObject<MSDocument | MSDocumentData> {
     return toArray(documentData.allSymbols()).map(wrapObject)
   }
 
-  _getSharedStyleWithIdAndType(sharedId, type) {
+  _getSharedStyleWithIdAndType(
+    sharedId: string,
+    type: SharedStyleType
+  ): SharedStyle | undefined {
     const documentData = this._getMSDocumentData()
     const sharedStyle = documentData[
       type === SharedStyleType.Layer ? 'layerStyleWithID' : 'textStyleWithID'
@@ -146,20 +237,20 @@ export class Document extends WrappedObject<MSDocument | MSDocumentData> {
     return undefined
   }
 
-  getSharedLayerStyleWithID(sharedId) {
+  getSharedLayerStyleWithID(sharedId: string) {
     return this._getSharedStyleWithIdAndType(sharedId, SharedStyleType.Layer)
   }
 
-  getSharedLayerStyles() {
+  getSharedLayerStyles(): SharedStyle[] {
     const documentData = this._getMSDocumentData()
     return toArray(documentData.allLayerStyles()).map(wrapObject)
   }
 
-  getSharedTextStyleWithID(sharedId) {
+  getSharedTextStyleWithID(sharedId: string) {
     return this._getSharedStyleWithIdAndType(sharedId, SharedStyleType.Text)
   }
 
-  getSharedTextStyles() {
+  getSharedTextStyles(): SharedStyle[] {
     const documentData = this._getMSDocumentData()
     return toArray(documentData.allTextStyles()).map(wrapObject)
   }
@@ -169,12 +260,17 @@ export class Document extends WrappedObject<MSDocument | MSDocumentData> {
    *
    * @param {Layer} layer The layer to center on.
    */
-  centerOnLayer(layer) {
+  centerOnLayer(layer: Layer) {
     const wrappedLayer = wrapObject(layer)
-    this._object.contentDrawView().centerRect_(wrappedLayer.sketchObject.rect())
+    this._getMSDocument()
+      .contentDrawView()
+      .centerRect(wrappedLayer.sketchObject.rect())
   }
 
-  static open(path, callback) {
+  static open(
+    path?: string,
+    callback?: (err: Error | null, document?: Document) => void
+  ) {
     if (typeof path === 'function') {
       /* eslint-disable no-param-reassign */
       callback = path
@@ -182,14 +278,14 @@ export class Document extends WrappedObject<MSDocument | MSDocumentData> {
       /* eslint-enable */
     }
 
-    const app = NSDocumentController.sharedDocumentController()
+    const app = MSDocumentController.sharedDocumentController() as MSDocumentController
 
     if (!path) {
       const dialog = NSOpenPanel.openPanel()
-      dialog.allowedFileTypes = ['sketch']
-      dialog.canChooseFiles = true
-      dialog.canChooseDirectories = false
-      dialog.allowsMultipleSelection = false
+      dialog.setAllowedFileTypes(['sketch'])
+      dialog.setCanChooseFiles(true)
+      dialog.setCanChooseDirectories(false)
+      dialog.setAllowsMultipleSelection(false)
       const buttonClicked = dialog.runModal()
       if (buttonClicked != NSOKButton) {
         if (callback) {
@@ -205,12 +301,18 @@ export class Document extends WrappedObject<MSDocument | MSDocumentData> {
         url,
         true,
         coscript,
-        (_document, documentWasAlreadyOpen, err) => {
+        (
+          _document: MSDocument | MSDocumentData,
+          documentWasAlreadyOpen: boolean,
+          err?: NSException
+        ) => {
           try {
-            if (err && !err.isEqual(NSNull.null())) {
-              callback(new Error(err.description()))
-            } else {
-              callback(null, Document.fromNative(_document))
+            if (callback) {
+              if (err && !err.isEqualTo(NSNull.null())) {
+                callback(new Error(String(err.description())))
+              } else {
+                callback(null, Document.fromNative(_document))
+              }
             }
             fiber.cleanup()
           } catch (error) {
@@ -223,14 +325,16 @@ export class Document extends WrappedObject<MSDocument | MSDocumentData> {
       // return the current document to maintain backward compatibility
       // but that's not the right document...
       const document = app.currentDocument()
-      return Document.fromNative(document)
+      return Document.fromNative(document as MSDocument | MSDocumentData)
     }
 
     let document
     const url = getURLFromPath(path)
 
     if (app.documentForURL(url)) {
-      document = Document.fromNative(app.documentForURL(url))
+      document = Document.fromNative(app.documentForURL(url) as
+        | MSDocument
+        | MSDocumentData)
       if (callback) {
         callback(null, document)
       }
@@ -253,7 +357,11 @@ export class Document extends WrappedObject<MSDocument | MSDocumentData> {
     return document
   }
 
-  save(path, options, callback) {
+  save(
+    path?: string,
+    options?: { saveMode?: SaveModeType },
+    callback?: (err: Error | null, document: Document) => void
+  ) {
     /* eslint-disable no-param-reassign */
     if (typeof options === 'function') {
       callback = options
@@ -267,34 +375,38 @@ export class Document extends WrappedObject<MSDocument | MSDocumentData> {
     const msdocument = this._getMSDocument()
     const saveMethod = 'saveToURL_ofType_forSaveOperation_completionHandler'
     if (!msdocument || !msdocument[saveMethod]) {
-      callback(new Error('Cannot save this document'), this)
+      if (callback) {
+        callback(new Error('Cannot save this document'), this)
+      }
       return
     }
     if (!path && !this._tempURL) {
       try {
         msdocument.saveDocument(null)
-        callback(null, this)
+        if (callback) callback(null, this)
       } catch (err) {
-        callback(err, this)
+        if (callback) callback(err, this)
       }
       return
     }
     const fiber = coscript.createFiber()
-    const url = getURLFromPath(path) || this._tempURL
-    const { saveMode } = options || {}
+    const url = path ? getURLFromPath(path) : this._tempURL
+    const { saveMode } = options || { saveMode: SaveModeType.SaveAs }
     const nativeSaveMode =
-      SaveModeType[saveMode] || saveMode || NSSaveAsOperation
+      (saveMode && SaveModeType[saveMode]) || saveMode || SaveModeType.SaveAs
     const that = this
     msdocument.saveDocumentToURL_saveMode_context_callback(
-      url,
+      url!,
       nativeSaveMode,
       coscript,
-      err => {
+      (err: NSException) => {
         try {
-          if (err && !err.isEqual(NSNull.null())) {
-            callback(new Error(err.description()), that)
-          } else {
-            callback(null, that)
+          if (callback) {
+            if (err && !err.isEqualTo(NSNull.null())) {
+              callback(new Error(String(err.description())), that)
+            } else {
+              callback(null, that)
+            }
           }
           fiber.cleanup()
         } catch (error) {
@@ -316,97 +428,9 @@ export class Document extends WrappedObject<MSDocument | MSDocumentData> {
   }
 }
 
-Document.type = Types.Document
-Document[DefinedPropertiesKey] = {
-  ...WrappedObject[DefinedPropertiesKey],
-}
 Factory.registerClass(Document, MSDocumentData)
 
 // also register MSDocument if it exists
 if (typeof MSDocument !== 'undefined') {
   Factory.registerClass(Document, MSDocument)
 }
-
-Document.SaveMode = SaveModeType
-
-// override getting the id to make sure it's fine if we have an MSDocument
-Document.define('id', {
-  exportable: true,
-  importable: false,
-  get() {
-    if (!this._object) {
-      return undefined
-    }
-    if (!this._object.objectID) {
-      return String(this._object.documentData().objectID())
-    }
-    return String(this._object.objectID())
-  },
-})
-
-Document.define('pages', {
-  get() {
-    if (!this._object) {
-      return []
-    }
-    const pages = toArray(this._object.pages())
-    return pages.map(page => Page.fromNative(page))
-  },
-  set(pages) {
-    // remove the existing pages
-    this._object.removePages_detachInstances(this._object.pages(), true)
-
-    toArray(pages)
-      .map(wrapObject)
-      .forEach(page => {
-        page.parent = this // eslint-disable-line
-      })
-  },
-})
-
-/**
- * The layers that the user has selected in the currently selected page.
- *
- * @return {Selection} A selection object representing the layers that the user has selected in the currently selected page.
- */
-Document.define('selectedLayers', {
-  enumerable: false,
-  exportable: false,
-  importable: false,
-  get() {
-    return new Selection(this.selectedPage)
-  },
-})
-
-/**
- * The current page that the user has selected.
- *
- * @return {Page} A page object representing the page that the user is currently viewing.
- */
-Document.define('selectedPage', {
-  enumerable: false,
-  exportable: false,
-  importable: false,
-  get() {
-    return Page.fromNative(this._object.currentPage())
-  },
-})
-
-Document.define('path', {
-  get() {
-    const url =
-      this._tempURL || (this._getMSDocument() || { fileURL() {} }).fileURL()
-    if (url) {
-      return String(url.absoluteString()).replace('file://', '')
-    }
-    return undefined
-  },
-
-  set(path) {
-    const url = getURLFromPath(path)
-    Object.defineProperty(this, '_tempURL', {
-      enumerable: false,
-      value: url,
-    })
-  },
-})

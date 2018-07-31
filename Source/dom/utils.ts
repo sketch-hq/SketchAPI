@@ -1,11 +1,9 @@
 import { WrappedObject } from './WrappedObject'
 
 export function getDocumentData(
-  document: IMSDocument | IMSDocumentData | WrappedObject<any>
-): IMSDocumentData {
-  let documentData = document
-
-  function isMSDocument(doc: any): doc is IMSDocument {
+  document: MSDocument | MSDocumentData | WrappedObject<any>
+): MSDocumentData {
+  function isMSDocument(doc: any): doc is MSDocument {
     return doc && typeof doc.documentData !== 'undefined'
   }
 
@@ -20,12 +18,12 @@ export function getDocumentData(
   return document
 }
 
-export function toArray<T>(object: T[] | INSArray<T>): T[] {
+export function toArray<T>(object: T[] | NSArray<T>): T[] {
   if (Array.isArray(object)) {
     return object
   }
   const arr = []
-  for (let j = 0; j < (object || []).length; j += 1) {
+  for (let j = 0; j < (object || []).count(); j += 1) {
     arr.push(object.objectAtIndex(j)!)
   }
   return arr
@@ -39,7 +37,7 @@ export function isWrappedObject(object: any): object is WrappedObject<any> {
   return object && !!object._isWrappedObject
 }
 
-export function getURLFromPath(path: string | INSURL): INSURL {
+export function getURLFromPath(path: string | NSURL): NSURL {
   return typeof path === 'string'
     ? NSURL.fileURLWithPath(
         NSString.stringWithString(path).stringByExpandingTildeInPath()

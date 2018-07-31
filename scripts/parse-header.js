@@ -17,7 +17,7 @@ const typeAliasRegex = /typedef ([^;,\n]+|[^;,\n]+<[^;\n>]+>) ([^;\n]+);/g
 const enumRegex = /typedef (?:(?:NS_OPTIONS|NS_ENUM|CF_ENUM) ?\([^,]*,([^)]*)\)|enum ([^{:]*) ?:? ?(?:[^{:]*)) ?\n?{([\s\S]*?)}([^;]*);/gm
 
 const methodsRegex = /([+-]) \(([^\)]+)\)([^;]+);/g
-const methodNameRegex = /([^:]+)(:\s?\((([^\(\)]*\([\S ]*?\^[^\(\)]*\)\s*\()*[^\)]*\)*)\)\s?([^ \n]+))*/g
+const methodNameRegex = /([^:]+)(:\s?\((([^\(\)]*\([\S ]*?\^[^\(\)]*\)\s*\()*[^\)]*\)*)\)\s?([^ \n,]+))*/g
 const propertiesRegex = /@property ?(?:\(([^\)]+)\) )?([^,;]*(?:<[^;]+>)?)(?: |\*| \*)([^; \n]+)\s*;/g
 const structMembersRegex = /([^;,]+) ([^;]+);/g
 const structMemberArrayRegex = /\[(\d*)\]/g
@@ -25,7 +25,7 @@ const enumMembersRegex = /([^=,]+)=?([^,]+)?,?/g
 const extendRegex = /<([^>]+)>/g
 
 const nullableRegex = /^nullable /g
-const METADATA_MACROS = /(NS_DEPRECATED_MAC|NS_DEPRECATED|NS_AVAILABLE_MAC|NS_AVAILABLE|NS_SWIFT_NAME|CF_BRIDGED_TYPE|NS_CALENDAR_ENUM_DEPRECATED|NS_ENUM_AVAILABLE_IOS|NS_SWIFT_UNAVAILABLE|NS_ENUM_AVAILABLE_MAC|NS_ENUM_DEPRECATED_MAC|NS_ENUM_AVAILABLE|NS_DEPRECATED_WITH_REPLACEMENT_MAC)\([^\)]*\)/g
+const METADATA_MACROS = /(NS_DEPRECATED_MAC|NS_DEPRECATED|NS_AVAILABLE_MAC|NS_AVAILABLE|NS_SWIFT_NAME|CF_BRIDGED_TYPE|NS_CALENDAR_ENUM_DEPRECATED|NS_ENUM_AVAILABLE_IOS|NS_SWIFT_UNAVAILABLE|NS_ENUM_AVAILABLE_MAC|NS_ENUM_DEPRECATED_MAC|NS_ENUM_AVAILABLE|NS_DEPRECATED_WITH_REPLACEMENT_MAC|NS_EXTENSION_UNAVAILABLE_IOS|NS_FORMAT_FUNCTION)\([^\)]*\)/g
 const API_AVAILABLE = /(API_DEPRECATED|API_AVAILABLE|API_UNAVAILABLE)\(([^\(\)]|\([^\)]*\))*\)/g
 
 /* eslint-disable no-param-reassign */
@@ -34,19 +34,45 @@ function parseMethodsAndProperties(data, headerData) {
   forEachMatch(methodsRegex, data, match => {
     let name = ''
     const args = []
+    const requiresNilTermination =
+      match[3].indexOf('NS_REQUIRES_NIL_TERMINATION') !== -1
+    if (requiresNilTermination) {
+      match[3] = match[3].replace('NS_REQUIRES_NIL_TERMINATION', '')
+    }
     let matchMethodName = methodNameRegex.exec(match[3])
     while (matchMethodName !== null) {
-      name += `${matchMethodName[1].trim()}${matchMethodName[2] ? ':' : ''}`
-      if (matchMethodName[3]) {
-        const isNullable = nullableRegex.test(matchMethodName[3])
+      if (
+        matchMethodName[0].trim() === ', ...' ||
+        matchMethodName[0].trim() === ',...' ||
+        matchMethodName[0].trim() === '...'
+      ) {
         args.push({
-          name: matchMethodName[5].trim().replace(';', ''),
-          type: matchMethodName[3].replace(nullableRegex, ''),
-          optional: isNullable,
+          name: 'args',
+          type: 'va_list',
+          optional: true,
         })
+      } else {
+        name += `${matchMethodName[1].trim()}${matchMethodName[2] ? ':' : ''}`
+        if (matchMethodName[3]) {
+          const isNullable = nullableRegex.test(matchMethodName[3])
+          args.push({
+            name: matchMethodName[5].trim().replace(';', ''),
+            type: matchMethodName[3].replace(nullableRegex, ''),
+            nullable: isNullable,
+          })
+        }
       }
       matchMethodName = methodNameRegex.exec(match[3])
     }
+
+    if (requiresNilTermination) {
+      // args.push({
+      //   name: 'nullTermination',
+      //   type: 'null',
+      //   optional: false,
+      // })
+    }
+
     if (name.match(/\n/)) {
       // something weird here, need to investigate
       return
@@ -131,10 +157,6 @@ module.exports = function parseHeader(data) {
 
     if (match[7]) {
       headerData.interfaces = match[7].split(',').map(i => i.trim())
-    }
-
-    if (headerData.name === 'NSMutableArray' && headerData.interfaces.length) {
-      console.log(match[0])
     }
 
     if (match[2]) {

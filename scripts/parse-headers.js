@@ -5,7 +5,7 @@ const path = require('path')
 const chalk = require('chalk')
 const parseHeader = require('./parse-header')
 const generateDeclaration = require('./generate-typescript-declaration')
-const { additionalClasses } = require('./typescript-overrides')
+const { additionalClasses, additions } = require('./typescript-overrides')
 
 const TYPES = path.join(__dirname, '../types/sketch-internals__generated.d.ts')
 const SKETCH_SOURCES_PATH = path.join(__dirname, '../../../')
@@ -73,10 +73,6 @@ function generate() {
                     : ''
           }`
 
-          if (obj.name === 'NSMutableArray') {
-            // console.log(obj)
-          }
-
           if (!obj.struct && !obj.typeAlias && !obj.enum && classes[key]) {
             // merge
             if (!classes[key].extends) {
@@ -114,7 +110,7 @@ function generate() {
 
   fs.ensureFileSync(TYPES)
   const file = fs.createWriteStream(TYPES)
-  file.write(require('./typescript-overrides').additions)
+  file.write(additions)
 
   Object.keys(classes).forEach(className => {
     file.write(generateDeclaration(classes[className], classes))

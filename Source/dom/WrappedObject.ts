@@ -1,7 +1,7 @@
 import 'reflect-metadata'
 import { Types } from './enums'
 
-type Descriptor = {
+type Descriptor<T extends WrappedObject<any>> = {
   exportable?: boolean
   enumerable?: boolean
   importable?: boolean
@@ -9,7 +9,7 @@ type Descriptor = {
   propertyName?: string
   get: () => any
   set?: (value: any) => void
-} & ThisType<WrappedObject<any>>
+} & ThisType<T>
 
 export const DefinedPropertiesKey = Symbol('DefinedPropertiesKey')
 
@@ -24,7 +24,9 @@ export const DefinedPropertiesKey = Symbol('DefinedPropertiesKey')
  * @param {string} propertyName - the name of the property
  * @param {Object} descriptor - the descriptor for the property (see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty)
  */
-export function define(descriptor: Descriptor) {
+export function define<T extends WrappedObject<any>>(
+  descriptor: Descriptor<T>
+) {
   return function(target: any, propertyName: string) {
     /* eslint-disable no-param-reassign */
     descriptor.propertyName = propertyName
@@ -48,7 +50,7 @@ export function define(descriptor: Descriptor) {
       typeof descriptor.get !== 'undefined' &&
       propertyName[0] !== '_'
 
-    let existingProperties: { [propertyName: string]: Descriptor } =
+    let existingProperties: { [propertyName: string]: Descriptor<T> } =
       Reflect.getOwnMetadata(DefinedPropertiesKey, target) || {}
     existingProperties[propertyName] = descriptor
     Reflect.defineMetadata(DefinedPropertiesKey, existingProperties, target)
@@ -63,7 +65,7 @@ export function define(descriptor: Descriptor) {
  */
 
 export class WrappedObject<T> {
-  static type: keyof Types;
+  static type: Types;
   static [DefinedPropertiesKey]: {}
 
   private readonly _object: T
@@ -97,7 +99,10 @@ export class WrappedObject<T> {
   })
   readonly _isWrappedObject!: boolean
 
-  constructor(options: { sketchObject: T }) {
+  constructor(options: { sketchObject?: T }) {
+    if (!options.sketchObject) {
+      throw new Error('missing sketch object')
+    }
     this._object = options.sketchObject
 
     this.update(options)
@@ -150,7 +155,10 @@ export class WrappedObject<T> {
    *
    * @param {Object} object - The Sketch model object to wrap.
    */
-  static fromNative(sketchObject: any) {
+  static fromNative<U, T extends WrappedObject<U>>(
+    this: { new (options: { sketchObject: U }): T },
+    sketchObject: U
+  ): T {
     return new this({
       sketchObject,
     })

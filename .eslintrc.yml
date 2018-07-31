@@ -129,6 +129,7 @@ rules:
   no-useless-constructor: warn
   eqeqeq: off
   strict: off
+  no-nested-ternary: warn
 
   ###########
   # SPECIAL #

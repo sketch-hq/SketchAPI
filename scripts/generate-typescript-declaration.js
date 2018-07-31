@@ -167,6 +167,7 @@ function inheritance(info, classes) {
       protocolMethods.forEach(m => info.methods.push(m))
       Object.keys(protocol.properties).forEach(m => {
         if (!info.type.properties[m]) {
+          // eslint-disable-next-line
           info.type.properties[m] = protocol.properties[m]
         }
       })
@@ -188,6 +189,7 @@ function inheritance(info, classes) {
       protocolMethods.forEach(m => info.methods.push(m))
       Object.keys(protocol.properties).forEach(m => {
         if (!info.type.properties[m]) {
+          // eslint-disable-next-line
           info.type.properties[m] = protocol.properties[m]
         }
       })
@@ -316,6 +318,18 @@ const reservedMap = {
   new: 'newObj',
 }
 
+const cocoascriptTypeAliases = {
+  NSString: 'NSString | string',
+  NSNumber: 'NSNumber | number',
+  'NSArray<any>': 'NSArray<any> | any[]',
+  'NSMutableArray<any>': 'NSMutableArray<any> | any[]',
+  'NSDictionary<any, any>': 'NSDictionary<any, any> | {[key: string]: any}',
+  'NSMutableDictionary<any, any>':
+    'NSMutableDictionary<any, any> | {[key: string]: any}',
+  MOJavaScriptObject: 'MOJavaScriptObject | Function',
+  NSException: 'NSException | Error',
+}
+
 function extractArguments(method, info) {
   const usedNames = {}
   return toArray(method.args)
@@ -335,7 +349,9 @@ function extractArguments(method, info) {
 
       return `${
         usedNames[name] > 1 ? `${name}${usedNames[name]}` : name
-      }: ${type}`
+      }: ${cocoascriptTypeAliases[type] || type}${
+        arg.nullable ? ' | null' : ''
+      }`
     })
     .join(', ')
 }
@@ -418,6 +434,7 @@ module.exports = function generateDeclaration(type, classes) {
   }
 
   if (type.enum) {
+    // eslint-disable-next-line
     type.members = type.members.map(m => {
       let value = overrides[m.value]
         ? overrides[m.value]
@@ -431,6 +448,7 @@ module.exports = function generateDeclaration(type, classes) {
             .replace(/ULL$/, '')
             .replace('L ', ' ')
             .replace(/L$/, '')
+      // eslint-disable-next-line
       if (isNaN(parseInt(value, 10))) {
         value = ''
       }
@@ -454,7 +472,10 @@ module.exports = function generateDeclaration(type, classes) {
   }`
 
   const info = typeInfo(type)
-  return `declare ${info.tsKind} ${name}${inheritance(info, classes)} {${each(
+  return `declare ${info.tsKind} ${name}${inheritance(
+    info,
+    classes
+  )} {${overrides.classAdditions[type.name] || ''}${each(
     info.methods,
     method => printMethod(method, info, name, classes),
     { newLineStart: true, newLineEnd: true }
@@ -465,7 +486,8 @@ module.exports = function generateDeclaration(type, classes) {
     }(): ${convertType(property.type, name)};
   ${possiblyStaticProperty(property, type)}set${capitalize(property.name)}(${
       reservedMap[property.name] ? reservedMap[property.name] : property.name
-    }: ${convertType(property.type, name)}): void;`,
+    }: ${cocoascriptTypeAliases[convertType(property.type, name)] ||
+      convertType(property.type, name)}): void;`,
     { newLineStart: true, newLineEnd: true }
   )}}
 

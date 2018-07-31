@@ -665,3 +665,16 @@ module.exports.shouldHideMethods = {
   MSWelcomeWindowController: ['close'],
   NSObject: ['objectForKeyedSubscript', 'setObject_forKeyedSubscript'],
 }
+
+module.exports.classAdditions = {
+  NSDictionary: `
+  [key: string]: ObjectType | Function;
+`,
+  NSArray: `
+  [key: number]: ObjectType | Function;
+  [key: string]: ObjectType | Function;
+`,
+  NSObject: `
+  description(): NSString;
+`,
+}
