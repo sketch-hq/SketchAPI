@@ -1,6 +1,5 @@
+import util from 'util'
 import { isWrappedObject, getDocumentData } from '../dom/utils'
-
-const util = require('util')
 
 function getPluginIdentifier() {
   if (!__command.pluginBundle()) {
@@ -118,7 +117,6 @@ export function documentSettingForKey(document, key) {
 }
 
 export function setDocumentSettingForKey(document, key, value) {
-  log(util)
   const documentData = getDocumentData(document)
   const stringifiedValue = JSON.stringify(value, (k, v) => util.toJSObject(v))
   __command.setValue_forKey_onDocument(stringifiedValue, key, documentData)
