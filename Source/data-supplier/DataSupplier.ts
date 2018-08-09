@@ -50,3 +50,15 @@ export function supplyData(
   const dataManager = AppController.sharedInstance().dataSupplierManager()
   dataManager.supplyData_forKey(data, key)
 }
+
+/**
+ * When we want to only supply 1 bit of the requested data.
+ */
+export function supplyDataAtIndex(
+  key: string | INSString,
+  datum: string | INSString,
+  index: number
+) {
+  const dataManager = AppController.sharedInstance().dataSupplierManager()
+  dataManager.supplyData_atIndex_forKey(datum, index, key)
+}
