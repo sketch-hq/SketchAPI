@@ -225,7 +225,7 @@ Style.define('sharedStyleId', {
       }
     }
 
-    if (newId) {
+    if (!newId) {
       return
     }
 
@@ -233,7 +233,7 @@ Style.define('sharedStyleId', {
     if (!sharedStyle) {
       throw new Error('Seems like this shared style does not exists')
     }
-    sharedStyle.sketchObject.registerInstance(this._object)
+    this._object.setSharedObjectID(newId)
   },
 })
 

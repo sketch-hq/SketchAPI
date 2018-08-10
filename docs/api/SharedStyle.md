@@ -67,6 +67,22 @@ var styles = sharedStyle.getAllInstances()
 
 Returns an array of all instances of the Shared Style in the document, on all pages.
 
+### Returns
+
+A [Style](#style) array.
+
+## Get all the Instances' Layers
+
+```javascript
+var layers = sharedStyle.getAllInstancesLayers()
+```
+
+Returns an array of all layers with a Style which is an instance of the Shared Style in the document, on all pages.
+
+### Returns
+
+A [Layer](#layer) array.
+
 ## Get the Library it was defined in
 
 ```javascript
@@ -106,10 +122,10 @@ You can unlink a Shared Style from the Library it comes from and make it a local
 
 `true` if it succeeded.
 
-## `SharedStyle.Type`
+## `SharedStyle.StyleType`
 
 ```javascript
-SharedStyle.Type.Text
+SharedStyle.StyleType.Text
 ```
 
 Enumeration of the type of Shared Style.
