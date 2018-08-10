@@ -21,6 +21,11 @@ interface IMSDataSupplierManager {
     data: Array<INSString | string>,
     key: INSString | string
   ) => void
+  supplyData_atIndex_forKey: (
+    data: INSString | string,
+    index: number,
+    key: INSString | string
+  ) => void
 }
 
 interface IAppController {
