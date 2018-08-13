@@ -111,23 +111,38 @@ function typeInfo(type) {
     method => !shouldSkipMethod(method, type)
   )
 
+  const name = `${type.protocol ? 'I' : ''}${type.name}${
+    type.generics && type.generics.length ? `<${type.generics.join(', ')}>` : ''
+  }`
+
+  const allocatorNameExtending = `${type.name}Allocator<${
+    type.generics && type.generics.length ? `${type.generics.join(', ')}, ` : ''
+  }T extends ${name}>`
+  const allocatorName = `${type.name}Allocator<${
+    type.generics && type.generics.length ? `${type.generics.join(', ')}, ` : ''
+  }T>`
+
   return {
     methods,
     tsKind: type.protocol ? 'interface' : 'class',
     type,
+    name,
+    allocatorName,
+    allocatorNameExtending,
   }
 }
 
 function each(values, formatter, { newLineStart, newLineEnd } = {}) {
-  if (values.length > 0) {
-    return `${newLineStart ? '\n' : ''}${values.map(formatter).join('\n')}${
+  const formattedValues = values.map(formatter).filter(v => v)
+  if (formattedValues.length > 0) {
+    return `${newLineStart ? '\n' : ''}${formattedValues.join('\n')}${
       newLineEnd ? '\n' : ''
     }`
   }
   return ''
 }
 
-function inheritance(info, classes) {
+function inheritance(info, classes, allocator) {
   const { type } = info
   let _inheritance = []
   if (type.extends) {
@@ -207,9 +222,25 @@ function inheritance(info, classes) {
     extension = typesMap[extension]
   }
 
+  if (allocator && extension) {
+    if (extension.indexOf('<') !== -1) {
+      extension = extension.split('<')
+      const name = extension.shift()
+      extension.unshift(`${name}Allocator`)
+      extension = extension.join('<')
+      extension = extension.split('>')
+      extension.push(', T>')
+      extension = extension.join('')
+    } else {
+      extension += 'Allocator<T>'
+    }
+  }
+
   return extension
     ? ` extends ${extension}${
-        protocols.length > 0 ? ` implements I${protocols.join(', I')}` : ''
+        protocols.length > 0 && !allocator
+          ? ` implements I${protocols.join(', I')}`
+          : ''
       }`
     : ''
 }
@@ -376,39 +407,74 @@ function checkIfMethodDefinedInExtension(method, type, classes) {
   return checkIfMethodDefinedInExtension(method, extension, classes)
 }
 
-function possiblyHideMethod(isInitMethod, method, info, classes) {
-  return (isInitMethod &&
-    isInitMethod.length &&
-    (info.type.protocol ||
-      checkIfMethodDefinedInExtension(method, info.type, classes))) ||
-    (overrides.shouldHideMethods[info.type.name] &&
-      overrides.shouldHideMethods[info.type.name].indexOf(
-        method.bridgedName
-      ) !== -1)
-    ? '// '
-    : ''
+function shouldIgnore(name, info) {
+  return (
+    overrides.shouldTSIgnoreMethods[info.type.name] &&
+    overrides.shouldTSIgnoreMethods[info.type.name].indexOf(name) !== -1
+  )
 }
 
-function printMethod(method, info, name, classes) {
-  const returnType = convertType(method.returns, name)
+function printMethod(method, info) {
+  const returnType = convertType(method.returns, info.name)
   const isInitMethod = method.bridgedName.match(initMethod)
+  if (isInitMethod) {
+    return ''
+  }
 
-  return `  ${possiblyHideMethod(
-    isInitMethod,
-    method,
-    info,
-    classes
-  )}${possiblyStaticMethod(method)}${escapeMethodName(method.bridgedName)}${
-    returnType === name &&
+  return `${
+    shouldIgnore(method.bridgedName, info)
+      ? `  // @ts-ignore
+`
+      : ''
+  }  ${possiblyStaticMethod(method)}${escapeMethodName(method.bridgedName)}${
+    returnType === info.name &&
     method.kind == 'class' &&
     info.type.generics &&
     info.type.generics.length
       ? `<${info.type.generics.join(', ')}>`
       : ''
-  }${isInitMethod ? `<T extends ${name}>` : ''}(${extractArguments(
+  }${isInitMethod ? `<T extends ${info.name}>` : ''}(${extractArguments(
     method,
     info
   )}): ${isInitMethod ? 'T' : returnType};`
+}
+
+function printAllocator(info, classes) {
+  if (info.type.protocol) {
+    return ''
+  }
+
+  return `class ${info.allocatorNameExtending}${inheritance(
+    info,
+    classes,
+    'Allocator<T>'
+  )} {${overrides.classAdditions[`${info.type.name}Allocator`] || ''}${each(
+    info.methods,
+    method => {
+      const isInitMethod = method.bridgedName.match(initMethod)
+      if (
+        !isInitMethod ||
+        checkIfMethodDefinedInExtension(method, info.type, classes)
+      ) {
+        return ''
+      }
+      return `  ${escapeMethodName(method.bridgedName)}(${extractArguments(
+        method,
+        info
+      )}): T;`
+    },
+    { newLineStart: true, newLineEnd: true }
+  )}}
+`
+}
+
+function printAlloc(info) {
+  if (info.type.protocol) {
+    return ''
+  }
+
+  return `
+  alloc<T extends ${info.name}>(): ${info.allocatorName};`
 }
 
 module.exports = function generateDeclaration(type, classes) {
@@ -467,27 +533,46 @@ module.exports = function generateDeclaration(type, classes) {
 `
   }
 
-  const name = `${type.protocol ? 'I' : ''}${type.name}${
-    type.generics && type.generics.length ? `<${type.generics.join(', ')}>` : ''
-  }`
-
   const info = typeInfo(type)
-  return `declare ${info.tsKind} ${name}${inheritance(
-    info,
-    classes
-  )} {${overrides.classAdditions[type.name] || ''}${each(
+  return `${printAllocator(info, classes)}declare ${info.tsKind} ${
+    info.name
+  }${inheritance(info, classes)} {${printAlloc(info)}
+${overrides.classAdditions[type.name] || ''}${each(
     info.methods,
-    method => printMethod(method, info, name, classes),
-    { newLineStart: true, newLineEnd: true }
+    method => printMethod(method, info, classes),
+    {
+      newLineStart: false,
+      newLineEnd: true,
+    }
   )}${each(
     toArray(info.type.properties),
-    property => `  ${possiblyStaticProperty(property, type)}${
-      property.name
-    }(): ${convertType(property.type, name)};
-  ${possiblyStaticProperty(property, type)}set${capitalize(property.name)}(${
-      reservedMap[property.name] ? reservedMap[property.name] : property.name
-    }: ${cocoascriptTypeAliases[convertType(property.type, name)] ||
-      convertType(property.type, name)}): void;`,
+    property =>
+      `${
+        shouldIgnore(property.name, info)
+          ? `  // @ts-ignore
+`
+          : ''
+      }  ${possiblyStaticProperty(property, type)}${
+        property.name
+      }(): ${convertType(property.type, info.name)};${
+        property.attributes.indexOf('readonly') === -1
+          ? `
+${
+              shouldIgnore(`set${capitalize(property.name)}`, info)
+                ? `  // @ts-ignore
+`
+                : ''
+            }  ${possiblyStaticProperty(property, type)}set${capitalize(
+              property.name
+            )}(${
+              reservedMap[property.name]
+                ? reservedMap[property.name]
+                : property.name
+            }: ${cocoascriptTypeAliases[
+              convertType(property.type, info.name)
+            ] || convertType(property.type, info.name)}): void;`
+          : ''
+      }`,
     { newLineStart: true, newLineEnd: true }
   )}}
 

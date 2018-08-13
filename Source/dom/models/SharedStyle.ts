@@ -24,7 +24,8 @@ export class SharedStyle extends WrappedObject<MSSharedStyle> {
   @define<SharedStyle>({
     get() {
       return (
-        SharedStyleTypeMap[this.sketchObject.type()] || this.sketchObject.type()
+        SharedStyleTypeMap[this.sketchObject.style().type()] ||
+        this.sketchObject.style().type()
       )
     },
   })
