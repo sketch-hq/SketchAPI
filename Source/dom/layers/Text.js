@@ -95,7 +95,8 @@ export class Text extends StyledLayer {
     const textLayer = this._object
     const storage = textLayer.immutableModelObject().createTextStorage()
     const layout = storage.layoutManagers().firstObject()
-    const actualCharacterRangePtr = MOPointer.new()
+    const glpyhRangeStorage = NSMakeRange(0, 0)
+    const actualCharacterRangePtr = MOPointer.new(glpyhRangeStorage)
     const charRange = NSMakeRange(0, storage.length())
     const drawingPoint = textLayer.drawingPointForText()
 
