@@ -95,8 +95,8 @@ export class Text extends StyledLayer {
     const textLayer = this._object
     const storage = textLayer.immutableModelObject().createTextStorage()
     const layout = storage.layoutManagers().firstObject()
-    const glpyhRangeStorage = NSMakeRange(0, 0)
-    const actualCharacterRangePtr = MOPointer.new(glpyhRangeStorage)
+    const glyphRangeStorage = NSMakeRange(0, 0)
+    const actualCharacterRangePtr = MOPointer.new(glyphRangeStorage)
     const charRange = NSMakeRange(0, storage.length())
     const drawingPoint = textLayer.drawingPointForText()
 
@@ -109,7 +109,8 @@ export class Text extends StyledLayer {
     const fragments = []
     let currentLocation = 0
     while (currentLocation < NSMaxRange(glyphRange)) {
-      const effectiveRangePtr = MOPointer.new()
+      const effectiveRangeStorage = NSMakeRange(0, 0)
+      const effectiveRangePtr = MOPointer.new(effectiveRangeStorage)
       const localRect = layout.lineFragmentRectForGlyphAtIndex_effectiveRange_(
         currentLocation,
         effectiveRangePtr
