@@ -329,14 +329,10 @@ module.exports = {
   PostTableViewCell: '',
   TodayViewController: '',
   AFImageCache: '',
-  NSLayoutAnchor: `// @ts-ignore
-class NSLayoutAnchorAllocator<T extends NSLayoutAnchor> extends NSObjectAllocator<T> {
-  initWithCoder(aDecoder: NSCoder): T;
+  NSLayoutAnchor: `interface NSLayoutAnchorAllocator<InitializedType = NSLayoutAnchor> extends NSObjectAllocator<NSLayoutAnchor> {
+  initWithCoder(aDecoder: NSCoder): InitializedType;
 }
-// @ts-ignore
-declare class NSLayoutAnchor extends NSObject implements INSCopying, INSCoding {
-  // @ts-ignore
-  alloc<T extends NSLayoutAnchor>(): NSLayoutAnchorAllocator<T>;
+interface NSLayoutAnchor extends NSObject, INSCopying, INSCoding {
   constraintEqualToAnchor(anchor: NSLayoutAnchor): NSLayoutConstraint;
   constraintGreaterThanOrEqualToAnchor(anchor: NSLayoutAnchor): NSLayoutConstraint;
   constraintLessThanOrEqualToAnchor(anchor: NSLayoutAnchor): NSLayoutConstraint;
@@ -355,34 +351,31 @@ declare class NSLayoutAnchor extends NSObject implements INSCopying, INSCoding {
   constraintsAffectingLayout(): NSArray<any>;
   setConstraintsAffectingLayout(constraintsAffectingLayout: NSArray<any>): void;
 }
+declare const NSLayoutAnchor: {
+  alloc(): NSLayoutAnchorAllocator;
+}
 
 `,
-  NSLayoutXAxisAnchor: `// @ts-ignore
-class NSLayoutXAxisAnchorAllocator<T extends NSLayoutXAxisAnchor> extends NSLayoutAnchorAllocator<T> {}
-// @ts-ignore
-declare class NSLayoutXAxisAnchor extends NSLayoutAnchor {
-  // @ts-ignore
-  alloc<T extends NSLayoutXAxisAnchor>(): NSLayoutXAxisAnchorAllocator<T>;
+  NSLayoutXAxisAnchor: `interface NSLayoutXAxisAnchorAllocator<InitializedType = NSLayoutXAxisAnchor> extends NSLayoutAnchorAllocator<NSLayoutXAxisAnchor> {}
+interface NSLayoutXAxisAnchor extends NSLayoutAnchor {
   anchorWithOffsetToAnchor(otherAnchor: NSLayoutXAxisAnchor): NSLayoutDimension;
 }
-
-`,
-  NSLayoutYAxisAnchor: `// @ts-ignore
-class NSLayoutYAxisAnchorAllocator<T extends NSLayoutYAxisAnchor> extends NSLayoutAnchorAllocator<T> {}
-// @ts-ignore
-declare class NSLayoutYAxisAnchor extends NSLayoutAnchor {
-  // @ts-ignore
-  alloc<T extends NSLayoutYAxisAnchor>(): NSLayoutYAxisAnchorAllocator<T>;
-  anchorWithOffsetToAnchor(otherAnchor: NSLayoutYAxisAnchor): NSLayoutDimension;
+declare const NSLayoutXAxisAnchor: {
+  alloc(): NSLayoutXAxisAnchorAllocator;
 }
 
 `,
-  NSLayoutDimension: `// @ts-ignore
-class NSLayoutDimensionAllocator<T extends NSLayoutDimension> extends NSLayoutAnchorAllocator<T> {}
-// @ts-ignore
-declare class NSLayoutDimension extends NSLayoutAnchor {
-  // @ts-ignore
-  alloc<T extends NSLayoutDimension>(): NSLayoutDimensionAllocator<T>;
+  NSLayoutYAxisAnchor: `interface NSLayoutYAxisAnchorAllocator<InitializedType = NSLayoutYAxisAnchor> extends NSLayoutAnchorAllocator<NSLayoutYAxisAnchor> {}
+interface NSLayoutYAxisAnchor extends NSLayoutAnchor {
+  anchorWithOffsetToAnchor(otherAnchor: NSLayoutYAxisAnchor): NSLayoutDimension;
+}
+declare const NSLayoutYAxisAnchor: {
+  alloc(): NSLayoutYAxisAnchorAllocator;
+}
+
+`,
+  NSLayoutDimension: `interface NSLayoutDimensionAllocator<InitializedType = NSLayoutDimension> extends NSLayoutAnchorAllocator<NSLayoutDimension> {}
+interface NSLayoutDimension extends NSLayoutAnchor {
   constraintEqualToConstant(c: CGFloat): NSLayoutConstraint;
   constraintGreaterThanOrEqualToConstant(c: CGFloat): NSLayoutConstraint;
   constraintLessThanOrEqualToConstant(c: CGFloat): NSLayoutConstraint;
@@ -393,6 +386,9 @@ declare class NSLayoutDimension extends NSLayoutAnchor {
   constraintGreaterThanOrEqualToAnchor_multiplier_constant(anchor: NSLayoutDimension, m: CGFloat, c: CGFloat): NSLayoutConstraint;
   constraintLessThanOrEqualToAnchor_multiplier_constant(anchor: NSLayoutDimension, m: CGFloat, c: CGFloat): NSLayoutConstraint;
 }
+declare const NSLayoutDimension: {
+  alloc(): NSLayoutDimensionAllocator;
+}
 
 `,
   'PDFFunctionInput[kMaxComponents]': `declare type PDFFunctionInput = CGFloat[]
@@ -401,14 +397,10 @@ declare class NSLayoutDimension extends NSLayoutAnchor {
   'PDFFunctionOutput[kMaxComponents]': `declare type PDFFunctionOutput = CGFloat[]
 
 `,
-  MSMathInspectorValueAdaptor: `// @ts-ignore
-class MSMathInspectorValueAdaptorAllocator<T extends MSMathInspectorValueAdaptor> extends MSInspectorValueAdaptorAllocator<T> {
-  initWithModelsController_floatValueGetter_floatValueSetter_modelKeyPathsToWatch(modelsController: NSArrayController, floatValueGetter: Block, floatValueSetter: Block, modelKeyPathsToWatch: NSArray<any>): T;
+  MSMathInspectorValueAdaptor: `interface MSMathInspectorValueAdaptorAllocator<InitializedType =  MSMathInspectorValueAdaptor> extends MSInspectorValueAdaptorAllocator<MSMathInspectorValueAdaptor> {
+  initWithModelsController_floatValueGetter_floatValueSetter_modelKeyPathsToWatch(modelsController: NSArrayController, floatValueGetter: Block, floatValueSetter: Block, modelKeyPathsToWatch: NSArray<any>): InitializedType;
 }
-// @ts-ignore
-declare class MSMathInspectorValueAdaptor extends MSInspectorValueAdaptor {
-  // @ts-ignore
-  alloc<T extends MSMathInspectorValueAdaptor>(): MSMathInspectorValueAdaptorAllocator<T>;
+interface MSMathInspectorValueAdaptor extends MSInspectorValueAdaptor {
   checkAndAdjustValues_contexts_withNumberFormatter_error(values: NSArray<any>, contexts: NSPointerArray, numberFormatter: NSNumberFormatter, error: NSError): NSArray<any>;
   effectiveNumberFormatter(): NSNumberFormatter;
   currentAdjustOptions(): MSValueAdaptorAdjustOptions;
@@ -427,6 +419,9 @@ declare class MSMathInspectorValueAdaptor extends MSInspectorValueAdaptor {
   isIncrementing(): boolean;
   setIsIncrementing(isIncrementing: boolean): void;
 }
+declare const MSMathInspectorValueAdaptor: {
+  alloc(): MSMathInspectorValueAdaptorAllocator;
+}
 
 `,
   SMKCommunicationController: '',
@@ -439,15 +434,6 @@ declare class MSMathInspectorValueAdaptor extends MSInspectorValueAdaptor {
   MSProfilingRenderer: '',
   MSProfilingRendererDelegate: '',
   CGGlyphDeprecatedEnum: '',
-  NSPopoverAppearance: `// @ts-ignore
-class NSPopoverAppearanceAllocator<T extends NSPopoverAppearance> extends NSAppearanceAllocator<T> {}
-// @ts-ignore
-declare class NSPopoverAppearance extends NSAppearance {
-  // @ts-ignore
-  alloc<T extends NSPopoverAppearance>(): NSPopoverAppearanceAllocator<T>;
-}
-
-`,
 }
 
 module.exports.additions = `/****** OVERRIDES ********/
@@ -634,16 +620,18 @@ declare type GLbitfield = any
 declare type SCNetworkReachabilityRef = any
 
 // TODO: find why this is not auto generated
-declare type NSTypesetterGlyphInfo = any
-declare interface IMSSliceLayerWatcher {}
-declare interface IMSAllRenderers extends IMSLayerRenderer, IMSPathRenderer, IMSFillRenderer, IMSBackgroundBlurRenderer, IMSShadowRenderer, IMSGridRenderer {}
-declare interface INSCollectionViewElement {}
-declare interface INSAccessibilityTable {}
-declare interface INSTextAttachmentContainer {}
-declare interface INSTextLayoutOrientationProvider {}
-declare interface IECIODelegate {}
-declare interface ISCKDiff {}
-declare interface IMSLayer {}
+type NSTypesetterGlyphInfo = any
+interface IMSSliceLayerWatcher {}
+interface IMSAllRenderers extends IMSLayerRenderer, IMSPathRenderer, IMSFillRenderer, IMSBackgroundBlurRenderer, IMSShadowRenderer, IMSGridRenderer {}
+interface INSCollectionViewElement {}
+interface INSAccessibilityTable {}
+interface INSTextAttachmentContainer {}
+interface INSTextLayoutOrientationProvider {}
+interface IECIODelegate {}
+interface ISCKDiff {}
+interface IMSLayer {}
+interface NSOpenGLLayer extends CALayer {}
+interface NSOpenGLLayerAllocator<InitializedType = NSOpenGLLayer> extends CALayerAllocator<NSOpenGLLayer> {}
 
 /****** AUTO GENERATED ********/
 
@@ -694,18 +682,21 @@ module.exports.additionalClasses = [
   },
 ]
 
-module.exports.shouldTSIgnoreMethods = {
+module.exports.shouldHideMethods = {
   MSMissingFontsDialog: ['close'],
   MSWelcomeWindowController: ['close'],
   NSObject: ['objectForKeyedSubscript', 'setObject_forKeyedSubscript'],
   MSAction: ['validateToolbarItem'],
-  AFHTTPRequestOperation: ['response'],
-  SCKCloudDocument: ['diffComparedTo'],
-  AFAmazonS3Manager: ['requestSerializer', 'setRequestSerializer'],
-  MSSharedStyle: ['newInstance'],
-  MSModelObject: ['setParentObject'],
-  NSDictionary: ['objectForKeyedSubscript'],
-  NSMutableDictionary: ['setObject_forKeyedSubscript'],
+  NSPopover: ['appearance', 'setAppearance'],
+  NSAccessibilityProgressIndicator: ['accessibilityValue'],
+  MSNormalInspector: ['layers', 'setLayers'],
+  // AFHTTPRequestOperation: ['response'],
+  // SCKCloudDocument: ['diffComparedTo'],
+  // AFAmazonS3Manager: ['requestSerializer', 'setRequestSerializer'],
+  // MSSharedStyle: ['newInstance'],
+  // MSModelObject: ['setParentObject'],
+  // NSDictionary: ['objectForKeyedSubscript'],
+  // NSMutableDictionary: ['setObject_forKeyedSubscript'],
 }
 
 module.exports.classAdditions = {

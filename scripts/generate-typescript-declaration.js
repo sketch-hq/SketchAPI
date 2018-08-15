@@ -111,20 +111,25 @@ function typeInfo(type) {
     method => !shouldSkipMethod(method, type)
   )
 
+  const generics =
+    type.generics && type.generics.length
+      ? `${`${type.generics.join(', ')}`}`
+      : ''
+
   const name = `${type.protocol ? 'I' : ''}${type.name}${
-    type.generics && type.generics.length ? `<${type.generics.join(', ')}>` : ''
+    generics ? `<${generics}>` : ''
   }`
 
   const allocatorNameExtending = `${type.name}Allocator<${
-    type.generics && type.generics.length ? `${type.generics.join(', ')}, ` : ''
-  }T extends ${name}>`
-  const allocatorName = `${type.name}Allocator<${
-    type.generics && type.generics.length ? `${type.generics.join(', ')}, ` : ''
-  }T>`
+    generics ? `${generics}, ` : ''
+  }InitializedType = ${name}>`
+  const allocatorName = `${type.name}Allocator${
+    generics ? `<${generics}>` : ''
+  }`
 
   return {
     methods,
-    tsKind: type.protocol ? 'interface' : 'class',
+    generics,
     type,
     name,
     allocatorName,
@@ -212,7 +217,7 @@ function inheritance(info, classes, allocator) {
 
     if (!info.type.protocol) {
       // a class cannot extends an interface so implement every thing instead
-      return ` implements ${extension}${
+      return ` extends ${extension}${
         protocols.length > 0 ? `, I${protocols.join(', I')}` : ''
       }`
     }
@@ -229,32 +234,41 @@ function inheritance(info, classes, allocator) {
       extension.unshift(`${name}Allocator`)
       extension = extension.join('<')
       extension = extension.split('>')
-      extension.push(', T>')
+      extension.push(`, ${info.name}>`)
       extension = extension.join('')
     } else {
-      extension += 'Allocator<T>'
+      extension += `Allocator<${info.name}>`
     }
   }
 
   return extension
     ? ` extends ${extension}${
-        protocols.length > 0 && !allocator
-          ? ` implements I${protocols.join(', I')}`
-          : ''
+        protocols.length > 0 && !allocator ? `, I${protocols.join(', I')}` : ''
       }`
     : ''
 }
 
-function possiblyStaticMethod(method) {
-  return method.kind == 'class' ? 'static ' : ''
+function isStaticMethod(method) {
+  return method.kind == 'class'
 }
 
-function possiblyStaticProperty(property, type) {
+function isStaticProperty(property) {
   return property.attributes.some(a => a === 'class')
-    ? type.protocol
-      ? '// static '
-      : 'static '
-    : ''
+}
+
+function split(methods, splitter) {
+  const static = []
+  const instance = []
+
+  methods.forEach(m => {
+    if (splitter(m)) {
+      static.push(m)
+    } else {
+      instance.push(m)
+    }
+  })
+
+  return { static, instance }
 }
 
 function escapeMethodName(methodName) {
@@ -409,8 +423,8 @@ function checkIfMethodDefinedInExtension(method, type, classes) {
 
 function shouldIgnore(name, info) {
   return (
-    overrides.shouldTSIgnoreMethods[info.type.name] &&
-    overrides.shouldTSIgnoreMethods[info.type.name].indexOf(name) !== -1
+    overrides.shouldHideMethods[info.type.name] &&
+    overrides.shouldHideMethods[info.type.name].indexOf(name) !== -1
   )
 }
 
@@ -422,11 +436,8 @@ function printMethod(method, info) {
   }
 
   return `${
-    shouldIgnore(method.bridgedName, info)
-      ? `  // @ts-ignore
-`
-      : ''
-  }  ${possiblyStaticMethod(method)}${escapeMethodName(method.bridgedName)}${
+    shouldIgnore(method.bridgedName, info) ? `  // ` : ''
+  }  ${escapeMethodName(method.bridgedName)}${
     returnType === info.name &&
     method.kind == 'class' &&
     info.type.generics &&
@@ -444,10 +455,10 @@ function printAllocator(info, classes) {
     return ''
   }
 
-  return `class ${info.allocatorNameExtending}${inheritance(
+  return `interface ${info.allocatorNameExtending}${inheritance(
     info,
     classes,
-    'Allocator<T>'
+    `Allocator<${info.name}>`
   )} {${overrides.classAdditions[`${info.type.name}Allocator`] || ''}${each(
     info.methods,
     method => {
@@ -461,20 +472,49 @@ function printAllocator(info, classes) {
       return `  ${escapeMethodName(method.bridgedName)}(${extractArguments(
         method,
         info
-      )}): T;`
+      )}): InitializedType;`
     },
     { newLineStart: true, newLineEnd: true }
   )}}
 `
 }
 
-function printAlloc(info) {
+function printAlloc(info, classes, staticMethods, staticProperties) {
   if (info.type.protocol) {
     return ''
   }
 
   return `
-  alloc<T extends ${info.name}>(): ${info.allocatorName};`
+declare const ${info.type.name}: {
+  alloc${info.generics ? `<${info.generics}>` : ''}(): ${
+    info.allocatorName
+  };${each(staticMethods, method => printMethod(method, info, classes), {
+    newLineStart: false,
+    newLineEnd: true,
+  })}${each(
+    staticProperties,
+    property =>
+      `${shouldIgnore(property.name, info) ? `  // ` : ''}  ${
+        property.name
+      }(): ${convertType(property.type, info.name)};${
+        property.attributes.indexOf('readonly') === -1
+          ? `
+${
+              shouldIgnore(`set${capitalize(property.name)}`, info)
+                ? `  // `
+                : ''
+            }  set${capitalize(property.name)}(${
+              reservedMap[property.name]
+                ? reservedMap[property.name]
+                : property.name
+            }: ${cocoascriptTypeAliases[
+              convertType(property.type, info.name)
+            ] || convertType(property.type, info.name)}): void;`
+          : ''
+      }`,
+    { newLineStart: true, newLineEnd: true }
+  )}
+}`
 }
 
 module.exports = function generateDeclaration(type, classes) {
@@ -534,37 +574,41 @@ module.exports = function generateDeclaration(type, classes) {
   }
 
   const info = typeInfo(type)
-  return `${printAllocator(info, classes)}declare ${info.tsKind} ${
-    info.name
-  }${inheritance(info, classes)} {${printAlloc(info)}
-${overrides.classAdditions[type.name] || ''}${each(
+
+  const { static: staticMethods, instance: instanceMethods } = split(
     info.methods,
+    isStaticMethod
+  )
+
+  const { static: staticProperties, instance: instanceProperties } = split(
+    toArray(info.type.properties),
+    isStaticProperty
+  )
+
+  return `${printAllocator(info, classes)}interface ${info.name}${inheritance(
+    info,
+    classes
+  )} {
+${overrides.classAdditions[type.name] || ''}${each(
+    instanceMethods,
     method => printMethod(method, info, classes),
     {
       newLineStart: false,
       newLineEnd: true,
     }
   )}${each(
-    toArray(info.type.properties),
+    instanceProperties,
     property =>
-      `${
-        shouldIgnore(property.name, info)
-          ? `  // @ts-ignore
-`
-          : ''
-      }  ${possiblyStaticProperty(property, type)}${
+      `${shouldIgnore(property.name, info) ? `  // ` : ''}  ${
         property.name
       }(): ${convertType(property.type, info.name)};${
         property.attributes.indexOf('readonly') === -1
           ? `
 ${
               shouldIgnore(`set${capitalize(property.name)}`, info)
-                ? `  // @ts-ignore
-`
+                ? `  // `
                 : ''
-            }  ${possiblyStaticProperty(property, type)}set${capitalize(
-              property.name
-            )}(${
+            }  set${capitalize(property.name)}(${
               reservedMap[property.name]
                 ? reservedMap[property.name]
                 : property.name
@@ -574,7 +618,7 @@ ${
           : ''
       }`,
     { newLineStart: true, newLineEnd: true }
-  )}}
+  )}}${printAlloc(info, classes, staticMethods, staticProperties)}
 
 `
 }
