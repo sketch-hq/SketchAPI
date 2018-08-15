@@ -7,8 +7,11 @@ const parseHeader = require('./parse-header')
 const generateDeclaration = require('./generate-typescript-declaration')
 const { additionalClasses, additions } = require('./typescript-overrides')
 
-const TYPES = path.join(__dirname, '../types/sketch-internals__generated.d.ts')
-const SKETCH_SOURCES_PATH = path.join(__dirname, '../../../')
+const TYPES = path.join(
+  __dirname,
+  '../../types/sketch-internals__generated.d.ts'
+)
+const SKETCH_SOURCES_PATH = path.join(__dirname, '../../../../')
 const MACOS_FOUNDATION_PATH =
   '/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/Foundation.framework/Headers'
 const MACOS_APPKIT_PATH =

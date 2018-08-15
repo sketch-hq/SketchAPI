@@ -106,7 +106,7 @@ function shouldSkipMethod(method, type) {
   return false
 }
 
-function typeInfo(type) {
+function typeInfo(type, classes) {
   const methods = toArray(type.methods).filter(
     method => !shouldSkipMethod(method, type)
   )
@@ -120,35 +120,13 @@ function typeInfo(type) {
     generics ? `<${generics}>` : ''
   }`
 
-  const allocatorNameExtending = `${type.name}Allocator<${
+  const uninitializedNameExtending = `${type.name}Uninitialized<${
     generics ? `${generics}, ` : ''
   }InitializedType = ${name}>`
-  const allocatorName = `${type.name}Allocator${
+  const uninitializedName = `${type.name}Uninitialized${
     generics ? `<${generics}>` : ''
   }`
 
-  return {
-    methods,
-    generics,
-    type,
-    name,
-    allocatorName,
-    allocatorNameExtending,
-  }
-}
-
-function each(values, formatter, { newLineStart, newLineEnd } = {}) {
-  const formattedValues = values.map(formatter).filter(v => v)
-  if (formattedValues.length > 0) {
-    return `${newLineStart ? '\n' : ''}${formattedValues.join('\n')}${
-      newLineEnd ? '\n' : ''
-    }`
-  }
-  return ''
-}
-
-function inheritance(info, classes, allocator) {
-  const { type } = info
   let _inheritance = []
   if (type.extends) {
     _inheritance.push(type.extends)
@@ -182,13 +160,13 @@ function inheritance(info, classes, allocator) {
     const protocol = classes[`${p}__protocol`]
     if (protocol) {
       const protocolMethods = toArray(protocol.methods).filter(
-        method => !shouldSkipMethod(method, info.type)
+        method => !shouldSkipMethod(method, type)
       )
-      protocolMethods.forEach(m => info.methods.push(m))
+      protocolMethods.forEach(m => methods.push(m))
       Object.keys(protocol.properties).forEach(m => {
-        if (!info.type.properties[m]) {
+        if (!type.properties[m]) {
           // eslint-disable-next-line
-          info.type.properties[m] = protocol.properties[m]
+          type.properties[m] = protocol.properties[m]
         }
       })
     }
@@ -197,29 +175,22 @@ function inheritance(info, classes, allocator) {
   if (
     extension &&
     extension.indexOf('<') === -1 &&
-    (!classes[extension] || extension === info.type.name)
+    (!classes[extension] || extension === type.name)
   ) {
     const protocol = classes[`${extension}__protocol`]
     extension = `I${extension}`
 
     if (protocol) {
       const protocolMethods = toArray(protocol.methods).filter(
-        method => !shouldSkipMethod(method, info.type)
+        method => !shouldSkipMethod(method, type)
       )
-      protocolMethods.forEach(m => info.methods.push(m))
+      protocolMethods.forEach(m => methods.push(m))
       Object.keys(protocol.properties).forEach(m => {
-        if (!info.type.properties[m]) {
+        if (!type.properties[m]) {
           // eslint-disable-next-line
-          info.type.properties[m] = protocol.properties[m]
+          type.properties[m] = protocol.properties[m]
         }
       })
-    }
-
-    if (!info.type.protocol) {
-      // a class cannot extends an interface so implement every thing instead
-      return ` extends ${extension}${
-        protocols.length > 0 ? `, I${protocols.join(', I')}` : ''
-      }`
     }
   }
 
@@ -227,23 +198,32 @@ function inheritance(info, classes, allocator) {
     extension = typesMap[extension]
   }
 
-  if (allocator && extension) {
-    if (extension.indexOf('<') !== -1) {
-      extension = extension.split('<')
-      const name = extension.shift()
-      extension.unshift(`${name}Allocator`)
-      extension = extension.join('<')
-      extension = extension.split('>')
-      extension.push(`, ${info.name}>`)
-      extension = extension.join('')
-    } else {
-      extension += `Allocator<${info.name}>`
-    }
+  return {
+    methods,
+    generics,
+    type,
+    name,
+    extension,
+    protocols,
+    uninitializedName,
+    uninitializedNameExtending,
   }
+}
 
+function each(values, formatter, { newLineStart, newLineEnd } = {}) {
+  const formattedValues = values.map(formatter).filter(v => v)
+  if (formattedValues.length > 0) {
+    return `${newLineStart ? '\n' : ''}${formattedValues.join('\n')}${
+      newLineEnd ? '\n' : ''
+    }`
+  }
+  return ''
+}
+
+function inheritance(extension, protocols) {
   return extension
     ? ` extends ${extension}${
-        protocols.length > 0 && !allocator ? `, I${protocols.join(', I')}` : ''
+        (protocols || []).length > 0 ? `, I${protocols.join(', I')}` : ''
       }`
     : ''
 }
@@ -450,16 +430,29 @@ function printMethod(method, info) {
   )}): ${isInitMethod ? 'T' : returnType};`
 }
 
-function printAllocator(info, classes) {
+function printUninitialized(info, classes) {
   if (info.type.protocol) {
     return ''
   }
 
-  return `interface ${info.allocatorNameExtending}${inheritance(
-    info,
-    classes,
-    `Allocator<${info.name}>`
-  )} {${overrides.classAdditions[`${info.type.name}Allocator`] || ''}${each(
+  let { extension } = info
+  if (extension) {
+    if (extension.indexOf('<') !== -1) {
+      extension = extension.split('<')
+      const name = extension.shift()
+      extension.unshift(`${name}Uninitialized`)
+      extension = extension.join('<')
+      extension = extension.split('>')
+      extension.push(`, ${info.name}>`)
+      extension = extension.join('')
+    } else {
+      extension += `Uninitialized<${info.name}>`
+    }
+  }
+
+  return `interface ${info.uninitializedNameExtending}${inheritance(
+    extension
+  )} {${overrides.classAdditions[`${info.type.name}Uninitialized`] || ''}${each(
     info.methods,
     method => {
       const isInitMethod = method.bridgedName.match(initMethod)
@@ -479,7 +472,7 @@ function printAllocator(info, classes) {
 `
 }
 
-function printAlloc(info, classes, staticMethods, staticProperties) {
+function printGlobalConstant(info, classes, staticMethods, staticProperties) {
   if (info.type.protocol) {
     return ''
   }
@@ -487,7 +480,7 @@ function printAlloc(info, classes, staticMethods, staticProperties) {
   return `
 declare const ${info.type.name}: {
   alloc${info.generics ? `<${info.generics}>` : ''}(): ${
-    info.allocatorName
+    info.uninitializedName
   };${each(staticMethods, method => printMethod(method, info, classes), {
     newLineStart: false,
     newLineEnd: true,
@@ -573,7 +566,7 @@ module.exports = function generateDeclaration(type, classes) {
 `
   }
 
-  const info = typeInfo(type)
+  const info = typeInfo(type, classes)
 
   const { static: staticMethods, instance: instanceMethods } = split(
     info.methods,
@@ -585,10 +578,9 @@ module.exports = function generateDeclaration(type, classes) {
     isStaticProperty
   )
 
-  return `${printAllocator(info, classes)}interface ${info.name}${inheritance(
-    info,
-    classes
-  )} {
+  return `${printUninitialized(info, classes)}interface ${
+    info.name
+  }${inheritance(info.extenstion, info.protocols)} {
 ${overrides.classAdditions[type.name] || ''}${each(
     instanceMethods,
     method => printMethod(method, info, classes),
@@ -618,7 +610,7 @@ ${
           : ''
       }`,
     { newLineStart: true, newLineEnd: true }
-  )}}${printAlloc(info, classes, staticMethods, staticProperties)}
+  )}}${printGlobalConstant(info, classes, staticMethods, staticProperties)}
 
 `
 }

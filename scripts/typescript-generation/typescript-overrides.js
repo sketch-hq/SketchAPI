@@ -329,7 +329,7 @@ module.exports = {
   PostTableViewCell: '',
   TodayViewController: '',
   AFImageCache: '',
-  NSLayoutAnchor: `interface NSLayoutAnchorAllocator<InitializedType = NSLayoutAnchor> extends NSObjectAllocator<NSLayoutAnchor> {
+  NSLayoutAnchor: `interface NSLayoutAnchorUninitialized<InitializedType = NSLayoutAnchor> extends NSObjectUninitialized<NSLayoutAnchor> {
   initWithCoder(aDecoder: NSCoder): InitializedType;
 }
 interface NSLayoutAnchor extends NSObject, INSCopying, INSCoding {
@@ -352,29 +352,29 @@ interface NSLayoutAnchor extends NSObject, INSCopying, INSCoding {
   setConstraintsAffectingLayout(constraintsAffectingLayout: NSArray<any>): void;
 }
 declare const NSLayoutAnchor: {
-  alloc(): NSLayoutAnchorAllocator;
+  alloc(): NSLayoutAnchorUninitialized;
 }
 
 `,
-  NSLayoutXAxisAnchor: `interface NSLayoutXAxisAnchorAllocator<InitializedType = NSLayoutXAxisAnchor> extends NSLayoutAnchorAllocator<NSLayoutXAxisAnchor> {}
+  NSLayoutXAxisAnchor: `interface NSLayoutXAxisAnchorUninitialized<InitializedType = NSLayoutXAxisAnchor> extends NSLayoutAnchorUninitialized<NSLayoutXAxisAnchor> {}
 interface NSLayoutXAxisAnchor extends NSLayoutAnchor {
   anchorWithOffsetToAnchor(otherAnchor: NSLayoutXAxisAnchor): NSLayoutDimension;
 }
 declare const NSLayoutXAxisAnchor: {
-  alloc(): NSLayoutXAxisAnchorAllocator;
+  alloc(): NSLayoutXAxisAnchorUninitialized;
 }
 
 `,
-  NSLayoutYAxisAnchor: `interface NSLayoutYAxisAnchorAllocator<InitializedType = NSLayoutYAxisAnchor> extends NSLayoutAnchorAllocator<NSLayoutYAxisAnchor> {}
+  NSLayoutYAxisAnchor: `interface NSLayoutYAxisAnchorUninitialized<InitializedType = NSLayoutYAxisAnchor> extends NSLayoutAnchorUninitialized<NSLayoutYAxisAnchor> {}
 interface NSLayoutYAxisAnchor extends NSLayoutAnchor {
   anchorWithOffsetToAnchor(otherAnchor: NSLayoutYAxisAnchor): NSLayoutDimension;
 }
 declare const NSLayoutYAxisAnchor: {
-  alloc(): NSLayoutYAxisAnchorAllocator;
+  alloc(): NSLayoutYAxisAnchorUninitialized;
 }
 
 `,
-  NSLayoutDimension: `interface NSLayoutDimensionAllocator<InitializedType = NSLayoutDimension> extends NSLayoutAnchorAllocator<NSLayoutDimension> {}
+  NSLayoutDimension: `interface NSLayoutDimensionUninitialized<InitializedType = NSLayoutDimension> extends NSLayoutAnchorUninitialized<NSLayoutDimension> {}
 interface NSLayoutDimension extends NSLayoutAnchor {
   constraintEqualToConstant(c: CGFloat): NSLayoutConstraint;
   constraintGreaterThanOrEqualToConstant(c: CGFloat): NSLayoutConstraint;
@@ -387,7 +387,7 @@ interface NSLayoutDimension extends NSLayoutAnchor {
   constraintLessThanOrEqualToAnchor_multiplier_constant(anchor: NSLayoutDimension, m: CGFloat, c: CGFloat): NSLayoutConstraint;
 }
 declare const NSLayoutDimension: {
-  alloc(): NSLayoutDimensionAllocator;
+  alloc(): NSLayoutDimensionUninitialized;
 }
 
 `,
@@ -397,7 +397,7 @@ declare const NSLayoutDimension: {
   'PDFFunctionOutput[kMaxComponents]': `declare type PDFFunctionOutput = CGFloat[]
 
 `,
-  MSMathInspectorValueAdaptor: `interface MSMathInspectorValueAdaptorAllocator<InitializedType =  MSMathInspectorValueAdaptor> extends MSInspectorValueAdaptorAllocator<MSMathInspectorValueAdaptor> {
+  MSMathInspectorValueAdaptor: `interface MSMathInspectorValueAdaptorUninitialized<InitializedType =  MSMathInspectorValueAdaptor> extends MSInspectorValueAdaptorUninitialized<MSMathInspectorValueAdaptor> {
   initWithModelsController_floatValueGetter_floatValueSetter_modelKeyPathsToWatch(modelsController: NSArrayController, floatValueGetter: Block, floatValueSetter: Block, modelKeyPathsToWatch: NSArray<any>): InitializedType;
 }
 interface MSMathInspectorValueAdaptor extends MSInspectorValueAdaptor {
@@ -420,7 +420,7 @@ interface MSMathInspectorValueAdaptor extends MSInspectorValueAdaptor {
   setIsIncrementing(isIncrementing: boolean): void;
 }
 declare const MSMathInspectorValueAdaptor: {
-  alloc(): MSMathInspectorValueAdaptorAllocator;
+  alloc(): MSMathInspectorValueAdaptorUninitialized;
 }
 
 `,
@@ -631,7 +631,7 @@ interface IECIODelegate {}
 interface ISCKDiff {}
 interface IMSLayer {}
 interface NSOpenGLLayer extends CALayer {}
-interface NSOpenGLLayerAllocator<InitializedType = NSOpenGLLayer> extends CALayerAllocator<NSOpenGLLayer> {}
+interface NSOpenGLLayerUninitialized<InitializedType = NSOpenGLLayer> extends CALayerUninitialized<NSOpenGLLayer> {}
 
 /****** AUTO GENERATED ********/
 
