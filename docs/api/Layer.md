@@ -1,7 +1,7 @@
 ---
 title: Layer
-order: 202
-section: components
+order: 301
+section: layers
 ---
 
 A Sketch layer. This is the base class for most of the Sketch components and defines methods to manipulate them..

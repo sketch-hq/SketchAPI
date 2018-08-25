@@ -1,7 +1,7 @@
 ---
 title: Document
 order: 201
-section: components
+section: models
 ---
 
 ```javascript
@@ -134,6 +134,62 @@ A method to help find the layers in this document which have the given name.
 ### Returns
 
 Return an array of [Layer](#layer).
+
+## Get all the Shared Layer Styles
+
+```javascript
+var symbols = document.getSharedLayerStyles()
+```
+
+A method to get all shared layer styles defined in the document.
+
+### Returns
+
+Return an array of the layer [SharedStyle](#sharedstyle) objects defined in the document.
+
+## Find a Shared Layer Style
+
+```javascript
+var sharedStyle = document.getSharedLayerStyleWithID(sharedStyleId)
+```
+
+A method to help find a shared style in the document.
+
+| Parameters                                                   |                                    |
+| ------------------------------------------------------------ | ---------------------------------- |
+| sharedStyleId<span class="arg-type">string - required</span> | The ID of the shared style to find |
+
+### Returns
+
+Return a [SharedStyle](#sharedstyle) object or `undefined` if it's not found.
+
+## Get all the Shared Text Styles
+
+```javascript
+var symbols = document.getSharedTextStyles()
+```
+
+A method to get all shared text styles defined in the document.
+
+### Returns
+
+Return an array of the text [SharedStyle](#sharedstyle) objects defined in the document.
+
+## Find a Shared Text Style
+
+```javascript
+var sharedStyle = document.getSharedTextStyleWithID(sharedStyleId)
+```
+
+A method to help find a shared style in the document.
+
+| Parameters                                                   |                                    |
+| ------------------------------------------------------------ | ---------------------------------- |
+| sharedStyleId<span class="arg-type">string - required</span> | The ID of the shared style to find |
+
+### Returns
+
+Return a [SharedStyle](#sharedstyle) object or `undefined` if it's not found.
 
 ## Get all the Symbol Masters
 

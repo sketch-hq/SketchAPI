@@ -1,7 +1,7 @@
 ---
 title: Symbol Override
-order: 211
-section: components
+order: 206
+section: models
 ---
 
 ```javascript

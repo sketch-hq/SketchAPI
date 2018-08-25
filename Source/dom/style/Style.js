@@ -1,5 +1,7 @@
 import { WrappedObject, DefinedPropertiesKey } from '../WrappedObject'
+import { Factory } from '../Factory'
 import { toArray } from '../utils'
+import { wrapObject } from '../wrapNativeObject'
 import { Types } from '../enums'
 import { GradientType } from './Gradient'
 import { colorFromString, colorToString } from './Color'
@@ -8,6 +10,7 @@ import { BorderOptions, Arrowhead, LineEnd, LineJoin } from './BorderOptions'
 import { Blur, BlurType } from './Blur'
 import { Fill, FillType } from './Fill'
 import { Border, BorderPosition } from './Border'
+import { SharedStyleType } from '../models/SharedStyle'
 
 const BlendingModeMap = {
   Normal: 0,
@@ -81,10 +84,26 @@ export class Style extends WrappedObject {
   static colorToString(value) {
     return colorToString(value)
   }
+
+  isOutOfSyncWithSharedStyle() {
+    const { sharedStyle, _object } = this
+    if (sharedStyle) {
+      return !!sharedStyle.sketchObject.isOutOfSyncWithInstance(_object)
+    }
+    return false
+  }
+
+  syncWithSharedStyle() {
+    const { sharedStyle, _object } = this
+    if (sharedStyle) {
+      _object.syncWithTemplateInstance(sharedStyle.style.sketchObject)
+    }
+  }
 }
 
 Style.type = Types.Style
 Style[DefinedPropertiesKey] = { ...WrappedObject[DefinedPropertiesKey] }
+Factory.registerClass(Style, MSStyle)
 
 Style.GradientType = GradientType
 
@@ -179,5 +198,65 @@ Style.define('innerShadows', {
   set(values) {
     const objects = values.map(Shadow.toNative.bind(Shadow, MSStyleInnerShadow))
     this._object.setInnerShadows(objects)
+  },
+})
+
+Style.define('sharedStyleId', {
+  get() {
+    if (this._object.sharedObjectID()) {
+      return String(this._object.sharedObjectID())
+    }
+    return null
+  },
+  set(newId) {
+    const document = wrapObject(this._object.documentData())
+    const type = this._object.hasTextStyle()
+      ? SharedStyleType.Text
+      : SharedStyleType.Layer
+
+    const currentSharedId = this._object.sharedObjectID()
+    if (currentSharedId) {
+      const currentSharedObject = document._getSharedStyleWithIdAndType(
+        currentSharedId,
+        type
+      )
+      if (currentSharedObject) {
+        currentSharedObject.sketchObject.unregisterInstance(this._object)
+      }
+    }
+
+    if (!newId) {
+      return
+    }
+
+    const sharedStyle = document._getSharedStyleWithIdAndType(newId, type)
+    if (!sharedStyle) {
+      throw new Error('Seems like this shared style does not exists')
+    }
+    this._object.setSharedObjectID(newId)
+  },
+})
+
+Style.define('sharedStyle', {
+  exportable: false,
+  enumerable: false,
+  get() {
+    const { sharedStyleId } = this
+    if (!sharedStyleId) {
+      return null
+    }
+    const document = wrapObject(this._object.documentData())
+    return document._getSharedStyleWithIdAndType(
+      sharedStyleId,
+      this._object.hasTextStyle() ? SharedStyleType.Text : SharedStyleType.Layer
+    )
+  },
+  set(sharedStyle) {
+    if (!sharedStyle) {
+      this.sharedStyleId = undefined
+    } else {
+      const wrappedMaster = wrapObject(sharedStyle)
+      this.sharedStyleId = wrappedMaster.id
+    }
   },
 })

@@ -1,7 +1,7 @@
 ---
 title: Rectangle
-order: 403
-section: Utils
+order: 210
+section: models
 ---
 
 ```javascript

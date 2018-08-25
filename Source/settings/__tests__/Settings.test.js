@@ -1,6 +1,6 @@
 /* globals expect, test */
 import { isRunningOnJenkins } from '../../test-utils'
-import { Text } from '../../dom/components/Text'
+import { Text } from '../../dom/layers/Text'
 import {
   settingForKey,
   setSettingForKey,

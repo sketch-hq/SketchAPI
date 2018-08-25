@@ -22,4 +22,5 @@ export const Types = {
   Flow: 'Flow',
   HotSpot: 'HotSpot',
   ImportableObject: 'ImportableObject',
+  SharedStyle: 'SharedStyle',
 }

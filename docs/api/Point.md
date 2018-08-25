@@ -1,7 +1,7 @@
 ---
 title: Point
-order: 404
-section: Utils
+order: 209
+section: models
 ---
 
 A utility class to represent a point.

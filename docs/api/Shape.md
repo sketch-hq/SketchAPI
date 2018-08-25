@@ -1,7 +1,7 @@
 ---
 title: Shape
-order: 207
-section: components
+order: 305
+section: layers
 ---
 
 ```javascript
