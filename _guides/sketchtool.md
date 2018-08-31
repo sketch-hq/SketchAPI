@@ -5,11 +5,11 @@ summary: Information about SketchTool
 order: 600
 ---
 
-SketchTool is a command line utility that's bundled with Sketch, that allows you to perform some operations with Sketch documents, like inspecting them or exporting assets. It also lets you control Sketch from the command line to perform some actions.
+SketchTool is a command line utility that’s bundled with Sketch, that allows you to perform some operations with Sketch documents, like inspecting them or exporting assets. It also lets you control Sketch from the command line to perform some actions (like running plugins, for example).
 
-## Installation
+## Using SketchTool
 
-SketchTool comes **bundled with Sketch** (and Sketch Beta). You can find it in `Sketch.app/Contents/Resources/sketchtool/bin/sketchtool`.
+SketchTool comes **bundled with Sketch** (and Sketch Beta). You can find it in `Sketch.app/Contents/Resources/sketchtool/bin/sketchtool` (to find the path to Sketch in a reliable way in your scripts, you can use the following command: `mdfind kMDItemCFBundleIdentifier == 'com.bohemiancoding.sketch3' | head -n 1`).
 
 It is recommended that you use it from inside Sketch, and not copy it to another location, so that you're always using the latest version (SketchTool is updated whenever Sketch is updated, and you'll need to use the updated version to read documents saved with the latest version of Sketch).
 
@@ -17,7 +17,7 @@ Note: SketchTool requires OSX 10.11 or higher.
 
 ### Important
 
-SketchTool is free to use, but it comes with absolutely no warranty. That being said, if you find any bugs or have any feature request, please send us an email and we'll do our best to improve it.
+SketchTool is free to use, but it comes with absolutely no warranty. That being said, if you find any bugs or have any feature request, please [send us an email](mailto:mail@sketchapp.com) and we'll do our best to improve it.
 
 SketchTool can only export a document if all the fonts that it uses have been installed on the system.
 
