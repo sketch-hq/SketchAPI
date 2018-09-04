@@ -23,4 +23,5 @@ export const Types = {
   HotSpot: 'HotSpot',
   ImportableObject: 'ImportableObject',
   SharedStyle: 'SharedStyle',
+  DataOverride: 'DataOverride',
 }
