@@ -5,7 +5,11 @@
     "[Fixed] Adding a remote library for the first time will now return the library instead of an error",
     "[Fixed] Adding a remote library will also download it right away",
     "[Fixed] Printing a missing Library",
-    "[New] Add support for SharedStyle"
+    "[New] Data Plugin!",
+    "[New] Add support for SharedStyle",
+    "[New] Add support for Immutable native model objects",
+    "[New] Add `affectedLayer` for Override",
+    "[Improved] Allow storing a setting on an Override or DataOverride"
   ],
   "releases": {
     "51": [
