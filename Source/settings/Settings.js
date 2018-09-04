@@ -84,10 +84,24 @@ export function setSettingForKey(key, value) {
   }
 }
 
+function getNativeStorageObject(layer) {
+  let object
+  if (!isWrappedObject(layer)) {
+    object = layer
+  } else if (layer.type === 'DataOverride') {
+    object = layer.sketchObject.availableOverride().overrideValue()
+  } else if (layer.type === 'Override') {
+    object = layer.sketchObject.overrideValue()
+  } else {
+    object = layer.sketchObject
+  }
+  return object
+}
+
 export function layerSettingForKey(layer, key) {
   const value = __command.valueForKey_onLayer(
     key,
-    isWrappedObject(layer) ? layer.sketchObject : layer
+    getNativeStorageObject(layer)
   )
 
   if (typeof value === 'undefined' || value == 'undefined' || value === null) {
@@ -100,7 +114,7 @@ export function setLayerSettingForKey(layer, key, value) {
   __command.setValue_forKey_onLayer(
     JSON.stringify(value),
     key,
-    isWrappedObject(layer) ? layer.sketchObject : layer
+    getNativeStorageObject(layer)
   )
 }
 
