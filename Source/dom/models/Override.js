@@ -2,6 +2,7 @@ import { DefinedPropertiesKey, WrappedObject } from '../WrappedObject'
 import { Types } from '../enums'
 import { Factory } from '../Factory'
 import { ImageData } from './ImageData'
+import { wrapNativeObject } from '../wrapNativeObject'
 
 /**
  * An MSAvailableOverride. This is not exposed, only used by SymbolInstance
@@ -21,6 +22,12 @@ Override.define('path', {
 Override.define('property', {
   get() {
     return String(this._object.overridePoint().property())
+  },
+})
+
+Override.define('affectedLayer', {
+  get() {
+    return wrapNativeObject(this._object.affectedLayer())
   },
 })
 
