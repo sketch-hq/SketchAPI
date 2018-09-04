@@ -91,6 +91,10 @@ export class WrappedObject {
     return json
   }
 
+  isImmutable() {
+    return /Immutable/.test(String(this.sketchObject.className()))
+  }
+
   /**
    * Because the API objects are thin wrappers, they are created on demand and are
    * thrown away regularly.
