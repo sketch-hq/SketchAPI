@@ -54,5 +54,10 @@ test('should have overrides', (context, document) => {
     symbolOverride: false,
     value: 'Test value',
     isDefault: true,
+    affectedLayer: {
+      ...text.toJSON(),
+      selected: undefined,
+      style: instance.overrides[0].affectedLayer.style.toJSON(),
+    },
   })
 })

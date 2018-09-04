@@ -77,6 +77,12 @@ test(
       symbolOverride: true,
       value: nestedInstance.symbolId,
       isDefault: true,
+      affectedLayer: {
+        ...nestedInstance.toJSON(),
+        overrides: undefined,
+        selected: undefined,
+        style: instance.overrides[0].affectedLayer.style.toJSON(),
+      },
     })
     expect(instance.overrides[1].toJSON()).toEqual({
       type: 'Override',
@@ -86,6 +92,11 @@ test(
       symbolOverride: false,
       value: 'Test value 2',
       isDefault: true,
+      affectedLayer: {
+        ...text2.toJSON(),
+        selected: undefined,
+        style: instance.overrides[1].affectedLayer.style.toJSON(),
+      },
     })
     expect(instance.overrides[2].toJSON()).toEqual({
       type: 'Override',
@@ -95,6 +106,11 @@ test(
       symbolOverride: false,
       value: 'Test value',
       isDefault: true,
+      affectedLayer: {
+        ...text.toJSON(),
+        selected: undefined,
+        style: instance.overrides[2].affectedLayer.style.toJSON(),
+      },
     })
   }
 )

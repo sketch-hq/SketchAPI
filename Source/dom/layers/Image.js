@@ -32,12 +32,16 @@ export class Image extends StyledLayer {
 Image.type = Types.Image
 Image[DefinedPropertiesKey] = { ...StyledLayer[DefinedPropertiesKey] }
 Factory.registerClass(Image, MSBitmapLayer)
+Factory.registerClass(Image, MSImmutableBitmapLayer)
 
 Image.define('image', {
   get() {
     return wrapObject(this._object.image())
   },
   set(image) {
+    if (this.isImmutable()) {
+      return
+    }
     const imageData = ImageData.from(image)
     this._object.setImage(imageData.sketchObject)
   },

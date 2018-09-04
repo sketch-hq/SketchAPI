@@ -1,4 +1,5 @@
 import { WrappedObject, DefinedPropertiesKey } from '../WrappedObject'
+import { Factory } from '../Factory'
 import { Rectangle } from '../models/Rectangle'
 import { wrapObject, wrapNativeObject } from '../wrapNativeObject'
 import { Flow } from '../models/Flow'
@@ -24,6 +25,9 @@ export class Layer extends WrappedObject {
    * Remove this layer from its parent.
    */
   remove() {
+    if (this.isImmutable()) {
+      return this
+    }
     const parent = this._object.parentGroup()
     if (parent) {
       parent.removeLayer(this._object)
@@ -35,6 +39,9 @@ export class Layer extends WrappedObject {
    * Move this layer to the front of its container.
    */
   moveToFront() {
+    if (this.isImmutable()) {
+      return this
+    }
     MSLayerMovement.moveToFront([this._object])
     return this
   }
@@ -43,6 +50,9 @@ export class Layer extends WrappedObject {
    * Move this layer forward in its container.
    */
   moveForward() {
+    if (this.isImmutable()) {
+      return this
+    }
     MSLayerMovement.moveForward([this._object])
     return this
   }
@@ -51,6 +61,9 @@ export class Layer extends WrappedObject {
    * Move this layer to the back of its container.
    */
   moveToBack() {
+    if (this.isImmutable()) {
+      return this
+    }
     MSLayerMovement.moveToBack([this._object])
     return this
   }
@@ -59,6 +72,9 @@ export class Layer extends WrappedObject {
    * Move this layer backwards in its container.
    */
   moveBackward() {
+    if (this.isImmutable()) {
+      return this
+    }
     MSLayerMovement.moveBackward([this._object])
     return this
   }
@@ -86,6 +102,8 @@ export class Layer extends WrappedObject {
 }
 
 Layer[DefinedPropertiesKey] = { ...WrappedObject[DefinedPropertiesKey] }
+Factory.registerClass(Layer, MSLayer)
+Factory.registerClass(Layer, MSImmutableLayer)
 
 Layer.define('index', {
   exportable: false,
@@ -113,6 +131,9 @@ Layer.define('parent', {
     return wrapNativeObject(this._object.parentGroup())
   },
   set(layer) {
+    if (this.isImmutable()) {
+      return
+    }
     if (this._object.parentGroup()) {
       this._object.removeFromParent()
     }
@@ -156,6 +177,9 @@ Layer.define('frame', {
    * @param {Rectangle} frame - The new frame of the layer.
    */
   set(value) {
+    if (this.isImmutable()) {
+      return
+    }
     const f = this._object.frame()
     f.setRect(NSMakeRect(value.x, value.y, value.width, value.height))
   },
@@ -177,6 +201,9 @@ Layer.define('name', {
    * @param {string} name The new name.
    */
   set(value) {
+    if (this.isImmutable()) {
+      return
+    }
     this._object.setName(value)
   },
 })
@@ -188,10 +215,14 @@ Layer.define('selected', {
    * @return {Boolean} selected.
    */
   get() {
-    return !!this._object.isSelected()
+    // undefined when immutable
+    return this._object.isSelected && !!this._object.isSelected()
   },
 
   set(value) {
+    if (this.isImmutable()) {
+      return
+    }
     if (value) {
       this._object.select_byExtendingSelection(true, true)
     } else {
@@ -205,6 +236,9 @@ Layer.define('flow', {
     return wrapObject(this._object.flow())
   },
   set(_flow) {
+    if (this.isImmutable()) {
+      return
+    }
     const flow = Flow.from(_flow)
     this._object.flow = flow.sketchObject
   },
@@ -215,6 +249,9 @@ Layer.define('hidden', {
     return !this._object.isVisible()
   },
   set(hidden) {
+    if (this.isImmutable()) {
+      return
+    }
     this._object.setIsVisible(!hidden)
   },
 })
@@ -224,6 +261,9 @@ Layer.define('locked', {
     return !!this._object.isLocked()
   },
   set(locked) {
+    if (this.isImmutable()) {
+      return
+    }
     this._object.setIsLocked(locked)
   },
 })

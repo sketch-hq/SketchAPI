@@ -40,6 +40,9 @@ export class Page extends Group {
   }
 
   remove() {
+    if (this.isImmutable()) {
+      return this
+    }
     this._object
       .documentData()
       .removePages_detachInstances([this._object], true)
@@ -70,6 +73,7 @@ export class Page extends Group {
 Page.type = Types.Page
 Page[DefinedPropertiesKey] = { ...Group[DefinedPropertiesKey] }
 Factory.registerClass(Page, MSPage)
+Factory.registerClass(Page, MSImmutablePage)
 
 // override setting up a flow which doesn't make sense for a Page
 delete Page[DefinedPropertiesKey].flow
@@ -85,6 +89,9 @@ Page.define('parent', {
     return wrapNativeObject(this._object.documentData())
   },
   set(document) {
+    if (this.isImmutable()) {
+      return
+    }
     document = wrapObject(document) // eslint-disable-line
 
     if (this._object.documentData()) {
@@ -115,6 +122,9 @@ Page.define('selected', {
   },
 
   set(value) {
+    if (this.isImmutable()) {
+      return
+    }
     if (value) {
       this._object.documentData().setCurrentPage(this._object)
     } else {

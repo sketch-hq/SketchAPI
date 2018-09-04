@@ -66,6 +66,9 @@ export class Text extends StyledLayer {
    * @param {NSFont} value The font to use.
    */
   set font(value) {
+    if (this.isImmutable()) {
+      return
+    }
     this._object.font = value
   }
 
@@ -75,6 +78,9 @@ export class Text extends StyledLayer {
    * @param {number} size The system font size to use.
    */
   set systemFontSize(size) {
+    if (this.isImmutable()) {
+      return
+    }
     this._object.setFont(NSFont.systemFontOfSize_(size))
   }
 
@@ -82,6 +88,9 @@ export class Text extends StyledLayer {
    * Adjust the frame of the layer to fit its contents.
    */
   adjustToFit() {
+    if (this.isImmutable()) {
+      return this
+    }
     this._object.adjustFrameToFit()
     return this
   }
@@ -93,7 +102,9 @@ export class Text extends StyledLayer {
    */
   get fragments() {
     const textLayer = this._object
-    const storage = textLayer.immutableModelObject().createTextStorage()
+    const storage = this.isImmutable()
+      ? textLayer.createTextStorage()
+      : textLayer.immutableModelObject().createTextStorage()
     const layout = storage.layoutManagers().firstObject()
     const glyphRangeStorage = NSMakeRange(0, 0)
     const actualCharacterRangePtr = MOPointer.new(glyphRangeStorage)
@@ -141,6 +152,7 @@ export class Text extends StyledLayer {
 Text.type = Types.Text
 Text[DefinedPropertiesKey] = { ...StyledLayer[DefinedPropertiesKey] }
 Factory.registerClass(Text, MSTextLayer)
+Factory.registerClass(Text, MSImmutableTextLayer)
 
 Text.define('text', {
   get() {
@@ -154,6 +166,9 @@ Text.define('text', {
    * @param {string} value The text to use.
    */
   set(value) {
+    if (this.isImmutable()) {
+      return
+    }
     const object = this._object
     object.stringValue = value
     if (!object.nameIsFixed()) {
@@ -188,6 +203,9 @@ Text.define('alignment', {
    * @param {string} mode The alignment mode to use.
    */
   set(mode) {
+    if (this.isImmutable()) {
+      return
+    }
     const translated = TextAlignmentMap[mode]
     this._object.textAlignment =
       typeof translated !== 'undefined' ? translated : mode
@@ -205,6 +223,9 @@ Text.define('lineSpacing', {
     )
   },
   set(mode) {
+    if (this.isImmutable()) {
+      return
+    }
     const translated = TextLineSpacingBehaviourMap[mode]
     const lineSpacingBehaviour =
       typeof translated !== 'undefined' ? translated : mode
@@ -225,6 +246,9 @@ Text.define('fixedWidth', {
     return this._object.textBehaviour() === TextBehaviour.fixedWidth
   },
   set(fixed) {
+    if (this.isImmutable()) {
+      return
+    }
     if (fixed) {
       this._object.textBehaviour = TextBehaviour.fixedWidth
     } else {
