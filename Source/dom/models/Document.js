@@ -192,9 +192,7 @@ export class Document extends WrappedObject {
       dialog.allowsMultipleSelection = false
       const buttonClicked = dialog.runModal()
       if (buttonClicked != NSOKButton) {
-        if (callback) {
-          callback(null, undefined)
-        }
+        if (callback) callback(null, undefined)
         return undefined
       }
 
@@ -207,10 +205,12 @@ export class Document extends WrappedObject {
         coscript,
         (_document, documentWasAlreadyOpen, err) => {
           try {
-            if (err && !err.isEqual(NSNull.null())) {
-              callback(new Error(err.description()))
-            } else {
-              callback(null, Document.fromNative(_document))
+            if (callback) {
+              if (err && !err.isEqual(NSNull.null())) {
+                callback(new Error(err.description()))
+              } else {
+                callback(null, Document.fromNative(_document))
+              }
             }
             fiber.cleanup()
           } catch (error) {
@@ -231,9 +231,7 @@ export class Document extends WrappedObject {
 
     if (app.documentForURL(url)) {
       document = Document.fromNative(app.documentForURL(url))
-      if (callback) {
-        callback(null, document)
-      }
+      if (callback) callback(null, document)
       return document
     }
 
@@ -247,9 +245,7 @@ export class Document extends WrappedObject {
 
     document = Document.fromNative(document)
 
-    if (callback) {
-      callback(null, document)
-    }
+    if (callback) callback(null, document)
     return document
   }
 
@@ -267,15 +263,15 @@ export class Document extends WrappedObject {
     const msdocument = this._getMSDocument()
     const saveMethod = 'saveToURL_ofType_forSaveOperation_completionHandler'
     if (!msdocument || !msdocument[saveMethod]) {
-      callback(new Error('Cannot save this document'), this)
+      if (callback) callback(new Error('Cannot save this document'), this)
       return
     }
     if (!path && !this._tempURL) {
       try {
         msdocument.saveDocument(null)
-        callback(null, this)
+        if (callback) callback(null, this)
       } catch (err) {
-        callback(err, this)
+        if (callback) callback(err, this)
       }
       return
     }
@@ -291,10 +287,12 @@ export class Document extends WrappedObject {
       coscript,
       err => {
         try {
-          if (err && !err.isEqual(NSNull.null())) {
-            callback(new Error(err.description()), that)
-          } else {
-            callback(null, that)
+          if (callback) {
+            if (err && !err.isEqual(NSNull.null())) {
+              callback(new Error(err.description()), that)
+            } else {
+              callback(null, that)
+            }
           }
           fiber.cleanup()
         } catch (error) {
