@@ -48,6 +48,11 @@ test('should be able to set overrides', (context, document) => {
     symbolOverride: false,
     value: 'overridden',
     isDefault: false,
+    affectedLayer: {
+      ...text.toJSON(),
+      selected: undefined,
+      style: instance.overrides[0].affectedLayer.style.toJSON(),
+    },
   })
 })
 
@@ -82,6 +87,12 @@ test('should change a nested symbol', (context, document) => {
     id: `${nestedInstance.id}_symbolID`,
     path: nestedInstance.id,
     property: 'symbolID',
+    affectedLayer: {
+      ...nestedInstance.toJSON(),
+      overrides: undefined,
+      selected: undefined,
+      style: instance.overrides[0].affectedLayer.style.toJSON(),
+    },
     symbolOverride: true,
     value: nestedMaster2.symbolId,
     isDefault: false,

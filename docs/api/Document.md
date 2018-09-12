@@ -250,7 +250,7 @@ A method to save a document to a specific path or ask the user to choose where t
 | Parameters                                                          |                                                                                                                      |
 | ------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- |
 | path<span class="arg-type">string</span>                            | The path where the document will be saved. If `undefined`, the user will be asked to select one.                     |
-| options<span class="arg-type">object</span>                         | The options for the save operation (only used when specifing a path).                                                |
+| options<span class="arg-type">object</span>                         | The options for the save operation (only used when specifying a path).                                               |
 | options.saveMode<span class="arg-type">[SaveMode](#savemode)</span> | The way to save the document.                                                                                        |
 | callback<span class="arg-type">function</span>                      | A function called after the document is saved. It is called with an `Error` if saving the Document was unsuccessful. |
 

@@ -5,6 +5,7 @@ import { Library } from './models/Library'
 import { SharedStyle } from './models/SharedStyle'
 import { Rectangle } from './models/Rectangle'
 import { AnimationType, BackTarget } from './models/Flow'
+import './models/DataOverride'
 
 import { Style } from './style/Style'
 

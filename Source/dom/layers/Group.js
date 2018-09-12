@@ -42,6 +42,9 @@ export class Group extends StyledLayer {
    * Adjust the group to fit its children.
    */
   adjustToFit() {
+    if (this.isImmutable()) {
+      return this
+    }
     this._object.resizeToFitChildrenWithOption_(0)
     return this
   }
@@ -50,12 +53,16 @@ export class Group extends StyledLayer {
 Group.type = Types.Group
 Group[DefinedPropertiesKey] = { ...StyledLayer[DefinedPropertiesKey] }
 Factory.registerClass(Group, MSLayerGroup)
+Factory.registerClass(Group, MSImmutableLayerGroup)
 
 Group.define('layers', {
   get() {
     return toArray(this._object.layers()).map(wrapNativeObject)
   },
   set(layers) {
+    if (this.isImmutable()) {
+      return
+    }
     // remove the existing layers
     toArray(this._object.layers()).forEach(l => l.removeFromParent())
 

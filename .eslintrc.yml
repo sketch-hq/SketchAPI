@@ -84,6 +84,20 @@ globals:
   MSForeignObjectProvider: false
   MSSharedStyle: false
   MSStyle: false
+  MSDataOverride: false
+  MSImmutableArtboardGroup: false
+  MSImmutableLayerGroup: false
+  MSImmutableHotspotLayer: false
+  MSImmutableBitmapLayer: false
+  MSImmutableLayer: false
+  MSImmutablePage: false
+  MSImmutableShapeGroup: false
+  MSStyledLayer: false
+  MSImmutableStyledLayer: false
+  MSImmutableSymbolInstance: false
+  MSImmutableSymbolMaster: false
+  MSImmutableTextLayer: false
+  MSImmutableDocumentData: false
 
 rules:
   ###########

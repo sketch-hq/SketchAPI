@@ -62,7 +62,11 @@ export class Document extends WrappedObject {
   _getMSDocumentData() {
     const msdocument = this._object
 
-    if (msdocument && String(msdocument.class()) === 'MSDocumentData') {
+    if (
+      msdocument &&
+      (String(msdocument.class()) === 'MSDocumentData' ||
+        String(msdocument.class()) === 'MSImmutableDocumentData')
+    ) {
       return msdocument
     }
 
@@ -170,6 +174,9 @@ export class Document extends WrappedObject {
    * @param {Layer} layer The layer to center on.
    */
   centerOnLayer(layer) {
+    if (this.isImmutable()) {
+      return
+    }
     const wrappedLayer = wrapObject(layer)
     this._object.contentDrawView().centerRect_(wrappedLayer.sketchObject.rect())
   }
@@ -319,6 +326,7 @@ Document[DefinedPropertiesKey] = {
   ...WrappedObject[DefinedPropertiesKey],
 }
 Factory.registerClass(Document, MSDocumentData)
+Factory.registerClass(Document, MSImmutableDocumentData)
 
 // also register MSDocument if it exists
 if (typeof MSDocument !== 'undefined') {
@@ -351,6 +359,9 @@ Document.define('pages', {
     return pages.map(page => Page.fromNative(page))
   },
   set(pages) {
+    if (this.isImmutable()) {
+      return
+    }
     // remove the existing pages
     this._object.removePages_detachInstances(this._object.pages(), true)
 
@@ -401,6 +412,9 @@ Document.define('path', {
   },
 
   set(path) {
+    if (this.isImmutable()) {
+      return
+    }
     const url = getURLFromPath(path)
     Object.defineProperty(this, '_tempURL', {
       enumerable: false,

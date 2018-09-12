@@ -41,3 +41,4 @@ export class Shape extends StyledLayer {
 Shape.type = Types.Shape
 Shape[DefinedPropertiesKey] = { ...StyledLayer[DefinedPropertiesKey] }
 Factory.registerClass(Shape, MSShapeGroup)
+Factory.registerClass(Shape, MSImmutableShapeGroup)

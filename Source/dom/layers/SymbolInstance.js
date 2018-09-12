@@ -27,6 +27,9 @@ export class SymbolInstance extends StyledLayer {
 
   // Replaces the instance with a group that contains a copy of the Symbol this instance refers to. Returns null if the master contains no layers instead of inserting an empty group
   detach() {
+    if (this.isImmutable()) {
+      return null
+    }
     const group = this._object.detachByReplacingWithGroup()
 
     if (group) {
@@ -37,6 +40,9 @@ export class SymbolInstance extends StyledLayer {
   }
 
   setOverrideValue(override, value) {
+    if (this.isImmutable()) {
+      return this
+    }
     const wrappedOverride = wrapObject(override)
     const overridePoint = wrappedOverride.sketchObject.overridePoint()
     if (wrappedOverride.property === 'image') {
@@ -58,6 +64,7 @@ SymbolInstance[DefinedPropertiesKey] = {
   ...StyledLayer[DefinedPropertiesKey],
 }
 Factory.registerClass(SymbolInstance, MSSymbolInstance)
+Factory.registerClass(SymbolInstance, MSImmutableSymbolInstance)
 
 SymbolInstance.define('symbolId', {
   depends: 'parent',
@@ -65,6 +72,9 @@ SymbolInstance.define('symbolId', {
     return String(this._object.symbolID())
   },
   set(id) {
+    if (this.isImmutable()) {
+      return
+    }
     // we need to find the symbol master and change the master,
     // it's not enough to just call `this._object.setSymbolID`
     const parentPage = this._object.parentPage()
@@ -90,6 +100,9 @@ SymbolInstance.define('master', {
     return null // this is a bit weird, if the instance is not inserted in the document, symbolMaster will be null
   },
   set(master) {
+    if (this.isImmutable()) {
+      return
+    }
     const wrappedMaster = wrapObject(master)
     this._object.changeInstanceToSymbol(wrappedMaster.sketchObject)
   },
@@ -97,6 +110,10 @@ SymbolInstance.define('master', {
 
 SymbolInstance.define('overrides', {
   get() {
+    // undefined when immutable
+    if (!this._object.availableOverrides) {
+      return undefined
+    }
     const overrides = toArray(this._object.availableOverrides())
 
     // recursively find the overrides

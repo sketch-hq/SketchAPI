@@ -44,3 +44,4 @@ export class HotSpot extends Layer {
 HotSpot.type = Types.HotSpot
 HotSpot[DefinedPropertiesKey] = { ...Layer[DefinedPropertiesKey] }
 Factory.registerClass(HotSpot, MSHotspotLayer)
+Factory.registerClass(HotSpot, MSImmutableHotspotLayer)

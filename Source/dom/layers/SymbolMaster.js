@@ -59,6 +59,9 @@ export class SymbolMaster extends Artboard {
   }
 
   syncWithLibrary() {
+    if (this.isImmutable()) {
+      return false
+    }
     const libraryController = AppController.sharedInstance().librariesController()
     const lib = libraryController.libraryForShareableObject(this._object)
     if (!lib) {
@@ -77,6 +80,9 @@ export class SymbolMaster extends Artboard {
   }
 
   unlinkFromLibrary() {
+    if (this.isImmutable()) {
+      return false
+    }
     const libraryController = AppController.sharedInstance().librariesController()
     const lib = libraryController.libraryForShareableObject(this._object)
     if (!lib) {
@@ -94,6 +100,7 @@ export class SymbolMaster extends Artboard {
 SymbolMaster.type = Types.SymbolMaster
 SymbolMaster[DefinedPropertiesKey] = { ...Artboard[DefinedPropertiesKey] }
 Factory.registerClass(SymbolMaster, MSSymbolMaster)
+Factory.registerClass(SymbolMaster, MSImmutableSymbolMaster)
 
 SymbolMaster.define('symbolId', {
   get() {

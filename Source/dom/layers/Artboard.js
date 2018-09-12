@@ -38,6 +38,7 @@ export class Artboard extends Group {
 Artboard.type = Types.Artboard
 Artboard[DefinedPropertiesKey] = { ...Group[DefinedPropertiesKey] }
 Factory.registerClass(Artboard, MSArtboardGroup)
+Factory.registerClass(Artboard, MSImmutableArtboardGroup)
 
 delete Artboard[DefinedPropertiesKey].flow
 delete Artboard[DefinedPropertiesKey].style
@@ -49,6 +50,9 @@ Artboard.define('flowStartPoint', {
     return !!this._object.isFlowHome()
   },
   set(isFlowStartHome) {
+    if (this.isImmutable()) {
+      return
+    }
     this._object.isFlowHome = isFlowStartHome
   },
 })
