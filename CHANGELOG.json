@@ -1,5 +1,6 @@
 {
   "unreleased": [
+    "[Improved] Make sure Document.save will not overwrite a folder by mistake",
     "[Fixed] Using 0 as a shadow's value shouldn't fall back to the default",
     "[Fixed] Logging an NSArray would print an array of `undefined` instead of the proper items",
     "[Fixed] Adding a remote library for the first time will now return the library instead of an error",

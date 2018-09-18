@@ -282,9 +282,21 @@ export class Document extends WrappedObject {
       }
       return
     }
-    const fiber = coscript.createFiber()
+
     const url = getURLFromPath(path) || this._tempURL
-    const { saveMode } = options || {}
+    const { saveMode, iKnowThatImOverwritingAFolder } = options || {}
+
+    if (
+      (!url.pathExtension() || !String(url.pathExtension())) &&
+      !iKnowThatImOverwritingAFolder
+    ) {
+      throw new Error(
+        'Attempting to overwrite a folder! If you really mean to do that, set the `iKnowThatImOverwritingAFolder` option to `true`'
+      )
+    }
+
+    const fiber = coscript.createFiber()
+
     const nativeSaveMode =
       SaveModeType[saveMode] || saveMode || NSSaveAsOperation
     const that = this
