@@ -4,6 +4,15 @@
 const normalConfig = require('./webpack.config').config
 
 module.exports = config => {
+  config.externals = normalConfig.externals.concat(
+    (context, request, callback) => {
+      // sketch API
+      if (/^sketch\//.test(request) || request === 'sketch') {
+        return callback(null, `commonjs ${request}`)
+      }
+      return callback()
+    }
+  )
   config.resolve = normalConfig.resolve
   config.module = normalConfig.module
   config.module.rules[0].use[0].options.silent = true

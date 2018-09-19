@@ -26,7 +26,7 @@ const ENTRIES = [
 
 const CORE_MODULES = Object.keys(
   require('./core-modules/package.json').dependencies
-).map(k => k.replace('skpm/', ''))
+).map(k => k.replace('@skpm/', ''))
 
 const config = {
   resolve: {
