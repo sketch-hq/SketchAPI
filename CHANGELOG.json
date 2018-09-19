@@ -10,7 +10,9 @@
     "[New] Add support for SharedStyle",
     "[New] Add support for Immutable native model objects",
     "[New] Add `affectedLayer` for Override",
-    "[Improved] Allow storing a setting on an Override or DataOverride"
+    "[Improved] Allow storing a setting on an Override or DataOverride",
+    "[Improved] Settings will now be serialized even if they are of native types",
+    "[New] Add basic support for Shape path"
   ],
   "releases": {
     "51": [

@@ -98,6 +98,17 @@ globals:
   MSImmutableSymbolMaster: false
   MSImmutableTextLayer: false
   MSImmutableDocumentData: false
+  MSShapePathLayer: false
+  MSOvalShape: false
+  MSPolygonShape: false
+  MSStarShape: false
+  MSTriangleShape: false
+  MSImmutableShapePathLayer: false
+  MSImmutableOvalShape: false
+  MSImmutablePolygonShape: false
+  MSImmutableStarShape: false
+  MSImmutableTriangleShape: false
+  MSImmutableRectangleShape: false
 
 rules:
   ###########

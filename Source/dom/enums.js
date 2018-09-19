@@ -24,4 +24,5 @@ export const Types = {
   ImportableObject: 'ImportableObject',
   SharedStyle: 'SharedStyle',
   DataOverride: 'DataOverride',
+  ShapePath: 'ShapePath',
 }
