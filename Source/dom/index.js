@@ -13,6 +13,7 @@ import { Group } from './layers/Group'
 import { Text } from './layers/Text'
 import { Image } from './layers/Image'
 import { Shape } from './layers/Shape'
+import { ShapePath } from './layers/ShapePath'
 import { Artboard } from './layers/Artboard'
 import { Page } from './layers/Page'
 import { SymbolMaster } from './layers/SymbolMaster'
@@ -29,6 +30,7 @@ api.Group = Group
 api.Text = Text
 api.Image = Image
 api.Shape = Shape
+api.ShapePath = ShapePath
 api.Artboard = Artboard
 api.Page = Page
 api.SharedStyle = SharedStyle
