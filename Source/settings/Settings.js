@@ -1,3 +1,4 @@
+import util from 'util'
 import { isWrappedObject, getDocumentData } from '../dom/utils'
 
 function getPluginIdentifier() {
@@ -38,7 +39,7 @@ export function globalSettingForKey(key) {
  */
 export function setGlobalSettingForKey(key, value) {
   const store = NSUserDefaults.standardUserDefaults()
-  const stringifiedValue = JSON.stringify(value)
+  const stringifiedValue = JSON.stringify(value, (k, v) => util.toJSObject(v))
   if (!stringifiedValue) {
     store.removeObjectForKey(key)
   } else {
@@ -76,7 +77,7 @@ export function setSettingForKey(key, value) {
   const store = NSUserDefaults.alloc().initWithSuiteName(
     `${SUITE_PREFIX}${getPluginIdentifier()}`
   )
-  const stringifiedValue = JSON.stringify(value)
+  const stringifiedValue = JSON.stringify(value, (k, v) => util.toJSObject(v))
   if (!stringifiedValue) {
     store.removeObjectForKey(key)
   } else {
@@ -111,8 +112,9 @@ export function layerSettingForKey(layer, key) {
 }
 
 export function setLayerSettingForKey(layer, key, value) {
+  const stringifiedValue = JSON.stringify(value, (k, v) => util.toJSObject(v))
   __command.setValue_forKey_onLayer(
-    JSON.stringify(value),
+    stringifiedValue,
     key,
     getNativeStorageObject(layer)
   )
@@ -130,5 +132,6 @@ export function documentSettingForKey(document, key) {
 
 export function setDocumentSettingForKey(document, key, value) {
   const documentData = getDocumentData(document)
-  __command.setValue_forKey_onDocument(JSON.stringify(value), key, documentData)
+  const stringifiedValue = JSON.stringify(value, (k, v) => util.toJSObject(v))
+  __command.setValue_forKey_onDocument(stringifiedValue, key, documentData)
 }

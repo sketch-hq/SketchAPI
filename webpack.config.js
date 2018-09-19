@@ -24,6 +24,10 @@ const ENTRIES = [
   { entry: './Source/ui/index.ts', output: 'SketchAPI_ui.js' },
 ]
 
+const CORE_MODULES = Object.keys(
+  require('./core-modules/package.json').dependencies
+).map(k => k.replace('skpm/', ''))
+
 const config = {
   resolve: {
     // Add '.ts' as resolvable extensions.
@@ -52,6 +56,15 @@ const config = {
         API_VERSION: JSON.stringify(process.env.npm_package_version),
       },
     }),
+  ],
+  externals: [
+    (context, request, callback) => {
+      // core modules shipped in Sketch
+      if (CORE_MODULES.indexOf(request) !== -1) {
+        return callback(null, `commonjs ${request}`)
+      }
+      return callback()
+    },
   ],
 }
 
