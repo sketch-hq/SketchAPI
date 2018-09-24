@@ -214,16 +214,7 @@ Style.define('sharedStyleId', {
       ? SharedStyleType.Text
       : SharedStyleType.Layer
 
-    const currentSharedId = this._object.sharedObjectID()
-    if (currentSharedId) {
-      const currentSharedObject = document._getSharedStyleWithIdAndType(
-        currentSharedId,
-        type
-      )
-      if (currentSharedObject) {
-        currentSharedObject.sketchObject.unregisterInstance(this._object)
-      }
-    }
+    this._object.setSharedObjectID(null)
 
     if (!newId) {
       return
