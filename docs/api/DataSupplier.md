@@ -47,7 +47,7 @@ var DataSupplier = require('sketch/data-supplier')
 // onSupplyKeyNeeded would be the handler for
 // the `SupplyKey` action defined in the manifest.json
 export function onSupplyKeyNeeded(context) {
-  var count = context.data.count
+  var count = context.data.requestedCount
   var key = context.data.key
   var items = context.data.items
 
@@ -61,8 +61,9 @@ The argument of the function called when you need to supply some data contains s
 
 | Key                  |                                                                                                                                                                                                                                             |
 | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `context.data.count` | The number of data you need to supply                                                                                                                                                                                                       |
+| `context.data.requestedCount` | The number of data you need to supply                                                                                                                                                                                                       |
 | `context.data.key`   | A unique key to identify the supply request. You need to pass it to the supply method untouched.                                                                                                                                            |
+| `context.data.isSymbolInstanceOverride`   | set to `true` if the request comes from a Symbol override, and `false` otherwise.                                                                                                                                            |
 | `context.data.items` | The array of native model objects for which we want some data. It can be either a native [Text](#text), a native [Image](#image) or a native [DataOverride](#dataoverride) (a special object when the data is for an [Override](#override)) |
 
 ### Supply all the data in one go
@@ -73,7 +74,7 @@ var DataSupplier = require('sketch/data-supplier')
 // onSupplyKeyNeeded would be the handler for
 // the `SupplyKey` action defined in the manifest.json
 export function onSupplyKeyNeeded(context) {
-  var count = context.data.count
+  var count = context.data.requestedCount
   var key = context.data.key
 
   var data = Array.from(Array(count)).map(i => 'foo')
@@ -87,7 +88,7 @@ When the plugin providing the dynamic data has finished generating the data (cou
 | Parameters                                            |                                                                                                                                                            |
 | ----------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | key<span class="arg-type">string - required</span>    | Should be equal to `context.data.key`                                                                                                                      |
-| data<span class="arg-type">string[] - required</span> | The list of values to provide. In case of `public.image`, the string is the path to the image. It needs to have a length equal to the `context.data.count` |
+| data<span class="arg-type">string[] - required</span> | The list of values to provide. In case of `public.image`, the string is the path to the image. It needs to have a length equal to the `context.data.requestedCount` |
 
 ### Supply the data one by one
 
@@ -114,7 +115,7 @@ When the plugin providing the dynamic data has finished generating the datum (co
 | Parameters                                           |                                                                                                                                                   |
 | ---------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
 | key<span class="arg-type">string - required</span>   | Should be equal to `context.data.key`                                                                                                             |
-| datum<span class="arg-type">string - required</span> | The value to provide. In case of `public.image`, the string is the path to the image. It needs to have a length equal to the `context.data.count` |
+| datum<span class="arg-type">string - required</span> | The value to provide. In case of `public.image`, the string is the path to the image. It needs to have a length equal to the `context.data.requestedCount` |
 | index<span class="arg-type">number - required</span> | The index of the item you are providing a value for.                                                                                              |
 
 ## DataOverride
