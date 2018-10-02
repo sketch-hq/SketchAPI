@@ -6,17 +6,19 @@ const path = require('path')
 const IS_BC_BUILD = /\/Modules\/SketchAPI/.test(__dirname)
 
 if (IS_BC_BUILD) {
-  fs.createReadStream(
-    path.join(
-      __dirname,
-      '../node_modules/@skpm/test-runner/test-runner.sketchplugin/Contents/Sketch/compiled-tests.js'
-    )
-  ).pipe(
-    fs.createWriteStream(
+  fs
+    .createReadStream(
       path.join(
         __dirname,
-        '../../SketchPluginManager/Tests/Data/PluginScriptTests/SketchAPI.tests.js'
+        '../node_modules/@skpm/test-runner/test-runner.sketchplugin/Contents/Sketch/compiled-tests.js'
       )
     )
-  )
+    .pipe(
+      fs.createWriteStream(
+        path.join(
+          __dirname,
+          '../../SketchPluginManager/Tests/Data/PluginScriptTests/SketchAPI.tests.js'
+        )
+      )
+    )
 }
