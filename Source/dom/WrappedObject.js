@@ -6,7 +6,7 @@ export const DefinedPropertiesKey = '_DefinedPropertiesKey'
  */
 
 export class WrappedObject {
-  constructor(options) {
+  constructor(options, hooks) {
     Object.defineProperty(this, '_object', {
       enumerable: false,
       value: options.sketchObject,
@@ -17,7 +17,15 @@ export class WrappedObject {
       value: this.constructor.type,
     })
 
+    if (hooks && hooks.beforeUpdate) {
+      hooks.beforeUpdate(this)
+    }
+
     this.update(options)
+
+    if (hooks && hooks.afterUpdate) {
+      hooks.afterUpdate(this)
+    }
   }
 
   update(options = {}) {
@@ -42,7 +50,10 @@ export class WrappedObject {
       })
       .forEach(k => {
         if (!propertyList[k]) {
-          console.warn(`no idea what to do with "${k}" in ${this.type}`)
+          // ignore the properties that starts with _, they are workarounds
+          if (k && k[0] !== '_') {
+            console.warn(`no idea what to do with "${k}" in ${this.type}`)
+          }
           return
         }
 
