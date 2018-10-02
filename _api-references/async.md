@@ -1,7 +1,7 @@
 ---
 title: async
-order: 407
-section: Utils
+order: 404
+section: API
 ---
 
 ```javascript
@@ -12,7 +12,7 @@ longRunningTask(function(err, result) {
 })
 ```
 
-By default, Sketch cleans up your script as soon as its callstack is empty. So if you schedule an asynchronous task, chances are that when the task returns, your script will be cleaned up and it will crash Sketch.
+By default, Sketch cleans up your script as soon as its call-stack is empty. So if you schedule an asynchronous task, chances are that when the task returns, your script will be cleaned up and it will crash Sketch.
 
 A fiber is a way to keep track of a asynchronous task. The script will stay alive as long as at least one fiber is running.
 

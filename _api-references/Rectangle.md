@@ -1,7 +1,7 @@
 ---
 title: Rectangle
-order: 403
-section: Utils
+order: 210
+section: models
 ---
 
 ```javascript
@@ -41,7 +41,7 @@ Return this rectangle (useful if you want to chain the calls).
 var newRect = rect.scale(scaleWidth, scaleHeight)
 ```
 
-Adjust the rectangle by scaling it. The `scaleHeight` argument can be ommited to apply the same factor on both the width and the height.
+Adjust the rectangle by scaling it. The `scaleHeight` argument can be omitted to apply the same factor on both the width and the height.
 
 ### Returns
 
@@ -75,7 +75,7 @@ Each layer defines its own system of coordinates (with its origin at the top lef
 | change.from<span class="arg-type">[Layer](#layer)</span> | The layer in which the rectangle's coordinates are expressed.     |
 | change.to<span class="arg-type">[Layer](#layer)</span>   | The layer in which the rectangle's coordinates will be expressed. |
 
-Both `from` and `to` can be ommited (but not at the same time) to change the basis from/to the Page coordinates.
+Both `from` and `to` can be omitted (but not at the same time) to change the basis from/to the Page coordinates.
 
 ## Get a `CGRect`
 

@@ -1,7 +1,7 @@
 ---
 title: export
-order: 406
-section: Utils
+order: 405
+section: API
 ---
 
 ```javascript

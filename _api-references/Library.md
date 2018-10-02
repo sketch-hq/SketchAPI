@@ -1,7 +1,7 @@
 ---
 title: Library
-order: 214
-section: components
+order: 202
+section: models
 ---
 
 ```javascript
@@ -106,6 +106,40 @@ Those references depends on the document you want to import them into. For examp
 ### Returns
 
 An array of [Shareable Object](#importable-object) that represents the Symbols which you can import from the Library.
+
+## Get the Shared Layer Styles that can be imported
+
+```javascript
+var document = sketch.getSelectedDocument()
+var stylesReferences = library.getImportableLayerStyleReferencesForDocument(
+  document
+)
+```
+
+To import a shared style from a Library, do **not** access its Document and look for the SharedStyle directly. Instead, get the [Shared Layer Style References](#importable-object) of the Library and use those to import them.
+
+Those references depends on the document you want to import them into. For example if a document has already imported a shared style, it will reference the local version to keep all the instances in sync.
+
+### Returns
+
+An array of [Shareable Object](#importable-object) that represents the Shared Layer Styles which you can import from the Library.
+
+## Get the Shared Text Styles that can be imported
+
+```javascript
+var document = sketch.getSelectedDocument()
+var stylesReferences = library.getImportableTextStyleReferencesForDocument(
+  document
+)
+```
+
+To import a shared style from a Library, do **not** access its Document and look for the SharedStyle directly. Instead, get the [Shared Text Style References](#importable-object) of the Library and use those to import them.
+
+Those references depends on the document you want to import them into. For example if a document has already imported a shared style, it will reference the local version to keep all the instances in sync.
+
+### Returns
+
+An array of [Shareable Object](#importable-object) that represents the Shared Layer Styles which you can import from the Library.
 
 ## `Library.LibraryType`
 

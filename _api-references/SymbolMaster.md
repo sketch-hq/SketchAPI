@@ -1,7 +1,7 @@
 ---
 title: Symbol Master
-order: 209
-section: components
+order: 308
+section: layers
 ---
 
 ```javascript
@@ -88,7 +88,7 @@ If the Symbol Master was imported from a library, the method can be used to:
 
 ### Returns
 
-The [Library](#library) the symbol was defined in, or `undefined` if it is a local symbol.
+The [Library](#library) the symbol was defined in, or `null` if it is a local symbol.
 
 ## Sync the local reference with the library version
 
@@ -96,7 +96,7 @@ The [Library](#library) the symbol was defined in, or `undefined` if it is a loc
 const success = master.syncWithLibrary()
 ```
 
-If a [Library](#library) has some updates, you can synchronize the local Symbol Master with the Library's version and bypass the panel where the user chooses the updated to bring.
+If a [Library](#library) has some updates, you can synchronize the local Symbol Master with the Library's version and bypass the panel where the user chooses the updates to bring.
 
 ### Returns
 

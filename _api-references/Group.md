@@ -1,7 +1,7 @@
 ---
 title: Group
-order: 203
-section: components
+order: 302
+section: layers
 ---
 
 ```javascript

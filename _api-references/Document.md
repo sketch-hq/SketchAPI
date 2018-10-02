@@ -1,7 +1,7 @@
 ---
 title: Document
 order: 201
-section: components
+section: models
 ---
 
 ```javascript
@@ -135,6 +135,62 @@ A method to help find the layers in this document which have the given name.
 
 Return an array of [Layer](#layer).
 
+## Get all the Shared Layer Styles
+
+```javascript
+var symbols = document.getSharedLayerStyles()
+```
+
+A method to get all shared layer styles defined in the document.
+
+### Returns
+
+Return an array of the layer [SharedStyle](#sharedstyle) objects defined in the document.
+
+## Find a Shared Layer Style
+
+```javascript
+var sharedStyle = document.getSharedLayerStyleWithID(sharedStyleId)
+```
+
+A method to help find a shared style in the document.
+
+| Parameters                                                   |                                    |
+| ------------------------------------------------------------ | ---------------------------------- |
+| sharedStyleId<span class="arg-type">string - required</span> | The ID of the shared style to find |
+
+### Returns
+
+Return a [SharedStyle](#sharedstyle) object or `undefined` if it's not found.
+
+## Get all the Shared Text Styles
+
+```javascript
+var symbols = document.getSharedTextStyles()
+```
+
+A method to get all shared text styles defined in the document.
+
+### Returns
+
+Return an array of the text [SharedStyle](#sharedstyle) objects defined in the document.
+
+## Find a Shared Text Style
+
+```javascript
+var sharedStyle = document.getSharedTextStyleWithID(sharedStyleId)
+```
+
+A method to help find a shared style in the document.
+
+| Parameters                                                   |                                    |
+| ------------------------------------------------------------ | ---------------------------------- |
+| sharedStyleId<span class="arg-type">string - required</span> | The ID of the shared style to find |
+
+### Returns
+
+Return a [SharedStyle](#sharedstyle) object or `undefined` if it's not found.
+
 ## Get all the Symbol Masters
 
 ```javascript
@@ -194,7 +250,7 @@ A method to save a document to a specific path or ask the user to choose where t
 | Parameters                                                          |                                                                                                                      |
 | ------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- |
 | path<span class="arg-type">string</span>                            | The path where the document will be saved. If `undefined`, the user will be asked to select one.                     |
-| options<span class="arg-type">object</span>                         | The options for the save operation (only used when specifing a path).                                                |
+| options<span class="arg-type">object</span>                         | The options for the save operation (only used when specifying a path).                                               |
 | options.saveMode<span class="arg-type">[SaveMode](#savemode)</span> | The way to save the document.                                                                                        |
 | callback<span class="arg-type">function</span>                      | A function called after the document is saved. It is called with an `Error` if saving the Document was unsuccessful. |
 

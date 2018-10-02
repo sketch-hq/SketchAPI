@@ -1,6 +1,6 @@
 ---
 title: UI
-order: 302
+order: 402
 section: API
 ---
 
@@ -51,7 +51,7 @@ Shows a simple input sheet which displays a message, and asks for a single strin
 
 ### Returns
 
-The string that the user input.
+The string that the user input, or "null" (String) if the user clicked 'Cancel'.
 
 ## Make the user select an option
 

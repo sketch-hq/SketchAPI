@@ -1,7 +1,7 @@
 ---
 title: Importable Object
-order: 215
-section: components
+order: 203
+section: models
 ---
 
 ```javascript
@@ -23,6 +23,7 @@ An Object that can imported from a [Library](#library). All its properties are r
 
 ```javascript
 var symbolMaster = symbolReference.import()
+var sharedStyle = sharedStyleReference.import()
 ```
 
 An Importable Object is linked to a Document so importing it will import it in the said Document.
@@ -39,6 +40,8 @@ Library.ImportableObjectType.Symbol
 
 Enumeration of the types of Importable Objects.
 
-| Value    |
-| -------- |
-| `Symbol` |
+| Value        |
+| ------------ |
+| `Symbol`     |
+| `LayerStyle` |
+| `TextStyle`  |

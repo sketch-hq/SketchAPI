@@ -1,7 +1,7 @@
 ---
 title: Symbol Instance
-order: 210
-section: components
+order: 309
+section: layers
 ---
 
 ```javascript

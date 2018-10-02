@@ -1,7 +1,7 @@
 ---
 title: Artboard
-order: 205
-section: components
+order: 304
+section: layers
 ---
 
 ```javascript

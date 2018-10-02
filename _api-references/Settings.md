@@ -1,6 +1,6 @@
 ---
 title: Settings
-order: 301
+order: 401
 section: API
 ---
 
@@ -74,12 +74,12 @@ Store a value of a Sketch setting for a given key.
 var setting = Settings.layerSettingForKey(layer, 'my-key')
 ```
 
-Return the value of a setting for a given key on a specific layer.
+Return the value of a setting for a given key on a specific [Layer](#layer) or [DataOverride](#dataoverride) or [Override](#override).
 
-| Parameters                                                    |                                         |
-| ------------------------------------------------------------- | --------------------------------------- |
-| layer<span class="arg-type">[Layer](#layer) - required</span> | The layer on which a setting is stored. |
-| key<span class="arg-type">string - required</span>            | The setting to look up.                 |
+| Parameters                                                                                                            |                                         |
+| --------------------------------------------------------------------------------------------------------------------- | --------------------------------------- |
+| layer<span class="arg-type">[Layer](#layer) / [DataOverride](#dataoverride) / [Override](#override) - required</span> | The layer on which a setting is stored. |
+| key<span class="arg-type">string - required</span>                                                                    | The setting to look up.                 |
 
 ### Returns
 
@@ -91,13 +91,13 @@ The setting that was stored for the given key. `undefined` if there was nothing.
 Settings.setLayerSettingForKey(layer, 'my-key', 0.1)
 ```
 
-Store a value of a setting for a given key on a specific layer.
+Store a value of a setting for a given key on a specific [Layer](#layer) or [DataOverride](#dataoverride) or [Override](#override).
 
-| Parameters                                                    |                                        |
-| ------------------------------------------------------------- | -------------------------------------- |
-| layer<span class="arg-type">[Layer](#layer) - required</span> | The layer on which the setting is set. |
-| key<span class="arg-type">string - required</span>            | The setting to set.                    |
-| value<span class="arg-type">any - required</span>             | The value to set it to.                |
+| Parameters                                                                                                            |                                        |
+| --------------------------------------------------------------------------------------------------------------------- | -------------------------------------- |
+| layer<span class="arg-type">[Layer](#layer) / [DataOverride](#dataoverride) / [Override](#override) - required</span> | The layer on which the setting is set. |
+| key<span class="arg-type">string - required</span>                                                                    | The setting to set.                    |
+| value<span class="arg-type">any - required</span>                                                                     | The value to set it to.                |
 
 ## Get a Document setting
 
