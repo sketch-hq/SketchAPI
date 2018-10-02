@@ -8,7 +8,7 @@ section: API
 var DataSupplier = require('sketch/data-supplier')
 ```
 
-When you plugin supplies some data, do not forget to set the [`suppliesData`](/guides/plugin-bundles/#suppliesdata) field to `true` in your `manifest.json`!
+When your plugin supplies some data, don’t forget to set the [`suppliesData`](/guides/plugin-bundles/#suppliesdata) field to `true` in your `manifest.json`!
 
 ## Register a Data Supplier
 
@@ -29,15 +29,18 @@ Register some data with a name and a key.
 
 | Parameters                                              |                                                                                                    |
 | ------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
-| dataType<span class="arg-type">string - required</span> | The data type. Currently `public.text` or `public.image` are the only allowed values.              |
-| dataName<span class="arg-type">string - required</span> | The data name, will be used as the menu item title for the data.                                   |
+| dataType<span class="arg-type">string - required</span> | The data type. Allowed values are `public.text` or `public.image`.                                 |
+| dataName<span class="arg-type">string - required</span> | The data name, used as the menu item title for the data.                                           |
 | action<span class="arg-type">string - required</span>   | The name of the Action that will be dispatched when the user requests some data. See `supplyData`. |
 
-## Supply some Data
+## Context of the action
 
-You have two different methods at your disposition to supply some data.
+When a user runs a Data plugin, Sketch will forward the request to your plugin, passing a `context.data` object with all the information you need to fulfil the request:
 
-### Context of the action
+| Key                  |                                                                                                                                                                                                                                             |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `context.data.key`   | A unique key to identify the supply request. You need to pass it to the supply method untouched.                                                                                                                                            |
+| `context.data.items` | The array of native model objects for which we want some data. It can be either a native [Text](#text), a native [Shape](#shape) or a native [DataOverride](#dataoverride) (a special object when the data is for an [Override](#override)) |
 
 ```javascript
 var util = require('util')
@@ -47,7 +50,7 @@ var DataSupplier = require('sketch/data-supplier')
 // onSupplyKeyNeeded would be the handler for
 // the `SupplyKey` action defined in the manifest.json
 export function onSupplyKeyNeeded(context) {
-  var count = context.data.count
+  var count = context.data.items.count()
   var key = context.data.key
   var items = context.data.items
 
@@ -57,13 +60,9 @@ export function onSupplyKeyNeeded(context) {
 }
 ```
 
-The argument of the function called when you need to supply some data contains some very important information.
+## Supply the Data
 
-| Key                  |                                                                                                                                                                                                                                             |
-| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `context.data.count` | The number of data you need to supply                                                                                                                                                                                                       |
-| `context.data.key`   | A unique key to identify the supply request. You need to pass it to the supply method untouched.                                                                                                                                            |
-| `context.data.items` | The array of native model objects for which we want some data. It can be either a native [Text](#text), a native [Image](#image) or a native [DataOverride](#dataoverride) (a special object when the data is for an [Override](#override)) |
+You have two different methods to supply data from your plugin: `supplyData` (to provide all the data at once), and `supplyDataAtIndex` (to provide data one by one).
 
 ### Supply all the data in one go
 
@@ -73,7 +72,7 @@ var DataSupplier = require('sketch/data-supplier')
 // onSupplyKeyNeeded would be the handler for
 // the `SupplyKey` action defined in the manifest.json
 export function onSupplyKeyNeeded(context) {
-  var count = context.data.count
+  var count = context.data.items.count()
   var key = context.data.key
 
   var data = Array.from(Array(count)).map(i => 'foo')
@@ -84,10 +83,10 @@ export function onSupplyKeyNeeded(context) {
 
 When the plugin providing the dynamic data has finished generating the data (could be an asynchronous operation), it will call this function with the data key and the data.
 
-| Parameters                                            |                                                                                                                                                            |
-| ----------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| key<span class="arg-type">string - required</span>    | Should be equal to `context.data.key`                                                                                                                      |
-| data<span class="arg-type">string[] - required</span> | The list of values to provide. In case of `public.image`, the string is the path to the image. It needs to have a length equal to the `context.data.count` |
+| Parameters                                            |                                                                                                |
+| ----------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| key<span class="arg-type">string - required</span>    | Should be equal to `context.data.key`                                                          |
+| data<span class="arg-type">string[] - required</span> | The list of values to provide. In case of `public.image`, the string is the path to the image. |
 
 ### Supply the data one by one
 
@@ -111,11 +110,11 @@ export function onSupplyKeyNeeded(context) {
 
 When the plugin providing the dynamic data has finished generating the datum (could be an asynchronous operation), it will call this function with the data key and the datum.
 
-| Parameters                                           |                                                                                                                                                   |
-| ---------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
-| key<span class="arg-type">string - required</span>   | Should be equal to `context.data.key`                                                                                                             |
-| datum<span class="arg-type">string - required</span> | The value to provide. In case of `public.image`, the string is the path to the image. It needs to have a length equal to the `context.data.count` |
-| index<span class="arg-type">number - required</span> | The index of the item you are providing a value for.                                                                                              |
+| Parameters                                           |                                                                                       |
+| ---------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| key<span class="arg-type">string - required</span>   | Should be equal to `context.data.key`                                                 |
+| datum<span class="arg-type">string - required</span> | The value to provide. In case of `public.image`, the string is the path to the image. |
+| index<span class="arg-type">number - required</span> | The index of the item you are providing a value for.                                  |
 
 ## DataOverride
 
@@ -138,4 +137,4 @@ export function onShutdown() {
 }
 ```
 
-When registering something, it is good practice to clean up after it. This is especially useful if when your plugin will be updated: the `Shutdown` Action will be called before the `Startup` will. It gives you the opportunity to update your handler cleanly.
+When registering something, it’s good practice to clean up after it. This is specially useful when your plugin is updated: the `Shutdown` Action will be called before the `Startup` will. It gives you the opportunity to update your handler cleanly.
