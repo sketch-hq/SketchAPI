@@ -54,6 +54,5 @@ test('should return all instances', (context, document) => {
     style,
   })
 
-  // there is actually 4 instances because each Shape has a MSRectangleShape layer which share the style
-  expect(sharedStyle.getAllInstances().length).toBe(4)
+  expect(sharedStyle.getAllInstances().length).toBe(2)
 })

@@ -45,7 +45,7 @@ var isOutOfSync = style.isOutOfSyncWithSharedStyle()
 
 ### Returns
 
-Wether the Style has some differences with the [Shared Style](#sharedstyle) it is linked to. In case it isn't linked to any, returns `false`.
+Wether the Style has some differences with the [Shared Style](#sharedstyle) it is linked to. In case it isn't linked to any, returns `null`.
 
 ## Sync the Style with its Shared Style
 

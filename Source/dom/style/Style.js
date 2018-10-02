@@ -74,7 +74,23 @@ export class Style extends WrappedObject {
       style.sketchObject = MSDefaultStyle.defaultStyle()
     }
 
-    super(style)
+    super(style, {
+      beforeUpdate: object => {
+        if (style._sharedStyle) {
+          Object.defineProperty(object, '_sharedStyle', {
+            enumerable: false,
+            writable: true,
+          })
+          // eslint-disable-next-line
+          object._sharedStyle = style._sharedStyle
+        }
+
+        Object.defineProperty(this, '_parentLayer', {
+          enumerable: false,
+          writable: true,
+        })
+      },
+    })
   }
 
   static colorFromString(color) {
@@ -90,7 +106,10 @@ export class Style extends WrappedObject {
     if (sharedStyle) {
       return !!sharedStyle.sketchObject.isOutOfSyncWithInstance(_object)
     }
-    return false
+    if (this._sharedStyle) {
+      return !!this._sharedStyle.sketchObject.isOutOfSyncWithInstance(_object)
+    }
+    return null
   }
 
   syncWithSharedStyle() {
@@ -98,6 +117,16 @@ export class Style extends WrappedObject {
     if (sharedStyle) {
       _object.syncWithTemplateInstance(sharedStyle.style.sketchObject)
     }
+  }
+
+  _getNativeParentLayer() {
+    if (this._object.parentLayer) {
+      return this._object.parentLayer()
+    }
+    if (this._parentLayer) {
+      return this._parentLayer.sketchObject
+    }
+    return null
   }
 }
 
@@ -203,37 +232,43 @@ Style.define('innerShadows', {
 
 Style.define('sharedStyleId', {
   get() {
-    if (this._object.sharedObjectID()) {
-      return String(this._object.sharedObjectID())
+    const parentLayer = this._getNativeParentLayer()
+    if (parentLayer && parentLayer.sharedStyleID) {
+      return String(parentLayer.sharedStyleID())
+    }
+    if (this._sharedStyle) {
+      return this._sharedStyle.id
     }
     return null
   },
   set(newId) {
+    if (!newId) {
+      const parentLayer = this._getNativeParentLayer()
+      if (parentLayer && parentLayer.setSharedStyleID) {
+        parentLayer.setSharedStyleID(null)
+      }
+      return
+    }
+
     const document = wrapObject(this._object.documentData())
+
+    if (!document) {
+      throw new Error('Add the Style to a Layer first')
+    }
+
     const type = this._object.hasTextStyle()
       ? SharedStyleType.Text
       : SharedStyleType.Layer
-
-    const currentSharedId = this._object.sharedObjectID()
-    if (currentSharedId) {
-      const currentSharedObject = document._getSharedStyleWithIdAndType(
-        currentSharedId,
-        type
-      )
-      if (currentSharedObject) {
-        currentSharedObject.sketchObject.unregisterInstance(this._object)
-      }
-    }
-
-    if (!newId) {
-      return
-    }
 
     const sharedStyle = document._getSharedStyleWithIdAndType(newId, type)
     if (!sharedStyle) {
       throw new Error('Seems like this shared style does not exists')
     }
-    this._object.setSharedObjectID(newId)
+
+    const parentLayer = this._getNativeParentLayer()
+    if (parentLayer && parentLayer.setSharedStyleID) {
+      parentLayer.setSharedStyleID(newId)
+    }
   },
 })
 
@@ -246,6 +281,9 @@ Style.define('sharedStyle', {
       return null
     }
     const document = wrapObject(this._object.documentData())
+    if (!document) {
+      throw new Error('Add the Style to a Layer first')
+    }
     return document._getSharedStyleWithIdAndType(
       sharedStyleId,
       this._object.hasTextStyle() ? SharedStyleType.Text : SharedStyleType.Layer

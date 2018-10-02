@@ -16,12 +16,20 @@ Factory.registerClass(StyledLayer, MSImmutableStyledLayer)
 StyledLayer.define('style', {
   get() {
     const style = Style.fromNative(this._object.style())
+    style._parentLayer = this
     return style
   },
   set(style) {
     if (this.isImmutable()) {
       return
     }
+    if (style && style._sharedStyle) {
+      this._object.setSharedStyleID(style._sharedStyle.id)
+    }
+    if (style && style.sharedStyleId) {
+      this._object.setSharedStyleID(style.sharedStyleId)
+    }
+
     if (isNativeObject(style)) {
       this._object.style = style
     } else if (!style || !style.sketchObject) {

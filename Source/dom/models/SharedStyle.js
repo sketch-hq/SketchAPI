@@ -3,6 +3,7 @@ import { Types } from '../enums'
 import { Factory } from '../Factory'
 import { wrapObject } from '../wrapNativeObject'
 import { toArray } from '../utils'
+import { Style } from '../style/Style'
 
 const SharedStyleTypeMap = {
   1: 'Layer',
@@ -32,7 +33,7 @@ export class SharedStyle extends WrappedObject {
     const wrappedInstance = wrapObject(style)
 
     const sharedStyle = SharedStyle.fromNative(
-      MSSharedStyle.alloc().initWithName_firstInstance(
+      MSSharedStyle.alloc().initWithName_style(
         name,
         wrappedInstance.sketchObject
       )
@@ -50,7 +51,10 @@ export class SharedStyle extends WrappedObject {
 
   // Returns a new Style instance linked to this SharedStyle, ready for adding to a layer
   createNewInstance() {
-    return wrapObject(this._object.newInstance())
+    return new Style({
+      sketchObject: this._object.style().copy(),
+      _sharedStyle: this,
+    })
   }
 
   getAllInstances() {
