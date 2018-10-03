@@ -10,16 +10,16 @@ var Image = require('sketch/dom').Image
 
 An image layer. It is an instance of [Layer](#layer) so all the methods defined there are available.
 
-| Properties                                                           |                                                                                                 |
-| -------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
-| id<span class="arg-type">string</span>                               | The unique ID of the Image.                                                                     |
-| name<span class="arg-type">string</span>                             | The name of the Image                                                                           |
-| parent<span class="arg-type">[Group](#group)</span>                  | The group the Image is in.                                                                      |
-| frame<span class="arg-type">[Rectangle](#rectangle)</span>           | The frame of the Image. This is given in coordinates that are local to the parent of the layer. |
-| flow<span class="arg-type">[Flow](#flow)</span>                      | The prototyping action associated with the Image.                                               |
-| style<span class="arg-type">[Style](#style)</span>                   | The style of the Image.                                                                         |
-| sharedStyle<span class="arg-type">[SharedStyle](#sharedstyle)</span> | The [SharedStyle](#sharedstyle) this Image is linked to if any.                                 |
-| image<span class="arg-type">[ImageData](#imagedata)</span>           | The actual image of the layer.                                                                  |
+| Properties                                                 |                                                                                                 |
+| ---------------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
+| id<span class="arg-type">string</span>                     | The unique ID of the Image.                                                                     |
+| name<span class="arg-type">string</span>                   | The name of the Image                                                                           |
+| parent<span class="arg-type">[Group](#group)</span>        | The group the Image is in.                                                                      |
+| frame<span class="arg-type">[Rectangle](#rectangle)</span> | The frame of the Image. This is given in coordinates that are local to the parent of the layer. |
+| flow<span class="arg-type">[Flow](#flow)</span>            | The prototyping action associated with the Image.                                               |
+| style<span class="arg-type">[Style](#style)</span>         | The style of the Image.                                                                         |
+| sharedStyleId<span class="arg-type">string / null</span>   | The ID of the [SharedStyle](#sharedstyle) this Image is linked to if any.                       |
+| image<span class="arg-type">[ImageData](#imagedata)</span> | The actual image of the layer.                                                                  |
 
 ## Create a new Image
 

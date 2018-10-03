@@ -38,7 +38,31 @@ StyledLayer.define('style', {
   },
 })
 
+StyledLayer.define('sharedStyleId', {
+  get() {
+    const nativeSharedStyle = this._object.sharedStyleID()
+    if (!nativeSharedStyle) {
+      return null
+    }
+    return String(nativeSharedStyle)
+  },
+  set(sharedStyleId) {
+    if (this.isImmutable()) {
+      return
+    }
+
+    if (!sharedStyleId) {
+      this._object.setSharedStyleID(null)
+      return
+    }
+
+    this._object.setSharedStyleID(sharedStyleId)
+  },
+})
+
 StyledLayer.define('sharedStyle', {
+  enumerable: false,
+  exportable: false,
   get() {
     if (!this._object.sharedObject) {
       return null
@@ -61,8 +85,5 @@ StyledLayer.define('sharedStyle', {
 
     const nativeSharedStyle = wrapObject(sharedStyle)
     this._object.setSharedStyleID(nativeSharedStyle.id)
-    this._object
-      .style()
-      .syncWithTemplateInstance(nativeSharedStyle.style.sketchObject)
   },
 })
