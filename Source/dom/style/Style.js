@@ -247,6 +247,9 @@ Style.define('sharedStyleId', {
       if (parentLayer && parentLayer.setSharedStyleID) {
         parentLayer.setSharedStyleID(null)
       }
+      if (this._sharedStyle) {
+        this._sharedStyle = undefined
+      }
       return
     }
 
