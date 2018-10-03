@@ -25,7 +25,7 @@ new Page()
 ```
 
 ```javascript
-new Artboard({
+new Page({
   name: 'my page',
 })
 ```
