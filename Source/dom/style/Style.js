@@ -73,18 +73,7 @@ export class Style extends WrappedObject {
       style.sketchObject = MSDefaultStyle.defaultStyle()
     }
 
-    super(style, {
-      beforeUpdate: object => {
-        if (style._sharedStyle) {
-          Object.defineProperty(object, '_sharedStyle', {
-            enumerable: false,
-            writable: true,
-          })
-          // eslint-disable-next-line
-          object._sharedStyle = style._sharedStyle
-        }
-      },
-    })
+    super(style)
   }
 
   static colorFromString(color) {

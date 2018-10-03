@@ -6,7 +6,7 @@ export const DefinedPropertiesKey = '_DefinedPropertiesKey'
  */
 
 export class WrappedObject {
-  constructor(options, hooks) {
+  constructor(options) {
     Object.defineProperty(this, '_object', {
       enumerable: false,
       value: options.sketchObject,
@@ -17,15 +17,7 @@ export class WrappedObject {
       value: this.constructor.type,
     })
 
-    if (hooks && hooks.beforeUpdate) {
-      hooks.beforeUpdate(this)
-    }
-
     this.update(options)
-
-    if (hooks && hooks.afterUpdate) {
-      hooks.afterUpdate(this)
-    }
   }
 
   update(options = {}) {
