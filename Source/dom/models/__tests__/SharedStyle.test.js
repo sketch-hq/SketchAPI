@@ -33,26 +33,25 @@ test(
   }
 )
 
-test(
-  'should create a new Style instance from a shared style',
-  (context, document) => {
-    const { sharedStyle } = createSharedStyle(document, Shape)
-    const style = sharedStyle.createNewInstance()
-
-    expect(style.sharedStyleId).toEqual(sharedStyle.id)
-  }
-)
-
 test('should return all instances', (context, document) => {
   const { sharedStyle } = createSharedStyle(document, Shape) // 1st instance
-  const style = sharedStyle.createNewInstance() // 2nd instance
 
-  // add styles to layers
-  // eslint-disable-next-line
   const shape = new Shape({
     parent: document.selectedPage,
-    style,
+    sharedStyle, // 2nd instance
   })
+
+  expect(sharedStyle.getAllInstances().length).toBe(2)
+
+  // eslint-disable-next-line
+  const shape2 = new Shape({
+    parent: document.selectedPage,
+    sharedStyle, // 2nd instance
+  })
+
+  expect(sharedStyle.getAllInstances().length).toBe(3)
+
+  shape.sharedStyle = undefined
 
   expect(sharedStyle.getAllInstances().length).toBe(2)
 })

@@ -10,7 +10,6 @@ import { BorderOptions, Arrowhead, LineEnd, LineJoin } from './BorderOptions'
 import { Blur, BlurType } from './Blur'
 import { Fill, FillType } from './Fill'
 import { Border, BorderPosition } from './Border'
-import { SharedStyleType } from '../models/SharedStyle'
 
 const BlendingModeMap = {
   Normal: 0,
@@ -84,11 +83,6 @@ export class Style extends WrappedObject {
           // eslint-disable-next-line
           object._sharedStyle = style._sharedStyle
         }
-
-        Object.defineProperty(this, '_parentLayer', {
-          enumerable: false,
-          writable: true,
-        })
       },
     })
   }
@@ -101,30 +95,21 @@ export class Style extends WrappedObject {
     return colorToString(value)
   }
 
-  isOutOfSyncWithSharedStyle() {
-    const { sharedStyle, _object } = this
-    if (sharedStyle) {
-      return !!sharedStyle.sketchObject.isOutOfSyncWithInstance(_object)
-    }
-    if (this._sharedStyle) {
-      return !!this._sharedStyle.sketchObject.isOutOfSyncWithInstance(_object)
-    }
-    return null
+  isOutOfSyncWithSharedStyle(sharedStyle) {
+    return !!wrapObject(sharedStyle).sketchObject.isOutOfSyncWithInstance(
+      this._object
+    )
   }
 
-  syncWithSharedStyle() {
-    const { sharedStyle, _object } = this
-    if (sharedStyle) {
-      _object.syncWithTemplateInstance(sharedStyle.style.sketchObject)
-    }
+  syncWithSharedStyle(sharedStyle) {
+    this._object.syncWithTemplateInstance(
+      wrapObject(sharedStyle).style.sketchObject
+    )
   }
 
-  _getNativeParentLayer() {
+  getParentLayer() {
     if (this._object.parentLayer) {
       return this._object.parentLayer()
-    }
-    if (this._parentLayer) {
-      return this._parentLayer.sketchObject
     }
     return null
   }
@@ -227,77 +212,5 @@ Style.define('innerShadows', {
   set(values) {
     const objects = values.map(Shadow.toNative.bind(Shadow, MSStyleInnerShadow))
     this._object.setInnerShadows(objects)
-  },
-})
-
-Style.define('sharedStyleId', {
-  get() {
-    const parentLayer = this._getNativeParentLayer()
-    if (parentLayer && parentLayer.sharedStyleID) {
-      return String(parentLayer.sharedStyleID())
-    }
-    if (this._sharedStyle) {
-      return this._sharedStyle.id
-    }
-    return null
-  },
-  set(newId) {
-    if (!newId) {
-      const parentLayer = this._getNativeParentLayer()
-      if (parentLayer && parentLayer.setSharedStyleID) {
-        parentLayer.setSharedStyleID(null)
-      }
-      if (this._sharedStyle) {
-        this._sharedStyle = undefined
-      }
-      return
-    }
-
-    const document = wrapObject(this._object.documentData())
-
-    if (!document) {
-      throw new Error('Add the Style to a Layer first')
-    }
-
-    const type = this._object.hasTextStyle()
-      ? SharedStyleType.Text
-      : SharedStyleType.Layer
-
-    const sharedStyle = document._getSharedStyleWithIdAndType(newId, type)
-    if (!sharedStyle) {
-      throw new Error('Seems like this shared style does not exists')
-    }
-
-    const parentLayer = this._getNativeParentLayer()
-    if (parentLayer && parentLayer.setSharedStyleID) {
-      parentLayer.setSharedStyleID(newId)
-    }
-  },
-})
-
-Style.define('sharedStyle', {
-  exportable: false,
-  enumerable: false,
-  get() {
-    const { sharedStyleId } = this
-    if (!sharedStyleId) {
-      return null
-    }
-    const document = wrapObject(this._object.documentData())
-    if (!document) {
-      throw new Error('Add the Style to a Layer first')
-    }
-    return document._getSharedStyleWithIdAndType(
-      sharedStyleId,
-      this._object.hasTextStyle() ? SharedStyleType.Text : SharedStyleType.Layer
-    )
-  },
-  set(sharedStyle) {
-    if (!sharedStyle) {
-      this.sharedStyleId = undefined
-    } else {
-      const wrappedMaster = wrapObject(sharedStyle)
-      this.sharedStyleId = wrappedMaster.id
-    }
   },
 })

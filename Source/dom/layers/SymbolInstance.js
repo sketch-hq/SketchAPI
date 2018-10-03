@@ -66,6 +66,8 @@ SymbolInstance[DefinedPropertiesKey] = {
 Factory.registerClass(SymbolInstance, MSSymbolInstance)
 Factory.registerClass(SymbolInstance, MSImmutableSymbolInstance)
 
+delete SymbolInstance[DefinedPropertiesKey].sharedStyle
+
 SymbolInstance.define('symbolId', {
   depends: 'parent',
   get() {

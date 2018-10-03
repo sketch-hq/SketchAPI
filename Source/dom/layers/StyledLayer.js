@@ -3,7 +3,8 @@ import { Factory } from '../Factory'
 import { Layer } from './Layer'
 import { Style } from '../style/Style'
 import { isNativeObject } from '../utils'
-import { Types } from '../enums'
+import { SharedStyle } from '../models/SharedStyle'
+import { wrapObject } from '../wrapNativeObject'
 
 /**
  * Represents a layer with style.
@@ -16,31 +17,15 @@ Factory.registerClass(StyledLayer, MSImmutableStyledLayer)
 
 StyledLayer.define('style', {
   get() {
-    const style = Style.fromNative(this._object.style())
-    style._parentLayer = this
-    return style
+    return Style.fromNative(this._object.style())
   },
   set(style) {
     if (this.isImmutable()) {
       return
     }
 
-    // handle passing a shared style directly
-    if (style && style.type === Types.SharedStyle) {
-      this._object.setSharedStyleID(style.id)
-      return
-    }
-
-    // if a style has a shared style id, we need to set it first
-    // so that the layer is linked to the shared style
-    if (style && style._sharedStyle) {
-      this._object.setSharedStyleID(style._sharedStyle.id)
-    }
-    if (style && style.sharedStyleId) {
-      this._object.setSharedStyleID(style.sharedStyleId)
-    }
-
     // we can then actually set the style
+    let nativeStyle
     if (isNativeObject(style)) {
       this._object.style = style
     } else if (!style || !style.sketchObject) {
@@ -48,5 +33,36 @@ StyledLayer.define('style', {
     } else {
       this._object.style = style.sketchObject
     }
+
+    this._object.style = nativeStyle.copy()
+  },
+})
+
+StyledLayer.define('sharedStyle', {
+  get() {
+    if (!this._object.sharedObject) {
+      return null
+    }
+    const nativeSharedStyle = this._object.sharedObject()
+    if (!nativeSharedStyle) {
+      return null
+    }
+    return SharedStyle.fromNative(nativeSharedStyle)
+  },
+  set(sharedStyle) {
+    if (this.isImmutable()) {
+      return
+    }
+
+    if (!sharedStyle) {
+      this._object.setSharedStyleID(null)
+      return
+    }
+
+    const nativeSharedStyle = wrapObject(sharedStyle)
+    this._object.setSharedStyleID(nativeSharedStyle.id)
+    this._object
+      .style()
+      .syncWithTemplateInstance(nativeSharedStyle.style.sketchObject)
   },
 })

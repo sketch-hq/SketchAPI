@@ -47,7 +47,7 @@ Create a new Shared Style with a specific name in a specific Document.
 
 A new SharedStyle
 
-## Create a new Instance
+## Create a new Style Instance
 
 ```javascript
 var style = sharedStyle.createNewInstance()

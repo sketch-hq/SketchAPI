@@ -28,12 +28,16 @@ export function createSharedStyle(document: any, Primitive: any) {
     parent: document.selectedPage,
   })
 
+  const sharedStyle = SharedStyle.fromStyle({
+    name: 'test shared style',
+    style: object.style,
+    document,
+  })
+
+  object.sharedStyle = sharedStyle
+
   return {
-    sharedStyle: SharedStyle.fromStyle({
-      name: 'test shared style',
-      style: object.style,
-      document,
-    }),
+    sharedStyle,
     object,
   }
 }
