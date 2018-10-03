@@ -3,6 +3,7 @@ import { Factory } from '../Factory'
 import { Layer } from './Layer'
 import { Style } from '../style/Style'
 import { isNativeObject } from '../utils'
+import { Types } from '../enums'
 
 /**
  * Represents a layer with style.
@@ -23,6 +24,15 @@ StyledLayer.define('style', {
     if (this.isImmutable()) {
       return
     }
+
+    // handle passing a shared style directly
+    if (style && style.type === Types.SharedStyle) {
+      this._object.setSharedStyleID(style.id)
+      return
+    }
+
+    // if a style has a shared style id, we need to set it first
+    // so that the layer is linked to the shared style
     if (style && style._sharedStyle) {
       this._object.setSharedStyleID(style._sharedStyle.id)
     }
@@ -30,6 +40,7 @@ StyledLayer.define('style', {
       this._object.setSharedStyleID(style.sharedStyleId)
     }
 
+    // we can then actually set the style
     if (isNativeObject(style)) {
       this._object.style = style
     } else if (!style || !style.sketchObject) {
