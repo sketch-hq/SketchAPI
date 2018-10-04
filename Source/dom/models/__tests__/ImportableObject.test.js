@@ -1,5 +1,6 @@
 /* globals expect, test */
 import { isRunningOnJenkins } from '../../../test-utils'
+// eslint-disable-next-line import/named
 import { Library, Document, Artboard, Text, SymbolMaster } from '../..'
 
 // some tests cannot really run on jenkins because it doesn't have access to MSDocument

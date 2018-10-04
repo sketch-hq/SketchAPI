@@ -1,5 +1,5 @@
 /* globals expect, test */
-
+// eslint-disable-next-line import/named
 import { Shape } from '../..'
 import { createSharedStyle } from '../../../test-utils'
 import { Style } from '../Style'

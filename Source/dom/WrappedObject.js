@@ -31,7 +31,8 @@ export class WrappedObject {
           propertyList[a].depends === b
         ) {
           return 1
-        } else if (
+        }
+        if (
           propertyList[b] &&
           propertyList[b].depends &&
           propertyList[b].depends === a

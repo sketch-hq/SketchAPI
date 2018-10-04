@@ -25,6 +25,15 @@ const LibraryType = {
   Remote: 'Remote',
 }
 
+/* eslint-disable no-use-before-define, typescript/no-use-before-define */
+export function getLibraries() {
+  const libraryController = AppController.sharedInstance().librariesController()
+  return toArray(libraryController.libraries()).map(
+    Library.fromNative.bind(Library)
+  )
+}
+/* eslint-enable */
+
 /**
  * A Sketch Library.
  */
@@ -38,10 +47,7 @@ export class Library extends WrappedObject {
   }
 
   static getLibraries() {
-    const libraryController = AppController.sharedInstance().librariesController()
-    return toArray(libraryController.libraries()).map(
-      Library.fromNative.bind(Library)
-    )
+    return getLibraries()
   }
 
   static getLibraryForDocumentAtPath(path) {

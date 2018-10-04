@@ -1,6 +1,6 @@
 /* globals expect, test */
 /* eslint-disable no-param-reassign */
-
+// eslint-disable-next-line import/named
 import { Text, Shape } from '../..'
 import { createSharedStyle } from '../../../test-utils'
 
