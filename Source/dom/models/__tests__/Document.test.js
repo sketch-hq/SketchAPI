@@ -4,6 +4,7 @@ import {
   createSymbolMaster,
   createSharedStyle,
 } from '../../../test-utils'
+// eslint-disable-next-line import/named
 import { Document, Group, Shape, Text } from '../..'
 
 test('should be able to log a document', (context, document) => {

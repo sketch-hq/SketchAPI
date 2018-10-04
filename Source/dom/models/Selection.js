@@ -17,9 +17,11 @@ export class Selection {
   forEach(fn) {
     return this.layers.forEach(fn)
   }
+
   map(fn) {
     return this.layers.map(fn)
   }
+
   reduce(fn, initial) {
     return this.layers.reduce(fn, initial)
   }

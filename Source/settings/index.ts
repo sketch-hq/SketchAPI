@@ -1,7 +1,6 @@
-import * as Settings from './Settings'
+export * from './Settings'
 
-module.exports = Settings
-module.exports.version = {
+export const version = {
   sketch: MSApplicationMetadata.metadata().appVersion,
   api: process.env.API_VERSION,
 }

@@ -17,6 +17,5 @@ module.exports = config => {
     }
   )
   config.module = normalConfig.module
-  config.module.rules[0].use[0].options.silent = true
   config.plugins = config.plugins.concat(normalConfig.plugins)
 }
