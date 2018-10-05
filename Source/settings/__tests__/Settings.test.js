@@ -1,6 +1,6 @@
 /* globals expect, test */
 import { isRunningOnJenkins } from '../../test-utils'
-import { Text } from '../../dom/layers/Text'
+import { Text } from '../../dom'
 import {
   settingForKey,
   setSettingForKey,
@@ -8,7 +8,7 @@ import {
   layerSettingForKey,
   setDocumentSettingForKey,
   documentSettingForKey,
-} from '../Settings'
+} from '..'
 
 test('non existing settings should return undefined', () => {
   if (isRunningOnJenkins()) {

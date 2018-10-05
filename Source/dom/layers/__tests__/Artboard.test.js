@@ -1,6 +1,6 @@
 /* globals expect, test */
 
-import { Artboard } from '../Artboard'
+import { Artboard } from '../..'
 
 test('should create an artboard', () => {
   const artboard = new Artboard({ name: 'Test' })

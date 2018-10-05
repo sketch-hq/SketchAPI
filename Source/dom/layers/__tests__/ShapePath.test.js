@@ -1,5 +1,5 @@
 /* globals expect, test */
-import { ShapePath } from '../ShapePath'
+import { ShapePath } from '../..'
 
 test('should create a new shape path', () => {
   const shapePath = new ShapePath()

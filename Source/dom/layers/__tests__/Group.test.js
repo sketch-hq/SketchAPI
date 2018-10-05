@@ -1,9 +1,6 @@
 /* globals expect, test */
 
-import { Group } from '../Group'
-import { Text } from '../Text'
-import { Shape } from '../Shape'
-import { Rectangle } from '../../models/Rectangle'
+import { Group, Text, Shape, Rectangle } from '../..'
 
 test(
   'should return the layers and can iterate through them',

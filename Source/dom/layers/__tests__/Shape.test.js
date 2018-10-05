@@ -1,5 +1,5 @@
 /* globals expect, test */
-import { Shape } from '../Shape'
+import { Shape } from '../..'
 
 test('should create a new shape', () => {
   const shape = new Shape()

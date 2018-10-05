@@ -1,5 +1,5 @@
 /* globals expect, test */
-import { Shape } from '../Shape'
+import { Shape } from '../..'
 
 test('should get a style', () => {
   const group = new Shape()
