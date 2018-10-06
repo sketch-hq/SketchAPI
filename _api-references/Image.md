@@ -18,6 +18,7 @@ An image layer. It is an instance of [Layer](#layer) so all the methods defined 
 | frame<span class="arg-type">[Rectangle](#rectangle)</span> | The frame of the Image. This is given in coordinates that are local to the parent of the layer. |
 | flow<span class="arg-type">[Flow](#flow)</span>            | The prototyping action associated with the Image.                                               |
 | style<span class="arg-type">[Style](#style)</span>         | The style of the Image.                                                                         |
+| sharedStyleId<span class="arg-type">string / null</span>   | The ID of the [SharedStyle](#sharedstyle) this Image is linked to if any.                       |
 | image<span class="arg-type">[ImageData](#imagedata)</span> | The actual image of the layer.                                                                  |
 
 ## Create a new Image
@@ -30,13 +31,13 @@ var imageLayer = new Image({
 
 The image property accept a wide range of input:
 
-* an [`ImageData`](#imagedata)
-* a native `NSImage`
-* a native `NSURL`
-* a native `MSImageData`
-* a string: path to the file to load the image from
-* an object with a `path` property: path to the file to load the image from
-* an object with a `base64` string: a base64 encoded image
+- an [`ImageData`](#imagedata)
+- a native `NSImage`
+- a native `NSURL`
+- a native `MSImageData`
+- a string: path to the file to load the image from
+- an object with a `path` property: path to the file to load the image from
+- an object with a `base64` string: a base64 encoded image
 
 ## `ImageData`
 

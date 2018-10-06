@@ -18,6 +18,7 @@ A text layer. It is an instance of [Layer](#layer) so all the methods defined th
 | frame<span class="arg-type">[Rectangle](#rectangle)</span>               | The frame of the Text. This is given in coordinates that are local to the parent of the layer. |
 | flow<span class="arg-type">[Flow](#flow)</span>                          | The prototyping action associated with the Text.                                               |
 | style<span class="arg-type">[Style](#style)</span>                       | The style of the Text.                                                                         |
+| sharedStyleId<span class="arg-type">string / null</span>                 | The ID of the [SharedStyle](#sharedstyle) this Text is linked to if any.                       |
 | text<span class="arg-type">string</span>                                 | The string value of the text layer.                                                            |
 | alignment<span class="arg-type">[Alignment](#textalignment)</span>       | The alignment of the layer.                                                                    |
 | lineSpacing<span class="arg-type">[LineSpacing](#textlinespacing)</span> | The line spacing of the layer.                                                                 |

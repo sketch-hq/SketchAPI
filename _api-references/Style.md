@@ -25,38 +25,37 @@ shape.style.fills = [
 
 The style of a Layer.
 
-| Properties                                                                   |                                                                           |
-| ---------------------------------------------------------------------------- | ------------------------------------------------------------------------- |
-| opacity<span class="arg-type">number</span>                                  | The opacity of a Layer, between 0 (transparent) and 1 (opaque).           |
-| blendingMode<span class="arg-type">[BlendingMode](#styleblendingMode)</span> | The opacity of a Layer, between 0 (transparent) and 1 (opaque).           |
-| blur<span class="arg-type">[Blur](#blur)</span>                              | The blur applied to the Layer.                                            |
-| fills<span class="arg-type">[Fill](#fill)[]</span>                           | The fills of a Layer.                                                     |
-| borders<span class="arg-type">[Border](#border)[]</span>                     | The borders of a Layer.                                                   |
-| borderOptions<span class="arg-type">[BorderOptions](#borderoptions)</span>   | The options that the borders share.                                       |
-| shadows<span class="arg-type">[Shadow](#shadow)[]</span>                     | The shadows of a Layer.                                                   |
-| innerShadows<span class="arg-type">[Shadow](#shadow)[]</span>                | The inner shadows of a Layer.                                             |
-| sharedStyleId<span class="arg-type">string / null</span>                     | The ID of the [SharedStyle](#sharedstyle) this style is linked to if any. |
+| Properties                                                                   |                                                                 |
+| ---------------------------------------------------------------------------- | --------------------------------------------------------------- |
+| opacity<span class="arg-type">number</span>                                  | The opacity of a Layer, between 0 (transparent) and 1 (opaque). |
+| blendingMode<span class="arg-type">[BlendingMode](#styleblendingMode)</span> | The opacity of a Layer, between 0 (transparent) and 1 (opaque). |
+| blur<span class="arg-type">[Blur](#blur)</span>                              | The blur applied to the Layer.                                  |
+| fills<span class="arg-type">[Fill](#fill)[]</span>                           | The fills of a Layer.                                           |
+| borders<span class="arg-type">[Border](#border)[]</span>                     | The borders of a Layer.                                         |
+| borderOptions<span class="arg-type">[BorderOptions](#borderoptions)</span>   | The options that the borders share.                             |
+| shadows<span class="arg-type">[Shadow](#shadow)[]</span>                     | The shadows of a Layer.                                         |
+| innerShadows<span class="arg-type">[Shadow](#shadow)[]</span>                | The inner shadows of a Layer.                                   |
 
-## Check if the Style is in sync with its Shared Style
+## Check if the Style is in sync with a Shared Style
 
 ```javascript
-var isOutOfSync = style.isOutOfSyncWithSharedStyle()
+var isOutOfSync = style.isOutOfSyncWithSharedStyle(sharedStyle)
 ```
 
 ### Returns
 
-Wether the Style has some differences with the [Shared Style](#sharedstyle) it is linked to. In case it isn't linked to any, returns `false`.
+Wether the Style has some differences with a [Shared Style](#sharedstyle).
 
-## Sync the Style with its Shared Style
+## Sync the Style with a Shared Style
 
 ```javascript
-style.syncWithSharedStyle()
+style.syncWithSharedStyle(sharedStyle)
 ```
 
 The style instance will be updated with the value of the Shared Style.
 
 ```javascript
-var sharedStyle = style.sharedStyle
+var sharedStyle = styledLayer.sharedStyle
 sharedStyle.style = style
 ```
 
