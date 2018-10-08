@@ -5,18 +5,17 @@ const path = require('path')
 const { config: normalConfig, CORE_MODULES } = require('./webpack.config')
 
 module.exports = config => {
-  config.externals = (context, request, callback) => {
-    // sketch API
-    if (/^sketch\//.test(request) || request === 'sketch') {
-      return callback(null, `commonjs ${request}`)
-    }
-    return callback()
-  }
+  config.externals = []
   config.resolve = normalConfig.resolve
-  config.resolve.alias = CORE_MODULES.reduce((prev, k) => {
-    prev[k] = path.resolve(__dirname, 'core-modules/node_modules/@skpm/', k)
-    return prev
-  }, {})
+  config.resolve.alias = CORE_MODULES.reduce(
+    (prev, k) => {
+      prev[k] = path.resolve(__dirname, 'core-modules/node_modules/@skpm/', k)
+      return prev
+    },
+    {
+      sketch: path.resolve(__dirname, 'Source/index.ts'),
+    }
+  )
   config.module = normalConfig.module
   config.module.rules[0].use[0].options.silent = true
   config.plugins = config.plugins.concat(normalConfig.plugins)
