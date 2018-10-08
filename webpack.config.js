@@ -81,3 +81,4 @@ module.exports = ENTRIES.map(({ entry, output }) => ({
 }))
 
 module.exports.config = config
+module.exports.CORE_MODULES = CORE_MODULES
