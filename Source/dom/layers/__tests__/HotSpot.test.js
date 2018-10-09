@@ -1,7 +1,5 @@
 /* globals expect, test */
-import { Artboard } from '../Artboard'
-import { Group } from '../Group'
-import { HotSpot } from '../HotSpot'
+import { Artboard, Group, HotSpot } from '../..'
 
 test('should create a new HotSpot', () => {
   const hotspot = new HotSpot()

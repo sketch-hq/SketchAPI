@@ -1,6 +1,5 @@
 /* globals expect, test */
 /* eslint-disable no-param-reassign */
-// eslint-disable-next-line import/named
 import { SymbolInstance } from '../..'
 import { createSymbolMaster } from '../../../test-utils'
 

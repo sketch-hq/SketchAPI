@@ -1,6 +1,6 @@
 /* globals expect, test */
 
-import { Style } from '../Style'
+import { Style } from '../..'
 
 test('should set the fills', () => {
   // setting the fills after creation

@@ -1,6 +1,5 @@
 /* globals expect, test */
-import { Group } from '../../layers/Group'
-import { Text } from '../../layers/Text'
+import { Group, Text } from '../..'
 
 test(
   'an empty document should have an empty selection',

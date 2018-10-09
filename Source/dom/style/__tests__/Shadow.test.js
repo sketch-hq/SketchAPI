@@ -1,6 +1,6 @@
 /* globals expect, test */
 
-import { Style } from '../Style'
+import { Style } from '../..'
 
 test('should set the shadows', () => {
   const style = new Style()
