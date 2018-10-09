@@ -22,7 +22,7 @@
     "prettier:base": "prettier --write",
     "prettify": "find . -name \"*.ts\" -o -name \"*.js\" | grep -v -f .gitignore | xargs npm run prettier:base",
     "lint-staged": "lint-staged",
-    "postinstall": "node ./scripts/install-pre-commit.js && node ./scripts/inject-new-api-in-tester.js && rm -rf .awcache || true"
+    "postinstall": "node ./scripts/install-pre-commit.js && node ./scripts/inject-new-api-in-tester.js && rm -rf .awcache || true && cd core-modules && npm install"
   },
   "devDependencies": {
     "@babel/preset-typescript": "^7.1.0",
