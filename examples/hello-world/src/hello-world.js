@@ -33,4 +33,4 @@ export default function(context) {
 //
 // Obviously this is only the tip of the iceberg. Check out some of the other examples to see what else can be done.
 //
-// If you have questions, comments or any feedback, ping us at <developer@sketchapp.com>!
+// If you have questions, comments or any feedback, ping us at <mail@sketchapp.com>!

@@ -11,7 +11,7 @@ This API is a very core layer which interfaces with Sketch itself. It's intentio
 
 ![api layers](https://cloud.githubusercontent.com/assets/206306/19645098/f7d3615c-99ea-11e6-962a-439fb553bf2d.png)
 
-Comments and suggestions for this API are welcome - send them to developers@sketchapp.com, or [file an issue](https://github.com/BohemianCoding/SketchAPI/issues) to discuss it.
+Comments and suggestions for this API are welcome - send them to mail@sketchapp.com, or [file an issue](https://github.com/BohemianCoding/SketchAPI/issues) to discuss it.
 
 ## Installation
 
