@@ -47,6 +47,18 @@ Create a new Shared Style with a specific name in a specific Document.
 
 A new SharedStyle
 
+## Create a new Style Instance
+
+```javascript
+var style = sharedStyle.createNewInstance()
+```
+
+Creates a new [Style](#style) linked to this SharedStyle, ready for inserting in a layer.
+
+### Returns
+
+A new [Style](#style)
+
 ## Get all the Instances
 
 ```javascript
