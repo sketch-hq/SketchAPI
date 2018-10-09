@@ -51,7 +51,7 @@ Lots of great community ideas for Sketch features are better implemented as plug
 * [Your First plugin](/guides/first-plugin) - Try creating a simple Hello World plugin.
 * [Extension API](/reference/) - Learn about the Sketch extensibility APIs.
 * [Extension Examples](https://github.com/BohemianCoding/SketchAPI/tree/develop/examples/) - A list of extension samples you can review and build.
-* [Developer Forum](http://sketchplugins.com) - A forum where plugin developers share their knowledge about all things Sketch.
+* [Developer Forum](https://sketchplugins.com) - A forum where plugin developers share their knowledge about all things Sketch.
 
 ### Help us improve
 
