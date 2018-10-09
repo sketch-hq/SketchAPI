@@ -1,6 +1,6 @@
 # Site settings
 title: Sketch Developers
-email: developer@sketchapp.com
+email: mail@sketchapp.com
 url: http://developer.sketchapp.com
 github_repo: https://github.com/BohemianCoding/SketchAPI/
 show_dir_listing: false
