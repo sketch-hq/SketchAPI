@@ -44,7 +44,9 @@ export class Flow extends WrappedObject {
         throw new Error(`Cannot create a flow from a ${className}`)
       }
       return Flow.fromNative(flow)
-    } else if (flow && (flow.target || flow.targetId)) {
+    }
+
+    if (flow && (flow.target || flow.targetId)) {
       return new Flow({
         sketchObject: MSFlowConnection.new(),
         ...flow,

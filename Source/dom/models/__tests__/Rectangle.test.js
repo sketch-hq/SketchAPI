@@ -1,6 +1,5 @@
 /* globals expect, test */
-import { Rectangle } from '../Rectangle'
-import { Group } from '../../layers/Group'
+import { Rectangle, Group } from '../..'
 
 test('should create a rectangle', () => {
   const r = new Rectangle(1, 2, 3, 4)

@@ -11,7 +11,10 @@ export class DataOverride extends WrappedObject {}
 
 DataOverride.type = Types.DataOverride
 DataOverride[DefinedPropertiesKey] = { ...WrappedObject[DefinedPropertiesKey] }
-Factory.registerClass(DataOverride, MSDataOverride)
+
+if (typeof MSDataOverride !== 'undefined') {
+  Factory.registerClass(DataOverride, MSDataOverride)
+}
 
 DataOverride.define('override', {
   get() {

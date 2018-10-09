@@ -1,13 +1,8 @@
-const api = require('./dom')
+import * as Async from './async'
+import * as DataSupplier from './data-supplier'
+import * as Settings from './settings'
+import * as UI from './ui'
 
-module.exports = api
+export * from './dom'
 
-module.exports.Async = require('./async')
-module.exports.DataSupplier = require('./data-supplier')
-module.exports.Settings = require('./settings')
-module.exports.UI = require('./ui')
-
-module.exports.version = {
-  sketch: MSApplicationMetadata.metadata().appVersion,
-  api: process.env.API_VERSION,
-}
+export { Async, DataSupplier, Settings, UI }

@@ -13,6 +13,22 @@ export const SaveModeType = {
   SaveAs: NSSaveAsOperation,
 }
 
+/* eslint-disable no-use-before-define, typescript/no-use-before-define */
+export function getDocuments() {
+  const app = NSDocumentController.sharedDocumentController()
+  return toArray(app.documents()).map(Document.fromNative.bind(Document))
+}
+
+export function getSelectedDocument() {
+  const app = NSDocumentController.sharedDocumentController()
+  const nativeDocument = app.currentDocument()
+  if (!nativeDocument) {
+    return undefined
+  }
+  return Document.fromNative(nativeDocument)
+}
+/* eslint-enable */
+
 /**
  * A Sketch document.
  */
@@ -74,17 +90,11 @@ export class Document extends WrappedObject {
   }
 
   static getDocuments() {
-    const app = NSDocumentController.sharedDocumentController()
-    return toArray(app.documents()).map(doc => Document.fromNative(doc))
+    return getDocuments()
   }
 
   static getSelectedDocument() {
-    const app = NSDocumentController.sharedDocumentController()
-    const nativeDocument = app.currentDocument()
-    if (!nativeDocument) {
-      return undefined
-    }
-    return Document.fromNative(nativeDocument)
+    return getSelectedDocument()
   }
 
   /**

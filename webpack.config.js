@@ -1,5 +1,6 @@
 const path = require('path')
 const webpack = require('webpack')
+const babelLoader = require('@skpm/builder/lib/utils/babelLoader').default({})
 
 const PRODUCTION =
   process.argv.indexOf('-p') !== -1 || process.env.NODE_ENV === 'production'
@@ -28,6 +29,9 @@ const CORE_MODULES = Object.keys(
   require('./core-modules/package.json').dependencies
 ).map(k => k.replace('@skpm/', ''))
 
+babelLoader.test = /\.(ts|js)$/
+babelLoader.use.options.presets.push('@babel/preset-typescript')
+
 const config = {
   resolve: {
     // Add '.ts' as resolvable extensions.
@@ -35,18 +39,8 @@ const config = {
   },
   module: {
     rules: [
-      // All files with a '.ts' or '.js' extension will be handled by 'awesome-typescript-loader'.
-      {
-        test: /\.(ts|js)$/,
-        use: [
-          {
-            loader: 'awesome-typescript-loader',
-            options: {
-              useCache: true,
-            },
-          },
-        ],
-      },
+      // All files with a '.ts' or '.js' extension will be handled by 'babel-loader'.
+      babelLoader,
     ],
   },
   plugins: [
@@ -81,3 +75,4 @@ module.exports = ENTRIES.map(({ entry, output }) => ({
 }))
 
 module.exports.config = config
+module.exports.CORE_MODULES = CORE_MODULES

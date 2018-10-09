@@ -1,6 +1,6 @@
 /* globals expect, test, coscript */
 
-import { createFiber } from '../async'
+import { createFiber } from '..'
 
 test('should create a fiber', () => {
   const fiber = createFiber()

@@ -1,7 +1,5 @@
 /* globals expect, test */
-import { Artboard } from '../../layers/Artboard'
-import { Group } from '../../layers/Group'
-import { AnimationType, BackTarget } from '../Flow'
+import { Artboard, Group, Flow } from '../..'
 
 test(
   'should create a flow between a layer and an artboard with a default animation',
@@ -89,7 +87,7 @@ test('should create a flow between a layer and an artboard with a specific anima
     parent: artboard,
     flow: {
       target: artboard2,
-      animationType: AnimationType.slideFromLeft,
+      animationType: Flow.AnimationType.slideFromLeft,
     },
   })
 
@@ -106,12 +104,12 @@ test('should create a back action', () => {
   const rect = new Group({
     parent: artboard,
     flow: {
-      target: BackTarget,
+      target: Flow.BackTarget,
     },
   })
 
   expect(rect.flow.toJSON()).toEqual({
-    targetId: BackTarget,
+    targetId: Flow.BackTarget,
     type: 'Flow',
     animationType: 'slideFromRight',
   })

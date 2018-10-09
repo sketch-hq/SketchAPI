@@ -1,6 +1,5 @@
 /* globals expect, test */
 /* eslint-disable no-param-reassign */
-
 import { Text, Shape } from '../..'
 import { createSharedStyle } from '../../../test-utils'
 
