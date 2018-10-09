@@ -1,7 +1,6 @@
 /* globals expect, test */
-
-import { Text, TextAlignmentMap, TextLineSpacingBehaviourMap } from '../Text'
-import { Rectangle } from '../../models/Rectangle'
+import { Text, Rectangle } from '../..'
+import { TextAlignmentMap, TextLineSpacingBehaviourMap } from '../Text'
 
 test('should create a Text layer', () => {
   const text = new Text()

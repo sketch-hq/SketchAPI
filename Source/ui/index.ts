@@ -1,7 +1,6 @@
-import * as UI from './UI'
+export * from './UI'
 
-module.exports = UI
-module.exports.version = {
+export const version = {
   sketch: MSApplicationMetadata.metadata().appVersion,
   api: process.env.API_VERSION,
 }

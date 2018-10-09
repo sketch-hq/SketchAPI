@@ -1,6 +1,5 @@
 /* globals expect, test */
-import { Group } from '../Group'
-import { Page } from '../Page'
+import { Group, Page } from '../..'
 
 test(
   'should return a Selection with the selected layers of the page',

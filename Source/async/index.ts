@@ -1,7 +1,6 @@
-import * as Async from './async'
+export * from './async'
 
-module.exports = Async
-module.exports.version = {
+export const version = {
   sketch: MSApplicationMetadata.metadata().appVersion,
   api: process.env.API_VERSION,
 }

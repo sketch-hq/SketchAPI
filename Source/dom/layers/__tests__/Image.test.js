@@ -1,6 +1,6 @@
 /* globals expect, test */
 
-import { Image } from '../Image'
+import { Image } from '../..'
 
 test('should create an empty image', (context, document) => {
   const page = document.selectedPage
