@@ -45,7 +45,7 @@ export class Group extends StyledLayer {
     if (this.isImmutable()) {
       return this
     }
-    this._object.resizeToFitChildrenWithOption_(0)
+    this._object.fixGeometryWithOptions_(0)
     return this
   }
 }
