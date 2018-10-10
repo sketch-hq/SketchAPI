@@ -138,7 +138,7 @@ Return an array of [Layer](#layer).
 ## Get all the Shared Layer Styles
 
 ```javascript
-var symbols = document.getSharedLayerStyles()
+var layerStyles = document.getSharedLayerStyles()
 ```
 
 A method to get all shared layer styles defined in the document.
@@ -166,7 +166,7 @@ Return a [SharedStyle](#sharedstyle) object or `undefined` if it's not found.
 ## Get all the Shared Text Styles
 
 ```javascript
-var symbols = document.getSharedTextStyles()
+var textStyles = document.getSharedTextStyles()
 ```
 
 A method to get all shared text styles defined in the document.
