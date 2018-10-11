@@ -13,7 +13,7 @@
     "@skpm/console": "0.1.7",
     "@skpm/events": "0.1.1",
     "@skpm/os": "0.1.1",
-    "@skpm/path": "0.1.0",
+    "@skpm/path": "0.1.1",
     "@skpm/timers": "0.1.0",
     "@skpm/util": "0.1.19"
   }
