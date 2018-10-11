@@ -1,20 +1,21 @@
 {
-  "unreleased": [
-    "[Improved] Make sure Document.save will not overwrite a folder by mistake",
-    "[Fixed] Using 0 as a shadow's value shouldn't fall back to the default",
-    "[Fixed] Logging an NSArray would print an array of `undefined` instead of the proper items",
-    "[Fixed] Adding a remote library for the first time will now return the library instead of an error",
-    "[Fixed] Adding a remote library will also download it right away",
-    "[Fixed] Printing a missing Library",
-    "[New] Data Plugin!",
-    "[New] Add support for SharedStyle",
-    "[New] Add support for Immutable native model objects",
-    "[New] Add `affectedLayer` for Override",
-    "[Improved] Allow storing a setting on an Override or DataOverride",
-    "[Improved] Settings will now be serialized even if they are of native types",
-    "[New] Add basic support for Shape path"
-  ],
+  "unreleased": [],
   "releases": {
+    "52.1": ["[New] Add basic support for Shape path"],
+    "52": [
+      "[Improved] Make sure Document.save will not overwrite a folder by mistake",
+      "[Fixed] Using 0 as a shadow's value shouldn't fall back to the default",
+      "[Fixed] Logging an NSArray would print an array of `undefined` instead of the proper items",
+      "[Fixed] Adding a remote library for the first time will now return the library instead of an error",
+      "[Fixed] Adding a remote library will also download it right away",
+      "[Fixed] Printing a missing Library",
+      "[New] Data Plugin!",
+      "[New] Add support for SharedStyle",
+      "[New] Add support for Immutable native model objects",
+      "[New] Add `affectedLayer` for Override",
+      "[Improved] Allow storing a setting on an Override or DataOverride",
+      "[Improved] Settings will now be serialized even if they are of native types"
+    ],
     "51": [
       "[New] Add `path` property to Document",
       "[New] Add `lastModifiedAt` property to Library",
