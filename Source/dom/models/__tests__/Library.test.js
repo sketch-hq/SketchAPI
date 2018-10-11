@@ -80,6 +80,18 @@ if (!isRunningOnJenkins()) {
     expect(lib.lastModifiedAt instanceof Date).toBe(true)
   })
 
+  test('should get the document of the library', () => {
+    const document = lib.getDocument()
+    expect(document.type).toBe('Document')
+    expect(document.path).toBe(
+      String(
+        NSString.stringWithString(
+          '~/Desktop/sketch-api-unit-tests-library.sketch'
+        ).stringByExpandingTildeInPath()
+      )
+    )
+  })
+
   test('should remove a library', () => {
     lib.remove()
 

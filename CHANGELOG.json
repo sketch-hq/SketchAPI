@@ -1,5 +1,7 @@
 {
-  "unreleased": [],
+  "unreleased": [
+    "[Improved] The document from a library will now have a proper path (either local path or the appcast URL)"
+  ],
   "releases": {
     "52.1": ["[New] Add basic support for Shape path"],
     "52": [

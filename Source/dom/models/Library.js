@@ -122,7 +122,13 @@ export class Library extends WrappedObject {
     if (!this._object.document() && !this._object.loadSynchronously()) {
       throw new Error(`could not get the document: ${this._object.status}`)
     }
-    return Document.fromNative(this._object.document())
+    const document = Document.fromNative(this._object.document())
+    if (this._object.appcastURL) {
+      document._tempURL = this._object.appcastURL()
+    } else if (this._object.locationOnDisk) {
+      document._tempURL = this._object.locationOnDisk()
+    }
+    return document
   }
 
   getImportableReferencesForDocument(document, objectType) {
