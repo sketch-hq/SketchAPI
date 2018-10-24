@@ -78,3 +78,33 @@ test('should fix the width', () => {
 
   expect(text.fixedWidth).toBe(true)
 })
+
+test('should return the fragments of a text layer', () => {
+  let text = new Text({
+    text: 'blah',
+  })
+  text.adjustToFit()
+
+  let { fragments } = text
+
+  expect(fragments.length).toBe(1)
+  expect(fragments[0].baselineOffset).toBe(3)
+  expect(Number(fragments[0].range.location)).toBe(0)
+  expect(Number(fragments[0].range.length)).toBe(4)
+  expect(fragments[0].rect.toJSON()).toEqual({
+    x: 0,
+    y: 0,
+    width: 10000000,
+    height: 14,
+  })
+
+  // https://github.com/BohemianCoding/SketchAPI/issues/144
+  text = new Text({
+    text: 'Test\nHello\n123\n',
+  })
+  text.adjustToFit()
+  // eslint-disable-next-line
+  fragments = text.fragments
+
+  expect(fragments.length).toBe(4)
+})

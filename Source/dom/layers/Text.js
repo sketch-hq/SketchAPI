@@ -107,7 +107,9 @@ export class Text extends StyledLayer {
       : textLayer.immutableModelObject().createTextStorage()
     const layout = storage.layoutManagers().firstObject()
     const glyphRangeStorage = NSMakeRange(0, 0)
-    const actualCharacterRangePtr = MOPointer.new(glyphRangeStorage)
+    const actualCharacterRangePtr = MOPointer.alloc().initWithValue(
+      glyphRangeStorage
+    )
     const charRange = NSMakeRange(0, storage.length())
     const drawingPoint = textLayer.drawingPointForText()
 
@@ -121,7 +123,9 @@ export class Text extends StyledLayer {
     let currentLocation = 0
     while (currentLocation < NSMaxRange(glyphRange)) {
       const effectiveRangeStorage = NSMakeRange(0, 0)
-      const effectiveRangePtr = MOPointer.new(effectiveRangeStorage)
+      const effectiveRangePtr = MOPointer.alloc().initWithValue(
+        effectiveRangeStorage
+      )
       const localRect = layout.lineFragmentRectForGlyphAtIndex_effectiveRange_(
         currentLocation,
         effectiveRangePtr
