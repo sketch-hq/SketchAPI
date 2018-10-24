@@ -100,11 +100,38 @@ test('should return the fragments of a text layer', () => {
 
   // https://github.com/BohemianCoding/SketchAPI/issues/144
   text = new Text({
-    text: 'Test\nHello\n123\n',
+    text: 'Test\nHello\n123\no',
   })
   text.adjustToFit()
   // eslint-disable-next-line
   fragments = text.fragments
 
   expect(fragments.length).toBe(4)
+  expect(fragments[0].baselineOffset).toBe(3)
+  expect(Number(fragments[0].range.location)).toBe(0)
+  expect(Number(fragments[0].range.length)).toBe(5)
+  expect(fragments[0].rect.toJSON()).toEqual({
+    x: 0,
+    y: 0,
+    width: 10000000,
+    height: 14,
+  })
+  expect(fragments[1].baselineOffset).toBe(3)
+  expect(Number(fragments[1].range.location)).toBe(5)
+  expect(Number(fragments[1].range.length)).toBe(6)
+  expect(fragments[1].rect.toJSON()).toEqual({
+    x: 0,
+    y: 14,
+    width: 10000000,
+    height: 14,
+  })
+  expect(fragments[2].baselineOffset).toBe(3)
+  expect(Number(fragments[2].range.location)).toBe(11)
+  expect(Number(fragments[2].range.length)).toBe(4)
+  expect(fragments[2].rect.toJSON()).toEqual({
+    x: 0,
+    y: 28,
+    width: 10000000,
+    height: 14,
+  })
 })
