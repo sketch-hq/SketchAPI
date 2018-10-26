@@ -9,7 +9,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@skpm/buffer": "^0.1.1",
+    "@skpm/buffer": "0.1.1",
     "@skpm/console": "0.1.7",
     "@skpm/events": "0.1.1",
     "@skpm/os": "0.1.1",
