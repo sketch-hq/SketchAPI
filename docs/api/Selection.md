@@ -29,7 +29,7 @@ selection.reduce((initial, layer) => {
 }, '')
 ```
 
-Even though a selection isn't an array, it defines `map`, `forEach` and `reduce` by just forwarding the arguments its layers. Those are just convenience methods to avoid getting the layers every time.
+Even though a selection isn't an array, it defines `map`, `forEach` and `reduce` by just forwarding the arguments to its layers. Those are just convenience methods to avoid getting the layers every time.
 
 ## Clear the Selection
 
@@ -37,7 +37,7 @@ Even though a selection isn't an array, it defines `map`, `forEach` and `reduce`
 selection.clear()
 ```
 
-Clear the selection.
+Clears the selection.
 
 ### Returns
 

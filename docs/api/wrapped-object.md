@@ -12,5 +12,5 @@ Each [Component](#document) follows the same API:
 - `Component.toJSON()` return a JSON object that represent the component
 - `new Component(properties)` creates a new native Sketch model object and returns a wrapped object
 - `componentInstance.sketchObject` returns the native Sketch model object.
-- `componentInstance.isImmutable()` returns if the component is wrapping an immutable version of a native Sketch model object. If that is the case, you won't be able to mutable the object (setting any property will be a no-op).
+- `componentInstance.isImmutable()` returns `true` if the component is wrapping an immutable version of a native Sketch model object. If that is the case, you won't be able to mutable the object (setting any property will be a no-op).
 - `componentInstance.type` returns a string that represent the type of the component. If it's `undefined`, it means that we couldn't match the native object and that we returned a really lightweight wrapper.
