@@ -22,7 +22,7 @@ A text layer. It is an instance of [Layer](#layer) so all the methods defined th
 | text<span class="arg-type">string</span>                                 | The string value of the text layer.                                                            |
 | alignment<span class="arg-type">[Alignment](#textalignment)</span>       | The alignment of the layer.                                                                    |
 | lineSpacing<span class="arg-type">[LineSpacing](#textlinespacing)</span> | The line spacing of the layer.                                                                 |
-| fixedWidth<span class="arg-type">boolean</span>                          | Wether the layer should have a fixed width or a flexible width.                                |
+| fixedWidth<span class="arg-type">boolean</span>                          | Whether the layer should have a fixed width or a flexible width.                                |
 
 ## Create a new Text
 

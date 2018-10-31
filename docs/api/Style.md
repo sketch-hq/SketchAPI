@@ -44,7 +44,7 @@ var isOutOfSync = style.isOutOfSyncWithSharedStyle(sharedStyle)
 
 ### Returns
 
-Wether the Style has some differences with a [Shared Style](#sharedstyle).
+Whether the Style has some differences with a [Shared Style](#sharedstyle).
 
 ## Sync the Style with a Shared Style
 
@@ -111,7 +111,7 @@ An object that represent the blur of the layer.
 | center<span class="arg-type">object</span>                       | The center of the blur (only used when the blur type is `Zoom`.   |
 | center.x<span class="arg-type">number</span>                     | The horizontal coordinate of the center of the blur.              |
 | center.y<span class="arg-type">number</span>                     | The vertical coordinate of the center of the blur.                |
-| enabled<span class="arg-type">boolean</span>                     | Wether the fill is active or not.                                 |
+| enabled<span class="arg-type">boolean</span>                     | Whether the fill is active or not.                                 |
 
 ## `Style.BlurType`
 
@@ -146,7 +146,7 @@ An object that represent a Fill.
 | fill<span class="arg-type">[FillType](#stylefilltype)</span> | The type of the fill.                            |
 | color<span class="arg-type">string</span>                    | A rgba hex-string (`#000000ff` is opaque black). |
 | gradient<span class="arg-type">[Gradient](#gradient)</span>  | The gradient of the fill.                        |
-| enabled<span class="arg-type">boolean</span>                 | Wether the fill is active or not.                |
+| enabled<span class="arg-type">boolean</span>                 | Whether the fill is active or not.                |
 
 ## `Style.FillType`
 
@@ -182,7 +182,7 @@ An object that represent a Border.
 | fillType<span class="arg-type">[FillType](#stylefilltype)</span>             | The type of the fill of the border.              |
 | color<span class="arg-type">string</span>                                    | A rgba hex-string (`#000000ff` is opaque black). |
 | gradient<span class="arg-type">[Gradient](#gradient)</span>                  | The gradient of the fill.                        |
-| enabled<span class="arg-type">boolean</span>                                 | Wether the border is active or not.              |
+| enabled<span class="arg-type">boolean</span>                                 | Whether the border is active or not.              |
 | position<span class="arg-type">[BorderPosition](#styleborderposition)</span> | The position of the border.                      |
 | thickness<span class="arg-type">number</span>                                | The thickness of the border.                     |
 
@@ -294,7 +294,7 @@ An object that represent a Shadow.
 | x<span class="arg-type">number</span>        | The horizontal offset of the shadow.             |
 | y<span class="arg-type">number</span>        | The vertical offset of the shadow.               |
 | spread<span class="arg-type">number</span>   | The spread of the shadow.                        |
-| enabled<span class="arg-type">boolean</span> | Wether the fill is active or not.                |
+| enabled<span class="arg-type">boolean</span> | Whether the fill is active or not.                |
 
 ## Gradient
 
