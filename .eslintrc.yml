@@ -35,7 +35,8 @@ globals:
   AppController: false
   MSImageData: false
   NSImage: false
-  MSModalInputSheet: false
+  NSTextField: false
+  NSSlider: false
   MSStyleFill: false
   MSStyleBorder: false
   MSColor: false
