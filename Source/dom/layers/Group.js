@@ -1,9 +1,9 @@
+import { toArray } from 'util'
 import { DefinedPropertiesKey } from '../WrappedObject'
 import { StyledLayer } from './StyledLayer'
 import { Rectangle } from '../models/Rectangle'
 import { Types } from '../enums'
 import { Factory } from '../Factory'
-import { toArray } from '../utils'
 import { wrapNativeObject, wrapObject } from '../wrapNativeObject'
 
 /**

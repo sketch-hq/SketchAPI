@@ -9,9 +9,8 @@
 const { execSync } = require('@skpm/child_process')
 
 // we will also need a function to transform an NSArray into a proper JavaScript array
-// the `sketch-utils` package contains such a function so let's just use it.
-// it was installed using `npm install --save sketch-utils`
-const toArray = require('sketch-utils/to-array')
+// the `util` package contains such a function so let's just use it.
+const { toArray } = require('util')
 
 // allows us to access the Sketch UI to post messages
 const UI = require('sketch/ui')

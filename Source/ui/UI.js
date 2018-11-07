@@ -1,6 +1,6 @@
 /* globals NSAlertFirstButtonReturn */
 
-import { isNativeObject } from '../dom/utils'
+import { isNativeObject } from 'util'
 
 function getPluginAlertIcon() {
   if (__command.pluginBundle() && __command.pluginBundle().alertIcon()) {

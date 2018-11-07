@@ -182,3 +182,24 @@ test('should lock the layer', () => {
   group.locked = true
   expect(group.locked).toBe(true)
 })
+
+test('should change the exportFormats', () => {
+  const group = new Group()
+  expect(group.exportFormats).toEqual([])
+
+  group.exportFormats = [
+    {
+      size: '2x',
+      suffix: '@2x',
+    },
+  ]
+  expect(group.exportFormats.map(e => e.toJSON())).toEqual([
+    {
+      type: 'ExportFormat',
+      fileFormat: 'png',
+      prefix: undefined,
+      suffix: '@2x',
+      size: '2x',
+    },
+  ])
+})

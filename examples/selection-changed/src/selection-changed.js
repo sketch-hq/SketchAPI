@@ -7,9 +7,8 @@
 const sketch = require('sketch')
 
 // we will also need a function to transform an NSArray into a proper JavaScript array
-// the `sketch-utils` package contains such a function so let's just use it.
-// it was installed using `npm install --save sketch-utils`
-const toArray = require('sketch-utils/to-array')
+// the `util` package contains such a function so let's just use it.
+const { toArray } = require('util')
 
 // ### Defining The Action Handler
 //

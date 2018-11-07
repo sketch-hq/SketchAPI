@@ -1,8 +1,8 @@
+import { isNativeObject } from 'util'
 import { DefinedPropertiesKey } from '../WrappedObject'
 import { Factory } from '../Factory'
 import { Layer } from './Layer'
 import { Style } from '../style/Style'
-import { isNativeObject } from '../utils'
 import { SharedStyle } from '../models/SharedStyle'
 import { wrapObject } from '../wrapNativeObject'
 

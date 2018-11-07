@@ -1,10 +1,10 @@
+import { toArray } from 'util'
 import { DefinedPropertiesKey } from '../WrappedObject'
 import { Artboard } from './Artboard'
 import { Rectangle } from '../models/Rectangle'
 import { Types } from '../enums'
 import { Factory } from '../Factory'
 import { wrapObject } from '../wrapNativeObject'
-import { toArray } from '../utils'
 
 /**
  * A Sketch symbol master.
