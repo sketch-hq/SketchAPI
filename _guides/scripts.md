@@ -67,7 +67,7 @@ All Plugins in Sketch have access to the following default variables:
 
 ## Trying Out Scripts
 
-The easiest way to try out simple scripts is via the **Plugins › Custom Plugin…** menu item.
+The easiest way to try out simple scripts is via the **Plugins › Run Script…** menu item.
 
 This gives you a text field into which you can type your script.
 
