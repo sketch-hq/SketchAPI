@@ -1,5 +1,7 @@
 {
-  "unreleased": ["[New] Add verticalAlignment to Text"],
+  "unreleased": [
+      "[New] Add `verticalAlignment` property to Text"
+  ],
   "releases": {
     "52.1": ["[New] Add basic support for Shape path"],
     "52": [
