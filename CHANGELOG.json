@@ -1,5 +1,7 @@
 {
-  "unreleased": [],
+  "unreleased": [
+    "[New] Add UI.getInputFromUser method and deprecate the other input methods"
+  ],
   "releases": {
     "52.1": ["[New] Add basic support for Shape path"],
     "52": [

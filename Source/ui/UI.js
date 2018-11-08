@@ -69,7 +69,7 @@ export function getInputFromUser(messageText, options, callback) {
   }
   /* eslint-enable */
 
-  const type = options.type || INPUT_TYPE.string
+  const type = String(options.type || INPUT_TYPE.string)
 
   if (options.type && !INPUT_TYPE[type]) {
     throw new Error('unknown input type')
