@@ -24,3 +24,5 @@ Slice.type = Types.Slice
 Slice[DefinedPropertiesKey] = { ...Layer[DefinedPropertiesKey] }
 Factory.registerClass(Slice, MSSliceLayer)
 Factory.registerClass(Slice, MSImmutableSliceLayer)
+
+delete Slice[DefinedPropertiesKey].flow
