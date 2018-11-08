@@ -94,7 +94,7 @@ test('should return the fragments of a text layer', () => {
   expect(fragments[0].rect.toJSON()).toEqual({
     x: 0,
     y: 0,
-    width: 10000000,
+    width: 22.6875,
     height: 14,
   })
 
@@ -113,7 +113,7 @@ test('should return the fragments of a text layer', () => {
   expect(fragments[0].rect.toJSON()).toEqual({
     x: 0,
     y: 0,
-    width: 10000000,
+    width: 22.0078125,
     height: 14,
   })
   expect(fragments[1].baselineOffset).toBe(3)
@@ -122,7 +122,7 @@ test('should return the fragments of a text layer', () => {
   expect(fragments[1].rect.toJSON()).toEqual({
     x: 0,
     y: 14,
-    width: 10000000,
+    width: 27.345703125,
     height: 14,
   })
   expect(fragments[2].baselineOffset).toBe(3)
@@ -131,7 +131,7 @@ test('should return the fragments of a text layer', () => {
   expect(fragments[2].rect.toJSON()).toEqual({
     x: 0,
     y: 28,
-    width: 10000000,
+    width: 20.021484375,
     height: 14,
   })
 })
