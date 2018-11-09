@@ -44,7 +44,7 @@ const VerticalTextAlignment = {
 }
 
 export const VerticalTextAlignmentMap = {
-  top: 0, // Visually left aligned
+  top: 0, // Visually top aligned
   center: 1, // Visually centered
   bottom: 2, // Visually bottom aligned
 }
