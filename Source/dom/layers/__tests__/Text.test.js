@@ -1,10 +1,7 @@
 /* globals expect, test */
 import { Text, Rectangle } from '../..'
-import {
-  TextAlignmentMap,
-  VerticalTextAlignmentMap,
-  TextLineSpacingBehaviourMap,
-} from '../Text'
+import { TextLineSpacingBehaviourMap } from '../Text'
+import { TextAlignmentMap } from '../../style/Text'
 
 test('should create a Text layer', () => {
   const text = new Text()
@@ -46,26 +43,6 @@ test('should change the text alignment', () => {
     // test setting by value
     text.alignment = TextAlignmentMap[key]
     expect(text.alignment).toBe(Text.Alignment[key])
-  })
-})
-
-test('should change the text vertical alignment', () => {
-  const text = new Text({
-    text: 'blah',
-    frame: new Rectangle(10, 10, 1000, 1000),
-  })
-
-  // default to top
-  expect(text.verticalAlignment).toBe(Text.VerticalAlignment.top)
-
-  Object.keys(Text.VerticalAlignment).forEach(key => {
-    // test setting by name
-    text.verticalAlignment = key
-    expect(text.verticalAlignment).toBe(Text.VerticalAlignment[key])
-
-    // test setting by value
-    text.verticalAlignment = VerticalTextAlignmentMap[key]
-    expect(text.verticalAlignment).toBe(Text.VerticalAlignment[key])
   })
 })
 

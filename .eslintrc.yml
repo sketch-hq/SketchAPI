@@ -110,6 +110,11 @@ globals:
   MSImmutableStarShape: false
   MSImmutableTriangleShape: false
   MSImmutableRectangleShape: false
+  NSParagraphStyleAttributeName: false
+  NSParagraphStyle: false
+  MSTextStyle: false
+  NSKernAttributeName: false
+  NSFontAttributeName: false
 
 rules:
   ###########

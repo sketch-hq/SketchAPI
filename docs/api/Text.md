@@ -92,7 +92,6 @@ Enumeration of the alignments of the text.
 | `right`   | Visually right aligned                                            |
 | `center`  | Visually centered                                                 |
 | `justify` | Fully-justified. The last line in a paragraph is natural-aligned. |
-| `natural` | Indicates the default alignment for script                        |
 
 ## `Text.VerticalAlignment`
 
