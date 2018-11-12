@@ -1,3 +1,5 @@
+import { Color } from './Color'
+
 export const TextAlignmentMap = {
   left: 0, // Visually left aligned
   right: 1, // Visually right aligned
@@ -227,6 +229,33 @@ export function defineTextStyleProperties(Style) {
         // eslint-disable-next-line
         paragraphStyle.lineSpacing = paragraphSpacing
         return paragraphStyle
+      })
+    },
+  })
+
+  Style.define('textColor', {
+    get() {
+      const attributes = getAttributes(this._object)
+      if (!attributes) {
+        return undefined
+      }
+
+      const raw = attributes.MSAttributedStringColorAttribute
+
+      return Color.from(raw || '#000000FF').toString()
+    },
+
+    set(color) {
+      if (this.isImmutable()) {
+        return
+      }
+
+      const _color = Color.from(color)
+
+      updateAttributes(this._object, attributes => {
+        // eslint-disable-next-line
+        attributes.MSAttributedStringColorAttribute = _color._object
+        return attributes
       })
     },
   })

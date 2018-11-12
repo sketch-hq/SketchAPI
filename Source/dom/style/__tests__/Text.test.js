@@ -96,3 +96,16 @@ test('should change the paragraph spacing', () => {
   text.style.paragraphSpacing = 0
   expect(text.style.paragraphSpacing).toBe(0)
 })
+
+test('should change the text color', () => {
+  const text = new Text({
+    text: 'blah',
+    frame: new Rectangle(10, 10, 1000, 1000),
+  })
+
+  // default to black
+  expect(text.style.textColor).toBe('#000000ff')
+
+  text.style.textColor = '#123'
+  expect(text.style.textColor).toBe('#112233ff')
+})
