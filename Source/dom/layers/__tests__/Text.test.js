@@ -49,14 +49,14 @@ test('should change the text alignment', () => {
   })
 })
 
-test('should change the text alignment', () => {
+test('should change the text vertical alignment', () => {
   const text = new Text({
     text: 'blah',
     frame: new Rectangle(10, 10, 1000, 1000),
   })
 
-  // default to left
-  expect(text.alignment).toBe(Text.Alignment.left)
+  // default to top
+  expect(text.verticalAlignment).toBe(Text.VerticalAlignment.top)
 
   Object.keys(Text.VerticalAlignment).forEach(key => {
     // test setting by name
