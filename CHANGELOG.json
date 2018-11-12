@@ -1,5 +1,6 @@
 {
   "unreleased": [
+    "[New] Add `verticalAlignment` property to Text",
     "[New] Add UI.getInputFromUser method and deprecate the other input methods"
   ],
   "releases": {

@@ -36,6 +36,19 @@ export const TextAlignmentMap = {
   natural: 4, // Indicates the default alignment for script
 }
 
+// Mapping between vertical text alignment names and values.
+const VerticalTextAlignment = {
+  top: 'top', // Visually top aligned
+  center: 'center', // Visually center aligned
+  bottom: 'bottom', // Visually bottom aligned
+}
+
+export const VerticalTextAlignmentMap = {
+  top: 0, // Visually top aligned
+  center: 1, // Visually centered
+  bottom: 2, // Visually bottom aligned
+}
+
 /**
  * Represents a text layer.
  */
@@ -229,6 +242,41 @@ Text.define('alignment', {
     }
     const translated = TextAlignmentMap[mode]
     this._object.textAlignment =
+      typeof translated !== 'undefined' ? translated : mode
+  },
+})
+
+Text.VerticalAlignment = VerticalTextAlignment
+Text.define('verticalAlignment', {
+  /**
+   * The vertical alignment of the layer.
+   * This will be one of the values: "top", "center", "bottom".
+   *
+   * @return {string} The vertical alignment mode.
+   */
+  get() {
+    const raw = this._object.verticalAlignment()
+    return (
+      Object.keys(VerticalTextAlignmentMap).find(
+        key => VerticalTextAlignmentMap[key] === raw
+      ) || raw
+    )
+  },
+
+  /**
+   * Set the vertical alignment of the layer.
+   *
+   * The mode supplied can be a string or a number.
+   * If it's a string, it should be one of the values: "top", "center", "bottom";
+   *
+   * @param {string} mode The vertical alignment mode to use.
+   */
+  set(mode) {
+    if (this.isImmutable()) {
+      return
+    }
+    const translated = VerticalTextAlignmentMap[mode]
+    this._object.verticalAlignment =
       typeof translated !== 'undefined' ? translated : mode
   },
 })
