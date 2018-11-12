@@ -71,10 +71,28 @@ test('should change the line height', () => {
 
   text.style.lineHeight = 10
   expect(text.style.lineHeight).toBe(10)
+  expect(text.style.paragraphSpacing).toBe(0)
 
   text.style.lineHeight = null
   expect(text.style.lineHeight).toBe(null)
 
   text.style.lineHeight = 0
   expect(text.style.lineHeight).toBe(null)
+})
+
+test('should change the paragraph spacing', () => {
+  const text = new Text({
+    text: 'blah',
+    frame: new Rectangle(10, 10, 1000, 1000),
+  })
+
+  // default to 0
+  expect(text.style.paragraphSpacing).toBe(0)
+
+  text.style.paragraphSpacing = 10
+  expect(text.style.paragraphSpacing).toBe(10)
+  expect(text.style.lineHeight).toBe(null)
+
+  text.style.paragraphSpacing = 0
+  expect(text.style.paragraphSpacing).toBe(0)
 })

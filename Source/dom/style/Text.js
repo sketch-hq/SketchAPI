@@ -204,4 +204,30 @@ export function defineTextStyleProperties(Style) {
       })
     },
   })
+
+  Style.define('paragraphSpacing', {
+    get() {
+      const paragraphStyle = getParagraphStyle(this._object)
+
+      if (!paragraphStyle) {
+        return undefined
+      }
+
+      return Number(paragraphStyle.paragraphSpacing())
+    },
+
+    set(paragraphSpacing) {
+      if (this.isImmutable()) {
+        return
+      }
+
+      updateParagraphStyle(this._object, paragraphStyle => {
+        // eslint-disable-next-line
+        paragraphStyle.paragraphSpacing = paragraphSpacing
+        // eslint-disable-next-line
+        paragraphStyle.lineSpacing = paragraphSpacing
+        return paragraphStyle
+      })
+    },
+  })
 }
