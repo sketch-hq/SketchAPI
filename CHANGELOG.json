@@ -2,8 +2,7 @@
   "unreleased": [
     "[New] Add support for Slices",
     "[New] Add `exportFormats` property on Layer",
-    "[Improved] No need to specified the type when there is no choice (like Document.pages can only contain Pages, Layer.exportFormats can only contain ExportFormats, etc.)",
-    "[New] Add UI.getInputFromUser method and deprecate the other input methods"
+    "[Improved] No need to specify the type when there is no choice (like Document.pages can only contain Pages, Layer.exportFormats can only contain ExportFormats, etc.)"
   ],
   "releases": {
     "52.1": ["[New] Add basic support for Shape path"],
