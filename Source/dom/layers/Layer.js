@@ -210,7 +210,7 @@ Layer.define('name', {
 
 Layer.define('selected', {
   /**
-   * Wether the layer is selected or not.
+   * Whether the layer is selected or not.
    *
    * @return {Boolean} selected.
    */

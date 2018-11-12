@@ -36,47 +36,61 @@ Show an alert with a custom title and message. The alert is modal, so it will st
 | title<span class="arg-type">string - required</span> | The title of the alert.  |
 | text<span class="arg-type">string - required</span>  | The text of the message. |
 
-## Get a string input from the user
+## Get an input from the user
 
-```js
-var string = UI.getStringFromUser("What's your name?", 'Appleseed')
-```
-
-Shows a simple input sheet which displays a message, and asks for a single string input.
-
-| Parameters                                             |                                        |
-| ------------------------------------------------------ | -------------------------------------- |
-| message<span class="arg-type">string - required</span> | The prompt message to show.            |
-| initialValue<span class="arg-type">string</span>       | The initial value of the input string. |
-
-### Returns
-
-The string that the user input, or "null" (String) if the user clicked 'Cancel'.
-
-## Make the user select an option
-
-```js
-var options = ['Sketch']
-var selection = UI.getSelectionFromUser(
-  "What's your favorite design tool?",
-  options
+```javascript
+UI.getInputFromUser(
+  "What's your name?",
+  {
+    initialValue: 'Appleseed',
+  },
+  (err, value) => {
+    if (err) {
+      // most likely the user canceled the input
+      return
+    }
+  }
 )
-
-var ok = selection[2]
-var value = options[selection[1]]
-if (ok) {
-  // do something
-}
 ```
 
-Shows an input sheet which displays a popup with a series of options, from which the user is asked to choose.
+```javascript
+UI.getInputFromUser("What's your favorite design tool?", {
+  type: UI.INPUT_TYPE.selection
+  possibleValues: ['Sketch']
+}, (err, value) => {
+  if (err) {
+    // most likely the user canceled the input
+    return
+  }
+})
+```
 
-| Parameters                                             |                                            |
-| ------------------------------------------------------ | ------------------------------------------ |
-| message<span class="arg-type">string - required</span> | The prompt message to show.                |
-| items<span class="arg-type">string[] - required</span> | An array of option items.                  |
-| selectedIndex<span class="arg-type">number</span>      | The index of the item to select initially. |
+```javascript
+UI.getInputFromUser(
+  "What's the opacity of the new layer?",
+  {
+    type: UI.INPUT_TYPE.slider,
+  },
+  (err, value) => {
+    if (err) {
+      // most likely the user canceled the input
+      return
+    }
+  }
+)
+```
 
-### Returns
+Shows a simple input sheet which displays a message, and asks for an input from the user.
 
-An array with a response code, the selected index and `ok`. The code will be one of `NSAlertFirstButtonReturn` or `NSAlertSecondButtonReturn`. The selection will be the integer index of the selected item. `ok` is the boolean `code === NSAlertFirstButtonReturn`.
+| Parameters                                                                              |                                                                                                                                                                                          |
+| --------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| message<span class="arg-type">string - required</span>                                  | The prompt message to show.                                                                                                                                                              |
+| options<span class="arg-type">object</span>                                             | Options to customize the input sheet. Most of the options depends on the type of the input.                                                                                              |
+| option.description<span class="arg-type">string</span>                                  | A secondary text to describe with more details the input.                                                                                                                                |
+| option.type<span class="arg-type">[Input Type](#inputtype)</span>                       | The type of the input.                                                                                                                                                                   |
+| option.initialValue<span class="arg-type">string                                        | number</span>                                                                                                                                                                            | The initial value of the input. |
+| option.possibleValues<span class="arg-type">string[] - required with a selection</span> | The possible choices that the user can make. Only used for a `selection` input.                                                                                                          |
+| option.maxValue<span class="arg-type">number</span>                                     | The maximal value. Only used for a `slider` input. Defaults to `1`.                                                                                                                      |
+| option.minValue<span class="arg-type">number</span>                                     | The maximal value. Only used for a `slider` input. Defaults to `0`.                                                                                                                      |
+| option.increment<span class="arg-type">number</span>                                    | Restricts the possible values to multiple of the increment. Only used for a `slider` input.                                                                                              |
+| callback<span class="arg-type">function</span>                                          | A function called after the user entered the input. It is called with an `Error` if the user canceled the input and a `string` or `number` depending on the input type (or `undefined`). |

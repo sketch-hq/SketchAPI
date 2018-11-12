@@ -44,7 +44,7 @@ test('should remove a page', (context, document) => {
   expect(document.pages[0]).toEqual(page)
 })
 
-test('should return wether a page is selected or not', (context, document) => {
+test('should return whether a page is selected or not', (context, document) => {
   const page = document.selectedPage
   expect(page.selected).toBe(true)
 
