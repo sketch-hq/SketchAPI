@@ -168,4 +168,40 @@ export function defineTextStyleProperties(Style) {
       })
     },
   })
+
+  Style.define('lineHeight', {
+    get() {
+      const paragraphStyle = getParagraphStyle(this._object)
+
+      if (!paragraphStyle) {
+        return undefined
+      }
+
+      const fixedLineHeight = paragraphStyle.minimumLineHeight()
+
+      if (
+        fixedLineHeight > 0 &&
+        fixedLineHeight == paragraphStyle.maximumLineHeight()
+      ) {
+        return Number(fixedLineHeight)
+      }
+      return null
+    },
+
+    set(lineHeight) {
+      if (this.isImmutable()) {
+        return
+      }
+
+      updateParagraphStyle(this._object, paragraphStyle => {
+        // eslint-disable-next-line
+        paragraphStyle.minimumLineHeight = lineHeight
+        // eslint-disable-next-line
+        paragraphStyle.maximumLineHeight = lineHeight
+        // eslint-disable-next-line
+        paragraphStyle.lineSpacing = 0
+        return paragraphStyle
+      })
+    },
+  })
 }

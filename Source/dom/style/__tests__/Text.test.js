@@ -59,3 +59,22 @@ test('should change the kerning', () => {
   text.style.kerning = null
   expect(text.style.kerning).toBe(null)
 })
+
+test('should change the line height', () => {
+  const text = new Text({
+    text: 'blah',
+    frame: new Rectangle(10, 10, 1000, 1000),
+  })
+
+  // default to null (auto)
+  expect(text.style.lineHeight).toBe(null)
+
+  text.style.lineHeight = 10
+  expect(text.style.lineHeight).toBe(10)
+
+  text.style.lineHeight = null
+  expect(text.style.lineHeight).toBe(null)
+
+  text.style.lineHeight = 0
+  expect(text.style.lineHeight).toBe(null)
+})
