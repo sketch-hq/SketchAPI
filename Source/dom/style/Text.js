@@ -139,4 +139,33 @@ export function defineTextStyleProperties(Style) {
         typeof translated !== 'undefined' ? translated : mode
     },
   })
+
+  Style.define('kerning', {
+    get() {
+      const attributes = getAttributes(this._object)
+      if (!attributes) {
+        return undefined
+      }
+
+      const raw = attributes[NSKernAttributeName]
+
+      if (raw === null) {
+        return null
+      }
+
+      return Number(raw)
+    },
+
+    set(kerning) {
+      if (this.isImmutable()) {
+        return
+      }
+
+      updateAttributes(this._object, attributes => {
+        // eslint-disable-next-line
+        attributes[NSKernAttributeName] = kerning
+        return attributes
+      })
+    },
+  })
 }

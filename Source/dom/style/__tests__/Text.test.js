@@ -43,3 +43,19 @@ test('should change the text vertical alignment', () => {
     expect(text.style.verticalAlignment).toBe(Text.VerticalAlignment[key])
   })
 })
+
+test('should change the kerning', () => {
+  const text = new Text({
+    text: 'blah',
+    frame: new Rectangle(10, 10, 1000, 1000),
+  })
+
+  // default to null (auto)
+  expect(text.style.kerning).toBe(null)
+
+  text.style.kerning = 1
+  expect(text.style.kerning).toBe(1)
+
+  text.style.kerning = null
+  expect(text.style.kerning).toBe(null)
+})
