@@ -1,6 +1,7 @@
 {
   "unreleased": [
-      "[New] Add `verticalAlignment` property to Text"
+    "[New] Add `verticalAlignment` property to Text",
+    "[New] Add UI.getInputFromUser method and deprecate the other input methods"
   ],
   "releases": {
     "52.1": ["[New] Add basic support for Shape path"],

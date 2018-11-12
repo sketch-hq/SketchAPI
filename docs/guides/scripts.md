@@ -26,11 +26,11 @@ Using it, you can write the logic of your Plugin in JavaScript, but can call the
 
 The basics are as follows:
 
-* you write your JavaScript code as you normally would
-* using the bridge, you can obtain Objective-C objects from the host application (in this case Sketch), or from the system itself
-* basic Objective-C objects that have a JavaScript equivalent (such as strings and numbers), can typically be used in the same way as their JS versions
-* you can read and write properties on custom Objective-C objects as you would in JS
-* you can call methods on custom Objective-C objects, using either the familiar JavaScript syntax, or the Objective-C square bracket syntax.
+- you write your JavaScript code as you normally would
+- using the bridge, you can obtain Objective-C objects from the host application (in this case Sketch), or from the system itself
+- basic Objective-C objects that have a JavaScript equivalent (such as strings and numbers), can typically be used in the same way as their JS versions
+- you can read and write properties on custom Objective-C objects as you would in JS
+- you can call methods on custom Objective-C objects, using either the familiar JavaScript syntax, or the Objective-C square bracket syntax.
 
 (See the [More On CocoaScript](/guides/cocoascript/) page for more details.)
 
@@ -58,16 +58,16 @@ var onRun = function(context) {
 
 All Plugins in Sketch have access to the following default variables:
 
-* **command**: an [`MSPluginCommand`](/reference/class/MSPluginCommand/) object representing the script command currently executing
-* **document**: an [`MSDocument`](/reference/class/MSDocument/) object representing the current document
-* **plugin**: an [`MSPluginBundle`](/reference/class/MSPluginBundle/) object representing the plugin bundle containing the currently executing script
-* **scriptPath**: an `NSString` containing the full path to the currently executing script
-* **scriptURL**: like **scriptPath**, but as an NSURL object
-* **selection**, an `NSArray` of the layer(s) that are selected in the current document; each item of this array is an [`MSLayer`](/reference/class/MSLayer/) object
+- **command**: an [`MSPluginCommand`](/reference/class/MSPluginCommand/) object representing the script command currently executing
+- **document**: an [`MSDocument`](/reference/class/MSDocument/) object representing the current document
+- **plugin**: an [`MSPluginBundle`](/reference/class/MSPluginBundle/) object representing the plugin bundle containing the currently executing script
+- **scriptPath**: an `NSString` containing the full path to the currently executing script
+- **scriptURL**: like **scriptPath**, but as an NSURL object
+- **selection**, an `NSArray` of the layer(s) that are selected in the current document; each item of this array is an [`MSLayer`](/reference/class/MSLayer/) object
 
 ## Trying Out Scripts
 
-The easiest way to try out simple scripts is via the **Plugins › Custom Plugin…** menu item.
+The easiest way to try out simple scripts is via the **Plugins › Run Script…** menu item.
 
 This gives you a text field into which you can type your script.
 

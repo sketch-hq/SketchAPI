@@ -114,48 +114,69 @@ export class Text extends StyledLayer {
    * @return {array} The line fragments. Each one is a dictionary containing a rectangle, and a baseline offset.
    */
   get fragments() {
+    const { text } = this
     const textLayer = this._object
     const storage = this.isImmutable()
       ? textLayer.createTextStorage()
       : textLayer.immutableModelObject().createTextStorage()
-    const layout = storage.layoutManagers().firstObject()
-    const glyphRangeStorage = NSMakeRange(0, 0)
-    const actualCharacterRangePtr = MOPointer.new(glyphRangeStorage)
-    const charRange = NSMakeRange(0, storage.length())
-    const drawingPoint = textLayer.drawingPointForText()
 
-    layout.glyphRangeForCharacterRange_actualCharacterRange_(
-      charRange,
-      actualCharacterRangePtr
-    )
-    const glyphRange = actualCharacterRangePtr.value()
+    const layout = storage.layoutManagers().firstObject()
+    const textContainer = layout.textContainers().firstObject()
+
+    const numberOfGlyphs = layout.numberOfGlyphs()
+    const drawingPoint = textLayer.drawingPointForText()
 
     const fragments = []
     let currentLocation = 0
-    while (currentLocation < NSMaxRange(glyphRange)) {
-      const effectiveRangeStorage = NSMakeRange(0, 0)
-      const effectiveRangePtr = MOPointer.new(effectiveRangeStorage)
-      const localRect = layout.lineFragmentRectForGlyphAtIndex_effectiveRange_(
+    while (currentLocation < numberOfGlyphs) {
+      // Get end of line index
+      const lineRangeStorage = NSMakeRange(0, 0)
+      const lineRangePtr = MOPointer.alloc().initWithValue(lineRangeStorage)
+
+      layout.lineFragmentRectForGlyphAtIndex_effectiveRange(
         currentLocation,
-        effectiveRangePtr
+        lineRangePtr
       )
+
+      const range = lineRangePtr.value()
+      const endOfLineIndex = NSMaxRange(range)
+
+      //	Get bounding rect
+      //	Also ignore empty line ends and hard line breaks
+      let rangeLength =
+        Math.min(endOfLineIndex, numberOfGlyphs) - currentLocation
+
+      const lineText = text.substr(currentLocation, rangeLength)
+      const trimmedLineText = lineText.trimRight()
+
+      rangeLength -= lineText.length - trimmedLineText.length
+
+      const glyphRange = NSMakeRange(currentLocation, rangeLength)
+      const lineRect = layout.boundingRectForGlyphRange_inTextContainer(
+        glyphRange,
+        textContainer
+      )
+
       const rect = new Rectangle(
-        localRect.origin.x + drawingPoint.x,
-        localRect.origin.y + drawingPoint.y,
-        localRect.size.width,
-        localRect.size.height
+        lineRect.origin.x + drawingPoint.x,
+        lineRect.origin.y + drawingPoint.y,
+        lineRect.size.width,
+        lineRect.size.height
       )
-      const effectiveRange = effectiveRangePtr.value()
+
+      // get baseline offset
       const baselineOffset = layout
         .typesetter()
-        .baselineOffsetInLayoutManager_glyphIndex_(layout, currentLocation)
+        .baselineOffsetInLayoutManager_glyphIndex(layout, currentLocation)
 
       fragments.push({
         rect,
         baselineOffset,
-        range: effectiveRange,
+        range,
       })
-      currentLocation = NSMaxRange(effectiveRange) + 1
+
+      // move to the next line
+      currentLocation = endOfLineIndex
     }
 
     return fragments
