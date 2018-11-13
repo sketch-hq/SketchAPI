@@ -171,6 +171,10 @@ A dictionary describing the menu layout for the commands in this Plugin.
 
 See [Plugins Menu](#plugins-menu) for more details on the contents of this dictionary, and how the menu for each Plugin is built.
 
+#### `scope`
+
+If present, and set to `"application"`, enables the plugin to be run when there are no documents open in Sketch.
+
 ## Plugin Commands
 
 A Plugin defines one or more commands for the user to execute.
