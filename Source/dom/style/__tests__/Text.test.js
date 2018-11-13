@@ -109,3 +109,16 @@ test('should change the text color', () => {
   text.style.textColor = '#123'
   expect(text.style.textColor).toBe('#112233ff')
 })
+
+test('should change the font size', () => {
+  const text = new Text({
+    text: 'blah',
+    frame: new Rectangle(10, 10, 1000, 1000),
+  })
+
+  // default to 12
+  expect(text.style.fontSize).toBe(12)
+
+  text.style.fontSize = 40
+  expect(text.style.fontSize).toBe(40)
+})

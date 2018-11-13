@@ -259,4 +259,32 @@ export function defineTextStyleProperties(Style) {
       })
     },
   })
+
+  Style.define('fontSize', {
+    get() {
+      const attributes = getAttributes(this._object)
+      if (!attributes) {
+        return undefined
+      }
+
+      const font = attributes[NSFontAttributeName]
+
+      return Number(font.pointSize())
+    },
+
+    set(fontSize) {
+      if (this.isImmutable()) {
+        return
+      }
+
+      updateAttributes(this._object, attributes => {
+        const font = attributes[NSFontAttributeName]
+        // eslint-disable-next-line
+        attributes[
+          NSFontAttributeName
+        ] = NSFontManager.sharedFontManager().convertFont_toSize(font, fontSize)
+        return attributes
+      })
+    },
+  })
 }

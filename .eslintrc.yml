@@ -115,6 +115,7 @@ globals:
   MSTextStyle: false
   NSKernAttributeName: false
   NSFontAttributeName: false
+  NSFontManager: false
 
 rules:
   ###########
