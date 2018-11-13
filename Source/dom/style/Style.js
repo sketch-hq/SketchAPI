@@ -219,8 +219,8 @@ Style.define('styleType', {
   get() {
     return this._object.textStyle() &&
       this._object.textStyle().attributes()[NSFontAttributeName]
-      ? StyleTypeMap.Text
-      : StyleTypeMap.Layer
+      ? StyleType.Text
+      : StyleType.Layer
   },
 })
 
