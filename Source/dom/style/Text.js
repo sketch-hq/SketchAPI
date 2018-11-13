@@ -316,4 +316,49 @@ export function defineTextStyleProperties(Style) {
       })
     },
   })
+
+  Style.define('textTransform', {
+    get() {
+      const attributes = getAttributes(this._object)
+      if (!attributes) {
+        return undefined
+      }
+
+      const transform = attributes.MSAttributedStringTextTransformAttribute
+
+      if (!transform) {
+        return 'none'
+      }
+      if (transform == 1) {
+        return 'uppercase'
+      }
+      if (transform == 2) {
+        return 'lowercase'
+      }
+
+      return undefined
+    },
+
+    set(transform) {
+      if (this.isImmutable()) {
+        return
+      }
+
+      const _transform = String(transform)
+      let attribute = null
+      if (_transform === 'uppercase') {
+        attribute = 1
+      } else if (_transform === 'lowercase') {
+        attribute = 2
+      } else if (_transform !== 'none' && transform) {
+        attribute = transform
+      }
+
+      updateAttributes(this._object, attributes => {
+        // eslint-disable-next-line
+        attributes.MSAttributedStringTextTransformAttribute = attribute
+        return attributes
+      })
+    },
+  })
 }

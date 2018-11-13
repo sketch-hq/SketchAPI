@@ -139,3 +139,22 @@ test('should change the font name', () => {
   text.style.fontName = 'non-existent-font-name'
   expect(text.style.fontName).toBe('Helvetica')
 })
+
+test('should change the text transform', () => {
+  const text = new Text({
+    text: 'blah',
+    frame: new Rectangle(10, 10, 1000, 1000),
+  })
+
+  // default to 'none'
+  expect(text.style.textTransform).toBe('none')
+
+  text.style.textTransform = 'uppercase'
+  expect(text.style.textTransform).toBe('uppercase')
+
+  text.style.textTransform = 'lowercase'
+  expect(text.style.textTransform).toBe('lowercase')
+
+  text.style.textTransform = 'none'
+  expect(text.style.textTransform).toBe('none')
+})
