@@ -96,6 +96,20 @@ Enumeration of the alignments of the text.
 | `justify` | Fully-justified. The last line in a paragraph is natural-aligned. |
 | `natural` | Indicates the default alignment for script                        |
 
+## `Text.VerticalAlignment`
+
+```javascript
+Text.VerticalAlignment.center
+```
+
+Enumeration of the vertical alignments of the text.
+
+| Value    |                              |
+| -------- | ---------------------------- |
+| `top`    | Visually top aligned         |
+| `center` | Visually vertically centered |
+| `bottom` | Visually bottom aligned      |
+
 ## `Text.LineSpacing`
 
 ```javascript
