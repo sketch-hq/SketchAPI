@@ -79,6 +79,22 @@ export class Layer extends WrappedObject {
     return this
   }
 
+  getParentPage() {
+    return wrapNativeObject(this._object.parentPage())
+  }
+
+  getParentArtboard() {
+    return wrapNativeObject(this._object.parentArtboard())
+  }
+
+  getParentSymbolMaster() {
+    return wrapNativeObject(this._object.parentSymbol())
+  }
+
+  getParentShape() {
+    return wrapNativeObject(this._object.parentShape())
+  }
+
   // @deprecated
   localRectToPageRect(rect) {
     console.warn(
