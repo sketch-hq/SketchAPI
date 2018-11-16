@@ -33,6 +33,11 @@ export class Artboard extends Group {
     this._object.resizeToFitChildren()
     return this
   }
+
+  // eslint-disable-next-line
+  getParentArtboard() {
+    return undefined
+  }
 }
 
 Artboard.type = Types.Artboard

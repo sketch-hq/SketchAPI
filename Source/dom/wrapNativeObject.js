@@ -13,6 +13,10 @@ import { Factory } from './Factory'
  * @return {WrappedObject} A javascript object (subclass of WrappedObject), which represents the Sketch object we were given.
  */
 export function wrapNativeObject(nativeObject) {
+  if (!nativeObject) {
+    return undefined
+  }
+
   let JsClass = Factory._nativeToBox[String(nativeObject.class())]
   if (!JsClass) {
     console.warn(`no mapped wrapper for ${String(nativeObject.class())}`)
@@ -24,7 +28,7 @@ export function wrapNativeObject(nativeObject) {
 
 export function wrapObject(object, defaultType) {
   if (!object) {
-    return object
+    return undefined
   }
 
   if (isNativeObject(object) && !isObject(object)) {

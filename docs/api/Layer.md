@@ -99,3 +99,23 @@ Move this layer backward in its parent.
 #### Returns
 
 The current layer (useful if you want to chain the calls).
+
+## Accessing the layer's hierarchy
+
+```javascript
+// access the page the layer is in
+layer.getParentPage()
+page.getParentPage() === undefined
+
+// access the artboard the layer is in (if any)
+layer.getParentArtboard()
+artboard.getParentArtboard() === undefined
+
+// access the symbol naster the layer is in (if any)
+layer.getParentSymbolMaster()
+
+// access the shape the layer is in (if any)
+layer.getParentShape()
+```
+
+In addition to the direct `parent`, you can access a few other entities in the hierarchy of the layer.
