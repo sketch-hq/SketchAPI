@@ -10,5 +10,5 @@ test('should create an empty image', (context, document) => {
   log(image)
   expect(image.type).toBe('Image')
   expect(image.parent).toEqual(page)
-  expect(image.image).toBe(undefined)
+  expect(image.image).toBe(null)
 })
