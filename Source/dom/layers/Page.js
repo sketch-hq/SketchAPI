@@ -68,6 +68,11 @@ export class Page extends Group {
     // doesn't do anything
     return this
   }
+
+  // eslint-disable-next-line
+  getParentPage() {
+    return undefined
+  }
 }
 
 Page.type = Types.Page

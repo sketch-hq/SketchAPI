@@ -28,7 +28,7 @@ test('should create a new HotSpot from a layer', (context, document) => {
 
   const hotspot = HotSpot.fromLayer(rect)
 
-  expect(rect.flow).toBe(null)
+  expect(rect.flow).toBe(undefined)
 
   expect(hotspot.type).toEqual('HotSpot')
   expect(hotspot.flow.toJSON()).toEqual({
