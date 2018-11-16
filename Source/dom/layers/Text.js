@@ -190,10 +190,8 @@ Text.define('text', {
       return
     }
     const object = this._object
-    object.stringValue = value
-    if (!object.nameIsFixed()) {
-      object.name = value
-    }
+    object.replaceTextPreservingAttributeRanges(value)
+    object.updateNameFromStorage()
   },
 })
 

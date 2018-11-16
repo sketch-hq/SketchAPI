@@ -288,35 +288,6 @@ export function defineTextStyleProperties(Style) {
     },
   })
 
-  Style.define('fontName', {
-    get() {
-      const attributes = getAttributes(this._object)
-      if (!attributes) {
-        return undefined
-      }
-
-      const font = attributes[NSFontAttributeName]
-
-      return String(font.fontName())
-    },
-
-    set(fontName) {
-      if (this.isImmutable()) {
-        return
-      }
-
-      updateAttributes(this._object, attributes => {
-        const font = attributes[NSFontAttributeName]
-        // eslint-disable-next-line
-        attributes[NSFontAttributeName] = NSFont.fontWithName_size(
-          fontName,
-          font.pointSize()
-        )
-        return attributes
-      })
-    },
-  })
-
   Style.define('textTransform', {
     get() {
       const attributes = getAttributes(this._object)
@@ -357,6 +328,38 @@ export function defineTextStyleProperties(Style) {
       updateAttributes(this._object, attributes => {
         // eslint-disable-next-line
         attributes.MSAttributedStringTextTransformAttribute = attribute
+        return attributes
+      })
+    },
+  })
+
+  Style.define('fontFamily', {
+    get() {
+      const attributes = getAttributes(this._object)
+      if (!attributes) {
+        return undefined
+      }
+
+      const font = attributes[NSFontAttributeName]
+
+      return String(font.familyName())
+    },
+
+    set(fontFamily) {
+      if (this.isImmutable()) {
+        return
+      }
+
+      updateAttributes(this._object, attributes => {
+        const font = attributes[NSFontAttributeName]
+        // eslint-disable-next-line
+        attributes[
+          NSFontAttributeName
+        ] = NSFontManager.sharedFontManager().convertFont_toFamily(
+          font,
+          fontFamily
+        )
+
         return attributes
       })
     },

@@ -123,23 +123,6 @@ test('should change the font size', () => {
   expect(text.style.fontSize).toBe(40)
 })
 
-test('should change the font name', () => {
-  const text = new Text({
-    text: 'blah',
-    frame: new Rectangle(10, 10, 1000, 1000),
-  })
-
-  // default to 'Helvetica'
-  expect(text.style.fontName).toBe('Helvetica')
-
-  text.style.fontName = 'Arial'
-  expect(text.style.fontName).toBe('ArialMT')
-
-  // non existent font will default to Helvetica
-  text.style.fontName = 'non-existent-font-name'
-  expect(text.style.fontName).toBe('Helvetica')
-})
-
 test('should change the text transform', () => {
   const text = new Text({
     text: 'blah',
@@ -157,4 +140,21 @@ test('should change the text transform', () => {
 
   text.style.textTransform = 'none'
   expect(text.style.textTransform).toBe('none')
+})
+
+test('should change the font family', () => {
+  const text = new Text({
+    text: 'blah',
+    frame: new Rectangle(10, 10, 1000, 1000),
+  })
+
+  // default to 'Helvetica'
+  expect(text.style.fontFamily).toBe('Helvetica')
+
+  text.style.fontFamily = 'Arial'
+  expect(text.style.fontFamily).toBe('Arial')
+
+  // non existent font will keep the previous one
+  text.style.fontFamily = 'non-existent-font-name'
+  expect(text.style.fontFamily).toBe('Arial')
 })
