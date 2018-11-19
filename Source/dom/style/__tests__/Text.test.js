@@ -158,3 +158,83 @@ test('should change the font family', () => {
   text.style.fontFamily = 'non-existent-font-name'
   expect(text.style.fontFamily).toBe('Arial')
 })
+
+test('should change the font weight', () => {
+  const text = new Text({
+    text: 'blah',
+    frame: new Rectangle(10, 10, 1000, 1000),
+  })
+
+  // default to 5
+  expect(text.style.fontWeight).toBe(5)
+
+  text.style.fontWeight = 9
+  expect(text.style.fontFamily).toBe('Helvetica')
+  expect(text.style.fontWeight).toBe(9)
+
+  text.style.fontWeight = 5
+  expect(text.style.fontFamily).toBe('Helvetica')
+  expect(text.style.fontWeight).toBe(5)
+
+  // non existent font weight will pick the closest one
+  text.style.fontWeight = 12
+  expect(text.style.fontFamily).toBe('Helvetica')
+  expect(text.style.fontWeight).toBe(9)
+})
+
+test('should change the font style', () => {
+  const text = new Text({
+    text: 'blah',
+    frame: new Rectangle(10, 10, 1000, 1000),
+  })
+
+  // default to undefined
+  expect(text.style.fontStyle).toBe(undefined)
+
+  text.style.fontStyle = 'italic'
+  expect(text.style.fontStyle).toBe('italic')
+
+  text.style.fontStyle = 'normal'
+  expect(text.style.fontStyle).toBe(undefined)
+})
+
+// TODO: can't seem to find a font with small caps
+// test('should change the font variant', () => {
+//   const text = new Text({
+//     text: 'blah',
+//     frame: new Rectangle(10, 10, 1000, 1000),
+//     style: {
+//       fontFamily: 'SF Compact Display',
+//     },
+//   })
+
+//   expect(text.style.fontFamily).toBe('SF Compact Display')
+
+//   // default to undefined
+//   expect(text.style.fontVariant).toBe(undefined)
+
+//   text.style.fontVariant = 'small-caps'
+//   expect(text.style.fontVariant).toBe('small-caps')
+
+//   text.style.fontVariant = 'normal'
+//   expect(text.style.fontVariant).toBe(undefined)
+// })
+
+test('should change the font stretch', () => {
+  const text = new Text({
+    text: 'blah',
+    frame: new Rectangle(10, 10, 1000, 1000),
+  })
+
+  // default to undefined
+  expect(text.style.fontStretch).toBe(undefined)
+
+  // but not all font families tho
+  text.style.fontFamily = 'Helvetica Neue'
+  text.style.fontWeight = 9
+  text.style.fontStretch = 'condensed'
+  expect(text.style.fontStretch).toBe('condensed')
+
+  text.style.fontStretch = 'normal'
+  expect(text.style.fontStretch).toBe(undefined)
+})

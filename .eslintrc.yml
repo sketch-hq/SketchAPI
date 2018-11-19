@@ -116,6 +116,15 @@ globals:
   NSKernAttributeName: false
   NSFontAttributeName: false
   NSFontManager: false
+  NSBoldFontMask: false
+  NSItalicFontMask: false
+  NSSmallCapsFontMask: false
+  NSCompressedFontMask: false
+  NSCondensedFontMask: false
+  NSExpandedFontMask: false
+  NSNarrowFontMask: false
+  NSPosterFontMask: false
+  MSDefaultTextStyle: false
 
 rules:
   ###########

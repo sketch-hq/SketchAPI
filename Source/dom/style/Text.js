@@ -55,7 +55,9 @@ function updateAttributes(_object, fn) {
   let textStyle = _object.textStyle()
 
   if (!textStyle) {
-    textStyle = MSTextStyle.styleWithAttributes({})
+    textStyle = MSTextStyle.styleWithAttributes(
+      MSDefaultTextStyle.defaultTextStyle()
+    )
     _object.setTextStyle(textStyle)
   }
 
@@ -269,6 +271,10 @@ export function defineTextStyleProperties(Style) {
 
       const font = attributes[NSFontAttributeName]
 
+      if (!font) {
+        return undefined
+      }
+
       return Number(font.pointSize())
     },
 
@@ -279,10 +285,17 @@ export function defineTextStyleProperties(Style) {
 
       updateAttributes(this._object, attributes => {
         const font = attributes[NSFontAttributeName]
+        const newFont = NSFontManager.sharedFontManager().convertFont_toSize(
+          font,
+          fontSize
+        )
+
+        if (!newFont) {
+          return attributes
+        }
+
         // eslint-disable-next-line
-        attributes[
-          NSFontAttributeName
-        ] = NSFontManager.sharedFontManager().convertFont_toSize(font, fontSize)
+        attributes[NSFontAttributeName] = newFont
         return attributes
       })
     },
@@ -342,6 +355,10 @@ export function defineTextStyleProperties(Style) {
 
       const font = attributes[NSFontAttributeName]
 
+      if (!font) {
+        return undefined
+      }
+
       return String(font.familyName())
     },
 
@@ -352,16 +369,257 @@ export function defineTextStyleProperties(Style) {
 
       updateAttributes(this._object, attributes => {
         const font = attributes[NSFontAttributeName]
-        // eslint-disable-next-line
-        attributes[
-          NSFontAttributeName
-        ] = NSFontManager.sharedFontManager().convertFont_toFamily(
+        const newFont = NSFontManager.sharedFontManager().convertFont_toFamily(
           font,
           fontFamily
         )
+
+        if (!newFont) {
+          return attributes
+        }
+
+        // eslint-disable-next-line
+        attributes[NSFontAttributeName] = newFont
 
         return attributes
       })
     },
   })
+
+  Style.define('fontWeight', {
+    get() {
+      const attributes = getAttributes(this._object)
+      if (!attributes) {
+        return undefined
+      }
+
+      const font = attributes[NSFontAttributeName]
+
+      if (!font) {
+        return undefined
+      }
+
+      return Number(NSFontManager.sharedFontManager().weightOfFont(font))
+    },
+
+    set(fontWeight) {
+      if (this.isImmutable()) {
+        return
+      }
+
+      updateAttributes(this._object, attributes => {
+        let font = attributes[NSFontAttributeName]
+        const manager = NSFontManager.sharedFontManager()
+
+        // remove the bold trait so that we can actually change the weight
+        font = manager.convertFont_toNotHaveTrait(font, NSBoldFontMask)
+
+        const newFont = manager.fontWithFamily_traits_weight_size(
+          font.familyName(),
+          manager.traitsOfFont(font),
+          fontWeight,
+          font.pointSize()
+        )
+
+        if (!newFont) {
+          return attributes
+        }
+
+        // eslint-disable-next-line
+        attributes[NSFontAttributeName] = newFont
+
+        return attributes
+      })
+    },
+  })
+
+  Style.define('fontStyle', {
+    get() {
+      const attributes = getAttributes(this._object)
+      if (!attributes) {
+        return undefined
+      }
+
+      const font = attributes[NSFontAttributeName]
+
+      if (!font) {
+        return undefined
+      }
+
+      return NSFontManager.sharedFontManager().fontNamed_hasTraits(
+        font.fontName(),
+        NSItalicFontMask
+      )
+        ? 'italic'
+        : undefined
+    },
+
+    set(fontStyle) {
+      if (this.isImmutable()) {
+        return
+      }
+
+      updateAttributes(this._object, attributes => {
+        const font = attributes[NSFontAttributeName]
+        const manager = NSFontManager.sharedFontManager()
+
+        let newFont
+
+        if (fontStyle === 'normal' || !fontStyle) {
+          newFont = manager.convertFont_toNotHaveTrait(font, NSItalicFontMask)
+        } else if (fontStyle === 'italic' || fontStyle === 'oblique') {
+          newFont = manager.convertFont_toHaveTrait(font, NSItalicFontMask)
+        } else {
+          throw new Error('Unknown font style')
+        }
+
+        if (!newFont) {
+          return attributes
+        }
+
+        // eslint-disable-next-line
+        attributes[NSFontAttributeName] = newFont
+
+        return attributes
+      })
+    },
+  })
+
+  Style.define('fontVariant', {
+    get() {
+      const attributes = getAttributes(this._object)
+      if (!attributes) {
+        return undefined
+      }
+
+      const font = attributes[NSFontAttributeName]
+
+      if (!font) {
+        return undefined
+      }
+
+      return NSFontManager.sharedFontManager().fontNamed_hasTraits(
+        font.fontName(),
+        NSSmallCapsFontMask
+      )
+        ? 'small-caps'
+        : undefined
+    },
+
+    set(fontVariant) {
+      if (this.isImmutable()) {
+        return
+      }
+
+      updateAttributes(this._object, attributes => {
+        const font = attributes[NSFontAttributeName]
+        const manager = NSFontManager.sharedFontManager()
+
+        let newFont
+
+        if (fontVariant === 'normal' || !fontVariant) {
+          newFont = manager.convertFont_toNotHaveTrait(
+            font,
+            NSSmallCapsFontMask
+          )
+        } else if (fontVariant === 'small-caps') {
+          newFont = manager.convertFont_toHaveTrait(font, NSSmallCapsFontMask)
+        } else {
+          throw new Error('Unknown font variant')
+        }
+
+        if (!newFont) {
+          return attributes
+        }
+
+        // eslint-disable-next-line
+        attributes[NSFontAttributeName] = newFont
+
+        return attributes
+      })
+    },
+  })
+
+  /* eslint-disable no-bitwise */
+  Style.define('fontStretch', {
+    get() {
+      const attributes = getAttributes(this._object)
+      if (!attributes) {
+        return undefined
+      }
+
+      const font = attributes[NSFontAttributeName]
+
+      if (!font) {
+        return undefined
+      }
+
+      const traits = NSFontManager.sharedFontManager().traitsOfFont(font)
+
+      if ((traits & NSCompressedFontMask) == NSCompressedFontMask) {
+        return 'compressed'
+      }
+      if ((traits & NSCondensedFontMask) == NSCondensedFontMask) {
+        return 'condensed'
+      }
+      if ((traits & NSExpandedFontMask) == NSExpandedFontMask) {
+        return 'expanded'
+      }
+      if ((traits & NSNarrowFontMask) == NSNarrowFontMask) {
+        return 'narrow'
+      }
+      if ((traits & NSPosterFontMask) == NSPosterFontMask) {
+        return 'poster'
+      }
+      return undefined
+    },
+
+    set(fontVariant) {
+      if (this.isImmutable()) {
+        return
+      }
+
+      updateAttributes(this._object, attributes => {
+        const font = attributes[NSFontAttributeName]
+        const manager = NSFontManager.sharedFontManager()
+
+        let newFont
+
+        if (fontVariant === 'normal' || !fontVariant) {
+          newFont = manager.convertFont_toNotHaveTrait(
+            font,
+            NSCompressedFontMask |
+              NSCondensedFontMask |
+              NSExpandedFontMask |
+              NSNarrowFontMask |
+              NSPosterFontMask
+          )
+        } else if (fontVariant === 'compressed') {
+          newFont = manager.convertFont_toHaveTrait(font, NSCompressedFontMask)
+        } else if (fontVariant === 'condensed') {
+          newFont = manager.convertFont_toHaveTrait(font, NSCondensedFontMask)
+        } else if (fontVariant === 'expanded') {
+          newFont = manager.convertFont_toHaveTrait(font, NSExpandedFontMask)
+        } else if (fontVariant === 'narrow') {
+          newFont = manager.convertFont_toHaveTrait(font, NSNarrowFontMask)
+        } else if (fontVariant === 'poster') {
+          newFont = manager.convertFont_toHaveTrait(font, NSPosterFontMask)
+        } else {
+          throw new Error('Unknown font stretch')
+        }
+
+        if (!newFont) {
+          return attributes
+        }
+
+        // eslint-disable-next-line
+        attributes[NSFontAttributeName] = newFont
+
+        return attributes
+      })
+    },
+  })
+  /* eslint-enable */
+
+  // TODO: text-decoration
 }
