@@ -14,6 +14,11 @@ Since not all Sketch users are Plugin developers, it didn't make sense to give t
 
 If a plugin crashes sketch, we disable plugins when relaunching sketch to make sure users don't end up in an infinite crashing loop. When developing a plugin, it might crash Sketch before you fix the bug and this behavior can become annoying as you need to go to the plugin menu to re-enable you plugin. You can use `defaults write com.bohemiancoding.sketch3 disableAutomaticSafeMode true` to disable that behavior.
 
+If you’re using the Beta version, you’ll need to run `defaults write com.bohemiancoding.sketch3.beta disableAutomaticSafeMode true`.
+
+If you want to restore the default behaviour, run `defaults delete com.bohemiancoding.sketch3 disableAutomaticSafeMode`.
+
+
 ## Listen to all actions in the Action API
 
 <p class="warning">
@@ -25,7 +30,7 @@ When working with the new [Action API](/reference/action/) you might want to lis
 To do that, use the `actionWildcardsAllowed` preference. If set to `YES`, scripts are allowed to register a wildcard handler for events. This is off by default, and it could have a bad effect on performance, so handle it with care.
 
 ```shell
-defaults write ~/Library/Preferences/com.bohemiancoding.sketch3.plist actionWildcardsAllowed -bool YES
+defaults write com.bohemiancoding.sketch3 actionWildcardsAllowed -bool YES
 ```
 
 Once you do that, you can tell your Plugin to call a method for every action by adding a `*` key to your `handlers.actions` object in `manifest.json`:
@@ -47,7 +52,7 @@ Once you do that, you can tell your Plugin to call a method for every action by 
 For performance reasons, Sketch caches the contents of the Plugins folder. This is very convenient for users, since Plugins run very fast, but makes your life hard if you’re a developer. That’s why we added a preference to disable this caching mechanism and force Sketch to always reload a Plugin’s code from disk:
 
 ```shell
-defaults write ~/Library/Preferences/com.bohemiancoding.sketch3.plist AlwaysReloadScript -bool YES
+defaults write com.bohemiancoding.sketch3 AlwaysReloadScript -bool YES
 ```
 
 If you enable this, as soon as you save your script it will be ready for testing in Sketch (bye bye relaunching it just to test a small change!)
@@ -68,6 +73,7 @@ And if you so happen to also have WebView JavaScript that doesn't require reboot
 
 `find ... | grep -v 'web\.js' | entr ...`
 
+
 ## Inspect a WebView
 
 If your plugin is using a WebView, chances are that you will need to inspect it at some point.
@@ -78,24 +84,38 @@ To do so, you need to add the preference:
 defaults write com.bohemiancoding.sketch3 WebKitDeveloperExtras -bool true
 ```
 
-Then you can simply right-click on your WebView and click on `Inspect`. The inspector should show up.
+Then you can simply right-click on your webview and click on `Inspect`. The inspector should show up.
+
+
+## Define a code editor for Plugins
+
+Have a favorite code editor? You can tell Sketch to use it to edit Plugins. For example, if you use [Atom](https://atom.io) you can do this:
+
+```shell
+defaults write com.bohemiancoding.sketch3 "Plugin Editor" "/usr/local/bin/atom"
+```
+
+and relaunch Sketch, you'll see a couple of new menu items:
+
+* Go to Preferences › Plugins and right click any of the listed Plugins. You'll see an 'Edit Code…' option that will launch your editor with the selected Plugin's code open.
+* Open the Plugins menu, and you'll see an 'Edit Plugins…' option, that will launch your editor with the whole 'Plugins' folder open.
 
 ## Tweak the 'Custom Plugin…' editor
 
 To change the font used in the 'Run Script…' panel (for example, to use SF Mono) you can do this:
 
 ```shell
-defaults write ~/Library/Preferences/com.bohemiancoding.sketch3.plist scriptEditorFont "SF Mono Light"
+defaults write com.bohemiancoding.sketch3 scriptEditorFont "SF Mono Light"
 ```
 
 To go back to the default (Andale Mono), just delete the preference:
 
 ```shell
-defaults delete ~/Library/Preferences/com.bohemiancoding.sketch3.plist scriptEditorFont
+defaults delete com.bohemiancoding.sketch3 scriptEditorFont
 ```
 
 To change the font size for the editor (the default is 12), use
 
 ```shell
-defaults write ~/Library/Preferences/com.bohemiancoding.sketch3.plist scriptEditorFontSize 14
+defaults write com.bohemiancoding.sketch3 scriptEditorFontSize 14
 ```
