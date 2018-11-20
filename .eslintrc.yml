@@ -125,6 +125,18 @@ globals:
   NSNarrowFontMask: false
   NSPosterFontMask: false
   MSDefaultTextStyle: false
+  NSUnderlineStyleAttributeName: false
+  NSStrikethroughStyleAttributeName: false
+  NSUnderlineStyleNone: false
+  NSUnderlineStyleSingle: false
+  NSUnderlineStyleThick: false
+  NSUnderlineStyleDouble: false
+  NSUnderlineStylePatternSolid: false
+  NSUnderlineStylePatternDot: false
+  NSUnderlineStylePatternDash: false
+  NSUnderlineStylePatternDashDot: false
+  NSUnderlineStylePatternDashDotDot: false
+  NSUnderlineStyleByWord: false
 
 rules:
   ###########

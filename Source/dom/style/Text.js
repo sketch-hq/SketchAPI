@@ -84,14 +84,91 @@ function updateParagraphStyle(_object, fn) {
   })
 }
 
+/* eslint-disable no-bitwise */
+function hasTrait(mask, trait) {
+  return (mask & trait) == trait
+}
+
+function getUnderline(underline) {
+  if (!underline) {
+    return undefined
+  }
+
+  const traits = []
+
+  if (hasTrait(underline, NSUnderlineStyleDouble)) {
+    traits.push('double')
+  } else if (hasTrait(underline, NSUnderlineStyleThick)) {
+    traits.push('thick')
+  } else if (hasTrait(underline, NSUnderlineStyleSingle)) {
+    traits.push('single')
+  }
+  if (hasTrait(underline, NSUnderlineStylePatternDashDotDot)) {
+    traits.push('dash-dot-dot')
+  } else if (hasTrait(underline, NSUnderlineStylePatternDashDot)) {
+    traits.push('dash-dot')
+  } else if (hasTrait(underline, NSUnderlineStylePatternDash)) {
+    traits.push('dash')
+  } else if (hasTrait(underline, NSUnderlineStylePatternDot)) {
+    traits.push('dot')
+  }
+
+  if (hasTrait(underline, NSUnderlineStyleByWord)) {
+    traits.push('by-word')
+  }
+
+  if (!traits.length) {
+    return undefined
+  }
+
+  return traits.join(' ')
+}
+
+function getTrait(trait) {
+  switch (trait) {
+    case 'single':
+      return NSUnderlineStyleSingle
+    case 'thick':
+      return NSUnderlineStyleThick
+    case 'double':
+      return NSUnderlineStyleDouble
+    case 'solid':
+      return NSUnderlineStylePatternSolid
+    case 'dot':
+      return NSUnderlineStylePatternDot
+    case 'dash':
+      return NSUnderlineStylePatternDash
+    case 'dash-dot':
+      return NSUnderlineStylePatternDashDot
+    case 'dash-dot-dot':
+      return NSUnderlineStylePatternDashDotDot
+    case 'by-word':
+      return NSUnderlineStyleByWord
+    default:
+      throw new Error(`unknown underline trait ${trait}`)
+  }
+}
+
+function getUnderlineMask(underline) {
+  if (!underline || underline === 'none') {
+    return NSUnderlineStyleNone
+  }
+  const traits = underline.split(' ')
+  let mask = getTrait(traits[0])
+  traits.forEach((trait, i) => {
+    if (i === 0) {
+      // already used to init
+      return
+    }
+    mask |= getTrait(trait)
+  })
+
+  return mask
+}
+/* eslint-enable */
+
 export function defineTextStyleProperties(Style) {
   Style.define('alignment', {
-    /**
-     * The alignment of the layer.
-     * This will be one of the values: "left", "center", "right", "justified", "natural".
-     *
-     * @return {string} The alignment mode.
-     */
     get() {
       const paragraphStyle = getParagraphStyle(this._object)
 
@@ -166,7 +243,7 @@ export function defineTextStyleProperties(Style) {
       }
 
       updateAttributes(this._object, attributes => {
-        // eslint-disable-next-line
+        // eslint-disable-next-line no-param-reassign
         attributes[NSKernAttributeName] = kerning
         return attributes
       })
@@ -198,11 +275,11 @@ export function defineTextStyleProperties(Style) {
       }
 
       updateParagraphStyle(this._object, paragraphStyle => {
-        // eslint-disable-next-line
+        // eslint-disable-next-line no-param-reassign
         paragraphStyle.minimumLineHeight = lineHeight
-        // eslint-disable-next-line
+        // eslint-disable-next-line no-param-reassign
         paragraphStyle.maximumLineHeight = lineHeight
-        // eslint-disable-next-line
+        // eslint-disable-next-line no-param-reassign
         paragraphStyle.lineSpacing = 0
         return paragraphStyle
       })
@@ -226,9 +303,9 @@ export function defineTextStyleProperties(Style) {
       }
 
       updateParagraphStyle(this._object, paragraphStyle => {
-        // eslint-disable-next-line
+        // eslint-disable-next-line no-param-reassign
         paragraphStyle.paragraphSpacing = paragraphSpacing
-        // eslint-disable-next-line
+        // eslint-disable-next-line no-param-reassign
         paragraphStyle.lineSpacing = paragraphSpacing
         return paragraphStyle
       })
@@ -255,7 +332,7 @@ export function defineTextStyleProperties(Style) {
       const _color = Color.from(color)
 
       updateAttributes(this._object, attributes => {
-        // eslint-disable-next-line
+        // eslint-disable-next-line no-param-reassign
         attributes.MSAttributedStringColorAttribute = _color._object
         return attributes
       })
@@ -294,7 +371,7 @@ export function defineTextStyleProperties(Style) {
           return attributes
         }
 
-        // eslint-disable-next-line
+        // eslint-disable-next-line no-param-reassign
         attributes[NSFontAttributeName] = newFont
         return attributes
       })
@@ -339,7 +416,7 @@ export function defineTextStyleProperties(Style) {
       }
 
       updateAttributes(this._object, attributes => {
-        // eslint-disable-next-line
+        // eslint-disable-next-line no-param-reassign
         attributes.MSAttributedStringTextTransformAttribute = attribute
         return attributes
       })
@@ -378,7 +455,7 @@ export function defineTextStyleProperties(Style) {
           return attributes
         }
 
-        // eslint-disable-next-line
+        // eslint-disable-next-line no-param-reassign
         attributes[NSFontAttributeName] = newFont
 
         return attributes
@@ -425,7 +502,7 @@ export function defineTextStyleProperties(Style) {
           return attributes
         }
 
-        // eslint-disable-next-line
+        // eslint-disable-next-line no-param-reassign
         attributes[NSFontAttributeName] = newFont
 
         return attributes
@@ -477,7 +554,7 @@ export function defineTextStyleProperties(Style) {
           return attributes
         }
 
-        // eslint-disable-next-line
+        // eslint-disable-next-line no-param-reassign
         attributes[NSFontAttributeName] = newFont
 
         return attributes
@@ -532,7 +609,7 @@ export function defineTextStyleProperties(Style) {
           return attributes
         }
 
-        // eslint-disable-next-line
+        // eslint-disable-next-line no-param-reassign
         attributes[NSFontAttributeName] = newFont
 
         return attributes
@@ -540,7 +617,6 @@ export function defineTextStyleProperties(Style) {
     },
   })
 
-  /* eslint-disable no-bitwise */
   Style.define('fontStretch', {
     get() {
       const attributes = getAttributes(this._object)
@@ -556,19 +632,19 @@ export function defineTextStyleProperties(Style) {
 
       const traits = NSFontManager.sharedFontManager().traitsOfFont(font)
 
-      if ((traits & NSCompressedFontMask) == NSCompressedFontMask) {
+      if (hasTrait(traits, NSCompressedFontMask)) {
         return 'compressed'
       }
-      if ((traits & NSCondensedFontMask) == NSCondensedFontMask) {
+      if (hasTrait(traits, NSCondensedFontMask)) {
         return 'condensed'
       }
-      if ((traits & NSExpandedFontMask) == NSExpandedFontMask) {
+      if (hasTrait(traits, NSExpandedFontMask)) {
         return 'expanded'
       }
-      if ((traits & NSNarrowFontMask) == NSNarrowFontMask) {
+      if (hasTrait(traits, NSNarrowFontMask)) {
         return 'narrow'
       }
-      if ((traits & NSPosterFontMask) == NSPosterFontMask) {
+      if (hasTrait(traits, NSPosterFontMask)) {
         return 'poster'
       }
       return undefined
@@ -586,6 +662,7 @@ export function defineTextStyleProperties(Style) {
         let newFont
 
         if (fontVariant === 'normal' || !fontVariant) {
+          /* eslint-disable no-bitwise */
           newFont = manager.convertFont_toNotHaveTrait(
             font,
             NSCompressedFontMask |
@@ -594,6 +671,7 @@ export function defineTextStyleProperties(Style) {
               NSNarrowFontMask |
               NSPosterFontMask
           )
+          /* eslint-enable */
         } else if (fontVariant === 'compressed') {
           newFont = manager.convertFont_toHaveTrait(font, NSCompressedFontMask)
         } else if (fontVariant === 'condensed') {
@@ -612,14 +690,63 @@ export function defineTextStyleProperties(Style) {
           return attributes
         }
 
-        // eslint-disable-next-line
+        // eslint-disable-next-line no-param-reassign
         attributes[NSFontAttributeName] = newFont
 
         return attributes
       })
     },
   })
-  /* eslint-enable */
 
-  // TODO: text-decoration
+  Style.define('textUnderline', {
+    get() {
+      const attributes = getAttributes(this._object)
+      if (!attributes) {
+        return undefined
+      }
+
+      return getUnderline(attributes[NSUnderlineStyleAttributeName])
+    },
+
+    set(textUnderline) {
+      if (this.isImmutable()) {
+        return
+      }
+
+      updateAttributes(this._object, attributes => {
+        // eslint-disable-next-line no-param-reassign
+        attributes[NSUnderlineStyleAttributeName] = getUnderlineMask(
+          textUnderline
+        )
+
+        return attributes
+      })
+    },
+  })
+
+  Style.define('textStrikethrough', {
+    get() {
+      const attributes = getAttributes(this._object)
+      if (!attributes) {
+        return undefined
+      }
+
+      return getUnderline(attributes[NSStrikethroughStyleAttributeName])
+    },
+
+    set(textStrikethrough) {
+      if (this.isImmutable()) {
+        return
+      }
+
+      updateAttributes(this._object, attributes => {
+        // eslint-disable-next-line no-param-reassign
+        attributes[NSStrikethroughStyleAttributeName] = getUnderlineMask(
+          textStrikethrough
+        )
+
+        return attributes
+      })
+    },
+  })
 }

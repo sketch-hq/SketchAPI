@@ -238,3 +238,53 @@ test('should change the font stretch', () => {
   text.style.fontStretch = 'normal'
   expect(text.style.fontStretch).toBe(undefined)
 })
+
+test('should change the text underline', () => {
+  const text = new Text({
+    text: 'blah',
+    frame: new Rectangle(10, 10, 1000, 1000),
+  })
+
+  // default to undefined
+  expect(text.style.textUnderline).toBe(undefined)
+
+  text.style.textUnderline = 'single'
+  expect(text.style.textUnderline).toBe('single')
+
+  text.style.textUnderline = 'none'
+  expect(text.style.textUnderline).toBe(undefined)
+
+  text.style.textUnderline = 'double dot'
+  expect(text.style.textUnderline).toBe('double dot')
+
+  text.style.textUnderline = 'dot double'
+  expect(text.style.textUnderline).toBe('double dot')
+
+  text.style.textUnderline = 'thick dash-dot'
+  expect(text.style.textUnderline).toBe('thick dash-dot')
+})
+
+test('should change the text strikethrough', () => {
+  const text = new Text({
+    text: 'blah',
+    frame: new Rectangle(10, 10, 1000, 1000),
+  })
+
+  // default to undefined
+  expect(text.style.textStrikethrough).toBe(undefined)
+
+  text.style.textStrikethrough = 'single'
+  expect(text.style.textStrikethrough).toBe('single')
+
+  text.style.textStrikethrough = 'none'
+  expect(text.style.textStrikethrough).toBe(undefined)
+
+  text.style.textStrikethrough = 'double dot'
+  expect(text.style.textStrikethrough).toBe('double dot')
+
+  text.style.textStrikethrough = 'dot double'
+  expect(text.style.textStrikethrough).toBe('double dot')
+
+  text.style.textStrikethrough = 'thick dash-dot'
+  expect(text.style.textStrikethrough).toBe('thick dash-dot')
+})
