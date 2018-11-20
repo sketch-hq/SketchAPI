@@ -56,7 +56,9 @@ export class Text extends StyledLayer {
 
     super(text)
 
-    this.adjustToFit()
+    if (!text.frame) {
+      this.adjustToFit()
+    }
   }
 
   /**

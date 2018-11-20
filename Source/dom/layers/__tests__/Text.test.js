@@ -84,7 +84,6 @@ test('should return the fragments of a text layer', () => {
   let text = new Text({
     text: 'blah',
   })
-  text.adjustToFit()
 
   let { fragments } = text
 
@@ -103,7 +102,6 @@ test('should return the fragments of a text layer', () => {
   text = new Text({
     text: 'Test\nHello\n123\no',
   })
-  text.adjustToFit()
   // eslint-disable-next-line
   fragments = text.fragments
 
