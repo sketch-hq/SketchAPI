@@ -1,7 +1,8 @@
+import { toArray } from 'util'
 import { WrappedObject, DefinedPropertiesKey } from '../WrappedObject'
 import { Page } from '../layers/Page'
 import { Selection } from './Selection'
-import { toArray, getURLFromPath } from '../utils'
+import { getURLFromPath } from '../utils'
 import { wrapObject } from '../wrapNativeObject'
 import { Types } from '../enums'
 import { Factory } from '../Factory'
@@ -388,7 +389,7 @@ Document.define('pages', {
     this._object.removePages_detachInstances(this._object.pages(), true)
 
     toArray(pages)
-      .map(wrapObject)
+      .map(p => wrapObject(p, Types.Page))
       .forEach(page => {
         page.parent = this // eslint-disable-line
       })

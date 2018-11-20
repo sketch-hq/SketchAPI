@@ -68,6 +68,11 @@ export class Page extends Group {
     // doesn't do anything
     return this
   }
+
+  // eslint-disable-next-line
+  getParentPage() {
+    return undefined
+  }
 }
 
 Page.type = Types.Page
@@ -80,6 +85,7 @@ delete Page[DefinedPropertiesKey].flow
 delete Page[DefinedPropertiesKey].style
 delete Page[DefinedPropertiesKey].locked
 delete Page[DefinedPropertiesKey].hidden
+delete Page[DefinedPropertiesKey].exportFormats
 
 // override setting up the parent as it's needs to a be a Document
 Page.define('parent', {

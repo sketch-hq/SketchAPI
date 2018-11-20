@@ -1,5 +1,5 @@
+import { toArray, isNativeObject } from 'util'
 import { WrappedObject, DefinedPropertiesKey } from '../WrappedObject'
-import { toArray, isNativeObject } from '../utils'
 import { GradientStop } from './GradientStop'
 import { Point } from '../models/Point'
 import { Types } from '../enums'

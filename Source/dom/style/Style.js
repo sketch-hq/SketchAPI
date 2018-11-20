@@ -1,6 +1,6 @@
+import { toArray } from 'util'
 import { WrappedObject, DefinedPropertiesKey } from '../WrappedObject'
 import { Factory } from '../Factory'
-import { toArray } from '../utils'
 import { wrapObject } from '../wrapNativeObject'
 import { Types } from '../enums'
 import { GradientType } from './Gradient'

@@ -1,4 +1,4 @@
-import { isNativeObject } from '../utils'
+import { isNativeObject } from 'util'
 
 /**
  * Given a string description of a color, return an MSImmutableColor.

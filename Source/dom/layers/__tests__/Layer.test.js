@@ -1,5 +1,5 @@
 /* globals expect, test */
-import { Group, Rectangle } from '../..'
+import { Group, Rectangle, Artboard } from '../..'
 
 test('should set the name of the layer', (context, document) => {
   // setting an existing name
@@ -181,4 +181,51 @@ test('should lock the layer', () => {
 
   group.locked = true
   expect(group.locked).toBe(true)
+})
+
+test('should change the exportFormats', () => {
+  const group = new Group()
+  expect(group.exportFormats).toEqual([])
+
+  group.exportFormats = [
+    {
+      size: '2x',
+      suffix: '@2x',
+    },
+  ]
+  expect(group.exportFormats.map(e => e.toJSON())).toEqual([
+    {
+      type: 'ExportFormat',
+      fileFormat: 'png',
+      suffix: '@2x',
+      size: '2x',
+    },
+  ])
+})
+
+test('should get the different parents', (context, document) => {
+  const page = document.selectedPage
+  expect(page.parent).toEqual(document)
+  expect(page.getParentPage()).toEqual(undefined)
+  expect(page.getParentArtboard()).toBe(undefined)
+  expect(page.getParentSymbolMaster()).toBe(undefined)
+  expect(page.getParentShape()).toBe(undefined)
+
+  const artboard = new Artboard({
+    parent: page,
+  })
+  expect(artboard.parent).toEqual(page)
+  expect(artboard.getParentPage()).toEqual(page)
+  expect(artboard.getParentArtboard()).toBe(undefined)
+  expect(artboard.getParentSymbolMaster()).toBe(undefined)
+  expect(artboard.getParentShape()).toBe(undefined)
+
+  const group = new Group({
+    parent: artboard,
+  })
+  expect(group.parent).toEqual(artboard)
+  expect(group.getParentPage()).toEqual(page)
+  expect(group.getParentArtboard()).toEqual(artboard)
+  expect(group.getParentSymbolMaster()).toBe(undefined)
+  expect(group.getParentShape()).toBe(undefined)
 })

@@ -25,7 +25,6 @@
     "@skpm/builder": "^0.5.3"
   },
   "dependencies": {
-    "@skpm/child_process": "^0.2.3",
-    "sketch-utils": "^0.1.2"
+    "@skpm/child_process": "^0.2.3"
   }
 }

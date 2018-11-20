@@ -137,6 +137,9 @@ globals:
   NSUnderlineStylePatternDashDot: false
   NSUnderlineStylePatternDashDotDot: false
   NSUnderlineStyleByWord: false
+  MSSliceLayer: false
+  MSImmutableSliceLayer: false
+  MSExportFormat: false
 
 rules:
   ###########

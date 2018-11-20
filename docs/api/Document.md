@@ -14,6 +14,7 @@ A Sketch document.
 | -------------------------------------------------- | ------------------------------ |
 | id<span class="arg-type">string</span>             | The unique ID of the document. |
 | pages<span class="arg-type">[Page](#page)[]</span> | The pages of the document.     |
+| path<span class="arg-type">string</span>           | The path to the document (or the appcast URL in case of a Document from a remote Library.     |
 
 ## Access the selected Document
 

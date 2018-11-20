@@ -20,6 +20,7 @@ export { Page } from './layers/Page'
 export { SymbolMaster } from './layers/SymbolMaster'
 export { SymbolInstance } from './layers/SymbolInstance'
 export { HotSpot } from './layers/HotSpot'
+export { Slice } from './layers/Slice'
 
 export { Types } from './enums'
 export { wrapObject as fromNative } from './wrapNativeObject'
