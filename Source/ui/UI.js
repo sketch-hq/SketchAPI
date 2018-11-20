@@ -1,6 +1,5 @@
 /* globals NSAlertFirstButtonReturn */
 import util from 'util'
-import { isNativeObject } from '../dom/utils'
 
 function getPluginAlertIcon() {
   if (__command.pluginBundle() && __command.pluginBundle().alertIcon()) {
@@ -24,7 +23,7 @@ export function message(text, document) {
       .orderedDocuments()
       .firstObject()
       .showMessage(text)
-  } else if (isNativeObject(document)) {
+  } else if (util.isNativeObject(document)) {
     document.showMessage(text)
   } else {
     document.sketchObject.showMessage(text)
@@ -81,7 +80,7 @@ export function getInputFromUser(messageText, options, callback) {
   let accessory
   switch (type) {
     case INPUT_TYPE.string:
-      accessory = NSTextField.alloc().initWithFrame(NSMakeRect(0, 0, 200, 25))
+      accessory = NSTextField.alloc().initWithFrame(NSMakeRect(0, 0, 295, 25))
       accessory.setStringValue(
         String(
           typeof options.initialValue === 'undefined'
@@ -91,7 +90,7 @@ export function getInputFromUser(messageText, options, callback) {
       )
       break
     // case INPUT_TYPE.number:
-    //   accessory = NSStepper.alloc().initWithFrame(NSMakeRect(0, 0, 200, 25))
+    //   accessory = NSStepper.alloc().initWithFrame(NSMakeRect(0, 0, 295, 25))
     //   accessory.setFloatValue(Number(options.initialValue || 0))
     //   if (typeof options.maxValue !== 'undefined') {
     //     accessory.setMaxValue(options.maxValue)
@@ -104,7 +103,7 @@ export function getInputFromUser(messageText, options, callback) {
     //   }
     //   break
     case INPUT_TYPE.slider: {
-      accessory = NSSlider.alloc().initWithFrame(NSMakeRect(0, 0, 200, 25))
+      accessory = NSSlider.alloc().initWithFrame(NSMakeRect(0, 0, 295, 25))
       accessory.setFloatValue(Number(options.initialValue || 0))
       if (typeof options.maxValue !== 'undefined') {
         accessory.setMaxValue(options.maxValue)
@@ -136,7 +135,7 @@ export function getInputFromUser(messageText, options, callback) {
           'When the input type is `selection`, you need to provide the array of possible choices.'
         )
       }
-      accessory = NSComboBox.alloc().initWithFrame(NSMakeRect(0, 0, 200, 25))
+      accessory = NSComboBox.alloc().initWithFrame(NSMakeRect(0, 0, 295, 25))
       accessory.addItemsWithObjectValues(options.possibleValues)
       const initialIndex = options.possibleValues.indexOf(options.initialValue)
       accessory.selectItemAtIndex(initialIndex !== -1 ? initialIndex : 0)
@@ -204,7 +203,7 @@ Use \`UI.getInputFromUser(
   (error, value) => {}
 )\` instead.`
   )
-  const accessory = NSTextField.alloc().initWithFrame(NSMakeRect(0, 0, 200, 25))
+  const accessory = NSTextField.alloc().initWithFrame(NSMakeRect(0, 0, 295, 25))
   accessory.setStringValue(
     String(typeof initial === 'undefined' ? '' : initial)
   )
@@ -237,7 +236,7 @@ Use \`UI.getInputFromUser(
   (error, value) => {}
 )\` instead.`
   )
-  const accessory = NSComboBox.alloc().initWithFrame(NSMakeRect(0, 0, 200, 25))
+  const accessory = NSComboBox.alloc().initWithFrame(NSMakeRect(0, 0, 295, 25))
   accessory.addItemsWithObjectValues(items)
   accessory.selectItemAtIndex(selectedItemIndex)
   accessory.editable = false

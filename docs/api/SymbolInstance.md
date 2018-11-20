@@ -10,17 +10,20 @@ var SymbolInstance = require('sketch/dom').SymbolInstance
 
 A [Symbol](https://www.sketchapp.com/docs/symbols/) instance. It is an instance of [Layer](#layer) so all the methods defined there are available.
 
-| Properties                                                            |                                                                                                           |
-| --------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
-| id<span class="arg-type">string</span>                                | The unique ID of the Symbol Instance object (not to be confused with `symbolId`).                         |
-| name<span class="arg-type">string</span>                              | The name of the Symbol Instance                                                                           |
-| parent<span class="arg-type">[Group](#group)</span>                   | The group the Symbol Instance is in.                                                                      |
-| frame<span class="arg-type">[Rectangle](#rectangle) </span>           | The frame of the Symbol Instance. This is given in coordinates that are local to the parent of the layer. |
-| flow<span class="arg-type">[Flow](#flow)</span>                       | The prototyping action associated with the Symbol.                                                        |
-| style<span class="arg-type">[Style](#style)</span>                    | The style of the Symbol Instance.                                                                         |
-| symbolId<span class="arg-type">string</span>                          | The unique ID of the Symbol that the instance and its master share.                                       |
-| master<span class="arg-type">[SymbolMaster](#symbol-master)</span>    | The Symbol master that the instance is linked to.                                                         |
-| overrides<span class="arg-type">[Override](#symbol-override)[]</span> | The array of the overrides to modify the instance.                                                        |
+| Properties                                                                 |                                                                                                           |
+| -------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
+| id<span class="arg-type">string</span>                                     | The unique ID of the Symbol Instance object (not to be confused with `symbolId`).                         |
+| name<span class="arg-type">string</span>                                   | The name of the Symbol Instance                                                                           |
+| parent<span class="arg-type">[Group](#group)</span>                        | The group the Symbol Instance is in.                                                                      |
+| locked<span class="arg-type">boolean</span>                                | If the Symbol Instance is locked.                                                                         |
+| hidden<span class="arg-type">boolean</span>                                | If the Symbol Instance is hidden.                                                                         |
+| frame<span class="arg-type">[Rectangle](#rectangle) </span>                | The frame of the Symbol Instance. This is given in coordinates that are local to the parent of the layer. |
+| flow<span class="arg-type">[Flow](#flow)</span>                            | The prototyping action associated with the Symbol.                                                        |
+| exportFormats<span class="arg-type">[ExportFormat](#exportformat)[]</span> | The export formats of the Symbol Instance.                                                                |
+| style<span class="arg-type">[Style](#style)</span>                         | The style of the Symbol Instance.                                                                         |
+| symbolId<span class="arg-type">string</span>                               | The unique ID of the Symbol that the instance and its master share.                                       |
+| master<span class="arg-type">[SymbolMaster](#symbol-master)</span>         | The Symbol master that the instance is linked to.                                                         |
+| overrides<span class="arg-type">[Override](#symbol-override)[]</span>      | The array of the overrides to modify the instance.                                                        |
 
 ## Create a new Symbol Instance
 

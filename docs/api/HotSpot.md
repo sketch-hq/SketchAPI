@@ -8,15 +8,17 @@ section: layers
 var HotSpot = require('sketch/dom').HotSpot
 ```
 
-A Sketch hotspot. It is an instance of both [Layer](#layer) so all the methods defined there are available.
+A Sketch hotspot. It is an instance of [Layer](#layer) so all the methods defined there are available.
 
-| Properties                                                 |                                                                                                    |
-| ---------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
-| id<span class="arg-type">string</span>                     | The unique ID of the Artboard.                                                                     |
-| name<span class="arg-type">string</span>                   | The name of the Artboard                                                                           |
-| parent<span class="arg-type">[Page](#page)</span>          | The page the Artboard is in.                                                                       |
-| frame<span class="arg-type">[Rectangle](#rectangle)</span> | The frame of the Artboard. This is given in coordinates that are local to the parent of the layer. |
-| flow<span class="arg-type">[Flow](#flow)</span>            | The prototyping action associated with the layer.                                                  |
+| Properties                                                 |                                                                                                     |
+| ---------------------------------------------------------- | --------------------------------------------------------------------------------------------------- |
+| id<span class="arg-type">string</span>                     | The unique ID of the HotSpot.                                                                       |
+| name<span class="arg-type">string</span>                   | The name of the HotSpot                                                                             |
+| parent<span class="arg-type">[Group](#group)</span>        | The group the HotSpot is in..                                                                       |
+| locked<span class="arg-type">boolean</span>                | If the HotSpot is locked.                                                                           |
+| hidden<span class="arg-type">boolean</span>                | If the HotSpot is hidden.                                                                           |
+| frame<span class="arg-type">[Rectangle](#rectangle)</span> | The frame of the HotSpot. This is given in coordinates that are local to the parent of the HotSpot. |
+| flow<span class="arg-type">[Flow](#flow)</span>            | The prototyping action associated with the HotSpot.                                                 |
 
 ## Create a new Hotspot
 

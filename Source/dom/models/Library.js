@@ -1,6 +1,7 @@
+import { toArray } from 'util'
 import { WrappedObject, DefinedPropertiesKey } from '../WrappedObject'
 import { Document } from './Document'
-import { toArray, getURLFromPath, getDocumentData } from '../utils'
+import { getURLFromPath, getDocumentData } from '../utils'
 import { Types } from '../enums'
 import { Factory } from '../Factory'
 import { wrapObject } from '../wrapNativeObject'

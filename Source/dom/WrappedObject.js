@@ -63,6 +63,9 @@ export class WrappedObject {
    * @param {Object} object - The Sketch model object to wrap.
    */
   static fromNative(sketchObject) {
+    if (!sketchObject) {
+      return sketchObject
+    }
     return new this({
       sketchObject,
     })

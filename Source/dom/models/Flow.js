@@ -1,7 +1,8 @@
+import { isNativeObject } from 'util'
 import { DefinedPropertiesKey, WrappedObject } from '../WrappedObject'
 import { Types } from '../enums'
 import { Factory } from '../Factory'
-import { isWrappedObject, isNativeObject } from '../utils'
+import { isWrappedObject } from '../utils'
 import { wrapObject } from '../wrapNativeObject'
 
 // Mapping between animation type names and values.

@@ -1,5 +1,5 @@
+import { toArray } from 'util'
 import { WrappedObject, DefinedPropertiesKey } from '../WrappedObject'
-import { toArray } from '../utils'
 import { Types } from '../enums'
 
 const ArrowheadMap = {

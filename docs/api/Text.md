@@ -10,19 +10,22 @@ var Text = require('sketch/dom').Text
 
 A text layer. It is an instance of [Layer](#layer) so all the methods defined there are available.
 
-| Properties                                                               |                                                                                                |
-| ------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------- |
-| id<span class="arg-type">string</span>                                   | The unique ID of the Text.                                                                     |
-| name<span class="arg-type">string</span>                                 | The name of the Text                                                                           |
-| parent<span class="arg-type">[Group](#group)</span>                      | The group the Text is in.                                                                      |
-| frame<span class="arg-type">[Rectangle](#rectangle)</span>               | The frame of the Text. This is given in coordinates that are local to the parent of the layer. |
-| flow<span class="arg-type">[Flow](#flow)</span>                          | The prototyping action associated with the Text.                                               |
-| style<span class="arg-type">[Style](#style)</span>                       | The style of the Text.                                                                         |
-| sharedStyleId<span class="arg-type">string / null</span>                 | The ID of the [SharedStyle](#sharedstyle) this Text is linked to if any.                       |
-| text<span class="arg-type">string</span>                                 | The string value of the text layer.                                                            |
-| alignment<span class="arg-type">[Alignment](#textalignment)</span>       | The alignment of the layer.                                                                    |
-| lineSpacing<span class="arg-type">[LineSpacing](#textlinespacing)</span> | The line spacing of the layer.                                                                 |
-| fixedWidth<span class="arg-type">boolean</span>                          | Whether the layer should have a fixed width or a flexible width.                                |
+| Properties                                                                 |                                                                                                |
+| -------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| id<span class="arg-type">string</span>                                     | The unique ID of the Text.                                                                     |
+| name<span class="arg-type">string</span>                                   | The name of the Text                                                                           |
+| parent<span class="arg-type">[Group](#group)</span>                        | The group the Text is in.                                                                      |
+| locked<span class="arg-type">boolean</span>                                | If the Text is locked.                                                                         |
+| hidden<span class="arg-type">boolean</span>                                | If the Text is hidden.                                                                         |
+| frame<span class="arg-type">[Rectangle](#rectangle)</span>                 | The frame of the Text. This is given in coordinates that are local to the parent of the layer. |
+| flow<span class="arg-type">[Flow](#flow)</span>                            | The prototyping action associated with the Text.                                               |
+| exportFormats<span class="arg-type">[ExportFormat](#exportformat)[]</span> | The export formats of the Symbol Master.                                                       |
+| style<span class="arg-type">[Style](#style)</span>                         | The style of the Text.                                                                         |
+| sharedStyleId<span class="arg-type">string / null</span>                   | The ID of the [SharedStyle](#sharedstyle) this Text is linked to if any.                       |
+| text<span class="arg-type">string</span>                                   | The string value of the text layer.                                                            |
+| alignment<span class="arg-type">[Alignment](#textalignment)</span>         | The alignment of the layer.                                                                    |
+| lineSpacing<span class="arg-type">[LineSpacing](#textlinespacing)</span>   | The line spacing of the layer.                                                                 |
+| fixedWidth<span class="arg-type">boolean</span>                            | Whether the layer should have a fixed width or a flexible width.                               |
 
 ## Create a new Text
 
@@ -92,6 +95,20 @@ Enumeration of the alignments of the text.
 | `center`  | Visually centered                                                 |
 | `justify` | Fully-justified. The last line in a paragraph is natural-aligned. |
 | `natural` | Indicates the default alignment for script                        |
+
+## `Text.VerticalAlignment`
+
+```javascript
+Text.VerticalAlignment.center
+```
+
+Enumeration of the vertical alignments of the text.
+
+| Value    |                              |
+| -------- | ---------------------------- |
+| `top`    | Visually top aligned         |
+| `center` | Visually vertically centered |
+| `bottom` | Visually bottom aligned      |
 
 ## `Text.LineSpacing`
 

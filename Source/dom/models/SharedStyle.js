@@ -1,8 +1,8 @@
+import { toArray } from 'util'
 import { DefinedPropertiesKey, WrappedObject } from '../WrappedObject'
 import { Types } from '../enums'
 import { Factory } from '../Factory'
 import { wrapObject } from '../wrapNativeObject'
-import { toArray } from '../utils'
 
 const SharedStyleTypeMap = {
   1: 'Layer',

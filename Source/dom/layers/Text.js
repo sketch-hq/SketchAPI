@@ -36,6 +36,19 @@ export const TextAlignmentMap = {
   natural: 4, // Indicates the default alignment for script
 }
 
+// Mapping between vertical text alignment names and values.
+const VerticalTextAlignment = {
+  top: 'top', // Visually top aligned
+  center: 'center', // Visually center aligned
+  bottom: 'bottom', // Visually bottom aligned
+}
+
+export const VerticalTextAlignmentMap = {
+  top: 0, // Visually top aligned
+  center: 1, // Visually centered
+  bottom: 2, // Visually bottom aligned
+}
+
 /**
  * Represents a text layer.
  */
@@ -232,6 +245,8 @@ Text.define('alignment', {
       typeof translated !== 'undefined' ? translated : mode
   },
 })
+
+Text.VerticalAlignment = VerticalTextAlignment
 
 Text.LineSpacing = TextLineSpacingBehaviour
 Text.define('lineSpacing', {

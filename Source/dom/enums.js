@@ -25,4 +25,6 @@ export const Types = {
   SharedStyle: 'SharedStyle',
   DataOverride: 'DataOverride',
   ShapePath: 'ShapePath',
+  Slice: 'Slice',
+  ExportFormat: 'ExportFormat',
 }
