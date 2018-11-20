@@ -1,8 +1,11 @@
+import { toArray } from 'util'
 import { WrappedObject, DefinedPropertiesKey } from '../WrappedObject'
 import { Factory } from '../Factory'
 import { Rectangle } from '../models/Rectangle'
 import { wrapObject, wrapNativeObject } from '../wrapNativeObject'
 import { Flow } from '../models/Flow'
+import { ExportFormat } from '../models/ExportFormat'
+import { Types } from '../enums'
 
 /**
  * Abstract class that represents a Sketch layer.
@@ -281,5 +284,26 @@ Layer.define('locked', {
       return
     }
     this._object.setIsLocked(locked)
+  },
+})
+
+Layer.define('exportFormats', {
+  get() {
+    return toArray(this._object.exportOptions().exportFormats() || []).map(
+      ExportFormat.fromNative.bind(ExportFormat)
+    )
+  },
+  set(exportFormats) {
+    if (this.isImmutable()) {
+      return
+    }
+
+    this._object
+      .exportOptions()
+      .setExportFormats(
+        toArray(exportFormats).map(
+          e => wrapObject(e, Types.ExportFormat).sketchObject
+        )
+      )
   },
 })

@@ -1,5 +1,5 @@
+import { isNativeObject } from 'util'
 import { WrappedObject, DefinedPropertiesKey } from '../WrappedObject'
-import { isNativeObject } from '../utils'
 import { Color, colorToString } from './Color'
 import { Types } from '../enums'
 

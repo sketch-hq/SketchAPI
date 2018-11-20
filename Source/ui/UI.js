@@ -1,6 +1,5 @@
 /* globals NSAlertFirstButtonReturn */
 import util from 'util'
-import { isNativeObject } from '../dom/utils'
 
 function getPluginAlertIcon() {
   if (__command.pluginBundle() && __command.pluginBundle().alertIcon()) {
@@ -24,7 +23,7 @@ export function message(text, document) {
       .orderedDocuments()
       .firstObject()
       .showMessage(text)
-  } else if (isNativeObject(document)) {
+  } else if (util.isNativeObject(document)) {
     document.showMessage(text)
   } else {
     document.sketchObject.showMessage(text)

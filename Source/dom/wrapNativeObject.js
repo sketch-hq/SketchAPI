@@ -1,6 +1,6 @@
+import { isNativeObject, isObject } from 'util'
 import { WrappedObject } from './WrappedObject'
-
-import { isNativeObject, isWrappedObject } from './utils'
+import { isWrappedObject } from './utils'
 import { Factory } from './Factory'
 
 /**
@@ -26,12 +26,12 @@ export function wrapNativeObject(nativeObject) {
   return JsClass.fromNative(nativeObject)
 }
 
-export function wrapObject(object) {
+export function wrapObject(object, defaultType) {
   if (!object) {
     return undefined
   }
 
-  if (isNativeObject(object)) {
+  if (isNativeObject(object) && !isObject(object)) {
     return wrapNativeObject(object)
   }
   if (isWrappedObject(object)) {
@@ -40,7 +40,7 @@ export function wrapObject(object) {
 
   const { type, ...rest } = object
 
-  if (!type) {
+  if (!type && !defaultType) {
     throw new Error(
       `You need to specify a "type" when creating a nested layer. Received: ${JSON.stringify(
         object,
@@ -50,5 +50,5 @@ export function wrapObject(object) {
     )
   }
 
-  return Factory.create(type, rest)
+  return Factory.create(type || defaultType, rest)
 }

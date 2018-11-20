@@ -183,6 +183,27 @@ test('should lock the layer', () => {
   expect(group.locked).toBe(true)
 })
 
+test('should change the exportFormats', () => {
+  const group = new Group()
+  expect(group.exportFormats).toEqual([])
+
+  group.exportFormats = [
+    {
+      size: '2x',
+      suffix: '@2x',
+    },
+  ]
+  expect(group.exportFormats.map(e => e.toJSON())).toEqual([
+    {
+      type: 'ExportFormat',
+      fileFormat: 'png',
+      prefix: undefined,
+      suffix: '@2x',
+      size: '2x',
+    },
+  ])
+})
+
 test('should get the different parents', (context, document) => {
   const page = document.selectedPage
   expect(page.parent).toEqual(document)

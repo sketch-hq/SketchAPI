@@ -4,7 +4,6 @@ import { ImageData } from '../models/ImageData'
 import { Rectangle } from '../models/Rectangle'
 import { Types } from '../enums'
 import { Factory } from '../Factory'
-import { wrapObject } from '../wrapNativeObject'
 
 /**
  * Represents an image layer.
@@ -36,7 +35,7 @@ Factory.registerClass(Image, MSImmutableBitmapLayer)
 
 Image.define('image', {
   get() {
-    return wrapObject(this._object.image())
+    return ImageData.fromNative(this._object.image())
   },
   set(image) {
     if (this.isImmutable()) {

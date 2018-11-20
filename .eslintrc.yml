@@ -110,6 +110,9 @@ globals:
   MSImmutableStarShape: false
   MSImmutableTriangleShape: false
   MSImmutableRectangleShape: false
+  MSSliceLayer: false
+  MSImmutableSliceLayer: false
+  MSExportFormat: false
 
 rules:
   ###########
