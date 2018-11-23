@@ -157,6 +157,10 @@ test('should change the font family', () => {
   // non existent font will keep the previous one
   text.style.fontFamily = 'non-existent-font-name'
   expect(text.style.fontFamily).toBe('Arial')
+
+  // system should set the font family to the system font
+  text.style.fontFamily = 'system'
+  expect(text.style.fontFamily).toBe('system')
 })
 
 test('should change the font weight', () => {

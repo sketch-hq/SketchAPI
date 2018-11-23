@@ -436,7 +436,13 @@ export function defineTextStyleProperties(Style) {
         return undefined
       }
 
-      return String(font.familyName())
+      const fontFamily = String(font.familyName())
+
+      if (fontFamily === '.SF NS Text') {
+        return 'system'
+      }
+
+      return fontFamily
     },
 
     set(fontFamily) {
@@ -446,6 +452,13 @@ export function defineTextStyleProperties(Style) {
 
       updateAttributes(this._object, attributes => {
         const font = attributes[NSFontAttributeName]
+
+        if (fontFamily === 'system') {
+          const systemFont = NSFont.systemFontOfSize(16)
+          // eslint-disable-next-line no-param-reassign
+          fontFamily = systemFont.familyName()
+        }
+
         const newFont = NSFontManager.sharedFontManager().convertFont_toFamily(
           font,
           fontFamily
