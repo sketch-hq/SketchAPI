@@ -67,6 +67,9 @@ export class Text extends StyledLayer {
    * @param {NSFont} value The font to use.
    */
   set font(value) {
+    console.warn(
+      '`Text.font` is deprecated. Use `Text.style.fontFamily` instead'
+    )
     if (this.isImmutable()) {
       return
     }
@@ -79,6 +82,9 @@ export class Text extends StyledLayer {
    * @param {number} size The system font size to use.
    */
   set systemFontSize(size) {
+    console.warn(
+      '`Text.systemFontSize = size` is deprecated. Use `Text.style.fontFamily = "system"; Text.style.fontSize = size` instead.'
+    )
     if (this.isImmutable()) {
       return
     }
