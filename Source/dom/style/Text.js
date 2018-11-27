@@ -103,7 +103,10 @@ function getUnderline(underline) {
   } else if (hasTrait(underline, NSUnderlineStyleSingle)) {
     traits.push('single')
   }
-  if (hasTrait(underline, NSUnderlineStylePatternDashDotDot)) {
+  if (
+    typeof NSUnderlineStylePatternDashDotDot !== 'undefined' &&
+    hasTrait(underline, NSUnderlineStylePatternDashDotDot)
+  ) {
     traits.push('dash-dot-dot')
   } else if (hasTrait(underline, NSUnderlineStylePatternDashDot)) {
     traits.push('dash-dot')
@@ -141,7 +144,9 @@ function getTrait(trait) {
     case 'dash-dot':
       return NSUnderlineStylePatternDashDot
     case 'dash-dot-dot':
-      return NSUnderlineStylePatternDashDotDot
+      return typeof NSUnderlineStylePatternDashDotDot !== 'undefined'
+        ? NSUnderlineStylePatternDashDotDot
+        : 1024
     case 'by-word':
       return NSUnderlineStyleByWord
     default:
