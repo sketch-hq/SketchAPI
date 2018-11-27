@@ -89,6 +89,19 @@ function hasTrait(mask, trait) {
   return (mask & trait) == trait
 }
 
+const UNDERLINE_TRAIT = {
+  none: 0, // NSUnderlineStyleNone
+  solid: 0, // NSUnderlineStylePatternSolid
+  double: 9, // NSUnderlineStyleDouble
+  thick: 2, // NSUnderlineStyleThick
+  single: 1, // NSUnderlineStyleSingle
+  'dash-dot-dot': 1024, // NSUnderlineStylePatternDashDotDot
+  'dash-dot': 768, // NSUnderlineStylePatternDashDot
+  dash: 512, // NSUnderlineStylePatternDash
+  dot: 256, // NSUnderlineStylePatternDot
+  'by-word': 32768, // NSUnderlineStyleByWord
+}
+
 function getUnderline(underline) {
   if (!underline) {
     return undefined
@@ -96,27 +109,24 @@ function getUnderline(underline) {
 
   const traits = []
 
-  if (hasTrait(underline, NSUnderlineStyleDouble)) {
+  if (hasTrait(underline, UNDERLINE_TRAIT.double)) {
     traits.push('double')
-  } else if (hasTrait(underline, NSUnderlineStyleThick)) {
+  } else if (hasTrait(underline, UNDERLINE_TRAIT.thick)) {
     traits.push('thick')
-  } else if (hasTrait(underline, NSUnderlineStyleSingle)) {
+  } else if (hasTrait(underline, UNDERLINE_TRAIT.single)) {
     traits.push('single')
   }
-  if (
-    typeof NSUnderlineStylePatternDashDotDot !== 'undefined' &&
-    hasTrait(underline, NSUnderlineStylePatternDashDotDot)
-  ) {
+  if (hasTrait(underline, UNDERLINE_TRAIT['dash-dot-dot'])) {
     traits.push('dash-dot-dot')
-  } else if (hasTrait(underline, NSUnderlineStylePatternDashDot)) {
+  } else if (hasTrait(underline, UNDERLINE_TRAIT['dash-dot'])) {
     traits.push('dash-dot')
-  } else if (hasTrait(underline, NSUnderlineStylePatternDash)) {
+  } else if (hasTrait(underline, UNDERLINE_TRAIT.dash)) {
     traits.push('dash')
-  } else if (hasTrait(underline, NSUnderlineStylePatternDot)) {
+  } else if (hasTrait(underline, UNDERLINE_TRAIT.dot)) {
     traits.push('dot')
   }
 
-  if (hasTrait(underline, NSUnderlineStyleByWord)) {
+  if (hasTrait(underline, UNDERLINE_TRAIT['by-word'])) {
     traits.push('by-word')
   }
 
@@ -128,35 +138,18 @@ function getUnderline(underline) {
 }
 
 function getTrait(trait) {
-  switch (trait) {
-    case 'single':
-      return NSUnderlineStyleSingle
-    case 'thick':
-      return NSUnderlineStyleThick
-    case 'double':
-      return NSUnderlineStyleDouble
-    case 'solid':
-      return NSUnderlineStylePatternSolid
-    case 'dot':
-      return NSUnderlineStylePatternDot
-    case 'dash':
-      return NSUnderlineStylePatternDash
-    case 'dash-dot':
-      return NSUnderlineStylePatternDashDot
-    case 'dash-dot-dot':
-      return typeof NSUnderlineStylePatternDashDotDot !== 'undefined'
-        ? NSUnderlineStylePatternDashDotDot
-        : 1024
-    case 'by-word':
-      return NSUnderlineStyleByWord
-    default:
-      throw new Error(`unknown underline trait ${trait}`)
+  const nativeTrait = UNDERLINE_TRAIT[trait]
+
+  if (!nativeTrait) {
+    throw new Error(`unknown underline trait ${trait}`)
   }
+
+  return nativeTrait
 }
 
 function getUnderlineMask(underline) {
   if (!underline || underline === 'none') {
-    return NSUnderlineStyleNone
+    return UNDERLINE_TRAIT.none
   }
   const traits = underline.split(' ')
   let mask = getTrait(traits[0])
