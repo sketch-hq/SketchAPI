@@ -1,8 +1,15 @@
 ---
 title: TextChanged
-summary: work in progress
+summary: Triggered when the contents of a text layer change
+documented: true
 ---
 
-Work In Progress
+This action is triggered when the contents of a Text Layer change.
 
-Documentation for the TextChanged action will appear here.
+## Action Context
+
+The action context for this action contains three keys:
+
+- `old`: The old contents of the Text Layer
+- `new`: The new contents of the Text Layer
+- `layer`: The layer that has changed

@@ -1,8 +1,14 @@
 ---
 title: LayersMoved
-summary: work in progress
+summary: Triggered when some layers are moved by the user
+documented: true
 ---
 
-Work In Progress
+This action is triggered when some layers are moved by the user.
 
-Documentation for the LayersMoved action will appear here.
+## Action Context
+
+The action context for this action contains two keys:
+
+- `document`: The document where the action was triggered
+- `layers`: An Array of layers

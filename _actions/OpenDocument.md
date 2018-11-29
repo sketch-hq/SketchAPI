@@ -1,8 +1,11 @@
 ---
 title: OpenDocument
-summary: work in progress
+summary: Triggered when a document is opened
+documented: true
 ---
 
-Work In Progress
+This action is triggered when a document is opened.
 
-Documentation for the OpenDocument action will appear here.
+## Related Actions
+
+- [CloseDocument](/reference/action/CloseDocument/)
