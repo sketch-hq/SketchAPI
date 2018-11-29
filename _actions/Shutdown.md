@@ -16,4 +16,4 @@ You can use this action to cleanup your plugin’s data, store any information y
 
 ### Related Actions
 
-- [Startup](/reference/action/startup/)
+- [Startup](/reference/action/Startup/)
