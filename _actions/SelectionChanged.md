@@ -1,6 +1,7 @@
 ---
 title: SelectionChanged
-summary: Triggered whenever the user changes which layers are selected in a document.
+summary: Triggered whenever the user changes which layers are selected in a document
+documented: true
 ---
 
 {{page.summary}}

@@ -13,16 +13,19 @@ It's a long list, and most haven't been documented yet, but we're providing it n
 
 If you want to learn how to listen to an action, see [the Action API guide](/guides/action-api/).
 
-## List of actions
+## List of Actions
 
 <table>
   <tbody>
-  {% assign actions = site.actions | sort: 'title' %}
-  {% for action in actions %}
+  {% assign states = site.actions | group_by: 'documented' | reverse %}
+  {% for state in states %}
+    {% assign actions = state.items | sort: 'title' %}
+    {% for action in actions %}
     <tr>
-      <td><a href="{{action.url}}">{{action.title}}</a></td>
+      <td><a href="{{action.url | downcase}}">{{action.title}}</a></td>
       <td>{{action.summary}}</td>
     </tr>
+    {% endfor %}
   {% endfor %}
   </tbody>
 </table>

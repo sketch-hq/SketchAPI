@@ -1,6 +1,7 @@
 ---
 title: ExportSlices
-summary: Triggered whenever the user exports some artboards, layers or slices.
+summary: Triggered whenever the user exports some artboards, layers or slices
+documented: true
 ---
 
 {{page.summary}}
