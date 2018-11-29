@@ -22,7 +22,8 @@ function hasMatchingDoc(change: string) {
 }
 
 function hasMatchingTypes(change: string) {
-  return true
+  // placeholder which will be filed when we have typescript types
+  return !!change
 }
 
 /**
