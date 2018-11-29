@@ -16,4 +16,4 @@ You can use this action to do any operations that are needed for your plugin to 
 
 ### Related Actions
 
-- [Shutdown](/reference/action/shutdown/)
+- [Shutdown](/reference/action/Shutdown/)
