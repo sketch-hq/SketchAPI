@@ -3,9 +3,8 @@ import { isWrappedObject, getDocumentData } from '../dom/utils'
 
 function getPluginIdentifier() {
   if (!__command.pluginBundle()) {
-    throw new Error(
-      'It seems that the command is not running in a plugin. Bundle your command in a plugin to use the Settings API.'
-    )
+    // if we run a script from the Run Script panel, it won't have a bundle
+    return 'com.sketchapp.temporary-script'
   }
   return __command.pluginBundle().identifier()
 }
