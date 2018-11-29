@@ -22,7 +22,7 @@ If you want to learn how to listen to an action, see [the Action API guide](/gui
     {% assign actions = state.items | sort: 'title' %}
     {% for action in actions %}
     <tr>
-      <td><a href="{{action.url | downcase}}">{{action.title}}</a></td>
+      <td><a href="{{action.url}}">{{action.title}}</a></td>
       <td>{{action.summary}}</td>
     </tr>
     {% endfor %}
