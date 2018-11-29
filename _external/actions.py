@@ -266,7 +266,12 @@ fakeActions = [
     "DocumentSaved",
 ]
 
-allActions = actions + fakeActions
+specialActions = [
+    "Startup",
+    "Shutdown"
+]
+
+allActions = actions + fakeActions + specialActions
 
 actionsPath = "_actions"
 if not os.path.exists(actionsPath):
