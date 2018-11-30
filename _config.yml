@@ -64,7 +64,7 @@ defaults:
     scope:
       type: "actions"
     values:
-      layout: "sidebar-page"
+      layout: "action"
       script: "/js/search.js"
   -
     scope:
