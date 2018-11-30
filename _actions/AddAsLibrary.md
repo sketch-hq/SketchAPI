@@ -1,8 +1,7 @@
 ---
 title: AddAsLibrary
-summary: work in progress
+summary: Triggered when a document is saved as a Library
+documented: true
 ---
 
-Work In Progress
-
-Documentation for the AddAsLibrary action will appear here.
+This action is triggered when a document is saved as a Library using the File › Add as Library… menu option

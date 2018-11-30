@@ -1,8 +1,11 @@
 ---
 title: ApplyLandscapeOrientation
-summary: work in progress
+summary: Triggered when the orientation of an Artboard changes
+documented: true
+related:
+  - ApplyPortraitOrientation
 ---
 
-Work In Progress
+This action is triggered when the orientation of an Artboard changes to Landscape.
 
-Documentation for the ApplyLandscapeOrientation action will appear here.
+This happens when the user clicks the 'Landscape' button in the Inspector while the Artboard is selected.

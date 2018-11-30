@@ -1,8 +1,9 @@
 ---
 title: ApplySharedLayerStyle
-summary: work in progress
+summary: Triggered when a shared Layer Style is applied to a layer
+documented: true
+related:
+  - ApplySharedTextStyle
 ---
 
-Work In Progress
-
-Documentation for the ApplySharedLayerStyle action will appear here.
+This action is triggered when a shared Layer Style is applied to a layer using the Inspector.

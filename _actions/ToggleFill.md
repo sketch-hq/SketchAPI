@@ -1,8 +1,9 @@
 ---
 title: ToggleFill
-summary: work in progress
+summary: Triggered when the fill for the selected shape is toggled
+documented: true
+related:
+  - ToggleBorder
 ---
 
-Work In Progress
-
-Documentation for the ToggleFill action will appear here.
+This action is triggered when the fill for the selected shape is toggled using the 'f' keyboard shortcut.
