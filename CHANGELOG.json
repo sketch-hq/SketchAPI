@@ -6,7 +6,7 @@
     "[Improved] No need to specify the type when there is no choice (like Document.pages can only contain Pages, Layer.exportFormats can only contain ExportFormats, etc.)",
     "[New] Add UI.getInputFromUser method and deprecate the other input methods",
     "[New] Add some `getParent*` methods on Layer",
-    "[New] Add methdo to get the theme of Sketch"
+    "[New] Add method to get the theme of Sketch"
   ],
   "releases": {
     "52.1": ["[New] Add basic support for Shape path"],
