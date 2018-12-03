@@ -1,5 +1,4 @@
 /* globals expect, test */
-import { isRunningOnJenkins } from '../../test-utils'
 import { Text } from '../../dom'
 import {
   settingForKey,
