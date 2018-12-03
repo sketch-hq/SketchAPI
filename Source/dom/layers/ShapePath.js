@@ -4,6 +4,39 @@ import { Types } from '../enums'
 import { Factory } from '../Factory'
 import { Rectangle } from '../models/Rectangle'
 
+const ShapeType = {
+  Rectangle: 'Rectangle',
+  Oval: 'Oval',
+  Polygon: 'Polygon',
+  Star: 'Star',
+  Triangle: 'Triangle',
+  Custom: 'Custom',
+}
+
+const ShapeTypeMap = {
+  MSRectangleShape: ShapeType.Rectangle,
+  MSShapePathLayer: ShapeType.Custom,
+  MSImmutableShapePathLayer: ShapeType.Custom,
+  MSOvalShape: ShapeType.Oval,
+  MSPolygonShape: ShapeType.Polygon,
+  MSStarShape: ShapeType.Star,
+  MSTriangleShape: ShapeType.Triangle,
+  MSImmutableOvalShape: ShapeType.Oval,
+  MSImmutablePolygonShape: ShapeType.Polygon,
+  MSImmutableRectangleShape: ShapeType.Rectangle,
+  MSImmutableStarShape: ShapeType.Star,
+  MSImmutableTriangleShape: ShapeType.Triangle,
+}
+
+const ShapeTypeMapReverse = {
+  Rectangle: MSRectangleShape,
+  Oval: MSOvalShape,
+  Polygon: MSPolygonShape,
+  Star: MSStarShape,
+  Triangle: MSTriangleShape,
+  Custom: MSRectangleShape, // we are just going to default to Rectangle here
+}
+
 // TODO: set and modify path
 
 /**
@@ -20,9 +53,18 @@ export class ShapePath extends StyledLayer {
   constructor(shape = {}) {
     if (!shape.sketchObject) {
       // eslint-disable-next-line no-param-reassign
-      shape.sketchObject = Factory.createNative(ShapePath)
+      shape.sketchObject = ShapeTypeMapReverse[
+        shape.shapeType || ShapeType.Custom
+      ]
         .alloc()
         .initWithFrame(new Rectangle(0, 0, 100, 100).asCGRect())
+
+      if (
+        shape.shapeType === ShapeType.Polygon ||
+        shape.shapeType === ShapeType.Star
+      ) {
+        shape.sketchObject.resetPoints()
+      }
 
       super(shape)
     } else {
@@ -45,3 +87,10 @@ Factory.registerClass(ShapePath, MSImmutablePolygonShape)
 Factory.registerClass(ShapePath, MSImmutableRectangleShape)
 Factory.registerClass(ShapePath, MSImmutableStarShape)
 Factory.registerClass(ShapePath, MSImmutableTriangleShape)
+
+ShapePath.ShapeType = ShapeType
+ShapePath.define('shapeType', {
+  get() {
+    return ShapeTypeMap[String(this._object.class())]
+  },
+})

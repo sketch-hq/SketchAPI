@@ -8,7 +8,7 @@ section: layers
 var Shape = require('sketch/dom').Shape
 ```
 
-A shape layer. It is an instance of [Layer](#layer) so all the methods defined there are available.
+A shape layer. It is an instance of [Layer](#layer) so all the methods defined there are available. It is shaped by its layers which have boolean operations between them.
 
 | Properties                                                                 |                                                                                                 |
 | -------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- |

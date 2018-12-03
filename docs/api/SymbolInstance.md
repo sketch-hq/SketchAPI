@@ -1,6 +1,6 @@
 ---
 title: Symbol Instance
-order: 309
+order: 310
 section: layers
 ---
 

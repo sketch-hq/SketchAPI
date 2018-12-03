@@ -7,3 +7,17 @@ test('should create a new shape path', () => {
   log(shapePath)
   expect(shapePath.type).toBe('ShapePath')
 })
+
+test('should create shape paths of different shape type', () => {
+  Object.keys(ShapePath.ShapeType).forEach(shapeType => {
+    const shapePath = new ShapePath({
+      shapeType,
+    })
+    expect(shapePath.type).toBe('ShapePath')
+    expect(shapePath.shapeType).toBe(
+      shapeType === ShapePath.ShapeType.Custom
+        ? ShapePath.ShapeType.Rectangle
+        : shapeType
+    )
+  })
+})
