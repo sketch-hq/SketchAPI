@@ -253,3 +253,7 @@ Use \`UI.getInputFromUser(
 
   return [responseCode, sel, responseCode === NSAlertFirstButtonReturn]
 }
+
+export function getTheme() {
+  return MSTheme.sharedTheme().isDark() ? 'dark' : 'light'
+}
