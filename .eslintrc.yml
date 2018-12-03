@@ -113,6 +113,7 @@ globals:
   MSSliceLayer: false
   MSImmutableSliceLayer: false
   MSExportFormat: false
+  MSTheme: false
 
 rules:
   ###########

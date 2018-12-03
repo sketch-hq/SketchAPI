@@ -94,3 +94,17 @@ Shows a simple input sheet which displays a message, and asks for an input from 
 | option.minValue<span class="arg-type">number</span>                                     | The maximal value. Only used for a `slider` input. Defaults to `0`.                                                                                                                      |
 | option.increment<span class="arg-type">number</span>                                    | Restricts the possible values to multiple of the increment. Only used for a `slider` input.                                                                                              |
 | callback<span class="arg-type">function</span>                                          | A function called after the user entered the input. It is called with an `Error` if the user canceled the input and a `string` or `number` depending on the input type (or `undefined`). |
+
+## Get the theme of Sketch
+
+```js
+var theme = UI.getTheme()
+
+if (theme === 'dark') {
+  // shows UI in dark theme
+} else {
+  // shows UI in light theme
+}
+```
+
+Sketch has 2 themes: `light` and `dark`. If your plugin has some custom UI, it should support both as well.
