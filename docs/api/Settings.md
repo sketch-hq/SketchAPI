@@ -136,7 +136,7 @@ Store a value of a setting for a given key on a specific document.
 var myVar = Settings.sessionVariable('myVar')
 ```
 
-Return the value of a variable which is _not_ persisted when Sketch closes but is persisted when the plugin finishes to run. It is useful when you want to keep a value between plugin's runs.
+Return the value of a variable which is persisted when the plugin finishes to run but is _not_ persisted when Sketch closes. It is useful when you want to keep a value between plugin's runs.
 
 | Parameters                                         |                          |
 | -------------------------------------------------- | ------------------------ |
@@ -152,7 +152,7 @@ The setting that was stored for the given key. `undefined` if there was nothing.
 Settings.setSessionVariable('myVar', 0.1)
 ```
 
-Store a value of a variable which is _not_ persisted when Sketch closes but is persisted when the plugin finishes to run. It is useful when you want to keep a value between plugin's runs.
+Store a value of a variable which is persisted when the plugin finishes to run but is _not_ persisted when Sketch closes. It is useful when you want to keep a value between plugin's runs.
 
 | Parameters                                         |                         |
 | -------------------------------------------------- | ----------------------- |
