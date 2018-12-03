@@ -112,7 +112,10 @@ export function layerSettingForKey(layer, key) {
 }
 
 export function setLayerSettingForKey(layer, key, value) {
-  const stringifiedValue = JSON.stringify(value, (k, v) => util.toJSObject(v))
+  let stringifiedValue = JSON.stringify(value, (k, v) => util.toJSObject(v))
+  if (!stringifiedValue) {
+    stringifiedValue = null
+  }
   __command.setValue_forKey_onLayer(
     stringifiedValue,
     key,
@@ -132,6 +135,9 @@ export function documentSettingForKey(document, key) {
 
 export function setDocumentSettingForKey(document, key, value) {
   const documentData = getDocumentData(document)
-  const stringifiedValue = JSON.stringify(value, (k, v) => util.toJSObject(v))
+  let stringifiedValue = JSON.stringify(value, (k, v) => util.toJSObject(v))
+  if (!stringifiedValue) {
+    stringifiedValue = null
+  }
   __command.setValue_forKey_onDocument(stringifiedValue, key, documentData)
 }
