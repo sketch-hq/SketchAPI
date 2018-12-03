@@ -1,17 +1,22 @@
+import { isNumber } from 'util'
 import { proxyProperty, initProxyProperties } from '../utils'
 
 export class Point {
   constructor(x, y) {
     initProxyProperties(this)
 
-    proxyProperty(this, 'x', parseFloat(x))
-    proxyProperty(this, 'y', parseFloat(y))
+    const isObject = x && isNumber(x.x)
 
-    // if the argument is object
-    if (typeof x === 'object' && typeof x.x === 'number') {
-      this._x = parseFloat(x.x)
-      this._y = parseFloat(x.y)
-    }
+    proxyProperty(this, 'x', isObject ? parseFloat(x.x) : parseFloat(x))
+    proxyProperty(this, 'y', isObject ? parseFloat(x.y) : parseFloat(y))
+  }
+
+  asCGPoint() {
+    return CGPointMake(this._x, this._y)
+  }
+
+  asNSPoint() {
+    return NSMakePoint(this._x, this._y)
   }
 
   toJSON() {
