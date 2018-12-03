@@ -11,6 +11,7 @@
     "build:api": "webpack -p --optimize-minimize",
     "start": "npm run build",
     "watch": "webpack --watch",
+    "docs:generate-actions": "node ./scripts/generate-actions",
     "deploy:docs": "./scripts/deploy.sh",
     "run-tests:no-variant": "skpm-test --app=latest",
     "run-tests": "skpm-test --app=xcode",
