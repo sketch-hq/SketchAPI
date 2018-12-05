@@ -1,3 +1,5 @@
+import * as util from 'util'
+
 export const DefinedPropertiesKey = '_DefinedPropertiesKey'
 
 /**
@@ -100,6 +102,33 @@ export class WrappedObject {
 
   isImmutable() {
     return /Immutable/.test(String(this.sketchObject.className()))
+  }
+
+  jsonArchive() {
+    const archiver = MSJSONDataArchiver.new()
+    archiver.archiveObjectIDs = false
+    const aPtr = MOPointer.alloc().init()
+    archiver.archivedDataWithRootObject_error(this.sketchObject, aPtr)
+    if (aPtr.value()) {
+      throw Error('Archive error')
+    }
+    const data = archiver.archivedData()
+    const str = NSString.alloc().initWithData_encoding(
+      data,
+      NSUTF8StringEncoding
+    )
+    return JSON.parse(str)
+  }
+
+  static fromArchive(archive, version) {
+    let v = version || MSArchiveHeader.metadataForNewHeader()['version']
+    const object = MSJSONDictionaryUnarchiver.unarchiveObjectFromDictionary_asVersion_corruptionDetected_error(
+      data,
+      v,
+      nil,
+      nil
+    )
+    return this(object)
   }
 
   /**
