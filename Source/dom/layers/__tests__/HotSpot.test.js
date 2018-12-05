@@ -38,25 +38,22 @@ test('should create a new HotSpot from a layer', (context, document) => {
   })
 })
 
-test(
-  'should throw an error when trying to create a new HotSpot from a layer without flow',
-  (context, document) => {
-    const artboard = new Artboard({
-      name: 'Test1',
-      parent: document.selectedPage,
-    })
+test('should throw an error when trying to create a new HotSpot from a layer without flow', (context, document) => {
+  const artboard = new Artboard({
+    name: 'Test1',
+    parent: document.selectedPage,
+  })
 
-    const rect = new Group({
-      parent: artboard,
-    })
+  const rect = new Group({
+    parent: artboard,
+  })
 
-    try {
-      HotSpot.fromLayer(rect)
-      expect(false).toBe(true)
-    } catch (err) {
-      expect(err.message).toMatch(
-        'Can only create a HotSpot from a layer with an existing flow'
-      )
-    }
+  try {
+    HotSpot.fromLayer(rect)
+    expect(false).toBe(true)
+  } catch (err) {
+    expect(err.message).toMatch(
+      'Can only create a HotSpot from a layer with an existing flow'
+    )
   }
-)
+})

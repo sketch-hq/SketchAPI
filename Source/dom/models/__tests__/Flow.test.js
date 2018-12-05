@@ -1,63 +1,57 @@
 /* globals expect, test */
 import { Artboard, Group, Flow } from '../..'
 
-test(
-  'should create a flow between a layer and an artboard with a default animation',
-  (context, document) => {
-    const artboard = new Artboard({
-      name: 'Test1',
-      parent: document.selectedPage,
-    })
-    const artboard2 = new Artboard({
-      name: 'Test2',
-      parent: document.selectedPage,
-    })
+test('should create a flow between a layer and an artboard with a default animation', (context, document) => {
+  const artboard = new Artboard({
+    name: 'Test1',
+    parent: document.selectedPage,
+  })
+  const artboard2 = new Artboard({
+    name: 'Test2',
+    parent: document.selectedPage,
+  })
 
-    const rect = new Group({
-      parent: artboard,
-      flow: {
-        target: artboard2,
-      },
-    })
+  const rect = new Group({
+    parent: artboard,
+    flow: {
+      target: artboard2,
+    },
+  })
 
-    // check that an flow can be logged
-    log(rect.flow)
-    expect(rect.flow.toJSON()).toEqual({
+  // check that an flow can be logged
+  log(rect.flow)
+  expect(rect.flow.toJSON()).toEqual({
+    targetId: artboard2.id,
+    type: 'Flow',
+    animationType: 'slideFromRight',
+  })
+  expect(rect.flow.isBackAction()).toBe(false)
+  expect(rect.flow.isValidConnection()).toBe(true)
+})
+
+test('should create a flow between a layer and an artboard with a targetId', (context, document) => {
+  const artboard = new Artboard({
+    name: 'Test1',
+    parent: document.selectedPage,
+  })
+  const artboard2 = new Artboard({
+    name: 'Test2',
+    parent: document.selectedPage,
+  })
+
+  const rect = new Group({
+    parent: artboard,
+    flow: {
       targetId: artboard2.id,
-      type: 'Flow',
-      animationType: 'slideFromRight',
-    })
-    expect(rect.flow.isBackAction()).toBe(false)
-    expect(rect.flow.isValidConnection()).toBe(true)
-  }
-)
+    },
+  })
 
-test(
-  'should create a flow between a layer and an artboard with a targetId',
-  (context, document) => {
-    const artboard = new Artboard({
-      name: 'Test1',
-      parent: document.selectedPage,
-    })
-    const artboard2 = new Artboard({
-      name: 'Test2',
-      parent: document.selectedPage,
-    })
-
-    const rect = new Group({
-      parent: artboard,
-      flow: {
-        targetId: artboard2.id,
-      },
-    })
-
-    expect(rect.flow.toJSON()).toEqual({
-      targetId: artboard2.id,
-      type: 'Flow',
-      animationType: 'slideFromRight',
-    })
-  }
-)
+  expect(rect.flow.toJSON()).toEqual({
+    targetId: artboard2.id,
+    type: 'Flow',
+    animationType: 'slideFromRight',
+  })
+})
 
 test('target should return the wrapped artboard', (context, document) => {
   const artboard = new Artboard({
