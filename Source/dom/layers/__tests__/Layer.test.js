@@ -32,17 +32,14 @@ test('mutating a frame should change the frame of a layer', () => {
   expect(group.frame.width).toBe(400)
 })
 
-test(
-  'should duplicate the layer and add it as a sibling',
-  (context, document) => {
-    const page = document.selectedPage
-    const group = new Group({ parent: page })
-    expect(page.layers.length).toBe(1)
-    const result = group.duplicate()
-    expect(page.layers.length).toBe(2)
-    expect(result.type).toBe('Group')
-  }
-)
+test('should duplicate the layer and add it as a sibling', (context, document) => {
+  const page = document.selectedPage
+  const group = new Group({ parent: page })
+  expect(page.layers.length).toBe(1)
+  const result = group.duplicate()
+  expect(page.layers.length).toBe(2)
+  expect(result.type).toBe('Group')
+})
 
 test('should remove the layer from its parent', (context, document) => {
   const page = document.selectedPage

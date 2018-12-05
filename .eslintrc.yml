@@ -130,6 +130,8 @@ globals:
   MSSliceLayer: false
   MSImmutableSliceLayer: false
   MSExportFormat: false
+  NSThread: false
+  MSTheme: false
 
 rules:
   ###########
