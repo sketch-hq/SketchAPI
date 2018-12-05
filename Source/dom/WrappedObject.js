@@ -1,5 +1,3 @@
-import * as util from 'util'
-
 export const DefinedPropertiesKey = '_DefinedPropertiesKey'
 
 /**
@@ -108,8 +106,12 @@ export class WrappedObject {
     const archiver = MSJSONDataArchiver.new()
     archiver.archiveObjectIDs = false
     const aPtr = MOPointer.alloc().init()
-    archiver.archivedDataWithRootObject_error(this.sketchObject, aPtr)
+    const obj = this.isImmutable()
+      ? this.sketchObject
+      : this.sketchObject.immutableModelObject()
+    archiver.archivedDataWithRootObject_error(obj, aPtr)
     if (aPtr.value()) {
+      console.error(`Archive error ${aPtr.value()}`)
       throw Error('Archive error')
     }
     const data = archiver.archivedData()
@@ -118,17 +120,6 @@ export class WrappedObject {
       NSUTF8StringEncoding
     )
     return JSON.parse(str)
-  }
-
-  static fromArchive(archive, version) {
-    let v = version || MSArchiveHeader.metadataForNewHeader()['version']
-    const object = MSJSONDictionaryUnarchiver.unarchiveObjectFromDictionary_asVersion_corruptionDetected_error(
-      data,
-      v,
-      nil,
-      nil
-    )
-    return this(object)
   }
 
   /**

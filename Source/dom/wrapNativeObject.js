@@ -52,3 +52,17 @@ export function wrapObject(object, defaultType) {
 
   return Factory.create(type || defaultType, rest)
 }
+
+export function objectFromArchive(archive, version) {
+  const v = version || MSArchiveHeader.metadataForNewHeader().version
+  let object = MSJSONDictionaryUnarchiver.unarchiveObjectFromDictionary_asVersion_corruptionDetected_error(
+    archive,
+    v,
+    null,
+    null
+  )
+  if (object.newMutableCounterpart) {
+    object = object.newMutableCounterpart()
+  }
+  return wrapNativeObject(object)
+}

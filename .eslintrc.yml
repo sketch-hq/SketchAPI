@@ -114,6 +114,11 @@ globals:
   MSImmutableSliceLayer: false
   MSExportFormat: false
   MSTheme: false
+  MSJSONDataArchiver: false
+  MSJSONDictionaryUnarchiver: false
+  MSArchiveHeader: false
+  NSUTF8StringEncoding: false
+
 
 rules:
   ###########

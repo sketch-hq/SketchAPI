@@ -23,7 +23,10 @@ export { HotSpot } from './layers/HotSpot'
 export { Slice } from './layers/Slice'
 
 export { Types } from './enums'
-export { wrapObject as fromNative } from './wrapNativeObject'
+export {
+  wrapObject as fromNative,
+  objectFromArchive as fromArchive,
+} from './wrapNativeObject'
 
 export const Flow = {
   AnimationType,
