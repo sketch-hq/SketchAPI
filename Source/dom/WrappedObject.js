@@ -102,26 +102,6 @@ export class WrappedObject {
     return /Immutable/.test(String(this.sketchObject.className()))
   }
 
-  jsonArchive() {
-    const archiver = MSJSONDataArchiver.new()
-    archiver.archiveObjectIDs = false
-    const aPtr = MOPointer.alloc().init()
-    const obj = this.isImmutable()
-      ? this.sketchObject
-      : this.sketchObject.immutableModelObject()
-    archiver.archivedDataWithRootObject_error(obj, aPtr)
-    if (aPtr.value()) {
-      console.error(`Archive error ${aPtr.value()}`)
-      throw Error('Archive error')
-    }
-    const data = archiver.archivedData()
-    const str = NSString.alloc().initWithData_encoding(
-      data,
-      NSUTF8StringEncoding
-    )
-    return JSON.parse(str)
-  }
-
   /**
    * Because the API objects are thin wrappers, they are created on demand and are
    * thrown away regularly.

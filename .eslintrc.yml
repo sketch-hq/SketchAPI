@@ -118,6 +118,10 @@ globals:
   MSJSONDictionaryUnarchiver: false
   MSArchiveHeader: false
   NSUTF8StringEncoding: false
+  MSExportRequest: false
+  MSExportManager: false
+  NSFileManager: false
+
 
 
 rules:
