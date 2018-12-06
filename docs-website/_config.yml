@@ -1,0 +1,79 @@
+# Site settings
+title: Sketch Developers
+email: mail@sketchapp.com
+url: http://developer.sketchapp.com
+github_repo: https://github.com/BohemianCoding/SketchAPI/
+show_dir_listing: false
+
+# Build settings
+incremental: true
+kramdown:
+  input: GFM
+  auto_ids: true
+  smart_quotes:   lsquo,rsquo,ldquo,rdquo
+  syntax_highlighter: rouge
+
+plugins:
+  - jekyll-seo-tag
+  - jekyll-sitemap
+  - jekyll-paginate
+
+plugins:
+  - jekyll-redirect-from
+
+# jekyll-paginate
+paginate: 5
+paginate_path: "/blog/page:num/"
+
+sass:
+  style: compressed
+
+exclude:
+  - node_modules
+  - gulpfile.js
+  - package.json
+  - .sass-cache
+  - README.md
+  - CNAME
+  - Gemfile
+  - Gemfile.lock
+  - DEVNOTES.md
+
+# Dynamic Content
+collections:
+  actions:
+    output: true
+    permalink: /reference/action/:path/
+  guides:
+    output: true
+    permalink: /guides/:path/
+  posts:
+    output: true
+    permalink: /blog/:path/
+  api-references: # this comes from the SketchAPI repo
+    output: false
+
+# Defaults
+defaults:
+  -
+    scope:
+      path: ""
+    values:
+      layout: "single-page"
+  -
+    scope:
+      type: "actions"
+    values:
+      layout: "action"
+      script: "/js/search.js"
+  -
+    scope:
+      type: "guides"
+    values:
+      layout: "sidebar-page"
+      script: "/js/search.js"
+  -
+    scope:
+      type: "posts"
+    values:
+      layout: "post"

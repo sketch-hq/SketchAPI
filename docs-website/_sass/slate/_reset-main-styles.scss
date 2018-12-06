@@ -1,0 +1,36 @@
+@import 'variables';
+
+body > * {
+  padding: 0;
+}
+
+.content > table {
+  width: auto;
+  border: 0;
+  background-color: transparent;
+  box-shadow: none;
+}
+
+.content > .highlighter-rouge {
+  margin-bottom: 0;
+  clear: none;
+}
+
+.main-nav h1 {
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.toc-wrapper.open + .main-nav h1 {
+  opacity: 1;
+}
+
+pre code {
+  color: inherit;
+}
+
+@media (max-width: $tablet-width) {
+  .main-nav h1 {
+    opacity: 1;
+  }
+}

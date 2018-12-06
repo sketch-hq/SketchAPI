@@ -1,0 +1,18 @@
+/*Basic link styles*/
+a {
+  text-decoration: none;
+  transition: color .2s $ease-in-out-quad, border-color .2s $ease-in-out-quad, background-color .2s $ease-in-out-quad, background-image .2s $ease-in-out-quad;
+  color: $action;
+  font-weight: $font-medium;
+  -webkit-tap-highlight-color: rgba( $action-high, .08 );
+  &:hover,
+  &:active,
+  &:focus { color: $action-high; }
+}
+
+.background-dark a {
+  color: $action-light;
+  &:hover,
+  &:active,
+  &:focus { color: $action-light-high; }
+}
