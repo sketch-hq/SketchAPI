@@ -26,11 +26,11 @@ export const DEFAULT_EXPORT_OPTIONS = {
  * ### General Options
  *
  * - use-id-for-name : normally the exported files are given the same names as the layers they represent, but if this options is true, then the layer ids are used instead; defaults to false.
- * - output : this is the path of the folder where all exported files are placed; defaults to "~/Documents/Sketch Exports"
+ * - output : this is the path of the folder where all exported files are placed; defaults to "~/Documents/Sketch Exports". If falsey the data is returned immediately (only supported for json).
  * - overwriting : if true, the exporter will overwrite any existing files with new ones; defaults to false.
  * - trimmed: if true, any transparent space around the exported image will be trimmed; defaults to false.
  * - scales: this should be a list of numbers; it will determine the sizes at which the layers are exported; defaults to "1"
- * - formats: this should be a list of one or more of "png", "jpg", "svg", and "pdf"; defaults to "png" (see discussion below)
+ * - formats: this should be a list of one or more of "png", "jpg", "svg", "json", and "pdf"; defaults to "png" (see discussion below)
  *
  * ### SVG options
  * - compact : if exporting as SVG, this option makes the output more compact; defaults to false.
