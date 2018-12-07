@@ -1,7 +1,10 @@
 import { AnimationType, BackTarget } from './models/Flow'
 import './models/DataOverride'
 
-export { exportObject as export } from './export'
+export {
+  exportObject as export,
+  objectFromJSON as fromSketchJSON,
+} from './export'
 
 export { Document, getDocuments, getSelectedDocument } from './models/Document'
 export { Library, getLibraries } from './models/Library'
@@ -23,10 +26,7 @@ export { HotSpot } from './layers/HotSpot'
 export { Slice } from './layers/Slice'
 
 export { Types } from './enums'
-export {
-  wrapObject as fromNative,
-  objectFromArchive as fromArchive,
-} from './wrapNativeObject'
+export { wrapObject as fromNative } from './wrapNativeObject'
 
 export const Flow = {
   AnimationType,

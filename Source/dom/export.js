@@ -1,4 +1,5 @@
 import { isWrappedObject } from './utils'
+import { wrapNativeObject } from './wrapNativeObject'
 
 export const DEFAULT_EXPORT_OPTIONS = {
   compact: false,
@@ -60,7 +61,7 @@ export function exportObject(object, options) {
   if (formats) {
     const idx = formats.indexOf('json')
     if (idx != undefined) {
-      delete formats[idx]
+      formats.splice(idx, 1)
       exportJSON = true
     }
   }
@@ -70,8 +71,7 @@ export function exportObject(object, options) {
     ...options,
     formats,
   }
-  console.log('Exporting with options')
-  console.log(merged)
+
   const objectsToExport = (Array.isArray(object) ? object : [object]).map(
     o => (isWrappedObject(o) ? o.sketchObject : o)
   )
@@ -83,11 +83,6 @@ export function exportObject(object, options) {
     const archiver = MSJSONDataArchiver.new()
     archiver.archiveObjectIDs = true
     const aPtr = MOPointer.alloc().init()
-
-    // if (nativeObject.documentData) {
-    //   nativeObject = nativeObject.documentData()
-    // }
-
     const obj = nativeObject.immutableModelObject
       ? nativeObject.immutableModelObject()
       : nativeObject
@@ -95,34 +90,22 @@ export function exportObject(object, options) {
     if (aPtr.value()) {
       throw Error('Archive error')
     }
-    const data = archiver.archivedData()
-    return data
+    return archiver.archivedData()
   }
 
   // Return data if no output directory specified
   if (!merged.output) {
     const firstObject = objectsToExport[0]
     if (exportJSON) {
-      let data = archiveNativeObject(firstObject)
       const str = NSString.alloc().initWithData_encoding(
-        data,
+        archiveNativeObject(firstObject),
         NSUTF8StringEncoding
       )
       return JSON.parse(str)
     }
     // Input code for returning image data here...
     throw new Error('Return output is only support for the json format')
-
-    // const exportRequest = MSExportRequest.exportRequestsFromExportableLayer(
-    //   firstObject
-    // ).firstObject()
-    // exportRequest.format = format
-    // exportRequest.scale = options.scale || 1.0
-    // return MSExportManager.alloc()
-    //   .init()
-    //   .exportedDataForRequest(exportRequest)
   }
-
   // Save files to directory at options.output
   const exporter = MSSelfContainedHighLevelExporter.alloc().initWithOptions(
     merged
@@ -131,7 +114,6 @@ export function exportObject(object, options) {
   function exportNativeLayers(layers) {
     exporter.exportLayers(layers)
   }
-
   function exportNativePage(page) {
     exporter.exportPage(page)
   }
@@ -139,11 +121,11 @@ export function exportObject(object, options) {
   // Export all object json
   if (exportJSON) {
     const fm = NSFileManager.defaultManager()
-    let directory = NSString.stringWithString(
+    const directory = NSString.stringWithString(
       merged.output
     ).stringByExpandingTildeInPath()
     const comps = String(directory).split('/')
-    const createdDir = fm.createDirectoryAtPath_withIntermediateDirectories_attributes_error(
+    fm.createDirectoryAtPath_withIntermediateDirectories_attributes_error(
       directory,
       true,
       null,
@@ -155,21 +137,23 @@ export function exportObject(object, options) {
         merged['use-id-for-name'] === true || !o.name ? o.objectID() : o.name()
       const pathComps = comps.slice()
       pathComps.push(`${name}.json`)
-      const path = NSString.stringWithString(pathComps.join('/'))
-      console.log('Preparing export to path: ' + path)
-      // Don't overwrite unless desired
-      if (!merged.overwriting && fm.fileExistsAtPath_isDirectory(path, null)) {
-        return
-      }
-      console.log('Exporting to path: ' + path)
+      const url = NSURL.fileURLWithPath(pathComps.join('/'))
       const data = archiveNativeObject(o)
-      if (data.writeToFile_atomically(path, true) != true) {
-        throw new Error('Error writing json file')
+      const writeOptions = merged.overwriting
+        ? 0
+        : NSDataWritingWithoutOverwriting
+      const ptr = MOPointer.new()
+      if (!data.writeToURL_options_error(url, writeOptions, ptr)) {
+        throw new Error(`Error writing json file ${ptr.value()}`)
       }
     })
+    // If only JSON stop to bypass the exporters PNG default
+    if (!merged.formats.length == 0) {
+      return true
+    }
   }
 
-  // Other formats are by
+  // Other formats are completed by the exporter
   const pages = []
   const layers = []
   objectsToExport.forEach(o => {
@@ -179,8 +163,21 @@ export function exportObject(object, options) {
       layers.push(o)
     }
   })
-
-  pages.forEach(exportNativePage)
+  pages.forEach(p => exportNativePage(p))
   exportNativeLayers(layers)
-  return undefined
+  return true
+}
+
+export function objectFromJSON(archive, version) {
+  const v = version || MSArchiveHeader.metadataForNewHeader().version
+  let object = MSJSONDictionaryUnarchiver.unarchiveObjectFromDictionary_asVersion_corruptionDetected_error(
+    archive,
+    v,
+    null,
+    null
+  )
+  if (object.newMutableCounterpart) {
+    object = object.newMutableCounterpart()
+  }
+  return wrapNativeObject(object)
 }

@@ -121,6 +121,7 @@ globals:
   MSExportRequest: false
   MSExportManager: false
   NSFileManager: false
+  NSDataWritingWithoutOverwriting: false
 
 
 
