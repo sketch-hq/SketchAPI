@@ -148,7 +148,7 @@ export function exportObject(object, options) {
       }
     })
     // If only JSON stop to bypass the exporters PNG default
-    if (!merged.formats.length == 0) {
+    if (merged.formats.length == 0) {
       return true
     }
   }
