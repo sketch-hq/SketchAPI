@@ -227,3 +227,29 @@ test('should get the different parents', (context, document) => {
   expect(group.getParentSymbolMaster()).toBe(undefined)
   expect(group.getParentShape()).toBe(undefined)
 })
+
+test('should transform the layer', () => {
+  const group = new Group()
+  expect(group.transform).toEqual({
+    rotation: 0,
+    flippedHorizontally: false,
+    flippedVertically: false,
+  })
+
+  group.transform.flippedHorizontally = true
+  expect(group.tranform.flippedHorizontally).toBe(true)
+
+  group.tranform = {
+    rotation: 90,
+    flippedHorizontally: true,
+    flippedVertically: false,
+  }
+  expect(group.transform).toEqual({
+    rotation: 90,
+    flippedHorizontally: true,
+    flippedVertically: false,
+  })
+
+  group.transform.rotation = 720
+  expect(group.transform.rotation).toBe(0)
+})
