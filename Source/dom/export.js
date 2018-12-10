@@ -54,7 +54,7 @@ export function exportObject(object, options) {
     throw new Error('No object provided to export')
   }
   let exportJSON = false
-  let { formats } = options
+  let { formats } = options || {}
 
   if (typeof formats === 'string') {
     formats = formats
@@ -79,7 +79,7 @@ export function exportObject(object, options) {
   const objectsToExport = (Array.isArray(object) ? object : [object]).map(
     o => (isWrappedObject(o) ? o.sketchObject : o)
   )
-  if (!objectsToExport) {
+  if (!objectsToExport.length) {
     throw new Error('No objects provided to export')
   }
 
@@ -92,7 +92,7 @@ export function exportObject(object, options) {
       : nativeObject
     archiver.archivedDataWithRootObject_error(obj, aPtr)
     if (aPtr.value()) {
-      throw Error('Archive error')
+      throw Error(`Couldn’t create the JSON string: ${aPtr.value()}`)
     }
     return archiver.archivedData()
   }
@@ -152,7 +152,7 @@ export function exportObject(object, options) {
       }
     })
     // If only JSON stop to bypass the exporters PNG default
-    if (merged.formats.length == 0) {
+    if (!(merged.formats || {}).length) {
       return true
     }
   }
