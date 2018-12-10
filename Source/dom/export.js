@@ -53,29 +53,22 @@ export function exportObject(object, options) {
   if (!object) {
     throw new Error('No object provided to export')
   }
-  let exportJSON = false
-  let { formats } = options || {}
-
+  // let exportJSON = false
+  let formats = (options || {}).formats || []
   if (typeof formats === 'string') {
-    formats = formats
-      .split(',')
-      .map(format => format.trim())
-      .filter(t => t.length > 0)
+    formats = formats.split(',')
   }
-  if (formats) {
-    const idx = formats.indexOf('json')
-    if (idx >= 0) {
-      formats.splice(idx, 1)
-      exportJSON = true
-    }
-    formats = formats.join(',')
+  if (formats.length == 0) {
+    formats.push('png')
   }
-
-  const merged = {
+  formats = formats.map(format => format.trim())
+  const exportJSON = formats.indexOf('json') >= 0
+  const optionsWithDefaults = {
     ...DEFAULT_EXPORT_OPTIONS,
     ...options,
-    formats,
+    ...{ formats: formats.join(',') },
   }
+
   const objectsToExport = (Array.isArray(object) ? object : [object]).map(
     o => (isWrappedObject(o) ? o.sketchObject : o)
   )
@@ -98,21 +91,29 @@ export function exportObject(object, options) {
   }
 
   // Return data if no output directory specified
-  if (!merged.output) {
-    const firstObject = objectsToExport[0]
-    if (exportJSON) {
-      const str = NSString.alloc().initWithData_encoding(
-        archiveNativeObject(firstObject),
-        NSUTF8StringEncoding
-      )
-      return JSON.parse(str)
+  if (!optionsWithDefaults.output) {
+    if (formats.length != 1) {
+      throw new Error('Can only return 1 format with no output type')
     }
-    // Input code for returning image data here...
-    throw new Error('Return output is only support for the json format')
+    const format = formats[0]
+    const archives = objectsToExport.map(nativeObject => {
+      if (format === 'json') {
+        const str = NSString.alloc().initWithData_encoding(
+          archiveNativeObject(nativeObject),
+          NSUTF8StringEncoding
+        )
+        return JSON.parse(str)
+      }
+      // Insert code for returning image data here...
+      throw new Error('Return output is only support for the json format')
+    })
+    // Return the same format that was provided
+    return Array.isArray(object) ? archives : archives[0]
   }
+
   // Save files to directory at options.output
   const exporter = MSSelfContainedHighLevelExporter.alloc().initWithOptions(
-    merged
+    optionsWithDefaults
   )
 
   function exportNativeLayers(layers) {
@@ -122,11 +123,11 @@ export function exportObject(object, options) {
     exporter.exportPage(page)
   }
 
-  // Export all object json
+  // Export all objects json
   if (exportJSON) {
     const fm = NSFileManager.defaultManager()
     const directory = NSString.stringWithString(
-      merged.output
+      optionsWithDefaults.output
     ).stringByExpandingTildeInPath()
     const comps = String(directory).split('/')
     fm.createDirectoryAtPath_withIntermediateDirectories_attributes_error(
@@ -138,12 +139,14 @@ export function exportObject(object, options) {
 
     objectsToExport.forEach(o => {
       const name =
-        merged['use-id-for-name'] === true || !o.name ? o.objectID() : o.name()
+        optionsWithDefaults['use-id-for-name'] === true || !o.name
+          ? o.objectID()
+          : o.name()
       const pathComps = comps.slice()
       pathComps.push(`${name}.json`)
       const url = NSURL.fileURLWithPath(pathComps.join('/'))
       const data = archiveNativeObject(o)
-      const writeOptions = merged.overwriting
+      const writeOptions = optionsWithDefaults.overwriting
         ? 0
         : NSDataWritingWithoutOverwriting
       const ptr = MOPointer.new()
@@ -152,7 +155,7 @@ export function exportObject(object, options) {
       }
     })
     // If only JSON stop to bypass the exporters PNG default
-    if (!(merged.formats || {}).length) {
+    if (formats.length == 1) {
       return true
     }
   }
