@@ -50,10 +50,15 @@ export const DEFAULT_EXPORT_OPTIONS = {
  * @returns If an output path is not set, the data is returned
  */
 export function exportObject(object, options) {
-  if (!object) {
-    throw new Error('No object provided to export')
+  // Validate the provided objects
+  const objectsToExport = (Array.isArray(object) ? object : [object])
+    .map(o => (isWrappedObject(o) ? o.sketchObject : o))
+    .filter(o => o)
+  if (!objectsToExport.length) {
+    throw new Error('No objects provided to export')
   }
-  // let exportJSON = false
+
+  // Validate export formats
   let formats = (options || {}).formats || []
   if (typeof formats === 'string') {
     formats = formats.split(',')
@@ -67,13 +72,6 @@ export function exportObject(object, options) {
     ...DEFAULT_EXPORT_OPTIONS,
     ...options,
     ...{ formats: formats.join(',') },
-  }
-
-  const objectsToExport = (Array.isArray(object) ? object : [object]).map(
-    o => (isWrappedObject(o) ? o.sketchObject : o)
-  )
-  if (!objectsToExport.length) {
-    throw new Error('No objects provided to export')
   }
 
   function archiveNativeObject(nativeObject) {
@@ -160,7 +158,7 @@ export function exportObject(object, options) {
     }
   }
 
-  // Other formats are completed by the exporter
+  // Other formats are completed by the exporter per type
   const pages = []
   const layers = []
   objectsToExport.forEach(o => {
@@ -175,11 +173,20 @@ export function exportObject(object, options) {
   return true
 }
 
-export function objectFromJSON(archive, version) {
+/**
+ * Create an object from the exported Sketch JSON.
+ *
+ * @param {dictionary} sketchJSON The exported Sketch JSON data
+ * @param {number} version The file version that the Sketch JSON
+ * was exported from. Defaults to the current version
+ * @returns {WrappedObject} A javascript object (subclass of WrappedObject),
+ * which represents the restored Sketch object.
+ */
+export function objectFromJSON(sketchJSON, version) {
   const v = version || MSArchiveHeader.metadataForNewHeader().version
   const ptr = MOPointer.new()
   let object = MSJSONDictionaryUnarchiver.unarchiveObjectFromDictionary_asVersion_corruptionDetected_error(
-    archive,
+    sketchJSON,
     v,
     null,
     ptr
