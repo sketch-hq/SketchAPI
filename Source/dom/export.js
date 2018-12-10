@@ -53,17 +53,22 @@ export function exportObject(object, options) {
   if (!object) {
     throw new Error('No object provided to export')
   }
-  let { formats } = options
-  if (typeof formats === 'string') {
-    formats = [formats]
-  }
   let exportJSON = false
+  let { formats } = options
+
+  if (typeof formats === 'string') {
+    formats = formats
+      .split(',')
+      .map(format => format.trim())
+      .filter(t => t.length > 0)
+  }
   if (formats) {
     const idx = formats.indexOf('json')
-    if (idx != undefined) {
+    if (idx >= 0) {
       formats.splice(idx, 1)
       exportJSON = true
     }
+    formats = formats.join(',')
   }
 
   const merged = {
@@ -71,7 +76,6 @@ export function exportObject(object, options) {
     ...options,
     formats,
   }
-
   const objectsToExport = (Array.isArray(object) ? object : [object]).map(
     o => (isWrappedObject(o) ? o.sketchObject : o)
   )
