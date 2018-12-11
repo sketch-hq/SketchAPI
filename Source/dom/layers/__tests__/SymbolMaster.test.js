@@ -67,7 +67,7 @@ test('should create a symbol master with a nested symbol', (context, document) =
   // add the instance to the page
   document.selectedPage.layers = document.selectedPage.layers.concat(instance)
   expect(instance.overrides.length).toBe(3)
-  expect(instance.overrides[0].toJSON()).toEqual({
+  const result0 = {
     type: 'Override',
     id: `${nestedInstance.id}_symbolID`,
     path: nestedInstance.id,
@@ -75,14 +75,12 @@ test('should create a symbol master with a nested symbol', (context, document) =
     symbolOverride: true,
     value: nestedInstance.symbolId,
     isDefault: true,
-    affectedLayer: {
-      ...nestedInstance.toJSON(),
-      overrides: undefined,
-      selected: undefined,
-      style: instance.overrides[0].affectedLayer.style.toJSON(),
-    },
-  })
-  expect(instance.overrides[1].toJSON()).toEqual({
+    affectedLayer: nestedInstance.toJSON(),
+  }
+  delete result0.affectedLayer.overrides
+  delete result0.affectedLayer.selected
+  result0.affectedLayer.style = instance.overrides[0].affectedLayer.style.toJSON()
+  const result1 = {
     type: 'Override',
     id: `${text2.id}_stringValue`,
     path: text2.id,
@@ -90,13 +88,12 @@ test('should create a symbol master with a nested symbol', (context, document) =
     symbolOverride: false,
     value: 'Test value 2',
     isDefault: true,
-    affectedLayer: {
-      ...text2.toJSON(),
-      selected: undefined,
-      style: instance.overrides[1].affectedLayer.style.toJSON(),
-    },
-  })
-  expect(instance.overrides[2].toJSON()).toEqual({
+    affectedLayer: text2.toJSON(),
+  }
+  delete result1.affectedLayer.overrides
+  delete result1.affectedLayer.selected
+  result1.affectedLayer.style = instance.overrides[1].affectedLayer.style.toJSON()
+  const result2 = {
     type: 'Override',
     id: `${nestedInstance.id}/${text.id}_stringValue`,
     path: `${nestedInstance.id}/${text.id}`,
@@ -104,10 +101,11 @@ test('should create a symbol master with a nested symbol', (context, document) =
     symbolOverride: false,
     value: 'Test value',
     isDefault: true,
-    affectedLayer: {
-      ...text.toJSON(),
-      selected: undefined,
-      style: instance.overrides[2].affectedLayer.style.toJSON(),
-    },
-  })
+    affectedLayer: text.toJSON(),
+  }
+  delete result2.affectedLayer.selected
+  result2.affectedLayer.style = instance.overrides[2].affectedLayer.style.toJSON()
+  expect(instance.overrides[0].toJSON()).toEqual(result0)
+  expect(instance.overrides[1].toJSON()).toEqual(result1)
+  expect(instance.overrides[2].toJSON()).toEqual(result2)
 })

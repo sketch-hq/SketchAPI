@@ -15,7 +15,6 @@ test('should be able to log an ExportFormat', () => {
     {
       type: 'ExportFormat',
       fileFormat: 'png',
-      prefix: undefined,
       suffix: '@2x',
       size: '2x',
     },
@@ -35,7 +34,6 @@ test('should be able to modify an ExportFormat', () => {
   expect(exportFormat.toJSON()).toEqual({
     type: 'ExportFormat',
     fileFormat: 'png',
-    prefix: undefined,
     suffix: '@2x',
     size: '2x',
   })
@@ -44,7 +42,6 @@ test('should be able to modify an ExportFormat', () => {
   expect(exportFormat.toJSON()).toEqual({
     type: 'ExportFormat',
     fileFormat: 'png',
-    prefix: undefined,
     suffix: '@2x',
     size: '25x',
   })
@@ -53,7 +50,6 @@ test('should be able to modify an ExportFormat', () => {
   expect(exportFormat.toJSON()).toEqual({
     type: 'ExportFormat',
     fileFormat: 'png',
-    prefix: undefined,
     suffix: '@2x',
     size: '500w',
   })
@@ -62,7 +58,6 @@ test('should be able to modify an ExportFormat', () => {
   expect(exportFormat.toJSON()).toEqual({
     type: 'ExportFormat',
     fileFormat: 'png',
-    prefix: undefined,
     suffix: '@2x',
     size: '400w',
   })
@@ -71,7 +66,6 @@ test('should be able to modify an ExportFormat', () => {
   expect(exportFormat.toJSON()).toEqual({
     type: 'ExportFormat',
     fileFormat: 'png',
-    prefix: undefined,
     suffix: '@2x',
     size: '300w',
   })
@@ -80,7 +74,6 @@ test('should be able to modify an ExportFormat', () => {
   expect(exportFormat.toJSON()).toEqual({
     type: 'ExportFormat',
     fileFormat: 'png',
-    prefix: undefined,
     suffix: '@2x',
     size: '500h',
   })
@@ -89,7 +82,6 @@ test('should be able to modify an ExportFormat', () => {
   expect(exportFormat.toJSON()).toEqual({
     type: 'ExportFormat',
     fileFormat: 'png',
-    prefix: undefined,
     suffix: '@2x',
     size: '400h',
   })
@@ -98,7 +90,6 @@ test('should be able to modify an ExportFormat', () => {
   expect(exportFormat.toJSON()).toEqual({
     type: 'ExportFormat',
     fileFormat: 'png',
-    prefix: undefined,
     suffix: '@2x',
     size: '300h',
   })
@@ -107,7 +98,6 @@ test('should be able to modify an ExportFormat', () => {
   expect(exportFormat.toJSON()).toEqual({
     type: 'ExportFormat',
     fileFormat: 'jpg',
-    prefix: undefined,
     suffix: '@2x',
     size: '300h',
   })
@@ -116,7 +106,6 @@ test('should be able to modify an ExportFormat', () => {
   expect(exportFormat.toJSON()).toEqual({
     type: 'ExportFormat',
     fileFormat: 'jpg',
-    prefix: undefined,
     suffix: '@3x',
     size: '300h',
   })
@@ -126,7 +115,6 @@ test('should be able to modify an ExportFormat', () => {
     type: 'ExportFormat',
     fileFormat: 'jpg',
     prefix: '@4x',
-    suffix: undefined,
     size: '300h',
   })
 })

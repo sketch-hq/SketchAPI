@@ -194,7 +194,6 @@ test('should change the exportFormats', () => {
     {
       type: 'ExportFormat',
       fileFormat: 'png',
-      prefix: undefined,
       suffix: '@2x',
       size: '2x',
     },

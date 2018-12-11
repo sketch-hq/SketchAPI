@@ -39,7 +39,7 @@ test('should have overrides', (context, document) => {
 
   expect(instance.overrides.length).toBe(1)
   const override = instance.overrides[0]
-  expect(override.toJSON()).toEqual({
+  const result = {
     type: 'Override',
     id: `${text.id}_stringValue`,
     path: text.id,
@@ -47,10 +47,9 @@ test('should have overrides', (context, document) => {
     symbolOverride: false,
     value: 'Test value',
     isDefault: true,
-    affectedLayer: {
-      ...text.toJSON(),
-      selected: undefined,
-      style: instance.overrides[0].affectedLayer.style.toJSON(),
-    },
-  })
+    affectedLayer: text.toJSON(),
+  }
+  delete result.affectedLayer.selected
+  result.affectedLayer.style = instance.overrides[0].affectedLayer.style.toJSON()
+  expect(override.toJSON()).toEqual(result)
 })

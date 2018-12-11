@@ -23,7 +23,6 @@ A text layer. It is an instance of [Layer](#layer) so all the methods defined th
 | style<span class="arg-type">[Style](#style)</span>                         | The style of the Text.                                                                         |
 | sharedStyleId<span class="arg-type">string / null</span>                   | The ID of the [SharedStyle](#sharedstyle) this Text is linked to if any.                       |
 | text<span class="arg-type">string</span>                                   | The string value of the text layer.                                                            |
-| alignment<span class="arg-type">[Alignment](#textalignment)</span>         | The alignment of the layer.                                                                    |
 | lineSpacing<span class="arg-type">[LineSpacing](#textlinespacing)</span>   | The line spacing of the layer.                                                                 |
 | fixedWidth<span class="arg-type">boolean</span>                            | Whether the layer should have a fixed width or a flexible width.                               |
 
@@ -48,30 +47,6 @@ Adjust the Text to fit its value.
 
 The current Text (useful if you want to chain the calls).
 
-## font
-
-```javascript
-text.font = myNSFont
-```
-
-Set the font of the text layer.
-
-| Parameters                                          |                                    |
-| --------------------------------------------------- | ---------------------------------- |
-| font<span class="arg-type">NSFont - required</span> | The font to set on the Text layer. |
-
-## systemFontSize
-
-```javascript
-text.systemFontSize = 16
-```
-
-Set the font of the text layer as the system font of the given size.
-
-| Parameters                                               |                              |
-| -------------------------------------------------------- | ---------------------------- |
-| pointSize<span class="arg-type">number - required</span> | The size of the font to set. |
-
 ## fragments
 
 ```javascript
@@ -94,7 +69,6 @@ Enumeration of the alignments of the text.
 | `right`   | Visually right aligned                                            |
 | `center`  | Visually centered                                                 |
 | `justify` | Fully-justified. The last line in a paragraph is natural-aligned. |
-| `natural` | Indicates the default alignment for script                        |
 
 ## `Text.VerticalAlignment`
 
