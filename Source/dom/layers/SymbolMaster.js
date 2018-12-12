@@ -102,6 +102,8 @@ SymbolMaster[DefinedPropertiesKey] = { ...Artboard[DefinedPropertiesKey] }
 Factory.registerClass(SymbolMaster, MSSymbolMaster)
 Factory.registerClass(SymbolMaster, MSImmutableSymbolMaster)
 
+delete SymbolMaster[DefinedPropertiesKey].background
+
 SymbolMaster.define('symbolId', {
   get() {
     return String(this._object.symbolID())

@@ -3,6 +3,7 @@ import { Group } from './Group'
 import { Rectangle } from '../models/Rectangle'
 import { Types } from '../enums'
 import { Factory } from '../Factory'
+import { Color, colorToString } from '../style/Color'
 
 /**
  * A Sketch artboard.
@@ -59,5 +60,61 @@ Artboard.define('flowStartPoint', {
       return
     }
     this._object.isFlowHome = isFlowStartHome
+  },
+})
+
+class Background {
+  constructor(artboard) {
+    Object.defineProperty(this, '_object', {
+      enumerable: false,
+      value: artboard,
+    })
+
+    Object.defineProperty(this, 'enabled', {
+      get() {
+        return Boolean(Number(this._object.hasBackgroundColor()))
+      },
+      set(enabled) {
+        this._object.setHasBackgroundColor(enabled)
+      },
+    })
+
+    Object.defineProperty(this, 'includedInExport', {
+      get() {
+        return Boolean(Number(this._object.includeBackgroundColorInExport()))
+      },
+      set(included) {
+        this._object.setIncludeBackgroundColorInExport(included)
+      },
+    })
+
+    Object.defineProperty(this, 'color', {
+      get() {
+        return colorToString(this._object.backgroundColor())
+      },
+      set(color) {
+        this._object.setBackgroundColor(Color.from(color))
+      },
+    })
+  }
+
+  toJSON() {
+    return {
+      color: this.color,
+      enabled: this.enabled,
+      includedInExport: this.includedInExport,
+    }
+  }
+}
+
+Artboard.define('background', {
+  get() {
+    return new Background(this._object)
+  },
+  set(background) {
+    const backgroundProxy = this.background
+    Object.keys(background).forEach(k => {
+      backgroundProxy[k] = background[k]
+    })
   },
 })
