@@ -19,7 +19,7 @@ test('should set the background', () => {
   const artboard = new Artboard()
 
   // defaults
-  expect(arbboard.background.toJSON()).toEqual({
+  expect(artboard.background.toJSON()).toEqual({
     enabled: false,
     includedInExport: true,
     color: '#000000ff',
@@ -39,7 +39,7 @@ test('should set the background', () => {
     enabled: false,
     includedInExport: true,
   }
-  expect(arbboard.background.toJSON()).toEqual({
+  expect(artboard.background.toJSON()).toEqual({
     enabled: false,
     includedInExport: true,
     color: '#00000000',
