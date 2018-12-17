@@ -230,24 +230,24 @@ test('should get the different parents', (context, document) => {
 
 test('should transform the layer', () => {
   const group = new Group()
-  expect(group.transform).toEqual({
+  expect(group.transform.toJSON()).toEqual({
     rotation: 0,
     flippedHorizontally: false,
     flippedVertically: false,
   })
 
   group.transform.flippedHorizontally = true
-  expect(group.tranform.flippedHorizontally).toBe(true)
+  expect(group.transform.flippedHorizontally).toBe(true)
 
   group.transform.flippedVertically = true
-  expect(group.tranform.flippedVertically).toBe(true)
+  expect(group.transform.flippedVertically).toBe(true)
 
-  group.tranform = {
+  group.transform = {
     rotation: 90,
     flippedHorizontally: true,
     flippedVertically: false,
   }
-  expect(group.transform).toEqual({
+  expect(group.transform.toJSON()).toEqual({
     rotation: 90,
     flippedHorizontally: true,
     flippedVertically: false,

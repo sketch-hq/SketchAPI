@@ -142,25 +142,35 @@ export class WrappedObject {
     const privateKey = `_${propertyName}`
     class NestedProperty {
       constructor(object) {
-        Object.defineProperty(this, '_object', {
+        const self = this
+        Object.defineProperty(self, '_parent', {
           enumerable: false,
           value: object,
         })
+        Object.defineProperty(self, '_object', {
+          enumerable: false,
+          value: object.sketchObject,
+        })
+        Object.defineProperty(self, '_keys', {
+          enumerable: false,
+          value: Object.keys(fields),
+        })
 
-        Object.keys(fields).forEach(field => {
-          Object.defineProperty(this, field, fields[field])
+        self._keys.forEach(field => {
+          Object.defineProperty(self, field, fields[field])
         })
       }
 
       toJSON() {
-        return Object.keys(fields).reduce((prev, field) => {
+        return this._keys.reduce((prev, field) => {
           // eslint-disable-next-line no-param-reassign
           prev[field] = this[field]
           return prev
         }, {})
       }
     }
-    this.define(propertyName, {
+
+    const fullDescriptor = {
       ...descriptor,
       get() {
         if (this[privateKey]) {
@@ -169,7 +179,7 @@ export class WrappedObject {
         // cache the instance
         Object.defineProperty(this, privateKey, {
           enumerable: false,
-          value: new NestedProperty(this._object),
+          value: new NestedProperty(this),
         })
         return this[privateKey]
       },
@@ -179,7 +189,10 @@ export class WrappedObject {
           proxy[k] = object[k]
         })
       },
-    })
+    }
+
+    this._addDescriptor(propertyName, fullDescriptor)
+    Object.defineProperty(this.prototype, propertyName, fullDescriptor)
   }
 
   /**
