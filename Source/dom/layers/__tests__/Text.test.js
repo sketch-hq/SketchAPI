@@ -1,7 +1,8 @@
 /* globals expect, test */
 import { isRunningOnJenkins } from '../../../test-utils'
 import { Text, Rectangle } from '../..'
-import { TextAlignmentMap, TextLineSpacingBehaviourMap } from '../Text'
+import { TextLineSpacingBehaviourMap } from '../Text'
+import { TextAlignmentMap } from '../../style/Text'
 
 test('should create a Text layer', () => {
   const text = new Text()
@@ -87,7 +88,6 @@ if (!isRunningOnJenkins()) {
     let text = new Text({
       text: 'blah',
     })
-    text.adjustToFit()
 
     let { fragments } = text
 
@@ -106,7 +106,6 @@ if (!isRunningOnJenkins()) {
     text = new Text({
       text: 'Test\nHello\n123\no',
     })
-    text.adjustToFit()
     // eslint-disable-next-line
     fragments = text.fragments
 

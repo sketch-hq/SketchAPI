@@ -28,36 +28,33 @@ test('default style should not have any fills', () => {
   expect(style.sketchObject.fills().count()).toBe(0)
 })
 
-test(
-  'should be in and out of sync with its shared style',
-  (context, document) => {
-    const { sharedStyle } = createSharedStyle(document, Shape)
+test('should be in and out of sync with its shared style', (context, document) => {
+  const { sharedStyle } = createSharedStyle(document, Shape)
 
-    const shape = new Shape({
-      parent: document.selectedPage,
-      sharedStyle,
-    })
-    const { style } = shape
+  const shape = new Shape({
+    parent: document.selectedPage,
+    sharedStyle,
+  })
+  const { style } = shape
 
-    expect(style.isOutOfSyncWithSharedStyle(sharedStyle)).toBe(false)
+  expect(style.isOutOfSyncWithSharedStyle(sharedStyle)).toBe(false)
 
-    sharedStyle.style.opacity = 0.5
+  sharedStyle.style.opacity = 0.5
 
-    expect(style.isOutOfSyncWithSharedStyle(sharedStyle)).toBe(true)
-    expect(style.opacity).toBe(1)
+  expect(style.isOutOfSyncWithSharedStyle(sharedStyle)).toBe(true)
+  expect(style.opacity).toBe(1)
 
-    style.syncWithSharedStyle(sharedStyle)
+  style.syncWithSharedStyle(sharedStyle)
 
-    expect(style.isOutOfSyncWithSharedStyle(sharedStyle)).toBe(false)
-    expect(style.opacity).toBe(0.5)
+  expect(style.isOutOfSyncWithSharedStyle(sharedStyle)).toBe(false)
+  expect(style.opacity).toBe(0.5)
 
-    style.opacity = 1
+  style.opacity = 1
 
-    expect(style.isOutOfSyncWithSharedStyle(sharedStyle)).toBe(true)
+  expect(style.isOutOfSyncWithSharedStyle(sharedStyle)).toBe(true)
 
-    sharedStyle.style = style
+  sharedStyle.style = style
 
-    expect(style.isOutOfSyncWithSharedStyle(sharedStyle)).toBe(false)
-    expect(sharedStyle.style.opacity).toBe(1)
-  }
-)
+  expect(style.isOutOfSyncWithSharedStyle(sharedStyle)).toBe(false)
+  expect(sharedStyle.style.opacity).toBe(1)
+})

@@ -90,7 +90,7 @@ export class WrappedObject {
         })
       } else if (value && typeof value.toJSON === 'function') {
         json[k] = value.toJSON()
-      } else {
+      } else if (typeof value !== 'undefined') {
         json[k] = value
       }
     })

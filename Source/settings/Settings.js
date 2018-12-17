@@ -3,9 +3,8 @@ import { isWrappedObject, getDocumentData } from '../dom/utils'
 
 function getPluginIdentifier() {
   if (!__command.pluginBundle()) {
-    throw new Error(
-      'It seems that the command is not running in a plugin. Bundle your command in a plugin to use the Settings API.'
-    )
+    // if we run a script from the Run Script panel, it won't have a bundle
+    return 'com.sketchapp.temporary-script'
   }
   return __command.pluginBundle().identifier()
 }
@@ -59,7 +58,7 @@ export function settingForKey(key) {
   const store = NSUserDefaults.alloc().initWithSuiteName(
     `${SUITE_PREFIX}${getPluginIdentifier()}`
   )
-  const value = store.objectForKey_(key)
+  const value = store.objectForKey(key)
 
   if (typeof value === 'undefined' || value == 'undefined' || value === null) {
     return undefined
@@ -140,4 +139,33 @@ export function setDocumentSettingForKey(document, key, value) {
     stringifiedValue = null
   }
   __command.setValue_forKey_onDocument(stringifiedValue, key, documentData)
+}
+
+export function sessionVariable(key) {
+  const threadDic = NSThread.mainThread().threadDictionary()
+
+  const value = threadDic.objectForKey(
+    `${SUITE_PREFIX}${getPluginIdentifier()}.${key}`
+  )
+
+  if (typeof value === 'undefined' || value == 'undefined' || value === null) {
+    return undefined
+  }
+  return JSON.parse(value)
+}
+
+export function setSessionVariable(key, value) {
+  const threadDic = NSThread.mainThread().threadDictionary()
+
+  const stringifiedValue = JSON.stringify(value, (k, v) => util.toJSObject(v))
+  if (!stringifiedValue) {
+    threadDic.removeObjectForKey(
+      `${SUITE_PREFIX}${getPluginIdentifier()}.${key}`
+    )
+  } else {
+    threadDic.setObject_forKey_(
+      stringifiedValue,
+      `${SUITE_PREFIX}${getPluginIdentifier()}.${key}`
+    )
+  }
 }

@@ -10,6 +10,7 @@ import { BorderOptions, Arrowhead, LineEnd, LineJoin } from './BorderOptions'
 import { Blur, BlurType } from './Blur'
 import { Fill, FillType } from './Fill'
 import { Border, BorderPosition } from './Border'
+import { defineTextStyleProperties } from './Text'
 
 const BlendingModeMap = {
   Normal: 0,
@@ -51,6 +52,15 @@ const BlendingMode = {
 
 const DEFAULT_STYLE = {
   fills: [],
+}
+
+export const StyleTypeMap = {
+  1: 'Layer',
+  2: 'Text',
+}
+export const StyleType = {
+  Layer: 'Layer',
+  Text: 'Text',
 }
 
 /**
@@ -203,3 +213,15 @@ Style.define('innerShadows', {
     this._object.setInnerShadows(objects)
   },
 })
+
+Style.StyleType = StyleType
+Style.define('styleType', {
+  get() {
+    return this._object.textStyle() &&
+      this._object.textStyle().attributes()[NSFontAttributeName]
+      ? StyleType.Text
+      : StyleType.Layer
+  },
+})
+
+defineTextStyleProperties(Style)

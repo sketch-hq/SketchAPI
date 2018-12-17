@@ -7,6 +7,9 @@
     "[New] Add UI.getInputFromUser method and deprecate the other input methods",
     "[New] Add some `getParent*` methods on Layer",
     "[New] Add `ShapeType` to create different shapes",
+    "[New] Add support for text styles",
+    "[New] Add some methods to store a session variable",
+    "[Improved] Allow using setting methods even from the Run Script panel",
     "[New] Add method to get the theme of Sketch"
   ],
   "releases": {

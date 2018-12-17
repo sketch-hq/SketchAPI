@@ -1,12 +1,9 @@
 /* globals expect, test */
 import { Group, Text } from '../..'
 
-test(
-  'an empty document should have an empty selection',
-  (context, document) => {
-    expect(document.selectedLayers.isEmpty).toBe(true)
-  }
-)
+test('an empty document should have an empty selection', (context, document) => {
+  expect(document.selectedLayers.isEmpty).toBe(true)
+})
 
 test('should clear the selection', (context, document) => {
   const group = new Group({
@@ -23,24 +20,21 @@ test('should clear the selection', (context, document) => {
   expect(selection.isEmpty).toBe(true)
 })
 
-test(
-  'should return the length without wrapping all the object',
-  (context, document) => {
-    // eslint-disable-next-line
-    const group = new Group({
-      parent: document.selectedPage,
-      selected: true,
-    })
-    // eslint-disable-next-line
-    const text = new Text({
-      parent: document.selectedPage,
-      selected: true,
-    })
-    const selection = document.selectedLayers
+test('should return the length without wrapping all the object', (context, document) => {
+  // eslint-disable-next-line
+  const group = new Group({
+    parent: document.selectedPage,
+    selected: true,
+  })
+  // eslint-disable-next-line
+  const text = new Text({
+    parent: document.selectedPage,
+    selected: true,
+  })
+  const selection = document.selectedLayers
 
-    expect(selection.length).toBe(2)
-  }
-)
+  expect(selection.length).toBe(2)
+})
 
 test('should be able to go through the layers', (context, document) => {
   const group = new Group({

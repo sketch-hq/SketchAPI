@@ -5,7 +5,7 @@ import { Color } from '../Color'
 test('should create a Color from a hex string', () => {
   // #rrggbbaa
   const color = Color.from('#11223344')
-  expect(String(color._object.class())).toBe('MSColor')
+  expect(String(color._object.class())).toBe('MSImmutableColor')
   expect(color.toString()).toBe('#11223344')
 
   // #rrggbb
