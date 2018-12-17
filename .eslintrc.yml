@@ -114,6 +114,7 @@ globals:
   MSImmutableSliceLayer: false
   MSExportFormat: false
   MSTheme: false
+  MSCurvePoint: false
 
 rules:
   ###########
