@@ -15,6 +15,6 @@
     "@skpm/os": "0.1.1",
     "@skpm/path": "0.1.2",
     "@skpm/timers": "0.2.0",
-    "@skpm/util": "0.1.21"
+    "@skpm/util": "0.1.23"
   }
 }

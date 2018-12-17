@@ -3,6 +3,23 @@ import { Types } from '../enums'
 import { Factory } from '../Factory'
 import { Point } from './Point'
 
+const CurveModeMap = {
+  Undefined: 0,
+  Straight: 1,
+  Mirrored: 2,
+  Asymmetric: 3,
+  Disconnected: 4,
+  Rounded: 5,
+}
+
+export const CurveMode = {
+  Undefined: 'Undefined',
+  Straight: 'Straight',
+  Mirrored: 'Mirrored',
+  Asymmetric: 'Asymmetric',
+  Disconnected: 'Disconnected',
+}
+
 export class CurvePoint extends WrappedObject {
   constructor(curvePoint = {}) {
     if (!curvePoint.sketchObject) {
@@ -11,10 +28,15 @@ export class CurvePoint extends WrappedObject {
     }
 
     super(curvePoint)
+
+    Object.defineProperty(this, '_parent', {
+      enumerable: false,
+      writable: true,
+    })
   }
 }
 
-CurvePoint.type = Types.ExportFormat
+CurvePoint.type = Types.CurvePoint
 CurvePoint[DefinedPropertiesKey] = { ...WrappedObject[DefinedPropertiesKey] }
 Factory.registerClass(CurvePoint, MSCurvePoint)
 
@@ -26,6 +48,10 @@ CurvePoint.define('cornerRadius', {
   },
   set(cornerRadius) {
     this._object.setCornerRadius(cornerRadius)
+    if (this._parent) {
+      this._parent.setEdited(true)
+      this._parent.adjustFrameAfterEditIntegral_fixAncestors(false, true)
+    }
   },
 })
 
@@ -38,6 +64,10 @@ CurvePoint.define('curveFrom', {
   },
   set(curveFrom) {
     this._object.setCurveFrom(NSMakePoint(curveFrom.x, curveFrom.y))
+    if (this._parent) {
+      this._parent.setEdited(true)
+      this._parent.adjustFrameAfterEditIntegral_fixAncestors(false, true)
+    }
   },
 })
 
@@ -50,6 +80,10 @@ CurvePoint.define('curveTo', {
   },
   set(curveTo) {
     this._object.setCurveTo(NSMakePoint(curveTo.x, curveTo.y))
+    if (this._parent) {
+      this._parent.setEdited(true)
+      this._parent.adjustFrameAfterEditIntegral_fixAncestors(false, true)
+    }
   },
 })
 
@@ -62,5 +96,27 @@ CurvePoint.define('point', {
   },
   set(point) {
     this._object.setPoint(NSMakePoint(point.x, point.y))
+    if (this._parent) {
+      this._parent.setEdited(true)
+      this._parent.adjustFrameAfterEditIntegral_fixAncestors(false, true)
+    }
+  },
+})
+
+CurvePoint.CurveMode = CurveMode
+CurvePoint.define('curveMode', {
+  get() {
+    const mode = this._object.curveMode()
+    return (
+      Object.keys(CurveModeMap).find(key => CurveModeMap[key] === mode) || mode
+    )
+  },
+  set(_mode) {
+    const mode = CurveModeMap[_mode]
+    this._object.setCurveMode(typeof mode !== 'undefined' ? mode : _mode)
+    if (this._parent) {
+      this._parent.setEdited(true)
+      this._parent.adjustFrameAfterEditIntegral_fixAncestors(false, true)
+    }
   },
 })

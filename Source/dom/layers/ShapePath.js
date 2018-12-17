@@ -1,8 +1,11 @@
+import { toArray } from 'util'
 import { DefinedPropertiesKey } from '../WrappedObject'
 import { StyledLayer } from './StyledLayer'
 import { Types } from '../enums'
 import { Factory } from '../Factory'
 import { Rectangle } from '../models/Rectangle'
+import { CurvePoint } from '../models/CurvePoint'
+import { wrapObject } from '../wrapNativeObject'
 
 const ShapeType = {
   Rectangle: 'Rectangle',
@@ -92,5 +95,42 @@ ShapePath.ShapeType = ShapeType
 ShapePath.define('shapeType', {
   get() {
     return ShapeTypeMap[String(this._object.class())]
+  },
+})
+
+ShapePath.define('points', {
+  get() {
+    return toArray(this._object.points()).map(p => {
+      const point = CurvePoint.fromNative(p)
+      point._parent = this._object
+      return point
+    })
+  },
+  set(points) {
+    if (this.isImmutable()) {
+      return
+    }
+    this._object.setEdited(true)
+    this._object.removeAllCurvePoints()
+
+    const curvePoints = points.map(
+      p => wrapObject(p, Types.CurvePoint).sketchObject
+    )
+    this._object.addCurvePoints(curvePoints)
+    this._object.adjustFrameAfterEditIntegral_fixAncestors(false, true)
+  },
+})
+
+ShapePath.define('closed', {
+  get() {
+    return Boolean(Number(this._object.isClosed()))
+  },
+  set(closed) {
+    if (this.isImmutable()) {
+      return
+    }
+    this._object.setEdited(true)
+    this._object.setIsClosed(closed)
+    this._object.adjustFrameAfterEditIntegral_fixAncestors(false, true)
   },
 })
