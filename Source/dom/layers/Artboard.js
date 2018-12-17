@@ -63,58 +63,38 @@ Artboard.define('flowStartPoint', {
   },
 })
 
-class Background {
-  constructor(artboard) {
-    Object.defineProperty(this, '_object', {
-      enumerable: false,
-      value: artboard,
-    })
-
-    Object.defineProperty(this, 'enabled', {
-      get() {
-        return Boolean(Number(this._object.hasBackgroundColor()))
-      },
-      set(enabled) {
-        this._object.setHasBackgroundColor(enabled)
-      },
-    })
-
-    Object.defineProperty(this, 'includedInExport', {
-      get() {
-        return Boolean(Number(this._object.includeBackgroundColorInExport()))
-      },
-      set(included) {
-        this._object.setIncludeBackgroundColorInExport(included)
-      },
-    })
-
-    Object.defineProperty(this, 'color', {
-      get() {
-        return colorToString(this._object.backgroundColor())
-      },
-      set(color) {
-        this._object.setBackgroundColor(Color.from(color))
-      },
-    })
-  }
-
-  toJSON() {
-    return {
-      color: this.color,
-      enabled: this.enabled,
-      includedInExport: this.includedInExport,
-    }
-  }
-}
-
-Artboard.define('background', {
-  get() {
-    return new Background(this._object)
+Artboard.defineObject('background', {
+  enabled: {
+    get() {
+      return Boolean(Number(this._object.hasBackgroundColor()))
+    },
+    set(enabled) {
+      if (this._parent.isImmutable()) {
+        return
+      }
+      this._object.setHasBackgroundColor(enabled)
+    },
   },
-  set(background) {
-    const backgroundProxy = this.background
-    Object.keys(background).forEach(k => {
-      backgroundProxy[k] = background[k]
-    })
+  includedInExport: {
+    get() {
+      return Boolean(Number(this._object.includeBackgroundColorInExport()))
+    },
+    set(included) {
+      if (this._parent.isImmutable()) {
+        return
+      }
+      this._object.setIncludeBackgroundColorInExport(included)
+    },
+  },
+  color: {
+    get() {
+      return colorToString(this._object.backgroundColor())
+    },
+    set(color) {
+      if (this._parent.isImmutable()) {
+        return
+      }
+      this._object.setBackgroundColor(Color.from(color))
+    },
   },
 })
