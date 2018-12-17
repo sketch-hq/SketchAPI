@@ -239,6 +239,9 @@ test('should transform the layer', () => {
   group.transform.flippedHorizontally = true
   expect(group.tranform.flippedHorizontally).toBe(true)
 
+  group.transform.flippedVertically = true
+  expect(group.tranform.flippedVertically).toBe(true)
+
   group.tranform = {
     rotation: 90,
     flippedHorizontally: true,
