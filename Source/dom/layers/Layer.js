@@ -308,61 +308,32 @@ Layer.define('exportFormats', {
   },
 })
 
-class Transform {
-  constructor(layer) {
-    Object.defineProperty(this, '_object', {
-      enumerable: false,
-      value: layer,
-    })
-
-    Object.defineProperty(this, 'rotation', {
-      get() {
-        return Number(this._object.userVisibleRotation())
-      },
-      set(rotation) {
-        this._object.applyUserVisibleRotation_explicitRotationCenter(
-          rotation,
-          null
-        )
-      },
-    })
-
-    Object.defineProperty(this, 'flippedHorizontally', {
-      get() {
-        return Boolean(Number(this._object.isFlippedHorizontal()))
-      },
-      set(flipped) {
-        this._object.setIsFlippedHorizontal(flipped)
-      },
-    })
-
-    Object.defineProperty(this, 'flippedVertically', {
-      get() {
-        return Boolean(Number(this._object.isFlippedVertical()))
-      },
-      set(flipped) {
-        this._object.setIsFlippedVertical(flipped)
-      },
-    })
-  }
-
-  toJSON() {
-    return {
-      rotation: this.rotation,
-      flippedHorizontally: this.flippedHorizontally,
-      flippedVertically: this.flippedVertically,
-    }
-  }
-}
-
-Layer.define('transform', {
-  get() {
-    return new Transform(this._object)
+Layer.defineObject('transform', {
+  rotation: {
+    get() {
+      return Number(this._object.userVisibleRotation())
+    },
+    set(rotation) {
+      this._object.applyUserVisibleRotation_explicitRotationCenter(
+        rotation,
+        null
+      )
+    },
   },
-  set(transform) {
-    const transformProxy = this.transform
-    Object.keys(transform).forEach(k => {
-      transformProxy[k] = transform[k]
-    })
+  flippedHorizontally: {
+    get() {
+      return Boolean(Number(this._object.isFlippedHorizontal()))
+    },
+    set(flipped) {
+      this._object.setIsFlippedHorizontal(flipped)
+    },
+  },
+  flippedVertically: {
+    get() {
+      return Boolean(Number(this._object.isFlippedVertical()))
+    },
+    set(flipped) {
+      this._object.setIsFlippedVertical(flipped)
+    },
   },
 })

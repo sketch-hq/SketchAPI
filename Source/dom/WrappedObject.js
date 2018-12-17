@@ -138,6 +138,50 @@ export class WrappedObject {
     Object.defineProperty(this.prototype, propertyName, descriptor)
   }
 
+  static defineObject(propertyName, fields, descriptor = {}) {
+    const privateKey = `_${propertyName}`
+    class NestedProperty {
+      constructor(object) {
+        Object.defineProperty(this, '_object', {
+          enumerable: false,
+          value: object,
+        })
+
+        Object.keys(fields).forEach(field => {
+          Object.defineProperty(this, field, fields[field])
+        })
+      }
+
+      toJSON() {
+        return Object.keys(fields).reduce((prev, field) => {
+          // eslint-disable-next-line no-param-reassign
+          prev[field] = this[field]
+          return prev
+        }, {})
+      }
+    }
+    this.define(propertyName, {
+      ...descriptor,
+      get() {
+        if (this[privateKey]) {
+          return this[privateKey]
+        }
+        // cache the instance
+        Object.defineProperty(this, privateKey, {
+          enumerable: false,
+          value: new NestedProperty(this._object),
+        })
+        return this[privateKey]
+      },
+      set(object) {
+        const proxy = this[propertyName]
+        Object.keys(object).forEach(k => {
+          proxy[k] = object[k]
+        })
+      },
+    })
+  }
+
   /**
    * we want to keep track of the defined properties and their order
    *
