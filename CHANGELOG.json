@@ -8,7 +8,8 @@
     "[New] Add some `getParent*` methods on Layer",
     "[New] Add some methods to store a session variable",
     "[Improved] Allow using setting methods even from the Run Script panel",
-    "[New] Add method to get the theme of Sketch"
+    "[New] Add method to get the theme of Sketch",
+    "[New] Add `transform` property to Layer"
   ],
   "releases": {
     "52.1": ["[New] Add basic support for Shape path"],
