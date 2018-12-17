@@ -10,7 +10,7 @@ test('should return exported json data', () => {
     output: false,
   })
   expect(archive.do_objectID).toEqual(String(object.id))
-  expect(archive._class).toEqual('rectangle')
+  expect(archive._class).toEqual('shapeGroup')
 })
 
 test('should return array of exported json data', () => {

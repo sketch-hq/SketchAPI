@@ -14,6 +14,83 @@ export const DEFAULT_EXPORT_OPTIONS = {
   output: '~/Documents/Sketch Exports',
 }
 
+function getJSONData(nativeObject) {
+  const archiver = MSJSONDataArchiver.new()
+  archiver.archiveObjectIDs = true
+  const aPtr = MOPointer.alloc().init()
+  const obj = nativeObject.immutableModelObject
+    ? nativeObject.immutableModelObject()
+    : nativeObject
+  archiver.archivedDataWithRootObject_error(obj, aPtr)
+  if (aPtr.value()) {
+    throw Error(`Couldn’t create the JSON string: ${aPtr.value()}`)
+  }
+  return archiver.archivedData()
+}
+
+function getJSONString(nativeObject) {
+  const data = getJSONData(nativeObject)
+  return String(
+    NSString.alloc().initWithData_encoding(data, NSUTF8StringEncoding)
+  )
+}
+
+function exportToJSONFile(nativeObjects, options) {
+  const fm = NSFileManager.defaultManager()
+  const directory = NSString.stringWithString(
+    options.output
+  ).stringByExpandingTildeInPath()
+  const comps = String(directory).split('/')
+  fm.createDirectoryAtPath_withIntermediateDirectories_attributes_error(
+    directory,
+    true,
+    null,
+    null
+  )
+
+  nativeObjects.forEach(o => {
+    const name =
+      options['use-id-for-name'] === true || !o.name ? o.objectID() : o.name()
+    const pathComps = comps.slice()
+    pathComps.push(`${name}.json`)
+    const url = NSURL.fileURLWithPath(pathComps.join('/'))
+    const data = getJSONData(o)
+    const writeOptions = options.overwriting
+      ? 0
+      : NSDataWritingWithoutOverwriting
+    const ptr = MOPointer.new()
+    data.writeToURL_options_error(url, writeOptions, ptr)
+    if (ptr.value()) {
+      throw new Error(`Error writing json file ${ptr.value()}`)
+    }
+  })
+}
+
+function exportToImageFile(nativeObjects, options) {
+  // we need to class the objects by types as we need to do different things depending on it
+  const pages = []
+  const layers = []
+  nativeObjects.forEach(o => {
+    if (o.isKindOfClass(MSPage)) {
+      pages.push(o)
+    } else {
+      layers.push(o)
+    }
+  })
+
+  const exporter = MSSelfContainedHighLevelExporter.alloc().initWithOptions(
+    options
+  )
+
+  // export the pages
+  pages.forEach(exporter.exportPage)
+
+  // export the layers
+  if (layers.length) {
+    exporter.exportLayers(layers)
+  }
+}
+
 /**
  * Export an object, using the options supplied.
  *
@@ -54,6 +131,7 @@ export function exportObject(object, options) {
   const objectsToExport = (Array.isArray(object) ? object : [object])
     .map(o => (isWrappedObject(o) ? o.sketchObject : o))
     .filter(o => o)
+
   if (!objectsToExport.length) {
     throw new Error('No objects provided to export')
   }
@@ -63,50 +141,46 @@ export function exportObject(object, options) {
   if (typeof formats === 'string') {
     formats = formats.split(',')
   }
-  if (formats.length == 0) {
+  formats = formats.map(format => format.trim())
+
+  // if we don't have any format, we default to png
+  if (formats.length === 0) {
     formats.push('png')
   }
-  formats = formats.map(format => format.trim())
-  const exportJSON = formats.indexOf('json') >= 0
+
+  const shouldExportToJSON = formats.indexOf('json') !== -1
+  const exportImagesFormat = formats.filter(format => format !== 'json')
+
   const optionsWithDefaults = {
     ...DEFAULT_EXPORT_OPTIONS,
     ...options,
-    ...{ formats: formats.join(',') },
-  }
-
-  function archiveNativeObject(nativeObject) {
-    const archiver = MSJSONDataArchiver.new()
-    archiver.archiveObjectIDs = true
-    const aPtr = MOPointer.alloc().init()
-    const obj = nativeObject.immutableModelObject
-      ? nativeObject.immutableModelObject()
-      : nativeObject
-    archiver.archivedDataWithRootObject_error(obj, aPtr)
-    if (aPtr.value()) {
-      throw Error(`Couldn’t create the JSON string: ${aPtr.value()}`)
-    }
-    return archiver.archivedData()
+    ...{ formats: exportImagesFormat.join(',') },
   }
 
   // Return data if no output directory specified
   if (!optionsWithDefaults.output) {
-    if (formats.length != 1) {
+    if (formats.length > 1) {
       throw new Error('Can only return 1 format with no output type')
     }
     const format = formats[0]
-    const archives = objectsToExport.map(nativeObject => {
+    const exported = objectsToExport.map(nativeObject => {
       if (format === 'json') {
-        const str = NSString.alloc().initWithData_encoding(
-          archiveNativeObject(nativeObject),
-          NSUTF8StringEncoding
-        )
+        const str = getJSONString(nativeObject)
         return JSON.parse(str)
       }
       // Insert code for returning image data here...
       throw new Error('Return output is only support for the json format')
     })
     // Return the same format that was provided
-    return Array.isArray(object) ? archives : archives[0]
+    return Array.isArray(object) ? exported : exported[0]
+  }
+
+  if (shouldExportToJSON) {
+    exportToJSONFile(objectsToExport, optionsWithDefaults)
+  }
+
+  if (exportImagesFormat.length) {
+    exportToImageFile(objectsToExport, optionsWithDefaults)
   }
 
   // Save files to directory at options.output
@@ -119,43 +193,6 @@ export function exportObject(object, options) {
   }
   function exportNativePage(page) {
     exporter.exportPage(page)
-  }
-
-  // Export all objects json
-  if (exportJSON) {
-    const fm = NSFileManager.defaultManager()
-    const directory = NSString.stringWithString(
-      optionsWithDefaults.output
-    ).stringByExpandingTildeInPath()
-    const comps = String(directory).split('/')
-    fm.createDirectoryAtPath_withIntermediateDirectories_attributes_error(
-      directory,
-      true,
-      null,
-      null
-    )
-
-    objectsToExport.forEach(o => {
-      const name =
-        optionsWithDefaults['use-id-for-name'] === true || !o.name
-          ? o.objectID()
-          : o.name()
-      const pathComps = comps.slice()
-      pathComps.push(`${name}.json`)
-      const url = NSURL.fileURLWithPath(pathComps.join('/'))
-      const data = archiveNativeObject(o)
-      const writeOptions = optionsWithDefaults.overwriting
-        ? 0
-        : NSDataWritingWithoutOverwriting
-      const ptr = MOPointer.new()
-      if (!data.writeToURL_options_error(url, writeOptions, ptr)) {
-        throw new Error(`Error writing json file ${ptr.value()}`)
-      }
-    })
-    // If only JSON stop to bypass the exporters PNG default
-    if (formats.length == 1) {
-      return true
-    }
   }
 
   // Other formats are completed by the exporter per type
