@@ -1,5 +1,5 @@
 import { isWrappedObject } from './utils'
-import { Types } from './enums'
+import { wrapNativeObject } from './wrapNativeObject'
 
 export const DEFAULT_EXPORT_OPTIONS = {
   compact: false,
@@ -26,11 +26,11 @@ export const DEFAULT_EXPORT_OPTIONS = {
  * ### General Options
  *
  * - use-id-for-name : normally the exported files are given the same names as the layers they represent, but if this options is true, then the layer ids are used instead; defaults to false.
- * - output : this is the path of the folder where all exported files are placed; defaults to "~/Documents/Sketch Exports"
+ * - output : this is the path of the folder where all exported files are placed; defaults to "~/Documents/Sketch Exports". If falsey the data is returned immediately (only supported for json).
  * - overwriting : if true, the exporter will overwrite any existing files with new ones; defaults to false.
  * - trimmed: if true, any transparent space around the exported image will be trimmed; defaults to false.
  * - scales: this should be a list of numbers; it will determine the sizes at which the layers are exported; defaults to "1"
- * - formats: this should be a list of one or more of "png", "jpg", "svg", and "pdf"; defaults to "png" (see discussion below)
+ * - formats: this should be a list of one or more of "png", "jpg", "svg", "json", and "pdf"; defaults to "png" (see discussion below)
  *
  * ### SVG options
  * - compact : if exporting as SVG, this option makes the output more compact; defaults to false.
@@ -46,58 +46,156 @@ export const DEFAULT_EXPORT_OPTIONS = {
  *
  *
  * @param {dictionary} options Options indicating which sizes and formats to use, etc.
+ *
+ * @returns If an output path is not set, the data is returned
  */
 export function exportObject(object, options) {
-  const merged = { ...DEFAULT_EXPORT_OPTIONS, ...options }
+  // Validate the provided objects
+  const objectsToExport = (Array.isArray(object) ? object : [object])
+    .map(o => (isWrappedObject(o) ? o.sketchObject : o))
+    .filter(o => o)
+  if (!objectsToExport.length) {
+    throw new Error('No objects provided to export')
+  }
+
+  // Validate export formats
+  let formats = (options || {}).formats || []
+  if (typeof formats === 'string') {
+    formats = formats.split(',')
+  }
+  if (formats.length == 0) {
+    formats.push('png')
+  }
+  formats = formats.map(format => format.trim())
+  const exportJSON = formats.indexOf('json') >= 0
+  const optionsWithDefaults = {
+    ...DEFAULT_EXPORT_OPTIONS,
+    ...options,
+    ...{ formats: formats.join(',') },
+  }
+
+  function archiveNativeObject(nativeObject) {
+    const archiver = MSJSONDataArchiver.new()
+    archiver.archiveObjectIDs = true
+    const aPtr = MOPointer.alloc().init()
+    const obj = nativeObject.immutableModelObject
+      ? nativeObject.immutableModelObject()
+      : nativeObject
+    archiver.archivedDataWithRootObject_error(obj, aPtr)
+    if (aPtr.value()) {
+      throw Error(`Couldn’t create the JSON string: ${aPtr.value()}`)
+    }
+    return archiver.archivedData()
+  }
+
+  // Return data if no output directory specified
+  if (!optionsWithDefaults.output) {
+    if (formats.length != 1) {
+      throw new Error('Can only return 1 format with no output type')
+    }
+    const format = formats[0]
+    const archives = objectsToExport.map(nativeObject => {
+      if (format === 'json') {
+        const str = NSString.alloc().initWithData_encoding(
+          archiveNativeObject(nativeObject),
+          NSUTF8StringEncoding
+        )
+        return JSON.parse(str)
+      }
+      // Insert code for returning image data here...
+      throw new Error('Return output is only support for the json format')
+    })
+    // Return the same format that was provided
+    return Array.isArray(object) ? archives : archives[0]
+  }
+
+  // Save files to directory at options.output
   const exporter = MSSelfContainedHighLevelExporter.alloc().initWithOptions(
-    merged
+    optionsWithDefaults
   )
 
   function exportNativeLayers(layers) {
     exporter.exportLayers(layers)
   }
-
   function exportNativePage(page) {
     exporter.exportPage(page)
   }
 
-  if (Array.isArray(object)) {
-    const isArrayOfPages = isWrappedObject(object[0])
-      ? object[0].type === Types.Page
-      : String(object[0].class()) === 'MSPage'
+  // Export all objects json
+  if (exportJSON) {
+    const fm = NSFileManager.defaultManager()
+    const directory = NSString.stringWithString(
+      optionsWithDefaults.output
+    ).stringByExpandingTildeInPath()
+    const comps = String(directory).split('/')
+    fm.createDirectoryAtPath_withIntermediateDirectories_attributes_error(
+      directory,
+      true,
+      null,
+      null
+    )
 
-    if (isArrayOfPages) {
-      // support an array of pages
-      object.forEach(o => {
-        if (isWrappedObject(o)) {
-          exportNativePage(o.sketchObject)
-        } else {
-          exportNativePage(o)
-        }
-      })
-    } else {
-      // support an array of layers
-      exportNativeLayers(
-        object.map(o => {
-          if (isWrappedObject(o)) {
-            return o.sketchObject
-          }
-          return o
-        })
-      )
+    objectsToExport.forEach(o => {
+      const name =
+        optionsWithDefaults['use-id-for-name'] === true || !o.name
+          ? o.objectID()
+          : o.name()
+      const pathComps = comps.slice()
+      pathComps.push(`${name}.json`)
+      const url = NSURL.fileURLWithPath(pathComps.join('/'))
+      const data = archiveNativeObject(o)
+      const writeOptions = optionsWithDefaults.overwriting
+        ? 0
+        : NSDataWritingWithoutOverwriting
+      const ptr = MOPointer.new()
+      if (!data.writeToURL_options_error(url, writeOptions, ptr)) {
+        throw new Error(`Error writing json file ${ptr.value()}`)
+      }
+    })
+    // If only JSON stop to bypass the exporters PNG default
+    if (formats.length == 1) {
+      return true
     }
-  } else if (isWrappedObject(object)) {
-    // support a wrapped object
-    if (object.type === Types.Page) {
-      exportNativePage(object.sketchObject)
-    } else {
-      exportNativeLayers([object.sketchObject])
-    }
-  } else if (String(object.class()) === 'MSPage') {
-    // support a native page
-    exportNativePage(object)
-  } else {
-    // support a native layer
-    exportNativeLayers([object])
   }
+
+  // Other formats are completed by the exporter per type
+  const pages = []
+  const layers = []
+  objectsToExport.forEach(o => {
+    if (String(o.class()) === 'MSPage') {
+      pages.push(o)
+    } else {
+      layers.push(o)
+    }
+  })
+  pages.forEach(p => exportNativePage(p))
+  exportNativeLayers(layers)
+  return true
+}
+
+/**
+ * Create an object from the exported Sketch JSON.
+ *
+ * @param {dictionary} sketchJSON The exported Sketch JSON data
+ * @param {number} version The file version that the Sketch JSON
+ * was exported from. Defaults to the current version
+ * @returns {WrappedObject} A javascript object (subclass of WrappedObject),
+ * which represents the restored Sketch object.
+ */
+export function objectFromJSON(sketchJSON, version) {
+  const v = version || MSArchiveHeader.metadataForNewHeader().version
+  const ptr = MOPointer.new()
+  let object = MSJSONDictionaryUnarchiver.unarchiveObjectFromDictionary_asVersion_corruptionDetected_error(
+    sketchJSON,
+    v,
+    null,
+    ptr
+  )
+  if (ptr.value()) {
+    throw new Error(`Failed to create object from sketch JSON: ${ptr.value()}`)
+  }
+  if (object.newMutableCounterpart) {
+    object = object.newMutableCounterpart()
+  }
+  return wrapNativeObject(object)
 }
