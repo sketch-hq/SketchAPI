@@ -22,7 +22,7 @@ test('should set the background', () => {
   expect(artboard.background.toJSON()).toEqual({
     enabled: false,
     includedInExport: true,
-    color: '#000000ff',
+    color: '#ffffffff',
   })
 
   artboard.background.color = '#123456ff'
