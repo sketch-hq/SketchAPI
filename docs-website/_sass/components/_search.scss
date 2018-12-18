@@ -1,0 +1,140 @@
+.search-form {
+  width: 100%;
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  pointer-events: none;
+}
+
+.search-form .search-contents {
+  margin: 0 auto;
+  background: $background-light;
+  pointer-events: all;
+  box-shadow: 0 1px 0 $border-dark-high, 0 1px 4px 1px $border-dark-high;
+  position: relative;
+}
+
+.search-field {
+  width: 100%;
+  padding: .6875rem 2.75rem .9375rem 1rem;
+  border: 0;
+  font-size: 1.625rem; /*26px*/
+  font-weight: $font-regular;
+}
+
+.search-close {
+  display: block;
+  width: 2.75rem;
+  height: 3.3125rem;
+  background-image: url('data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2212%22%20height%3D%2212%22%20viewBox%3D%220%200%2012%2012%22%3E%3Cpath%20fill%3D%22%23fa6400%22%20fill-rule%3D%22evenodd%22%20d%3D%22M6%204.926L1.3.226C1-.074.52-.074.223.223c-.3.3-.295.78.005%201.08L4.928%206l-4.7%204.7c-.3.3-.303.78-.006%201.078.3.3.78.295%201.08-.005L6%207.073l4.7%204.7c.3.3.78.302%201.078.005.3-.3.295-.78-.005-1.08L7.073%206l4.7-4.7c.3-.3.302-.78.005-1.078-.3-.3-.78-.295-1.08.005L6%204.927z%22%2F%3E%3C%2Fsvg%3E');
+  background-position: center center;
+  background-repeat: no-repeat;
+  position: absolute;
+  top: 0;
+  right: 0;
+  cursor: pointer;
+  -webkit-transition: -webkit-filter .1s ease-out;
+  transition: filter .1s ease-out;
+  &:hover,
+  &:active,
+  &:focus {
+    //http://stackoverflow.com/questions/29037023/how-to-calculate-required-hue-rotate-to-generate-specific-colour
+    -webkit-filter: hue-rotate(1deg) saturate(117%) brightness(105%);
+    filter: hue-rotate(1deg) saturate(117%) brightness(105%);
+  }
+}
+
+.search-results ul {
+  overflow: auto;
+  border-top: 1px solid $border-dark-high;
+}
+
+.search-results li {
+  display: block;
+  margin-left: 1rem;
+}
+
+  .search-results li:last-child {
+    border-bottom: 0;
+  }
+
+.search-results a {
+  display: block;
+  padding: 1rem 0;
+  border-bottom: 1px solid $border-dark;
+  position: relative;
+  &:hover,
+  &:active,
+  &:focus {
+    margin-left: -1rem; //To remove the separation
+    padding-left: 1rem; //To compensate the negative margin
+    margin-top: -.0625rem; //-1px to cover the previous elements' bottom line;
+    padding-top: 1.0625rem; //16px + 1px
+    background-color: $action-ultra-low; //must be solid to avoid overlapping
+  }
+}
+
+  //Top Line
+  .search-results a:hover::before,
+  .search-results a:active::before,
+  .search-results a:focus::before {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 1px;
+    background: $border-dark;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+@include tablet-and-above {
+  .search-form {
+    top: 100px;
+  }
+
+  .search-form .search-contents,
+  .search-field {
+    border-radius: $radius-normal;
+  }
+
+  .search-results ul {
+    max-height: 14.2rem; //Aproximately 4 results
+    position: relative; //To crop the bottom elements on hover
+    border-radius: 0 0 $radius-normal $radius-normal; //To crop the bottom elements on hover
+  }
+}
+
+@include tablet-and-below {
+  .search-form {
+    padding: 0;
+    top: 0;
+  }
+
+  .search-results ul {
+    max-height: calc(100vh - 3.6875rem); //So it covers the screen (minus the nav bar) at max
+  }
+
+    .ios .search-results ul {
+      max-height: calc(100vh - 7.9375rem); //So it covers the screen (minus the nav bar and the toolbar) at max
+    }
+
+    .ios .search-results ul a {
+      -webkit-transform: translate3d(0,0,0); //Increasing performance of scrolling
+      z-index: 10000; //Increasing reliability of scrolling
+    }
+
+  .search-results a::after {
+    content: "";
+    display: inline-block;
+    width: .375rem; //6px
+    height: .625rem; //10px
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background-image: url('data:image/svg+xml;utf8,%3Csvg%20width%3D%228%22%20height%3D%2213%22%20viewBox%3D%220%200%208%2013%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Ctitle%3EDisclosure%20Indicator%3C%2Ftitle%3E%3Cpath%20d%3D%22M0%2C1.5%20L1.5%2C0%20L7.29201249%2C5.79201249%20C7.68302319%2C6.18302319%207.68649149%2C6.81350851%207.29201249%2C7.20798751%20L1.5%2C13%20L0%2C11.5%20L4.29422684%2C7.20577316%20C4.68401459%2C6.81598541%204.68722761%2C6.18722761%204.29422684%2C5.79422684%20L0%2C1.5%20Z%22%20fill%3D%22%23207cdf%22%20fill-rule%3D%22evenodd%22%2F%3E%3C%2Fsvg%3E');
+    background-size: contain;
+    opacity: .25;
+  }
+}

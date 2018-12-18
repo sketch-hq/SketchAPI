@@ -1,0 +1,222 @@
+img.max,
+.sidebar-main-content figure img,
+.sidebar-main-content video {
+  max-width: 100%;
+  height: auto;
+  display: block; //Avoid ugly gap on bottom
+}
+
+.sidebar-main-content figure:not([class]) img,
+.sidebar-main-content video {
+  //margin: 0 auto 2rem;
+  border-radius: $radius-small;
+  box-shadow: 0 0 2px $border-dark-high;
+}
+
+// Responsive embed container for YouTube videos
+.embed-container {
+  max-width: 100%;
+  height: 0;
+  padding-bottom: 56.25%;
+  margin-bottom: 2rem;
+  overflow: hidden;
+  position: relative;
+  border-radius: $radius-small;
+}
+
+.embed-container iframe,
+.embed-container object,
+.embed-container embed {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: $radius-small;
+}
+
+.sidebar-main-content figure:not([class]) {
+  margin: 2rem 0;
+}
+
+//Created ad-hoc for /learn/documentation/15-other/6-contacting-support.html
+.sidebar-main-content .figure-icon + h4 {
+  margin-top: 1rem;
+}
+
+figcaption {
+  margin-top: 1rem;
+  //text-align: center;
+  font-size: .8125rem; //13px
+  line-height: .98125rem; //15.7px
+  color: $text-dark-ultra-low;
+}
+
+.new {
+  display: inline-block;
+  padding: .3125rem .375rem .25rem; /*5px 6px 4px*/
+  vertical-align: middle;
+  position: relative;
+  top: -.2em;
+  border-radius: $radius-small; /*2px*/
+  text-transform: uppercase;
+  font-size: .75rem; /*12px*/
+  background: #4d994e;
+  color: $text-light-high;
+  line-height: 1;
+}
+
+/*Clearfix*/
+.group:before,
+.group:before,
+.group:after { content: ""; display: table; }
+.group:after { clear: both; }
+.group { zoom: 1; }
+
+.visuallyhidden {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+/*Image replacement*/
+.ir {
+  background-color: transparent;
+  background-repeat: no-repeat;
+  border: 0;
+  direction: ltr;
+  display: inline-block;
+  overflow: hidden;
+  text-align: left;
+  text-indent: -999em;
+}
+
+/*Right to left. Used for images that need to overflow backwards*/
+.rtl { direction: rtl; }
+.rtl .online-link { direction: ltr; }
+
+/*Selection color for pages*/
+*::selection {
+  color: $text-light-high;
+  background: $sk-orange2;
+}
+
+  *::selection:window-inactive {
+      background: $sk-orange4;
+  }
+
+/* Avoid the ugly focus ring in form elements in Safari */
+*:focus { outline: none; }
+
+.view-all::after {
+  content: ""; //\203a
+  display: inline-block;
+  width: .375rem; //6px
+  height: .625rem; //10px
+  margin-left: .375rem; //6px
+  vertical-align: baseline;
+  background-image: url('data:image/svg+xml;utf8,%3Csvg%20width%3D%228%22%20height%3D%2213%22%20viewBox%3D%220%200%208%2013%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Ctitle%3EDisclosure%20Indicator%3C%2Ftitle%3E%3Cpath%20d%3D%22M0%2C1.5%20L1.5%2C0%20L7.29201249%2C5.79201249%20C7.68302319%2C6.18302319%207.68649149%2C6.81350851%207.29201249%2C7.20798751%20L1.5%2C13%20L0%2C11.5%20L4.29422684%2C7.20577316%20C4.68401459%2C6.81598541%204.68722761%2C6.18722761%204.29422684%2C5.79422684%20L0%2C1.5%20Z%22%20fill%3D%22%236236ff%22%20fill-rule%3D%22evenodd%22%2F%3E%3C%2Fsvg%3E');
+  background-size: cover;
+}
+
+.hide {
+  display: none !important;
+}
+
+.hidden {
+  display: none;
+}
+
+.marked-text {
+  padding: 0 .125em; //0 2px
+  margin: 0 -.125em; //Compensating
+  color: $text-dark-high;
+  font-weight: inherit;
+  font-style: inherit;
+  background-color: $divider-dark; //rgba( $action , .05 )
+  border-bottom: 1px solid $border-dark-high; //$action-border
+}
+
+.actions {
+  display: block;
+  padding-left: 0;
+}
+
+.actions li {
+  display: inline-block;
+  padding-right: 2rem;
+  text-align: center;
+}
+
+  .actions li:nth-child(2n) {
+    padding-right: 0;
+  }
+
+@include tablet-and-below {
+  .actions li {
+    display: block;
+    padding-right: 0;
+    margin-bottom: .5rem;
+  }
+
+  .actions li a {
+    display: block;
+  }
+}
+
+.actions + .actions {
+  margin-top: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+picture + .actions {
+  margin-top: 1rem;
+}
+
+//TODO Evaluate these
+/* @group Mobile styles */
+@media screen and (max-width: $breakpoint_tablet_width) {
+  img.max {
+    display: block;
+    margin: 0 auto;
+  }
+
+  .two-cols::before,
+  .two-cols::after {
+    display: none;
+  }
+
+  .masthead > .wrapper > .actions {
+    white-space: nowrap;
+  }
+
+  .masthead > .wrapper > .actions > .button {
+    margin: 0 !important; /*20px*/
+  }
+
+  .is-for {
+    height: 3em;
+  }
+
+  .testimonials .col + .col {
+    margin-top: 5rem;
+  }
+
+  .testimonials img {
+    display: inline-block;
+  }
+
+  .thirds-list {
+    margin-bottom: -2.8125rem !important; /*20px*/
+  }
+
+  .thirds-list li {
+    margin-bottom: 2.8125rem; /*20px*/
+  }
+}
+/* @end */
