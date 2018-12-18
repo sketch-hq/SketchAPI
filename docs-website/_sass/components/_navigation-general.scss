@@ -1,0 +1,50 @@
+/*Basic navigation styles*/
+nav ul,
+nav ol,
+ul.row,
+ol.row {
+  list-style: none;
+}
+
+nav ul,
+nav ol {
+  margin: 0;
+  padding: 0;
+  font-size: 0; /*Removing spacing*/
+}
+
+nav li {
+  font-size: 1rem; /*Setting the font back to normal*/
+}
+
+@include tablet-and-above {
+  nav li {
+    display: inline-block;
+    vertical-align: middle;
+  }
+}
+
+nav a {
+  color: $text-dark;
+  //font-weight: $font-semibold;
+  &:hover,
+  &:focus {
+    color: $action-high;
+  }
+  &:active,
+  &.active {
+    color: $text-dark-ultra-low;
+  }
+}
+
+.background-dark nav a {
+  color: $text-light;
+  &:hover,
+  &:focus {
+    color: $text-light-low;
+  }
+  &:active,
+  &.active {
+    color: $text-light-ultra-low;
+  }
+}

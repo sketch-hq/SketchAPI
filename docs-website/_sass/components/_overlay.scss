@@ -1,0 +1,41 @@
+.stop-scrolling {
+  overflow: hidden;
+}
+
+  //iOS only workaround to prevent scrolling when we have the modal open, as overflow doesn't work on iOS. Scrolling position is saved in a JS variable, then restored when we remove the class so we can keep the scroll position
+  .stop-scrolling.ios {
+    position: fixed;
+    width: 100%;
+  }
+
+.overlay {
+  position: fixed;
+  z-index: 98;
+  width: 100%;
+  height: 100%;
+  background-color: rgba( $sk-orange8 , .80);
+  top: 0;
+  bottom: 0;
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+  transition: opacity .08s ease-out;
+  will-change: transform, opacity;
+}
+
+@include tablet-and-below {
+  .overlay {
+    -webkit-backdrop-filter: blur(10px);
+  }
+}
+
+  .overlay.active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: all;
+    transition-timing-function: ease-in;
+  }
+
+  .overlay.cover-all {
+    z-index: 999; //To pass over the navigation bar
+  }

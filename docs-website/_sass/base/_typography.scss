@@ -1,0 +1,427 @@
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font: $font-regular 16px/1.5 -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif; //1.48125
+  color: $text-dark;
+
+  // Enabling kerning and optional ligatures
+  text-rendering: optimizeLegibility;
+}
+
+:root .background-dark {
+  background-color: $background-dark;
+  color: $text-light-low;
+}
+
+@include tablet-and-below {
+  .display-1,
+  .masthead h1 {
+    font-size: 3.0625rem; /*49px*/
+    line-height: 3.1875rem; /*51px*/
+    margin: 3rem 0 2rem; /*48px*/
+  }
+
+  h1, .h1 {
+    font-size: 2.4375rem; /*39px*/
+    line-height: 2.6875rem; /*43px*/
+    margin: 3rem 0 2rem; /*48px*/
+  }
+
+  h2, .h2 {
+    font-size: 1.859375rem; /*29.75px*/
+    line-height: 2.20625rem; /*35.3px*/
+    margin: 3rem 0 1.5rem; /*40px*/
+  }
+
+  h3, .h3 {
+    font-size: 1.3125rem; /*21px*/
+    line-height: 1.71875rem; /*27.5px*/
+    margin: 2rem 0 1rem; /*32px*/
+  }
+
+  h4, .h4,
+  h1:not([class]) + p,
+  .lead,
+  .lead-text,
+  blockquote {
+    font-size: 1.09375rem; /*17.5px*/
+    line-height: 1.7125rem; /*27.4px*/
+    margin: 2rem 0 1rem; /*32px*/
+  }
+
+  h5, .h5 {
+    font-size: .823529412rem; /*14px*/
+    line-height: 1.23125rem; /*19.7px*/
+    margin: 1.5rem 0 .5rem; /*32px*/
+  }
+
+  h6, .h6,
+  .heading-main-title,
+  .heading-caption {
+    display: block;
+    font-size: .75rem; /*12px*/
+    line-height: 1.23125rem; /*19.7px*/
+    margin: 1.5rem 0 .5rem; /*32px*/
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+  }
+}
+
+@include tablet-and-above {
+  .display-1,
+  .masthead h1 {
+    font-size: 3.375rem; /*54px*/
+    line-height: 3.5rem; /*56px*/
+    margin: 3rem 0 2rem; /*48px*/
+  }
+
+  h1, .h1 {
+    font-size: 2.75rem; /*44px*/
+    line-height: 3rem; /*48px*/
+    margin: 3rem 0 2rem; /*48px*/
+  }
+
+  h2, .h2 {
+    font-size: 2rem; /*32px*/
+    line-height: 2.5rem; /*40px*/
+    margin: 3rem 0 1.5rem; /*40px*/
+  }
+
+  h3, .h3 {
+    font-size: 1.625rem; /*26px*/
+    line-height: 2rem; /*32px*/
+    margin: 2rem 0 1rem; /*32px*/
+  }
+
+  h4, .h4 {
+    font-size: 1.375rem; /*22px*/
+    line-height: 1.75rem; /*28px*/
+    margin: 2rem 0 1rem; /*32px*/
+  }
+
+  h1:not([class]) + p,
+  .lead,
+  .lead-text,
+  blockquote {
+    font-size: 1.25rem; /*20px*/
+    line-height: 1.75rem; /*28px*/
+    margin: 1.5rem 0;
+  }
+
+  h5, .h5 {
+    font-size: 1rem; /*16px*/
+    line-height: 1.5rem; /*24px*/
+    margin: 1.5rem 0 .5rem; /*32px*/
+  }
+
+  h6, .h6,
+  .heading-main-title,
+  .heading-caption {
+    display: block;
+    font-size: .75rem; /*12px*/
+    line-height: 1.25rem; /*20px*/
+    margin: 1.5rem 0 .5rem; /*32px*/
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+  }
+}
+
+/*Basic heading styles*/
+display-1,
+h1, .h1,
+h2, .h2,
+h3, .h3,
+h4, .h4,
+h5, .h5,
+nav li,
+th,
+.card-title,
+.button,
+.main-nav .nav-toggle,
+.update-download {
+  letter-spacing: -.02em;
+  word-wrap: break-word;
+  font-weight: $font-semibold;
+}
+
+  html.fonts-loaded display-1,
+  html.fonts-loaded h1, html.fonts-loaded .h1,
+  html.fonts-loaded h2, html.fonts-loaded .h2,
+  html.fonts-loaded h3, html.fonts-loaded .h3,
+  html.fonts-loaded h4, html.fonts-loaded .h4,
+  html.fonts-loaded h5, html.fonts-loaded .h5,
+  html.fonts-loaded nav li,
+  html.fonts-loaded th,
+  html.fonts-loaded .card-title,
+  html.fonts-loaded .button,
+  html.fonts-loaded .main-nav .nav-toggle,
+  html.fonts-loaded .update-download  {
+    font-family: "Eina01-SemiBold-webfont", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  	font-weight: normal;
+  	font-style: normal;
+  }
+
+display-1,
+h1, .h1,
+h2, .h2,
+h3, .h3,
+h4, .h4,
+h5, .h5,
+th,
+.card-title {
+  color: $text-dark-high;
+}
+
+  .background-dark display-1,
+  .background-dark h1, .background-dark .h1,
+  .background-dark h2, .background-dark .h2,
+  .background-dark h3, .background-dark .h3,
+  .background-dark h4, .background-dark .h4,
+  .background-dark h5, .background-dark .h5,
+  .background-dark th,
+  .background-dark .card-title {
+    color: $text-light-high;
+  }
+
+.content h1:first-child {
+  margin-top: 0;
+}
+
+.heading-caption {
+  margin-top: -1.25rem;
+  position: relative;
+  z-index: 2;
+  color: $text-dark-ultra-low;
+}
+
+.background-dark .heading-caption {
+  color: $text-light-ultra-low;
+}
+
+display-1 a,
+h1 a, .h1 a,
+h2 a, .h2 a,
+h3 a, .h3 a,
+h4 a, .h4 a,
+h5 a, .h5 a,
+th a,
+.card-title a {
+  font-weight: inherit;
+  font-style: inherit;
+  color: inherit;
+}
+
+.heading-main-title {
+  display: block;
+  margin-top: 0;
+  padding-bottom: 1rem;
+  color: $text-dark-ultra-low;
+}
+
+  .background-dark .heading-main-title {
+    color: $text-light-ultra-low;
+  }
+
+h1:not([class]) + p,
+.lead,
+.lead-text {
+  color: $text-dark;
+}
+
+  .background-dark h1:not([class]) + p,
+  .background-dark .lead,
+  .background-dark .lead-text {
+    color: $text-light;
+  }
+
+p,
+ul, ol,
+:root pre,
+blockquote,
+.note {
+  margin: 0 0 1rem; //32px
+}
+
+p {
+  word-wrap: break-word;
+}
+
+ul, ol {
+  list-style-position: outside;
+  margin-top: 0;
+  padding-left: 1.2em;
+  &.row,
+  &.row { padding-left: 0; }
+}
+
+ul {
+  list-style-type: square;
+}
+
+strong {
+  font-weight: $font-semibold;
+  color: $text-dark-high;
+}
+
+  .background-dark strong {
+    color: $text-light-high;
+  }
+
+  .display-1 strong,
+  h1 strong, .h1 strong,
+  h2 strong, .h2 strong,
+  h3 strong, .h3 strong,
+  h4 strong, .h4 strong,
+  h5 strong, .h5 strong,
+  th strong,
+  .card-title strong {
+    font-weight: inherit;
+  }
+
+  .display-1 em,
+  h1 em, .h1 em,
+  h2 em, .h2 em,
+  h3 em, .h3 em,
+  h4 em, .h4 em,
+  h5 em, .h5 em,
+  th em {
+    font-style: normal;
+    display: inline-block;
+    padding: .09em;
+    margin: -.09em;
+    background: $sk-orange-8;
+  }
+
+  .background-dark .display-1 em,
+  .background-dark h1 em, .background-dark .h1 em,
+  .background-dark h2 em, .background-dark .h2 em,
+  .background-dark h3 em, .background-dark .h3 em,
+  .background-dark h4 em, .background-dark .h4 em,
+  .background-dark h5 em, .background-dark .h5 em,
+  .background-dark th em {
+    background: $sk-orange6;
+  }
+
+pre code,
+article blockquote,
+.note {
+  display: block;
+  padding: 1rem; /*16px*/
+  border-radius: $radius-normal;
+}
+
+blockquote {
+  color: $text-dark-low;
+  position: relative;
+}
+
+  .background-dark blockquote {
+    color: $text-light-low;
+  }
+
+article blockquote,
+.note {
+  background: $divider-dark;
+  color: $text-dark;
+  border-left: .125rem solid $border-dark-high;
+  &::before {
+    display: none;
+  }
+}
+
+.note {
+  background-color: rgba( $action , .05 );
+  border-color: $action-border;
+}
+
+article blockquote > * {
+  margin-left: -.125rem; //Compensating
+}
+
+th {
+  text-align: left;
+}
+
+q::before {
+  content: "\201C";
+  margin-left: -.6ex;
+}
+
+q::after {
+  content: "\201D";
+}
+
+cite {
+  font-style: normal;
+}
+
+pre, code, kbd {
+  border-radius: $radius-normal;
+  //white-space: pre-wrap; /*Keeping the current text without crappy overflows*/
+  overflow-wrap: break-word; /*Preventing ultra long stuff to overflow the container*/
+  overflow-x: auto;
+  font-weight: $font-medium;
+  font-size: .875em; //13px
+}
+
+pre, code {
+  font-family: "SF Mono", "Source Code Pro", Consolas, Menlo, monospace;
+}
+
+code {
+  padding: .2em .4em;
+  background-color: $border-dark;
+}
+
+pre code {
+  font-size: .875rem; //14px
+  box-shadow: inset 0 0 0 1px $border-dark-high;
+  background-color: $background-white;
+  color: $text-dark-low;
+}
+
+kbd {
+  padding: .2em .4em;
+  font-family: inherit;
+  box-shadow: inset 0 0 0 1px $border-dark-ultra-high , inset 0 -2px 0 $border-dark;
+  background-color: $background-white;
+  color: $text-dark-low;
+}
+
+  .background-dark code {
+    background-color: $sk-orange6;
+    color: $sk-orange-8;
+  }
+
+  .background-dark kbd {
+    background-color: $sk-tungsten6;
+    color: $sk-tungsten-8;
+  }
+
+small,
+.small {
+  display: block;
+  font-size: .8125rem; //13px
+  line-height: 1.25rem; //20px
+  color: $text-dark-low;
+  font-weight: $font-regular;
+}
+
+  .background-dark small,
+  .background-dark .small {
+    color: $text-light-low;
+  }
+
+small strong,
+.small strong {
+  color: $text-dark-low;
+}
+
+  .background-dark small strong,
+  .background-dark .small strong {
+    color: $text-light-low;
+  }
+
+.note .h5 {
+  margin-bottom: 1rem;
+}

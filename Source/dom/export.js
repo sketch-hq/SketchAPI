@@ -141,6 +141,7 @@ export function exportObject(object, options) {
   if (typeof formats === 'string') {
     formats = formats.split(',')
   }
+
   formats = formats.map(format => format.trim())
 
   // if we don't have any format, we default to png
@@ -155,10 +156,12 @@ export function exportObject(object, options) {
     ...DEFAULT_EXPORT_OPTIONS,
     ...options,
     ...{ formats: exportImagesFormat.join(',') },
+
   }
 
   // Return data if no output directory specified
   if (!optionsWithDefaults.output) {
+
     if (formats.length > 1) {
       throw new Error('Can only return 1 format with no output type')
     }

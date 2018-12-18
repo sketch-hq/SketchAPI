@@ -1,0 +1,120 @@
+@include tablet-and-above {
+  html,
+  body {
+    height: 100%;
+  }
+
+  body > * {
+    padding: 0 2rem; /*32px*/
+  }
+
+  .release-notes {
+    margin-top: 1.75rem;
+  }
+}
+
+@include tablet-and-below {
+  body > * {
+    padding: 0 1rem; /*16px*/
+  }
+
+  [class*="span-"] + [class*="span-"] {
+    margin-top: 3rem; /*48px*/
+    margin-left: 0 !important;
+  }
+}
+
+body > section {
+  overflow: hidden;
+}
+
+.wrapper {
+  max-width: 62.5rem; /*1000px*/
+  margin: 0 auto;
+}
+
+  section .wrapper {
+    padding: 3.5rem 0; /*48px*/
+  }
+
+  section .wrapper.extra {
+    padding: 6rem 0; /*96px*/
+  }
+
+body > section {
+  background-color: $background-light-dark;
+}
+
+  body > section:nth-of-type(even) {
+    background-color: $background-light;
+  }
+
+.sections-inverted > section {
+    background: $background-light;
+  }
+
+    .sections-inverted > section:nth-of-type(even) {
+      background-color: $background-light-dark;
+    }
+
+
+/*Product blocks*/
+section .section-header {
+  margin: 0 auto 3.5rem;
+  text-align: center;
+}
+
+.section-footer {
+  margin-top: 2.8125rem; /*45px*/
+  text-align: center;
+  position: relative;
+  border-width: 1px 0 0;
+  border-style: solid;
+  border-image: linear-gradient(90deg,
+    hsla(0, 0%, 90%, 0),
+    hsla(0, 0%, 90%, 1) 50%,
+    hsla(0, 0%, 90%, 0) 100%) 2%;
+}
+
+  .masthead .section-footer {
+    border-style: solid;
+    border-image: linear-gradient(90deg,
+      hsla(0, 100%, 100%, 0),
+      hsla(0, 100%, 100%, .15) 50%,
+      hsla(0, 100%, 100%, 0) 100%) 2%;
+  }
+
+  .wrapper.extra .section-footer {
+    margin-bottom: -2.8125rem !important; /*Compensating 45px*/
+  }
+
+  body > section:nth-child(odd) .footer-title > span {
+    background-color: $background-light-dark;
+  }
+
+/*Masthead styles for product sections*/
+body .masthead {
+  .hero.hero {
+    display: inline-block;
+    margin: 5.625rem -90rem 0; /*90px top -1440px left*/
+  }
+}
+
+.masthead.background-dark {
+  background-image: url(images/background-main.svg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+}
+
+.masthead.background-dark::before {
+  content: "";
+  height: 3.5rem;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(180deg, $background-dark, rgba( $background-dark , 0));
+  pointer-events: none;
+  z-index: 10;
+}

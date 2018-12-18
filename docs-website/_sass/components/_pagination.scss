@@ -1,0 +1,59 @@
+/* Pagination in documentation & developer pages */
+.pagination {
+  margin-top: 3rem; /*48px*/
+  padding-top: 3rem;
+  border-width: 1px 0 0;
+  border-style: solid;
+  border-image: linear-gradient(90deg,
+    hsla(0, 0%, 90%, 0),
+    hsla(0, 0%, 90%, 1) 50%,
+    hsla(0, 0%, 90%, 0) 100%) 5%;
+}
+
+.pagination > a {
+  display: inline-block;
+  font-size: 1rem;
+  width: 50%;
+  padding: 1rem; //Fitts
+  margin: -1rem !important;
+}
+
+.pagination > a > span {
+  display: inline-block;
+  vertical-align: middle;
+  max-width: 80%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pagination > .prev::before,
+.pagination > .next::after {
+  font-family: "Source Code Pro", Consolas, Menlo, monospace;
+  display: inline-block;
+  vertical-align: baseline;
+}
+
+.pagination > .prev {
+  float: left;
+    &::before {
+      content: "\2190\0020";
+      padding-right: .375rem;
+    }
+}
+
+  @include tablet-and-above {
+    //Hanging punctuation
+    .pagination > .prev::before {
+      margin-left: -1em;
+    }
+  }
+
+.pagination > .next {
+  float: right;
+  text-align: right;
+  &::after {
+    content: "\0020\2192";
+    padding-left: .375rem;
+  }
+}

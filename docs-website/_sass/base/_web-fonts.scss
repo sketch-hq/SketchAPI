@@ -1,0 +1,35 @@
+/**
+ * @license
+ * MyFonts Webfont Build ID 3291108, 2016-10-04T06:45:21-0400
+ *
+ * The fonts listed in this notice are subject to the End User License
+ * Agreement(s) entered into by the website owner. All other parties are
+ * explicitly restricted from using the Licensed Webfonts(s).
+ *
+ * You may obtain a valid license at the URLs below.
+ *
+ * Webfont: Eina01-SemiBold by Textaxis
+ * URL: http://www.myfonts.com/fonts/textaxis/eina/01-semibold/
+ * Copyright: Copyright (c) 2013 Textaxis. v 1.0 by I&#x00F1;igo Jerez. Barcelona. All rights reserved.
+ * Licensed pageviews: 1,000,000
+ *
+ *
+ * License: http://www.myfonts.com/viewlicense?type=web&buildid=3291108
+ *
+ * © 2016 MyFonts Inc
+*/
+
+
+/* @import must be at top of file, otherwise CSS will not work */
+@import url("//hello.myfonts.net/count/3237e4");
+
+@font-face {
+  font-family: 'Eina01-SemiBold-webfont';
+  // src: url('webfonts/3237E4_0_0.eot');
+  // src: url('webfonts/3237E4_0_0.eot?#iefix') format('embedded-opentype'),
+  src: url('webfonts/3237E4_0_0.woff2') format('woff2'),
+       url('webfonts/3237E4_0_0.woff') format('woff');
+  // url('webfonts/3237E4_0_0.ttf') format('truetype');
+  //unicode-range: U+000-5FF; /* Latin glyphs */
+  font-display: swap;
+}
