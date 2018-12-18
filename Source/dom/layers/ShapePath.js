@@ -74,6 +74,30 @@ export class ShapePath extends StyledLayer {
       super(shape)
     }
   }
+
+  static fromSVGPath(svgPath) {
+    const closed = MOPointer.alloc().init()
+    return new this({
+      sketchObject: MSShapePathLayer.layerWithPath(
+        MSPath.pathWithBezierPath(
+          SVGPathInterpreter.bezierPathFromCommands_isPathClosed(
+            svgPath,
+            closed
+          )
+        )
+      ),
+    })
+  }
+
+  getSVGPath() {
+    const nsbezierpath = NSBezierPath.bezierPathWithPath(
+      this._object.pathInFrameWithTransforms()
+    )
+
+    return String(nsbezierpath.svgPathAttribute())
+      .replace(/^d="/g, '')
+      .replace(/"$/g, '')
+  }
 }
 
 ShapePath.type = Types.ShapePath

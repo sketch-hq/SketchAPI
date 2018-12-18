@@ -133,6 +133,9 @@ globals:
   NSThread: false
   MSTheme: false
   MSCurvePoint: false
+  MSPath: false
+  SVGPathInterpreter: false
+  NSBezierPath: false
 
 rules:
   ###########

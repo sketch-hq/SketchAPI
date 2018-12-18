@@ -29,13 +29,27 @@ A shape path layer. It is an instance of [Layer](#layer) so all the methods defi
 ## Create a new ShapePath
 
 ```javascript
-new ShapePath({
+const shapePath = new ShapePath({
   name: 'my shape path',
   shapePath: ShapePath.ShapeType.Oval,
 })
 ```
 
 You can only set the `shapePath` when creating a new one. Once it is created, the `shapePath` is read-only. If it is not specified, it will default to ShapePath.ShapeType.Rectangle
+
+```javascript
+const shapePath = ShapePath.fromSVGPath('M10 10 H 90 V 90 H 10 L 10 10')
+```
+
+You can also create a new ShapePath from an SVG path (the string that goes in the `d` attribute of a `path` tag in an SVG). See [the MDN documentation](https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths) for more information about SVG paths.
+
+## Get the SVG path
+
+```javascript
+const svgPath = shapePath.getSVGPath()
+```
+
+Returns a string representing the SVG path of the ShapePath.
 
 ## `ShapePath.ShapeType`
 
