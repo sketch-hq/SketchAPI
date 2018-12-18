@@ -39,7 +39,7 @@ test('should be able to set overrides', (context, document) => {
   override.value = 'overridden'
 
   expect(instance.overrides.length).toBe(1)
-  expect(instance.overrides[0].toJSON()).toEqual({
+  const result = {
     type: 'Override',
     id: `${text.id}_stringValue`,
     path: text.id,
@@ -47,12 +47,11 @@ test('should be able to set overrides', (context, document) => {
     symbolOverride: false,
     value: 'overridden',
     isDefault: false,
-    affectedLayer: {
-      ...text.toJSON(),
-      selected: undefined,
-      style: instance.overrides[0].affectedLayer.style.toJSON(),
-    },
-  })
+    affectedLayer: text.toJSON(),
+  }
+  delete result.affectedLayer.selected
+  result.affectedLayer.style = instance.overrides[0].affectedLayer.style.toJSON()
+  expect(instance.overrides[0].toJSON()).toEqual(result)
 })
 
 test('should change a nested symbol', (context, document) => {
@@ -81,21 +80,20 @@ test('should change a nested symbol', (context, document) => {
   const override = instance.overrides[0]
   override.value = nestedMaster2.symbolId
 
-  expect(instance.overrides[0].toJSON()).toEqual({
+  const result = {
     type: 'Override',
     id: `${nestedInstance.id}_symbolID`,
     path: nestedInstance.id,
     property: 'symbolID',
-    affectedLayer: {
-      ...nestedInstance.toJSON(),
-      overrides: undefined,
-      selected: undefined,
-      style: instance.overrides[0].affectedLayer.style.toJSON(),
-    },
+    affectedLayer: nestedInstance.toJSON(),
     symbolOverride: true,
     value: nestedMaster2.symbolId,
     isDefault: false,
-  })
+  }
+  delete result.affectedLayer.overrides
+  delete result.affectedLayer.selected
+  result.affectedLayer.style = instance.overrides[0].affectedLayer.style.toJSON()
+  expect(instance.overrides[0].toJSON()).toEqual(result)
 })
 
 test('should handle image override', (context, document) => {

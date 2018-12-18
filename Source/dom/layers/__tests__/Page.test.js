@@ -1,21 +1,18 @@
 /* globals expect, test */
 import { Group, Page } from '../..'
 
-test(
-  'should return a Selection with the selected layers of the page',
-  (context, document) => {
-    const page = document.selectedPage
-    // check that an artboard can be logged
-    log(page)
-    const selection = page.selectedLayers
-    expect(selection.isEmpty).toBe(true)
+test('should return a Selection with the selected layers of the page', (context, document) => {
+  const page = document.selectedPage
+  // check that an artboard can be logged
+  log(page)
+  const selection = page.selectedLayers
+  expect(selection.isEmpty).toBe(true)
 
-    const group = new Group({ parent: page, name: 'Test', selected: true })
+  const group = new Group({ parent: page, name: 'Test', selected: true })
 
-    expect(group.selected).toBe(true)
-    expect(selection.isEmpty).toBe(false)
-  }
-)
+  expect(group.selected).toBe(true)
+  expect(selection.isEmpty).toBe(false)
+})
 
 test('should create a page', (context, document) => {
   const page = new Page({ parent: document })

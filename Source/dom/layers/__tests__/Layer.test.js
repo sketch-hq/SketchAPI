@@ -32,17 +32,14 @@ test('mutating a frame should change the frame of a layer', () => {
   expect(group.frame.width).toBe(400)
 })
 
-test(
-  'should duplicate the layer and add it as a sibling',
-  (context, document) => {
-    const page = document.selectedPage
-    const group = new Group({ parent: page })
-    expect(page.layers.length).toBe(1)
-    const result = group.duplicate()
-    expect(page.layers.length).toBe(2)
-    expect(result.type).toBe('Group')
-  }
-)
+test('should duplicate the layer and add it as a sibling', (context, document) => {
+  const page = document.selectedPage
+  const group = new Group({ parent: page })
+  expect(page.layers.length).toBe(1)
+  const result = group.duplicate()
+  expect(page.layers.length).toBe(2)
+  expect(result.type).toBe('Group')
+})
 
 test('should remove the layer from its parent', (context, document) => {
   const page = document.selectedPage
@@ -197,7 +194,6 @@ test('should change the exportFormats', () => {
     {
       type: 'ExportFormat',
       fileFormat: 'png',
-      prefix: undefined,
       suffix: '@2x',
       size: '2x',
     },
@@ -229,4 +225,33 @@ test('should get the different parents', (context, document) => {
   expect(group.getParentArtboard()).toEqual(artboard)
   expect(group.getParentSymbolMaster()).toBe(undefined)
   expect(group.getParentShape()).toBe(undefined)
+})
+
+test('should transform the layer', () => {
+  const group = new Group()
+  expect(group.transform.toJSON()).toEqual({
+    rotation: 0,
+    flippedHorizontally: false,
+    flippedVertically: false,
+  })
+
+  group.transform.flippedHorizontally = true
+  expect(group.transform.flippedHorizontally).toBe(true)
+
+  group.transform.flippedVertically = true
+  expect(group.transform.flippedVertically).toBe(true)
+
+  group.transform = {
+    rotation: 90,
+    flippedHorizontally: true,
+    flippedVertically: false,
+  }
+  expect(group.transform.toJSON()).toEqual({
+    rotation: 90,
+    flippedHorizontally: true,
+    flippedVertically: false,
+  })
+
+  group.transform.rotation = 720
+  expect(group.transform.rotation).toBe(0)
 })

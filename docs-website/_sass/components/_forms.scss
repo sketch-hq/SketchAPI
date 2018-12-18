@@ -1,0 +1,321 @@
+label,
+.label,
+div.invalid {
+  display: block;
+  font-size: .8125rem; //13px
+  line-height: 1rem;
+  font-weight: $font-regular;
+}
+
+label,
+.label {
+  margin-bottom: .25rem; //4px
+  user-select: none;
+  color: $text-dark-high;
+}
+
+  input[type="checkbox"] + label,
+  input[type="radio"] + label,
+  label small {
+    display: inline-block;
+  }
+
+  input[type="checkbox"] + label,
+  input[type="radio"] + label {
+    margin-left: .375rem;
+  }
+
+  label > input[type="checkbox"],
+  label > input[type="radio"] {
+    margin-right: .375rem;
+  }
+
+.label-inline {
+  display: inline-block;
+  text-transform: none;
+}
+
+@include tablet-and-above {
+  .label-inline + .label-inline {
+    margin-left: 1rem;
+  }
+}
+
+@include tablet-and-below {
+  .label-inline + .label-inline {
+    margin-top: 1rem;
+  }
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="search"],
+input[type="button"],
+input[type="number"],
+select,
+textarea {
+  -webkit-appearance: none;
+  appearance: none;
+  -moz-appearance: none;
+  padding: .625rem 1rem .6875rem;
+  background-color: $background-white;
+  color: $text-dark-high;
+  border: .0625rem solid $border-dark-ultra-high;
+  border-radius: $radius-normal;
+  transition: all .12s linear;
+}
+
+  .background-dark input[type="text"],
+  .background-dark input[type="email"],
+  .background-dark input[type="password"],
+  .background-dark input[type="search"],
+  .background-dark input[type="button"],
+  .background-dark input[type="number"],
+  .background-dark select,
+  .background-dark textarea {
+    background-color: rgba( $action-light , .05);
+    border-color: $action-light-border;
+    border-right: 0;
+    color: $action-light;
+  }
+
+input[type="reset"] {
+  appearance: none;
+  -moz-appearance: none;
+  background-color: transparent;
+  display: inline-block;
+  padding: .5625em 1.5625em !important; /*10px 25px (in EMs)*/
+  color: $action-high;
+  line-height: 1.5;
+}
+
+input[type="search"] {
+  background: $background-light url(images/loupe.svg) 1rem center no-repeat;
+  padding-left: 2.5rem;
+}
+
+input[type="file"] {
+  line-height: 1;
+  padding: .5rem 0;
+}
+
+select {
+  padding-right: 2.5rem; //40px
+  background-image: url('data:image/svg+xml;utf8,%3Csvg%20width%3D%229%22%20height%3D%225%22%20viewBox%3D%220%200%209%205%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Ctitle%3EShape%3C%2Ftitle%3E%3Cpath%20fill%3D%22%23373D47%22%20d%3D%22M0%200h8.485L4.243%204.243z%22%20fill-rule%3D%22evenodd%22%2F%3E%3C%2Fsvg%3E');
+  background-repeat: no-repeat;
+  background-position: calc(100% - 1rem) calc(50% + 1px);
+}
+
+select.empty {
+  background-image: url('data:image/svg+xml;utf8,%3Csvg%20width%3D%229%22%20height%3D%225%22%20viewBox%3D%220%200%209%205%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Ctitle%3EShape%3C%2Ftitle%3E%3Cpath%20fill%3D%22%23373D47%22%20d%3D%22M0%200h8.485L4.243%204.243z%22%20fill-rule%3D%22evenodd%22%20opacity%3D%22.6%22%2F%3E%3C%2Fsvg%3E');
+  color: $text-dark-ultra-low;
+}
+
+@include tablet-and-below {
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  input[type="search"],
+  input[type="button"],
+  input[type="reset"],
+  input[type="number"],
+  select,
+  textarea,
+  form button {
+    width: 100%;
+  }
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="search"],
+input[type="button"],
+input[type="reset"],
+input[type="number"],
+textarea {
+  box-shadow: inset 0 1px 0 $divider-dark;
+}
+
+  input[type="text"]:focus,
+  input[type="email"]:focus,
+  input[type="password"]:focus,
+  input[type="search"]:focus,
+  input[type="button"]:focus,
+  input[type="reset"]:focus,
+  input[type="number"]:focus,
+  select:focus,
+  textarea:focus {
+    background-color: $background-white;
+    border-color: $action-border;
+  }
+
+  .background-dark input[type="text"]:focus,
+  .background-dark input[type="email"]:focus,
+  .background-dark input[type="password"]:focus,
+  .background-dark input[type="search"]:focus,
+  .background-dark input[type="button"]:focus,
+  .background-dark input[type="reset"]:focus,
+  .background-dark input[type="number"]:focus,
+  .background-dark select:focus,
+  .background-dark textarea:focus {
+    border-color: $background-white;
+    color: $text-dark;
+  }
+
+textarea {
+  resize: vertical;
+}
+
+.textarea-more-info {
+  display: block;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  border-bottom-style: dashed;
+}
+
+  .textarea-more-info:focus {
+    border-bottom-color: $border-dark-ultra-high;
+  }
+
+.textarea-more-info ~ small {
+  display: block;
+  padding: .5rem 1rem;
+  background-color: #FDFDFE;
+  border: .0625rem solid $border-dark-ultra-high;
+  border-top: 0;
+  border-radius: 0 0 $radius-normal $radius-normal;
+  transition: all .12s linear;
+}
+
+  .textarea-more-info:focus ~ small {
+    border-color: $action-border;
+  }
+
+::placeholder {
+  color: $text-dark-ultra-low;
+}
+
+.background-dark ::placeholder,
+.background-dark select.empty {
+  color: rgba( $action-light , .6 );
+}
+
+  .background-dark :focus::placeholder {
+    color: $text-dark-ultra-low;
+  }
+
+//Invalid fields
+:root .invalid,
+.textarea-more-info.invalid ~ small {
+  border-color: $negative-low;
+  animation: shake .5s linear;
+}
+
+  :root .invalid:focus,
+  .textarea-more-info.invalid:focus ~ small {
+    border-color: $negative-high;
+  }
+
+.textarea-more-info.invalid {
+  border-bottom-color: $border-dark-ultra-high;
+}
+
+.invalid::placeholder,
+select.empty.invalid {
+  color: $negative-low;
+}
+
+div.invalid {
+  margin-top: .25rem; //4px
+  color: $negative-high;
+}
+
+  div.invalid:empty {
+    display: none !important;
+  }
+
+  @keyframes shake {
+    8%, 41% {
+        transform: translateX(-4px);
+    }
+    25%, 58% {
+        transform: translateX(4px);
+    }
+    75% {
+        transform: translateX(-2px);
+    }
+    92% {
+        transform: translateX(2px);
+    }
+    0%, 100% {
+        transform: translateX(0);
+    }
+  }
+
+
+[disabled] {
+  opacity: .5;
+  pointer-events: none;
+  cursor: default;
+}
+
+form ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+form > ol > li {
+  margin-bottom: 1rem;
+}
+
+form > ol > li:last-child {
+  margin-top: 2rem;
+}
+
+.inline-fields {
+  display: inline-block;
+}
+
+.inline-fields input,
+.inline-fields select {
+  width: 100%;
+}
+
+.radio-group {
+  padding-bottom: .625rem;
+}
+
+.input-group {
+  // display: inline-table;
+  // vertical-align: middle;
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: stretch;
+}
+
+.input-group input {
+  flex: 1;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border-right: 0;
+}
+
+.input-group .button {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  &:hover,
+  &:active,
+  &:focus {
+    transform: translateY(0);
+  }
+}
+
+@include tablet-and-below {
+  .input-group .button {
+    width: auto;
+  }
+}

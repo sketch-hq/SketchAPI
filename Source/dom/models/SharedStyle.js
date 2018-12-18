@@ -3,15 +3,7 @@ import { DefinedPropertiesKey, WrappedObject } from '../WrappedObject'
 import { Types } from '../enums'
 import { Factory } from '../Factory'
 import { wrapObject } from '../wrapNativeObject'
-
-const SharedStyleTypeMap = {
-  1: 'Layer',
-  2: 'Text',
-}
-export const SharedStyleType = {
-  Layer: 'Layer',
-  Text: 'Text',
-}
+import { StyleTypeMap, StyleType } from '../style/Style'
 
 /**
  * A Sketch shared style, either Text style or Layer Style.
@@ -100,10 +92,10 @@ SharedStyle.type = Types.SharedStyle
 SharedStyle[DefinedPropertiesKey] = { ...WrappedObject[DefinedPropertiesKey] }
 Factory.registerClass(SharedStyle, MSSharedStyle)
 
-SharedStyle.StyleType = SharedStyleType
+SharedStyle.StyleType = StyleType
 SharedStyle.define('styleType', {
   get() {
-    return SharedStyleTypeMap[this._object.type()] || this._object.type()
+    return StyleTypeMap[this._object.type()] || this._object.type()
   },
 })
 

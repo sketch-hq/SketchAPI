@@ -6,7 +6,12 @@
     "[Improved] No need to specify the type when there is no choice (like Document.pages can only contain Pages, Layer.exportFormats can only contain ExportFormats, etc.)",
     "[New] Add UI.getInputFromUser method and deprecate the other input methods",
     "[New] Add some `getParent*` methods on Layer",
-    "[New] Add method to get the theme of Sketch"
+    "[New] Add support for text styles",
+    "[New] Add some methods to store a session variable",
+    "[Improved] Allow using setting methods even from the Run Script panel",
+    "[New] Add method to get the theme of Sketch",
+    "[New] Add `background` property on Artboard",
+    "[New] Add `transform` property on Layer"
   ],
   "releases": {
     "52.1": ["[New] Add basic support for Shape path"],

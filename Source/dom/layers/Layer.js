@@ -307,3 +307,58 @@ Layer.define('exportFormats', {
       )
   },
 })
+
+Layer.defineObject('transform', {
+  rotation: {
+    get() {
+      // taken from MSLayer+Rotation.m
+      // we are not using `userVisibleRotation` directly because it is not defined in the immutable classes
+
+      // rotation math works counter-clockwise, but users think in clockwise rotation, so reverse
+      let rotation = -Number(this._object.rotation())
+      // -345 degrees is better expressed as 15 degrees
+      while (rotation <= -180) {
+        rotation += 360
+      }
+      // anything more than 360 can be subtracted for clarity
+      rotation %= 360
+
+      // rotation might be -0 so let's return 0
+      if (rotation === 0) {
+        return 0
+      }
+      return rotation
+    },
+    set(rotation) {
+      if (this._parent.isImmutable()) {
+        return
+      }
+      this._object.applyUserVisibleRotation_explicitRotationCenter(
+        rotation,
+        null
+      )
+    },
+  },
+  flippedHorizontally: {
+    get() {
+      return Boolean(Number(this._object.isFlippedHorizontal()))
+    },
+    set(flipped) {
+      if (this._parent.isImmutable()) {
+        return
+      }
+      this._object.setIsFlippedHorizontal(flipped)
+    },
+  },
+  flippedVertically: {
+    get() {
+      return Boolean(Number(this._object.isFlippedVertical()))
+    },
+    set(flipped) {
+      if (this._parent.isImmutable()) {
+        return
+      }
+      this._object.setIsFlippedVertical(flipped)
+    },
+  },
+})

@@ -110,9 +110,27 @@ globals:
   MSImmutableStarShape: false
   MSImmutableTriangleShape: false
   MSImmutableRectangleShape: false
+  NSParagraphStyleAttributeName: false
+  NSParagraphStyle: false
+  MSTextStyle: false
+  NSKernAttributeName: false
+  NSFontAttributeName: false
+  NSFontManager: false
+  NSBoldFontMask: false
+  NSItalicFontMask: false
+  NSSmallCapsFontMask: false
+  NSCompressedFontMask: false
+  NSCondensedFontMask: false
+  NSExpandedFontMask: false
+  NSNarrowFontMask: false
+  NSPosterFontMask: false
+  MSDefaultTextStyle: false
+  NSUnderlineStyleAttributeName: false
+  NSStrikethroughStyleAttributeName: false
   MSSliceLayer: false
   MSImmutableSliceLayer: false
   MSExportFormat: false
+  NSThread: false
   MSTheme: false
   MSJSONDataArchiver: false
   MSJSONDictionaryUnarchiver: false

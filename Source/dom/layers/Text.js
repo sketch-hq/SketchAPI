@@ -28,25 +28,11 @@ const TextAlignment = {
   natural: 'natural', // Indicates the default alignment for script
 }
 
-export const TextAlignmentMap = {
-  left: 0, // Visually left aligned
-  right: 1, // Visually right aligned
-  center: 2, // Visually centered
-  justified: 3, // Fully-justified. The last line in a paragraph is natural-aligned.
-  natural: 4, // Indicates the default alignment for script
-}
-
 // Mapping between vertical text alignment names and values.
 const VerticalTextAlignment = {
   top: 'top', // Visually top aligned
   center: 'center', // Visually center aligned
   bottom: 'bottom', // Visually bottom aligned
-}
-
-export const VerticalTextAlignmentMap = {
-  top: 0, // Visually top aligned
-  center: 1, // Visually centered
-  bottom: 2, // Visually bottom aligned
 }
 
 /**
@@ -70,7 +56,9 @@ export class Text extends StyledLayer {
 
     super(text)
 
-    this.adjustToFit()
+    if (!text.frame) {
+      this.adjustToFit()
+    }
   }
 
   /**
@@ -79,6 +67,9 @@ export class Text extends StyledLayer {
    * @param {NSFont} value The font to use.
    */
   set font(value) {
+    console.warn(
+      '`Text.font` is deprecated. Use `Text.style.fontFamily` instead'
+    )
     if (this.isImmutable()) {
       return
     }
@@ -91,6 +82,9 @@ export class Text extends StyledLayer {
    * @param {number} size The system font size to use.
    */
   set systemFontSize(size) {
+    console.warn(
+      '`Text.systemFontSize = size` is deprecated. Use `Text.style.fontFamily = "system"; Text.style.fontSize = size` instead.'
+    )
     if (this.isImmutable()) {
       return
     }
@@ -204,49 +198,30 @@ Text.define('text', {
       return
     }
     const object = this._object
-    object.stringValue = value
-    if (!object.nameIsFixed()) {
-      object.name = value
-    }
+    object.replaceTextPreservingAttributeRanges(value)
+    object.updateNameFromStorage()
   },
 })
 
 Text.Alignment = TextAlignment
-Text.define('alignment', {
-  /**
-   * The alignment of the layer.
-   * This will be one of the values: "left", "center", "right", "justified", "natural".
-   *
-   * @return {string} The alignment mode.
-   */
-  get() {
-    const raw = this._object.textAlignment()
-    return (
-      Object.keys(TextAlignmentMap).find(
-        key => TextAlignmentMap[key] === raw
-      ) || raw
-    )
-  },
+Text.VerticalAlignment = VerticalTextAlignment
 
-  /**
-   * Set the alignment of the layer.
-   *
-   * The mode supplied can be a string or a number.
-   * If it's a string, it should be one of the values: "left", "center", "right", "justified", "natural".
-   *
-   * @param {string} mode The alignment mode to use.
-   */
+Text.define('alignment', {
+  enumerable: false,
+  exportable: false,
+  get() {
+    console.warn(
+      '`Text.alignment` is deprecated. Use `Text.style.alignment` instead'
+    )
+    return this.style.alignment
+  },
   set(mode) {
-    if (this.isImmutable()) {
-      return
-    }
-    const translated = TextAlignmentMap[mode]
-    this._object.textAlignment =
-      typeof translated !== 'undefined' ? translated : mode
+    console.warn(
+      '`Text.alignment` is deprecated. Use `Text.style.alignment` instead'
+    )
+    this.style.alignment = mode
   },
 })
-
-Text.VerticalAlignment = VerticalTextAlignment
 
 Text.LineSpacing = TextLineSpacingBehaviour
 Text.define('lineSpacing', {

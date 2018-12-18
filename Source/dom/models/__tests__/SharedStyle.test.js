@@ -3,34 +3,28 @@
 import { Text, Shape } from '../..'
 import { createSharedStyle } from '../../../test-utils'
 
-test(
-  'should create a shared text style from a normal style',
-  (context, document) => {
-    // build the shared style
-    const { sharedStyle, object } = createSharedStyle(document, Shape)
-    // check that a shared style can be logged
-    log(sharedStyle)
-    expect(sharedStyle.type).toBe('SharedStyle')
+test('should create a shared text style from a normal style', (context, document) => {
+  // build the shared style
+  const { sharedStyle, object } = createSharedStyle(document, Shape)
+  // check that a shared style can be logged
+  log(sharedStyle)
+  expect(sharedStyle.type).toBe('SharedStyle')
 
-    expect(sharedStyle.style).toEqual(object.style)
-    expect(sharedStyle.name).toEqual('test shared style')
+  expect(sharedStyle.style).toEqual(object.style)
+  expect(sharedStyle.name).toEqual('test shared style')
 
-    expect(document.getSharedLayerStyles()).toEqual([sharedStyle])
-    expect(document.getSharedTextStyles()).toEqual([])
-  }
-)
+  expect(document.getSharedLayerStyles()).toEqual([sharedStyle])
+  expect(document.getSharedTextStyles()).toEqual([])
+})
 
-test(
-  'should create a shared text style from a text style',
-  (context, document) => {
-    // build the shared style
-    const { sharedStyle, object } = createSharedStyle(document, Text)
+test('should create a shared text style from a text style', (context, document) => {
+  // build the shared style
+  const { sharedStyle, object } = createSharedStyle(document, Text)
 
-    expect(sharedStyle.style).toEqual(object.style)
-    expect(document.getSharedLayerStyles()).toEqual([])
-    expect(document.getSharedTextStyles()).toEqual([sharedStyle])
-  }
-)
+  expect(sharedStyle.style).toEqual(object.style)
+  expect(document.getSharedLayerStyles()).toEqual([])
+  expect(document.getSharedTextStyles()).toEqual([sharedStyle])
+})
 
 test('should return all instances', (context, document) => {
   const { sharedStyle } = createSharedStyle(document, Shape) // 1st instance

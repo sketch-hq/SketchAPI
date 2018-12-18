@@ -86,6 +86,7 @@ delete Page[DefinedPropertiesKey].style
 delete Page[DefinedPropertiesKey].locked
 delete Page[DefinedPropertiesKey].hidden
 delete Page[DefinedPropertiesKey].exportFormats
+delete Page[DefinedPropertiesKey].transform
 
 // override setting up the parent as it's needs to a be a Document
 Page.define('parent', {
@@ -98,12 +99,17 @@ Page.define('parent', {
     if (this.isImmutable()) {
       return
     }
-    document = wrapObject(document) // eslint-disable-line
 
     if (this._object.documentData()) {
       this._object
         .documentData()
         .removePages_detachInstances([this._object], false)
+    }
+
+    document = wrapObject(document) // eslint-disable-line
+
+    if (!document) {
+      return
     }
 
     if (typeof document._object.addPage === 'function') {

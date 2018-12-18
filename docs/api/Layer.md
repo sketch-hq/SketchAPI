@@ -17,6 +17,10 @@ A Sketch layer. This is the base class for most of the Sketch components and def
 | selected<span class="arg-type">boolean</span>                              | If the layer is selected.                                                                       |
 | flow<span class="arg-type">[Flow](#flow)</span>                            | The prototyping action associated with the layer.                                               |
 | exportFormats<span class="arg-type">[ExportFormat](#exportformat)[]</span> | The export formats of the Layer.                                                                |
+| transform<span class="arg-type">object</span>                              | The transformation applied to the Layer.                                                        |
+| transform.rotation<span class="arg-type">number</span>                     | The rotation of the Layer in degrees, clock-wise.                                               |
+| transform.flippedHorizontally<span class="arg-type">boolean</span>         | If the layer is horizontally flipped.                                                           |
+| transform.flippedVertically<span class="arg-type">boolean</span>           | If the layer is vertically flipped.                                                             |
 
 ## Duplicate the Layer
 

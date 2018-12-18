@@ -3,6 +3,7 @@ import { Group } from './Group'
 import { Rectangle } from '../models/Rectangle'
 import { Types } from '../enums'
 import { Factory } from '../Factory'
+import { Color, colorToString } from '../style/Color'
 
 /**
  * A Sketch artboard.
@@ -49,6 +50,7 @@ delete Artboard[DefinedPropertiesKey].flow
 delete Artboard[DefinedPropertiesKey].style
 delete Artboard[DefinedPropertiesKey].locked
 delete Artboard[DefinedPropertiesKey].hidden
+delete Artboard[DefinedPropertiesKey].transform
 
 Artboard.define('flowStartPoint', {
   get() {
@@ -59,5 +61,41 @@ Artboard.define('flowStartPoint', {
       return
     }
     this._object.isFlowHome = isFlowStartHome
+  },
+})
+
+Artboard.defineObject('background', {
+  enabled: {
+    get() {
+      return Boolean(Number(this._object.hasBackgroundColor()))
+    },
+    set(enabled) {
+      if (this._parent.isImmutable()) {
+        return
+      }
+      this._object.setHasBackgroundColor(enabled)
+    },
+  },
+  includedInExport: {
+    get() {
+      return Boolean(Number(this._object.includeBackgroundColorInExport()))
+    },
+    set(included) {
+      if (this._parent.isImmutable()) {
+        return
+      }
+      this._object.setIncludeBackgroundColorInExport(included)
+    },
+  },
+  color: {
+    get() {
+      return colorToString(this._object.backgroundColor())
+    },
+    set(color) {
+      if (this._parent.isImmutable()) {
+        return
+      }
+      this._object.setBackgroundColor(Color.from(color))
+    },
   },
 })
