@@ -3,7 +3,7 @@ import { Types } from '../enums'
 import { Factory } from '../Factory'
 import { Point } from './Point'
 
-const CurveModeMap = {
+const PointTypeMap = {
   Undefined: 0,
   Straight: 1,
   Mirrored: 2,
@@ -12,7 +12,7 @@ const CurveModeMap = {
   Rounded: 5,
 }
 
-export const CurveMode = {
+export const PointType = {
   Undefined: 'Undefined',
   Straight: 'Straight',
   Mirrored: 'Mirrored',
@@ -103,17 +103,22 @@ CurvePoint.define('point', {
   },
 })
 
-CurvePoint.CurveMode = CurveMode
-CurvePoint.define('curveMode', {
+CurvePoint.PointType = PointType
+CurvePoint.define('pointType', {
   get() {
     const mode = this._object.curveMode()
     return (
-      Object.keys(CurveModeMap).find(key => CurveModeMap[key] === mode) || mode
+      Object.keys(PointTypeMap).find(key => PointTypeMap[key] === mode) || mode
     )
   },
   set(_mode) {
-    const mode = CurveModeMap[_mode]
-    this._object.setCurveMode(typeof mode !== 'undefined' ? mode : _mode)
+    if (!_mode) {
+      this._object.setCurveMode(0)
+    } else {
+      const mode = PointTypeMap[_mode]
+      this._object.setCurveMode(typeof mode !== 'undefined' ? mode : _mode)
+    }
+
     if (this._parent) {
       this._parent.setEdited(true)
       this._parent.adjustFrameAfterEditIntegral_fixAncestors(false, true)

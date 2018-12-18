@@ -23,6 +23,8 @@ A shape path layer. It is an instance of [Layer](#layer) so all the methods defi
 | style<span class="arg-type">[Style](#style)</span>                         | The style of the ShapePath.                                                                         |
 | sharedStyleId<span class="arg-type">string / null</span>                   | The ID of the [SharedStyle](#sharedstyle) this ShapePath is linked to if any.                       |
 | shapeType<span class="arg-type">[ShapeType](#shapepathshapetype)</span>    | The type of the Shape Path. It can only be set when creating a new ShapePath.                       |
+| points<span class="arg-type">[CurvePoint](#curvepoint)[]</span>            | The points defining the Shape Path.                                                                 |
+| closed<span class="arg-type">boolean</span>                                | If the Path is closed.                                                                              |
 
 ## Create a new ShapePath
 

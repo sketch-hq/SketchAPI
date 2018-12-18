@@ -27,7 +27,7 @@ test('should return the points of a shape', () => {
   expect(shapePath.points.map(p => p.toJSON())).toEqual([
     {
       type: 'CurvePoint',
-      curveMode: 'Straight',
+      pointType: 'Straight',
       cornerRadius: 0,
       curveFrom: { x: 0, y: 0 },
       curveTo: { x: 0, y: 0 },
@@ -35,7 +35,7 @@ test('should return the points of a shape', () => {
     },
     {
       type: 'CurvePoint',
-      curveMode: 'Straight',
+      pointType: 'Straight',
       cornerRadius: 0,
       curveFrom: { x: 1, y: 0 },
       curveTo: { x: 1, y: 0 },
@@ -43,7 +43,7 @@ test('should return the points of a shape', () => {
     },
     {
       type: 'CurvePoint',
-      curveMode: 'Straight',
+      pointType: 'Straight',
       cornerRadius: 0,
       curveFrom: { x: 1, y: 1 },
       curveTo: { x: 1, y: 1 },
@@ -51,7 +51,7 @@ test('should return the points of a shape', () => {
     },
     {
       type: 'CurvePoint',
-      curveMode: 'Straight',
+      pointType: 'Straight',
       cornerRadius: 0,
       curveFrom: { x: 0, y: 1 },
       curveTo: { x: 0, y: 1 },

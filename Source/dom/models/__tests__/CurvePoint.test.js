@@ -10,7 +10,7 @@ test('should be able to modify a CurvePoint', () => {
   const curvePoint = new CurvePoint()
   expect(curvePoint.toJSON()).toEqual({
     type: 'CurvePoint',
-    curveMode: 'Undefined',
+    pointType: 'Undefined',
     cornerRadius: 0,
     curveFrom: { x: 0, y: 0 },
     curveTo: { x: 0, y: 0 },
