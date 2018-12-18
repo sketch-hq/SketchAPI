@@ -156,12 +156,10 @@ export function exportObject(object, options) {
     ...DEFAULT_EXPORT_OPTIONS,
     ...options,
     ...{ formats: exportImagesFormat.join(',') },
-
   }
 
   // Return data if no output directory specified
   if (!optionsWithDefaults.output) {
-
     if (formats.length > 1) {
       throw new Error('Can only return 1 format with no output type')
     }
@@ -185,31 +183,6 @@ export function exportObject(object, options) {
   if (exportImagesFormat.length) {
     exportToImageFile(objectsToExport, optionsWithDefaults)
   }
-
-  // Save files to directory at options.output
-  const exporter = MSSelfContainedHighLevelExporter.alloc().initWithOptions(
-    optionsWithDefaults
-  )
-
-  function exportNativeLayers(layers) {
-    exporter.exportLayers(layers)
-  }
-  function exportNativePage(page) {
-    exporter.exportPage(page)
-  }
-
-  // Other formats are completed by the exporter per type
-  const pages = []
-  const layers = []
-  objectsToExport.forEach(o => {
-    if (String(o.class()) === 'MSPage') {
-      pages.push(o)
-    } else {
-      layers.push(o)
-    }
-  })
-  pages.forEach(p => exportNativePage(p))
-  exportNativeLayers(layers)
   return true
 }
 
