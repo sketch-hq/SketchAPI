@@ -19,6 +19,10 @@ A Sketch artboard. It is an instance of both [Layer](#layer) and [Group](#group)
 | frame<span class="arg-type">[Rectangle](#rectangle)</span>                 | The frame of the Artboard. This is given in coordinates that are local to the parent of the layer. |
 | flowStartPoint<span class="arg-type">boolean</span>                        | A Start Point allows you to choose where to start your prototype from.                             |
 | exportFormats<span class="arg-type">[ExportFormat](#exportformat)[]</span> | The export formats of the Artboard.                                                                |
+| background<span class="arg-type">object</span> | The background of the Artboard |
+| background.enabled<span class="arg-type">boolean</span> | If the background should be enabled, eg. shown or not |
+| background.includedInExport<span class="arg-type">boolean</span> | If the background should be exported or if it should be transparent during the export |
+| background.color<span class="arg-type">string</span> | The rgba representation of the color of the background |
 
 ## Create a new Artboard
 
