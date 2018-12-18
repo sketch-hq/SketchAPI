@@ -141,8 +141,6 @@ globals:
   NSFileManager: false
   NSDataWritingWithoutOverwriting: false
 
-
-
 rules:
   ###########
   # PLUGINS #
