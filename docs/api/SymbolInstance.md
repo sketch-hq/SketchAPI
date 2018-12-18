@@ -20,6 +20,10 @@ A [Symbol](https://www.sketchapp.com/docs/symbols/) instance. It is an instance 
 | frame<span class="arg-type">[Rectangle](#rectangle) </span>                | The frame of the Symbol Instance. This is given in coordinates that are local to the parent of the layer. |
 | flow<span class="arg-type">[Flow](#flow)</span>                            | The prototyping action associated with the Symbol.                                                        |
 | exportFormats<span class="arg-type">[ExportFormat](#exportformat)[]</span> | The export formats of the Symbol Instance.                                                                |
+| transform<span class="arg-type">object</span>                              | The transformation applied to the Symbol Instance.                                                        |
+| transform.rotation<span class="arg-type">number</span>                     | The rotation of the Symbol Instance in degrees, clock-wise.                                               |
+| transform.flippedHorizontally<span class="arg-type">boolean</span>         | If the Symbol Instance is horizontally flipped.                                                           |
+| transform.flippedVertically<span class="arg-type">boolean</span>           | If the Symbol Instance is vertically flipped.                                                             |
 | style<span class="arg-type">[Style](#style)</span>                         | The style of the Symbol Instance.                                                                         |
 | symbolId<span class="arg-type">string</span>                               | The unique ID of the Symbol that the instance and its master share.                                       |
 | master<span class="arg-type">[SymbolMaster](#symbol-master)</span>         | The Symbol master that the instance is linked to.                                                         |

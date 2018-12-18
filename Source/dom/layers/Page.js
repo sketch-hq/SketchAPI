@@ -86,6 +86,7 @@ delete Page[DefinedPropertiesKey].style
 delete Page[DefinedPropertiesKey].locked
 delete Page[DefinedPropertiesKey].hidden
 delete Page[DefinedPropertiesKey].exportFormats
+delete Page[DefinedPropertiesKey].transform
 
 // override setting up the parent as it's needs to a be a Document
 Page.define('parent', {
