@@ -1,0 +1,103 @@
+@include tablet-and-above {
+  [data-sticky-sidebar] {
+    margin-top: 1.75rem;
+    top: -1.75rem;
+  }
+
+  [data-sticky-sidebar].license-sidebar, [data-sticky-sidebar].contact-sidebar, [data-sticky-sidebar].edu-sidebar {
+    position: relative;
+    margin-top: 1.75rem;
+    top: -0.8rem;
+  }
+
+  [data-sticky-sidebar].will-stick {
+    margin-top: 0;
+    top: 0;
+    min-height: calc( 100vh - 14.0625rem); //225px = 65px (main-nav) + 64px (sec-nav) + 56px (padding) + 40px (padding)
+  }
+
+  [data-sticky-sidebar].will-stick > .stuck-scroll {
+    padding-top: 0;
+    padding-bottom: 1.5rem;
+    overflow-x: visible;
+    overflow-y: scroll;
+    position: absolute;
+    height: 100%;
+    width: calc(100% + 1rem); //little hack in order to show the .active indicators, as overflow-x doesn't work as expected
+    margin-left: -1rem; //part of the hack
+    padding-left: 1rem; //part of the hack
+  }
+
+  [data-sticky-sidebar].will-stick > .stuck-scroll.edu-sidebar,
+  [data-sticky-sidebar].will-stick > .stuck-scroll.license-sidebar {
+    padding-top: 40px;
+    margin-top: -12px;
+    position: relative;
+  }
+
+  //Noticeable scrollbar
+  [data-sticky-sidebar].will-stick > .stuck-scroll::-webkit-scrollbar {
+    width: .0625rem; //1px
+    border-radius: $radius-big;
+  }
+
+  [data-sticky-sidebar].will-stick > .stuck-scroll::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+
+  [data-sticky-sidebar].will-stick > .stuck-scroll::-webkit-scrollbar-thumb {
+    background-color: $border-dark-high;
+    border-radius: $radius-big;
+  }
+
+  [data-sticky-sidebar].will-stick > .stuck-scroll:hover::-webkit-scrollbar {
+    width: .25rem; //4px
+  }
+
+  [data-sticky-sidebar].will-stick > .stuck-scroll:hover::-webkit-scrollbar-thumb {
+    background-color: $border-dark-ultra-high;
+  }
+
+  [data-sticky-sidebar].will-stick:before, [data-sticky-sidebar].will-stick:after {
+    content: "";
+    width: calc(100% - 1.25rem);
+    position: absolute;
+    height: 2.2rem;
+    z-index: 10;
+    pointer-events: none; //To avoid overlapping elements' events
+  }
+
+  [data-sticky-sidebar].will-stick:before {
+    transition: opacity .15s linear;
+    opacity: 0;
+    top: 0;
+    background: linear-gradient(to bottom, #fdfdff 0%, rgba(253, 253, 255, 0) 100%);
+  }
+
+  [data-sticky-sidebar].will-stick:after {
+    bottom: 0;
+    background: linear-gradient(to bottom, rgba(253, 253, 255, 0) 0%, #fdfdff 100%);
+  }
+
+  [data-sticky-sidebar].will-stick.scrolled:before {
+    opacity: 1;
+  }
+
+  [data-sticky-sidebar].stuck-nav {
+    margin-top: 0;
+    position: fixed;
+    top: 0;
+    padding-top: 2.5rem;
+    height: calc(100vh - 5rem) !important;
+    transition: max-height .2s ease-out;
+    max-height: calc(100vh - 5rem) !important; //2.5 x 2
+  }
+
+  [data-sticky-sidebar].stuck-nav:before {
+    top: 2.5rem;
+  }
+
+  [data-sticky-sidebar].stuck-nav:after {
+    bottom: -2.5rem;
+  }
+}

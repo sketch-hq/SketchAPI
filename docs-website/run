@@ -1,0 +1,33 @@
+#!/usr/bin/env ruby
+# Run the developer website project
+# This script checks that all dependencies are installed, and installs them if they’re not
+
+def command?(name)
+  `command -v #{name}`
+  $?.success?
+end
+
+def check_dependencies
+  puts "Checking dependencies"
+  # Bundler
+  if !command? "bundle"
+    puts "Bundler not found, installing (we'll only do this once)"
+    system("sudo gem install bundler -n /usr/local/bin")
+  end
+  # Bundle
+  `bundle check`
+  if !$?.success?
+    puts "Installing required Rubygems (we'll only do this once)"
+    system("bundle install --quiet --clean --jobs=4 --path _vendor")
+  end
+  puts "✅  Dependencies ok"
+end
+
+def build
+  puts "Building the site"
+  system("bundle exec jekyll clean")
+  system("bundle exec jekyll liveserve --watch --open-url --config _config.yml,_config_dev.yml")
+end
+
+check_dependencies
+build

@@ -1,0 +1,14 @@
+---
+layout: sidebar-page
+---
+
+{{content}}
+
+{% if page.related %}
+<h2>Related Actions</h2>
+<ul>
+  {% for action in page.related %}
+  <li><a href="/reference/action/{{action}}">{{action}}</a></li>
+  {% endfor %}
+</ul>
+{% endif %}

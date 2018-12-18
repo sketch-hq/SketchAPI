@@ -19,9 +19,9 @@
     "test:watch": "npm run run-tests -- --watch",
     "test:no-variant": "npm run lint -- --quiet && npm run run-tests:no-variant",
     "test:no-variant:watch": "npm run run-tests:no-variant -- --watch",
-    "lint": "find . -name \"*.ts\" -o -name \"*.js\" | grep -v -f .gitignore | grep -v .d.ts | grep -v examples | xargs eslint",
+    "lint": "find . -name \"*.ts\" -o -name \"*.js\" | grep -v -f .gitignore | grep -v .d.ts | grep -v examples | grep -v docs-website | xargs eslint",
     "prettier:base": "prettier --write",
-    "prettify": "find . -name \"*.ts\" -o -name \"*.js\" | grep -v -f .gitignore | xargs npm run prettier:base",
+    "prettify": "find . -name \"*.ts\" -o -name \"*.js\" | grep -v -f .gitignore | grep -v docs-website | xargs npm run prettier:base",
     "lint-staged": "lint-staged",
     "postinstall": "node ./scripts/install-pre-commit.js && node ./scripts/inject-new-api-in-tester.js && rm -rf .awcache || true && cd core-modules && npm install"
   },
