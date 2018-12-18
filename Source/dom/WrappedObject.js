@@ -138,6 +138,63 @@ export class WrappedObject {
     Object.defineProperty(this.prototype, propertyName, descriptor)
   }
 
+  static defineObject(propertyName, fields, descriptor = {}) {
+    const privateKey = `_${propertyName}`
+    class NestedProperty {
+      constructor(object) {
+        const self = this
+        Object.defineProperty(self, '_parent', {
+          enumerable: false,
+          value: object,
+        })
+        Object.defineProperty(self, '_object', {
+          enumerable: false,
+          value: object.sketchObject,
+        })
+        Object.defineProperty(self, '_keys', {
+          enumerable: false,
+          value: Object.keys(fields),
+        })
+
+        self._keys.forEach(field => {
+          Object.defineProperty(self, field, fields[field])
+        })
+      }
+
+      toJSON() {
+        return this._keys.reduce((prev, field) => {
+          // eslint-disable-next-line no-param-reassign
+          prev[field] = this[field]
+          return prev
+        }, {})
+      }
+    }
+
+    const fullDescriptor = {
+      ...descriptor,
+      get() {
+        if (this[privateKey]) {
+          return this[privateKey]
+        }
+        // cache the instance
+        Object.defineProperty(this, privateKey, {
+          enumerable: false,
+          value: new NestedProperty(this),
+        })
+        return this[privateKey]
+      },
+      set(object) {
+        const proxy = this[propertyName]
+        Object.keys(object).forEach(k => {
+          proxy[k] = object[k]
+        })
+      },
+    }
+
+    this._addDescriptor(propertyName, fullDescriptor)
+    Object.defineProperty(this.prototype, propertyName, fullDescriptor)
+  }
+
   /**
    * we want to keep track of the defined properties and their order
    *

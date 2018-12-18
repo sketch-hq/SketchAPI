@@ -47,3 +47,4 @@ Factory.registerClass(HotSpot, MSHotspotLayer)
 Factory.registerClass(HotSpot, MSImmutableHotspotLayer)
 
 delete HotSpot[DefinedPropertiesKey].exportFormats
+delete HotSpot[DefinedPropertiesKey].transform
