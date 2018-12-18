@@ -20,6 +20,10 @@ A group of layers. It is also an instance of [Layer](#layer) so all the methods 
 | frame<span class="arg-type">[Rectangle](#rectangle)</span>                 | The frame of the Group. This is given in coordinates that are local to the parent of the layer. |
 | flow<span class="arg-type">[Flow](#flow)</span>                            | The prototyping action associated with the Group.                                               |
 | exportFormats<span class="arg-type">[ExportFormat](#exportformat)[]</span> | The export formats of the Group.                                                                |
+| transform<span class="arg-type">object</span>                              | The transformation applied to the Group.                                                        |
+| transform.rotation<span class="arg-type">number</span>                     | The rotation of the Group in degrees, clock-wise.                                               |
+| transform.flippedHorizontally<span class="arg-type">boolean</span>         | If the Group is horizontally flipped.                                                           |
+| transform.flippedVertically<span class="arg-type">boolean</span>           | If the Group is vertically flipped.                                                             |
 | style<span class="arg-type">[Style](#style)</span>                         | The style of the Group.                                                                         |
 | sharedStyleId<span class="arg-type">string / null</span>                   | The ID of the [SharedStyle](#sharedstyle) this Group is linked to if any.                       |
 | layers<span class="arg-type">[Layer](#layer)[]</span>                      | The layers that this component groups together.                                                 |

@@ -50,6 +50,7 @@ delete Artboard[DefinedPropertiesKey].flow
 delete Artboard[DefinedPropertiesKey].style
 delete Artboard[DefinedPropertiesKey].locked
 delete Artboard[DefinedPropertiesKey].hidden
+delete Artboard[DefinedPropertiesKey].transform
 
 Artboard.define('flowStartPoint', {
   get() {
