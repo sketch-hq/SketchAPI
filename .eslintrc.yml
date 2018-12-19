@@ -141,6 +141,7 @@ globals:
   NSFileManager: false
   NSDataWritingWithoutOverwriting: false
   MSColorAsset: false
+  MSPersistentAssetCollection: false
 
 rules:
   ###########
