@@ -27,7 +27,7 @@
   },
   "devDependencies": {
     "@babel/preset-typescript": "^7.1.0",
-    "@skpm/test-runner": "^0.3.6",
+    "@skpm/test-runner": "^0.3.8",
     "@types/node": "^10.12.10",
     "awesome-typescript-loader": "^5.2.1",
     "babel-loader": "^8.0.4",

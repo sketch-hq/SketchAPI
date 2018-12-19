@@ -170,6 +170,7 @@ Style.define('blur', {
 
 Style.FillType = FillType
 Style.define('fills', {
+  array: true,
   get() {
     const fills = toArray(this._object.fills())
     return fills.map(Fill.fromNative.bind(Fill))
@@ -178,10 +179,22 @@ Style.define('fills', {
     const objects = values.map(Fill.toNative.bind(Fill))
     this._object.setFills(objects)
   },
+  insertItem(item, index) {
+    const arr = toArray(this._object.fills())
+    arr.splice(index, 0, item)
+    this.fills = arr
+  },
+  removeItem(index) {
+    const arr = toArray(this._object.fills())
+    const removed = arr.splice(index, 1)
+    this.fills = arr
+    return Fill.fromNative(removed[0])
+  },
 })
 
 Style.BorderPosition = BorderPosition
 Style.define('borders', {
+  array: true,
   get() {
     const borders = toArray(this._object.borders())
     return borders.map(Border.fromNative.bind(Border))
@@ -190,9 +203,21 @@ Style.define('borders', {
     const objects = values.map(Border.toNative.bind(Border))
     this._object.setBorders(objects)
   },
+  insertItem(item, index) {
+    const arr = toArray(this._object.borders())
+    arr.splice(index, 0, item)
+    this.borders = arr
+  },
+  removeItem(index) {
+    const arr = toArray(this._object.borders())
+    const removed = arr.splice(index, 1)
+    this.borders = arr
+    return Border.fromNative(removed[0])
+  },
 })
 
 Style.define('shadows', {
+  array: true,
   get() {
     return toArray(this._object.shadows()).map(Shadow.fromNative.bind(Shadow))
   },
@@ -200,9 +225,21 @@ Style.define('shadows', {
     const objects = values.map(Shadow.toNative.bind(Shadow, MSStyleShadow))
     this._object.setShadows(objects)
   },
+  insertItem(item, index) {
+    const arr = toArray(this._object.shadows())
+    arr.splice(index, 0, item)
+    this.shadows = arr
+  },
+  removeItem(index) {
+    const arr = toArray(this._object.shadows())
+    const removed = arr.splice(index, 1)
+    this.shadows = arr
+    return Shadow.fromNative(removed[0])
+  },
 })
 
 Style.define('innerShadows', {
+  array: true,
   get() {
     return toArray(this._object.innerShadows()).map(
       Shadow.fromNative.bind(Shadow)
@@ -211,6 +248,17 @@ Style.define('innerShadows', {
   set(values) {
     const objects = values.map(Shadow.toNative.bind(Shadow, MSStyleInnerShadow))
     this._object.setInnerShadows(objects)
+  },
+  insertItem(item, index) {
+    const arr = toArray(this._object.innerShadows())
+    arr.splice(index, 0, item)
+    this.innerShadows = arr
+  },
+  removeItem(index) {
+    const arr = toArray(this._object.innerShadows())
+    const removed = arr.splice(index, 1)
+    this.innerShadows = arr
+    return Shadow.fromNative(removed[0])
   },
 })
 

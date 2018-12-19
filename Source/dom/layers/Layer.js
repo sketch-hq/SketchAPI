@@ -288,6 +288,7 @@ Layer.define('locked', {
 })
 
 Layer.define('exportFormats', {
+  array: true,
   get() {
     return toArray(this._object.exportOptions().exportFormats() || []).map(
       ExportFormat.fromNative.bind(ExportFormat)
@@ -305,6 +306,23 @@ Layer.define('exportFormats', {
           e => wrapObject(e, Types.ExportFormat).sketchObject
         )
       )
+  },
+  insertItem(item, index) {
+    if (this.isImmutable()) {
+      return
+    }
+    const arr = toArray(this._object.exportOptions().exportFormats() || [])
+    arr.splice(index, 0, item)
+    this.exportFormats = arr
+  },
+  removeItem(index) {
+    if (this.isImmutable()) {
+      return undefined
+    }
+    const arr = toArray(this._object.exportOptions().exportFormats() || [])
+    const removed = arr.splice(index, 1)
+    this.exportFormats = arr
+    return ExportFormat.fromNative(removed[0])
   },
 })
 
