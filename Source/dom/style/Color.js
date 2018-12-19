@@ -27,6 +27,28 @@ export class Color {
     this._object = nativeColor
   }
 
+  static colorAssetFrom(object) {
+    let color = object
+    let name = null
+
+    if (isNativeObject(object)) {
+      const className = String(object.class())
+      if (className === 'MSColorAsset') {
+        color = object.color()
+        name = object.name()
+      }
+    } else if (typeof object == 'object') {
+      ;({ color, name } = object)
+    }
+    if (!color) {
+      throw new Error(`Unable to create color asset from color ${object}`)
+    }
+    return {
+      color: Color.from(color),
+      name,
+    }
+  }
+
   static from(object) {
     if (!object) {
       return undefined

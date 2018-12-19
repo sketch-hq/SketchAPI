@@ -140,6 +140,7 @@ globals:
   MSExportManager: false
   NSFileManager: false
   NSDataWritingWithoutOverwriting: false
+  MSColorAsset: false
 
 rules:
   ###########

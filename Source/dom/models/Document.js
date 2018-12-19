@@ -6,7 +6,8 @@ import { getURLFromPath } from '../utils'
 import { wrapObject } from '../wrapNativeObject'
 import { Types } from '../enums'
 import { Factory } from '../Factory'
-import { StyleType } from '../style/Style'
+import { StyleType, Style } from '../style/Style'
+import { Color } from '../style/Color'
 
 export const SaveModeType = {
   Save: NSSaveOperation,
@@ -443,5 +444,48 @@ Document.define('path', {
       enumerable: false,
       value: url,
     })
+  },
+})
+
+Document.define('colors', {
+  array: true,
+  get() {
+    if (!this._object) {
+      return []
+    }
+    const documentData = this._getMSDocumentData()
+    const colorAssets = toArray(documentData.assets().colorAssets())
+    return colorAssets.map(a => ({
+      color: Style.colorToString(a.color()),
+      name: a.name(),
+    }))
+  },
+  set(colors) {
+    const assets = this._getMSDocumentData().assets()
+    assets.removeAllColorAssets()
+    colors.forEach(c => {
+      const cleaned = Color.colorAssetFrom(c)
+      const asset = MSColorAsset.alloc().initWithAsset_name(
+        MSColor.alloc().initWithImmutableObject(cleaned.color._object),
+        cleaned.name
+      )
+      assets.addColorAsset(asset)
+    })
+  },
+  insertItem(color, index) {
+    if (this.isImmutable()) {
+      return
+    }
+    const assets = this._getMSDocumentData().assets()
+    const cleaned = Color.colorAssetFrom(color)
+    const asset = MSColorAsset.alloc().initWithAsset_name(
+      MSColor.alloc().initWithImmutableObject(cleaned.color._object),
+      cleaned.name
+    )
+    assets.insertColorAsset_atIndex(asset, index)
+  },
+  removeItem(index) {
+    const documentData = this._getMSDocumentData()
+    documentData.assets().removeColorAssetAtIndex(index)
   },
 })
