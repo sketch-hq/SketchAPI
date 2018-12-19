@@ -132,6 +132,14 @@ export class WrappedObject {
    *
    * @param {string} propertyName - the name of the property
    * @param {Object} descriptor - the descriptor for the property (see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty)
+   *
+   * When returning an array, we also need to add some additional descriptions to handle mutating the owner when mutating the array.
+   * So when returning an array, you need to add the following properties to the descriptor:
+   *  {
+   *    array: true,
+   *    insertItem: (item, index) => void,
+   *    removeItem: (index) => removedItem
+   *  }
    */
   static define(propertyName, descriptor) {
     this._addDescriptor(propertyName, descriptor)
