@@ -56,7 +56,7 @@ UI.getInputFromUser(
 ```javascript
 UI.getInputFromUser("What's your favorite design tool?", {
   type: UI.INPUT_TYPE.selection,
-  possibleValues: ['Sketch']
+  possibleValues: ['Sketch', 'Paper']
 }, (err, value) => {
   if (err) {
     // most likely the user canceled the input
