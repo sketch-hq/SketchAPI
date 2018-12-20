@@ -91,6 +91,14 @@ test('should list all the shared text styles', (context, document) => {
   expect(document.getSharedTextStyles()).toEqual([sharedStyle])
 })
 
+test('should create document colors from hex', (context, document) => {
+  const doc = document
+  doc.colors = ['#FFFFFF', { color: '#AAAAAA', name: 'Grey' }]
+  expect(document.colors[0].color).toEqual('#ffffffff')
+  expect(document.colors[1].color).toEqual('#aaaaaaff')
+  expect(String(document.colors[1].name)).toEqual('Grey')
+})
+
 // some tests cannot really run on jenkins because it doesn't have access to MSDocument
 if (!isRunningOnJenkins()) {
   let _document
