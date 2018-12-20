@@ -65,6 +65,7 @@ UI.getInputFromUser("What's your favorite design tool?", {
 })
 ```
 
+<!--
 ```javascript
 UI.getInputFromUser(
   "What's the opacity of the new layer?",
@@ -79,6 +80,7 @@ UI.getInputFromUser(
   }
 )
 ```
+-->
 
 Shows a simple input sheet which displays a message, and asks for an input from the user.
 
@@ -88,11 +90,8 @@ Shows a simple input sheet which displays a message, and asks for an input from 
 | options<span class="arg-type">object</span>                                             | Options to customize the input sheet. Most of the options depends on the type of the input.                                                                                              |
 | option.description<span class="arg-type">string</span>                                  | A secondary text to describe with more details the input.                                                                                                                                |
 | option.type<span class="arg-type">[Input Type](#inputtype)</span>                       | The type of the input.                                                                                                                                                                   |
-| option.initialValue<span class="arg-type">string                                        | number</span>                                                                                                                                                                            | The initial value of the input. |
-| option.possibleValues<span class="arg-type">string[] - required with a selection</span> | The possible choices that the user can make. Only used for a `selection` input.                                                                                                          |
-| option.maxValue<span class="arg-type">number</span>                                     | The maximal value. Only used for a `slider` input. Defaults to `1`.                                                                                                                      |
-| option.minValue<span class="arg-type">number</span>                                     | The maximal value. Only used for a `slider` input. Defaults to `0`.                                                                                                                      |
-| option.increment<span class="arg-type">number</span>                                    | Restricts the possible values to multiple of the increment. Only used for a `slider` input.                                                                                              |
+| option.initialValue<span class="arg-type">string / number</span>                        | The initial value of the input.   |
+| option.possibleValues<span class="arg-type">string[] - required with a selection</span> | The possible choices that the user can make. Only used for a `selection` input.                                                                                                          |<!--| option.maxValue<span class="arg-type">number</span>                                     | The maximal value. Only used for a `slider` input. Defaults to `1`.                                                                                                                      || option.minValue<span class="arg-type">number</span>                                     | The maximal value. Only used for a `slider` input. Defaults to `0`.                                                                                                                      || option.increment<span class="arg-type">number</span>                                    | Restricts the possible values to multiple of the increment. Only used for a `slider` input.                                                                                             |-->
 | callback<span class="arg-type">function</span>                                          | A function called after the user entered the input. It is called with an `Error` if the user canceled the input and a `string` or `number` depending on the input type (or `undefined`). |
 
 ## Get the theme of Sketch
