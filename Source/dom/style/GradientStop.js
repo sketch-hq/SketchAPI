@@ -11,7 +11,10 @@ export class GradientStop extends WrappedObject {
     let nativeStop
     if (isNativeObject(object)) {
       const className = String(object.class())
-      if (className === 'MSGradientStop') {
+      if (
+        className === 'MSGradientStop' ||
+        className === 'MSImmutableGradientStop'
+      ) {
         nativeStop = object
       } else {
         throw new Error(`Cannot create a gradient from a ${className}`)

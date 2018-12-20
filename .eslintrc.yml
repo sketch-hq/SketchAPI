@@ -136,6 +136,14 @@ globals:
   MSPath: false
   SVGPathInterpreter: false
   NSBezierPath: false
+  MSJSONDataArchiver: false
+  MSJSONDictionaryUnarchiver: false
+  MSArchiveHeader: false
+  NSUTF8StringEncoding: false
+  MSExportRequest: false
+  MSExportManager: false
+  NSFileManager: false
+  NSDataWritingWithoutOverwriting: false
 
 rules:
   ###########
