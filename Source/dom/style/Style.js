@@ -108,9 +108,32 @@ export class Style extends WrappedObject {
 
   getParentLayer() {
     if (this._object.parentLayer) {
-      return this._object.parentLayer()
+      return wrapObject(this._object.parentLayer())
     }
     return null
+  }
+
+  getDefaultLineHeight() {
+    if (!this._object.parentLayer) {
+      return undefined
+    }
+    const layer = this._object.parentLayer()
+    if (!layer) {
+      return undefined
+    }
+    const className = String(layer.class())
+    if (className !== 'MSTextLayer' && className !== 'MSImmutableTextLayer') {
+      return undefined
+    }
+    const immutableLayer =
+      className === 'MSImmutableTextLayer'
+        ? layer
+        : layer.immutableModelObject()
+
+    const storage = immutableLayer.createTextStorage()
+    const layoutManager = storage.layoutManagers().firstObject()
+
+    return Number(immutableLayer.defaultLineHeight(layoutManager))
   }
 }
 

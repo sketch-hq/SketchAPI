@@ -53,6 +53,18 @@ The style of a Layer.
 | textUnderline<span class="arg-type">string: `<line-style> [<line-pattern>] ['by-word']` / undefined where `<line-style>` can be `single` / `thick` / `double` and `<line-pattern>` can be `dot` / `dash` / `dash-dot` / `dash-dot-dot`</span>     | The underline decoration of a Text Layer.                                                                                                                                                                                                                                                |
 | textStrikethrough<span class="arg-type">string: `<line-style> [<line-pattern>] ['by-word']` / undefined where `<line-style>` can be `single` / `thick` / `double` and `<line-pattern>` can be `dot` / `dash` / `dash-dot` / `dash-dot-dot`</span> | The strikethrough decoration of a Text Layer.                                                                                                                                                                                                                                            |
 
+## Get the default line height
+
+```javascript
+var defaultlineHeight = style.getDefaultLineHeight()
+```
+
+When no line height is specified, `style.lineHeight` will be `undefined`. You can get the default line height of the font using `style.getDefaultLineHeight()`.
+
+### Returns
+
+A number if the layer is a Text layer or `undefined`.
+
 ## Check if the Style is in sync with a Shared Style
 
 ```javascript

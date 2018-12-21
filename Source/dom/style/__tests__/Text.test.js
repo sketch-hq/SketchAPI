@@ -1,5 +1,5 @@
 /* globals expect, test */
-import { Text, Rectangle } from '../..'
+import { Text, Rectangle, Group } from '../..'
 import { VerticalTextAlignmentMap, TextAlignmentMap } from '../Text'
 
 test('should change the text alignment', () => {
@@ -291,4 +291,19 @@ test('should change the text strikethrough', () => {
 
   text.style.textStrikethrough = 'thick dash-dot'
   expect(text.style.textStrikethrough).toBe('thick dash-dot')
+})
+
+test('should get the default line height', () => {
+  const text = new Text({
+    text: 'blah',
+    frame: new Rectangle(10, 10, 1000, 1000),
+  })
+
+  expect(text.style.getDefaultLineHeight()).toBe(14)
+
+  const group = new Group({
+    frame: new Rectangle(10, 10, 1000, 1000),
+  })
+
+  expect(group.style.getDefaultLineHeight()).toBe(undefined)
 })
