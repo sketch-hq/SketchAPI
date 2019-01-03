@@ -140,6 +140,8 @@ globals:
   MSExportManager: false
   NSFileManager: false
   NSDataWritingWithoutOverwriting: false
+  MSOverrideProperty: false
+  MSOverridePoint: false
 
 rules:
   ###########

@@ -112,3 +112,40 @@ test('should create a symbol master with a nested symbol', (context, document) =
   expect(instance.overrides[1].toJSON()).toEqual(result1)
   expect(instance.overrides[2].toJSON()).toEqual(result2)
 })
+
+test('should have overrides', (context, document) => {
+  const { master, text } = createSymbolMaster(document)
+
+  expect(master.overrides.length).toBe(1)
+  const override = master.overrides[0]
+  const result = {
+    type: 'Override',
+    id: `${text.id}_stringValue`,
+    path: text.id,
+    property: 'stringValue',
+    symbolOverride: false,
+    value: 'Test value',
+    isDefault: true,
+    editable: true,
+    affectedLayer: text.toJSON(),
+  }
+  delete result.affectedLayer.selected
+  result.affectedLayer.style = master.overrides[0].affectedLayer.style.toJSON()
+  expect(override.toJSON()).toEqual(result)
+})
+
+test('should set overrides as editable or not', (context, document) => {
+  const { master } = createSymbolMaster(document)
+
+  expect(master.overrides[0].editable).toBe(true)
+  master.overrides[0].editable = false
+  expect(master.overrides[0].editable).toBe(false)
+
+  master.overrides = [
+    {
+      ...master.overrides[0].toJSON(),
+      editable: true,
+    },
+  ]
+  expect(master.overrides[0].editable).toBe(true)
+})

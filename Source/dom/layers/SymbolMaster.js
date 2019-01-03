@@ -5,6 +5,7 @@ import { Rectangle } from '../models/Rectangle'
 import { Types } from '../enums'
 import { Factory } from '../Factory'
 import { wrapObject } from '../wrapNativeObject'
+import { Override } from '../models/Override'
 
 /**
  * A Sketch symbol master.
@@ -118,5 +119,51 @@ SymbolMaster.define('symbolId', {
   },
   set() {
     throw new Error('Changing the symbol ID of a SymbolMaster is forbidden.')
+  },
+})
+
+SymbolMaster.define('overrides', {
+  get() {
+    // undefined when immutable
+    if (!this._object.overrideProperies) {
+      return undefined
+    }
+    const overrideProperies = this._object.overrideProperies()
+    const overrides = toArray(this._object.availableOverrides())
+
+    // recursively find the overrides
+    function findChildrenOverrides(instance) {
+      const children = toArray(instance.children())
+      children.forEach(c => {
+        overrides.push(c)
+        findChildrenOverrides(c)
+      })
+    }
+    overrides.forEach(findChildrenOverrides)
+
+    return overrides.map(o => {
+      const wrapped = Override.fromNative(o)
+      const property = overrideProperies[o.overridePoint().name()]
+      Object.defineProperty(wrapped, '__symbolMaster', {
+        writable: false,
+        enumerable: false,
+        value: this,
+      })
+      if (property && !o.isVisible) {
+        Object.defineProperty(wrapped, '__editable', {
+          writable: true,
+          enumerable: false,
+          value: property.canOverride,
+        })
+      }
+      return wrapped
+    })
+  },
+  set(overrides) {
+    overrides.forEach(o => {
+      const overridePoint = MSOverridePoint.alloc().init()
+      overridePoint.name = o.id
+      this._object.setOverridePoint_editable(overridePoint, o.editable)
+    })
   },
 })

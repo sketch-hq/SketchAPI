@@ -23,6 +23,7 @@ A [Symbol](https://www.sketchapp.com/docs/symbols/) master. It is an instance of
 | background.includedInExport<span class="arg-type">boolean</span>           | If the background should be exported or if it should be transparent during the export                   |
 | background.color<span class="arg-type">string</span>                       | The rgba representation of the color of the background                                                  |
 | symbolId<span class="arg-type">string</span>                               | The unique ID of the Symbol that the master and its instances share.                                    |
+| overrides<span class="arg-type">[Override](#symbol-override)[]</span>      | The array of the overrides that the instances of the Symbol Master will be able to change.              |
 
 ## Create a new Symbol Master
 
