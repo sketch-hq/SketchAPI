@@ -64,3 +64,9 @@ Override.define('isDefault', {
     return !this._object.hasOverride()
   },
 })
+
+Override.define('editable', {
+  get() {
+    return Boolean(Number(this._object.isEditable()))
+  },
+})

@@ -47,6 +47,7 @@ test('should have overrides', (context, document) => {
     symbolOverride: false,
     value: 'Test value',
     isDefault: true,
+    editable: true,
     affectedLayer: text.toJSON(),
   }
   delete result.affectedLayer.selected
