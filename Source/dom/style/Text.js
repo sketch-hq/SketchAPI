@@ -1,4 +1,5 @@
 import { Color } from './Color'
+import { FloatingPointNumber } from '../utils'
 
 export const TextAlignmentMap = {
   left: 0, // Visually left aligned
@@ -232,7 +233,7 @@ export function defineTextStyleProperties(Style) {
         return null
       }
 
-      return Number(raw)
+      return FloatingPointNumber(raw)
     },
 
     set(kerning) {
@@ -262,7 +263,7 @@ export function defineTextStyleProperties(Style) {
         fixedLineHeight > 0 &&
         fixedLineHeight == paragraphStyle.maximumLineHeight()
       ) {
-        return Number(fixedLineHeight)
+        return FloatingPointNumber(fixedLineHeight)
       }
       return null
     },
@@ -292,7 +293,7 @@ export function defineTextStyleProperties(Style) {
         return undefined
       }
 
-      return Number(paragraphStyle.paragraphSpacing())
+      return FloatingPointNumber(paragraphStyle.paragraphSpacing())
     },
 
     set(paragraphSpacing) {

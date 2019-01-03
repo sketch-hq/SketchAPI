@@ -60,6 +60,16 @@ test('should change the kerning', () => {
   expect(text.style.kerning).toBe(null)
 })
 
+test('should round the kerning before returning it (#319)', () => {
+  const text = new Text({
+    text: 'blah',
+    frame: new Rectangle(10, 10, 1000, 1000),
+  })
+
+  text.style.kerning = 0.6
+  expect(text.style.kerning).toBe(0.6)
+})
+
 test('should change the line height', () => {
   const text = new Text({
     text: 'blah',
