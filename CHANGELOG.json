@@ -10,7 +10,7 @@
     "[New] Add some methods to store a session variable",
     "[Improved] Allow using setting methods even from the Run Script panel",
     "[New] Add method to get the theme of Sketch",
-    "[New] `export` can now export to the JSON file format"
+    "[New] `export` can now export to the JSON file format",
     "[New] Add `background` property on Artboard",
     "[New] Add `transform` property on Layer"
   ],
