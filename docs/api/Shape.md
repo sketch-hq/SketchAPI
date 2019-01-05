@@ -25,7 +25,7 @@ A shape layer. It is an instance of [Layer](#layer) so all the methods defined t
 | transform.flippedHorizontally<span class="arg-type">boolean</span>         | If the layer is horizontally flipped.                                                           |
 | transform.flippedVertically<span class="arg-type">boolean</span>           | If the layer is vertically flipped.                                                             |
 | style<span class="arg-type">[Style](#style)</span>                         | The style of the Shape.                                                                         |
-| sharedStyleId<span class="arg-type">string / null</span>                   | The ID of the [SharedStyle](#sharedstyle) this Shape is linked to if any.                       |
+| sharedStyleId<span class="arg-type">string / null</span>                   | The ID of the [SharedStyle](#shared-style) this Shape is linked to if any.                       |
 
 ## Create a new Shape
 
