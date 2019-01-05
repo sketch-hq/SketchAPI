@@ -18,7 +18,7 @@ A group of layers. It is also an instance of [Layer](#layer) so all the methods 
 | frame<span class="arg-type">[Rectangle](#rectangle)</span> | The frame of the Group. This is given in coordinates that are local to the parent of the layer. |
 | flow<span class="arg-type">[Flow](#flow)</span>            | The prototyping action associated with the Group.                                               |
 | style<span class="arg-type">[Style](#style)</span>         | The style of the Group.                                                                         |
-| sharedStyleId<span class="arg-type">string / null</span>   | The ID of the [SharedStyle](#sharedstyle) this Group is linked to if any.                       |
+| sharedStyleId<span class="arg-type">string / null</span>   | The ID of the [SharedStyle](#shared-style) this Group is linked to if any.                       |
 | layers<span class="arg-type">[Layer](#layer)[]</span>      | The layers that this component groups together.                                                 |
 
 ## Create a new Group

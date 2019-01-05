@@ -18,7 +18,7 @@ An image layer. It is an instance of [Layer](#layer) so all the methods defined 
 | frame<span class="arg-type">[Rectangle](#rectangle)</span> | The frame of the Shape. This is given in coordinates that are local to the parent of the layer. |
 | flow<span class="arg-type">[Flow](#flow)</span>            | The prototyping action associated with the Shape.                                               |
 | style<span class="arg-type">[Style](#style)</span>         | The style of the Shape.                                                                         |
-| sharedStyleId<span class="arg-type">string / null</span>   | The ID of the [SharedStyle](#sharedstyle) this Shape is linked to if any.                       |
+| sharedStyleId<span class="arg-type">string / null</span>   | The ID of the [SharedStyle](#shared-style) this Shape is linked to if any.                       |
 
 ## Create a new Shape
 
