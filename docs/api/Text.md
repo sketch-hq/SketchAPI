@@ -25,7 +25,7 @@ A text layer. It is an instance of [Layer](#layer) so all the methods defined th
 | transform.flippedHorizontally<span class="arg-type">boolean</span>         | If the Text is horizontally flipped.                                                           |
 | transform.flippedVertically<span class="arg-type">boolean</span>           | If the Text is vertically flipped.                                                             |
 | style<span class="arg-type">[Style](#style)</span>                         | The style of the Text.                                                                         |
-| sharedStyleId<span class="arg-type">string / null</span>                   | The ID of the [SharedStyle](#sharedstyle) this Text is linked to if any.                       |
+| sharedStyleId<span class="arg-type">string / null</span>                   | The ID of the [SharedStyle](#shared-style) this Text is linked to if any.                       |
 | text<span class="arg-type">string</span>                                   | The string value of the text layer.                                                            |
 | lineSpacing<span class="arg-type">[LineSpacing](#textlinespacing)</span>   | The line spacing of the layer.                                                                 |
 | fixedWidth<span class="arg-type">boolean</span>                            | Whether the layer should have a fixed width or a flexible width.                               |

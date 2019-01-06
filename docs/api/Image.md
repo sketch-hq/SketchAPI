@@ -25,7 +25,7 @@ An image layer. It is an instance of [Layer](#layer) so all the methods defined 
 | transform.flippedHorizontally<span class="arg-type">boolean</span>         | If the Image is horizontally flipped.                                                           |
 | transform.flippedVertically<span class="arg-type">boolean</span>           | If the Image is vertically flipped.                                                             |
 | style<span class="arg-type">[Style](#style)</span>                         | The style of the Image.                                                                         |
-| sharedStyleId<span class="arg-type">string / null</span>                   | The ID of the [SharedStyle](#sharedstyle) this Image is linked to if any.                       |
+| sharedStyleId<span class="arg-type">string / null</span>                   | The ID of the [SharedStyle](#shared-style) this Image is linked to if any.                       |
 | image<span class="arg-type">[ImageData](#imagedata)</span>                 | The actual image of the layer.                                                                  |
 
 ## Create a new Image
