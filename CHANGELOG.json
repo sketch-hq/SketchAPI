@@ -1,5 +1,8 @@
 {
   "unreleased": [
+    "[Improved] Obj-C exceptions will be thrown as JS Errors which will reference the exception in their `nativeException` property",
+    "[Improved] `setTimeout` and all the other timeout, interval, immediate methods are now available directly, no need to polyfill them",
+    "[New] new method on the path module `require('path').resourcePath(resourceName)` which returns the path to a resource in the plugin bundle or `undefined` if it doesn't exist",
     "[Improved] The document from a library will now have a proper path (either local path or the appcast URL)",
     "[New] Add support for Slices",
     "[New] Add `exportFormats` property on Layer",
