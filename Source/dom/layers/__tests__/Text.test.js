@@ -39,11 +39,15 @@ test('should change the text alignment', () => {
   Object.keys(Text.Alignment).forEach(key => {
     // test setting by name
     text.alignment = key
-    expect(text.alignment).toBe(Text.Alignment[key])
+    expect(text.alignment).toBe(
+      Text.Alignment[key] === 'natural' ? 'left' : Text.Alignment[key]
+    )
 
     // test setting by value
     text.alignment = TextAlignmentMap[key]
-    expect(text.alignment).toBe(Text.Alignment[key])
+    expect(text.alignment).toBe(
+      Text.Alignment[key] === 'natural' ? 'left' : Text.Alignment[key]
+    )
   })
 })
 

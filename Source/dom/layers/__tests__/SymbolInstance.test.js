@@ -53,3 +53,15 @@ test('should have overrides', (context, document) => {
   result.affectedLayer.style = instance.overrides[0].affectedLayer.style.toJSON()
   expect(override.toJSON()).toEqual(result)
 })
+
+test('should detach an instance', (context, document) => {
+  const { master } = createSymbolMaster(document)
+  const instance = new SymbolInstance({
+    symbolId: master.symbolId,
+    parent: document.selectedPage,
+  })
+  expect(instance.type).toBe('SymbolInstance')
+
+  const group = instance.detach()
+  expect(group.type).toBe('Group')
+})

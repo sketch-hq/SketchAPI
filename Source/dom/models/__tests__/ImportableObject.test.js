@@ -22,6 +22,7 @@ if (!isRunningOnJenkins()) {
       document.save(
         '~/Desktop/sketch-api-unit-tests-importable-objects.sketch',
         err => {
+          document.close()
           if (err) {
             return reject(err)
           }
@@ -43,8 +44,6 @@ if (!isRunningOnJenkins()) {
       const importedMaster = symbolRefs[0].import()
 
       expect(importedMaster.layers[0].text).toBe('Test value')
-
-      document.close()
       document2.close()
       lib.remove()
     })
