@@ -86,3 +86,11 @@ export function proxyProperty(object, property, value, parser) {
     })
   }
 }
+
+export function FloatingPointNumber(x) {
+  // 32-bits numbers
+  const precision = 7
+  // cast to number to handle NSInteger and such
+  const number = Number(x)
+  return Number(number.toFixed(precision))
+}

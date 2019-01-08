@@ -1,3 +1,4 @@
+import { isNumber } from 'util'
 import { wrapObject } from '../wrapNativeObject'
 import { proxyProperty, initProxyProperties } from '../utils'
 
@@ -17,17 +18,21 @@ export class Rectangle {
   constructor(x, y, width, height) {
     initProxyProperties(this)
 
-    proxyProperty(this, 'x', parseFloat(x))
-    proxyProperty(this, 'y', parseFloat(y))
-    proxyProperty(this, 'width', parseFloat(width))
-    proxyProperty(this, 'height', parseFloat(height))
-
-    // if the argument is object
-    if (typeof x === 'object' && typeof x.x === 'number') {
-      this._x = parseFloat(x.x)
-      this._y = parseFloat(x.y)
-      this._width = parseFloat(x.width)
-      this._height = parseFloat(x.height)
+    if (x && x.origin && isNumber(x.origin.x)) {
+      proxyProperty(this, 'x', parseFloat(x.origin.x))
+      proxyProperty(this, 'y', parseFloat(x.origin.y))
+      proxyProperty(this, 'width', parseFloat(x.size.width))
+      proxyProperty(this, 'height', parseFloat(x.size.height))
+    } else if (x && isNumber(x.x)) {
+      proxyProperty(this, 'x', parseFloat(x.x))
+      proxyProperty(this, 'y', parseFloat(x.y))
+      proxyProperty(this, 'width', parseFloat(x.width))
+      proxyProperty(this, 'height', parseFloat(x.height))
+    } else {
+      proxyProperty(this, 'x', parseFloat(x))
+      proxyProperty(this, 'y', parseFloat(y))
+      proxyProperty(this, 'width', parseFloat(width))
+      proxyProperty(this, 'height', parseFloat(height))
     }
   }
 
@@ -64,6 +69,10 @@ export class Rectangle {
    */
   asCGRect() {
     return CGRectMake(this._x, this._y, this._width, this._height)
+  }
+
+  asNSRect() {
+    return NSMakeRect(this._x, this._y, this._width, this._height)
   }
 
   /**

@@ -1,6 +1,6 @@
 ---
 title: Rectangle
-order: 211
+order: 212
 section: models
 ---
 
@@ -84,3 +84,11 @@ var cgRect = rect.asCGRect()
 ```
 
 Return the Rectangle as a [`CGRect`](https://developer.apple.com/documentation/coregraphics/cgrect?language=objc).
+
+## Get an `NSRect`
+
+```javascript
+var nsRect = rect.asNSRect()
+```
+
+Return the Rectangle as a [`NSRect`](https://developer.apple.com/documentation/foundation/nsrect?language=objc).
