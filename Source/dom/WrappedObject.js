@@ -218,6 +218,7 @@ export class WrappedObject {
 
   static defineObject(propertyName, fields, descriptor = {}) {
     const privateKey = `_${propertyName}`
+    const privateClassKey = `_${propertyName}Class`
     class NestedProperty {
       constructor(object) {
         const self = this
@@ -231,6 +232,7 @@ export class WrappedObject {
         })
         Object.defineProperty(self, '_keys', {
           enumerable: false,
+          writable: true,
           value: Object.keys(fields),
         })
 
@@ -248,6 +250,8 @@ export class WrappedObject {
       }
     }
 
+    this[privateClassKey] = NestedProperty
+
     const fullDescriptor = {
       ...descriptor,
       get() {
@@ -255,9 +259,10 @@ export class WrappedObject {
           return this[privateKey]
         }
         // cache the instance
+        const _NestedProperty = this.constructor[privateClassKey]
         Object.defineProperty(this, privateKey, {
           enumerable: false,
-          value: new NestedProperty(this),
+          value: new _NestedProperty(this),
         })
         return this[privateKey]
       },
@@ -271,6 +276,29 @@ export class WrappedObject {
 
     this._addDescriptor(propertyName, fullDescriptor)
     Object.defineProperty(this.prototype, propertyName, fullDescriptor)
+  }
+
+  static extendObject(propertyName, fields) {
+    const privateClassKey = `_${propertyName}Class`
+
+    if (!this[privateClassKey]) {
+      throw new Error('missing super class')
+    }
+
+    class NestedProperty extends this[privateClassKey] {
+      constructor(object) {
+        super(object)
+        const self = this
+        const newKeys = Object.keys(fields)
+        this._keys = this._keys.concat(newKeys)
+
+        newKeys.forEach(field => {
+          Object.defineProperty(self, field, fields[field])
+        })
+      }
+    }
+
+    this[privateClassKey] = NestedProperty
   }
 
   /**

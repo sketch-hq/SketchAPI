@@ -1,6 +1,6 @@
 ---
 title: Symbol Master
-order: 308
+order: 309
 section: layers
 ---
 
@@ -21,6 +21,7 @@ A [Symbol](https://www.sketchapp.com/docs/symbols/) master. It is an instance of
 | background<span class="arg-type">object</span>                             | The background of the Symbol Master                                                                     |
 | background.enabled<span class="arg-type">boolean</span>                    | If the background should be enabled, eg. shown or not                                                   |
 | background.includedInExport<span class="arg-type">boolean</span>           | If the background should be exported or if it should be transparent during the export                   |
+| background.includedInInstance<span class="arg-type">boolean</span>         | If the background should appear in the instances of the Symbol Master                                   |
 | background.color<span class="arg-type">string</span>                       | The rgba representation of the color of the background                                                  |
 | symbolId<span class="arg-type">string</span>                               | The unique ID of the Symbol that the master and its instances share.                                    |
 | overrides<span class="arg-type">[Override](#symbol-override)[]</span>      | The array of the overrides that the instances of the Symbol Master will be able to change.              |

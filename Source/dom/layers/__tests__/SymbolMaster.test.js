@@ -149,3 +149,32 @@ test('should set overrides as editable or not', (context, document) => {
   ]
   expect(master.overrides[0].editable).toBe(true)
 })
+
+test('should include `includedInInstance` in the `background`', (context, document) => {
+  // build the symbol master
+  const { master } = createSymbolMaster(document)
+
+  // defaults
+  expect(master.background.toJSON()).toEqual({
+    enabled: false,
+    includedInExport: true,
+    includedInInstance: true,
+    color: '#ffffffff',
+  })
+
+  master.background.includedInInstance = false
+  expect(master.background.includedInInstance).toBe(false)
+
+  master.background = {
+    color: '#00000000',
+    enabled: false,
+    includedInInstance: true,
+    includedInExport: true,
+  }
+  expect(master.background.toJSON()).toEqual({
+    enabled: false,
+    includedInExport: true,
+    includedInInstance: true,
+    color: '#00000000',
+  })
+})

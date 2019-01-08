@@ -167,3 +167,17 @@ SymbolMaster.define('overrides', {
     })
   },
 })
+
+SymbolMaster.extendObject('background', {
+  includedInInstance: {
+    get() {
+      return Boolean(Number(this._object.includeBackgroundColorInInstance()))
+    },
+    set(included) {
+      if (this._parent.isImmutable()) {
+        return
+      }
+      this._object.setIncludeBackgroundColorInInstance(included)
+    },
+  },
+})
