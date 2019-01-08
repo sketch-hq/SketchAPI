@@ -182,7 +182,7 @@ test('should lock the layer', () => {
 
 test('should change the exportFormats', () => {
   const group = new Group()
-  expect(group.exportFormats).toEqual([])
+  expect(group.exportFormats.length).toEqual(0)
 
   group.exportFormats = [
     {

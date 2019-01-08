@@ -17,7 +17,8 @@
     "[New] Add `background` property on Artboard",
     "[New] Add `transform` property on Layer",
     "[New] Add `editable` property on Override",
-    "[New] Add `overrides` property on Symbol Master to be able to change their `editable` property"
+    "[New] Add `overrides` property on Symbol Master to be able to change their `editable` property",
+    "[Improved] Add an options parameter when detaching a Symbol Instance"
   ],
   "releases": {
     "52.1": ["[New] Add basic support for Shape path"],
