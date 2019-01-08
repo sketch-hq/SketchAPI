@@ -32,7 +32,7 @@ export class SymbolInstance extends StyledLayer {
     }
 
     const recursively = (options || {}).recursively || false
-    const group = this._object.detachByReplacingWithGroupRecursively(
+    const group = this._object.detachStylesAndReplaceWithGroupRecursively(
       recursively
     )
 
