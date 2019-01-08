@@ -20,8 +20,12 @@ An image layer. It is an instance of [Layer](#layer) so all the methods defined 
 | frame<span class="arg-type">[Rectangle](#rectangle)</span>                 | The frame of the Image. This is given in coordinates that are local to the parent of the layer. |
 | flow<span class="arg-type">[Flow](#flow)</span>                            | The prototyping action associated with the Image.                                               |
 | exportFormats<span class="arg-type">[ExportFormat](#exportformat)[]</span> | The export formats of the Image.                                                                |
+| transform<span class="arg-type">object</span>                              | The transformation applied to the Image.                                                        |
+| transform.rotation<span class="arg-type">number</span>                     | The rotation of the Image in degrees, clock-wise.                                               |
+| transform.flippedHorizontally<span class="arg-type">boolean</span>         | If the Image is horizontally flipped.                                                           |
+| transform.flippedVertically<span class="arg-type">boolean</span>           | If the Image is vertically flipped.                                                             |
 | style<span class="arg-type">[Style](#style)</span>                         | The style of the Image.                                                                         |
-| sharedStyleId<span class="arg-type">string / null</span>                   | The ID of the [SharedStyle](#sharedstyle) this Image is linked to if any.                       |
+| sharedStyleId<span class="arg-type">string / null</span>                   | The ID of the [SharedStyle](#shared-style) this Image is linked to if any.                       |
 | image<span class="arg-type">[ImageData](#imagedata)</span>                 | The actual image of the layer.                                                                  |
 
 ## Create a new Image

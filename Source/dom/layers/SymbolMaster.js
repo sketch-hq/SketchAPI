@@ -53,6 +53,16 @@ export class SymbolMaster extends Artboard {
     const libraryController = AppController.sharedInstance().librariesController()
     const lib = libraryController.libraryForShareableObject(this._object)
     if (!lib) {
+      const foreignObject = this._object.foreignObject()
+      if (foreignObject) {
+        return {
+          type: Types.Library,
+          id: String(foreignObject.libraryID()),
+          name: String(foreignObject.sourceLibraryName()),
+          enabled: false,
+          valid: false,
+        }
+      }
       return null
     }
     return wrapObject(lib)

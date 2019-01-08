@@ -26,3 +26,4 @@ Factory.registerClass(Slice, MSSliceLayer)
 Factory.registerClass(Slice, MSImmutableSliceLayer)
 
 delete Slice[DefinedPropertiesKey].flow
+delete Slice[DefinedPropertiesKey].transform
