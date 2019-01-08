@@ -10,19 +10,19 @@ var SymbolMaster = require('sketch/dom').SymbolMaster
 
 A [Symbol](https://www.sketchapp.com/docs/symbols/) master. It is an instance of [Artboard](#artboard) (hence of [Layer](#layer) and [Group](#group)) so all the methods defined there are available.
 
-| Properties                                                                 |                                                                                                         |
-| -------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
-| id<span class="arg-type">string</span>                                     | The unique ID of the Symbol Master object (not to be confused with `symbolId`).                         |
-| name<span class="arg-type">string</span>                                   | The name of the Symbol Master                                                                           |
-| parent<span class="arg-type">[Group](#group)</span>                        | The group the Symbol Master is in.                                                                      |
-| frame<span class="arg-type">[Rectangle](#rectangle)</span>                 | The frame of the Symbol Master. This is given in coordinates that are local to the parent of the layer. |
-| exportFormats<span class="arg-type">[ExportFormat](#exportformat)[]</span> | The export formats of the Symbol Master.                                                                |
-| layers<span class="arg-type">[Layer](#layer)[]</span>                      | The layers composing the Symbol Master.                                                                 |
-| background<span class="arg-type">object</span>                             | The background of the Symbol Master                                                                     |
-| background.enabled<span class="arg-type">boolean</span>                    | If the background should be enabled, eg. shown or not                                                   |
-| background.includedInExport<span class="arg-type">boolean</span>           | If the background should be exported or if it should be transparent during the export                   |
-| background.color<span class="arg-type">string</span>                       | The rgba representation of the color of the background                                                  |
-| symbolId<span class="arg-type">string</span>                               | The unique ID of the Symbol that the master and its instances share.                                    |
+| Properties                                                                  |                                                                                                         |
+| --------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
+| id<span class="arg-type">string</span>                                      | The unique ID of the Symbol Master object (not to be confused with `symbolId`).                         |
+| name<span class="arg-type">string</span>                                    | The name of the Symbol Master                                                                           |
+| parent<span class="arg-type">[Group](#group)</span>                         | The group the Symbol Master is in.                                                                      |
+| frame<span class="arg-type">[Rectangle](#rectangle)</span>                  | The frame of the Symbol Master. This is given in coordinates that are local to the parent of the layer. |
+| exportFormats<span class="arg-type">[ExportFormat](#export-format)[]</span> | The export formats of the Symbol Master.                                                                |
+| layers<span class="arg-type">[Layer](#layer)[]</span>                       | The layers composing the Symbol Master.                                                                 |
+| background<span class="arg-type">object</span>                              | The background of the Symbol Master                                                                     |
+| background.enabled<span class="arg-type">boolean</span>                     | If the background should be enabled, eg. shown or not                                                   |
+| background.includedInExport<span class="arg-type">boolean</span>            | If the background should be exported or if it should be transparent during the export                   |
+| background.color<span class="arg-type">string</span>                        | The rgba representation of the color of the background                                                  |
+| symbolId<span class="arg-type">string</span>                                | The unique ID of the Symbol that the master and its instances share.                                    |
 
 ## Create a new Symbol Master
 
