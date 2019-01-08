@@ -11,6 +11,7 @@
     "build:api": "webpack -p --optimize-minimize",
     "start": "npm run build",
     "watch": "webpack --watch",
+    "docs:start": "cd docs-website && ./run",
     "docs:generate-actions": "node ./scripts/generate-actions",
     "deploy:docs": "./scripts/deploy.sh",
     "run-tests:no-variant": "skpm-test --app=latest",
@@ -27,7 +28,7 @@
   },
   "devDependencies": {
     "@babel/preset-typescript": "^7.1.0",
-    "@skpm/test-runner": "^0.3.6",
+    "@skpm/test-runner": "^0.3.8",
     "@types/node": "^10.12.10",
     "awesome-typescript-loader": "^5.2.1",
     "babel-loader": "^8.0.4",

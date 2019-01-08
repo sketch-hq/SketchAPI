@@ -56,6 +56,7 @@ Factory.registerClass(Group, MSLayerGroup)
 Factory.registerClass(Group, MSImmutableLayerGroup)
 
 Group.define('layers', {
+  array: true,
   get() {
     return toArray(this._object.layers()).map(wrapNativeObject)
   },
@@ -64,12 +65,30 @@ Group.define('layers', {
       return
     }
     // remove the existing layers
-    toArray(this._object.layers()).forEach(l => l.removeFromParent())
+    this._object.removeAllLayers()
 
-    toArray(layers)
-      .map(wrapObject)
-      .forEach(layer => {
-        layer.parent = this // eslint-disable-line
-      })
+    this._object.addLayers(
+      toArray(layers)
+        .map(wrapObject)
+        .map(l => l._object)
+    )
+  },
+  insertItem(item, index) {
+    if (this.isImmutable()) {
+      return
+    }
+    const layer = wrapObject(item)
+    if (layer._object.parentGroup()) {
+      layer._object.removeFromParent()
+    }
+    this._object.insertLayer_atIndex(layer._object, index)
+  },
+  removeItem(index) {
+    if (this.isImmutable()) {
+      return undefined
+    }
+    const item = wrapNativeObject(this._object.layers()[index])
+    this._object.removeLayerAtIndex(index)
+    return item
   },
 })

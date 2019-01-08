@@ -374,6 +374,7 @@ Document.define('id', {
 })
 
 Document.define('pages', {
+  array: true,
   get() {
     if (!this._object) {
       return []
@@ -393,6 +394,30 @@ Document.define('pages', {
       .forEach(page => {
         page.parent = this // eslint-disable-line
       })
+  },
+  insertItem(item, index) {
+    if (this.isImmutable()) {
+      return
+    }
+    const wrapped = wrapObject(item, Types.Page)
+    if (wrapped._object.documentData()) {
+      wrapped._object
+        .documentData()
+        .removePages_detachInstances([wrapped._object], false)
+    }
+    if (typeof this._object.insertPage_atIndex === 'function') {
+      this._object.insertPage_atIndex(wrapped._object, index)
+    } else {
+      this._object.documentData().insertPage_atIndex(wrapped._object, index)
+    }
+  },
+  removeItem(index) {
+    if (this.isImmutable()) {
+      return undefined
+    }
+    const removed = this._object.pages()[index]
+    this._object.removePages_detachInstances([removed], true)
+    return Page.fromNative(removed)
   },
 })
 

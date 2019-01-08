@@ -26,11 +26,15 @@ export class SymbolInstance extends StyledLayer {
   }
 
   // Replaces the instance with a group that contains a copy of the Symbol this instance refers to. Returns null if the master contains no layers instead of inserting an empty group
-  detach() {
+  detach(options) {
     if (this.isImmutable()) {
       return null
     }
-    const group = this._object.detachByReplacingWithGroup()
+
+    const recursively = (options || {}).recursively || false
+    const group = this._object.detachStylesAndReplaceWithGroupRecursively(
+      recursively
+    )
 
     if (group) {
       return wrapObject(group)

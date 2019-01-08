@@ -1,6 +1,6 @@
 ---
 title: Symbol Master
-order: 308
+order: 309
 section: layers
 ---
 
@@ -16,11 +16,12 @@ A [Symbol](https://www.sketchapp.com/docs/symbols/) master. It is an instance of
 | name<span class="arg-type">string</span>                                   | The name of the Symbol Master                                                                           |
 | parent<span class="arg-type">[Group](#group)</span>                        | The group the Symbol Master is in.                                                                      |
 | frame<span class="arg-type">[Rectangle](#rectangle)</span>                 | The frame of the Symbol Master. This is given in coordinates that are local to the parent of the layer. |
-| exportFormats<span class="arg-type">[ExportFormat](#exportformat)[]</span> | The export formats of the Symbol Master.                                                                |
+| exportFormats<span class="arg-type">[ExportFormat](#export-format)[]</span> | The export formats of the Symbol Master.                                                                |
 | layers<span class="arg-type">[Layer](#layer)[]</span>                      | The layers composing the Symbol Master.                                                                 |
 | background<span class="arg-type">object</span>                             | The background of the Symbol Master                                                                     |
 | background.enabled<span class="arg-type">boolean</span>                    | If the background should be enabled, eg. shown or not                                                   |
 | background.includedInExport<span class="arg-type">boolean</span>           | If the background should be exported or if it should be transparent during the export                   |
+| background.includedInInstance<span class="arg-type">boolean</span>         | If the background should appear in the instances of the Symbol Master                                   |
 | background.color<span class="arg-type">string</span>                       | The rgba representation of the color of the background                                                  |
 | symbolId<span class="arg-type">string</span>                               | The unique ID of the Symbol that the master and its instances share.                                    |
 

@@ -120,3 +120,17 @@ SymbolMaster.define('symbolId', {
     throw new Error('Changing the symbol ID of a SymbolMaster is forbidden.')
   },
 })
+
+SymbolMaster.extendObject('background', {
+  includedInInstance: {
+    get() {
+      return Boolean(Number(this._object.includeBackgroundColorInInstance()))
+    },
+    set(included) {
+      if (this._parent.isImmutable()) {
+        return
+      }
+      this._object.setIncludeBackgroundColorInInstance(included)
+    },
+  },
+})
