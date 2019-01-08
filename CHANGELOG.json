@@ -15,7 +15,8 @@
     "[New] Add method to get the theme of Sketch",
     "[New] `export` can now export to the JSON file format",
     "[New] Add `background` property on Artboard",
-    "[New] Add `transform` property on Layer"
+    "[New] Add `transform` property on Layer",
+    "[Improved] Add an options parameter when detaching a Symbol Instance"
   ],
   "releases": {
     "52.1": ["[New] Add basic support for Shape path"],

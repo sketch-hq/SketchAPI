@@ -54,9 +54,18 @@ A new SymbolInstance
 
 ```javascript
 var group = instance.detach()
+
+var group = instance.detach({
+  recursively: true,
+})
 ```
 
 Replaces a group that contains a copy of the Symbol this instance refers to. Returns `null` if the master contains no layers instead of inserting an empty group
+
+| Parameters                                               |                                                                     |
+| -------------------------------------------------------- | ------------------------------------------------------------------- |
+| options<span class="arg-type">object</span>              | The options to apply when detaching the instance.                   |
+| options.recursively<span class="arg-type">boolean</span> | If it should detach the nested symbols as well. Default to `false`. |
 
 ### Returns
 
