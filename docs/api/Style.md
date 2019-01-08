@@ -61,7 +61,7 @@ var isOutOfSync = style.isOutOfSyncWithSharedStyle(sharedStyle)
 
 ### Returns
 
-Whether the Style has some differences with a [Shared Style](#sharedstyle).
+Whether the Style has some differences with a [Shared Style](#shared-style).
 
 ## Sync the Style with a Shared Style
 

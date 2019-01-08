@@ -1,5 +1,8 @@
 {
   "unreleased": [
+    "[Improved] Obj-C exceptions will be thrown as JS Errors which will reference the exception in their `nativeException` property",
+    "[Improved] `setTimeout` and all the other timeout, interval, immediate methods are now available directly, no need to polyfill them",
+    "[New] new method on the path module `require('path').resourcePath(resourceName)` which returns the path to a resource in the plugin bundle or `undefined` if it doesn't exist",
     "[Improved] The document from a library will now have a proper path (either local path or the appcast URL)",
     "[New] Add support for Slices",
     "[New] Add `exportFormats` property on Layer",
@@ -10,7 +13,7 @@
     "[New] Add some methods to store a session variable",
     "[Improved] Allow using setting methods even from the Run Script panel",
     "[New] Add method to get the theme of Sketch",
-    "[New] `export` can now export to the JSON file format"
+    "[New] `export` can now export to the JSON file format",
     "[New] Add `background` property on Artboard",
     "[New] Add `transform` property on Layer",
     "[New] Add `editable` property on Override",

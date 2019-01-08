@@ -21,7 +21,7 @@ A shared style (either a layer style or a text style).
 | Properties                                                                 |                                                   |
 | -------------------------------------------------------------------------- | ------------------------------------------------- |
 | id<span class="arg-type">string</span>                                     | The unique ID of the Shared Style.                |
-| styleType<span class="arg-type">[SharedStyleType](#sharedStyleType)</span> | The type of the Shared Style (`Layer` or `Text`). |
+| styleType<span class="arg-type">[SharedStyle.StyleType](#sharedstylestyletype)</span> | The type of the Shared Style (`Layer` or `Text`). |
 | name<span class="arg-type">string</span>                                   | The name of the Shared Style.                     |
 | style<span class="arg-type">[Style](#style)</span>                         | The Style value that is shared.                   |
 
