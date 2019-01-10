@@ -77,6 +77,8 @@ export function getInputFromUser(messageText, options, callback) {
     throw new Error('input description missing')
   }
 
+  const dialog = NSAlert.alloc().init()
+
   let accessory
   switch (type) {
     case INPUT_TYPE.string:
@@ -88,6 +90,7 @@ export function getInputFromUser(messageText, options, callback) {
             : options.initialValue
         )
       )
+      dialog.window().setInitialFirstResponder(accessory)
       break
     // case INPUT_TYPE.number:
     //   accessory = NSStepper.alloc().initWithFrame(NSMakeRect(0, 0, 295, 25))
@@ -146,7 +149,6 @@ export function getInputFromUser(messageText, options, callback) {
       break
   }
 
-  const dialog = NSAlert.alloc().init()
   dialog.setMessageText(messageText)
   if (options.description) {
     dialog.setInformativeText(options.description)
@@ -214,6 +216,7 @@ Use \`UI.getInputFromUser(
   dialog.addButtonWithTitle('Cancel')
   dialog.setAccessoryView(accessory)
   dialog.icon = getPluginAlertIcon()
+  dialog.window().setInitialFirstResponder(accessory)
   dialog.runModal()
   return String(accessory.stringValue())
 }
