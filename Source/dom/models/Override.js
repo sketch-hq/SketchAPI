@@ -55,6 +55,9 @@ Override.define('value', {
   },
   set(value) {
     // __symbolInstance is set when building the Override
+    if (!this.__symbolInstance) {
+      throw new Error('Can only set `value` for a symbol instance')
+    }
     this.__symbolInstance.setOverrideValue(this, value)
   },
 })
@@ -62,5 +65,25 @@ Override.define('value', {
 Override.define('isDefault', {
   get() {
     return !this._object.hasOverride()
+  },
+})
+
+Override.define('editable', {
+  get() {
+    if (typeof this.__editable !== 'undefined') {
+      return this.__editable
+    }
+    return Boolean(Number(this._object.isEditable()))
+  },
+  set(editable) {
+    // __symbolInstance is set when building the Override
+    if (!this.__symbolMaster) {
+      throw new Error('Can only set `editable` for a symbol master')
+    }
+    this.__editable = editable
+    this.__symbolMaster.sketchObject.setOverridePoint_editable(
+      this._object.overridePoint(),
+      editable
+    )
   },
 })
