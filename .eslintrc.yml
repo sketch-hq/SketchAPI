@@ -132,6 +132,10 @@ globals:
   MSExportFormat: false
   NSThread: false
   MSTheme: false
+  MSCurvePoint: false
+  MSPath: false
+  SVGPathInterpreter: false
+  NSBezierPath: false
   MSJSONDataArchiver: false
   MSJSONDictionaryUnarchiver: false
   MSArchiveHeader: false
@@ -142,6 +146,8 @@ globals:
   NSDataWritingWithoutOverwriting: false
   MSColorAsset: false
   MSPersistentAssetCollection: false
+  MSOverrideProperty: false
+  MSOverridePoint: false
 
 rules:
   ###########

@@ -132,14 +132,93 @@ export class WrappedObject {
    *
    * @param {string} propertyName - the name of the property
    * @param {Object} descriptor - the descriptor for the property (see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty)
+   *
+   * When returning an array, we also need to add some additional descriptions to handle mutating the owner when mutating the array.
+   * So when returning an array, you need to add the following properties to the descriptor:
+   *  {
+   *    array: true,
+   *    insertItem: (item, index) => void,
+   *    removeItem: (index) => removedItem
+   *  }
    */
   static define(propertyName, descriptor) {
     this._addDescriptor(propertyName, descriptor)
+    // if we return an array, we need to hook into the method that mutates it
+    // so that we can modify the owner
+    if (descriptor.array && typeof descriptor.set !== 'undefined') {
+      if (!descriptor.insertItem || !descriptor.removeItem) {
+        throw new Error('missing method to mutate the array')
+      }
+      const oldGet = descriptor.get
+      // eslint-disable-next-line no-param-reassign
+      descriptor.get = function get() {
+        const arr = oldGet.bind(this)()
+        if (!Array.isArray(arr)) {
+          return arr
+        }
+
+        arr.reverse = () => {
+          Array.prototype.reverse.call(arr)
+          descriptor.set.bind(this)(arr)
+        }
+        arr.sort = compareFunction => {
+          Array.prototype.reverse.call(arr, [compareFunction])
+          descriptor.set.bind(this)(arr)
+        }
+        arr.fill = (value, start, end) => {
+          Array.prototype.reverse.call(arr, [value, start, end])
+          descriptor.set.bind(this)(arr)
+        }
+
+        arr.splice = (start, count, ...items) => {
+          if (start < 0) {
+            // eslint-disable-next-line no-param-reassign
+            start += arr.length
+          }
+          if (!start || start < 0 || start > arr.length) {
+            // eslint-disable-next-line no-param-reassign
+            start = 0
+          }
+
+          if (typeof count === 'undefined' || count > arr.length - start) {
+            // eslint-disable-next-line no-param-reassign
+            count = arr.length - start
+          }
+
+          const removedItems = []
+
+          for (let i = start; i < count + start; i += 1) {
+            removedItems.push(descriptor.removeItem.bind(this)(i))
+          }
+
+          items.forEach((item, i) => {
+            descriptor.insertItem.bind(this)(item, start + i)
+          })
+
+          // call the native function
+          Array.prototype.splice.call(arr, [start, count, ...items])
+          return removedItems
+        }
+
+        arr.push = (...items) => {
+          arr.splice(arr.length, 0, ...items)
+          return arr.length + items.length
+        }
+        arr.unshift = (...items) => {
+          arr.splice(0, 0, ...items)
+          return arr.length + items.length
+        }
+        arr.pop = () => arr.splice(arr.length - 1)[0]
+        arr.shift = () => arr.splice(0, 1)[0]
+        return arr
+      }
+    }
     Object.defineProperty(this.prototype, propertyName, descriptor)
   }
 
   static defineObject(propertyName, fields, descriptor = {}) {
     const privateKey = `_${propertyName}`
+    const privateClassKey = `_${propertyName}Class`
     class NestedProperty {
       constructor(object) {
         const self = this
@@ -153,6 +232,7 @@ export class WrappedObject {
         })
         Object.defineProperty(self, '_keys', {
           enumerable: false,
+          writable: true,
           value: Object.keys(fields),
         })
 
@@ -170,6 +250,8 @@ export class WrappedObject {
       }
     }
 
+    this[privateClassKey] = NestedProperty
+
     const fullDescriptor = {
       ...descriptor,
       get() {
@@ -177,9 +259,10 @@ export class WrappedObject {
           return this[privateKey]
         }
         // cache the instance
+        const _NestedProperty = this.constructor[privateClassKey]
         Object.defineProperty(this, privateKey, {
           enumerable: false,
-          value: new NestedProperty(this),
+          value: new _NestedProperty(this),
         })
         return this[privateKey]
       },
@@ -193,6 +276,29 @@ export class WrappedObject {
 
     this._addDescriptor(propertyName, fullDescriptor)
     Object.defineProperty(this.prototype, propertyName, fullDescriptor)
+  }
+
+  static extendObject(propertyName, fields) {
+    const privateClassKey = `_${propertyName}Class`
+
+    if (!this[privateClassKey]) {
+      throw new Error('missing super class')
+    }
+
+    class NestedProperty extends this[privateClassKey] {
+      constructor(object) {
+        super(object)
+        const self = this
+        const newKeys = Object.keys(fields)
+        this._keys = this._keys.concat(newKeys)
+
+        newKeys.forEach(field => {
+          Object.defineProperty(self, field, fields[field])
+        })
+      }
+    }
+
+    this[privateClassKey] = NestedProperty
   }
 
   /**

@@ -26,12 +26,14 @@ export class Shape extends Group {
 
       super(shape)
 
-      const frame = this._object.frame()
-      this.sketchObject.addLayer(
-        MSRectangleShape.alloc().initWithFrame(
-          CGRectMake(0, 0, frame.width(), frame.height())
+      if (!shape.layers) {
+        const frame = this._object.frame()
+        this.sketchObject.addLayer(
+          MSRectangleShape.alloc().initWithFrame(
+            CGRectMake(0, 0, frame.width(), frame.height())
+          )
         )
-      )
+      }
     } else {
       super(shape)
     }

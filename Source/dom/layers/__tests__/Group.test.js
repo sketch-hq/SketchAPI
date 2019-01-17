@@ -68,3 +68,30 @@ test('should create a group with some layers', (context, document) => {
   })
   expect(group.layers[0].type).toBe('Text')
 })
+
+test('should add a layer to a group', (context, document) => {
+  const page = document.selectedPage
+
+  const group = new Group({
+    parent: page,
+    layers: [
+      {
+        type: 'Text',
+        text: 'hello world',
+      },
+    ],
+  })
+  expect(group.layers.length).toBe(1)
+
+  group.layers = group.layers.concat({
+    type: 'Text',
+    text: 'hello world',
+  })
+  expect(group.layers.length).toBe(2)
+
+  group.layers.push({
+    type: 'Text',
+    text: 'hello world',
+  })
+  expect(group.layers.length).toBe(3)
+})

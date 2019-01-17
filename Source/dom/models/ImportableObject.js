@@ -52,9 +52,27 @@ export class ImportableObject extends WrappedObject {
           }
           return undefined
         }
+        case ImportableObjectType.LayerStyle: {
+          const sharedStyle = this._documentData.layerStyleWithID(
+            this._object.sharedObjectID()
+          )
+          if (sharedStyle) {
+            return wrapNativeObject(sharedStyle)
+          }
+          return undefined
+        }
+        case ImportableObjectType.TextStyle: {
+          const sharedStyle = this._documentData.textStyleWithID(
+            this._object.sharedObjectID()
+          )
+          if (sharedStyle) {
+            return wrapNativeObject(sharedStyle)
+          }
+          return undefined
+        }
         default:
           throw new Error(
-            'Cannot import an already imported object other than a Symbol'
+            'Cannot import an already imported object other than a Symbol or a Shared Style'
           )
       }
     }

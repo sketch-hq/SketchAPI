@@ -27,4 +27,5 @@ export const Types = {
   ShapePath: 'ShapePath',
   Slice: 'Slice',
   ExportFormat: 'ExportFormat',
+  CurvePoint: 'CurvePoint',
 }
