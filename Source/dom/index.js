@@ -10,6 +10,7 @@ export { Document, getDocuments, getSelectedDocument } from './models/Document'
 export { Library, getLibraries } from './models/Library'
 export { SharedStyle } from './models/SharedStyle'
 export { Rectangle } from './models/Rectangle'
+export { ColorAsset } from './models/ColorAsset'
 
 export { Style } from './style/Style'
 

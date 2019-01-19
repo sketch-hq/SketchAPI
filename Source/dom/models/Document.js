@@ -6,8 +6,8 @@ import { getURLFromPath } from '../utils'
 import { wrapObject } from '../wrapNativeObject'
 import { Types } from '../enums'
 import { Factory } from '../Factory'
-import { StyleType, Style } from '../style/Style'
-import { Color } from '../style/Color'
+import { StyleType } from '../style/Style'
+import { ColorAsset } from './ColorAsset'
 
 export const SaveModeType = {
   Save: NSSaveOperation,
@@ -479,38 +479,35 @@ Document.define('colors', {
       return []
     }
     const documentData = this._getMSDocumentData()
-    const colorAssets = toArray(documentData.assets().colorAssets())
-    return colorAssets.map(a => ({
-      color: Style.colorToString(a.color()),
-      name: a.name(),
-    }))
+    return toArray(documentData.assets().colorAssets()).map(a =>
+      ColorAsset.fromNative(a)
+    )
   },
   set(colors) {
+    if (this.isImmutable()) {
+      return
+    }
     const assets = this._getMSDocumentData().assets()
     assets.removeAllColorAssets()
-    colors.forEach(c => {
-      const cleaned = Color.colorAssetFrom(c)
-      const asset = MSColorAsset.alloc().initWithAsset_name(
-        MSColor.alloc().initWithImmutableObject(cleaned.color._object),
-        cleaned.name
-      )
-      assets.addColorAsset(asset)
-    })
+    toArray(colors)
+      .map(c => ColorAsset.from(c))
+      .forEach(c => {
+        assets.addColorAsset(c._object)
+      })
   },
   insertItem(color, index) {
     if (this.isImmutable()) {
       return
     }
     const assets = this._getMSDocumentData().assets()
-    const cleaned = Color.colorAssetFrom(color)
-    const asset = MSColorAsset.alloc().initWithAsset_name(
-      MSColor.alloc().initWithImmutableObject(cleaned.color._object),
-      cleaned.name
-    )
-    assets.insertColorAsset_atIndex(asset, index)
+    const wrapped = ColorAsset.from(color)
+    assets.insertColorAsset_atIndex(wrapped._object, index)
   },
   removeItem(index) {
+    if (this.isImmutable()) {
+      return undefined
+    }
     const documentData = this._getMSDocumentData()
-    documentData.assets().removeColorAssetAtIndex(index)
+    return documentData.assets().removeColorAssetAtIndex(index)
   },
 })

@@ -1,15 +1,10 @@
 import { toArray } from 'util'
-import { colorToString } from './style/Color'
 import { Gradient } from './style/Gradient'
+import { ColorAsset } from './models/ColorAsset'
 
 export function globalColors() {
-  const colors = toArray(
-    MSPersistentAssetCollection.sharedGlobalAssets().colorAssets()
-  )
-  return colors.map(a => ({
-    color: colorToString(a.color()),
-    name: a.name(),
-  }))
+  const native = MSPersistentAssetCollection.sharedGlobalAssets().colorAssets()
+  return toArray(native).map(a => ColorAsset.fromNative(a))
 }
 
 export function globalGradients() {
