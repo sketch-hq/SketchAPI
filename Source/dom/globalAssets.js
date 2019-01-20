@@ -1,6 +1,5 @@
 import { toArray } from 'util'
-import { Gradient } from './style/Gradient'
-import { ColorAsset } from './models/ColorAsset'
+import { ColorAsset, GradientAsset } from './models/ColorAssets'
 
 export function globalColors() {
   const native = MSPersistentAssetCollection.sharedGlobalAssets().colorAssets()
@@ -8,11 +7,6 @@ export function globalColors() {
 }
 
 export function globalGradients() {
-  const gradients = toArray(
-    MSPersistentAssetCollection.sharedGlobalAssets().gradientAssets()
-  )
-  return gradients.map(g => ({
-    gradient: Gradient.fromNative(g.gradient()),
-    name: g.name(),
-  }))
+  const native = MSPersistentAssetCollection.sharedGlobalAssets().gradientAssets()
+  return toArray(native).map(a => GradientAsset.fromNative(a))
 }

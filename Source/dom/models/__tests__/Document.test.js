@@ -116,6 +116,36 @@ test('should remove document color', (context, document) => {
   expect(document.colors[0].color).toEqual('#ffffffff')
 })
 
+test('should reset document gradients', (context, document) => {
+  const doc = document
+  doc.gradients = [
+    { gradientType: 'Radial' },
+    {
+      gradient: { gradientType: 'Linear' },
+      name: 'My Gradient',
+    },
+  ]
+  expect(document.gradients[0].gradient.gradientType).toEqual('Radial')
+  expect(document.gradients[1].gradient.gradientType).toEqual('Linear')
+  expect(document.gradients[1].name).toEqual('My Gradient')
+})
+
+test('should append document gradients', (context, document) => {
+  const doc = document
+  doc.gradients = [{ gradient: {}, name: 'Some' }]
+  doc.gradients.push({ gradient: {}, name: 'Another' })
+  expect(document.gradients.length).toEqual(2)
+  expect(document.gradients[1].name).toEqual('Another')
+})
+
+test('should remove document gradients', (context, document) => {
+  const doc = document
+  doc.gradients = [{}, {}]
+  expect(document.gradients.length).toEqual(2)
+  doc.gradients.splice(1, 1)
+  expect(document.gradients.length).toEqual(1)
+})
+
 // some tests cannot really run on jenkins because it doesn't have access to MSDocument
 if (!isRunningOnJenkins()) {
   let _document

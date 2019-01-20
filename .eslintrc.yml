@@ -145,9 +145,11 @@ globals:
   NSFileManager: false
   NSDataWritingWithoutOverwriting: false
   MSColorAsset: false
+  MSGradientAsset: false
   MSPersistentAssetCollection: false
   MSOverrideProperty: false
   MSOverridePoint: false
+
 
 rules:
   ###########

@@ -7,7 +7,7 @@ import { wrapObject } from '../wrapNativeObject'
 import { Types } from '../enums'
 import { Factory } from '../Factory'
 import { StyleType } from '../style/Style'
-import { ColorAsset } from './ColorAsset'
+import { ColorAsset, GradientAsset } from './ColorAssets'
 
 export const SaveModeType = {
   Save: NSSaveOperation,
@@ -509,5 +509,45 @@ Document.define('colors', {
     }
     const documentData = this._getMSDocumentData()
     return documentData.assets().removeColorAssetAtIndex(index)
+  },
+})
+
+Document.define('gradients', {
+  array: true,
+  get() {
+    if (!this._object) {
+      return []
+    }
+    const documentData = this._getMSDocumentData()
+    return toArray(documentData.assets().gradientAssets()).map(a =>
+      GradientAsset.fromNative(a)
+    )
+  },
+  set(gradients) {
+    if (this.isImmutable()) {
+      return
+    }
+    const assets = this._getMSDocumentData().assets()
+    assets.removeAllGradientAssets()
+    toArray(gradients)
+      .map(c => GradientAsset.from(c))
+      .forEach(c => {
+        assets.addGradientAsset(c._object)
+      })
+  },
+  insertItem(gradient, index) {
+    if (this.isImmutable()) {
+      return
+    }
+    const assets = this._getMSDocumentData().assets()
+    const wrapped = GradientAsset.from(gradient)
+    assets.insertGradientAsset_atIndex(wrapped._object, index)
+  },
+  removeItem(index) {
+    if (this.isImmutable()) {
+      return undefined
+    }
+    const documentData = this._getMSDocumentData()
+    return documentData.assets().removeGradientAssetAtIndex(index)
   },
 })

@@ -7,12 +7,10 @@ test('should return global colors', () => {
   expect(colors.length > 0).toBe(true)
   expect(colors[0].type).toBe('ColorAsset')
   expect(typeof colors[0].color).toBe('string')
-  expect(typeof colors[0].color).toBe('string')
 })
 
-test('should return global colors', () => {
+test('should return global gradients', () => {
   const gradients = globalGradients()
   expect(gradients.length > 0).toBe(true)
-  expect(gradients[0].gradient.type).toBe('Gradient')
-  expect(gradients[0].name).toBe(null)
+  expect(gradients[0].type).toBe('GradientAsset')
 })

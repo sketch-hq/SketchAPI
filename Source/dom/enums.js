@@ -29,4 +29,5 @@ export const Types = {
   ExportFormat: 'ExportFormat',
   CurvePoint: 'CurvePoint',
   ColorAsset: 'ColorAsset',
+  GradientAsset: 'GradientAsset',
 }
