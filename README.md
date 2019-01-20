@@ -1,15 +1,15 @@
 # Sketch API
 
-This is a prototype Javascript API for Sketch. It's still a work in progress, but the intention is to make something which is:
+This is a prototype JavaScript API for Sketch. It's still a work in progress, but the intention is to make something which is:
 
-* native Javascript
+* native JavaScript
 * an easily understandable subset of the full internals of Sketch
 * fully supported by Bohemian between releases (ie we try not to change it, unlike our internal API which we can and do change whenever we need to)
 * still allows you to drop down to our internal API when absolutely necessary.
 
 This API is a very core layer which interfaces with Sketch itself. It's intentionally simple, and we want to keep it that way. If you feel like adding some high-level code to it, it’s probably better to add it to a community-maintained library that can be used on top of the API, and keep it separate from the core API effort.
 
-![api layers](https://cloud.githubusercontent.com/assets/206306/19645098/f7d3615c-99ea-11e6-962a-439fb553bf2d.png)
+![API layers](https://cloud.githubusercontent.com/assets/206306/19645098/f7d3615c-99ea-11e6-962a-439fb553bf2d.png)
 
 Comments and suggestions for this API are welcome - send them to developers@sketchapp.com, or [file an issue](https://github.com/BohemianCoding/SketchAPI/issues) to discuss it.
 
@@ -17,13 +17,13 @@ Comments and suggestions for this API are welcome - send them to developers@sket
 
 The API comes bundled inside Sketch, so no installation is required. You access it by obtaining a global `sketch` object:
 
-```javascript
+```js
 var api = require('sketch')
 ```
 
 ## Overview
 
-The API exposed is deliberately thin at the moment, and primarily covers the following areas:
+The API exposed is deliberately thin at the moment and primarily covers the following areas:
 
 * obtaining the selected document, page, and layers
 * iterating over the selection
@@ -31,7 +31,7 @@ The API exposed is deliberately thin at the moment, and primarily covers the fol
 * finding layers by name or id
 * creating new layers
 
-The approach taken is to wrap the native Sketch model objects inside javascript objects. These are thin wrappers, and contain no state - they just exist as a way to provide a cleaner and more stable coding interface to the underlying model.
+The approach taken is to wrap the native Sketch model objects inside JavaScript objects. These are thin wrappers, and contain no state - they just exist as a way to provide a cleaner and more stable coding interface to the underlying model.
 
 The layer hierarchy is deliberately simplified, with all shape layers being treated the same way. Thus there are currently wrapper classes for the following layer types: `Page`, `Artboard`, `Group`, `Shape`, `Text`, `Image`.
 
@@ -43,7 +43,7 @@ There is the beginning of a wrapper class `Style` for layer styles, but it's cur
 
 On `sketch.Settings`, there is also some support for more global tasks such as reading/writing preferences.
 
-The api object also exposes some utility classes. Currently the main one of note is `Rectangle`, which is a javascript-native representation of a rectangle. The plan is to use this class consistently within the API, in order to try to mask the fact that the model itself uses a confusing mix of `NSRect`, `CGRect`, `MSRect` and `MSAbsoluteRect`! In time more utility classes may be added. In time, also, we hope to clean up the model to be more consistent, at which point `Rectangle` might just turn into a thin wrapper for one of the native types.
+The API object also exposes some utility classes. Currently the main one of note is `Rectangle`, which is a JavaScript-native representation of a rectangle. The plan is to use this class consistently within the API, in order to try to mask the fact that the model itself uses a confusing mix of `NSRect`, `CGRect`, `MSRect` and `MSAbsoluteRect`! In time more utility classes may be added. In time, also, we hope to clean up the model to be more consistent, at which point `Rectangle` might just turn into a thin wrapper for one of the native types.
 
 Finally, there is some crude support for interaction with the user via alerts/sheets and the messages area at the bottom of the canvas. This stuff is _not_ final, and is currently just a re-working of some of our original code snippets. Ideally we'd like to come up with a more powerful and cleaner API to allow your plugin to interact with the user in a way that is consistent and compatible with the way Sketch itself interacts. It will probably take some time for us to get to this stuff!
 
@@ -59,7 +59,7 @@ If you have a performance issue where you're iterating across very large numbers
 
 Because multiple wrappers might exist for a given model object, if you're testing two for equality, you should test the things that they wrap, rather than the wrapper objects themselves:
 
-```javascript
+```js
 // this is probably not what you meant
 if (obj1 == obj2) {
   /* do stuff */
@@ -75,9 +75,9 @@ if (obj1.isEqual(obj2)) {
 
 Here's a very simple example script:
 
-```javascript
+```js
 var sketch = require('sketch')
-log(sketch.version.api)
+log(sketch.version.API)
 log(sketch.version.sketch)
 
 var document = sketch.getSelectedDocument()
@@ -126,7 +126,7 @@ Happy coding!
 
 ## Development
 
-The API is organised as a series of files defining javascript classes, and written with ES6 syntax.
+The API is organised as a series of files defining JavaScript classes, and written with ES6 syntax.
 
 However, the version that is embedded in Sketch is a single minified and transpiled library file called `SketchAPI.js`.
 
@@ -187,9 +187,9 @@ npm run test:no-variant:watch
 
 ## Website
 
-The website’s contents and layout live in the `gh-pages` branch, except for the API and Guides sections, which are copied from the relevant branches for deployment. If you want to change content in any page outside of the `/guides/` or `/reference/api/` sections on the site, switch to the `gh-pages` branch and do your changes there (sending a PR when appropriate, of course).
+The website’s contents and layout live in the `gh-pages` branch, except for the API and Guides sections, which are copied from the relevant branches for deployment. If you want to change content in any page outside of the `/guides/` or `/reference/API/` sections on the site, switch to the `gh-pages` branch and do your changes there (sending a PR when appropriate, of course).
 
-If you want to edit the API or Guides sections, switch to the branch your changes belong to (usually it'll be either `develop` or `release/XXX`) and do your changes there, in the `docs/api` or `docs/guides` folders. Once your changes are ready and committed, you can deploy the site running `npm run deploy:docs` from the branch you made your changes in (i.e: **not `gh-pages`**).
+If you want to edit the API or Guides sections, switch to the branch your changes belong to (usually it'll be either `develop` or `release/XXX`) and do your changes there, in the `docs/API` or `docs/guides` folders. Once your changes are ready and committed, you can deploy the site running `npm run deploy:docs` from the branch you made your changes in (i.e: **not `gh-pages`**).
 
 For more details on what happens when you run that command, check `scripts/deploy.sh`
 
