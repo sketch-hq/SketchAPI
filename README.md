@@ -77,7 +77,7 @@ Here's a very simple example script:
 
 ```js
 var sketch = require('sketch')
-log(sketch.version.API)
+log(sketch.version.api)
 log(sketch.version.sketch)
 
 var document = sketch.getSelectedDocument()
@@ -187,9 +187,9 @@ npm run test:no-variant:watch
 
 ## Website
 
-The website’s contents and layout live in the `gh-pages` branch, except for the API and Guides sections, which are copied from the relevant branches for deployment. If you want to change content in any page outside of the `/guides/` or `/reference/API/` sections on the site, switch to the `gh-pages` branch and do your changes there (sending a PR when appropriate, of course).
+The website’s contents and layout live in the `gh-pages` branch, except for the API and Guides sections, which are copied from the relevant branches for deployment. If you want to change content in any page outside of the `/guides/` or `/reference/api/` sections on the site, switch to the `gh-pages` branch and do your changes there (sending a PR when appropriate, of course).
 
-If you want to edit the API or Guides sections, switch to the branch your changes belong to (usually it'll be either `develop` or `release/XXX`) and do your changes there, in the `docs/API` or `docs/guides` folders. Once your changes are ready and committed, you can deploy the site running `npm run deploy:docs` from the branch you made your changes in (i.e: **not `gh-pages`**).
+If you want to edit the API or Guides sections, switch to the branch your changes belong to (usually it'll be either `develop` or `release/XXX`) and do your changes there, in the `docs/api` or `docs/guides` folders. Once your changes are ready and committed, you can deploy the site running `npm run deploy:docs` from the branch you made your changes in (i.e: **not `gh-pages`**).
 
 For more details on what happens when you run that command, check `scripts/deploy.sh`
 
