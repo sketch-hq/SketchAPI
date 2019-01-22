@@ -11,7 +11,7 @@
     "**/.hg": true,
     "**/.DS_Store": true,
     "**/node_modules": true,
-    // "**/build": true,
+    "**/build": true,
     "**/.awcache": true,
     "**/_external": true,
     "**/_reference": true,
