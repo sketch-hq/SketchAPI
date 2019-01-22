@@ -26,7 +26,7 @@ export function createSharedStyle(document: any, Primitive: any, style?: any) {
   const object = new Primitive({
     name: 'Test',
     parent: document.selectedPage,
-    ...(style ? style : {}),
+    ...(style || {}),
   })
 
   const sharedStyle = SharedStyle.fromStyle({
