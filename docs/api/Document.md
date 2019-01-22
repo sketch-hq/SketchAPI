@@ -220,6 +220,30 @@ A method to help find a symbol master in the document.
 
 Return a [SymbolMaster](#symbolmaster) object or `undefined` if it's not found.
 
+## Get all the Document Colors
+
+```javascript
+var colors = document.colors
+```
+
+A method to get all color assets defined in the document.
+
+### Returns
+
+Return an array of the [ColorAsset](#colorasset) objects defined in the document. Mutating the returned array will update the document colors.
+
+## Get all the Document Gradients
+
+```javascript
+var gradients = document.gradients
+```
+
+A method to get all gradient assets defined in the document. Mutating the returned array will update the document gradients.
+
+### Returns
+
+Return an array of the [ColorAsset](#colorasset) objects defined in the document.
+
 ## Center on Layer
 
 ```javascript

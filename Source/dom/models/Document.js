@@ -7,7 +7,7 @@ import { wrapObject } from '../wrapNativeObject'
 import { Types } from '../enums'
 import { Factory } from '../Factory'
 import { StyleType } from '../style/Style'
-import { ColorAsset, GradientAsset } from './ColorAssets'
+import { ColorAsset, GradientAsset } from './Asset'
 
 export const SaveModeType = {
   Save: NSSaveOperation,
@@ -472,6 +472,11 @@ Document.define('path', {
   },
 })
 
+/**
+ * A list of document colors
+ *
+ * @return {Array<ColorAsset>} A mutable array of color assets defined in the document
+ */
 Document.define('colors', {
   array: true,
   get() {
@@ -512,6 +517,11 @@ Document.define('colors', {
   },
 })
 
+/**
+ * A list of document gradients
+ *
+ * @return {Array<GradientAsset>} A mutable array of gradient assets defined in the document
+ */
 Document.define('gradients', {
   array: true,
   get() {

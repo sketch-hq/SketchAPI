@@ -93,10 +93,9 @@ test('should list all the shared text styles', (context, document) => {
 
 test('should reset document colors', (context, document) => {
   const doc = document
-  doc.colors = ['#FFFFFF', { color: '#AAAAAA', name: 'Grey' }]
+  doc.colors = ['#FFFFFF', '#AAAAAA']
   expect(document.colors[0].color).toEqual('#ffffffff')
   expect(document.colors[1].color).toEqual('#aaaaaaff')
-  expect(String(document.colors[1].name)).toEqual('Grey')
 })
 
 test('should append document colors', (context, document) => {
@@ -119,31 +118,44 @@ test('should remove document color', (context, document) => {
 test('should reset document gradients', (context, document) => {
   const doc = document
   doc.gradients = [
-    { gradientType: 'Radial' },
     {
-      gradient: { gradientType: 'Linear' },
-      name: 'My Gradient',
+      gradient: {},
+      name: 'Gradient 1',
+    },
+    {
+      gradient: {},
+      name: 'Gradient 2',
     },
   ]
-  expect(document.gradients[0].gradient.gradientType).toEqual('Radial')
-  expect(document.gradients[1].gradient.gradientType).toEqual('Linear')
-  expect(document.gradients[1].name).toEqual('My Gradient')
+  expect(document.gradients[0].name).toEqual('Gradient 1')
+  expect(document.gradients[1].name).toEqual('Gradient 2')
 })
 
 test('should append document gradients', (context, document) => {
   const doc = document
-  doc.gradients = [{ gradient: {}, name: 'Some' }]
-  doc.gradients.push({ gradient: {}, name: 'Another' })
+  doc.gradients = [{ gradient: {}, name: 'Gradient 1' }]
+  doc.gradients.push({ gradient: {}, name: 'Gradient 2' })
   expect(document.gradients.length).toEqual(2)
-  expect(document.gradients[1].name).toEqual('Another')
+  expect(document.gradients[0].name).toEqual('Gradient 1')
+  expect(document.gradients[1].name).toEqual('Gradient 2')
 })
 
 test('should remove document gradients', (context, document) => {
   const doc = document
-  doc.gradients = [{}, {}]
+  doc.gradients = [
+    {
+      gradient: {},
+      name: 'Gradient 1',
+    },
+    {
+      gradient: {},
+      name: 'Gradient 2',
+    },
+  ]
   expect(document.gradients.length).toEqual(2)
-  doc.gradients.splice(1, 1)
+  doc.gradients.splice(0, 1)
   expect(document.gradients.length).toEqual(1)
+  expect(document.gradients[0].name).toEqual('Gradient 2')
 })
 
 // some tests cannot really run on jenkins because it doesn't have access to MSDocument

@@ -34,7 +34,12 @@ export class ColorAsset extends Asset {
       if (className === 'MSColorAsset') {
         nativeAsset = object
       } else {
-        throw new Error(`Cannot create a color asset from a ${className}`)
+        try {
+          const c = Color.from(object)._object.newMutableCounterpart()
+          nativeAsset = MSColorAsset.alloc().initWithAsset_name(c, null)
+        } catch {
+          throw new Error(`Cannot create a color asset from a ${className}`)
+        }
       }
     } else if (typeof object == 'object') {
       const { color, name } = object
@@ -82,7 +87,7 @@ export class GradientAsset extends Asset {
     }
 
     let gradient
-    let name = null
+    let name
     if (isWrappedObject(object)) {
       gradient = object
     } else if (typeof object == 'object') {
