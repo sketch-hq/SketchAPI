@@ -117,7 +117,6 @@ export class GradientAsset extends Asset {
 GradientAsset.type = Types.GradientAsset
 GradientAsset[DefinedPropertiesKey] = { ...WrappedObject[DefinedPropertiesKey] }
 Factory.registerClass(GradientAsset, MSGradientAsset)
-delete GradientAsset[DefinedPropertiesKey].id
 
 GradientAsset.define('gradient', {
   get() {
