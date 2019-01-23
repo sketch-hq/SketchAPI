@@ -31,12 +31,6 @@ To watch for changes:
 npm run watch
 ```
 
-Additionally, if you wish to run the plugin every time it is built:
-
-```bash
-npm run start
-```
-
 ## Debugging
 
 To view the output of your `console.log`, you have a few different options:
