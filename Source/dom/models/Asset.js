@@ -7,6 +7,8 @@ import { Gradient } from '../style/Gradient'
 import { isWrappedObject } from '../utils'
 
 export class Asset extends WrappedObject {}
+Asset[DefinedPropertiesKey] = { ...WrappedObject[DefinedPropertiesKey] }
+delete Asset[DefinedPropertiesKey].id
 
 Asset.define('name', {
   get() {
@@ -55,9 +57,8 @@ export class ColorAsset extends Asset {
 }
 
 ColorAsset.type = Types.ColorAsset
-ColorAsset[DefinedPropertiesKey] = { ...WrappedObject[DefinedPropertiesKey] }
+ColorAsset[DefinedPropertiesKey] = { ...Asset[DefinedPropertiesKey] }
 Factory.registerClass(ColorAsset, MSColorAsset)
-delete ColorAsset[DefinedPropertiesKey].id
 
 ColorAsset.define('color', {
   get() {
@@ -115,7 +116,7 @@ export class GradientAsset extends Asset {
 }
 
 GradientAsset.type = Types.GradientAsset
-GradientAsset[DefinedPropertiesKey] = { ...WrappedObject[DefinedPropertiesKey] }
+GradientAsset[DefinedPropertiesKey] = { ...Asset[DefinedPropertiesKey] }
 Factory.registerClass(GradientAsset, MSGradientAsset)
 
 GradientAsset.define('gradient', {
