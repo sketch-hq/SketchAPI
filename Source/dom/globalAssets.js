@@ -1,5 +1,5 @@
 import { toArray } from 'util'
-import { ColorAsset, GradientAsset } from './models/Asset'
+import { ColorAsset, GradientAsset } from './assets'
 
 /**
  * Access any global colors

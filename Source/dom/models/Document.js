@@ -7,7 +7,7 @@ import { wrapObject } from '../wrapNativeObject'
 import { Types } from '../enums'
 import { Factory } from '../Factory'
 import { StyleType } from '../style/Style'
-import { ColorAsset, GradientAsset } from './Asset'
+import { ColorAsset, GradientAsset } from '../assets'
 
 export const SaveModeType = {
   Save: NSSaveOperation,

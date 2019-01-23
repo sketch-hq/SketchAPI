@@ -1,6 +1,5 @@
 /* globals expect, test */
-import { ColorAsset, GradientAsset } from '../Asset'
-import { Gradient } from '../../style/Gradient'
+import { ColorAsset } from '../ColorAsset'
 
 test('should create color asset from hex', () => {
   const asset = ColorAsset.from('#FFFFFF')
@@ -30,28 +29,4 @@ test('should create color asset with name', () => {
   })
   expect(asset.color).toBe('#ffffffff')
   expect(asset.name).toBe('White')
-})
-
-// Gradients
-
-test('should create gradient asset from dictionary', () => {
-  const asset = GradientAsset.from({})
-  expect(asset.gradient.type).toBe('Gradient')
-  expect(asset.name).toBe(null)
-})
-
-test('should create gradient asset from MSGradientAsset', () => {
-  const gradient = Gradient.from({})._object
-  const nativeAsset = MSGradientAsset.alloc().initWithAsset_name(gradient, null)
-  const asset = GradientAsset.from(nativeAsset)
-  expect(asset.gradient.type).toBe('Gradient')
-})
-
-test('should create gradient asset with name', () => {
-  const asset = GradientAsset.from({
-    name: 'My Gradient',
-    gradient: {},
-  })
-  expect(asset.gradient.type).toBe('Gradient')
-  expect(asset.name).toBe('My Gradient')
 })
