@@ -129,17 +129,11 @@ SymbolMaster.define('overrides', {
       return undefined
     }
     const overrideProperies = this._object.overrideProperies()
-    const overrides = toArray(this._object.availableOverrides())
-
-    // recursively find the overrides
-    function findChildrenOverrides(instance) {
-      const children = toArray(instance.children())
-      children.forEach(c => {
-        overrides.push(c)
-        findChildrenOverrides(c)
-      })
-    }
-    overrides.forEach(findChildrenOverrides)
+    const overrides = toArray(
+      MSAvailableOverride.flattenAvailableOverrides(
+        this._object.availableOverrides()
+      )
+    )
 
     return overrides.map(o => {
       const wrapped = Override.fromNative(o)
