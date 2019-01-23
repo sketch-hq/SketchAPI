@@ -15,6 +15,8 @@ A Sketch document.
 | id<span class="arg-type">string</span>             | The unique ID of the document. |
 | pages<span class="arg-type">[Page](#page)[]</span> | The pages of the document.     |
 | path<span class="arg-type">string</span>           | The path to the document (or the appcast URL in case of a Document from a remote Library.     |
+| colors<span class="arg-type">[GraientAsset]</span>           | A list of color assets defined in the document. Mutating the returned array will update the document gradients.     |
+| gradients<span class="arg-type">[GraientAsset]</span>| A list of gradient assets defined in the document. Mutating the returned array will update the document gradients. |
 
 ## Access the selected Document
 
@@ -220,29 +222,6 @@ A method to help find a symbol master in the document.
 
 Return a [SymbolMaster](#symbolmaster) object or `undefined` if it's not found.
 
-## Get all the Document Colors
-
-```javascript
-var colors = document.colors
-```
-
-A method to get all color assets defined in the document.
-
-### Returns
-
-Return an array of the [ColorAsset](#colorasset) objects defined in the document. Mutating the returned array will update the document colors.
-
-## Get all the Document Gradients
-
-```javascript
-var gradients = document.gradients
-```
-
-A method to get all gradient assets defined in the document. Mutating the returned array will update the document gradients.
-
-### Returns
-
-Return an array of the [ColorAsset](#colorasset) objects defined in the document.
 
 ## Center on Layer
 
