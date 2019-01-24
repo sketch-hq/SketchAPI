@@ -7,6 +7,15 @@ import { Factory } from '../Factory'
 import { DefinedPropertiesKey } from '../WrappedObject'
 
 export class GradientAsset extends Asset {
+  /**
+   * Create a ColorAsset from a varienty of objects
+   * - A native MSGradientAsset
+   * - An MSGradient
+   * - An dictionary of Gradient properties. see Gradient
+   *
+   * To include a name with one of the gradient objects,
+   * use a dictionary with `gradient` and `name`.
+   */
   static from(object) {
     if (!object) {
       return undefined

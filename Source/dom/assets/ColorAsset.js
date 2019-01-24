@@ -6,6 +6,17 @@ import { Types } from '../enums'
 import { Asset } from './Asset'
 
 export class ColorAsset extends Asset {
+  /**
+   * Create a ColorAsset from a varienty of objects
+   * - A native MSColorAsset
+   * - An MSColor
+   * - An MSImmutableColor
+   * - An NSColor
+   * - A hex color string
+   *
+   * To include a name with one of the color objects,
+   * use a dictionary with `color` and `name`.
+   */
   static from(object) {
     if (!object) {
       return undefined
