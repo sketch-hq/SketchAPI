@@ -5,7 +5,7 @@ summary: Information about how to integrate Sketch into a 3rd party app
 order: 610
 ---
 
-A Sketch plugin is not the only you can interact with Sketch. You might build a new app and want to integrate with Sketch. Here are a couple of ways to have a seamless workflow between your app and Sketch.
+A Sketch plugin is not the only way you can interact with Sketch. You might have built a new app and want to integrate it with Sketch. Here are a couple of ways to have a seamless workflow between your app and Sketch.
 
 ## Using the JSON file format
 
