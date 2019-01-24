@@ -9,7 +9,7 @@ A Sketch plugin is not the only way you can interact with Sketch. You might have
 
 ## Using the JSON file format
 
-A Sketch file is just a zip file containing a bunch of JSON files. Your app can unzip it, modify some of the files and zip it back. You don't even need Sketch at all! You can also create a Sketch file from scratch. The [`sketch-file`](https://github.com/mathieudutour/sketch-file) library might help with that.
+A Sketch file is just a zip file containing a bunch of JSON files. Your app can unzip it, modify some of the files and zip it back. You don't even need Sketch at all! You can even create a Sketch file from scratch. The [`sketch-file`](https://github.com/mathieudutour/sketch-file) library might help with that.
 
 ## Using SketchTool
 
