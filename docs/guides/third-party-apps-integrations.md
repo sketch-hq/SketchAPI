@@ -13,7 +13,7 @@ A Sketch file is just a zip file containing a bunch of JSON files. Your app can 
 
 ## Using SketchTool
 
-SketchTool is the perfect tool to interact with Sketch. You can export previews, get metadata from a file and even run a plugin programmatically!
+SketchTool is the perfect tool to interact with Sketch. You can export document previews, get metadata from a file and even run a plugin programmatically!
 
 The plugin you can run with SketchTool does not need to be installed by the user, it can be bundled in your app and executed from there. You can also install the plugin by copying to the plugin folder (`~/Library/Application Support/com.bohemiancoding.sketch3/Plugins`) if necessary.
 
