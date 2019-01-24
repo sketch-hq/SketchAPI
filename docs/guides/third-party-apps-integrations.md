@@ -19,7 +19,7 @@ The plugin you can run with SketchTool does not need to be installed by the user
 
 ## Using the `sketch://` URL scheme
 
-Sketch listens to the `sketch://` URL scheme and use can make use of that to open it with a specific sketch file for example:
+Sketch listens to the `sketch://` URL scheme and you can use it to open a specific document. For example:
 
 ```
 // open the file in sketch
