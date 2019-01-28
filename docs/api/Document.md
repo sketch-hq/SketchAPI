@@ -10,13 +10,13 @@ var Document = require('sketch/dom').Document
 
 A Sketch document.
 
-| Properties                                         |                                |
-| -------------------------------------------------- | ------------------------------ |
-| id<span class="arg-type">string</span>             | The unique ID of the document. |
-| pages<span class="arg-type">[Page](#page)[]</span> | The pages of the document.     |
-| path<span class="arg-type">string</span>           | The path to the document (or the appcast URL in case of a Document from a remote Library.     |
-| colors<span class="arg-type">[GraientAsset]</span>           | A list of color assets defined in the document. Mutating the returned array will update the document colors.     |
-| gradients<span class="arg-type">[GraientAsset]</span>| A list of gradient assets defined in the document. Mutating the returned array will update the document gradients. |
+| Properties                                                                |                                                                                                                    |
+|---------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------|
+| id<span class="arg-type">string</span>                                    | The unique ID of the document.                                                                                     |
+| pages<span class="arg-type">[Page](#page)[]</span>                        | The pages of the document.                                                                                         |
+| path<span class="arg-type">string</span>                                  | The path to the document (or the appcast URL in case of a Document from a remote Library.                          |
+| colors<span class="arg-type">[ColorAsset](#color-asset)[]</span>          | A list of color assets defined in the document. Mutating the returned array will update the document colors.       |
+| gradients<span class="arg-type">[GradientAsset](#gradient-asset)[]</span> | A list of gradient assets defined in the document. Mutating the returned array will update the document gradients. |
 
 ## Access the selected Document
 
@@ -72,7 +72,7 @@ Document.open('path/to/the/document.sketch', (err, document) => {
 A method to open an existing sketch document or ask the user to open one. The method is asynchronous so if you want to do something after the document is opening it, make sure that you pass a callback and continue your script there.
 
 | Parameters                                     |                                                                                                                                                          |
-| ---------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
+|------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------|
 | path<span class="arg-type">string</span>       | The path to the document to open. If `undefined`, the user will be asked to select one.                                                                  |
 | callback<span class="arg-type">function</span> | A function called after the document is opened. It is called with an `Error` if opening the Document was unsuccessful and a `Document` (or `undefined`). |
 
@@ -112,7 +112,7 @@ if (layer) {
 A method to help find the first layer in this document which has the given id.
 
 | Parameters                                             |                             |
-| ------------------------------------------------------ | --------------------------- |
+|--------------------------------------------------------|-----------------------------|
 | layerId<span class="arg-type">string - required</span> | The ID of the layer to find |
 
 ### Returns
@@ -131,7 +131,7 @@ if (layers.length) {
 A method to help find the layers in this document which have the given name.
 
 | Parameters                                          |                                |
-| --------------------------------------------------- | ------------------------------ |
+|-----------------------------------------------------|--------------------------------|
 | name<span class="arg-type">string - required</span> | The name of the layers to find |
 
 ### Returns
@@ -159,7 +159,7 @@ var sharedStyle = document.getSharedLayerStyleWithID(sharedStyleId)
 A method to help find a shared style in the document.
 
 | Parameters                                                   |                                    |
-| ------------------------------------------------------------ | ---------------------------------- |
+|--------------------------------------------------------------|------------------------------------|
 | sharedStyleId<span class="arg-type">string - required</span> | The ID of the shared style to find |
 
 ### Returns
@@ -187,7 +187,7 @@ var sharedStyle = document.getSharedTextStyleWithID(sharedStyleId)
 A method to help find a shared style in the document.
 
 | Parameters                                                   |                                    |
-| ------------------------------------------------------------ | ---------------------------------- |
+|--------------------------------------------------------------|------------------------------------|
 | sharedStyleId<span class="arg-type">string - required</span> | The ID of the shared style to find |
 
 ### Returns
@@ -215,7 +215,7 @@ var symbolMaster = document.getSymbolMasterWithID(symbolInstance.symbolId)
 A method to help find a symbol master in the document.
 
 | Parameters                                              |                                            |
-| ------------------------------------------------------- | ------------------------------------------ |
+|---------------------------------------------------------|--------------------------------------------|
 | symbolId<span class="arg-type">string - required</span> | The symbol ID of the symbol master to find |
 
 ### Returns
@@ -232,7 +232,7 @@ document.centerOnLayer(layer)
 A method to help center the view of the document window on a given layer.
 
 | Parameters                                                    |                                   |
-| ------------------------------------------------------------- | --------------------------------- |
+|---------------------------------------------------------------|-----------------------------------|
 | layer<span class="arg-type">[Layer](#layer) - required</span> | The layer to center the view onto |
 
 ## Save the Document
@@ -252,7 +252,7 @@ document.save('path/to/the/document.sketch', err => {
 A method to save a document to a specific path or ask the user to choose where to save it. The method is asynchronous so if you want to do something after the document is saved, make sure that you pass a callback and continue your script there.
 
 | Parameters                                                          |                                                                                                                      |
-| ------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- |
+|---------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------|
 | path<span class="arg-type">string</span>                            | The path where the document will be saved. If `undefined`, the user will be asked to select one.                     |
 | options<span class="arg-type">object</span>                         | The options for the save operation (only used when specifying a path).                                               |
 | options.saveMode<span class="arg-type">[SaveMode](#savemode)</span> | The way to save the document.                                                                                        |
@@ -279,7 +279,7 @@ document.save('path/to/the/document.sketch', {
 Enumeration of the save mode.
 
 | Value    |                                                                                                                               |
-| -------- | ----------------------------------------------------------------------------------------------------------------------------- |
+|----------|-------------------------------------------------------------------------------------------------------------------------------|
 | `Save`   | Overwrites a document’s file with the document’s contents                                                                     |
 | `SaveAs` | Writes a document’s contents to a new file and then changes the document’s current location to point to the just-written file |
 | `SaveTo` | Writes a document’s contents to a new file without changing the document’s current location to point to the new file.         |
