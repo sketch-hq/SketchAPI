@@ -19,6 +19,7 @@
     "test": "npm run lint -- --quiet && npm run run-tests",
     "test:watch": "npm run run-tests -- --watch",
     "test:no-variant": "npm run lint -- --quiet && npm run run-tests:no-variant",
+    "run-tests:private": "skpm-test --app=\"/Applications/Sketch Private.app\"",
     "test:no-variant:watch": "npm run run-tests:no-variant -- --watch",
     "lint": "find . -name \"*.ts\" -o -name \"*.js\" | grep -v -f .gitignore | grep -v .d.ts | grep -v examples | grep -v docs-website | xargs eslint",
     "prettier:base": "prettier --write",

@@ -7,6 +7,7 @@ import { wrapObject } from '../wrapNativeObject'
 import { Types } from '../enums'
 import { Factory } from '../Factory'
 import { StyleType } from '../style/Style'
+import { ColorAsset, GradientAsset } from '../assets'
 
 export const SaveModeType = {
   Save: NSSaveOperation,
@@ -468,5 +469,95 @@ Document.define('path', {
       enumerable: false,
       value: url,
     })
+  },
+})
+
+/**
+ * A list of document colors
+ *
+ * @return {Array<ColorAsset>} A mutable array of color assets defined in the document
+ */
+Document.define('colors', {
+  array: true,
+  get() {
+    if (!this._object) {
+      return []
+    }
+    const documentData = this._getMSDocumentData()
+    return toArray(documentData.assets().colorAssets()).map(a =>
+      ColorAsset.fromNative(a)
+    )
+  },
+  set(colors) {
+    if (this.isImmutable()) {
+      return
+    }
+    const assets = this._getMSDocumentData().assets()
+    assets.removeAllColorAssets()
+    toArray(colors)
+      .map(c => ColorAsset.from(c))
+      .forEach(c => {
+        assets.addColorAsset(c._object)
+      })
+  },
+  insertItem(color, index) {
+    if (this.isImmutable()) {
+      return
+    }
+    const assets = this._getMSDocumentData().assets()
+    const wrapped = ColorAsset.from(color)
+    assets.insertColorAsset_atIndex(wrapped._object, index)
+  },
+  removeItem(index) {
+    if (this.isImmutable()) {
+      return undefined
+    }
+    const documentData = this._getMSDocumentData()
+    return documentData.assets().removeColorAssetAtIndex(index)
+  },
+})
+
+/**
+ * A list of document gradients
+ *
+ * @return {Array<GradientAsset>} A mutable array of gradient assets defined in the document
+ */
+Document.define('gradients', {
+  array: true,
+  get() {
+    if (!this._object) {
+      return []
+    }
+    const documentData = this._getMSDocumentData()
+    return toArray(documentData.assets().gradientAssets()).map(a =>
+      GradientAsset.fromNative(a)
+    )
+  },
+  set(gradients) {
+    if (this.isImmutable()) {
+      return
+    }
+    const assets = this._getMSDocumentData().assets()
+    assets.removeAllGradientAssets()
+    toArray(gradients)
+      .map(c => GradientAsset.from(c))
+      .forEach(c => {
+        assets.addGradientAsset(c._object)
+      })
+  },
+  insertItem(gradient, index) {
+    if (this.isImmutable()) {
+      return
+    }
+    const assets = this._getMSDocumentData().assets()
+    const wrapped = GradientAsset.from(gradient)
+    assets.insertGradientAsset_atIndex(wrapped._object, index)
+  },
+  removeItem(index) {
+    if (this.isImmutable()) {
+      return undefined
+    }
+    const documentData = this._getMSDocumentData()
+    return documentData.assets().removeGradientAssetAtIndex(index)
   },
 })

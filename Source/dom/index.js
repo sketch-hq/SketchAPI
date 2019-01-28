@@ -27,6 +27,7 @@ export { Slice } from './layers/Slice'
 
 export { Types } from './enums'
 export { wrapObject as fromNative } from './wrapNativeObject'
+export { getGlobalColors, getGlobalGradients } from './globalAssets'
 
 export const Flow = {
   AnimationType,
