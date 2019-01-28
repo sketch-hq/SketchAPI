@@ -3,6 +3,7 @@ import { Document } from './models/Document'
 import { wrapObject } from './wrapNativeObject'
 import { Types } from './enums'
 import { Factory } from './Factory'
+import { colorFromString } from './style/Color'
 
 const simpleAttribute = (attribute, opposite) => (
   operator,
@@ -43,6 +44,25 @@ const attributesMap = {
 
     addPredicatePart(`${opposite ? '!' : ''}(${predicate.join(' OR ')})`)
   },
+  'style.fills.color': (
+    operator,
+    value,
+    { addPredicatePart, addPredicateVar }
+  ) => {
+    const opposite = operator === '!='
+    if (opposite) {
+      // eslint-disable-next-line no-param-reassign
+      operator = '='
+    }
+    if (operator !== '=') {
+      throw new Error(`Can only check for equality`)
+    }
+    const nativeColor = colorFromString(value)
+    addPredicateVar(nativeColor)
+    addPredicatePart(
+      `${opposite ? '!' : ''}(ANY style.fills.color fuzzyIsEqual:%@)`
+    )
+  },
 }
 
 const operatorMap = {
@@ -59,7 +79,7 @@ const operatorMap = {
 
 // taken from https://github.com/jquery/sizzle/blob/master/src/sizzle.js
 const whitespace = '\\s'
-const identifier = '(?:\\\\.|[\\w-]|[^\0-\\xa0])+'
+const identifier = '(?:\\\\.|[\\w-]|[^\0-\\xa0]|\\.)+'
 const attributes = `\\[${whitespace}*(${identifier})(?:${whitespace}*([*^$|!~]?=)${whitespace}*(?:'((?:\\\\.|[^\\\\'])*)'|"((?:\\\\.|[^\\\\"])*)"|(${identifier}))|)${whitespace}*\\]`
 const booleans = 'locked|hidden|selected'
 
