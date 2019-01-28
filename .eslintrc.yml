@@ -150,7 +150,6 @@ globals:
   MSOverrideProperty: false
   MSOverridePoint: false
 
-
 rules:
   ###########
   # PLUGINS #
