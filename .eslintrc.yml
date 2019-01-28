@@ -146,6 +146,7 @@ globals:
   NSDataWritingWithoutOverwriting: false
   MSOverrideProperty: false
   MSOverridePoint: false
+  NSMutableArray: false
 
 rules:
   ###########

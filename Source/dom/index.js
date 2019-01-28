@@ -28,6 +28,8 @@ export { Slice } from './layers/Slice'
 export { Types } from './enums'
 export { wrapObject as fromNative } from './wrapNativeObject'
 
+export { find } from './find'
+
 export const Flow = {
   AnimationType,
   BackTarget,
