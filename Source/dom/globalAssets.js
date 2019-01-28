@@ -6,7 +6,7 @@ import { ColorAsset, GradientAsset } from './assets'
  *
  * @return {Array<ColorAsset>} A list of color assets defined globally
  */
-export function globalColors() {
+export function getGlobalColors() {
   const native = MSPersistentAssetCollection.sharedGlobalAssets().colorAssets()
   return toArray(native).map(a => ColorAsset.fromNative(a))
 }
@@ -16,7 +16,7 @@ export function globalColors() {
  *
  * @return {Array<GradientAsset>} A list of gradient assets defined globally
  */
-export function globalGradients() {
+export function getGlobalGradients() {
   const native = MSPersistentAssetCollection.sharedGlobalAssets().gradientAssets()
   return toArray(native).map(a => GradientAsset.fromNative(a))
 }
