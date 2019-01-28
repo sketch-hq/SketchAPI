@@ -12,7 +12,7 @@ Sketch plugins are listed in a GitHub repository. This document explains how to 
 
 Sketch plugins are listed in a GitHub repository: [https://github.com/sketchplugins/plugin-directory](https://github.com/sketchplugins/plugin-directory).
 
-To add your plugin to the list, open a PR with the information about your plugin. Once it is merged, your plugin will appear here: [https://sketchapp.com/extensions/plugins/](https://sketchapp.com/extensions/plugins/)
+To add your plugin to the list, open a PR with the information about your plugin. Once it is merged, your plugin will appear here: [https://sketchapp.com/extensions/plugins/](https://sketchapp.com/extensions/plugins/) after the site is deployed (this can take anywhere from a few minutes to a few days, depending on the schedule of our web team).
 
 If you use `skpm`, the first time you publish a plugin using `skpm publish`, it will automatically create the PR for you.
 

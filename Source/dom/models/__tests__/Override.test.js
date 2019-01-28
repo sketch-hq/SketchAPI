@@ -34,8 +34,11 @@ test('should be able to set overrides', (context, document) => {
 
   expect(instance.overrides.length).toBe(1)
   const override = instance.overrides[0]
+  expect(override.isDefault).toBe(true)
   // check that an override can be logged
   log(override)
+
+  // override
   override.value = 'overridden'
 
   expect(instance.overrides.length).toBe(1)
@@ -47,6 +50,7 @@ test('should be able to set overrides', (context, document) => {
     symbolOverride: false,
     value: 'overridden',
     isDefault: false,
+    editable: true,
     affectedLayer: text.toJSON(),
   }
   delete result.affectedLayer.selected
@@ -89,6 +93,7 @@ test('should change a nested symbol', (context, document) => {
     symbolOverride: true,
     value: nestedMaster2.symbolId,
     isDefault: false,
+    editable: true,
   }
   delete result.affectedLayer.overrides
   delete result.affectedLayer.selected
@@ -127,4 +132,13 @@ test('should handle image override', (context, document) => {
   expect(instance.overrides[0].property).toBe('image')
   expect(instance.overrides[0].isDefault).toBe(false)
   expect(instance.overrides[0].value.type).toBe('ImageData')
+})
+
+test('hidden layers should not be editable', (context, document) => {
+  const { master } = createSymbolMaster(document)
+  master.layers[0].hidden = true
+  const instance = master.createNewInstance()
+  document.selectedPage.layers = document.selectedPage.layers.concat(instance)
+
+  expect(instance.overrides[0].editable).toBe(false)
 })

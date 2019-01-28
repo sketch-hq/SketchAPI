@@ -19,9 +19,6 @@
     "**/_vendor": true,
     "**/.bundle": true,
     "**/.sass-cache": true,
-    "**/css": true,
-    "**/images": true,
-    "**/js": true,
     ".jekyll-metadata": true
   },
   "editor.tabSize": 2,
