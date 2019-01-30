@@ -61,10 +61,10 @@ StyledLayer.define('sharedStyle', {
   enumerable: false,
   exportable: false,
   get() {
-    if (!this._object.sharedObject) {
+    if (!this._object.sharedStyle) {
       return null
     }
-    const nativeSharedStyle = this._object.sharedObject()
+    const nativeSharedStyle = this._object.sharedStyle()
     if (!nativeSharedStyle) {
       return null
     }

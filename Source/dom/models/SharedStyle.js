@@ -23,7 +23,7 @@ export class SharedStyle extends WrappedObject {
 
   static fromStyle({ name, style, document } = {}) {
     const documentData = wrapObject(document)._getMSDocumentData()
-    const wrappedStyle = wrapObject(style)
+    const wrappedStyle = wrapObject(style, Types.Style)
 
     const sharedStyle = SharedStyle.fromNative(
       MSSharedStyle.alloc().initWithName_style(name, wrappedStyle.sketchObject)
