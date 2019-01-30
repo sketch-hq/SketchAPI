@@ -24,10 +24,11 @@ export function createSymbolMaster(document: any) {
   }
 }
 
-export function createSharedStyle(document: any, Primitive: any) {
+export function createSharedStyle(document: any, Primitive: any, style?: any) {
   const object = new Primitive({
     name: 'Test',
     parent: document.selectedPage,
+    ...(style || {}),
   })
 
   const sharedStyles =

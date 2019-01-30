@@ -26,7 +26,7 @@ export class SharedStyle extends WrappedObject {
       `\`SharedStyle.fromStyle({ name, style, document })\` is deprecated. Use \`document.sharedLayersStyles.push({ name, style })\` (or \`document.sharedTextStyles\`) instead.`
     )
     const documentData = wrapObject(document)._getMSDocumentData()
-    const wrappedStyle = wrapObject(style)
+    const wrappedStyle = wrapObject(style, Types.Style)
 
     const sharedStyle = SharedStyle.fromNative(
       MSSharedStyle.alloc().initWithName_style(name, wrappedStyle.sketchObject)
