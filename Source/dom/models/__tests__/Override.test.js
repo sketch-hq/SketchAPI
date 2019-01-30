@@ -81,7 +81,7 @@ test('should change a nested symbol', (context, document) => {
   document.selectedPage.layers = document.selectedPage.layers.concat(instance)
   expect(instance.overrides.length).toBe(3)
 
-  const override = instance.overrides[0]
+  const override = instance.overrides[1]
   override.value = nestedMaster2.symbolId
 
   const result = {
@@ -97,8 +97,8 @@ test('should change a nested symbol', (context, document) => {
   }
   delete result.affectedLayer.overrides
   delete result.affectedLayer.selected
-  result.affectedLayer.style = instance.overrides[0].affectedLayer.style.toJSON()
-  expect(instance.overrides[0].toJSON()).toEqual(result)
+  result.affectedLayer.style = instance.overrides[1].affectedLayer.style.toJSON()
+  expect(instance.overrides[1].toJSON()).toEqual(result)
 })
 
 test('should handle image override', (context, document) => {

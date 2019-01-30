@@ -120,17 +120,11 @@ SymbolInstance.define('overrides', {
     if (!this._object.availableOverrides) {
       return undefined
     }
-    const overrides = toArray(this._object.availableOverrides())
-
-    // recursively find the overrides
-    function findChildrenOverrides(instance) {
-      const children = toArray(instance.children())
-      children.forEach(c => {
-        overrides.push(c)
-        findChildrenOverrides(c)
-      })
-    }
-    overrides.forEach(findChildrenOverrides)
+    const overrides = toArray(
+      MSAvailableOverride.flattenAvailableOverrides(
+        this._object.availableOverrides()
+      )
+    )
 
     return overrides.map(o => {
       const wrapped = Override.fromNative(o)

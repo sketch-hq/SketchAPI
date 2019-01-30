@@ -16,7 +16,9 @@ export function isWrappedObject(object) {
 export function getURLFromPath(path) {
   return typeof path === 'string'
     ? NSURL.fileURLWithPath(
-        NSString.stringWithString(path).stringByExpandingTildeInPath()
+        NSString.stringWithString(
+          path.replace(/^file:\/\//, '')
+        ).stringByExpandingTildeInPath()
       )
     : path
 }
