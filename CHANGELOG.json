@@ -1,5 +1,8 @@
 {
-  "unreleased": ["[New] Add `colors` and `gradients` properties on Document"],
+  "unreleased": [
+    "[New] Add `colors` and `gradients` properties on Document",
+    "[Improved] Shared styles are now document properties and can be mutated"
+  ],
   "releases": {
     "53": [
       "[Improved] Obj-C exceptions will be thrown as JS Errors which will reference the exception in their `nativeException` property",
