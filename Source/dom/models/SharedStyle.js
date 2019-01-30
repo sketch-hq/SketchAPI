@@ -15,13 +15,16 @@ export class SharedStyle extends WrappedObject {
   constructor(master = {}) {
     if (!master.sketchObject) {
       throw new Error(
-        `Cannot create a SharedStyle directly, use SharedStyle.fromStyle({ name, style, document }) instead.`
+        `Cannot create a SharedStyle directly, use \`document.sharedLayersStyles.push({ name, style })\` (or \`document.sharedTextStyles\`) instead.`
       )
     }
     super(master)
   }
 
   static fromStyle({ name, style, document } = {}) {
+    console.warn(
+      `\`SharedStyle.fromStyle({ name, style, document })\` is deprecated. Use \`document.sharedLayersStyles.push({ name, style })\` (or \`document.sharedTextStyles\`) instead.`
+    )
     const documentData = wrapObject(document)._getMSDocumentData()
     const wrappedStyle = wrapObject(style)
 
