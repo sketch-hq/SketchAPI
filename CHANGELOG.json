@@ -1,5 +1,5 @@
 {
-  "unreleased": [],
+  "unreleased": ["[New] Add `colors` and `gradients` properties on Document"],
   "releases": {
     "53": [
       "[Improved] Obj-C exceptions will be thrown as JS Errors which will reference the exception in their `nativeException` property",
