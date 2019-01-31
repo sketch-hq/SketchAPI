@@ -149,6 +149,9 @@ globals:
   MSPersistentAssetCollection: false
   MSOverrideProperty: false
   MSOverridePoint: false
+  CGRectNull: false
+  NSColorSpace: false
+  MSExporter: false
 
 rules:
   ###########

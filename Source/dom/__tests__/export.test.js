@@ -1,5 +1,5 @@
 /* globals expect, test */
-
+import { Buffer } from 'buffer'
 import { exportObject, objectFromJSON } from '../export'
 import { Shape } from '../layers/Shape'
 
@@ -44,18 +44,15 @@ test('Should fail with no object provided', () => {
   }
 })
 
-test('Should fail to return image data', () => {
-  try {
-    const object = new Shape()
-    exportObject(object, {
-      formats: 'png',
-      output: false,
-    })
-  } catch (err) {
-    expect(err.message).toMatch(
-      'Return output is only support for the json format'
-    )
-  }
+test('Should return a buffer', (context, document) => {
+  const object = new Shape({
+    parent: document.selectedPage,
+  })
+  const buffer = exportObject(object, {
+    formats: 'png',
+    output: false,
+  })
+  expect(Buffer.isBuffer(buffer)).toBe(true)
 })
 
 test('should fail with to return with mulitple formats', () => {
@@ -65,6 +62,7 @@ test('should fail with to return with mulitple formats', () => {
       formats: ['png', 'json'],
       output: false,
     })
+    expect(false).toBe(true)
   } catch (err) {
     expect(err.message).toMatch('Can only return 1 format with no output type')
   }
