@@ -1,7 +1,10 @@
+import { isNativeObject } from 'util'
 import { Color, colorToString } from './Color'
 import { WrappedObject, DefinedPropertiesKey } from '../WrappedObject'
 import { Gradient } from './Gradient'
 import { Types } from '../enums'
+import { ImageData } from '../models/ImageData'
+import { isWrappedObject } from '../utils'
 
 export const FillTypeMap = {
   Color: 0, // A solid fill/border.
@@ -22,8 +25,42 @@ export const FillType = {
   noise: 'Noise', // A noise fill/border.
 }
 
+export const PatternFillTypeMap = {
+  Tile: 0, // tile the image to fill the shape
+  Fill: 1, // fit the shape inside the image
+  Stretch: 2, // stretch the image to fill the shape
+  Fit: 3, // fit the image inside the shape
+}
+
+export const PatternFillType = {
+  Tile: 'Tile',
+  Fill: 'Fill',
+  Stretch: 'Stretch',
+  Fit: 'Fit',
+}
+
+export const NoiseTypeMap = {
+  Original: 0,
+  Black: 1,
+  White: 2,
+  Color: 3,
+}
+
+export const NoiseType = {
+  Original: 'Original',
+  Black: 'Black',
+  White: 'White',
+  Color: 'Color',
+}
+
 export class Fill extends WrappedObject {
   static toNative(value) {
+    if (isNativeObject(value)) {
+      return value
+    }
+    if (isWrappedObject(value)) {
+      return value.sketchObject
+    }
     const fill = MSStyleFill.new()
     const color =
       typeof value === 'string' ? Color.from(value) : Color.from(value.color)
@@ -37,7 +74,39 @@ export class Fill extends WrappedObject {
       fill.gradient = gradient._object
     }
 
-    const fillType = FillTypeMap[value.fillType]
+    if (value.noise) {
+      if (typeof value.noise.noiseType !== 'undefined') {
+        const noiseTypeMapped = NoiseTypeMap[value.noise.noiseType]
+        fill.setNoiseIndex(
+          typeof noiseTypeMapped !== 'undefined'
+            ? noiseTypeMapped
+            : value.noise.noiseType || NoiseTypeMap.Original
+        )
+      }
+      if (typeof value.noise.intensity !== 'undefined') {
+        fill.setNoiseIntensity(value.noise.intensity)
+      }
+    }
+
+    if (value.pattern) {
+      if (typeof value.pattern.patternType !== 'undefined') {
+        const patternTypeMapped = PatternFillTypeMap[value.pattern.patternType]
+        fill.setPatternFillType(
+          typeof patternTypeMapped !== 'undefined'
+            ? patternTypeMapped
+            : value.pattern.patternType || PatternFillTypeMap.Tile
+        )
+      }
+      if (typeof value.pattern.tileScale !== 'undefined') {
+        fill.setPatternTileScale(value.pattern.tileScale)
+      }
+      if (typeof value.pattern.image !== 'undefined') {
+        const image = ImageData.from(value.pattern.image)
+        fill.setImage(image.sketchObject)
+      }
+    }
+
+    const fillType = FillTypeMap[value.fill]
     fill.fillType =
       typeof fillType !== 'undefined'
         ? fillType
@@ -98,6 +167,70 @@ Fill.define('gradient', {
   set(_gradient) {
     const gradient = Gradient.from(_gradient)
     this._object.gradient = gradient
+  },
+})
+
+Fill.defineObject('pattern', {
+  patternType: {
+    get() {
+      return (
+        Object.keys(PatternFillTypeMap).find(
+          key => PatternFillTypeMap[key] === this._object.patternFillType()
+        ) || this._object.patternFillType()
+      )
+    },
+    set(patternType) {
+      const patternTypeMapped = PatternFillTypeMap[patternType]
+      this._object.setPatternFillType(
+        typeof patternTypeMapped !== 'undefined'
+          ? patternTypeMapped
+          : patternType || PatternFillTypeMap.Tile
+      )
+    },
+  },
+  image: {
+    get() {
+      return ImageData.fromNative(this._object.image())
+    },
+    set(image) {
+      this._object.setImage(ImageData.from(image).sketchObject)
+    },
+  },
+  tileScale: {
+    get() {
+      return Number(this._object.patternTileScale())
+    },
+    set(scale) {
+      this._object.setPatternTileScale(scale)
+    },
+  },
+})
+
+Fill.defineObject('noise', {
+  noiseType: {
+    get() {
+      return (
+        Object.keys(NoiseTypeMap).find(
+          key => NoiseTypeMap[key] === this._object.noiseIndex()
+        ) || this._object.noiseIndex()
+      )
+    },
+    set(noiseType) {
+      const noiseTypeMapped = NoiseTypeMap[noiseType]
+      this._object.setNoiseIndex(
+        typeof noiseTypeMapped !== 'undefined'
+          ? noiseTypeMapped
+          : noiseType || NoiseTypeMap.Original
+      )
+    },
+  },
+  intensity: {
+    get() {
+      return Number(this._object.noiseIntensity())
+    },
+    set(intensity) {
+      this._object.setNoiseIntensity(intensity)
+    },
   },
 })
 
