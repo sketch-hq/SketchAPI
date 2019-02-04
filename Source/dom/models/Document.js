@@ -1,13 +1,14 @@
-import { toArray } from 'util'
+import { toArray, isNativeObject } from 'util'
 import { WrappedObject, DefinedPropertiesKey } from '../WrappedObject'
 import { Page } from '../layers/Page'
 import { Selection } from './Selection'
-import { getURLFromPath } from '../utils'
+import { getURLFromPath, isWrappedObject } from '../utils'
 import { wrapObject } from '../wrapNativeObject'
 import { Types } from '../enums'
 import { Factory } from '../Factory'
 import { StyleType } from '../style/Style'
 import { ColorAsset, GradientAsset } from '../assets'
+import { SharedStyle } from './SharedStyle'
 
 export const SaveModeType = {
   Save: NSSaveOperation,
@@ -182,6 +183,9 @@ export class Document extends WrappedObject {
   }
 
   getSharedLayerStyles() {
+    console.warn(
+      `\`document.getSharedLayerStyles()\` is deprecated. Use \`document.sharedLayerStyles\` instead.`
+    )
     const documentData = this._getMSDocumentData()
     return toArray(documentData.allLayerStyles()).map(wrapObject)
   }
@@ -191,6 +195,9 @@ export class Document extends WrappedObject {
   }
 
   getSharedTextStyles() {
+    console.warn(
+      `\`document.getSharedTextStyles()\` is deprecated. Use \`document.sharedTextStyles\` instead.`
+    )
     const documentData = this._getMSDocumentData()
     return toArray(documentData.allTextStyles()).map(wrapObject)
   }
@@ -413,7 +420,7 @@ Document.define('pages', {
   },
   insertItem(item, index) {
     if (this.isImmutable()) {
-      return
+      return undefined
     }
     const wrapped = wrapObject(item, Types.Page)
     if (wrapped._object.documentData()) {
@@ -426,6 +433,7 @@ Document.define('pages', {
     } else {
       this._object.documentData().insertPage_atIndex(wrapped._object, index)
     }
+    return wrapped
   },
   removeItem(index) {
     if (this.isImmutable()) {
@@ -517,11 +525,12 @@ Document.define('colors', {
   },
   insertItem(color, index) {
     if (this.isImmutable()) {
-      return
+      return undefined
     }
     const assets = this._getMSDocumentData().assets()
     const wrapped = ColorAsset.from(color)
     assets.insertColorAsset_atIndex(wrapped._object, index)
+    return wrapped
   },
   removeItem(index) {
     if (this.isImmutable()) {
@@ -562,11 +571,12 @@ Document.define('gradients', {
   },
   insertItem(gradient, index) {
     if (this.isImmutable()) {
-      return
+      return undefined
     }
     const assets = this._getMSDocumentData().assets()
     const wrapped = GradientAsset.from(gradient)
     assets.insertGradientAsset_atIndex(wrapped._object, index)
+    return wrapped
   },
   removeItem(index) {
     if (this.isImmutable()) {
@@ -574,5 +584,165 @@ Document.define('gradients', {
     }
     const documentData = this._getMSDocumentData()
     return documentData.assets().removeGradientAssetAtIndex(index)
+  },
+})
+
+Document.define('sharedLayerStyles', {
+  array: true,
+  get() {
+    if (!this._object) {
+      return []
+    }
+    const documentData = this._getMSDocumentData()
+    return toArray(documentData.allLayerStyles()).map(wrapObject)
+  },
+  set(sharedLayerStyles) {
+    if (this.isImmutable()) {
+      return
+    }
+    const documentData = this._getMSDocumentData()
+    const container = documentData.sharedObjectContainerOfType(1)
+
+    // remove the existing shared styles
+    container.removeAllSharedObjects()
+
+    container.addSharedObjects(
+      toArray(sharedLayerStyles).map(item => {
+        let sharedStyle
+
+        if (isWrappedObject(item)) {
+          sharedStyle = item.sketchObject
+        } else if (isNativeObject(item)) {
+          sharedStyle = item
+        } else {
+          const wrappedStyle = wrapObject(item.style, Types.Style)
+
+          sharedStyle = MSSharedStyle.alloc().initWithName_style(
+            item.name,
+            wrappedStyle.sketchObject
+          )
+        }
+        return sharedStyle
+      })
+    )
+  },
+  insertItem(item, index) {
+    if (this.isImmutable()) {
+      return undefined
+    }
+
+    const documentData = this._getMSDocumentData()
+
+    let sharedStyle
+
+    if (isWrappedObject(item)) {
+      sharedStyle = item.sketchObject
+    } else if (isNativeObject(item)) {
+      sharedStyle = item
+    } else {
+      const wrappedStyle = wrapObject(item.style, Types.Style)
+
+      sharedStyle = MSSharedStyle.alloc().initWithName_style(
+        item.name,
+        wrappedStyle.sketchObject
+      )
+    }
+
+    const container = documentData.sharedObjectContainerOfType(1)
+
+    container.insertSharedObject_atIndex(sharedStyle, index)
+
+    return new SharedStyle({ sketchObject: sharedStyle })
+  },
+  removeItem(index) {
+    if (this.isImmutable()) {
+      return undefined
+    }
+    const documentData = this._getMSDocumentData()
+    const container = documentData.sharedObjectContainerOfType(1)
+
+    const removed = documentData.allLayerStyles()[index]
+    container.removeSharedObjectAtIndex(index)
+    return wrapObject(removed, Types.SharedStyle)
+  },
+})
+
+Document.define('sharedTextStyles', {
+  array: true,
+  get() {
+    if (!this._object) {
+      return []
+    }
+    const documentData = this._getMSDocumentData()
+    return toArray(documentData.allTextStyles()).map(wrapObject)
+  },
+  set(sharedLayerStyles) {
+    if (this.isImmutable()) {
+      return
+    }
+    const documentData = this._getMSDocumentData()
+    const container = documentData.sharedObjectContainerOfType(2)
+
+    // remove the existing shared styles
+    container.removeAllSharedObjects()
+
+    container.addSharedObjects(
+      toArray(sharedLayerStyles).map(item => {
+        let sharedStyle
+
+        if (isWrappedObject(item)) {
+          sharedStyle = item.sketchObject
+        } else if (isNativeObject(item)) {
+          sharedStyle = item
+        } else {
+          const wrappedStyle = wrapObject(item.style, Types.Style)
+
+          sharedStyle = MSSharedStyle.alloc().initWithName_style(
+            item.name,
+            wrappedStyle.sketchObject
+          )
+        }
+        return sharedStyle
+      })
+    )
+  },
+  insertItem(item, index) {
+    if (this.isImmutable()) {
+      return undefined
+    }
+
+    const documentData = this._getMSDocumentData()
+
+    let sharedStyle
+
+    if (isWrappedObject(item)) {
+      sharedStyle = item.sketchObject
+    } else if (isNativeObject(item)) {
+      sharedStyle = item
+    } else {
+      const wrappedStyle = wrapObject(item.style, Types.Style)
+
+      sharedStyle = MSSharedStyle.alloc().initWithName_style(
+        item.name,
+        wrappedStyle.sketchObject
+      )
+    }
+
+    const container = documentData.sharedObjectContainerOfType(2)
+
+    container.insertSharedObject_atIndex(sharedStyle, index)
+
+    return new SharedStyle({ sketchObject: sharedStyle })
+  },
+  removeItem(index) {
+    if (this.isImmutable()) {
+      return undefined
+    }
+    const documentData = this._getMSDocumentData()
+    const container = documentData.sharedObjectContainerOfType(2)
+
+    const removed = documentData.allTextStyles()[index]
+    container.removeSharedObjectAtIndex(index)
+    return wrapObject(removed, Types.SharedStyle)
   },
 })

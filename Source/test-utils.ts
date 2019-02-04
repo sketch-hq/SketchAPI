@@ -1,4 +1,6 @@
-const { SymbolMaster, SharedStyle, Text, Artboard } = require('./dom')
+import { Style } from './dom'
+
+const { SymbolMaster, Text, Artboard } = require('./dom')
 
 export function isRunningOnJenkins() {
   return !__command.pluginBundle()
@@ -29,11 +31,17 @@ export function createSharedStyle(document: any, Primitive: any, style?: any) {
     ...(style || {}),
   })
 
-  const sharedStyle = SharedStyle.fromStyle({
+  const sharedStyles =
+    object.style.styleType == Style.StyleType.Layer
+      ? document.sharedLayerStyles
+      : document.sharedTextStyles
+
+  const newLength = sharedStyles.push({
     name: 'test shared style',
     style: object.style,
-    document,
   })
+
+  const sharedStyle = sharedStyles[newLength - 1]
 
   object.sharedStyle = sharedStyle
 

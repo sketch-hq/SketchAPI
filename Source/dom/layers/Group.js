@@ -75,13 +75,15 @@ Group.define('layers', {
   },
   insertItem(item, index) {
     if (this.isImmutable()) {
-      return
+      return undefined
     }
     const layer = wrapObject(item)
     if (layer._object.parentGroup()) {
       layer._object.removeFromParent()
     }
     this._object.insertLayer_atIndex(layer._object, index)
+
+    return layer
   },
   removeItem(index) {
     if (this.isImmutable()) {

@@ -208,6 +208,7 @@ Style.define('fills', {
     const arr = toArray(this._object.fills())
     arr.splice(index, 0, item)
     this.fills = arr
+    return Fill.fromNative(Fill.toNative(item))
   },
   removeItem(index) {
     const arr = toArray(this._object.fills())
@@ -232,6 +233,7 @@ Style.define('borders', {
     const arr = toArray(this._object.borders())
     arr.splice(index, 0, item)
     this.borders = arr
+    return Border.fromNative(Border.toNative(item))
   },
   removeItem(index) {
     const arr = toArray(this._object.borders())
@@ -254,6 +256,7 @@ Style.define('shadows', {
     const arr = toArray(this._object.shadows())
     arr.splice(index, 0, item)
     this.shadows = arr
+    return Shadow.fromNative(Shadow.toNative(MSStyleShadow, item))
   },
   removeItem(index) {
     const arr = toArray(this._object.shadows())
@@ -278,6 +281,7 @@ Style.define('innerShadows', {
     const arr = toArray(this._object.innerShadows())
     arr.splice(index, 0, item)
     this.innerShadows = arr
+    return Shadow.fromNative(Shadow.toNative(MSStyleInnerShadow, item))
   },
   removeItem(index) {
     const arr = toArray(this._object.innerShadows())
