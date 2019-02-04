@@ -15,7 +15,7 @@ export class SharedStyle extends WrappedObject {
   constructor(master = {}) {
     if (!master.sketchObject) {
       throw new Error(
-        `Cannot create a SharedStyle directly, use \`document.sharedLayersStyles.push({ name, style })\` (or \`document.sharedTextStyles\`) instead.`
+        `Cannot create a SharedStyle directly, use \`document.sharedLayerStyles.push({ name, style })\` (or \`document.sharedTextStyles\`) instead.`
       )
     }
     super(master)
