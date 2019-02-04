@@ -23,7 +23,7 @@ export class SharedStyle extends WrappedObject {
 
   static fromStyle({ name, style, document } = {}) {
     console.warn(
-      `\`SharedStyle.fromStyle({ name, style, document })\` is deprecated. Use \`document.sharedLayersStyles.push({ name, style })\` (or \`document.sharedTextStyles\`) instead.`
+      `\`SharedStyle.fromStyle({ name, style, document })\` is deprecated. Use \`document.sharedLayerStyles.push({ name, style })\` (or \`document.sharedTextStyles\`) instead.`
     )
     const documentData = wrapObject(document)._getMSDocumentData()
     const wrappedStyle = wrapObject(style, Types.Style)
