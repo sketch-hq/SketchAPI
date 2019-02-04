@@ -1,6 +1,7 @@
 {
   "unreleased": [
     "[New] Add `colors` and `gradients` properties on Document",
+    "[Improved] Be more aggressive in finding the selected document",
     "[New] Add `noise` and `pattern` properties on Fill"
   ],
   "releases": {
