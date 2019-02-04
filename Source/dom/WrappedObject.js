@@ -158,15 +158,15 @@ export class WrappedObject {
         }
 
         arr.reverse = () => {
-          Array.prototype.reverse.call(arr)
+          Array.prototype.reverse.apply(arr)
           descriptor.set.bind(this)(arr)
         }
         arr.sort = compareFunction => {
-          Array.prototype.reverse.call(arr, [compareFunction])
+          Array.prototype.reverse.apply(arr, [compareFunction])
           descriptor.set.bind(this)(arr)
         }
         arr.fill = (value, start, end) => {
-          Array.prototype.reverse.call(arr, [value, start, end])
+          Array.prototype.reverse.apply(arr, [value, start, end])
           descriptor.set.bind(this)(arr)
         }
 
@@ -191,22 +191,24 @@ export class WrappedObject {
             removedItems.push(descriptor.removeItem.bind(this)(i))
           }
 
+          const addedItems = []
+
           items.forEach((item, i) => {
-            descriptor.insertItem.bind(this)(item, start + i)
+            addedItems.push(descriptor.insertItem.bind(this)(item, start + i))
           })
 
           // call the native function
-          Array.prototype.splice.call(arr, [start, count, ...items])
+          Array.prototype.splice.apply(arr, [start, count, ...addedItems])
           return removedItems
         }
 
         arr.push = (...items) => {
           arr.splice(arr.length, 0, ...items)
-          return arr.length + items.length
+          return arr.length
         }
         arr.unshift = (...items) => {
           arr.splice(0, 0, ...items)
-          return arr.length + items.length
+          return arr.length
         }
         arr.pop = () => arr.splice(arr.length - 1)[0]
         arr.shift = () => arr.splice(0, 1)[0]

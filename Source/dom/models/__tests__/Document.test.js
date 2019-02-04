@@ -76,7 +76,19 @@ test('should look for a shared layer style by its id', (context, document) => {
 test('should list all the shared layer styles', (context, document) => {
   const { sharedStyle } = createSharedStyle(document, Shape)
 
-  expect(document.getSharedLayerStyles()).toEqual([sharedStyle])
+  expect(document.sharedLayerStyles.length).toBe(1)
+  expect(document.sharedLayerStyles[0]).toEqual(sharedStyle)
+
+  document.sharedLayerStyles.push({
+    name: 'test2',
+    style: { fills: ['#000'] },
+  })
+
+  expect(document.sharedLayerStyles.length).toBe(2)
+
+  document.sharedLayerStyles.pop()
+
+  expect(document.sharedLayerStyles.length).toBe(1)
 })
 
 test('should look for a shared text style by its id', (context, document) => {
@@ -88,7 +100,8 @@ test('should look for a shared text style by its id', (context, document) => {
 test('should list all the shared text styles', (context, document) => {
   const { sharedStyle } = createSharedStyle(document, Text)
 
-  expect(document.getSharedTextStyles()).toEqual([sharedStyle])
+  expect(document.sharedTextStyles.length).toBe(1)
+  expect(document.sharedTextStyles[0]).toEqual(sharedStyle)
 })
 
 test('should reset document colors', (context, document) => {

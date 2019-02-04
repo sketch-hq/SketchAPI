@@ -309,11 +309,12 @@ Layer.define('exportFormats', {
   },
   insertItem(item, index) {
     if (this.isImmutable()) {
-      return
+      return undefined
     }
     const arr = toArray(this._object.exportOptions().exportFormats() || [])
     arr.splice(index, 0, item)
     this.exportFormats = arr
+    return wrapObject(item, Types.ExportFormat)
   },
   removeItem(index) {
     if (this.isImmutable()) {
