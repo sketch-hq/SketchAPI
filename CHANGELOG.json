@@ -1,6 +1,7 @@
 {
   "unreleased": [
     "[New] Add `colors` and `gradients` properties on Document",
+    "[New] `export` now returns a Buffer if `options.output` is `false` and `options.formats` is an image format",
     "[Improved] Shared styles are now document properties and can be mutated",
     "[Improved] `console.clear` will now clear the DevTools console",
     "[Improved] Be more aggressive in finding the selected document",

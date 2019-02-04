@@ -1,6 +1,8 @@
 import { isWrappedObject } from './utils'
 import { wrapNativeObject } from './wrapNativeObject'
 
+let Buffer
+
 export const DEFAULT_EXPORT_OPTIONS = {
   compact: false,
   'include-namespaces': false,
@@ -91,6 +93,40 @@ function exportToImageFile(nativeObjects, options) {
   }
 }
 
+function exportToBuffer(nativeObject, options) {
+  const isPage = nativeObject.isKindOfClass(MSPage)
+
+  const exporter = MSSelfContainedHighLevelExporter.alloc().initWithOptions(
+    options
+  )
+  const formats = exporter.formatsToExport()
+
+  const rect = isPage ? exporter.rectToExportForPage(nativeObject) : CGRectNull
+
+  const request = exporter.exportRequestsForLayer_inRect_exportFormats(
+    nativeObject,
+    rect,
+    formats
+  )[0]
+  const colorSpace = NSColorSpace.colorSpaceForSketchColorSpace(
+    request.immutableDocument().colorSpace()
+  )
+  const renderer = MSExporter.exporterForRequest_colorSpace_driver(
+    request,
+    colorSpace,
+    exporter.driver()
+  )
+
+  const data = renderer.data()
+
+  if (!Buffer) {
+    // eslint-disable-next-line global-require, prefer-destructuring
+    Buffer = require('buffer').Buffer
+  }
+
+  return Buffer.from(data)
+}
+
 /**
  * Export an object, using the options supplied.
  *
@@ -169,8 +205,8 @@ export function exportObject(object, options) {
         const str = getJSONString(nativeObject)
         return JSON.parse(str)
       }
-      // Insert code for returning image data here...
-      throw new Error('Return output is only support for the json format')
+
+      return exportToBuffer(nativeObject, optionsWithDefaults)
     })
     // Return the same format that was provided
     return Array.isArray(object) ? exported : exported[0]
