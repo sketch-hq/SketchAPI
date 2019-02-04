@@ -23,8 +23,23 @@ export function getDocuments() {
 }
 
 export function getSelectedDocument() {
-  const app = NSDocumentController.sharedDocumentController()
-  const nativeDocument = app.currentDocument()
+  let nativeDocument
+
+  // skpm will define context as a global so let's use that if available
+  if (typeof context !== 'undefined') {
+    // eslint-disable-next-line no-undef
+    nativeDocument = context.document
+  }
+
+  if (!nativeDocument) {
+    const app = NSDocumentController.sharedDocumentController()
+    nativeDocument = app.currentDocument()
+  }
+
+  // if there is no current document, let's just try to pick the first one
+  if (!nativeDocument) {
+    ;[nativeDocument] = NSApplication.sharedApplication().orderedDocuments()
+  }
   if (!nativeDocument) {
     return undefined
   }
