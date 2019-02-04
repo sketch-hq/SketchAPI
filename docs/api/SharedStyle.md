@@ -32,7 +32,7 @@ document.sharedTextStyles.push({
   style: text.style,
 })
 
-document.sharedLayersStyles.push({
+document.sharedLayerStyles.push({
   name: 'Red Background',
   style: shape.style,
 })
