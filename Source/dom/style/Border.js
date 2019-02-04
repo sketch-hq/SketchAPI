@@ -1,8 +1,10 @@
+import { isNativeObject } from 'util'
 import { Color, colorToString } from './Color'
 import { WrappedObject, DefinedPropertiesKey } from '../WrappedObject'
 import { Gradient } from './Gradient'
 import { FillTypeMap } from './Fill'
 import { Types } from '../enums'
+import { isWrappedObject } from '../utils'
 
 const BorderPositionMap = {
   Center: 0,
@@ -20,6 +22,12 @@ export const BorderPosition = {
 
 export class Border extends WrappedObject {
   static toNative(value) {
+    if (isNativeObject(value)) {
+      return value
+    }
+    if (isWrappedObject(value)) {
+      return value.sketchObject
+    }
     const border = MSStyleBorder.new()
     const color =
       typeof value === 'string' ? Color.from(value) : Color.from(value.color)

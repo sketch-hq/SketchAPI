@@ -1,9 +1,17 @@
+import { isNativeObject } from 'util'
 import { Color, colorToString } from './Color'
 import { WrappedObject, DefinedPropertiesKey } from '../WrappedObject'
 import { Types } from '../enums'
+import { isWrappedObject } from '../utils'
 
 export class Shadow extends WrappedObject {
   static toNative(nativeClass, value) {
+    if (isNativeObject(value)) {
+      return value
+    }
+    if (isWrappedObject(value)) {
+      return value.sketchObject
+    }
     const shadow = nativeClass.new()
     const color =
       typeof value === 'string' ? Color.from(value) : Color.from(value.color)
