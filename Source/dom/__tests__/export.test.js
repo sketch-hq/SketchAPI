@@ -55,7 +55,7 @@ test('Should return a buffer', (context, document) => {
   expect(Buffer.isBuffer(buffer)).toBe(true)
 })
 
-test('should fail with to return with mulitple formats', () => {
+test('should fail with to return with multiple formats', () => {
   try {
     const object = new Shape()
     exportObject(object, {
