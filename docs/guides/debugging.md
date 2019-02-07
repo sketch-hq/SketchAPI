@@ -13,9 +13,9 @@ The most common way to debug a JavaScript code is to put a bunch of `console.log
 
 There are several options to see those logs:
 
-* Open Console.app and look for the sketch logs
-* Look at the `~/Library/Logs/com.bohemiancoding.sketch3/Plugin Output.log` file
-* Run `skpm log` which will output the file above (`skpm log -f` to stream the logs)
+- Open Console.app and look for the sketch logs
+- Look at the `~/Library/Logs/com.bohemiancoding.sketch3/Plugin Output.log` file
+- Run `skpm log` which will output the file above (`skpm log -f` to stream the logs)
 
 `skpm` will polyfill `console` so that you can use `console.log` as usual. In addition to using the `log` method behind the scene, it will also forward the logs to [`sketch-dev-tools`](https://github.com/skpm/sketch-dev-tools).
 

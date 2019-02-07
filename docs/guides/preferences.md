@@ -16,8 +16,7 @@ If a plugin crashes sketch, we disable plugins when relaunching sketch to make s
 
 If you’re using the Beta version, you’ll need to run `defaults write com.bohemiancoding.sketch3.beta disableAutomaticSafeMode true`.
 
-If you want to restore the default behaviour, run `defaults delete com.bohemiancoding.sketch3 disableAutomaticSafeMode`.
-
+If you want to restore the default behavior, run `defaults delete com.bohemiancoding.sketch3 disableAutomaticSafeMode`.
 
 ## Listen to all actions in the Action API
 
@@ -73,7 +72,6 @@ And if you so happen to also have WebView JavaScript that doesn't require reboot
 
 `find ... | grep -v 'web\.js' | entr ...`
 
-
 ## Inspect a WebView
 
 If your plugin is using a WebView, chances are that you will need to inspect it at some point.
@@ -84,8 +82,7 @@ To do so, you need to add the preference:
 defaults write com.bohemiancoding.sketch3 WebKitDeveloperExtras -bool true
 ```
 
-Then you can simply right-click on your webview and click on `Inspect`. The inspector should show up.
-
+Then you can simply right-click on your web-view and click on `Inspect`. The inspector should show up.
 
 ## Define a code editor for Plugins
 
@@ -97,8 +94,8 @@ defaults write com.bohemiancoding.sketch3 "Plugin Editor" "/usr/local/bin/atom"
 
 and relaunch Sketch, you'll see a couple of new menu items:
 
-* Go to Preferences › Plugins and right click any of the listed Plugins. You'll see an 'Edit Code…' option that will launch your editor with the selected Plugin's code open.
-* Open the Plugins menu, and you'll see an 'Edit Plugins…' option, that will launch your editor with the whole 'Plugins' folder open.
+- Go to Preferences › Plugins and right click any of the listed Plugins. You'll see an 'Edit Code…' option that will launch your editor with the selected Plugin's code open.
+- Open the Plugins menu, and you'll see an 'Edit Plugins…' option, that will launch your editor with the whole 'Plugins' folder open.
 
 ## Tweak the 'Custom Plugin…' editor
 
