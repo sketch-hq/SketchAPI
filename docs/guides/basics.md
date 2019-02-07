@@ -51,4 +51,4 @@ The script doesn't run in a browser or Nodejs environment but in a [special envi
 
 We've seen how to run a small script directly in Sketch but all the plugins you know and love comes in the form of a `.sketchplugin` file that exposes one or more scripts and that you can easily share.
 
-The [next guide](/first-plugin/) will help you get started creating such a file.
+The [next guide](/guides/first-plugin/) will help you get started creating such a file.
