@@ -6,6 +6,8 @@ export {
   objectFromJSON as fromSketchJSON,
 } from './export'
 
+export { layerFromString, layerFromData } from './import'
+
 export { Document, getDocuments, getSelectedDocument } from './models/Document'
 export { Library, getLibraries } from './models/Library'
 export { SharedStyle } from './models/SharedStyle'

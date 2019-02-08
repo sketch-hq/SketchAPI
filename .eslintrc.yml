@@ -152,6 +152,8 @@ globals:
   CGRectNull: false
   NSColorSpace: false
   MSExporter: false
+  MSSVGImporter: false
+  MSPDFImporter: false
 
 rules:
   ###########
