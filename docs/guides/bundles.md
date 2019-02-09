@@ -233,9 +233,10 @@ A string specifying the title to use for the submenu.
 
 This is an array which lists the items to include in the menu.
 
-It can contain items of two types:
+It can contain items of three types:
 
 - a string giving the identifier of a command
+- a string `"-"` to add a separator line
 - a dictionary describing a sub-menu (containing "title" and "items")
 
 #### `isRoot`
