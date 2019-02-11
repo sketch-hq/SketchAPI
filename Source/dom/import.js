@@ -4,10 +4,13 @@ import { Image } from './layers/Image'
 
 function _importWithImporter(data, importer) {
   let nsData
-  if (typeof data.isKindOfClass === 'function' && data.isKindOfClass(NSData)) {
-    nsData = data
-  } else if (!Buffer.isBuffer(data)) {
+  if (Buffer.isBuffer(data)) {
     nsData = data.toNSData()
+  } else if (
+    typeof data.isKindOfClass === 'function' &&
+    data.isKindOfClass(NSData)
+  ) {
+    nsData = data
   } else {
     nsData = Buffer.from(data).toNSData()
   }
