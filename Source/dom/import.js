@@ -1,7 +1,17 @@
+import { Buffer } from 'buffer'
 import { wrapNativeObject } from './wrapNativeObject'
+import { Image } from './layers/Image'
 
 function _importWithImporter(data, importer) {
-  importer.prepareToImportFromData(data)
+  let nsData
+  if (typeof data.isKindOfClass === 'function' && data.isKindOfClass(NSData)) {
+    nsData = data
+  } else if (!Buffer.isBuffer(data)) {
+    nsData = data.toNSData()
+  } else {
+    nsData = Buffer.from(data).toNSData()
+  }
+  importer.prepareToImportFromData(nsData)
   return wrapNativeObject(importer.importAsLayer())
 }
 
@@ -15,7 +25,7 @@ function _importEPS(data) {
   return _importWithImporter(data, MSPDFImporter.epsImporter())
 }
 
-export const layerFromData = (data, type) => {
+export const createLayerFromData = (data, type) => {
   switch (type) {
     case 'svg':
       return _importSVG(data)
@@ -23,13 +33,9 @@ export const layerFromData = (data, type) => {
       return _importPDF(data)
     case 'eps':
       return _importEPS(data)
+    case 'image':
+      return Image({ image: data })
     default:
       throw new Error(`Can't import ${type}`)
   }
-}
-
-export const layerFromString = (str, type) => {
-  const nsStr = NSString.alloc().initWithString(str)
-  const data = nsStr.dataUsingEncoding(NSUTF8StringEncoding)
-  return layerFromData(data, type)
 }
