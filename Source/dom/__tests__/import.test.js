@@ -21,18 +21,22 @@ test('should create page from PDF', (context, document) => {
   const layer = new Shape({
     parent: document.selectedPage,
     frame: new Rectangle(0, 0, 200, 100),
+    style: {
+      fills: [
+        {
+          color: '#888888',
+        },
+      ],
+    },
   })
   const buffer = exportObject(layer, {
     formats: 'pdf',
     output: null,
   })
-  const page = createLayerFromData(buffer, 'pdf')
-  expect(page.type).toEqual('Page')
-  expect(page.layers.length).toEqual(1)
-  expect(page.layers[0].type).toEqual('ShapePath')
-  expect(page.layers[0].shapeType).toEqual('Rectangle')
-  expect(page.layers[0].frame.width).toEqual(200)
-  expect(page.layers[0].frame.height).toEqual(100)
+  const group = createLayerFromData(buffer, 'pdf')
+  expect(group.type).toEqual('Group')
+  expect(group.frame.width).toEqual(200)
+  expect(group.frame.height).toEqual(100)
 })
 
 test('should create Image layer from image', (context, document) => {
