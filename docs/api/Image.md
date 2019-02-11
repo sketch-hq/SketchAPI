@@ -39,6 +39,7 @@ var imageLayer = new Image({
 The image property accept a wide range of input:
 
 - an [`ImageData`](#imagedata)
+- a `Buffer`
 - a native `NSImage`
 - a native `NSURL`
 - a native `MSImageData`
