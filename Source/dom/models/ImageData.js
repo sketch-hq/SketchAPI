@@ -1,9 +1,9 @@
-import { Buffer } from 'buffer'
 import { isNativeObject } from 'util'
+import { DefinedPropertiesKey, WrappedObject } from '../WrappedObject'
 import { Types } from '../enums'
 import { Factory } from '../Factory'
 import { isWrappedObject } from '../utils'
-import { DefinedPropertiesKey, WrappedObject } from '../WrappedObject'
+
 /**
  * An MSImageData. This is not exposed, only used by Image
  */
@@ -37,8 +37,6 @@ export class ImageData extends WrappedObject {
       } else {
         throw new Error(`Cannot create an image from a ${className}`)
       }
-    } else if (Buffer.isBuffer(image)) {
-      nsImage = NSImage.alloc().initWithData(image.toNSData())
     } else if (typeof image === 'string' || (image && image.path)) {
       nsImage = NSImage.alloc().initByReferencingFile(image.path || image)
     } else if (image && image.base64) {
