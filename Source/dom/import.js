@@ -37,7 +37,7 @@ export const createLayerFromData = (data, type) => {
     case 'eps':
       return _importEPS(data)
     case 'image':
-      return Image({ image: data })
+      return new Image({ image: data })
     default:
       throw new Error(`Can't import ${type}`)
   }

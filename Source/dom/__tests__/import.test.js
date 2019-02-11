@@ -26,11 +26,11 @@ test('should create layer from PDF', (context, document) => {
     format: 'pdf',
     output: null,
   })
-  const group = createLayerFromData(buffer, 'pdf')
-  expect(group.type).toEqual('Group')
-  expect(group.layers.length).toEqual(1)
-  expect(group.layers[0].type).toEqual('ShapePath')
-  expect(group.layers[0].shapeType).toEqual('Rectangle')
-  expect(group.layers[0].frame.width).toEqual(200)
-  expect(group.layers[0].frame.height).toEqual(100)
+  const page = createLayerFromData(buffer, 'pdf')
+  expect(page.type).toEqual('Page')
+  expect(page.layers.length).toEqual(1)
+  expect(page.layers[0].type).toEqual('ShapePath')
+  expect(page.layers[0].shapeType).toEqual('Rectangle')
+  expect(page.layers[0].frame.width).toEqual(200)
+  expect(page.layers[0].frame.height).toEqual(100)
 })
