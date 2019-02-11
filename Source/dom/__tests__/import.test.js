@@ -35,7 +35,7 @@ test('should create page from PDF', (context, document) => {
   expect(page.layers[0].frame.height).toEqual(100)
 })
 
-test('should Image layer from image', (context, document) => {
+test('should create Image layer from image', (context, document) => {
   const layer = new Shape({
     parent: document.selectedPage,
     frame: new Rectangle(0, 0, 200, 100),
