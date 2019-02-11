@@ -17,13 +17,13 @@ test('should create svg layer', () => {
   expect(group.layers[0].frame.height).toEqual(100)
 })
 
-test('should create layer from PDF', (context, document) => {
+test('should create page from PDF', (context, document) => {
   const layer = new Shape({
     parent: document.selectedPage,
     frame: new Rectangle(0, 0, 200, 100),
   })
   const buffer = exportObject(layer, {
-    format: 'pdf',
+    formats: 'pdf',
     output: null,
   })
   const page = createLayerFromData(buffer, 'pdf')
@@ -33,4 +33,17 @@ test('should create layer from PDF', (context, document) => {
   expect(page.layers[0].shapeType).toEqual('Rectangle')
   expect(page.layers[0].frame.width).toEqual(200)
   expect(page.layers[0].frame.height).toEqual(100)
+})
+
+test('should Image layer from image', (context, document) => {
+  const layer = new Shape({
+    parent: document.selectedPage,
+    frame: new Rectangle(0, 0, 200, 100),
+  })
+  const buffer = exportObject(layer, {
+    formats: 'png',
+    output: null,
+  })
+  const page = createLayerFromData(buffer, 'image')
+  expect(page.type).toEqual('Image')
 })
