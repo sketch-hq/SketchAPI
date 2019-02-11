@@ -461,6 +461,11 @@ Document.define('selectedLayers', {
   get() {
     return new Selection(this.selectedPage)
   },
+  set(layers) {
+    this.selectedPage.sketchObject.changeSelectionBySelectingLayers(
+      (layers.layers || layers || []).map(l => wrapObject(l).sketchObject)
+    )
+  },
 })
 
 /**
@@ -474,6 +479,19 @@ Document.define('selectedPage', {
   importable: false,
   get() {
     return Page.fromNative(this._object.currentPage())
+  },
+  set(page) {
+    const wrapped = wrapObject(page, Types.Page)
+    if (
+      wrapped._object.documentData() &&
+      String(wrapped._object.documentData().objectID()) !== this.id
+    ) {
+      wrapped._object
+        .documentData()
+        .removePages_detachInstances([wrapped._object], false)
+      wrapped.parent = this
+    }
+    wrapped.selected = true
   },
 })
 

@@ -18,6 +18,7 @@ A text layer. It is an instance of [Layer](#layer) so all the methods defined th
 | locked<span class="arg-type">boolean</span>                                 | If the Text is locked.                                                                         |
 | hidden<span class="arg-type">boolean</span>                                 | If the Text is hidden.                                                                         |
 | frame<span class="arg-type">[Rectangle](#rectangle)</span>                  | The frame of the Text. This is given in coordinates that are local to the parent of the layer. |
+| selected<span class="arg-type">boolean</span>                               | If the Text is selected.                                                                       |
 | flow<span class="arg-type">[Flow](#flow)</span>                             | The prototyping action associated with the Text.                                               |
 | exportFormats<span class="arg-type">[ExportFormat](#export-format)[]</span> | The export formats of the Symbol Master.                                                       |
 | transform<span class="arg-type">object</span>                               | The transformation applied to the Text.                                                        |
@@ -94,7 +95,7 @@ Enumeration of the vertical alignments of the text.
 Text.LineSpacing.constantBaseline
 ```
 
-Enumeration of the line spacing behaviour for the text.
+Enumeration of the line spacing behavior for the text.
 
 | Value              |                                                         |
 | ------------------ | ------------------------------------------------------- |

@@ -14,6 +14,8 @@ A Sketch document.
 | ----------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
 | id<span class="arg-type">string</span>                                        | The unique ID of the document.                                                                                     |
 | pages<span class="arg-type">[Page](#page)[]</span>                            | The pages of the document.                                                                                         |
+| selectedPage<span class="arg-type">[Page](#page)</span>                       | The selected page of the Document.                                                                                 |
+| selectedLayers<span class="arg-type">[Selection](#selection)</span>           | The Selection of the layers that the user has selected in the currently selected page.                             |
 | path<span class="arg-type">string</span>                                      | The path to the document (or the appcast URL in case of a Document from a remote Library).                         |
 | sharedLayerStyles<span class="arg-type">[SharedStyle](#shared-style)[]</span> | The list of all shared layer styles defined in the document.                                                       |
 | sharedTextStyles<span class="arg-type">[SharedStyle](#shared-style)[]</span>  | The list of all shared text styles defined in the document.                                                        |
@@ -77,30 +79,6 @@ A method to open an existing sketch document or ask the user to open one. The me
 | ---------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | path<span class="arg-type">string</span>       | The path to the document to open. If `undefined`, the user will be asked to select one.                                                                  |
 | callback<span class="arg-type">function</span> | A function called after the document is opened. It is called with an `Error` if opening the Document was unsuccessful and a `Document` (or `undefined`). |
-
-## Get the selected Page
-
-```javascript
-var page = document.selectedPage
-```
-
-A read-only property to get the current page that the user has selected.
-
-### Returns
-
-Return a [Page](#page) object.
-
-## Get the selected Layers
-
-```javascript
-var selection = document.selectedLayers
-```
-
-A read-only property to get the layers that the user has selected in the currently selected page.
-
-### Returns
-
-Returns a [Selection](#selection) object.
 
 ## Find a Layer by Id
 

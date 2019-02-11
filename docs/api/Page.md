@@ -17,6 +17,7 @@ A Sketch page. It is an instance of both [Layer](#layer) and [Group](#group) so 
 | parent<span class="arg-type">[Document](#document)</span>  | The document the page is in.   |
 | layers<span class="arg-type">[Layer](#layer)</span>        | The layers that this page has. |
 | frame<span class="arg-type">[Rectangle](#rectangle)</span> | The frame of the page.         |
+| selected<span class="arg-type">boolean</span>              | If the Page is selected.       |
 
 ## Create a new Page
 

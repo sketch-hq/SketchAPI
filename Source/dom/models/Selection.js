@@ -1,5 +1,5 @@
 import { toArray } from 'util'
-import { wrapNativeObject } from '../wrapNativeObject'
+import { wrapNativeObject, wrapObject } from '../wrapNativeObject'
 
 /**
  * Represents the layers that the user has selected.
@@ -36,6 +36,12 @@ export class Selection {
       wrapNativeObject
     )
     return layers
+  }
+
+  set layers(layers) {
+    this._object.changeSelectionBySelectingLayers(
+      (layers.layers || layers).map(l => wrapObject(l).sketchObject)
+    )
   }
 
   /**
