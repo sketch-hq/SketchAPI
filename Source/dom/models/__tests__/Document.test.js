@@ -30,6 +30,9 @@ test('should return the selected layers', (context, document) => {
 
   expect(group.selected).not.toBe(false)
   expect(selection.isEmpty).toBe(false)
+
+  document.selectedLayers = [] // eslint-disable-line
+  expect(selection.isEmpty).toBe(true)
 })
 
 test('should look for a layer by its id', (context, document) => {

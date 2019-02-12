@@ -18,6 +18,7 @@ A shape path layer. It is an instance of [Layer](#layer) so all the methods defi
 | locked<span class="arg-type">boolean</span>                                | If the ShapePath is locked.                                                                         |
 | hidden<span class="arg-type">boolean</span>                                | If the ShapePath is hidden.                                                                         |
 | frame<span class="arg-type">[Rectangle](#rectangle)</span>                 | The frame of the ShapePath. This is given in coordinates that are local to the parent of the layer. |
+| selected<span class="arg-type">boolean</span>                              | If the ShapePath is selected.                                                                       |
 | flow<span class="arg-type">[Flow](#flow)</span>                            | The prototyping action associated with the ShapePath.                                               |
 | exportFormats<span class="arg-type">[ExportFormat](#exportformat)[]</span> | The export formats of the ShapePath.                                                                |
 | style<span class="arg-type">[Style](#style)</span>                         | The style of the ShapePath.                                                                         |
