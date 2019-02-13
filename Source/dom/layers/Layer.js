@@ -252,14 +252,20 @@ Layer.define('selected', {
 
 Layer.define('flow', {
   get() {
+    if (!this._object.flow()) {
+      return undefined
+    }
     return Flow.fromNative(this._object.flow())
   },
-  set(_flow) {
+  set(flow) {
     if (this.isImmutable()) {
       return
     }
-    const flow = _flow ? Flow.from(_flow) : null
-    this._object.flow = flow.sketchObject
+    if (!flow) {
+      this._object.flow = null
+      return
+    }
+    this._object.flow = Flow.from(flow).sketchObject
   },
 })
 
