@@ -130,7 +130,10 @@ Page.define('index', {
 
 Page.define('selected', {
   get() {
-    return this._object.documentData().currentPage() == this._object
+    if (this._object.documentData()) {
+      return this._object.documentData().currentPage() == this._object
+    }
+    return false
   },
 
   set(value) {
