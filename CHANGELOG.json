@@ -7,7 +7,8 @@
     "[Improved] Be more aggressive in finding the selected document",
     "[New] Add `noise` and `pattern` properties on Fill",
     "[Fixed] Setting `flow` as `undefined` on a Layer",
-    "[Improved] `selectedPage` and `selectedLayers` can now be set on the Document"
+    "[Improved] `selectedPage` and `selectedLayers` can now be set on the Document",
+    "[Fixed] Setting mutable colors where it should"
   ],
   "releases": {
     "53": [

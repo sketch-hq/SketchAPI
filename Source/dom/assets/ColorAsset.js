@@ -25,23 +25,24 @@ export class ColorAsset extends Asset {
     let nativeAsset
 
     if (isNativeObject(object)) {
-      const className = String(object.class())
-      if (className === 'MSColorAsset') {
+      if (object.isKindOfClass(MSColorAsset)) {
         nativeAsset = object
       } else {
         try {
-          const c = Color.from(object)._object.newMutableCounterpart()
+          const c = Color.from(object).toMSColor()
           nativeAsset = MSColorAsset.alloc().initWithAsset_name(c, null)
         } catch {
-          throw new Error(`Cannot create a color asset from a ${className}`)
+          throw new Error(
+            `Cannot create a color asset from a ${String(object.class())}`
+          )
         }
       }
     } else if (typeof object == 'object') {
       const { color, name } = object
-      const c = Color.from(color)._object.newMutableCounterpart()
+      const c = Color.from(color).toMSColor()
       nativeAsset = MSColorAsset.alloc().initWithAsset_name(c, name || null)
     } else {
-      const c = Color.from(object)._object.newMutableCounterpart()
+      const c = Color.from(object).toMSColor()
       nativeAsset = MSColorAsset.alloc().initWithAsset_name(c, null)
     }
 
