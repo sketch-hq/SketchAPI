@@ -4,7 +4,7 @@ import { Rectangle } from '../models/Rectangle'
 import { exportObject } from '../export'
 import { Shape } from '../layers/Shape'
 
-test('should create svg layer', () => {
+test('should create Group from an SVG', () => {
   const svgString =
     '<svg width="200px" height="100px" viewBox="0 0 200 100" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><rect fill="#000000" x="0" y="0" width="200" height="100"></rect></svg>'
 
@@ -17,7 +17,7 @@ test('should create svg layer', () => {
   expect(group.layers[0].frame.height).toEqual(100)
 })
 
-test('should create page from PDF', (context, document) => {
+test('should create group from a PDF', (context, document) => {
   const layer = new Shape({
     parent: document.selectedPage,
     frame: new Rectangle(0, 0, 200, 100),
@@ -33,13 +33,13 @@ test('should create page from PDF', (context, document) => {
     formats: 'pdf',
     output: null,
   })
-  const group = createLayerFromData(buffer, 'pdf')
-  expect(group.type).toEqual('Group')
-  expect(group.frame.width).toEqual(200)
-  expect(group.frame.height).toEqual(100)
+  const page = createLayerFromData(buffer, 'pdf')
+  expect(page.type).toEqual('Group')
+  expect(page.frame.width).toEqual(200)
+  expect(page.frame.height).toEqual(100)
 })
 
-test('should create Image layer from image', (context, document) => {
+test('should create Image from a bitmap', (context, document) => {
   const layer = new Shape({
     parent: document.selectedPage,
     frame: new Rectangle(0, 0, 200, 100),
@@ -48,6 +48,6 @@ test('should create Image layer from image', (context, document) => {
     formats: 'png',
     output: null,
   })
-  const page = createLayerFromData(buffer, 'image')
-  expect(page.type).toEqual('Image')
+  const image = createLayerFromData(buffer, 'bitmap')
+  expect(image.type).toEqual('Image')
 })

@@ -1,4 +1,5 @@
 import { Buffer } from 'buffer'
+import { isNativeObject } from 'util'
 import { wrapNativeObject } from './wrapNativeObject'
 import { Image } from './layers/Image'
 
@@ -6,10 +7,7 @@ function _importWithImporter(data, importer) {
   let nsData
   if (Buffer.isBuffer(data)) {
     nsData = data.toNSData()
-  } else if (
-    typeof data.isKindOfClass === 'function' &&
-    data.isKindOfClass(NSData)
-  ) {
+  } else if (isNativeObject(data) && data.isKindOfClass(NSData)) {
     nsData = data
   } else {
     nsData = Buffer.from(data).toNSData()
@@ -36,7 +34,7 @@ export const createLayerFromData = (data, type) => {
       return _importPDF(data)
     case 'eps':
       return _importEPS(data)
-    case 'image':
+    case 'bitmap':
       return new Image({ image: data })
     default:
       throw new Error(`Can't import ${type}`)
