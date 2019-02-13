@@ -255,3 +255,27 @@ test('should transform the layer', () => {
   group.transform.rotation = 720
   expect(group.transform.rotation).toBe(0)
 })
+
+test('should remove a flow from a layer', (context, document) => {
+  const artboard = new Artboard({
+    name: 'Test1',
+    parent: document.selectedPage,
+  })
+  const artboard2 = new Artboard({
+    name: 'Test2',
+    parent: document.selectedPage,
+  })
+
+  const rect = new Group({
+    parent: artboard,
+    flow: {
+      targetId: artboard2.id,
+    },
+  })
+
+  expect(rect.flow.targetId).toBe(artboard2.id)
+
+  rect.flow = undefined
+
+  expect(rect.flow).toBe(undefined)
+})
