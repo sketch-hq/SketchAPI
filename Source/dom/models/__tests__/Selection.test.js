@@ -20,6 +20,21 @@ test('should clear the selection', (context, document) => {
   expect(selection.isEmpty).toBe(true)
 })
 
+test('should change the selection', (context, document) => {
+  const group = new Group({
+    parent: document.selectedPage,
+    selected: true,
+  })
+  const selection = document.selectedLayers
+  // check that a selection can be logged
+  log(selection)
+  expect(group.selected).toBe(true)
+  expect(selection.isEmpty).toBe(false)
+  selection.layers = []
+  expect(group.selected).toBe(false)
+  expect(selection.isEmpty).toBe(true)
+})
+
 test('should return the length without wrapping all the object', (context, document) => {
   // eslint-disable-next-line
   const group = new Group({

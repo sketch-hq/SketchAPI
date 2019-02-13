@@ -19,6 +19,7 @@ A [Symbol](https://www.sketchapp.com/docs/symbols/) instance. It is an instance 
 | hidden<span class="arg-type">boolean</span>                                 | If the Symbol Instance is hidden.                                                                         |
 | frame<span class="arg-type">[Rectangle](#rectangle) </span>                 | The frame of the Symbol Instance. This is given in coordinates that are local to the parent of the layer. |
 | flow<span class="arg-type">[Flow](#flow)</span>                             | The prototyping action associated with the Symbol.                                                        |
+| selected<span class="arg-type">boolean</span>                               | If the Symbol Instance is selected.                                                                       |
 | exportFormats<span class="arg-type">[ExportFormat](#export-format)[]</span> | The export formats of the Symbol Instance.                                                                |
 | transform<span class="arg-type">object</span>                               | The transformation applied to the Symbol Instance.                                                        |
 | transform.rotation<span class="arg-type">number</span>                      | The rotation of the Symbol Instance in degrees, clock-wise.                                               |

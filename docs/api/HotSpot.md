@@ -18,6 +18,7 @@ A Sketch hotspot. It is an instance of [Layer](#layer) so all the methods define
 | locked<span class="arg-type">boolean</span>                | If the HotSpot is locked.                                                                           |
 | hidden<span class="arg-type">boolean</span>                | If the HotSpot is hidden.                                                                           |
 | frame<span class="arg-type">[Rectangle](#rectangle)</span> | The frame of the HotSpot. This is given in coordinates that are local to the parent of the HotSpot. |
+| selected<span class="arg-type">boolean</span>              | If the HotSpot is selected.                                                                         |
 | flow<span class="arg-type">[Flow](#flow)</span>            | The prototyping action associated with the HotSpot.                                                 |
 
 ## Create a new Hotspot
