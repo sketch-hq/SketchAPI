@@ -95,7 +95,7 @@ Artboard.defineObject('background', {
       if (this._parent.isImmutable()) {
         return
       }
-      this._object.setBackgroundColor(Color.from(color)._object)
+      this._object.setBackgroundColor(Color.from(color).toMSColor())
     },
   },
 })

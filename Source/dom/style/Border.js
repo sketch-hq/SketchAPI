@@ -26,7 +26,7 @@ export class Border extends WrappedObject {
     const gradient = Gradient.from(value.gradient)
 
     if (color) {
-      border.color = color._object
+      border.color = color.toMSColor()
     }
 
     if (gradient) {
@@ -108,7 +108,7 @@ Border.define('color', {
   },
   set(_color) {
     const color = Color.from(_color)
-    this._object.color = color._object
+    this._object.color = color.toMSColor()
   },
 })
 

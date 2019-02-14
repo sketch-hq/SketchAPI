@@ -8,7 +8,7 @@ export class Shadow extends WrappedObject {
     const color =
       typeof value === 'string' ? Color.from(value) : Color.from(value.color)
     if (color) {
-      shadow.color = color._object
+      shadow.color = color.toMSColor()
     }
     if (typeof value.blur !== 'undefined') {
       shadow.blurRadius = value.blur
@@ -86,7 +86,7 @@ Shadow.define('color', {
   },
   set(_color) {
     const color = Color.from(_color)
-    this._object.color = color._object
+    this._object.color = color.toMSColor()
   },
 })
 
