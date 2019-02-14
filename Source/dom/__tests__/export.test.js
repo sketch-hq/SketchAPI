@@ -1,5 +1,6 @@
 /* globals expect, test */
 import { Buffer } from 'buffer'
+import { isRunningOnJenkins } from '../../test-utils'
 import { exportObject, objectFromJSON } from '../export'
 import { Shape } from '../layers/Shape'
 
@@ -44,16 +45,18 @@ test('Should fail with no object provided', () => {
   }
 })
 
-test('Should return a buffer', (context, document) => {
-  const object = new Shape({
-    parent: document.selectedPage,
+if (!isRunningOnJenkins()) {
+  test('Should return a buffer', (context, document) => {
+    const object = new Shape({
+      parent: document.selectedPage,
+    })
+    const buffer = exportObject(object, {
+      formats: 'png',
+      output: false,
+    })
+    expect(Buffer.isBuffer(buffer)).toBe(true)
   })
-  const buffer = exportObject(object, {
-    formats: 'png',
-    output: false,
-  })
-  expect(Buffer.isBuffer(buffer)).toBe(true)
-})
+}
 
 test('should fail with to return with multiple formats', () => {
   try {
