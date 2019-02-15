@@ -10,6 +10,9 @@
     "[Improved] `selectedPage` and `selectedLayers` can now be set on the Document"
   ],
   "releases": {
+    "53.1": [
+      "[Fixed] Setting mutable colors where it should"
+    ],
     "53": [
       "[Improved] Obj-C exceptions will be thrown as JS Errors which will reference the exception in their `nativeException` property",
       "[Improved] `setTimeout` and all the other timeout, interval, immediate methods are now available directly, no need to polyfill them",
