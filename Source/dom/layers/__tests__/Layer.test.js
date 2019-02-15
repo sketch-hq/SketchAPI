@@ -41,6 +41,12 @@ test('should duplicate the layer and add it as a sibling', (context, document) =
   expect(result.type).toBe('Group')
 })
 
+test('should duplicate the layer with no parent', () => {
+  const group = new Group()
+  const result = group.duplicate()
+  expect(result.type).toBe('Group')
+})
+
 test('should remove the layer from its parent', (context, document) => {
   const page = document.selectedPage
   const group = new Group({
