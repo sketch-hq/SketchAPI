@@ -40,7 +40,7 @@ export class Page extends Group {
   }
 
   remove() {
-    if (this.isImmutable()) {
+    if (this.isImmutable() || !this._object.documentData()) {
       return this
     }
     this._object
@@ -72,6 +72,13 @@ export class Page extends Group {
   // eslint-disable-next-line
   getParentPage() {
     return undefined
+  }
+
+  isSymbolsPage() {
+    if (!this._object.documentData()) {
+      return false
+    }
+    return this._object.documentData().symbolsPage() == this._object
   }
 }
 

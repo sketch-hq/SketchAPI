@@ -57,3 +57,10 @@ test('should return whether a page is selected or not', (context, document) => {
   expect(newPage.selected).toBe(false)
   expect(page.selected).toBe(true)
 })
+
+test('should return if the page is the Symbols page', (context, document) => {
+  const page = new Page({ parent: document })
+  expect(page.isSymbolsPage()).toBe(false)
+  page.name = 'Symbols'
+  expect(page.isSymbolsPage()).toBe(true)
+})
