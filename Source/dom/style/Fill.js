@@ -110,7 +110,7 @@ export class Fill extends WrappedObject {
     fill.fillType =
       typeof fillType !== 'undefined'
         ? fillType
-        : value.fillType || FillTypeMap.Color
+        : value.fill || FillTypeMap.Color
 
     if (typeof value.enabled === 'undefined') {
       fill.isEnabled = true
