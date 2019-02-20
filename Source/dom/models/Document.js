@@ -414,7 +414,10 @@ Document.define('pages', {
       return
     }
     // remove the existing pages
-    this._object.removePages_detachInstances(this._object.pages(), true)
+    this._getMSDocumentData().removePages_detachInstances(
+      this._object.pages(),
+      true
+    )
 
     toArray(pages)
       .map(p => wrapObject(p, Types.Page))
@@ -432,11 +435,7 @@ Document.define('pages', {
         .documentData()
         .removePages_detachInstances([wrapped._object], false)
     }
-    if (typeof this._object.insertPage_atIndex === 'function') {
-      this._object.insertPage_atIndex(wrapped._object, index)
-    } else {
-      this._object.documentData().insertPage_atIndex(wrapped._object, index)
-    }
+    this._getMSDocumentData().insertPage_atIndex(wrapped._object, index)
     return wrapped
   },
   removeItem(index) {
@@ -444,7 +443,7 @@ Document.define('pages', {
       return undefined
     }
     const removed = this._object.pages()[index]
-    this._object.removePages_detachInstances([removed], true)
+    this._getMSDocumentData().removePages_detachInstances([removed], true)
     return Page.fromNative(removed)
   },
 })
