@@ -2,16 +2,17 @@
 /* eslint-disable no-param-reassign */
 // eslint-disable-next-line import/named
 import { SymbolMaster, Text, Artboard } from '../..'
-import { createSymbolMaster } from '../../../test-utils'
+import { createSymbolMaster, canBeLogged } from '../../../test-utils'
 
 test('should create a symbol master from an artboard', (context, document) => {
   // build the symbol master
   const { master } = createSymbolMaster(document)
-  // check that a master can be logged
-  log(master)
+
   expect(master.type).toBe('SymbolMaster')
 
   expect(document.getSymbolMasterWithID(master.symbolId)).toEqual(master)
+
+  canBeLogged(master, SymbolMaster)
 })
 
 test('should replace a symbol master by an artboard', (context, document) => {

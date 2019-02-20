@@ -133,7 +133,7 @@ Page.define('index', {
 
 Page.define('selected', {
   get() {
-    if (this._object.documentData()) {
+    if (this._object.documentData && this._object.documentData()) {
       return this._object.documentData().currentPage() == this._object
     }
     return false

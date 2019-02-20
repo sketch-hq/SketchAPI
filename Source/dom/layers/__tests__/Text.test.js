@@ -1,14 +1,13 @@
 /* globals expect, test */
-import { isRunningOnJenkins } from '../../../test-utils'
+import { isRunningOnJenkins, canBeLogged } from '../../../test-utils'
 import { Text, Rectangle } from '../..'
 import { TextLineSpacingBehaviourMap } from '../Text'
 import { TextAlignmentMap } from '../../style/Text'
 
 test('should create a Text layer', () => {
   const text = new Text()
-  // check that a text can be logged
-  log(text)
   expect(text.type).toBe('Text')
+  canBeLogged(text, Text)
 })
 
 test('should be able to change the text value', () => {

@@ -1,5 +1,5 @@
 /* globals expect, test */
-
+import { canBeLogged } from '../../../test-utils'
 import { Group, Text, Shape, Rectangle } from '../..'
 
 test('should return the layers and can iterate through them', (context, document) => {
@@ -49,9 +49,9 @@ test('should create a group', (context, document) => {
   const page = document.selectedPage
 
   const group = new Group({ parent: page })
-  // check that a group can be logged
-  log(group)
+
   expect(group.type).toBe('Group')
+  canBeLogged(group, Group)
 })
 
 test('should create a group with some layers', (context, document) => {

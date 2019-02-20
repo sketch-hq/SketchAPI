@@ -18,8 +18,9 @@ export const SaveModeType = {
 
 /* eslint-disable no-use-before-define, typescript/no-use-before-define */
 export function getDocuments() {
-  const app = NSDocumentController.sharedDocumentController()
-  return toArray(app.documents()).map(Document.fromNative.bind(Document))
+  return toArray(NSApp.orderedDocuments())
+    .filter(doc => doc.isKindOfClass(MSDocument))
+    .map(Document.fromNative.bind(Document))
 }
 
 export function getSelectedDocument() {
@@ -503,8 +504,14 @@ Document.define('selectedPage', {
 
 Document.define('path', {
   get() {
-    const url =
-      this._tempURL || (this._getMSDocument() || { fileURL() {} }).fileURL()
+    let url = this._tempURL
+
+    if (!url) {
+      const msDocument = this._getMSDocument()
+      if (msDocument && msDocument.fileURL) {
+        url = msDocument.fileURL()
+      }
+    }
     if (url) {
       return String(url.absoluteString()).replace('file://', '')
     }

@@ -7,6 +7,7 @@ import { Factory } from '../Factory'
 import { wrapObject } from '../wrapNativeObject'
 import { Override } from '../models/Override'
 import { ImageData } from '../models/ImageData'
+import { getDocuments } from '../models/Document'
 
 /**
  * A Sketch symbol instance.
@@ -99,9 +100,22 @@ SymbolInstance.define('master', {
   exportable: false,
   enumerable: false,
   get() {
-    const master = this._object.symbolMaster()
+    let master
+    if (this._object.symbolMaster) {
+      master = this._object.symbolMaster()
+    }
+    if (!master && !this._object.documentData) {
+      // we are an immutable instance so we need to loop through the docs,
+      // find a matching master and hope that the right one
+      const id = this.symbolID
+      const docs = getDocuments()
+      docs.some(doc => {
+        master = doc.getSymbolMasterWithID(id)
+        return !!master
+      })
+    }
     if (master) {
-      return wrapObject(this._object.symbolMaster())
+      return wrapObject(master)
     }
     return null // this is a bit weird, if the instance is not inserted in the document, symbolMaster will be null
   },

@@ -1,10 +1,9 @@
 /* globals expect, test */
+import { canBeLogged } from '../../../test-utils'
 import { Group, Page } from '../..'
 
 test('should return a Selection with the selected layers of the page', (context, document) => {
   const page = document.selectedPage
-  // check that an artboard can be logged
-  log(page)
   const selection = page.selectedLayers
   expect(selection.isEmpty).toBe(true)
 
@@ -12,6 +11,8 @@ test('should return a Selection with the selected layers of the page', (context,
 
   expect(group.selected).toBe(true)
   expect(selection.isEmpty).toBe(false)
+
+  canBeLogged(page, Page)
 })
 
 test('should create a page', (context, document) => {
