@@ -100,23 +100,26 @@ Page.define('parent', {
       return
     }
 
+    document = wrapObject(document) // eslint-disable-line
+
     if (this._object.documentData()) {
+      if (
+        document &&
+        this._object.documentData() == document._getMSDocumentData()
+      ) {
+        // if the parent is the same, then bail out
+        return
+      }
       this._object
         .documentData()
         .removePages_detachInstances([this._object], false)
     }
 
-    document = wrapObject(document) // eslint-disable-line
-
     if (!document) {
       return
     }
 
-    if (typeof document._object.addPage === 'function') {
-      document._object.addPage(this._object)
-    } else {
-      document._object.documentData().addPage(this._object)
-    }
+    document._getMSDocumentData().addPage(this._object)
   },
 })
 

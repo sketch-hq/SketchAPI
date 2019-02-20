@@ -413,17 +413,24 @@ Document.define('pages', {
     if (this.isImmutable()) {
       return
     }
-    // remove the existing pages
-    this._getMSDocumentData().removePages_detachInstances(
-      this._object.pages(),
-      true
-    )
+
+    const pagesToRemove = this.pages.reduce((prev, p) => {
+      prev[p.id] = p.sketchObject // eslint-disable-line
+      return prev
+    }, {})
 
     toArray(pages)
       .map(p => wrapObject(p, Types.Page))
       .forEach(page => {
         page.parent = this // eslint-disable-line
+        delete pagesToRemove[page.id]
       })
+
+    // remove the previous pages
+    this._getMSDocumentData().removePages_detachInstances(
+      Object.keys(pagesToRemove).map(id => pagesToRemove[id]),
+      true
+    )
   },
   insertItem(item, index) {
     if (this.isImmutable()) {
