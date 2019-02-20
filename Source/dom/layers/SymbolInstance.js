@@ -107,7 +107,7 @@ SymbolInstance.define('master', {
     if (!master && !this._object.documentData) {
       // we are an immutable instance so we need to loop through the docs,
       // find a matching master and hope that the right one
-      const id = this.symbolID
+      const id = this.symbolId
       const docs = getDocuments()
       docs.some(doc => {
         master = doc.getSymbolMasterWithID(id)
