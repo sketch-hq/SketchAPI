@@ -35,7 +35,7 @@ Register some data with a name and a key.
 
 ## Context of the action
 
-When a user runs a Data plugin, Sketch will forward the request to your plugin, passing a `context.data` object with all the information you need to fulfil the request:
+When a user runs a Data plugin, Sketch will forward the request to your plugin, passing a `context.data` object with all the information you need to fulfill the request:
 
 | Key                  |                                                                                                                                                                                                                                             |
 | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |

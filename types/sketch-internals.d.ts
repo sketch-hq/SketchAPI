@@ -28,8 +28,25 @@ interface IMSDataSupplierManager {
   ) => void
 }
 
+interface IMSCodeSnippetSupplierManager {
+  registerCodeSnippetSupplier_withName_pluginIdentifier_commandIdentifier: (
+    dynamicDataKey: INSString | string,
+    dataName: INSString | string,
+    identifier: INSString,
+    commandIdentifier: INSString
+  ) => void
+  deregisterCodeSnipperSuppliersForPluginWithIdentifier: (
+    identifier: INSString
+  ) => void
+  supplyCodeSnippet_forKey: (
+    snippet: INSString | string,
+    key: INSString | string
+  ) => void
+}
+
 interface IAppController {
   dataSupplierManager: () => IMSDataSupplierManager
+  codeSnippetSupplierManager: () => IMSCodeSnippetSupplierManager
 }
 
 declare const AppController: {
