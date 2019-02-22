@@ -1,15 +1,14 @@
 /* globals expect, test */
 /* eslint-disable no-param-reassign */
 import { SymbolInstance } from '../..'
-import { createSymbolMaster } from '../../../test-utils'
+import { createSymbolMaster, canBeLogged } from '../../../test-utils'
 
 test('should create a instance by setting the master property', (context, document) => {
   const { master } = createSymbolMaster(document)
   const instance = new SymbolInstance({
     master,
   })
-  // check that an instance can be logged
-  log(instance)
+
   expect(instance.type).toBe('SymbolInstance')
   expect(instance.master).toBe(null)
   // by default, it's not anywhere in the document
@@ -19,6 +18,8 @@ test('should create a instance by setting the master property', (context, docume
   document.selectedPage.layers = document.selectedPage.layers.concat(instance)
   expect(master.getAllInstances()).toEqual([instance])
   expect(instance.master).toEqual(master)
+
+  canBeLogged(instance, SymbolInstance)
 })
 
 test('should create a instance by setting the symbolId property', (context, document) => {

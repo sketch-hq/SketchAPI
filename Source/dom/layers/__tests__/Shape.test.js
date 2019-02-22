@@ -1,11 +1,11 @@
 /* globals expect, test */
+import { canBeLogged } from '../../../test-utils'
 import { Shape, ShapePath } from '../..'
 
 test('should create a new shape', () => {
   const shape = new Shape()
-  // check that a shape can be logged
-  log(shape)
   expect(shape.type).toBe('Shape')
+  canBeLogged(shape, Shape)
 })
 
 test('a new shape should have a rectangle shape path if no layers was defined', () => {

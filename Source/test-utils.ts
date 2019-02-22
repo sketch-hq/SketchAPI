@@ -1,9 +1,15 @@
-import { Style } from './dom'
-
-const { SymbolMaster, Text, Artboard } = require('./dom')
+import { inspect } from 'util'
+import { Style, SymbolMaster, Text, Artboard } from './dom'
 
 export function isRunningOnJenkins() {
   return !__command.pluginBundle()
+}
+
+export function canBeLogged(obj: any, Constructor: any) {
+  inspect(obj)
+  if (obj.sketchObject && obj.sketchObject.immutableModelObject) {
+    inspect(Constructor.fromNative(obj.sketchObject.immutableModelObject()))
+  }
 }
 
 export function createSymbolMaster(document: any) {
