@@ -109,9 +109,10 @@ You can unlink a Shared Style from the Library it comes from and make it a local
 SharedStyle.StyleType.Text
 ```
 
-Enumeration of the type of Shared Style.
+Enumeration of the type of Shared Style. Note that the `Unknown` shouldn't happen. It's a sign that the object is broken.
 
-| Value   |
-| ------- |
-| `Text`  |
-| `Layer` |
+| Value     |
+| --------- |
+| `Text`    |
+| `Layer`   |
+| `Unknown` |
