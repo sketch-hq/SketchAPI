@@ -57,10 +57,12 @@ const DEFAULT_STYLE = {
 export const StyleTypeMap = {
   1: 'Layer',
   2: 'Text',
+  3: 'Unknown',
 }
 export const StyleType = {
   Layer: 'Layer',
   Text: 'Text',
+  Unknown: 'Unknown',
 }
 
 /**
