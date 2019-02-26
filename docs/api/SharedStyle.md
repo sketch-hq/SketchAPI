@@ -17,12 +17,12 @@ document.sharedTextStyles.push({
 
 A shared style (either a layer style or a text style).
 
-| Properties                                                                            |                                                   |
-| ------------------------------------------------------------------------------------- | ------------------------------------------------- |
-| id<span class="arg-type">string</span>                                                | The unique ID of the Shared Style.                |
-| styleType<span class="arg-type">[SharedStyle.StyleType](#sharedstylestyletype)</span> | The type of the Shared Style (`Layer` or `Text`). |
-| name<span class="arg-type">string</span>                                              | The name of the Shared Style.                     |
-| style<span class="arg-type">[Style](#style)</span>                                    | The Style value that is shared.                   |
+| Properties                                                                            |                                    |
+| ------------------------------------------------------------------------------------- | ---------------------------------- |
+| id<span class="arg-type">string</span>                                                | The unique ID of the Shared Style. |
+| styleType<span class="arg-type">[SharedStyle.StyleType](#sharedstylestyletype)</span> | The type of the Shared Style.      |
+| name<span class="arg-type">string</span>                                              | The name of the Shared Style.      |
+| style<span class="arg-type">[Style](#style)</span>                                    | The Style value that is shared.    |
 
 ## Create a new Shared Style from a Style
 
@@ -109,7 +109,7 @@ You can unlink a Shared Style from the Library it comes from and make it a local
 SharedStyle.StyleType.Text
 ```
 
-Enumeration of the type of Shared Style. Note that the `Unknown` shouldn't happen. It's a sign that the object is broken.
+Enumeration of the type of Shared Style. `Unknown` indicates the object is broken and Sketch can't determine the style type.
 
 | Value     |
 | --------- |
