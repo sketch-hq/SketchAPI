@@ -135,9 +135,13 @@ Override.define('selected', {
     const documentData =
       this.__symbolInstance.sketchObject.documentData &&
       this.__symbolInstance.sketchObject.documentData()
+    if (!documentData) {
+      return
+    }
+
     const representation = this._findRepresentation()
 
-    if (!documentData || !representation) {
+    if (!representation) {
       return
     }
 
