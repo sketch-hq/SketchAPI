@@ -22,18 +22,19 @@ export class GradientAsset extends Asset {
     }
 
     if (isNativeObject(object)) {
-      const className = String(object.class())
-      if (className === 'MSGradientAsset') {
+      if (object.isKindOfClass(MSGradientAsset)) {
         return GradientAsset.fromNative(object)
       }
-      if (className === 'MSGradient') {
+      if (object.isKindOfClass(MSGradient)) {
         const nativeAsset = MSGradientAsset.alloc().initWithAsset_name(
           object,
           null
         )
         return GradientAsset.fromNative(nativeAsset)
       }
-      throw new Error(`Cannot create a color asset from a ${className}`)
+      throw new Error(
+        `Cannot create a color asset from a ${String(object.class())}`
+      )
     }
 
     let gradient
