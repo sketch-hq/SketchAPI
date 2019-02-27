@@ -9,7 +9,8 @@
     "[Fixed] Setting `flow` as `undefined` on a Layer",
     "[Improved] `selectedPage` and `selectedLayers` can now be set on the Document",
     "[Improved] `layer.duplicate` now works on a layer with no parent",
-    "[Fixed] `symbolInstance.master` now works on an immutable instance"
+    "[Fixed] `symbolInstance.master` now works on an immutable instance",
+    "[New] Add `aspectRation` property to Gradient"
   ],
   "releases": {
     "53.1": ["[Fixed] Setting mutable colors where it should"],

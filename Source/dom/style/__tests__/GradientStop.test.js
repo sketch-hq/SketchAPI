@@ -23,6 +23,7 @@ test('should create a gradient with some stops', () => {
     gradientType: 'Linear',
     from: { x: 0.5, y: 0 },
     to: { x: 0.5, y: 1 },
+    aspectRatio: 0,
     stops: [
       { position: 1, color: '#112233ff' },
       { position: 0, color: '#553344ff' },

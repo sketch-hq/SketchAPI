@@ -42,6 +42,7 @@ test('should get the fills', () => {
         gradientType: 'Linear',
         from: { x: 0.5, y: 0 },
         to: { x: 0.5, y: 1 },
+        aspectRatio: 0,
         stops: [
           { position: 0, color: '#ffffffff' },
           { position: 1, color: '#000000ff' },
@@ -58,6 +59,7 @@ test('should get the fills', () => {
         gradientType: 'Linear',
         from: { x: 0.5, y: 0 },
         to: { x: 0.5, y: 1 },
+        aspectRatio: 0,
         stops: [
           { position: 0, color: '#ffffffff' },
           { position: 1, color: '#000000ff' },
