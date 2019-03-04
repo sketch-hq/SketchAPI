@@ -135,6 +135,47 @@ test('should reorder the layers', (context, document) => {
   expect(group2.index).toBe(2)
 })
 
+test('should reorder the layers using the index property', (context, document) => {
+  const page = document.selectedPage
+  const group1 = new Group({
+    parent: page,
+  })
+  const group2 = new Group({
+    parent: page,
+  })
+  const group3 = new Group({
+    parent: page,
+  })
+  expect(group1.index).toBe(0)
+  expect(group2.index).toBe(1)
+  expect(group3.index).toBe(2)
+
+  group1.index = 2
+  expect(group2.index).toBe(0)
+  expect(group3.index).toBe(1)
+  expect(group1.index).toBe(2)
+
+  group3.index = 0
+  expect(group3.index).toBe(0)
+  expect(group2.index).toBe(1)
+  expect(group1.index).toBe(2)
+
+  group2.index = 2
+  expect(group3.index).toBe(0)
+  expect(group1.index).toBe(1)
+  expect(group2.index).toBe(2)
+
+  group1.index = 0
+  expect(group1.index).toBe(0)
+  expect(group3.index).toBe(1)
+  expect(group2.index).toBe(2)
+
+  group1.index = 3
+  expect(group3.index).toBe(0)
+  expect(group2.index).toBe(1)
+  expect(group1.index).toBe(2)
+})
+
 test('should convert rect to different coord system', (context, document) => {
   const page = document.selectedPage
   const group = new Group({

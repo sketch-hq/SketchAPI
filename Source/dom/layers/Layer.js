@@ -128,6 +128,7 @@ Factory.registerClass(Layer, MSImmutableLayer)
 
 Layer.define('index', {
   exportable: false,
+  depends: 'parent',
   /**
    * Return the index of this layer in it's container.
    * The layer at the back of the container (visually) will be layer 0. The layer at the front will be layer n - 1 (if there are n layers).
@@ -136,7 +137,20 @@ Layer.define('index', {
    */
   get() {
     const ourLayer = this._object
+    if (!ourLayer.parentGroup()) {
+      return undefined
+    }
     return parseInt(ourLayer.parentGroup().indexOfLayer_(ourLayer), 10)
+  },
+  set(index) {
+    const parent = this._object.parentGroup()
+    if (!parent) {
+      return
+    }
+    const safeIndex = Math.max(Math.min(parent.layers().length - 1, index), 0)
+    console.log(safeIndex)
+    this._object.removeFromParent()
+    parent.insertLayer_atIndex(this._object, safeIndex)
   },
 })
 

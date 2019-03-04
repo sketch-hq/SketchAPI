@@ -56,10 +56,22 @@ The index of this layer in its parent. The layer at the back of the parent (visu
 
 ## Move the Layer in the hierarchy
 
+### Using the index
+
+```javascript
+layer.index = 2
+```
+
+You can set the index of the layer to move it in the hierarchy.
+
 ### Move to the front
 
 ```javascript
 layer.moveToFront()
+
+// which is the same as
+
+layer.index = layer.parent.layers.length - 1
 ```
 
 Move this layer to the front of its parent.
@@ -72,6 +84,10 @@ The current layer (useful if you want to chain the calls).
 
 ```javascript
 layer.moveForward()
+
+// which is the same as
+
+layer.index = layer.index + 1
 ```
 
 Move this layer forward in its parent.
@@ -84,6 +100,10 @@ The current layer (useful if you want to chain the calls).
 
 ```javascript
 layer.moveToBack()
+
+// which is the same as
+
+layer.index = 0
 ```
 
 Move this layer to the back of its parent.
@@ -96,6 +116,10 @@ The current layer (useful if you want to chain the calls).
 
 ```javascript
 layer.moveBackward()
+
+// which is the same as
+
+layer.index = layer.index - 1
 ```
 
 Move this layer backward in its parent.
