@@ -27,6 +27,20 @@ export class Page extends Group {
     super(page)
   }
 
+  static getSymbolsPage(document) {
+    if (!document) {
+      throw new Error('Need to provide a document')
+    }
+    const wrapped = wrapObject(document)
+    return wrapObject(wrapped._getMSDocumentData().symbolsPage())
+  }
+
+  static createSymbolsPage() {
+    return new Page({
+      name: MSPage.defaultSymbolsPageName(),
+    })
+  }
+
   // eslint-disable-next-line
   adjustToFit() {
     // obviously doesn't do anything

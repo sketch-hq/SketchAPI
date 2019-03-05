@@ -7,7 +7,8 @@
     "[Improved] Be more aggressive in finding the selected document",
     "[New] Add `noise` and `pattern` properties on Fill",
     "[Fixed] Setting `flow` as `undefined` on a Layer",
-    "[Improved] `selectedPage` and `selectedLayers` can now be set on the Document"
+    "[Improved] `selectedPage` and `selectedLayers` can now be set on the Document",
+    "[New] Add some methods to deal with the Symbols Page"
   ],
   "releases": {
     "53": [

@@ -64,3 +64,15 @@ test('should return if the page is the Symbols page', (context, document) => {
   page.name = 'Symbols'
   expect(page.isSymbolsPage()).toBe(true)
 })
+
+test('should create the Symbols page', (context, document) => {
+  const page = Page.createSymbolsPage()
+  page.parent = document
+  expect(page.isSymbolsPage()).toBe(true)
+})
+
+test('should get the Symbols page', (context, document) => {
+  const page = Page.createSymbolsPage()
+  page.parent = document
+  expect(Page.getSymbolsPage(document)).toEqual(page)
+})
