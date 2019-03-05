@@ -148,7 +148,6 @@ Layer.define('index', {
       return
     }
     const safeIndex = Math.max(Math.min(parent.layers().length - 1, index), 0)
-    console.log(safeIndex)
     this._object.removeFromParent()
     parent.insertLayer_atIndex(this._object, safeIndex)
   },
