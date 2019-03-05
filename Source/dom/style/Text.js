@@ -332,7 +332,7 @@ export function defineTextStyleProperties(Style) {
 
       updateAttributes(this._object, attributes => {
         // eslint-disable-next-line no-param-reassign
-        attributes.MSAttributedStringColorAttribute = _color._object
+        attributes.MSAttributedStringColorAttribute = _color.toMSImmutableColor()
         return attributes
       })
     },

@@ -125,7 +125,7 @@ SymbolMaster.define('symbolId', {
 SymbolMaster.define('overrides', {
   get() {
     // undefined when immutable
-    if (!this._object.overrideProperies) {
+    if (!this._object.overrideProperies || !this._object.availableOverrides) {
       return undefined
     }
     const overrideProperies = this._object.overrideProperies()
@@ -154,6 +154,9 @@ SymbolMaster.define('overrides', {
     })
   },
   set(overrides) {
+    if (this.isImmutable()) {
+      return
+    }
     overrides.forEach(o => {
       const overridePoint = MSOverridePoint.alloc().init()
       overridePoint.name = o.id

@@ -3,12 +3,13 @@ import {
   isRunningOnJenkins,
   createSymbolMaster,
   createSharedStyle,
+  canBeLogged,
 } from '../../../test-utils'
 import { Document, Group, Shape, Text } from '../..'
 
 test('should be able to log a document', (context, document) => {
-  log(document)
   expect(true).toBe(true)
+  canBeLogged(document, Document)
 })
 
 test('should return the pages', (context, document) => {

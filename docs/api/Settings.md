@@ -146,7 +146,7 @@ Return the value of a variable which is persisted when the plugin finishes to ru
 
 The setting that was stored for the given key. `undefined` if there was nothing.
 
-## Set a plugin setting
+## Set a session variable
 
 ```js
 Settings.setSessionVariable('myVar', 0.1)

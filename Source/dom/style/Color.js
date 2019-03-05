@@ -57,4 +57,12 @@ export class Color {
   toString() {
     return colorToString(this._object)
   }
+
+  toMSColor() {
+    return this._object.newMutableCounterpart()
+  }
+
+  toMSImmutableColor() {
+    return this._object
+  }
 }

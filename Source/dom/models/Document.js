@@ -18,12 +18,18 @@ export const SaveModeType = {
 
 /* eslint-disable no-use-before-define, typescript/no-use-before-define */
 export function getDocuments() {
-  const app = NSDocumentController.sharedDocumentController()
-  return toArray(app.documents()).map(Document.fromNative.bind(Document))
+  return toArray(NSApp.orderedDocuments())
+    .filter(doc => doc.isKindOfClass(MSDocument))
+    .map(Document.fromNative.bind(Document))
 }
 
 export function getSelectedDocument() {
   let nativeDocument
+
+  if (!nativeDocument) {
+    const app = NSDocumentController.sharedDocumentController()
+    nativeDocument = app.currentDocument()
+  }
 
   // skpm will define context as a global so let's use that if available
   if (typeof context !== 'undefined') {
@@ -33,11 +39,6 @@ export function getSelectedDocument() {
         ? context.actionContext.document
         : context.document
     /* eslint-enable no-undef */
-  }
-
-  if (!nativeDocument) {
-    const app = NSDocumentController.sharedDocumentController()
-    nativeDocument = app.currentDocument()
   }
 
   // if there is no current document, let's just try to pick the first one
@@ -413,14 +414,24 @@ Document.define('pages', {
     if (this.isImmutable()) {
       return
     }
-    // remove the existing pages
-    this._object.removePages_detachInstances(this._object.pages(), true)
+
+    const pagesToRemove = this.pages.reduce((prev, p) => {
+      prev[p.id] = p.sketchObject // eslint-disable-line
+      return prev
+    }, {})
 
     toArray(pages)
       .map(p => wrapObject(p, Types.Page))
       .forEach(page => {
         page.parent = this // eslint-disable-line
+        delete pagesToRemove[page.id]
       })
+
+    // remove the previous pages
+    this._getMSDocumentData().removePages_detachInstances(
+      Object.keys(pagesToRemove).map(id => pagesToRemove[id]),
+      true
+    )
   },
   insertItem(item, index) {
     if (this.isImmutable()) {
@@ -432,11 +443,7 @@ Document.define('pages', {
         .documentData()
         .removePages_detachInstances([wrapped._object], false)
     }
-    if (typeof this._object.insertPage_atIndex === 'function') {
-      this._object.insertPage_atIndex(wrapped._object, index)
-    } else {
-      this._object.documentData().insertPage_atIndex(wrapped._object, index)
-    }
+    this._getMSDocumentData().insertPage_atIndex(wrapped._object, index)
     return wrapped
   },
   removeItem(index) {
@@ -444,7 +451,7 @@ Document.define('pages', {
       return undefined
     }
     const removed = this._object.pages()[index]
-    this._object.removePages_detachInstances([removed], true)
+    this._getMSDocumentData().removePages_detachInstances([removed], true)
     return Page.fromNative(removed)
   },
 })
@@ -497,8 +504,14 @@ Document.define('selectedPage', {
 
 Document.define('path', {
   get() {
-    const url =
-      this._tempURL || (this._getMSDocument() || { fileURL() {} }).fileURL()
+    let url = this._tempURL
+
+    if (!url) {
+      const msDocument = this._getMSDocument()
+      if (msDocument && msDocument.fileURL) {
+        url = msDocument.fileURL()
+      }
+    }
     if (url) {
       return String(url.absoluteString()).replace('file://', '')
     }

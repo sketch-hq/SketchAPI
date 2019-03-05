@@ -1,12 +1,11 @@
 /* globals expect, test */
-import { isRunningOnJenkins } from '../../../test-utils'
+import { isRunningOnJenkins, canBeLogged } from '../../../test-utils'
 import { ShapePath } from '../..'
 
 test('should create a new shape path', () => {
   const shapePath = new ShapePath()
-  // check that a shapePath can be logged
-  log(shapePath)
   expect(shapePath.type).toBe('ShapePath')
+  canBeLogged(shapePath, ShapePath)
 })
 
 test('should create shape paths of different shape type', () => {

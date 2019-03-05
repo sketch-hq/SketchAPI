@@ -22,7 +22,7 @@ export class GradientStop extends WrappedObject {
     } else {
       nativeStop = MSGradientStop.stopWithPosition_color(
         object.position || 0,
-        Color.from(object.color || '#000000FF')._object
+        Color.from(object.color || '#000000FF').toMSColor()
       )
     }
 
@@ -57,6 +57,6 @@ GradientStop.define('color', {
   },
   set(_color) {
     const color = Color.from(_color)
-    this._object.color = color._object
+    this._object.color = color.toMSColor()
   },
 })

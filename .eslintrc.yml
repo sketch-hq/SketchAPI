@@ -154,6 +154,7 @@ globals:
   MSExporter: false
   MSSVGImporter: false
   MSPDFImporter: false
+  NSApp: false
 
 rules:
   ###########

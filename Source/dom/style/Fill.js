@@ -67,7 +67,7 @@ export class Fill extends WrappedObject {
     const gradient = Gradient.from(value.gradient)
 
     if (color) {
-      fill.color = color._object
+      fill.color = color.toMSColor()
     }
 
     if (gradient) {
@@ -110,7 +110,7 @@ export class Fill extends WrappedObject {
     fill.fillType =
       typeof fillType !== 'undefined'
         ? fillType
-        : value.fillType || FillTypeMap.Color
+        : value.fill || FillTypeMap.Color
 
     if (typeof value.enabled === 'undefined') {
       fill.isEnabled = true
@@ -156,7 +156,7 @@ Fill.define('color', {
   },
   set(_color) {
     const color = Color.from(_color)
-    this._object.color = color._object
+    this._object.color = color.toMSColor()
   },
 })
 
