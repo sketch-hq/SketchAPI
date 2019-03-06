@@ -27,6 +27,20 @@ export class Page extends Group {
     super(page)
   }
 
+  static getSymbolsPage(document) {
+    if (!document) {
+      throw new Error('Need to provide a document')
+    }
+    const wrapped = wrapObject(document)
+    return wrapObject(wrapped._getMSDocumentData().symbolsPage())
+  }
+
+  static createSymbolsPage() {
+    return new Page({
+      name: MSPage.defaultSymbolsPageName(),
+    })
+  }
+
   // eslint-disable-next-line
   adjustToFit() {
     // obviously doesn't do anything
@@ -40,7 +54,7 @@ export class Page extends Group {
   }
 
   remove() {
-    if (this.isImmutable()) {
+    if (this.isImmutable() || !this._object.documentData()) {
       return this
     }
     this._object
@@ -72,6 +86,13 @@ export class Page extends Group {
   // eslint-disable-next-line
   getParentPage() {
     return undefined
+  }
+
+  isSymbolsPage() {
+    if (!this._object.documentData()) {
+      return false
+    }
+    return this._object.documentData().symbolsPage() == this._object
   }
 }
 
