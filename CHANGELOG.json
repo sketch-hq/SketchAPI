@@ -8,9 +8,11 @@
     "[New] Add `noise` and `pattern` properties on Fill",
     "[Fixed] Setting `flow` as `undefined` on a Layer",
     "[Improved] `selectedPage` and `selectedLayers` can now be set on the Document",
+    "[New] Add some methods to deal with the Symbols Page",
     "[Improved] `layer.duplicate` now works on a layer with no parent",
     "[Fixed] `symbolInstance.master` now works on an immutable instance",
-    "[New] Add `aspectRation` property to Gradient"
+    "[New] Add `aspectRation` property to Gradient",
+    "[Improved] `layer.index` can now be set"
   ],
   "releases": {
     "53.1": ["[Fixed] Setting mutable colors where it should"],
