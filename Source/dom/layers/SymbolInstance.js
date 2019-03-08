@@ -123,6 +123,11 @@ SymbolInstance.define('master', {
     if (this.isImmutable()) {
       return
     }
+    if (!this._object.documentData || !this._object.documentData()) {
+      throw new Error(
+        'The Symbol Instance needs to be inserted in a document before setting its master'
+      )
+    }
     const wrappedMaster = wrapObject(master)
     this._object.changeInstanceToSymbol(wrappedMaster.sketchObject)
   },

@@ -19,6 +19,6 @@
     "@skpm/stream": "0.1.4",
     "@skpm/string_decoder": "0.1.5",
     "@skpm/timers": "0.2.0",
-    "@skpm/util": "0.1.24"
+    "@skpm/util": "0.1.25"
   }
 }

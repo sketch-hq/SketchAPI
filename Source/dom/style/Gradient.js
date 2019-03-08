@@ -23,11 +23,15 @@ export class Gradient extends WrappedObject {
     }
     let nativeGradient
     if (isNativeObject(object)) {
-      const className = String(object.class())
-      if (className === 'MSGradient' || className === 'MSImmutableGradient') {
+      if (
+        object.isKindOfClass(MSGradient) ||
+        object.isKindOfClass(MSImmutableGradient)
+      ) {
         nativeGradient = object
       } else {
-        throw new Error(`Cannot create a gradient from a ${className}`)
+        throw new Error(
+          `Cannot create a gradient from a ${String(object.class())}`
+        )
       }
     } else {
       nativeGradient = MSGradient.alloc().initBlankGradient()

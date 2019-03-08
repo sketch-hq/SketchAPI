@@ -1,13 +1,33 @@
+import { toArray } from 'util'
 import { DefinedPropertiesKey, WrappedObject } from '../WrappedObject'
 import { Types } from '../enums'
 import { Factory } from '../Factory'
 import { ImageData } from './ImageData'
 import { wrapNativeObject } from '../wrapNativeObject'
+import { Rectangle } from './Rectangle'
 
 /**
  * An MSAvailableOverride. This is not exposed, only used by SymbolInstance
  */
-export class Override extends WrappedObject {}
+export class Override extends WrappedObject {
+  _findRepresentation() {
+    if (!this.__symbolInstance) {
+      return undefined
+    }
+    return toArray(
+      this.__symbolInstance.sketchObject.overrideContainer().flattenedChildren()
+    ).find(x => x.availableOverride() == this.sketchObject)
+  }
+
+  getFrame() {
+    const representation = this._findRepresentation()
+    if (!representation) {
+      return undefined
+    }
+    const path = representation.pathInInstance()
+    return new Rectangle(CGPathGetBoundingBox(path))
+  }
+}
 
 Override.type = Types.Override
 Override[DefinedPropertiesKey] = { ...WrappedObject[DefinedPropertiesKey] }
@@ -85,5 +105,74 @@ Override.define('editable', {
       this._object.overridePoint(),
       editable
     )
+  },
+})
+
+Override.define('selected', {
+  get() {
+    // __symbolInstance is set when building the Override
+    if (!this.__symbolInstance) {
+      return undefined
+    }
+
+    if (!this.__symbolInstance.selected) {
+      return false
+    }
+    const representation = this._findRepresentation()
+
+    if (!representation) {
+      return false
+    }
+
+    return Boolean(Number(representation.isSelected()))
+  },
+  set(selected) {
+    // __symbolInstance is set when building the Override
+    if (!this.__symbolInstance) {
+      throw new Error('Can only set `selected` for a symbol instance')
+    }
+
+    const documentData =
+      this.__symbolInstance.sketchObject.documentData &&
+      this.__symbolInstance.sketchObject.documentData()
+    if (!documentData) {
+      return
+    }
+
+    const representation = this._findRepresentation()
+
+    if (!representation) {
+      return
+    }
+
+    const selectionId = representation.selectionID()
+
+    let selectedOverrides = toArray(documentData.selectedOverrides())
+
+    const alreadySelected = selectedOverrides.some(id =>
+      id.isEqual(selectionId)
+    )
+
+    if (selected) {
+      if (alreadySelected) {
+        return
+      }
+
+      selectedOverrides.push(selectionId)
+
+      if (!this.__symbolInstance.selected) {
+        this.__symbolInstance.selected = true
+      }
+    } else {
+      if (!alreadySelected) {
+        return
+      }
+
+      selectedOverrides = selectedOverrides.filter(
+        id => !id.isEqual(selectionId)
+      )
+    }
+
+    documentData.setSelectedOverrides(selectedOverrides)
   },
 })
