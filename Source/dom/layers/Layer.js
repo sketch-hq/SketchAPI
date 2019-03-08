@@ -113,8 +113,9 @@ export class Layer extends WrappedObject {
   /**
    * Return a new layer
    */
-  layerByConvertToOutlines() {
-    return this._object.layersByConvertingToOutlines()
+  layersByConvertingToOutlines() {
+    const converted = this._object.layersByConvertingToOutlines()
+    return toArray(converted).map(l => wrapNativeObject(l))
   }
 
   // @deprecated

@@ -1,5 +1,5 @@
 /* globals expect, test */
-import { Group, Rectangle, Artboard } from '../..'
+import { Group, Rectangle, Artboard, Text } from '../..'
 
 test('should set the name of the layer', (context, document) => {
   // setting an existing name
@@ -325,4 +325,13 @@ test('should remove a flow from a layer', (context, document) => {
   rect.flow = undefined
 
   expect(rect.flow).toBe(undefined)
+})
+
+test('should create layer by converting to outlines', () => {
+  const shape = new Text({
+    text: 'Hello',
+  })
+  const outlines = shape.layersByConvertingToOutlines()
+  expect(outlines.length).toBe(1)
+  expect(outlines[0].type).toBe('Shape')
 })
