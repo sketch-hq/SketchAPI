@@ -78,6 +78,7 @@ test('should create a symbol master with a nested symbol', (context, document) =
     isDefault: true,
     editable: true,
     affectedLayer: text2.toJSON(),
+    selected: false,
   }
   delete result0.affectedLayer.overrides
   delete result0.affectedLayer.selected
@@ -92,6 +93,7 @@ test('should create a symbol master with a nested symbol', (context, document) =
     isDefault: true,
     editable: true,
     affectedLayer: nestedInstance.toJSON(),
+    selected: false,
   }
   delete result1.affectedLayer.overrides
   delete result1.affectedLayer.selected
@@ -106,6 +108,7 @@ test('should create a symbol master with a nested symbol', (context, document) =
     isDefault: true,
     editable: true,
     affectedLayer: text.toJSON(),
+    selected: false,
   }
   delete result2.affectedLayer.selected
   result2.affectedLayer.style = instance.overrides[2].affectedLayer.style.toJSON()

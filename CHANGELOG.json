@@ -11,6 +11,8 @@
     "[New] Add some methods to deal with the Symbols Page",
     "[Improved] `layer.duplicate` now works on a layer with no parent",
     "[Fixed] `symbolInstance.master` now works on an immutable instance",
+    "[New] Add `selected` property on an Override",
+    "[New] Add `getFrame` method on an Override",
     "[New] add `sketch.globalAssets` property",
     "[Improved] `layer.index` can now be set"
   ],

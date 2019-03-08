@@ -158,6 +158,7 @@ globals:
   MSSVGImporter: false
   MSPDFImporter: false
   NSApp: false
+  CGPathGetBoundingBox: false
 
 rules:
   ###########
