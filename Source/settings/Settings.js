@@ -1,5 +1,5 @@
 import * as util from 'util'
-import { isWrappedObject, getDocumentData } from '../dom/utils'
+import { getDocumentData } from './utils'
 
 function getPluginIdentifier() {
   if (!__command.pluginBundle()) {
@@ -86,7 +86,7 @@ export function setSettingForKey(key, value) {
 
 function getNativeStorageObject(layer) {
   let object
-  if (!isWrappedObject(layer)) {
+  if (!layer._isWrappedObject) {
     object = layer
   } else if (layer.type === 'DataOverride') {
     object = layer.sketchObject.availableOverride().overrideValue()

@@ -13,6 +13,7 @@
     "[Fixed] `symbolInstance.master` now works on an immutable instance",
     "[New] Add `selected` property on an Override",
     "[New] Add `getFrame` method on an Override",
+    "[New] add `sketch.globalAssets` property",
     "[Improved] `layer.index` can now be set"
   ],
   "releases": {

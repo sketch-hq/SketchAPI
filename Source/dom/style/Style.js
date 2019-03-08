@@ -123,14 +123,15 @@ export class Style extends WrappedObject {
     if (!layer) {
       return undefined
     }
-    const className = String(layer.class())
-    if (className !== 'MSTextLayer' && className !== 'MSImmutableTextLayer') {
+
+    const isImmutableTextLayer = layer.isKindOfClass(MSImmutableTextLayer)
+
+    if (!layer.isKindOfClass(MSTextLayer) && !isImmutableTextLayer) {
       return undefined
     }
-    const immutableLayer =
-      className === 'MSImmutableTextLayer'
-        ? layer
-        : layer.immutableModelObject()
+    const immutableLayer = isImmutableTextLayer
+      ? layer
+      : layer.immutableModelObject()
 
     const storage = immutableLayer.createTextStorage()
     const layoutManager = storage.layoutManagers().firstObject()
