@@ -9,7 +9,7 @@ Wrapper classes that are used to represent reusable assets retrieved from a docu
 ## Color Asset
 
 | Properties                                |                                 |
-|-------------------------------------------|---------------------------------|
+| ----------------------------------------- | ------------------------------- |
 | name<span class="arg-type">string</span>  | The name of the asset, or null. |
 | color<span class="arg-type">string</span> | The hex string for the color.   |
 
@@ -17,29 +17,27 @@ Wrapper classes that are used to represent reusable assets retrieved from a docu
 
 ```javascript
 var sketch = require('sketch/dom')
-var colors = sketch.getGlobalColors()
+var colors = sketch.globalAssets.colors
 ```
 
 #### Returns
 
-An array of [ColorAsset](#color-asset) objects
-
+An array of [ColorAsset](#color-asset) objects.
 
 ## Gradient Asset
 
 | Properties                                                  |                                 |
-|-------------------------------------------------------------|---------------------------------|
+| ----------------------------------------------------------- | ------------------------------- |
 | name<span class="arg-type">string</span>                    | The name of the asset, or null. |
 | gradient<span class="arg-type">[Gradient](#gradient)</span> | The gradient object.            |
-
 
 ### Get the Global Gradients
 
 ```javascript
 var sketch = require('sketch/dom')
-var gradients = sketch.getGlobalGradients()
+var gradients = sketch.globalAssets.gradients
 ```
 
 #### Returns
 
-An array of [GradientAsset](#gradient-asset) objects
+An array of [GradientAsset](#gradient-asset) objects.

@@ -1,3 +1,5 @@
+import { hookedArray } from './utils'
+
 export const DefinedPropertiesKey = '_DefinedPropertiesKey'
 
 /**
@@ -153,66 +155,7 @@ export class WrappedObject {
       // eslint-disable-next-line no-param-reassign
       descriptor.get = function get() {
         const arr = oldGet.bind(this)()
-        if (!Array.isArray(arr)) {
-          return arr
-        }
-
-        arr.reverse = () => {
-          Array.prototype.reverse.apply(arr)
-          descriptor.set.bind(this)(arr)
-        }
-        arr.sort = compareFunction => {
-          Array.prototype.reverse.apply(arr, [compareFunction])
-          descriptor.set.bind(this)(arr)
-        }
-        arr.fill = (value, start, end) => {
-          Array.prototype.reverse.apply(arr, [value, start, end])
-          descriptor.set.bind(this)(arr)
-        }
-
-        arr.splice = (start, count, ...items) => {
-          if (start < 0) {
-            // eslint-disable-next-line no-param-reassign
-            start += arr.length
-          }
-          if (!start || start < 0 || start > arr.length) {
-            // eslint-disable-next-line no-param-reassign
-            start = 0
-          }
-
-          if (typeof count === 'undefined' || count > arr.length - start) {
-            // eslint-disable-next-line no-param-reassign
-            count = arr.length - start
-          }
-
-          const removedItems = []
-
-          for (let i = start; i < count + start; i += 1) {
-            removedItems.push(descriptor.removeItem.bind(this)(i))
-          }
-
-          const addedItems = []
-
-          items.forEach((item, i) => {
-            addedItems.push(descriptor.insertItem.bind(this)(item, start + i))
-          })
-
-          // call the native function
-          Array.prototype.splice.apply(arr, [start, count, ...addedItems])
-          return removedItems
-        }
-
-        arr.push = (...items) => {
-          arr.splice(arr.length, 0, ...items)
-          return arr.length
-        }
-        arr.unshift = (...items) => {
-          arr.splice(0, 0, ...items)
-          return arr.length
-        }
-        arr.pop = () => arr.splice(arr.length - 1)[0]
-        arr.shift = () => arr.splice(0, 1)[0]
-        return arr
+        return hookedArray(arr, this, descriptor)
       }
     }
     Object.defineProperty(this.prototype, propertyName, descriptor)
