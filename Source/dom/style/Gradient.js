@@ -57,6 +57,9 @@ export class Gradient extends WrappedObject {
           )
         )
       }
+      if (typeof object.aspectRatio !== 'undefined') {
+        nativeGradient.setElipseLength(object.aspectRatio)
+      }
       if (object.stops) {
         nativeGradient.setStops(
           object.stops.map(GradientStop.from).map(g => g._object)
@@ -127,6 +130,15 @@ Gradient.define('to', {
         point.y !== 'undefined' ? point.y : 1
       )
     )
+  },
+})
+
+Gradient.define('aspectRatio', {
+  get() {
+    return Number(this._object.elipseLength())
+  },
+  set(length) {
+    this._object.setElipseLength(length)
   },
 })
 

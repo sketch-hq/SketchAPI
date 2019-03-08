@@ -9,6 +9,7 @@ test('should create a default gradient', () => {
     gradientType: 'Linear',
     from: { x: 0.5, y: 0 },
     to: { x: 0.5, y: 1 },
+    aspectRatio: 0,
     stops: [],
   })
 })
@@ -19,6 +20,7 @@ test('should create a gradient with a specific type', () => {
     gradientType: 'Angular',
     from: { x: 0.5, y: 0 },
     to: { x: 0.5, y: 1 },
+    aspectRatio: 0,
     stops: [],
   })
 })
@@ -38,6 +40,7 @@ test('should create a gradient with a specific from and to coordinates', () => {
     gradientType: 'Linear',
     from: { x: 1, y: 0.5 },
     to: { x: 2, y: 5 },
+    aspectRatio: 0,
     stops: [],
   })
 })
@@ -48,6 +51,7 @@ test('should change the from', () => {
     gradientType: 'Linear',
     from: { x: 0.5, y: 0 },
     to: { x: 0.5, y: 1 },
+    aspectRatio: 0,
     stops: [],
   })
   gradient.from.x = 0.7
@@ -55,6 +59,7 @@ test('should change the from', () => {
     gradientType: 'Linear',
     from: { x: 0.7, y: 0 },
     to: { x: 0.5, y: 1 },
+    aspectRatio: 0,
     stops: [],
   })
 
@@ -63,6 +68,7 @@ test('should change the from', () => {
     gradientType: 'Linear',
     from: { x: 0.7, y: 0.1 },
     to: { x: 0.5, y: 1 },
+    aspectRatio: 0,
     stops: [],
   })
 
@@ -74,6 +80,7 @@ test('should change the from', () => {
     gradientType: 'Linear',
     from: { x: 0.1, y: 0.4 },
     to: { x: 0.5, y: 1 },
+    aspectRatio: 0,
     stops: [],
   })
 })
@@ -85,6 +92,7 @@ test('should change the to', () => {
     gradientType: 'Linear',
     from: { x: 0.5, y: 0 },
     to: { x: 0.5, y: 1 },
+    aspectRatio: 0,
     stops: [],
   })
   gradient.to.x = 0.7
@@ -92,6 +100,7 @@ test('should change the to', () => {
     gradientType: 'Linear',
     from: { x: 0.5, y: 0 },
     to: { x: 0.7, y: 1 },
+    aspectRatio: 0,
     stops: [],
   })
 
@@ -100,6 +109,7 @@ test('should change the to', () => {
     gradientType: 'Linear',
     from: { x: 0.5, y: 0 },
     to: { x: 0.7, y: 0.1 },
+    aspectRatio: 0,
     stops: [],
   })
 
@@ -111,6 +121,7 @@ test('should change the to', () => {
     gradientType: 'Linear',
     from: { x: 0.5, y: 0 },
     to: { x: 0.1, y: 0.4 },
+    aspectRatio: 0,
     stops: [],
   })
 })
@@ -131,6 +142,18 @@ test('should create a gradient with a specific from and to coordinates including
     gradientType: 'Linear',
     from: { x: 0, y: 0 },
     to: { x: 0, y: 0 },
+    aspectRatio: 0,
     stops: [],
   })
+})
+
+test('should set the aspect ratio of a gradient', () => {
+  const gradient = Gradient.from({
+    gradientType: 'Radial',
+  })
+  expect(gradient.aspectRatio).toBe(0)
+
+  gradient.aspectRatio = 2
+
+  expect(gradient.aspectRatio).toBe(2)
 })
