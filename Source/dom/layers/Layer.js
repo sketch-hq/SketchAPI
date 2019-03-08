@@ -110,6 +110,13 @@ export class Layer extends WrappedObject {
     })
   }
 
+  /**
+   * Return a new layer
+   */
+  layerByConvertToOutlines() {
+    return this._object.layersByConvertingToOutlines()
+  }
+
   // @deprecated
   localRectToParentRect(rect) {
     console.warn(
