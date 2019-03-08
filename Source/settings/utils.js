@@ -5,7 +5,7 @@ export function getDocumentData(document) {
     if (document.type !== 'Document') {
       throw new Error(`Expected a Document, got a ${document.type}`)
     }
-    documentData = document.sketchObject._getMSDocumentData()
+    documentData = document._getMSDocumentData()
   } else if (document && document.documentData) {
     documentData = document.documentData()
   }
