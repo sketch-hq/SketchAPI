@@ -11,7 +11,7 @@
     "[New] Add some methods to deal with the Symbols Page",
     "[Improved] `layer.duplicate` now works on a layer with no parent",
     "[Fixed] `symbolInstance.master` now works on an immutable instance",
-    "[New] Add `aspectRation` property to Gradient",
+    "[New] Add `aspectRatio` property to Gradient",
     "[Improved] `layer.index` can now be set"
   ],
   "releases": {
