@@ -3,6 +3,7 @@ import { Buffer } from 'buffer'
 import { isRunningOnJenkins } from '../../test-utils'
 import { exportObject, objectFromJSON } from '../export'
 import { Shape } from '../layers/Shape'
+import { Page } from '../layers/Page'
 
 test('should return exported json data', () => {
   const object = new Shape()
@@ -45,6 +46,18 @@ test('Should fail with no object provided', () => {
   }
 })
 
+test('should fail with to return with multiple formats', () => {
+  try {
+    const object = new Shape()
+    exportObject(object, {
+      formats: ['png', 'json'],
+      output: false,
+    })
+  } catch (err) {
+    expect(err.message).toMatch('Can only return 1 format with no output type')
+  }
+})
+
 if (!isRunningOnJenkins()) {
   test('Should return a buffer', (context, document) => {
     const object = new Shape({
@@ -58,15 +71,45 @@ if (!isRunningOnJenkins()) {
   })
 }
 
-test('should fail with to return with multiple formats', () => {
+test('should fail to export bitmaps with no page', () => {
   try {
     const object = new Shape()
     exportObject(object, {
-      formats: ['png', 'json'],
+      formats: ['png'],
       output: false,
     })
-    expect(false).toBe(true)
   } catch (err) {
-    expect(err.message).toMatch('Can only return 1 format with no output type')
+    expect(err.message).toMatch(
+      'Layers must be added to a page in a document to export bitmaps'
+    )
+  }
+})
+
+test('should fail to export bitmaps with a page without a document', () => {
+  try {
+    const object = new Shape({
+      page: new Page(),
+    })
+    exportObject(object, {
+      formats: ['png'],
+      output: false,
+    })
+  } catch (err) {
+    expect(err.message).toMatch(
+      'Layers must be added to a page in a document to export bitmaps'
+    )
+  }
+})
+
+test('should fail to export bitmaps to file without a document', () => {
+  try {
+    const object = new Shape()
+    exportObject(object, {
+      formats: ['png'],
+    })
+  } catch (err) {
+    expect(err.message).toMatch(
+      'Layers must be added to a page in a document to export bitmaps'
+    )
   }
 })

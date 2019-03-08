@@ -68,6 +68,24 @@ function exportToJSONFile(nativeObjects, options) {
   })
 }
 
+function convertNativeError(err) {
+  console.log(`err native ${err.nativeException}`)
+  if (err.nativeException) {
+    const nativeMessage = String(err.nativeException.description())
+    const missingParentFailures = [
+      'BCAssertion failed for expression: (request.rootLayer) != nil',
+      'An Obj-C exception occurred. Export Options must have an immutable doc specified',
+    ]
+    console.log(`native message ${nativeMessage}`)
+    if (missingParentFailures.indexOf(nativeMessage) >= 0) {
+      return new Error(
+        'Layers must be added to a page in a document to export bitmaps'
+      )
+    }
+  }
+  return err
+}
+
 function exportToImageFile(nativeObjects, options) {
   // we need to class the objects by types as we need to do different things depending on it
   const pages = []
@@ -84,12 +102,15 @@ function exportToImageFile(nativeObjects, options) {
     options
   )
 
-  // export the pages
-  pages.forEach(exporter.exportPage)
-
-  // export the layers
-  if (layers.length) {
-    exporter.exportLayers(layers)
+  try {
+    // export the pages
+    pages.forEach(exporter.exportPage)
+    // export the layers
+    if (layers.length) {
+      exporter.exportLayers(layers)
+    }
+  } catch (err) {
+    throw convertNativeError(err)
   }
 }
 
@@ -102,29 +123,30 @@ function exportToBuffer(nativeObject, options) {
   const formats = exporter.formatsToExport()
 
   const rect = isPage ? exporter.rectToExportForPage(nativeObject) : CGRectNull
+  try {
+    const request = exporter.exportRequestsForLayer_inRect_exportFormats(
+      nativeObject,
+      rect,
+      formats
+    )[0]
+    const colorSpace = NSColorSpace.colorSpaceForSketchColorSpace(
+      request.immutableDocument().colorSpace()
+    )
+    const renderer = MSExporter.exporterForRequest_colorSpace_driver(
+      request,
+      colorSpace,
+      exporter.driver()
+    )
 
-  const request = exporter.exportRequestsForLayer_inRect_exportFormats(
-    nativeObject,
-    rect,
-    formats
-  )[0]
-  const colorSpace = NSColorSpace.colorSpaceForSketchColorSpace(
-    request.immutableDocument().colorSpace()
-  )
-  const renderer = MSExporter.exporterForRequest_colorSpace_driver(
-    request,
-    colorSpace,
-    exporter.driver()
-  )
-
-  const data = renderer.data()
-
-  if (!Buffer) {
-    // eslint-disable-next-line global-require, prefer-destructuring
-    Buffer = require('buffer').Buffer
+    const data = renderer.data()
+    if (!Buffer) {
+      // eslint-disable-next-line global-require, prefer-destructuring
+      Buffer = require('buffer').Buffer
+    }
+    return Buffer.from(data)
+  } catch (err) {
+    throw convertNativeError(err)
   }
-
-  return Buffer.from(data)
 }
 
 /**
