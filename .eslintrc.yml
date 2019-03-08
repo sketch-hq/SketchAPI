@@ -67,7 +67,9 @@ globals:
   MSStyleShadow: false
   MSStyleInnerShadow: false
   MSGradientStop: false
+  MSImmutableGradientStop: false
   MSGradient: false
+  MSImmutableGradient: false
   CGPointMake: false
   MSSharedLayerReference: false
   MSSharedTextReference: false
@@ -151,6 +153,7 @@ globals:
   MSOverridePoint: false
   CGRectNull: false
   NSColorSpace: false
+  NSColor: false
   MSExporter: false
   MSSVGImporter: false
   MSPDFImporter: false

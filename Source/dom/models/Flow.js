@@ -40,9 +40,8 @@ export class Flow extends WrappedObject {
     }
 
     if (isNativeObject(flow)) {
-      const className = String(flow.class())
-      if (className !== 'MSFlowConnection') {
-        throw new Error(`Cannot create a flow from a ${className}`)
+      if (!flow.isKindOfClass(MSFlowConnection)) {
+        throw new Error(`Cannot create a flow from a ${String(flow.class())}`)
       }
       return Flow.fromNative(flow)
     }

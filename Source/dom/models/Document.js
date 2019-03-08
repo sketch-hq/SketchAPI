@@ -89,7 +89,7 @@ export class Document extends WrappedObject {
 
   _getMSDocument() {
     let msdocument = this._object
-    if (msdocument && String(msdocument.class()) === 'MSDocumentData') {
+    if (msdocument && msdocument.isKindOfClass(MSDocumentData)) {
       // we only have an MSDocumentData instead of a MSDocument
       // let's try to get back to the MSDocument
       msdocument = msdocument.delegate()
@@ -103,8 +103,8 @@ export class Document extends WrappedObject {
 
     if (
       msdocument &&
-      (String(msdocument.class()) === 'MSDocumentData' ||
-        String(msdocument.class()) === 'MSImmutableDocumentData')
+      (msdocument.isKindOfClass(MSDocumentData) ||
+        msdocument.isKindOfClass(MSImmutableDocumentData))
     ) {
       return msdocument
     }

@@ -17,9 +17,11 @@ export function wrapNativeObject(nativeObject) {
     return undefined
   }
 
-  let JsClass = Factory._nativeToBox[String(nativeObject.class())]
+  const className = String(nativeObject.class())
+
+  let JsClass = Factory._nativeToBox[className]
   if (!JsClass) {
-    console.warn(`no mapped wrapper for ${String(nativeObject.class())}`)
+    console.warn(`no mapped wrapper for ${className}`)
     JsClass = WrappedObject
   }
 
