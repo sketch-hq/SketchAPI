@@ -1,7 +1,7 @@
 import { toArray } from 'util'
 import { WrappedObject, DefinedPropertiesKey } from '../WrappedObject'
 import { Document } from './Document'
-import { getURLFromPath, getDocumentData } from '../utils'
+import { getURLFromPath } from '../utils'
 import { Types } from '../enums'
 import { Factory } from '../Factory'
 import { wrapObject } from '../wrapNativeObject'
@@ -132,22 +132,23 @@ export class Library extends WrappedObject {
     return document
   }
 
-  getImportableReferencesForDocument(document, objectType) {
+  getImportableReferencesForDocument(_document, objectType) {
+    const document = wrapObject(_document)
     let provider
     switch (objectType) {
       case ImportableObjectType.Symbol:
         provider = MSForeignSymbolProvider.alloc().initWithDocument(
-          wrapObject(document).sketchObject
+          document._getMSDocument()
         )
         break
       case ImportableObjectType.LayerStyle:
         provider = MSSharedLayerStyleProvider.alloc().initWithDocument(
-          wrapObject(document).sketchObject
+          document._getMSDocument()
         )
         break
       case ImportableObjectType.TextStyle:
         provider = MSSharedTextStyleProvider.alloc().initWithDocument(
-          wrapObject(document).sketchObject
+          document._getMSDocument()
         )
         break
       default:
@@ -174,7 +175,7 @@ export class Library extends WrappedObject {
     if (!shareableObjectRefsForCurrentLib) {
       return []
     }
-    const documentData = getDocumentData(document)
+    const documentData = document._getMSDocumentData()
     return toArray(shareableObjectRefsForCurrentLib.objectRefs).map(ref => {
       const obj = ImportableObject.fromNative(ref)
       obj._documentData = documentData

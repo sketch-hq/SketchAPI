@@ -1,14 +1,3 @@
-export function getDocumentData(document) {
-  let documentData = document
-
-  if (document && document.sketchObject && document.sketchObject.documentData) {
-    documentData = document.sketchObject.documentData()
-  } else if (document && document.documentData) {
-    documentData = document.documentData()
-  }
-  return documentData
-}
-
 export function isWrappedObject(object) {
   return object && object._isWrappedObject
 }
