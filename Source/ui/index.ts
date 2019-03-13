@@ -1,6 +1,6 @@
-export * from './UI'
+module.exports = require('./UI')
 
-export const version = {
+module.exports.version = {
   sketch: MSApplicationMetadata.metadata().appVersion,
   api: process.env.API_VERSION,
 }

@@ -1,8 +1,6 @@
-import * as Async from './async'
-import * as DataSupplier from './data-supplier'
-import * as Settings from './settings'
-import * as UI from './ui'
+module.exports = require('./dom')
 
-export * from './dom'
-
-export { Async, DataSupplier, Settings, UI }
+module.exports.Async = require('./async')
+module.exports.DataSupplier = require('./data-supplier')
+module.exports.Settings = require('./settings')
+module.exports.UI = require('./ui')
