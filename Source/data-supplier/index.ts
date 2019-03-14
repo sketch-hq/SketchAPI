@@ -1,6 +1,6 @@
-export * from './DataSupplier'
+module.exports = require('./DataSupplier')
 
-export const version = {
+module.exports.version = {
   sketch: MSApplicationMetadata.metadata().appVersion,
   api: process.env.API_VERSION,
 }
