@@ -1,4 +1,7 @@
-module.exports = require('./DataSupplier')
+const DataSupplier = require('./DataSupplier')
+
+module.exports = DataSupplier
+module.exports.default = DataSupplier
 
 module.exports.version = {
   sketch: MSApplicationMetadata.metadata().appVersion,

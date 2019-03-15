@@ -75,6 +75,7 @@ const DOM = {
 }
 
 module.exports = DOM
+module.exports.default = DOM
 
 module.exports.version = {
   sketch: MSApplicationMetadata.metadata().appVersion,
