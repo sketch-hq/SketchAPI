@@ -32,7 +32,7 @@ export function getSelectedDocument() {
   }
 
   // skpm will define context as a global so let's use that if available
-  if (typeof context !== 'undefined') {
+  if (!nativeDocument && typeof context !== 'undefined') {
     /* eslint-disable no-undef */
     nativeDocument =
       context.actionContext && context.actionContext.document
