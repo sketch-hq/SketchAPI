@@ -1,6 +1,8 @@
-module.exports = require('./dom')
+const completeExport = require('./dom')
+completeExport.Async = require('./async')
+completeExport.DataSupplier = require('./data-supplier')
+completeExport.Settings = require('./settings')
+completeExport.UI = require('./ui')
 
-module.exports.Async = require('./async')
-module.exports.DataSupplier = require('./data-supplier')
-module.exports.Settings = require('./settings')
-module.exports.UI = require('./ui')
+module.exports = completeExport
+module.exports.default = completeExport
