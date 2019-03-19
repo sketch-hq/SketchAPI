@@ -27,17 +27,17 @@ A shared style (either a layer style or a text style).
 ## Create a new Shared Style from a Style
 
 ```javascript
+const newSharedStyle = SharedStyle.fromStyle({
+  name: 'Header 1',
+  style: layer.style,
+  document: document,
+})
+
+// you can also push to the shared styles arrays directly
 document.sharedTextStyles.push({
   name: 'Header 1',
   style: text.style,
 })
-
-const newSharedStylesNumber = document.sharedLayerStyles.push({
-  name: 'Red Background',
-  style: shape.style,
-})
-
-const newSharedStyle = document.sharedLayerStyles[newSharedStylesNumber]
 ```
 
 Create a new Shared Style with a specific name in a specific Document.
