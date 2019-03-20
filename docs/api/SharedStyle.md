@@ -27,18 +27,22 @@ A shared style (either a layer style or a text style).
 ## Create a new Shared Style from a Style
 
 ```javascript
+const newSharedStyle = SharedStyle.fromStyle({
+  name: 'Header 1',
+  style: layer.style,
+  document: document,
+})
+
+// you can also push to the shared styles arrays directly
 document.sharedTextStyles.push({
   name: 'Header 1',
   style: text.style,
 })
-
-document.sharedLayerStyles.push({
-  name: 'Red Background',
-  style: shape.style,
-})
 ```
 
 Create a new Shared Style with a specific name in a specific Document.
+
+> ⚠️You can only insert local shared styles (eg. not linked to a Library). `document.sharedLayerStyles` returns the foreign shared styles (eg. linked to a Library) concatenated with the local shared styles. So if you try to insert a new Shared Style at the beginning (using `unshift` for example), it will end up at the beginning of the local Shared Styles but that might not be the beginning of all the shared styles if there are some foreign.
 
 ## Get all the Instances
 
