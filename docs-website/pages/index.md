@@ -21,11 +21,11 @@ Generate, modify and process Sketch files directly with the open JSON file forma
 
 [View documentation](/guides/third-party-apps-integrations)
 
-## [Sketch.app](/guides/third-party-apps-integrations)
+## [Sketch.app](/app)
 
 Integrate Sketch into your workflows with the `sketch://` URL scheme.
 
-[View documentation](/guides/third-party-apps-integrations)
+[View documentation](/app)
 
 <hr style="height: 1px;
            border: 0;
@@ -51,9 +51,9 @@ Try the Sketch JavaScript API now, directly within Sketch. The code below shows 
      style="max-width: 100%;" />
 
 1. Open a new or existing file in Sketch
-1. Select _Run Script…_ from the _Plugins_ menu or use the keyboard shortcut `control + shift + k` to bring up the code editor
-1. Paste in the code below
-1. Select _Run_
+2. Select _Run Script…_ from the _Plugins_ menu or use the keyboard shortcut `control + shift + k` to bring up the code editor
+3. Paste in the code below
+4. Select _Run_
 
 ```javascript
 const sketch = require('sketch')
@@ -63,11 +63,23 @@ sketch.UI.message('Hello Sketch 👋')
 
 ### Publish a plugin
 
-TBD
+Use the Sketch Plugin Manager `skpm` to publish a new plugin or an update of an existing one. This adds your plugin automatically to the [Sketch Plugin Directory](https://github.com/sketchplugins/plugin-directory) for review before being listed on the [Sketch website](https://sketch.com/extensions/plugins).
 
 ### Export assets automatically
 
-TBD
+Create assets with a single command with the Sketch command line interface `sketchtool`. Quickly generate files for all exportable layers, slices, artboards or entire pages in as many different resolutions as you want.
+
+1. Open a new file in Sketch
+2. Add a shape or anything else to the canvas
+3. Save the file locally, e.g. _App.sketch_ on your Desktop
+4. Open _Terminal_ and run the following command, which looks up the `sketchtool` bundled with Sketch and exports all pages of _App.sketch_.
+
+This will generate an image file called _Page 1.png_ in the same folder you ran the command in.
+
+```sh
+SKETCH=$(mdfind kMDItemCFBundleIdentifier == 'com.bohemiancoding.sketch3' | head -n 1) && \
+"$SKETCH/Contents/Resources/sketchtool/bin/sketchtool" export pages ~/Desktop/App.sketch
+```
 
 ### Not a developer? Submit an idea
 
@@ -88,3 +100,7 @@ Explore some [sample plugins](https://github.com/BohemianCoding/SketchAPI/tree/d
 #### Support
 
 [Get in touch](mailto:developer@sketchapp.com) with us.
+
+### API Reference
+
+View the Plugin [JavaScript API reference](/reference/api/).
