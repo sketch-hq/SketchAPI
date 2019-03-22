@@ -3,12 +3,6 @@ title: Start extending Sketch…
 permalink: /
 ---
 
-## [Sketch.app](/guides/third-party-apps-integrations)
-
-Integrate Sketch into your workflows with the `sketch://` URL scheme.
-
-[View documentation](/guides/third-party-apps-integrations)
-
 ## [Plugin](/guides)
 
 Add to and customize the functionality of Sketch using JavaScript or Objective-C.
@@ -24,6 +18,12 @@ Use the `sketchtool` command line interface to export assets, inspect documents 
 ## [Sketch file format](/guides/third-party-apps-integrations)
 
 Generate, modify and process Sketch files directly with the open JSON file format.
+
+[View documentation](/guides/third-party-apps-integrations)
+
+## [Sketch.app](/guides/third-party-apps-integrations)
+
+Integrate Sketch into your workflows with the `sketch://` URL scheme.
 
 [View documentation](/guides/third-party-apps-integrations)
 
