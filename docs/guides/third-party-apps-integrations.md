@@ -16,21 +16,3 @@ A Sketch file is just a zip file containing a bunch of JSON files. Your app can 
 SketchTool is the perfect tool to interact with Sketch. You can export document previews, get metadata from a file and even run a plugin programmatically!
 
 The plugin you can run with SketchTool does not need to be installed by the user, it can be bundled in your app and executed from there. You can also install the plugin by copying to the plugin folder (`~/Library/Application Support/com.bohemiancoding.sketch3/Plugins`) if necessary.
-
-## Using the `sketch://` URL scheme
-
-Sketch listens to the `sketch://` URL scheme and you can use it to open a specific document. For example:
-
-```
-// open the file in sketch
-sketch:///path/to/file.sketch
-
-// open the file in sketch and center the canvas on a layer
-sketch:///path/to/file.sketch?centerOnLayer=LAYER_ID
-
-// open the file in sketch and set the zoom
-sketch:///path/to/file.sketch?zoom=1
-
-// you can also add multiple options
-sketch:///path/to/file.sketch?centerOnLayer=LAYER_ID&zoom=1
-```
