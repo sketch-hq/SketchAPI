@@ -10,7 +10,7 @@
   "license": "MIT",
   "dependencies": {
     "@skpm/buffer": "0.1.3",
-    "@skpm/console": "0.1.9",
+    "@skpm/console": "0.2.0",
     "@skpm/events": "0.2.0",
     "@skpm/os": "0.1.1",
     "@skpm/path": "0.1.4",
