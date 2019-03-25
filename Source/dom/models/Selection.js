@@ -71,13 +71,4 @@ export class Selection {
     this._object.changeSelectionBySelectingLayers(null)
     return this
   }
-
-  // print something nice
-  toJSON() {
-    return {
-      layers: this.layers,
-      length: this.length,
-      isEmpty: this.isEmpty,
-    }
-  }
 }
