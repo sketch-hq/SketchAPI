@@ -12,6 +12,44 @@ export class Selection {
    */
   constructor(page) {
     this._object = page._object
+
+    Object.defineProperty(this, '_object', {
+      enumerable: false,
+      writable: false,
+      value: page._object,
+    })
+
+    Object.defineProperty(this, 'layers', {
+      enumerable: true,
+      get() {
+        const layers = toArray(this._object.selectedLayers().layers()).map(
+          wrapNativeObject
+        )
+        return layers
+      },
+      set(layers) {
+        this._object.changeSelectionBySelectingLayers(
+          (layers.layers || layers).map(l => wrapObject(l).sketchObject)
+        )
+      },
+    })
+
+    Object.defineProperty(this, 'length', {
+      enumerable: true,
+      get() {
+        return this._object
+          .selectedLayers()
+          .layers()
+          .count()
+      },
+    })
+
+    Object.defineProperty(this, 'isEmpty', {
+      enumerable: true,
+      get() {
+        return this.length === 0
+      },
+    })
   }
 
   forEach(fn) {
@@ -27,49 +65,19 @@ export class Selection {
   }
 
   /**
-   * Return the wrapped Sketch layers in the selection.
-   *
-   * @return {array} The selected layers.
-   * */
-  get layers() {
-    const layers = toArray(this._object.selectedLayers().layers()).map(
-      wrapNativeObject
-    )
-    return layers
-  }
-
-  set layers(layers) {
-    this._object.changeSelectionBySelectingLayers(
-      (layers.layers || layers).map(l => wrapObject(l).sketchObject)
-    )
-  }
-
-  /**
-   * Return the number of selected layers.
-   *
-   * @return {number} The number of layers that are selected.
-   */
-  get length() {
-    return this._object
-      .selectedLayers()
-      .layers()
-      .count()
-  }
-
-  /**
-   * Does the selection contain any layers?
-   *
-   * @return {boolean} true if the selection is empty.
-   */
-  get isEmpty() {
-    return this.length === 0
-  }
-
-  /**
    * Clear the selection.
    */
   clear() {
     this._object.changeSelectionBySelectingLayers(null)
     return this
+  }
+
+  // print something nice
+  toJSON() {
+    return {
+      layers: this.layers,
+      length: this.length,
+      isEmpty: this.isEmpty,
+    }
   }
 }
