@@ -5,7 +5,7 @@ section: layers
 ---
 
 ```javascript
-var Shape = require('sketch/dom').Shape
+var ShapePath = require('sketch/dom').ShapePath
 ```
 
 A shape path layer. It is an instance of [Layer](#layer) so all the methods defined there are available.
