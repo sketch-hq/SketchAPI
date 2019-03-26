@@ -1,5 +1,5 @@
 {
-  "unreleased": [],
+  "unreleased": ["[Fixed] `new Text({ style: {} })` now works as expected"],
   "releases": {
     "54": [
       "[New] Add `colors` and `gradients` properties on Document",

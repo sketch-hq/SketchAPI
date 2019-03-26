@@ -77,12 +77,17 @@ export class Style extends WrappedObject {
    *                              If `sketchObject` is provided, will wrap it.
    *                              Otherwise, creates a new native object.
    */
-  constructor(style = {}) {
+  constructor(style = {}, parentType) {
     if (!style.sketchObject) {
       // eslint-disable-next-line no-param-reassign
       style = Object.assign({}, DEFAULT_STYLE, style)
-      // eslint-disable-next-line no-param-reassign
-      style.sketchObject = MSDefaultStyle.defaultStyle()
+      if (parentType === Types.Text) {
+        // eslint-disable-next-line no-param-reassign
+        style.sketchObject = MSDefaultTextStyle.defaultTextStyle()
+      } else {
+        // eslint-disable-next-line no-param-reassign
+        style.sketchObject = MSDefaultStyle.defaultStyle()
+      }
     }
 
     super(style)
