@@ -57,42 +57,21 @@ layout: base
             </li>
           {% endfor %}
 
+          {% comment %}
+            The Actions API lists all actions in the sidebar.
+          {% endcomment %}
 
-
-            {% if page.url contains '/guides/' %}
-              {% assign guides = site.guides | sort:"order" %}
-              <li>
-                <h2>Getting Started</h2>
-                <ol>
-                  {% for guide in guides %}
-                    {% if guide.order < 200 %}
-                      <li><a href="{{guide.url}}" {% if page.url == guide.url %} class="active"{% endif %}>{{guide.title}}</a></li>
-                    {% endif %}
-                  {% endfor %}
-                </ol>
-              </li>
-              <li>
-                <h2>Advanced</h2>
-                <ol>
-                  {% for guide in guides %}
-                    {% if guide.order >= 200 %}
-                      <li><a href="{{guide.url}}" {% if page.url == guide.url %} class="active"{% endif %}>{{guide.title}}</a></li>
-                    {% endif %}
-                  {% endfor %}
-                </ol>
-              </li>
-            {% endif %}
-            {% if page.url contains '/action/' %}
-              <li>
-                <h2><a href="/reference/action/">Actions Index</a></h2>
-                <ol>
-                  {% assign actions = site.actions | sort:"title"%}
-                  {% for action in actions %}
-                  <li><a href="{{action.url}}" {% if page.url == action.url %} class="active"{% endif %}>{{ action.title }}</a></li>
-                  {% endfor %}
-                </ol>
-              </li>
-            {% endif %}
+          {% if page.url contains '/action/' %}
+            <li>
+              <h2><a href="/reference/action/">Actions Index</a></h2>
+              <ol>
+                {% assign actions = site.actions | sort:"title"%}
+                {% for action in actions %}
+                <li><a href="{{action.url}}" {% if page.url == action.url %} class="active"{% endif %}>{{ action.title }}</a></li>
+                {% endfor %}
+              </ol>
+            </li>
+          {% endif %}
           </ol>
         </nav>
       </aside>
