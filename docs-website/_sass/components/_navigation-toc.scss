@@ -1,8 +1,8 @@
 /*TOC navigation*/
 .search-toggle {
   background-image: url('data:image/svg+xml;utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20fill%3D%22%23fa6400%22%20fill-rule%3D%22evenodd%22%20d%3D%22M13.46%2014.39c-.78.586-1.748.933-2.8.933-2.573%200-4.66-2.087-4.66-4.66C6%208.086%208.087%206%2010.66%206c2.575%200%204.662%202.087%204.662%204.662%200%201.05-.348%202.02-.935%202.8.075.035.144.082.205.143l3.2%203.2c.275.275.28.717.004.992-.273.273-.72.27-.992-.003l-3.2-3.2c-.062-.06-.11-.13-.143-.205zM12%2024c6.627%200%2012-5.373%2012-12S18.627%200%2012%200%200%205.373%200%2012s5.373%2012%2012%2012zm-1.34-9.61c2.06%200%203.73-1.67%203.73-3.728%200-2.06-1.67-3.73-3.73-3.73-2.058%200-3.728%201.67-3.728%203.73s1.67%203.73%203.73%203.73z%22%2F%3E%3C%2Fsvg%3E');
-  -webkit-transition: -webkit-filter .1s ease-out;
-  transition: filter .1s ease-out;
+  -webkit-transition: -webkit-filter 0.1s ease-out;
+  transition: filter 0.1s ease-out;
   &:hover,
   &:active,
   &:focus {
@@ -11,7 +11,6 @@
     filter: hue-rotate(1deg) saturate(117%) brightness(105%);
   }
 }
-
 
 @include tablet-and-above {
   .toc-nav {
@@ -32,10 +31,9 @@
     height: 1.5rem;
     cursor: pointer;
     float: right;
-    margin-top: .45rem;
+    margin-top: 0.45rem;
     margin-right: 1rem;
   }
-
 }
 
 .toc-nav h1 {
@@ -47,24 +45,34 @@
   font-size: 1rem;
   line-height: 1.75rem; //28px
   margin: 0;
-  padding: 0
+  padding: 0;
 }
 
-  @include tablet-and-above {
-    .toc-nav li:not(:first-child) h2,
-    .toc-nav nav > ol > li:not(:first-child) {
-      margin: .375rem 0; //6px
-    }
+.toc-nav h2 a {
+  color: $action;
+  -webkit-tap-highlight-color: rgba($action-high, 0.08);
+  &:hover,
+  &:active,
+  &:focus {
+    color: $action-high;
   }
+}
+
+@include tablet-and-above {
+  .toc-nav li:not(:first-child) h2,
+  .toc-nav nav > ol > li:not(:first-child) {
+    margin: 0.375rem 0; //6px
+  }
+}
 
 /*Active triangle indicator*/
-.toc-nav a.active::before {
-  content: "\2023";
+.toc-nav ol ol a.active::before {
+  content: '\2023';
   display: inline-block;
   vertical-align: middle;
   position: absolute;
-  margin-left: -.55rem;
-  margin-right: .25rem;
+  margin-left: -0.55rem;
+  margin-right: 0.25rem;
 }
 
 .toc-nav li {
@@ -73,58 +81,66 @@
   overflow: hidden;
   text-overflow: ellipsis;
   display: list-item;
-  font-size: .875rem; //14px
+  font-size: 0.875rem; //14px
   line-height: 1.25rem; //20px
 }
 
-  @include tablet-and-above {
-    .toc-nav {
-      padding-top: 2.5rem;
-      padding-bottom: 2.5rem;
-      background: linear-gradient(90deg, $background-light ,#fbfbfb);
-      box-shadow: inset -1px 0 0 $divider-dark;
-      margin-top: -1.5rem;
-      margin-bottom: 2rem !important;
-      position: relative;
-    }
-
-    .toc-nav > * {
-      position: relative;
-      z-index: 1;
-    }
-
-    .toc-nav::before,
-    .toc-nav::after {
-      content: "";
-      display: block;
-      width: 100%;
-      height: 4rem;
-      position: absolute;
-      z-index: 0;
-    }
-
-      .toc-nav::before {
-        top: 0;
-        background: linear-gradient(180deg, $background-light , rgba( $background-light , 0 ));
-      }
-
-      .toc-nav::after {
-        bottom: 0;
-        background: linear-gradient(180deg, rgba( $background-light , 0 ) , $background-light);
-      }
-
-    .toc-nav li {
-      margin: .375rem 0 .375rem .5rem; //4px
-      // font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
-      // font-weight: $font-medium;
-      // letter-spacing: normal;
-    }
+@include tablet-and-above {
+  .toc-nav {
+    padding-top: 2.5rem;
+    padding-bottom: 2.5rem;
+    background: linear-gradient(90deg, $background-light, #fbfbfb);
+    box-shadow: inset -1px 0 0 $divider-dark;
+    margin-top: -1.5rem;
+    margin-bottom: 2rem !important;
+    position: relative;
   }
+
+  .toc-nav > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  .toc-nav::before,
+  .toc-nav::after {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 4rem;
+    position: absolute;
+    z-index: 0;
+  }
+
+  .toc-nav::before {
+    top: 0;
+    background: linear-gradient(
+      180deg,
+      $background-light,
+      rgba($background-light, 0)
+    );
+  }
+
+  .toc-nav::after {
+    bottom: 0;
+    background: linear-gradient(
+      180deg,
+      rgba($background-light, 0),
+      $background-light
+    );
+  }
+
+  .toc-nav li {
+    margin: 0.375rem 0 0.375rem 0.5rem; //4px
+    // font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    // font-weight: $font-medium;
+    // letter-spacing: normal;
+  }
+}
 
 @include tablet-and-below {
   .toc-nav {
-    margin: -2.5rem -.5rem 0;
-    padding: .594rem 1rem;
+    margin: -2.5rem -0.5rem 0;
+    padding: 0.594rem 1rem;
     width: calc(100% + 1rem); //fucking hack | #MakeTheWebLessHackyAgain
     border: 1px solid $border-dark-high;
     border-radius: $radius-normal;
@@ -146,7 +162,7 @@
   .toc-nav h2,
   .toc-nav ol ol a {
     display: block;
-    padding: .5rem 0;
+    padding: 0.5rem 0;
   }
 
   .toc-nav .nav-toggle {
@@ -155,8 +171,8 @@
     cursor: pointer;
     position: relative;
     font-size: 1rem;
-    margin: -.625rem -1rem -.5625rem;
-    padding: .5rem 1rem .5625rem;
+    margin: -0.625rem -1rem -0.5625rem;
+    padding: 0.5rem 1rem 0.5625rem;
   }
 
   .toc-nav .nav-toggle::after {
@@ -183,14 +199,14 @@
   }
 
   .toc-nav nav.active {
-    margin-top: .5625rem;
+    margin-top: 0.5625rem;
     // border-top: 1px solid $divider-dark;
-    padding-top: .5rem;
+    padding-top: 0.5rem;
     position: relative;
   }
 
   .toc-nav nav.active::before {
-    content: "";
+    content: '';
     display: block;
     width: calc(100% + 2rem);
     height: 1px;
@@ -205,14 +221,13 @@
   }
 
   .toc-nav nav > ol > li > a.active::before {
-    margin-top: .25rem;
+    margin-top: 0.25rem;
   }
 
   .toc-sidebar {
     max-height: none !important;
     height: auto !important;
   }
-
 }
 
 .glossary-nav ol {
