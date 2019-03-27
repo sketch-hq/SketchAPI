@@ -9,6 +9,5 @@ redirect_from:
   - /introduction/plugin-bundles/
   - /guides/plugin-bundles/
 
-layout: sidebar-page
 order: 200
 ---

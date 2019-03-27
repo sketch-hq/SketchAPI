@@ -68,7 +68,7 @@ defaults:
       script: "/js/search.js"
   -
     scope:
-      type: "guides"
+      type: "pages"
     values:
       layout: "sidebar-page"
       script: "/js/search.js"
