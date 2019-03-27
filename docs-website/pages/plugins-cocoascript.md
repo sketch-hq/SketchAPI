@@ -27,10 +27,11 @@ From CocoaScript’s README:
 Your plugin's script does not run in a browser but in a JavaScriptCore context. Hence the JavaScript environment it is running in is a bit uncommon.
 
 - The [JavaScript standard library](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects) is available.
-- Every thing else isn't. That means that `setTimeout`, `fetch`, `console` etc. are not available.
+- `console`, `setTimeout`, `setInterval`, etc. are available.
+- Every thing else isn't. That means that `fetch`, `window`, `navigator` etc. are not available.
 - NodeJS core modules are not available.
 
-That being said, if you use `skpm`, it will automatically polyfill some things for you: [`console`](https://github.com/skpm/sketch-polyfill-console),[`setTimeout`](https://github.com/skpm/sketch-polyfill-setTimeout), [`setInterval`](https://github.com/skpm/sketch-polyfill-setInterval) and [`fetch`](https://github.com/skpm/sketch-polyfill-fetch).
+That being said, if you use `skpm`, it will automatically polyfill some things for you: [`fetch`](https://github.com/skpm/sketch-polyfill-fetch).
 
 ## Accessing Cocoa and Sketch APIs
 
