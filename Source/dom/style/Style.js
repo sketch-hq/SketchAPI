@@ -8,7 +8,7 @@ import { colorFromString, colorToString } from './Color'
 import { Shadow } from './Shadow'
 import { BorderOptions, Arrowhead, LineEnd, LineJoin } from './BorderOptions'
 import { Blur, BlurType } from './Blur'
-import { Fill, FillType, PatternFillType, NoiseType } from './Fill'
+import { Fill, FillType, PatternFillType } from './Fill'
 import { Border, BorderPosition } from './Border'
 import { defineTextStyleProperties } from './Text'
 
@@ -196,7 +196,6 @@ Style.define('blur', {
 
 Style.FillType = FillType
 Style.PatternFillType = PatternFillType
-Style.NoiseType = NoiseType
 Style.define('fills', {
   array: true,
   get() {
