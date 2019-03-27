@@ -17,7 +17,8 @@
       "[New] Add `selected` property on an Override",
       "[New] Add `getFrame` method on an Override",
       "[New] add `sketch.globalAssets` property",
-      "[Improved] `layer.index` can now be set"
+      "[Improved] `layer.index` can now be set",
+      "[Fixed] `new Text({ style: {} })` now works as expected"
     ],
     "53.1": ["[Fixed] Setting mutable colors where it should"],
     "53": [
