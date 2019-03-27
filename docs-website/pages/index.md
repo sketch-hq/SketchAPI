@@ -105,7 +105,7 @@ Explore some [sample plugins](https://github.com/BohemianCoding/SketchAPI/tree/d
 
 #### Support
 
-[Get in touch](mailto:developer@sketchapp.com) with us.
+[Get in touch](mailto:developer@sketch.com) with us.
 
 ### API Reference
 
