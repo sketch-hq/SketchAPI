@@ -11,7 +11,6 @@ redirect_from:
 
 summary: Some more details on how to use CocoaScript
 
-layout: sidebar-page
 order: 400
 ---
 
