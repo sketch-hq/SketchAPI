@@ -9,18 +9,31 @@ redirect_from:
 order: 1
 ---
 
-## JavaScript
+Use Sketch APIs to write your own plugins.
 
-### Absolute beginners
+## Examples
 
-- Learn the fundamentals of JavaScript at [Codecademy](https://www.codecademy.com/tracks/javascript)
-- [Eloquent JavaScript](http://eloquentjavascript.net), a book about JavaScript, programming, and the wonders of the digital.
+Explore some [sample plugins](https://github.com/BohemianCoding/SketchAPI/tree/develop/examples/) built by Sketch.
 
-### Experienced developers
+## Find plugins
 
-- Learning the Web › JavaScript, at [Mozilla](https://developer.mozilla.org/en/Learn/JavaScript)
-- [A re-introduction to JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript/A_re-introduction_to_JavaScript)
-- [JavaScript: The Good Parts](http://shop.oreilly.com/product/9780596517748.do), an O'Reilly book.
+- [Sketch Plugins](https://sketch.com/extensions/plugins)
+- [Awesome Sketch Plugins](http://awesome-sket.ch)
+- [Sketchpacks](http://www.sketchpacks.com)
+- [Sketchrunner](https://sketchrunner.com)
+
+## Resources
+
+### JavaScript
+
+- [JavaScript reference](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference)
+- [Introduction to JavaScript at Codecademy](https://www.codecademy.com/learn/introduction-to-javascript)
+- [Learn JavaScript at MDN](https://developer.mozilla.org/en-US/docs/Learn/JavaScript)
+
+#### Books
+
+- [Eloquent JavaScript](http://eloquentjavascript.net)
+- [JavaScript: The Good Parts](http://shop.oreilly.com/product/9780596517748.do)
 
 ## Cocoa
 
@@ -36,18 +49,6 @@ order: 1
 - [How I made a Sketch Plugin for my team without knowing code](http://hackingui.com/design/how-to-create-a-sketch-plugin/)
 - [Programmers Design Differently: Why I Built a CSS Plugin for Sketch 3](https://medium.com/sketch-app-sources/programmers-design-differently-why-i-built-a-css-plugin-for-sketch-3-52a1246305a4#.v0qjvzsfd)
 - [Sketch Runner](https://medium.com/sketch-app-sources/runner-speed-up-your-sketch-workflow-fba470ed43c1#.bgdpr68wy)
-
-## Sample Plugins
-
-- Some example plugins are [available on Github](https://github.com/BohemianCoding/ExampleSketchPlugins)
-- A template/example Sketch plugin with a UI built in Interface Builder and connected to CocoaScript through black magic: [Sketch-NibUITemplatePlugin](https://github.com/romannurik/Sketch-NibUITemplatePlugin)
-
-## 3rd Party Plugins
-
-- [Sketch Plugins](https://github.com/sketchplugins/plugin-directory), a list of Sketch Plugins hosted at GitHub.
-- [awesome-sket.ch](http://awesome-sket.ch), a curated list of Sketch Plugins.
-- [sketchplugins.com](https://sketchplugins.com), the mailing list for Sketch Plugin developers.
-- [Sketchpacks](http://www.sketchpacks.com), Find and discover the most useful plugins for Sketch
 
 ## Tools
 
