@@ -5,7 +5,7 @@ section: models
 ---
 
 A utility class to represent a curve point (with handles to control the curve in a path).
-try netlify
+try netlify more
 
 <!-- Contains some methods to make interacting with a point easier. -->
 
