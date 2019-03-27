@@ -1,19 +1,25 @@
 ---
 title: Start extending Sketch…
 permalink: /
+
+redirect_from:
+  - /guides/
+  - /guides/third-party-apps-integrations/
+
+layout: single-page
 ---
 
-## [Plugin](/guides)
+## [Plugins](/plugins)
 
 Add to and customize the functionality of Sketch using JavaScript or Objective-C.
 
-[View documentation](/guides)
+[View documentation](/plugins)
 
-## [CLI](/guides/sketchtool)
+## [CLI](/cli)
 
 Use the `sketchtool` command line interface to export assets, inspect documents and run plugins.
 
-[View documentation](/guides/sketchtool)
+[View documentation](/cli)
 
 ## [Sketch file format](/guides/third-party-apps-integrations)
 
