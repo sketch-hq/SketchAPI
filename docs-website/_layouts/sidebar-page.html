@@ -20,23 +20,9 @@ layout: base
             chapters.
           {% endcomment %}
 
-          {% assign section_page = site.pages | where: "section", page.section | sort: "order" | first %}
-          {% if section_page.chapter %}{% assign section_page = nil %}{% endif %}
-
           {% assign all_chapters = site.pages | where: "section", page.section | sort: "order" | map: "chapter" | uniq %}
 
           <ol>
-          {% if section_page %}
-            <li>
-              <h2>
-                <a href="{{section_page.url}}" title="{{section_page.title}}"
-                {% if page.url == section_page.url %} class="active"{% endif %}
-                >
-                  {{ section_page.title }}
-                </a>
-              </h2>
-            </li>
-          {% endif %}
 
           {% for chapter in all_chapters %}
             {% if chapter == nil %}{% continue %}{% endif %}
@@ -72,6 +58,7 @@ layout: base
               </ol>
             </li>
           {% endif %}
+
           </ol>
         </nav>
       </aside>
