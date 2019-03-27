@@ -20,13 +20,13 @@
 }
 
 // External links
-.content a[href^="http://"]:not([href*="sketchapp.com"]):not([href*="bohemiancoding.com"]):not(.card),
-.content a[href^="https://"]:not([href*="sketchapp.com"]):not([href*="bohemiancoding.com"]):not(.card) {
+.content a[href^="http://"]:not([href*="sketch.com"]):not([href*="bohemiancoding.com"]):not(.card),
+.content a[href^="https://"]:not([href*="sketch.com"]):not([href*="bohemiancoding.com"]):not(.card) {
   white-space: nowrap;
 }
 
-.content a[href^="http://"]:not([href*="sketchapp.com"]):not([href*="bohemiancoding.com"]):not(.card):after,
-.content a[href^="https://"]:not([href*="sketchapp.com"]):not([href*="bohemiancoding.com"]):not(.card):after {
+.content a[href^="http://"]:not([href*="sketch.com"]):not([href*="bohemiancoding.com"]):not(.card):after,
+.content a[href^="https://"]:not([href*="sketch.com"]):not([href*="bohemiancoding.com"]):not(.card):after {
    content: "\21F1"; //⇱
    display: inline-block;
    margin-left: .25rem;

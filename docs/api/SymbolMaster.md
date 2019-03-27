@@ -8,7 +8,7 @@ section: layers
 var SymbolMaster = require('sketch/dom').SymbolMaster
 ```
 
-A [Symbol](https://www.sketchapp.com/docs/symbols/) master. It is an instance of [Artboard](#artboard) (hence of [Layer](#layer) and [Group](#group)) so all the methods defined there are available.
+A [Symbol](https://sketch.com/docs/symbols/) master. It is an instance of [Artboard](#artboard) (hence of [Layer](#layer) and [Group](#group)) so all the methods defined there are available.
 
 | Properties                                                                  |                                                                                                         |
 | --------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
