@@ -6,6 +6,7 @@
 // let's get a hold on the Sketch API
 const sketch = require('sketch')
 
+// eslint-disable-next-line no-restricted-syntax
 export default function(context) {
   // We are going to make a new image layer using the PDF file we included in
   // our Resources folder. To do this, we'll need to fetch the full location
@@ -30,7 +31,8 @@ export default function(context) {
   // These functions all take a single parameter which is a dictionary of properties to set
   // on the new layer. Typically you will want to set the parent of the new layer, its frame, and perhaps
   // some other properties such as its name, style, and so on.
-  const group = new sketch.Group({
+  // eslint-disable-next-line no-new
+  new sketch.Group({
     parent: page,
     frame: {
       x: 0,
