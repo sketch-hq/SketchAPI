@@ -1,8 +1,14 @@
 ---
-title: Debugging
-summary: How to debug a sketch plugin
-permalink: /guides/debugging-plugins/
-order: 130
+title: Debug a plugin
+section: plugins
+chapter: Guides
+permalink: /plugins/debugging
+
+# Previous developer documentation
+redirect_from:
+  - /guides/debugging-plugins/
+
+order: 103
 ---
 
 When developing a Sketch plugin, chances are you will need some ways to know what is happening when your code is running.
