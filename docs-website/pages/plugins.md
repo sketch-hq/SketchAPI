@@ -11,9 +11,21 @@ order: 1
 
 Use Sketch APIs to write your own plugins.
 
+## JavaScript API
+
+## Internal API
+
+> **Note:** New versions of Sketch can introduce breaking changes to the internal API. Sketch does not provide an API reference for the internal API, however [header files are available](https://github.com/abynim/Sketch-Headers) thanks to [@abynim](https://github.com/abynim) 🙏.
+>
+> We recommend using the JavaScript API where possible. Something is missing? Please [submit feedback and feature requests](https://github.com/BohemianCoding/SketchAPI/issues).
+
 ## Examples
 
 Explore some [sample plugins](https://github.com/BohemianCoding/SketchAPI/tree/develop/examples/) built by Sketch.
+
+## Install a plugin
+
+See the [Sketch documentation](https://sketch.com/docs/plugins/) on how to install and disable plugins.
 
 ## Find plugins
 
