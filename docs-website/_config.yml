@@ -44,9 +44,6 @@ collections:
   actions:
     output: true
     permalink: /reference/action/:path/
-  guides:
-    output: true
-    permalink: /guides/:path/
   posts:
     output: true
     permalink: /blog/:path/
