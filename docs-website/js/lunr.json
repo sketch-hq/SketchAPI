@@ -1,10 +1,7 @@
 ---
 layout: null
 ---
-{%- assign guides = site.documents | where: "collection", "guides" -%}
-{%- assign actions = site.documents | where: "collection", "actions" -%}
-{%- assign pages = guides | concat: actions -%}
-[{% for page in pages %}
+[{% for page in site.documents %}
     {
       "id": {{ forloop.index0 }},
       "url": {{ page.url | jsonify }},
