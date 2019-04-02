@@ -1,5 +1,5 @@
 ---
-title: Debug a plugin
+title: Create a plugin
 section: plugins
 chapter: Guides
 permalink: /plugins/create-a-plugin
