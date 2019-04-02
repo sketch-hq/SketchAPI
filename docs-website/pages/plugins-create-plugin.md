@@ -1,8 +1,14 @@
 ---
-title: Your First Plugin
-summary: Basic concepts for plugin users.
-permalink: /guides/first-plugin/
-order: 110
+title: Debug a plugin
+section: plugins
+chapter: Guides
+permalink: /plugins/create-a-plugin
+
+# Previous developer documentation
+redirect_from:
+  - /guides/first-plugin/
+
+order: 102
 ---
 
 This document will take you through creating your first Sketch plugin ("Hello World") and will explain the basic Sketch extensibility concepts.
