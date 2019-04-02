@@ -1,9 +1,14 @@
 ---
 title: Publishing Plugins
 summary: How to publish a plugin for the first time and how to publish updates
-permalink: /guides/publishing-plugins/
-redirect_from: /introduction/updating-plugins/
-order: 150
+permalink: /plugins/publish-a-plugin
+
+# Previous developer documentation
+redirect_from:
+  - /introduction/updating-plugins/
+  - /guides/publishing-plugins/
+
+order: 105
 ---
 
 Sketch plugins are listed in a GitHub repository. This document explains how to publish it there and how to allow Sketch to receive updates for your plugin.
@@ -104,10 +109,3 @@ For example, if your plugin displays some user interface elements within Sketch,
 The same goes for any persistent data that your plugin maintains. Any unsaved information should be written to disk when `Shutdown` is called.
 
 Do not include code in the `Startup` handler that could be run later.
-
-### Troubleshooting
-
-So you've followed all the steps, and your plugin is still not updating? Try these:
-
-- Remove the `PluginsWarehouse` folder that lives in `~/Library/Application Support/com.bohemiancoding.sketch3/`. This is where we cache plugin downloads, and if you've been testing different versions of your appcast, you probably have some old stuff there that's worth cleaning.
-- Make sure the `manifest.json` in your downloaded ZIP has a version number that matches the one in your appcast. If the appcast says the ZIP contains v1.2, but the actual ZIP says it's v1.1, the installation will not work.
