@@ -140,3 +140,10 @@ defaults write com.bohemiancoding.sketch3 WebKitDeveloperExtras -bool true
 ```
 
 Then you can simply right-click on your web-view and click on `Inspect`. The inspector should show up.
+
+### Troubleshooting
+
+So you've followed all the steps, and your plugin is still not updating? Try these:
+
+- Remove the `PluginsWarehouse` folder that lives in `~/Library/Application Support/com.bohemiancoding.sketch3/`. This is where we cache plugin downloads, and if you've been testing different versions of your appcast, you probably have some old stuff there that's worth cleaning.
+- Make sure the `manifest.json` in your downloaded ZIP has a version number that matches the one in your appcast. If the appcast says the ZIP contains v1.2, but the actual ZIP says it's v1.1, the installation will not work.
