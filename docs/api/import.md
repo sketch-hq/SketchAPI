@@ -7,14 +7,14 @@ section: API
 ```javascript
 var sketch = require('sketch/dom')
 
-const layer = sketch.import(buffer, 'svg')
+const layer = sketch.createLayerFromData(buffer, 'svg')
 ```
 
 ```javascript
 const svgString =
   '<svg width="200px" height="100px" viewBox="0 0 200 100" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><rect fill="#000000" x="0" y="0" width="200" height="100"></rect></svg>'
 
-const group = sketch.import(svgString, 'svg')
+const group = sketch.createLayerFromData(svgString, 'svg')
 ```
 
 Import a file as a Layer.
