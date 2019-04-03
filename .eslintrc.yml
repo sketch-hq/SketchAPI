@@ -159,6 +159,8 @@ globals:
   MSPDFImporter: false
   NSApp: false
   CGPathGetBoundingBox: false
+  MSShapeEventHandler: false
+  NSIndexPath: false
 
 rules:
   ###########
