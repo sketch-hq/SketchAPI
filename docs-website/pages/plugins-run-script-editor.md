@@ -7,7 +7,7 @@ permalink: /plugins/customize-editor
 order: 109
 ---
 
-Use your preferred font with the built-in script editor in the _Run Script…_ panel.
+Use your preferred font with the built-in script editor in the _Run Script…_ panel by setting user defaults on the command-line.
 
 ### Use custom font
 
