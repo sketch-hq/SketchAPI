@@ -1,5 +1,5 @@
 ---
-title: Command line interface
+title: Command-line interface
 section: cli
 permalink: /cli/
 
@@ -9,9 +9,9 @@ redirect_from:
 order: 2
 ---
 
-Sketch includes `sketchtool`, a command line interface to export assets, inspect documents and run plugins.
+Sketch includes `sketchtool`, a command-line interface to export assets, inspect documents and run plugins.
 
-> **Important:** The Sketch command line interface is free to use but requires a valid license to run plugins. `sketchtool` is provided "as is" without warranty of any kind.
+> **Important:** The Sketch command-line interface is free to use but requires a valid license to run plugins. `sketchtool` is provided "as is" without warranty of any kind.
 
 ## Usage
 
@@ -21,7 +21,7 @@ The `sketchtool` binary is located within the Sketch application bundle.
 Sketch.app/Contents/Resources/sketchtool/bin/sketchtool
 ```
 
-To run `sketchtool` from anywhere on the command line, add the cli location to `$PATH` or use a convenience script to look up the correct path using `mdfind`.
+To run `sketchtool` from anywhere on the command-line, add the cli location to `$PATH` or use a convenience script to look up the correct path using `mdfind`.
 
 ```sh
 #!/bin/sh

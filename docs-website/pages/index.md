@@ -17,7 +17,7 @@ Add to and customize the functionality of Sketch using JavaScript or Objective-C
 
 ## [CLI](/cli)
 
-Use the `sketchtool` command line interface to export assets, inspect documents and run plugins.
+Use the `sketchtool` command-line interface to export assets, inspect documents and run plugins.
 
 [View documentation](/cli)
 
@@ -53,8 +53,7 @@ Try the Sketch JavaScript API now, directly within Sketch. The code below shows 
 
 <img src="/images/developer/menu-run-script.png"
      alt="Run script menu"
-     width="235"
-     style="max-width: 100%;" />
+     width="235" />
 
 1. Open a new or existing file in Sketch
 2. Select _Run Script…_ from the _Plugins_ menu or use the keyboard shortcut `control + shift + k` to bring up the code editor
@@ -73,7 +72,7 @@ Use the Sketch Plugin Manager `skpm` to publish a new plugin or an update of an 
 
 ### Export assets automatically
 
-Create assets with a single command with the Sketch command line interface `sketchtool`. Quickly generate files for all exportable layers, slices, artboards or entire pages in as many different resolutions as you want.
+Create assets with a single command with the Sketch command-line interface `sketchtool`. Quickly generate files for all exportable layers, slices, artboards or entire pages in as many different resolutions as you want.
 
 1. Open a new file in Sketch
 2. Add a shape or anything else to the canvas

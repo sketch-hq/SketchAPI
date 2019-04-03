@@ -19,7 +19,7 @@ Running
 sketchtool export artboards path/to/document.sketch
 ```
 
-will export all the artboards in the document, regardless of their exportable status. If the artboards have been set to Exportable, SketchTool will export all the sizes and formats. Otherwise, they'll be exported at 1x in PNG format by default, You can specify a custom format or size using command line options:
+will export all the artboards in the document, regardless of their exportable status. If the artboards have been set to Exportable, SketchTool will export all the sizes and formats. Otherwise, they'll be exported at 1x in PNG format by default, You can specify a custom format or size using command-line options:
 
 ```
 sketchtool export artboards path/to/document.sketch --formats=jpg
