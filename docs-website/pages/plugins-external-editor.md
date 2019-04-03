@@ -7,15 +7,18 @@ permalink: /plugins/external-text-editor
 order: 110
 ---
 
-## Define a code editor for Plugins
-
-Have a favorite code editor? You can tell Sketch to use it to edit Plugins. For example, if you use [Atom](https://atom.io) you can do this:
+Use your favourite text editor such as [Atom](https://atom.io) or [Visual Studio Code](https://code.visualstudio.com) to write Sketch plugins by setting a user defaults on the command-line.
 
 ```shell
-defaults write com.bohemiancoding.sketch3 "Plugin Editor" "/usr/local/bin/atom"
+defaults write com.bohemiancoding.sketch3 "Plugin Editor" "/usr/local/bin/code"
 ```
 
-and relaunch Sketch, you'll see a couple of new menu items:
+**Note:** Restart Sketch for the changes to take effect.
 
-- Go to Preferences › Plugins and right click any of the listed Plugins. You'll see an 'Edit Code…' option that will launch your editor with the selected Plugin's code open.
-- Open the Plugins menu, and you'll see an 'Edit Plugins…' option, that will launch your editor with the whole 'Plugins' folder open.
+### Usage
+
+Open _Preferences_ › _Plugins_ from the menu and show the context menu on the plugin of the plugin you want to edit and select _Edit Code…_.
+
+<img src="/images/developer/plugin-edit-code.png"
+     alt="Run script menu"
+     width="626" />
