@@ -1,8 +1,8 @@
 ---
-title: Publish a plugin update
+title: Update a plugin
 section: plugins
 chapter: Guides
-permalink: /plugins/publish-a-plugin-update
+permalink: /plugins/update-a-plugin
 
 order: 106
 ---
