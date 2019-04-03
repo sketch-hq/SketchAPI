@@ -24,6 +24,14 @@ A shared style (either a layer style or a text style).
 | name<span class="arg-type">string</span>                                              | The name of the Shared Style.      |
 | style<span class="arg-type">[Style](#style)</span>                                    | The Style value that is shared.    |
 
+> Note that the `id` of a Shared Style coming from a Library might look like this: `FBFF821E-20F3-48C5-AEDC-89F97A8C2344[D1A683E0-5333-4EBE-977C-48F64F934E99]`.
+>
+> If you have a Symbol Instance which has a Layer using a Shared Style from a Library and a Layer in the Document using the same Shared Style from the Library, the style will be imported twice; once for use in the layer and once for use by the foreign Symbol. The reason for this is to do with syncing. If you change the Shared Style in the Library it will cause both the Symbol Instance and the Shared Style to be out-of-date in the document. This will be shown in the component sync sheet, but you can choose only to sync the Shared Style (or the Symbol). Using these “private” Shared Styles means that syncing just the shared style doesn’t implicitly also sync the symbol.
+>
+> The format of these symbol private shared style IDs is `SYMBOLID[STYLEID]` Where: `STYLEID` is the id of the original Shared Style in the original Library. And `SYMBOLID` is the new symbolId of the foreign symbol in the destination document.
+>
+> Where we have such as symbol private style, the same ID will be used both as the local ID and as the remote ID.
+
 ## Create a new Shared Style from a Style
 
 ```javascript
