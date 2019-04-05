@@ -17,7 +17,7 @@ Note: SketchTool requires OSX 10.11 or higher.
 
 ### Important
 
-SketchTool is free to use, but it comes with absolutely no warranty. That being said, if you find any bugs or have any feature request, please [send us an email](mailto:mail@sketchapp.com) and we'll do our best to improve it.
+SketchTool is free to use, but it comes with absolutely no warranty. That being said, if you find any bugs or have any feature request, please [send us an email](mailto:mail@sketch.com) and we'll do our best to improve it.
 
 SketchTool can only export a document if all the fonts that it uses have been installed on the system.
 
