@@ -49,6 +49,7 @@ export function alert(title, text) {
 
 export const INPUT_TYPE = {
   string: 'string',
+  textarea: 'string',
   slider: 'slider',
   selection: 'selection',
   // coming soon
@@ -84,6 +85,44 @@ export function getInputFromUser(messageText, options, callback) {
     case INPUT_TYPE.string:
       accessory = NSTextField.alloc().initWithFrame(NSMakeRect(0, 0, 295, 25))
       accessory.setStringValue(
+        String(
+          typeof options.initialValue === 'undefined'
+            ? ''
+            : options.initialValue
+        )
+      )
+      dialog.window().setInitialFirstResponder(accessory)
+      break
+    case INPUT_TYPE.textarea:
+      let numberOfLines = 3
+      let FLT_MAX = 10000000 // c library replacement
+      if (typeof options.numberOfLines !== 'undefined') {
+        numberOfLines = options.numberOfLines
+      }
+
+      let accessory = NSScrollView.alloc().initWithFrame(
+        NSMakeRect(20, 20, 295, 22 * numberOfLines)
+      )
+      let contentSize = accessory.contentSize()
+      accessory.setHasVerticalScroller(true)
+      accessory.setHasHorizontalScroller(false)
+      accessory.setAutoresizingMask(NSViewWidthSizable | NSViewHeightSizable)
+
+      textView = NSTextView.alloc().initWithFrame(
+        NSMakeRect(0, 0, contentSize.width(), contentSize.height())
+      )
+      textView.setMinSize(NSMakeSize(0.0, contentSize.height()))
+      textView.setMaxSize(NSMakeSize(FLT_MAX, FLT_MAX))
+      textView.setVerticallyResizable(true)
+      textVew.setHorizontallyResizable(false)
+      textView.setRichText(false)
+      textView.setAutoresizingMask(NSViewWidthSizable)
+      textView
+        .textContainer()
+        .setContainerSize(NSMakeSize(contentSize.width(), FLT_MAX))
+      textView.textContainer().setWidthTracksTextView(true)
+
+      textView.setString(
         String(
           typeof options.initialValue === 'undefined'
             ? ''
