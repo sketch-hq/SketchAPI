@@ -7,23 +7,19 @@ permalink: /plugins/plugin-manifest
 order: 201
 ---
 
-The manifest is a JSON file containing metadata about the Plugin, its commands and resources.
+The manifest is a JSON file that provides information about a plugin such as author, description, icon and where to get the latest update from. It also tells Sketch how to run the plugin, for instance what menu items should be available.
 
-It describes such things as the full name, a description, and the name of the author. It lists the names of any commands defined by the Plugin, and tells Sketch what to call the corresponding menu items and which menus to put them in.
-
-Here’s an example:
-
-<a id="manifest-json-example"></a>
+## Example manifest
 
 ```json
 {
   "name": "Select Shapes",
-  "description": "Plugins to select and deselect shapes",
-  "author": "Joe Bloggs",
-  "homepage": "https://github.com/example/sketchplugins",
+  "description": "Quickly select all or just specific shape types",
+  "author": "Bob Ross",
+  "homepage": "https://github.com/example/select-shapes",
   "version": "1.0",
-  "identifier": "com.example.sketch.shape-plugins",
-  "appcast": "https://excellent.sketchplugin.com/excellent-plugin-appcast.xml",
+  "identifier": "com.example.sketch.plugin.select-shapes",
+  "appcast": "https://example.com/select-shapes-plugin-appcast.xml",
   "compatibleVersion": "3",
   "bundleVersion": 1,
   "commands": [
@@ -37,12 +33,12 @@ Here’s an example:
     {
       "name": "Circles",
       "identifier": "circles",
-      "script": "Select Circles.cocoascript"
+      "script": "circles.js"
     },
     {
       "name": "Rectangles",
       "identifier": "rectangles",
-      "script": "Select Rectangles.cocoascript"
+      "script": "rectangles.js"
     }
   ],
   "menu": {
