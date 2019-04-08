@@ -7,7 +7,7 @@ permalink: /plugins/plugin-manifest
 order: 201
 ---
 
-The manifest is a JSON file that provides information about a plugin such as author, description, icon and where to get the latest update from. It also tells Sketch how to run the plugin, for instance what menu items should be available.
+The manifest is a JSON file that provides information about a plugin such as author, description, icon and where to get the latest update from. It also tells Sketch how to run the plugin and how it integrates into the _Plugins_ menu.
 
 ## Example manifest
 
@@ -70,7 +70,7 @@ Specfies the version of the plugin bundle's metadata structure and file layout. 
 
 #### `compatibleVersion`
 
-Defines the minimum version of Sketch required to run the plugin. This string must be provided using semantic versioning.
+Defines the minimum version of Sketch required to run the plugin. This string must be provided using [semantic versioning](semantic versioning).
 
 ```json
 "compatibleVersion": "52.1"
@@ -144,7 +144,7 @@ Defines a unique identifier for the plugin. This value is a string using reverse
 
 #### `maxCompatibleVersion`
 
-Defines the maximum version of Sketch supported by the plugin. This string is optional and must be using semantic versioning if provided.
+Defines the maximum version of Sketch supported by the plugin. This string is optional and must be using [semantic versioning](semantic versioning) if provided.
 
 ```json
 "compatibleVersion": "54"
@@ -202,3 +202,5 @@ Provides information about the menu layout of the plugin. Sketch initializes the
 | `isRoot` | Specifies that menu items are created directly within the _Plugins_ menu in Sketch. By default Sketch creates a submenu for the plugin. This value is not supported for submenus. |
 | `items`  | An array of menu items, supported values are command identifier, `"-"` separator and a dictionary defining a submenu                                                              |
 | `title`  | Provides the human readable title used for the menu item. The value is ignored if the menu item also has `isRoot` set to `true`.                                                  |
+
+[semantic versioning]: http://semver.org
