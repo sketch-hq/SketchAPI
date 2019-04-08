@@ -10,17 +10,29 @@ redirect_from:
 order: 1
 ---
 
-Use Sketch APIs to write your own plugins.
+Write a Sketch plugin in JavaScript. Take advantage of ES6, access macOS frameworks and use the Sketch APIs without learning Objective-C or Swift.
 
-When Sketch starts up, it scans a folder on your disk looking for Plugins.
+## Plugin location
+
+When Sketch is launched, it scans the disc within the user's home folder for installed plugins.
 
 ```
 ~/Library/Application Support/com.bohemiancoding.sketch3/Plugins
 ```
 
-_(~ here is shorthand for your home folder, e.g. `/Users/joe`)_
+If an update was updated, the previously installed version is kept in a separate folder.
 
-You can access this Plugins folder easily by holding `Alt` while opening the Plugins menu and then choosing 'Reveal Plugins Folder'.
+```
+~/Library/Application Support/com.bohemiancoding.sketch3/PluginsWarehouse
+```
+
+> **Quick tipp:** You can access the plugins folder by holding `alt` while opening the _Plugins_ menu in Sketch and then choose 'Reveal Plugins Folder'.
+
+### Install a plugin
+
+See the [Sketch documentation](https://sketch.com/docs/plugins/) on how to install plugins.
+
+For development
 
 ### Installing Plugins
 
@@ -30,7 +42,7 @@ Alternatively, you can install plugins by simply moving them into the Plugins fo
 
 _Note: Sketch also supports using aliases and links to individual Plugins, or to the Plugins folder itself. This allows you to place them elsewhere (for example, a Dropbox folder to keep multiple installs of Sketch synced)._
 
-### Removing Plugins
+### Uninstall Plugins
 
 To remove a Plugin, just select the **Plugins › Manage Plugins…** menu option, select the Plugin you want to remove from the list, and either right click the plugin or click the gear icon and select _Uninstall "Plugin Name"_:
 
@@ -52,10 +64,6 @@ Alternatively, you can just uncheck any Plugin on the list to disable it without
 
 Explore some [sample plugins](https://github.com/BohemianCoding/SketchAPI/tree/develop/examples/) built by Sketch.
 
-## Install a plugin
-
-See the [Sketch documentation](https://sketch.com/docs/plugins/) on how to install and disable plugins.
-
 ## Find plugins
 
 - [Sketch Plugins](https://sketch.com/extensions/plugins)
@@ -76,12 +84,12 @@ See the [Sketch documentation](https://sketch.com/docs/plugins/) on how to insta
 - [Eloquent JavaScript](http://eloquentjavascript.net)
 - [JavaScript: The Good Parts](http://shop.oreilly.com/product/9780596517748.do)
 
-## Cocoa
+### Cocoa
 
 - [AppKit](https://developer.apple.com/documentation/appkit?language=objc), one the main Apple frameworks that Sketch is built on.
 - [Foundation](https://developer.apple.com/documentation/foundation?language=objc), more essential Apple classes and services.
 
-## CocoaScript
+### CocoaScript
 
 - [Sketch Plugins Cookbook](https://github.com/turbobabr/Sketch-Plugins-Cookbook), an amazing collection of tips and information, from [Andrey Shakhmin](https://github.com/turbobabr)
 - [Sketch Plugin Snippets for Plugin Developers](https://medium.com/sketch-app-sources/sketch-plugin-snippets-for-plugin-developers-e9e1d2ab6827#.a3xn6hth6)
