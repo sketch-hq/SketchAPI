@@ -4,5 +4,5 @@ section: plugins
 chapter: JavaScript API
 permalink: /plugins/javascript-dom
 
-order: 300
+order: 301
 ---

@@ -11,6 +11,10 @@ The manifest is a JSON file that provides information about a plugin such as aut
 
 ## Example manifest
 
+The example plugin below called _Select Shapes_ defines three commands _All_, _Circles_ and _Rectangles_ which can be accessed from _Plugins_ › _Select Shape_.
+
+It also includes an `appcast` URL for Sketch to automatically check if a new version of the plugin are available.
+
 ```json
 {
   "name": "Select Shapes",
@@ -20,8 +24,7 @@ The manifest is a JSON file that provides information about a plugin such as aut
   "version": "1.0",
   "identifier": "com.example.sketch.plugin.select-shapes",
   "appcast": "https://example.com/select-shapes-plugin-appcast.xml",
-  "compatibleVersion": "3",
-  "bundleVersion": 1,
+  "compatibleVersion": "52.1",
   "commands": [
     {
       "name": "All",
@@ -47,185 +50,155 @@ The manifest is a JSON file that provides information about a plugin such as aut
 }
 ```
 
-This Plugin is called “Select Shapes”. It defines three commands “All”, “Circles”, and “Rectangles”, which will be placed in a “Select Shapes” menu.
-
-This plugin can be updated by Sketch. Sketch will download the file at the location specified by `appcast` and use it to determine if an update is available or not.
-
-Unpacking this file a bit further, here are the supported keys and what they are for:
-
-#### `name`
-
-The name for this Plugin. This is used by default as the name of the sub-menu in which the Plugin’s menu commands will appear.
-
-#### `description`
-
-A string describing what this Plugin’s command (or commands) do.
-
-#### `author`
-
-A string specifying the author of the Plugin.
-
-#### `authorEmail`
-
-An optional string specifying how to contact the Plugin author by email.
-
-#### `icon`
-
-The resource path to the icon for this Plugin. This is used in the Plugin list and when showing an alert from your plugin. Must be a 128x128 PNG.
-
-#### `homepage`
-
-An optional string specifying an online resource for the user to find out more information or provide feedback for the Plugin.
-
-#### `version`
-
-A string specifying the [semantic version][semantic versioning] for the Plugin, for example `1.0`, `1.1.1`.
-
-#### `identifier`
-
-A string specifying a unique identifier for the Plugin.
-
-Reverse-domain syntax is strongly encouraged, for example `com.example.sketch.shape-plugins`.
-
-Sketch uses this string internally to track the Plugin, store settings for it, etc.
+## Members
 
 #### `appcast`
 
-A string specifying a URL to the appcast file. The appcast file contains information about updates to the plugin, like the versions of available updates and where the updates can be downloaded from. Sketch downloads this file to determine if there are plugin updates available.
+A URL to the plugin's appcast file containing information about the available versions including URLs to download specific versions. Sketch automatically checks this file for updates and notifies the user when there's an update available.
 
-#### `compatibleVersion` and `maxCompatibleVersion`
+#### `author`
 
-A string specifying the [version][semantic versioning] of Sketch in which the author has tested the Plugin, for example `3`, `3.1`, `3.2.2`.
+Provides the name of the plugin author.
 
-At the moment (Sketch 3.4) this is an optional key, but we could use it as a filtering option in the [Plugins page](https://sketch.com/plugins/) at some point.
+#### `authorEmail`
 
-Internally it uses the [BCCompareVersions](https://github.com/BohemianCoding/BCFoundation/blob/develop/Source/BCVersionComparison.m#L11) function, which splits the string by `.`, then compares the integer value of each component.
+Specifies how to contact the plugin author by email. This is optional.
 
 #### `bundleVersion`
 
-The version for the layout of the bundle an metadata. If excluded it is assumed the value is 1.
+Specfies the version of the plugin bundle's metadata structure and file layout. This is optional, default `1`. No other versions are currently supported.
 
-This is just a future-proofing mechanism for us. If, in the future, we see a plugin with a bundleVersion > 1, we'd know that we could treat the other values in the metadata differently.
+#### `compatibleVersion`
 
-For now it's fine to omit it.
+Defines the minimum version of Sketch required to run the plugin. This string must be provided using semantic versioning.
 
-#### `suppliesData`
-
-Indicates if the plugin supplies some data. If `true`, it results in the data icon showing in the plugin preferences for the plugin.
-
-#### `disableCocoaScriptPreprocessor`
-
-This is an advanced setting, and it defaults to `false`. When set to `true`, it will disable CocoaScript's own preprocessor. This way, you'll be able to use build systems like [skpm](https://skpm.io) or ES6 module syntax to develop your plugins.
-
-Setting this option to `true` does the following:
-
-- disables `@import` support, you'll have to take care of your imports manually
-- disables bracket syntax (i.e: `[obj msg:]`), you'll have to use dot-syntax only
-
-Note that if you use `skpm`, it will default to `true` instead.
+```json
+"compatibleVersion": "52.1"
+```
 
 #### `commands`
 
-An array of commands that the Plugin defines.
+An array of dictionaries defining all commands provided by the plugin.
 
-Each item within the array is a dictionary specifying the name, shortcut and other properties of the command. See [Plugin Commands](#plugin-commands) for more details.
+```json
+"commands": [
+  {
+    "name": "All",
+    "identifier": "all",
+    "shortcut": "ctrl shift a",
+    "script": "shared.js",
+    "handler": "selectAll"
+  }
+]
+```
 
-#### `menu`
-
-A dictionary describing the menu layout for the commands in this Plugin.
-
-See [Plugins Menu](#plugins-menu) for more details on the contents of this dictionary, and how the menu for each Plugin is built.
-
-#### `scope`
-
-If present, and set to `"application"`, enables the plugin to be run when there are no documents open in Sketch.
-
-## Plugin Commands
-
-A Plugin defines one or more commands for the user to execute.
-
-The commands array in the manifest describes these. Each entry in the array is a dictionary, with the following properties:
-
-#### `name`
-
-The display name for the command. This value is used in the Plugins menu.
-
-#### `identifier`
-
-A string specifying a unique identifier for the command within the Plugin bundle. This is used to consistently map commands to actions, irrespective of command name changes.
-
-#### `shortcut`
-
-An optional string specifying a default keyboard shortcut for this command, for example: `ctrl t`, `cmd t`, `ctrl shift t`.
-
-#### `script`
-
-The relative path within the Plugin bundle’s `Sketch` folder for the script that implements this command.
-
-#### `handler`
-
-The name of the function with the script to call this command. The function must take a single `context` parameter, which is a dictionary with keys for things like the current document and selection. If unspecified the command is expected to be `export default`:
+##### Example handler definitions
 
 ```js
-// unspecified handler
-export default function (context) {
-  var doc = context.document;
-  var selection = context.selection;
-  …
+// default handler
+export default function(context) {
+  console.log(context.selection)
 }
 
-// onSelection handler
-export function onSelection(context) {
-  var doc = context.document;
-  var selection = context.selection;
-  …
+// explicitly defined handler
+export function selectAll(context) {
+  console.log(context.document)
 }
 ```
 
-## Plugins Menu
+| Member       | Description                                                                                                                                                                                                                                           |
+| ------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `identifier` | Defines a unique identifier of the command within the plugin bundle.                                                                                                                                                                                  |
+| `name`       | Provides the name of the command which is used within the _Plugins_ menu.                                                                                                                                                                             |
+| `shortcut`   | Provides a default keyboard shortcut for the command, e.g. `ctrl shift t`.                                                                                                                                                                            |
+| `script`     | Specifies the relative path within the plugin bundle's `Sketch` folder to the script implementing the command.                                                                                                                                        |
+| `handler`    | Specifies the name of function to be called with the command. The function must accept a single `context` parameter, containing information such as the current document and selection. If unspecified the command is expected to be `export default` |
 
-When it loads a Plugin, Sketch creates a menu for it, and populates that menu using information from the “menu” dictionary in the manifest file.
+#### `description`
 
-This dictionary can contain the following keys.
+Provides a general description of what the plugin does.
 
-#### `title`
+#### `disableCocoaScriptPreprocessor`
 
-A string specifying the title to use for the submenu.
+Defines if the CocoaScript preprocessor should be used for the plugin's scripts. Set to true to use ES6 syntax and build systems like [skpm](https://skpm.io).
 
-#### `items`
+When disabled, `@import` and bracket syntax, i.e. `[obj hello: world]` are no longer supported.
 
-This is an array which lists the items to include in the menu.
+This value is optional, default `false`, set to `true` when using `skpm`.
 
-It can contain items of three types:
+#### `homepage`
 
-- a string giving the identifier of a command
-- a string `"-"` to add a separator line
-- a dictionary describing a sub-menu (containing "title" and "items")
+Specifies a the website address of where to find more information or provide feedback for the plugin. This is optional.
 
-#### `isRoot`
+#### `icon`
 
-By default, the menu items listed in this dictionary will appear in a menu with the name specified by the _title_ key.
+The path to the plugin icon used within Sketch, e.g. within preferences. The icon must be provided as a PNG file at a resolution of 128x128px and located directly or in a subfolder within `Contents/Resources` of the plugin bundle.
 
-If the isRoot key is specified, with a value of true, the items will instead be inserted at the root level of the Plugins menu, rather than in a subfolder. In this case, the _title_ key will be ignored.
+#### `identifier`
 
-_This key is ignored in sub-menus._
+Defines a unique identifier for the plugin. This value is a string using reverse-domain syntax.
 
-### Menu Example
+```json
+"identifier": "com.example.sketch.plugin.select-shapes"
+```
 
-Here’s an example. It defines three commands in a menu called “My Plugin Menu”. The first two items of the menu correspond to two of the Plugin’s commands, but the third item is a submenu called “My Plugin Submenu”. This submenu has a single item in it (the third of the Plugin’s commands):
+#### `maxCompatibleVersion`
+
+Defines the maximum version of Sketch supported by the plugin. This string is optional and must be using semantic versioning if provided.
+
+```json
+"compatibleVersion": "54"
+```
+
+#### `name`
+
+Provides a human-readable name for the plugin when displayed to the user, e.g. within the _Plugins_ menu or the list of installed plugins in the Sketch preferences.
+
+#### `scope`
+
+Specifies if the plugin can be run without an open Sketch document.
+
+- `document`: default, disables the plugin's menu items when no document is open
+- `application`: enables the plugin menu and allow to run the plugin without an open document
+
+```json
+"scope": "application"
+```
+
+#### `suppliesData`
+
+Specifies if the plugin is a data supplier. If set to `true` a visual identicator is displayed with the plugin within the preferance pane showing the list of all installed plugins.
+
+#### `version`
+
+The version of the plugin using [semantic versioning][semantic versioning].
+
+```json
+"version": "1.0.1"
+```
+
+#### `menu`
+
+Provides information about the menu layout of the plugin. Sketch initializes the menu when loading the plugin.
 
 ```json
 {
   "menu": {
-    "title": "My Plugin Menu",
+    "title": "Select Shapes",
     "items": [
-      "command1-identifier",
-      "command2-identifier",
+      "selectAll",
+      "-",
       {
-        "title": "My Plugin Submenu",
-        "items": ["command3-identifier"]
+        "title": "Select…",
+        "items": ["circles", "rectangles"]
       }
     ]
   }
 }
 ```
+
+| Member   | Description                                                                                                                                                                       |
+| -------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `isRoot` | Specifies that menu items are created directly within the _Plugins_ menu in Sketch. By default Sketch creates a submenu for the plugin. This value is not supported for submenus. |
+| `items`  | An array of menu items, supported values are command identifier, `"-"` separator and a dictionary defining a submenu                                                              |
+| `title`  | Provides the human readable title used for the menu item. The value is ignored if the menu item also has `isRoot` set to `true`.                                                  |
