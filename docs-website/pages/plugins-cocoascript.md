@@ -11,42 +11,37 @@ redirect_from:
 
 summary: Some more details on how to use CocoaScript
 
-order: 400
+order: 203
 ---
 
-Sketch Plugins are made possible by [Mocha](https://github.com/logancollins/Mocha) and [CocoaScript](https://github.com/ccgus/CocoaScript), a bridge that lets you use Objective-C/Cocoa code from an external script written in JavaScript. The bridge takes care of the translation between JavaScript and Cocoa, so you can concentrate on the important parts (namely, making Sketch do awesome stuff).
+[CocoaScript](https://github.com/ccgus/CocoaScript) is a bridge providing access to the internal Sketch APIs and macOS frameworks in JavaScript.
 
-From CocoaScript’s README:
+From CocoaScript’s `README`:
 
 > CocoaScript is built on top of Apple’s JavaScriptCore, the same JavaScript engine that powers Safari. So when you write in CocoaScript, you are really writing JavaScript.
 >
 > CocoaScript also includes a bridge which lets you access Apple’s Cocoa frameworks from JavaScript. This means you have a ton wonderful classes and functions you can use in addition to the standard JavaScript library.
 
-## JavaScript environment
+## Syntax
 
-Your plugin's script does not run in a browser but in a JavaScriptCore context. Hence the JavaScript environment it is running in is a bit uncommon.
+The square bracket syntax of Objective-C is converted to dot-syntax in JavaScript. Internally CocoaScript creates opaque JavaScript proxy objects which have the following attributes.
 
-- The [JavaScript standard library](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects) is available.
-- `console`, `setTimeout`, `setInterval`, etc. are available.
-- Every thing else isn't. That means that `fetch`, `window`, `navigator` etc. are not available.
-- NodeJS core modules are not available.
-
-That being said, if you use `skpm`, it will automatically polyfill some things for you: [`fetch`](https://github.com/skpm/sketch-polyfill-fetch).
-
-## Accessing Cocoa and Sketch APIs
-
-You can access all Cocoa and Sketch APIs from CocoaScript.
-
-Objective-C properties behave as they should on the JavaScript side of the bridge.
-
-Objective-C methods are exposed as properties of the object's opaque JavaScript proxy.
-
-The following steps are taken when converting a selector name to the JavaScript property name:
-
-- All colons are converted to underscores (the latest underscore is optional).
+- Objective-C properties are also JavaScript properties.
+- Objective-C selectors are exposed as methods of the JavaScript proxy.
+- `:` are converted to `_`, the last underscore is optional.
 - Each component of the selector is concatenated into a single string with no separation.
 
-As such, a selector such as `executeOperation:withObject:error:` is converted to the function name `executeOperation_withObject_error()`.
+### Objective-C
+
+```obj-c
+[executeOperation:withObject:error:]
+```
+
+### JavaScript
+
+```js
+executeOperation_withObject_error()
+```
 
 For example, if you want to open a File Picker panel, you can use the [NSOpenPanel](https://developer.apple.com/documentation/appkit/nsopenpanel?language=objc) class:
 
