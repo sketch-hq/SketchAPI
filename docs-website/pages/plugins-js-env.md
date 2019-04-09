@@ -33,3 +33,16 @@ See all official polyfills [on Github](https://github.com/search?q=topic%3Apolyf
 ## Use macOS frameworks and dynamic Sketch runtime
 
 All macOS frameworks and the internal Sketch APIs are made available to JavaScript by CocoaScript. For a more detailed overview see the [CocoaScript documentation](/plugins/cocoascript).
+
+## Asyncronous operations
+
+The JavaScript context of a Sketch plugin is short-lived. Whenever a plugin is run, a new JavaScript environment is initialized and destroyed as soon as the script finished. To run and wait for asynchronous operations to complete, use fibers to keep the JavaScript environment alive.
+
+```js
+let fiber = require('sketch/async').createFiber()
+
+longRunningAsyncTask(function(res) {
+  // after completion, tell the fiber we're done
+  fiber.cleanup()
+})
+```

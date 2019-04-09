@@ -43,49 +43,26 @@ The square bracket syntax of Objective-C is converted to dot-syntax in JavaScrip
 executeOperation_withObject_error()
 ```
 
-For example, if you want to open a File Picker panel, you can use the [NSOpenPanel](https://developer.apple.com/documentation/appkit/nsopenpanel?language=objc) class:
+## Pointer
+
+Some Objective-C selectors require pointer parameters. Since JavaScript does not support passing objects by reference CocoaScript provides `MOPointer`, a proxy object to create references from variables.
 
 ```js
-var openPanel = NSOpenPanel.openPanel()
-openPanel.setCanChooseDirectories(false)
-openPanel.setCanChooseFiles(true)
-openPanel.setCanCreateDirectories(false)
-openPanel.setDirectoryURL(NSURL.fileURLWithPath('~/Documents/'))
+let str = NSMutableString.alloc().init()
+let pointer = MOPointer.alloc().initWithValue(str)
 
-openPanel.setTitle('Choose a file')
-openPanel.setPrompt('Choose')
-openPanel.runModal()
+str.setString('Hello Sketch')
+console.log(pointer.value())
+
+str.appendString(' 👋')
+console.log(pointer.value())
 ```
 
-If you need more information about Cocoa, check the [Resources](/resources/) section.
-
-## A few specific globals
-
-### Pointer
-
-For some Obj-C selectors, you might need to pass a pointer. That doesn't exist in JavaScript so there is a global method to create one:
-
-```js
-var ptr = MOPointer.alloc().init()
-var ptrToSomething = MOPointer.alloc().initWithValue(something)
-```
-
-### Long running script
-
-If your script is doing something asynchronous, we will need to tell Sketch to keep it around and to not garbage collect it.
-
-You can do so by accessing `COScript`:
-
-```js
-COScript.currentCOScript().shouldKeepAround = true
-```
-
-When the script has finished its work, don't forget to release it:
-
-```js
-COScript.currentCOScript().shouldKeepAround = false
-```
+## Use macOS Frameworks
 
 ## Next Steps
 
-For more information about how the bridge really works, take a look at the [Mocha Readme](https://github.com/logancollins/Mocha), it is really complete (but requires some notion of Obj-C).
+Read more about the internals of CocoaScript and macOS frameworks.
+
+- [Mocha `README`](https://github.com/logancollins/Mocha), please note that Mocha is now included in CocoaScript but the documentation remained on the original repository.
+- [Apple Developer Documentation](https://developer.apple.com/documentation)
