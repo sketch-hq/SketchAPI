@@ -1,5 +1,5 @@
 {
-  "unreleased": [],
+  "unreleased": ["[New] Add `isSelected` method on a CurvePoint"],
   "releases": {
     "54": [
       "[New] Add `colors` and `gradients` properties on Document",
