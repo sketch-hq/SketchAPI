@@ -7,7 +7,9 @@ permalink: /plugins/javascript
 order: 300
 ---
 
-https://developer.mozilla.org/en-US/docs/Web/JavaScript/A_re-introduction_to_JavaScript
+## Resources
+
+[A re-introduction to JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript/A_re-introduction_to_JavaScript) [ECMAScript 2015 (ES6) support in Mozilla](https://developer.mozilla.org/en-US/docs/Web/JavaScript/New_in_JavaScript/ECMAScript_2015_support_in_Mozilla)
 
 ## Terminology
 
@@ -37,8 +39,6 @@ sketch.UI.message('Hello, world!')
 It renders a toast saying “Hello, world!” at the bottom of the Sketch document. You can run a handler implementation directly in the `Run Script` panel, try it!
 
 ## A note on JavaScript
-
-Sketch plugins are written in JavaScript, and so we assume that you have a basic understanding of the JavaScript language. If you don’t feel very confident, we recommend [refreshing your JavaScript knowledge](https://developer.mozilla.org/en-US/docs/Web/JavaScript/A_re-introduction_to_JavaScript) so you can follow along more easily.
 
 We also use some of the ES6 syntax in the examples. We try to use it sparingly because it’s still relatively new, but we encourage you to get familiar with [arrow functions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions), [let](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/let), and [const](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/const) statements.
 
