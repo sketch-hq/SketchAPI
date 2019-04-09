@@ -190,10 +190,10 @@ export function find(predicate, root) {
   const children =
     root.type == Types.Document
       ? root.sketchObject.pages().reduce((prev, page) => {
-          prev.addObjectsFromArray(page.children())
+          prev.addObjectsFromArray(page.childrenIncludingSelf(true))
           return prev
         }, NSMutableArray.new())
-      : root.sketchObject.children()
+      : root.sketchObject.childrenIncludingSelf(false)
 
   const matches = children.filteredArrayUsingPredicate(nativePredicate)
 
