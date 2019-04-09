@@ -1,14 +1,3 @@
-export function getDocumentData(document) {
-  let documentData = document
-
-  if (document && document.sketchObject && document.sketchObject.documentData) {
-    documentData = document.sketchObject.documentData()
-  } else if (document && document.documentData) {
-    documentData = document.documentData()
-  }
-  return documentData
-}
-
 export function isWrappedObject(object) {
   return object && object._isWrappedObject
 }
@@ -16,7 +5,9 @@ export function isWrappedObject(object) {
 export function getURLFromPath(path) {
   return typeof path === 'string'
     ? NSURL.fileURLWithPath(
-        NSString.stringWithString(path).stringByExpandingTildeInPath()
+        NSString.stringWithString(
+          path.replace(/^file:\/\//, '')
+        ).stringByExpandingTildeInPath()
       )
     : path
 }
@@ -93,4 +84,73 @@ export function FloatingPointNumber(x) {
   // cast to number to handle NSInteger and such
   const number = Number(x)
   return Number(number.toFixed(precision))
+}
+
+/*
+  This function returns an array which mutating methods (`reverse`, `pop`, etc.)
+  have been hooked so that they can trigger a mutation in the Sketch model
+
+  * descriptor needs `set`, `removeItem` and `insertItem`
+*/
+export function hookedArray(arr, binding, descriptor) {
+  if (!Array.isArray(arr)) {
+    return arr
+  }
+
+  arr.reverse = () => {
+    Array.prototype.reverse.apply(arr)
+    descriptor.set.bind(binding)(arr)
+  }
+  arr.sort = compareFunction => {
+    Array.prototype.reverse.apply(arr, [compareFunction])
+    descriptor.set.bind(binding)(arr)
+  }
+  arr.fill = (value, start, end) => {
+    Array.prototype.reverse.apply(arr, [value, start, end])
+    descriptor.set.bind(binding)(arr)
+  }
+
+  arr.splice = (start, count, ...items) => {
+    if (start < 0) {
+      // eslint-disable-next-line no-param-reassign
+      start += arr.length
+    }
+    if (!start || start < 0 || start > arr.length) {
+      // eslint-disable-next-line no-param-reassign
+      start = 0
+    }
+
+    if (typeof count === 'undefined' || count > arr.length - start) {
+      // eslint-disable-next-line no-param-reassign
+      count = arr.length - start
+    }
+
+    const removedItems = []
+
+    for (let i = start; i < count + start; i += 1) {
+      removedItems.push(descriptor.removeItem.bind(binding)(i))
+    }
+
+    const addedItems = []
+
+    items.forEach((item, i) => {
+      addedItems.push(descriptor.insertItem.bind(binding)(item, start + i))
+    })
+
+    // call the native function
+    Array.prototype.splice.apply(arr, [start, count, ...addedItems])
+    return removedItems
+  }
+
+  arr.push = (...items) => {
+    arr.splice(arr.length, 0, ...items)
+    return arr.length
+  }
+  arr.unshift = (...items) => {
+    arr.splice(0, 0, ...items)
+    return arr.length
+  }
+  arr.pop = () => arr.splice(arr.length - 1)[0]
+  arr.shift = () => arr.splice(0, 1)[0]
+  return arr
 }

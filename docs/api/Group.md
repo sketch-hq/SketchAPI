@@ -18,6 +18,7 @@ A group of layers. It is also an instance of [Layer](#layer) so all the methods 
 | locked<span class="arg-type">boolean</span>                                 | If the group is locked.                                                                         |
 | hidden<span class="arg-type">boolean</span>                                 | If the group is hidden.                                                                         |
 | frame<span class="arg-type">[Rectangle](#rectangle)</span>                  | The frame of the Group. This is given in coordinates that are local to the parent of the layer. |
+| selected<span class="arg-type">boolean</span>                               | If the Group is selected.                                                                       |
 | flow<span class="arg-type">[Flow](#flow)</span>                             | The prototyping action associated with the Group.                                               |
 | exportFormats<span class="arg-type">[ExportFormat](#export-format)[]</span> | The export formats of the Group.                                                                |
 | transform<span class="arg-type">object</span>                               | The transformation applied to the Group.                                                        |

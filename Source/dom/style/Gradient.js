@@ -23,11 +23,15 @@ export class Gradient extends WrappedObject {
     }
     let nativeGradient
     if (isNativeObject(object)) {
-      const className = String(object.class())
-      if (className === 'MSGradient' || className === 'MSImmutableGradient') {
+      if (
+        object.isKindOfClass(MSGradient) ||
+        object.isKindOfClass(MSImmutableGradient)
+      ) {
         nativeGradient = object
       } else {
-        throw new Error(`Cannot create a gradient from a ${className}`)
+        throw new Error(
+          `Cannot create a gradient from a ${String(object.class())}`
+        )
       }
     } else {
       nativeGradient = MSGradient.alloc().initBlankGradient()
@@ -52,6 +56,9 @@ export class Gradient extends WrappedObject {
             typeof object.to.y !== 'undefined' ? object.to.y : 1
           )
         )
+      }
+      if (typeof object.aspectRatio !== 'undefined') {
+        nativeGradient.setElipseLength(object.aspectRatio)
       }
       if (object.stops) {
         nativeGradient.setStops(
@@ -123,6 +130,15 @@ Gradient.define('to', {
         point.y !== 'undefined' ? point.y : 1
       )
     )
+  },
+})
+
+Gradient.define('aspectRatio', {
+  get() {
+    return Number(this._object.elipseLength())
+  },
+  set(length) {
+    this._object.setElipseLength(length)
   },
 })
 

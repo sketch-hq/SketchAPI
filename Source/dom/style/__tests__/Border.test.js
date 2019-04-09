@@ -72,6 +72,7 @@ test('should get the borders', () => {
       gradientType: 'Linear',
       from: { x: 0.5, y: 0 },
       to: { x: 0.5, y: 1 },
+      aspectRatio: 0,
       stops: [
         { position: 0, color: '#ffffffff' },
         { position: 1, color: '#000000ff' },
@@ -88,6 +89,7 @@ test('should get the borders', () => {
       gradientType: 'Linear',
       from: { x: 0.5, y: 0 },
       to: { x: 0.5, y: 1 },
+      aspectRatio: 0,
       stops: [
         { position: 0, color: '#ffffffff' },
         { position: 1, color: '#000000ff' },
@@ -98,6 +100,7 @@ test('should get the borders', () => {
     gradientType: 'Linear',
     from: { x: 0.5, y: 0 },
     to: { x: 0.5, y: 1 },
+    aspectRatio: 0,
     stops: [
       { position: 0, color: '#11223344' },
       { position: 0.5, color: '#00000000' },

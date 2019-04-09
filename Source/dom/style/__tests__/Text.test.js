@@ -2,6 +2,15 @@
 import { Text, Rectangle, Group } from '../..'
 import { VerticalTextAlignmentMap, TextAlignmentMap } from '../Text'
 
+test('should create a text style for a text layer', () => {
+  const { style } = new Text({
+    text: 'Hello!',
+    style: {},
+  })
+
+  expect(style.styleType).toBe('Text')
+})
+
 test('should change the text alignment', () => {
   const text = new Text({
     text: 'blah',

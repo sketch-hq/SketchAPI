@@ -2,16 +2,17 @@
 /* eslint-disable no-param-reassign */
 // eslint-disable-next-line import/named
 import { SymbolMaster, Text, Artboard } from '../..'
-import { createSymbolMaster } from '../../../test-utils'
+import { createSymbolMaster, canBeLogged } from '../../../test-utils'
 
 test('should create a symbol master from an artboard', (context, document) => {
   // build the symbol master
   const { master } = createSymbolMaster(document)
-  // check that a master can be logged
-  log(master)
+
   expect(master.type).toBe('SymbolMaster')
 
   expect(document.getSymbolMasterWithID(master.symbolId)).toEqual(master)
+
+  canBeLogged(master, SymbolMaster)
 })
 
 test('should replace a symbol master by an artboard', (context, document) => {
@@ -69,20 +70,6 @@ test('should create a symbol master with a nested symbol', (context, document) =
   expect(instance.overrides.length).toBe(3)
   const result0 = {
     type: 'Override',
-    id: `${nestedInstance.id}_symbolID`,
-    path: nestedInstance.id,
-    property: 'symbolID',
-    symbolOverride: true,
-    value: nestedInstance.symbolId,
-    isDefault: true,
-    editable: true,
-    affectedLayer: nestedInstance.toJSON(),
-  }
-  delete result0.affectedLayer.overrides
-  delete result0.affectedLayer.selected
-  result0.affectedLayer.style = instance.overrides[0].affectedLayer.style.toJSON()
-  const result1 = {
-    type: 'Override',
     id: `${text2.id}_stringValue`,
     path: text2.id,
     property: 'stringValue',
@@ -91,6 +78,22 @@ test('should create a symbol master with a nested symbol', (context, document) =
     isDefault: true,
     editable: true,
     affectedLayer: text2.toJSON(),
+    selected: false,
+  }
+  delete result0.affectedLayer.overrides
+  delete result0.affectedLayer.selected
+  result0.affectedLayer.style = instance.overrides[0].affectedLayer.style.toJSON()
+  const result1 = {
+    type: 'Override',
+    id: `${nestedInstance.id}_symbolID`,
+    path: nestedInstance.id,
+    property: 'symbolID',
+    symbolOverride: true,
+    value: nestedInstance.symbolId,
+    isDefault: true,
+    editable: true,
+    affectedLayer: nestedInstance.toJSON(),
+    selected: false,
   }
   delete result1.affectedLayer.overrides
   delete result1.affectedLayer.selected
@@ -105,6 +108,7 @@ test('should create a symbol master with a nested symbol', (context, document) =
     isDefault: true,
     editable: true,
     affectedLayer: text.toJSON(),
+    selected: false,
   }
   delete result2.affectedLayer.selected
   result2.affectedLayer.style = instance.overrides[2].affectedLayer.style.toJSON()

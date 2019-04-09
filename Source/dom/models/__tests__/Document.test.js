@@ -3,12 +3,13 @@ import {
   isRunningOnJenkins,
   createSymbolMaster,
   createSharedStyle,
+  canBeLogged,
 } from '../../../test-utils'
 import { Document, Group, Shape, Text } from '../..'
 
 test('should be able to log a document', (context, document) => {
-  log(document)
   expect(true).toBe(true)
+  canBeLogged(document, Document)
 })
 
 test('should return the pages', (context, document) => {
@@ -30,6 +31,9 @@ test('should return the selected layers', (context, document) => {
 
   expect(group.selected).not.toBe(false)
   expect(selection.isEmpty).toBe(false)
+
+  document.selectedLayers = [] // eslint-disable-line
+  expect(selection.isEmpty).toBe(true)
 })
 
 test('should look for a layer by its id', (context, document) => {
@@ -76,7 +80,19 @@ test('should look for a shared layer style by its id', (context, document) => {
 test('should list all the shared layer styles', (context, document) => {
   const { sharedStyle } = createSharedStyle(document, Shape)
 
-  expect(document.getSharedLayerStyles()).toEqual([sharedStyle])
+  expect(document.sharedLayerStyles.length).toBe(1)
+  expect(document.sharedLayerStyles[0]).toEqual(sharedStyle)
+
+  document.sharedLayerStyles.push({
+    name: 'test2',
+    style: { fills: ['#000'] },
+  })
+
+  expect(document.sharedLayerStyles.length).toBe(2)
+
+  document.sharedLayerStyles.pop()
+
+  expect(document.sharedLayerStyles.length).toBe(1)
 })
 
 test('should look for a shared text style by its id', (context, document) => {
@@ -88,7 +104,75 @@ test('should look for a shared text style by its id', (context, document) => {
 test('should list all the shared text styles', (context, document) => {
   const { sharedStyle } = createSharedStyle(document, Text)
 
-  expect(document.getSharedTextStyles()).toEqual([sharedStyle])
+  expect(document.sharedTextStyles.length).toBe(1)
+  expect(document.sharedTextStyles[0]).toEqual(sharedStyle)
+})
+
+test('should reset document colors', (context, document) => {
+  const doc = document
+  doc.colors = ['#FFFFFF', '#AAAAAA']
+  expect(document.colors[0].color).toEqual('#ffffffff')
+  expect(document.colors[1].color).toEqual('#aaaaaaff')
+})
+
+test('should append document colors', (context, document) => {
+  const doc = document
+  doc.colors = ['000000']
+  doc.colors.push('#FFFFFF')
+  expect(document.colors.length).toEqual(2)
+  expect(document.colors[1].color).toEqual('#ffffffff')
+})
+
+test('should remove document color', (context, document) => {
+  const doc = document
+  doc.colors = ['#FFFFFF', '#000000']
+  expect(document.colors.length).toEqual(2)
+  doc.colors.splice(1, 1)
+  expect(document.colors.length).toEqual(1)
+  expect(document.colors[0].color).toEqual('#ffffffff')
+})
+
+test('should reset document gradients', (context, document) => {
+  const doc = document
+  doc.gradients = [
+    {
+      gradient: {},
+      name: 'Gradient 1',
+    },
+    {
+      gradient: {},
+      name: 'Gradient 2',
+    },
+  ]
+  expect(document.gradients[0].name).toEqual('Gradient 1')
+  expect(document.gradients[1].name).toEqual('Gradient 2')
+})
+
+test('should append document gradients', (context, document) => {
+  const doc = document
+  doc.gradients = [{ gradient: {}, name: 'Gradient 1' }]
+  doc.gradients.push({ gradient: {}, name: 'Gradient 2' })
+  expect(document.gradients.length).toEqual(2)
+  expect(document.gradients[0].name).toEqual('Gradient 1')
+  expect(document.gradients[1].name).toEqual('Gradient 2')
+})
+
+test('should remove document gradients', (context, document) => {
+  const doc = document
+  doc.gradients = [
+    {
+      gradient: {},
+      name: 'Gradient 1',
+    },
+    {
+      gradient: {},
+      name: 'Gradient 2',
+    },
+  ]
+  expect(document.gradients.length).toEqual(2)
+  doc.gradients.splice(0, 1)
+  expect(document.gradients.length).toEqual(1)
+  expect(document.gradients[0].name).toEqual('Gradient 2')
 })
 
 // some tests cannot really run on jenkins because it doesn't have access to MSDocument

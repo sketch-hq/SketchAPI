@@ -20,7 +20,9 @@ export class Layer extends WrappedObject {
   duplicate() {
     const object = this._object
     const duplicate = object.copy()
-    object.parentGroup().insertLayers_afterLayer([duplicate], object)
+    if (object.parentGroup()) {
+      object.parentGroup().insertLayers_afterLayer([duplicate], object)
+    }
     return wrapNativeObject(duplicate)
   }
 
@@ -126,6 +128,7 @@ Factory.registerClass(Layer, MSImmutableLayer)
 
 Layer.define('index', {
   exportable: false,
+  depends: 'parent',
   /**
    * Return the index of this layer in it's container.
    * The layer at the back of the container (visually) will be layer 0. The layer at the front will be layer n - 1 (if there are n layers).
@@ -134,7 +137,19 @@ Layer.define('index', {
    */
   get() {
     const ourLayer = this._object
+    if (!ourLayer.parentGroup()) {
+      return undefined
+    }
     return parseInt(ourLayer.parentGroup().indexOfLayer_(ourLayer), 10)
+  },
+  set(index) {
+    const parent = this._object.parentGroup()
+    if (!parent) {
+      return
+    }
+    const safeIndex = Math.max(Math.min(parent.layers().length - 1, index), 0)
+    this._object.removeFromParent()
+    parent.insertLayer_atIndex(this._object, safeIndex)
   },
 })
 
@@ -252,14 +267,20 @@ Layer.define('selected', {
 
 Layer.define('flow', {
   get() {
-    return wrapObject(this._object.flow())
+    if (!this._object.flow()) {
+      return undefined
+    }
+    return Flow.fromNative(this._object.flow())
   },
-  set(_flow) {
+  set(flow) {
     if (this.isImmutable()) {
       return
     }
-    const flow = Flow.from(_flow)
-    this._object.flow = flow.sketchObject
+    if (!flow) {
+      this._object.flow = null
+      return
+    }
+    this._object.flow = Flow.from(flow).sketchObject
   },
 })
 
@@ -309,11 +330,12 @@ Layer.define('exportFormats', {
   },
   insertItem(item, index) {
     if (this.isImmutable()) {
-      return
+      return undefined
     }
     const arr = toArray(this._object.exportOptions().exportFormats() || [])
     arr.splice(index, 0, item)
     this.exportFormats = arr
+    return wrapObject(item, Types.ExportFormat)
   },
   removeItem(index) {
     if (this.isImmutable()) {

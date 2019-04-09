@@ -159,6 +159,8 @@ Setting this option to `true` does the following:
 - disables `@import` support, you'll have to take care of your imports manually
 - disables bracket syntax (i.e: `[obj msg:]`), you'll have to use dot-syntax only
 
+Note that if you use `skpm`, it will default to `true` instead.
+
 #### `commands`
 
 An array of commands that the Plugin defines.
@@ -199,10 +201,18 @@ The relative path within the Plugin bundle’s `Sketch` folder for the script th
 
 #### `handler`
 
-The name of the function with the script to call this command. The function must take a single `context` parameter, which is a dictionary with keys for things like the current document and selection. If unspecified the command is expected to be `onRun`:
+The name of the function with the script to call this command. The function must take a single `context` parameter, which is a dictionary with keys for things like the current document and selection. If unspecified the command is expected to be `export default`:
 
 ```js
-var onRun = function (context) {
+// unspecified handler
+export default function (context) {
+  var doc = context.document;
+  var selection = context.selection;
+  …
+}
+
+// onSelection handler
+export function onSelection(context) {
   var doc = context.document;
   var selection = context.selection;
   …
@@ -223,9 +233,10 @@ A string specifying the title to use for the submenu.
 
 This is an array which lists the items to include in the menu.
 
-It can contain items of two types:
+It can contain items of three types:
 
 - a string giving the identifier of a command
+- a string `"-"` to add a separator line
 - a dictionary describing a sub-menu (containing "title" and "items")
 
 #### `isRoot`
@@ -260,12 +271,12 @@ Here’s an example. It defines three commands in a menu called “My Plugin Men
 
 Plugin commands are implemented by handlers.
 
-These are simply JavaScript functions which live in a `.cocoascript` file in the Plugin bundle, and which take a single parameter containing some context.
+These are simply JavaScript functions which live in a `.js` file in the Plugin bundle, and which take a single parameter containing some context.
 
 Here’s a simple example:
 
 ```js
-var doMyCommand = function(context) {
+export function doMyCommand(context) {
   context.document.currentPage().deselectAllLayers()
 }
 ```
@@ -278,8 +289,8 @@ You are free to put each command implementation into its own script file, or to 
 
 You must specify the _script_ key for each command.
 
-If you put each command in its own script file, you can omit the _handler_ key. In this case, Sketch will default to calling the `onRun` handler.
+If you put each command in its own script file, you can omit the _handler_ key. In this case, Sketch will default to calling the `export default function () {}` handler.
 
-If you put multiple command handlers into the same script file, you need to use the _handler_ key for each one, since they can’t all use the `onRun` handler!.
+If you put multiple command handlers into the same script file, you need to use the _handler_ key for each one, since they can’t all use the `default` handler!.
 
 [semantic versioning]: http://semver.org

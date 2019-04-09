@@ -1,24 +1,20 @@
 /* globals expect, test */
 /* eslint-disable no-param-reassign */
 import { SymbolInstance } from '../..'
-import { createSymbolMaster } from '../../../test-utils'
+import { createSymbolMaster, canBeLogged } from '../../../test-utils'
 
 test('should create a instance by setting the master property', (context, document) => {
   const { master } = createSymbolMaster(document)
   const instance = new SymbolInstance({
+    parent: document.selectedPage,
     master,
   })
-  // check that an instance can be logged
-  log(instance)
-  expect(instance.type).toBe('SymbolInstance')
-  expect(instance.master).toBe(null)
-  // by default, it's not anywhere in the document
-  expect(master.getAllInstances()).toEqual([])
 
-  // add the instance to the page
-  document.selectedPage.layers = document.selectedPage.layers.concat(instance)
-  expect(master.getAllInstances()).toEqual([instance])
+  expect(instance.type).toBe('SymbolInstance')
   expect(instance.master).toEqual(master)
+  expect(master.getAllInstances()).toEqual([instance])
+
+  canBeLogged(instance, SymbolInstance)
 })
 
 test('should create a instance by setting the symbolId property', (context, document) => {
@@ -49,6 +45,7 @@ test('should have overrides', (context, document) => {
     isDefault: true,
     editable: true,
     affectedLayer: text.toJSON(),
+    selected: false,
   }
   delete result.affectedLayer.selected
   result.affectedLayer.style = instance.overrides[0].affectedLayer.style.toJSON()

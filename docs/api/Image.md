@@ -18,6 +18,7 @@ An image layer. It is an instance of [Layer](#layer) so all the methods defined 
 | locked<span class="arg-type">boolean</span>                                 | If the Image is locked.                                                                         |
 | hidden<span class="arg-type">boolean</span>                                 | If the Image is hidden.                                                                         |
 | frame<span class="arg-type">[Rectangle](#rectangle)</span>                  | The frame of the Image. This is given in coordinates that are local to the parent of the layer. |
+| selected<span class="arg-type">boolean</span>                               | If the Image is selected.                                                                       |
 | flow<span class="arg-type">[Flow](#flow)</span>                             | The prototyping action associated with the Image.                                               |
 | exportFormats<span class="arg-type">[ExportFormat](#export-format)[]</span> | The export formats of the Image.                                                                |
 | transform<span class="arg-type">object</span>                               | The transformation applied to the Image.                                                        |
@@ -39,6 +40,7 @@ var imageLayer = new Image({
 The image property accept a wide range of input:
 
 - an [`ImageData`](#imagedata)
+- a `Buffer`
 - a native `NSImage`
 - a native `NSURL`
 - a native `MSImageData`

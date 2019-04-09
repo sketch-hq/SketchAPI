@@ -1,41 +1,86 @@
-import { AnimationType, BackTarget } from './models/Flow'
-import './models/DataOverride'
+const { AnimationType, BackTarget } = require('./models/Flow')
+require('./models/DataOverride')
 
-export {
-  exportObject as export,
-  objectFromJSON as fromSketchJSON,
-} from './export'
+const { exportObject, objectFromJSON } = require('./export')
 
-export { Document, getDocuments, getSelectedDocument } from './models/Document'
-export { Library, getLibraries } from './models/Library'
-export { SharedStyle } from './models/SharedStyle'
-export { Rectangle } from './models/Rectangle'
+const { createLayerFromData } = require('./import')
 
-export { Style } from './style/Style'
+const {
+  Document,
+  getDocuments,
+  getSelectedDocument,
+} = require('./models/Document')
+const { Library, getLibraries } = require('./models/Library')
+const { SharedStyle } = require('./models/SharedStyle')
+const { Rectangle } = require('./models/Rectangle')
 
-export { Group } from './layers/Group'
-export { Text } from './layers/Text'
-export { Image } from './layers/Image'
-export { Shape } from './layers/Shape'
-export { ShapePath } from './layers/ShapePath'
-export { Artboard } from './layers/Artboard'
-export { Page } from './layers/Page'
-export { SymbolMaster } from './layers/SymbolMaster'
-export { SymbolInstance } from './layers/SymbolInstance'
-export { HotSpot } from './layers/HotSpot'
-export { Slice } from './layers/Slice'
+const { Style } = require('./style/Style')
 
-export { Types } from './enums'
-export { wrapObject as fromNative } from './wrapNativeObject'
+const { Layer } = require('./layers/Layer')
+const { Group } = require('./layers/Group')
+const { Text } = require('./layers/Text')
+const { Image } = require('./layers/Image')
+const { Shape } = require('./layers/Shape')
+const { ShapePath } = require('./layers/ShapePath')
+const { Artboard } = require('./layers/Artboard')
+const { Page } = require('./layers/Page')
+const { SymbolMaster } = require('./layers/SymbolMaster')
+const { SymbolInstance } = require('./layers/SymbolInstance')
+const { HotSpot } = require('./layers/HotSpot')
+const { Slice } = require('./layers/Slice')
 
-export { find } from './find'
+const { Types } = require('./enums')
+const { wrapObject } = require('./wrapNativeObject')
+const {
+  getGlobalColors,
+  getGlobalGradients,
+  globalAssets,
+} = require('./globalAssets')
 
-export const Flow = {
+const { find } = require('./find')
+
+const Flow = {
   AnimationType,
   BackTarget,
 }
 
-export const version = {
+const DOM = {
+  export: exportObject,
+  fromSketchJSON: objectFromJSON,
+  createLayerFromData,
+  Document,
+  getDocuments,
+  getSelectedDocument,
+  Library,
+  getLibraries,
+  SharedStyle,
+  Rectangle,
+  Style,
+  Layer,
+  Group,
+  Text,
+  Image,
+  Shape,
+  ShapePath,
+  Artboard,
+  Page,
+  SymbolMaster,
+  SymbolInstance,
+  HotSpot,
+  Slice,
+  Types,
+  fromNative: wrapObject,
+  getGlobalColors,
+  getGlobalGradients,
+  globalAssets,
+  Flow,
+  find,
+}
+
+module.exports = DOM
+module.exports.default = DOM
+
+module.exports.version = {
   sketch: MSApplicationMetadata.metadata().appVersion,
   api: process.env.API_VERSION,
 }

@@ -3,7 +3,7 @@ import { DefinedPropertiesKey, WrappedObject } from '../WrappedObject'
 import { Types } from '../enums'
 import { Factory } from '../Factory'
 import { wrapObject } from '../wrapNativeObject'
-import { StyleTypeMap, StyleType } from '../style/Style'
+import { StyleType } from '../style/Style'
 
 /**
  * A Sketch shared style, either Text style or Layer Style.
@@ -15,7 +15,7 @@ export class SharedStyle extends WrappedObject {
   constructor(master = {}) {
     if (!master.sketchObject) {
       throw new Error(
-        `Cannot create a SharedStyle directly, use SharedStyle.fromStyle({ name, style, document }) instead.`
+        `Cannot create a SharedStyle directly, use \`document.sharedLayerStyles.push({ name, style })\` (or \`document.sharedTextStyles\`) instead.`
       )
     }
     super(master)
@@ -23,7 +23,7 @@ export class SharedStyle extends WrappedObject {
 
   static fromStyle({ name, style, document } = {}) {
     const documentData = wrapObject(document)._getMSDocumentData()
-    const wrappedStyle = wrapObject(style)
+    const wrappedStyle = wrapObject(style, Types.Style)
 
     const sharedStyle = SharedStyle.fromNative(
       MSSharedStyle.alloc().initWithName_style(name, wrappedStyle.sketchObject)
@@ -105,7 +105,7 @@ Factory.registerClass(SharedStyle, MSSharedStyle)
 SharedStyle.StyleType = StyleType
 SharedStyle.define('styleType', {
   get() {
-    return StyleTypeMap[this._object.type()] || this._object.type()
+    return this.style.type
   },
 })
 

@@ -28,7 +28,7 @@ StyledLayer.define('style', {
     if (isNativeObject(style)) {
       this._object.style = style.copy()
     } else if (!style || !style.sketchObject) {
-      this._object.style = new Style(style).sketchObject
+      this._object.style = new Style(style, this.type).sketchObject
     } else {
       this._object.style = style.sketchObject.copy()
     }
@@ -61,10 +61,10 @@ StyledLayer.define('sharedStyle', {
   enumerable: false,
   exportable: false,
   get() {
-    if (!this._object.sharedObject) {
+    if (!this._object.sharedStyle) {
       return null
     }
-    const nativeSharedStyle = this._object.sharedObject()
+    const nativeSharedStyle = this._object.sharedStyle()
     if (!nativeSharedStyle) {
       return null
     }

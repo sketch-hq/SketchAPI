@@ -18,7 +18,13 @@ if (typeof MSDataOverride !== 'undefined') {
 
 DataOverride.define('override', {
   get() {
-    return Override.fromNative(this._object.availableOverride())
+    const wrapped = Override.fromNative(this._object.availableOverride())
+    Object.defineProperty(wrapped, '__symbolInstance', {
+      writable: false,
+      enumerable: false,
+      value: this.symbolInstance,
+    })
+    return wrapped
   },
 })
 

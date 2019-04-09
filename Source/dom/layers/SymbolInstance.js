@@ -7,6 +7,7 @@ import { Factory } from '../Factory'
 import { wrapObject } from '../wrapNativeObject'
 import { Override } from '../models/Override'
 import { ImageData } from '../models/ImageData'
+import { getDocuments } from '../models/Document'
 
 /**
  * A Sketch symbol instance.
@@ -99,15 +100,33 @@ SymbolInstance.define('master', {
   exportable: false,
   enumerable: false,
   get() {
-    const master = this._object.symbolMaster()
+    let master
+    if (this._object.symbolMaster) {
+      master = this._object.symbolMaster()
+    }
+    if (!master && !this._object.documentData) {
+      // we are an immutable instance so we need to loop through the docs,
+      // find a matching master and hope that the right one
+      const id = this.symbolId
+      const docs = getDocuments()
+      docs.some(doc => {
+        master = doc.getSymbolMasterWithID(id)
+        return !!master
+      })
+    }
     if (master) {
-      return wrapObject(this._object.symbolMaster())
+      return wrapObject(master)
     }
     return null // this is a bit weird, if the instance is not inserted in the document, symbolMaster will be null
   },
   set(master) {
     if (this.isImmutable()) {
       return
+    }
+    if (!this._object.documentData || !this._object.documentData()) {
+      throw new Error(
+        'The Symbol Instance needs to be inserted in a document before setting its master'
+      )
     }
     const wrappedMaster = wrapObject(master)
     this._object.changeInstanceToSymbol(wrappedMaster.sketchObject)
@@ -120,17 +139,11 @@ SymbolInstance.define('overrides', {
     if (!this._object.availableOverrides) {
       return undefined
     }
-    const overrides = toArray(this._object.availableOverrides())
-
-    // recursively find the overrides
-    function findChildrenOverrides(instance) {
-      const children = toArray(instance.children())
-      children.forEach(c => {
-        overrides.push(c)
-        findChildrenOverrides(c)
-      })
-    }
-    overrides.forEach(findChildrenOverrides)
+    const overrides = toArray(
+      MSAvailableOverride.flattenAvailableOverrides(
+        this._object.availableOverrides()
+      )
+    )
 
     return overrides.map(o => {
       const wrapped = Override.fromNative(o)

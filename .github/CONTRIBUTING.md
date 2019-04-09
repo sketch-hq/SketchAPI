@@ -27,7 +27,7 @@ Note that the Sketch API is a work in progress, so everything is likely to chang
 
 ### Code of Conduct
 
-This project adheres to the Contributor Covenant [code of conduct](/CODE_OF_CONDUCT.md). By participating, you are expected to uphold this code. Please report unacceptable behavior to [developers@sketchapp.com](mailto:developers@sketchapp.com).
+This project adheres to the Contributor Covenant [code of conduct](/CODE_OF_CONDUCT.md). By participating, you are expected to uphold this code. Please report unacceptable behavior to [developers@sketch.com](mailto:developers@sketch.com).
 
 ### The Roadmap
 

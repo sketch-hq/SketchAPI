@@ -1,10 +1,9 @@
 /* globals expect, test */
+import { canBeLogged } from '../../../test-utils'
 import { Group, Page } from '../..'
 
 test('should return a Selection with the selected layers of the page', (context, document) => {
   const page = document.selectedPage
-  // check that an artboard can be logged
-  log(page)
   const selection = page.selectedLayers
   expect(selection.isEmpty).toBe(true)
 
@@ -12,6 +11,8 @@ test('should return a Selection with the selected layers of the page', (context,
 
   expect(group.selected).toBe(true)
   expect(selection.isEmpty).toBe(false)
+
+  canBeLogged(page, Page)
 })
 
 test('should create a page', (context, document) => {
@@ -56,4 +57,23 @@ test('should return whether a page is selected or not', (context, document) => {
   newPage.remove()
   expect(newPage.selected).toBe(false)
   expect(page.selected).toBe(true)
+})
+
+test('should return if the page is the Symbols page', (context, document) => {
+  const page = new Page({ parent: document })
+  expect(page.isSymbolsPage()).toBe(false)
+  page.name = 'Symbols'
+  expect(page.isSymbolsPage()).toBe(true)
+})
+
+test('should create the Symbols page', (context, document) => {
+  const page = Page.createSymbolsPage()
+  page.parent = document
+  expect(page.isSymbolsPage()).toBe(true)
+})
+
+test('should get the Symbols page', (context, document) => {
+  const page = Page.createSymbolsPage()
+  page.parent = document
+  expect(Page.getSymbolsPage(document)).toEqual(page)
 })

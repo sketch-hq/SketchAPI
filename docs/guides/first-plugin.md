@@ -108,3 +108,7 @@ If you'd like to read more generally about the plugin APIs, try these topics:
 
 - [Extension API Overview](/reference/) - Learn about the Sketch extensibility possibilities.
 - [Additional Plugin Examples](https://github.com/BohemianCoding/SketchAPI/tree/develop/examples) - Take a look at our list of example plugin projects.
+
+You might also want to check out the guide about the [manifest.json](/guides/plugin-bundles/) to learn all the options you can use to personalize your plugin.
+
+There are also a few preferences you can leverage to make your [Development Environment](/guides/preferences) nicer.

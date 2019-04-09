@@ -41,6 +41,12 @@ test('should duplicate the layer and add it as a sibling', (context, document) =
   expect(result.type).toBe('Group')
 })
 
+test('should duplicate the layer with no parent', () => {
+  const group = new Group()
+  const result = group.duplicate()
+  expect(result.type).toBe('Group')
+})
+
 test('should remove the layer from its parent', (context, document) => {
   const page = document.selectedPage
   const group = new Group({
@@ -127,6 +133,47 @@ test('should reorder the layers', (context, document) => {
   expect(group1.index).toBe(0)
   expect(group3.index).toBe(1)
   expect(group2.index).toBe(2)
+})
+
+test('should reorder the layers using the index property', (context, document) => {
+  const page = document.selectedPage
+  const group1 = new Group({
+    parent: page,
+  })
+  const group2 = new Group({
+    parent: page,
+  })
+  const group3 = new Group({
+    parent: page,
+  })
+  expect(group1.index).toBe(0)
+  expect(group2.index).toBe(1)
+  expect(group3.index).toBe(2)
+
+  group1.index = 2
+  expect(group2.index).toBe(0)
+  expect(group3.index).toBe(1)
+  expect(group1.index).toBe(2)
+
+  group3.index = 0
+  expect(group3.index).toBe(0)
+  expect(group2.index).toBe(1)
+  expect(group1.index).toBe(2)
+
+  group2.index = 2
+  expect(group3.index).toBe(0)
+  expect(group1.index).toBe(1)
+  expect(group2.index).toBe(2)
+
+  group1.index = 0
+  expect(group1.index).toBe(0)
+  expect(group3.index).toBe(1)
+  expect(group2.index).toBe(2)
+
+  group1.index = 3
+  expect(group3.index).toBe(0)
+  expect(group2.index).toBe(1)
+  expect(group1.index).toBe(2)
 })
 
 test('should convert rect to different coord system', (context, document) => {
@@ -254,4 +301,28 @@ test('should transform the layer', () => {
 
   group.transform.rotation = 720
   expect(group.transform.rotation).toBe(0)
+})
+
+test('should remove a flow from a layer', (context, document) => {
+  const artboard = new Artboard({
+    name: 'Test1',
+    parent: document.selectedPage,
+  })
+  const artboard2 = new Artboard({
+    name: 'Test2',
+    parent: document.selectedPage,
+  })
+
+  const rect = new Group({
+    parent: artboard,
+    flow: {
+      targetId: artboard2.id,
+    },
+  })
+
+  expect(rect.flow.targetId).toBe(artboard2.id)
+
+  rect.flow = undefined
+
+  expect(rect.flow).toBe(undefined)
 })

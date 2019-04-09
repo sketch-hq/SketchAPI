@@ -95,8 +95,7 @@ The following Appcast example lists three different versions of the plugin. Each
 
 ### Implementing the Startup and Shutdown methods in your Plugin
 
-If your plugin does anything that requires some initialization you should implement the `Startup` handler as part of your plugin. The same goes for implementing the `Shutdown` handler, where you should implement any cleanup code that your plugin requires.
-You may have already been using these events, but with plugin updating it is more important than ever to do so.
+If your plugin does anything that requires some initialization you should implement the `Startup` handler as part of your plugin. The same goes for implementing the `Shutdown` handler, where you should implement any cleanup code that your plugin requires. You may have already been using these events, but with plugin updating it is more important than ever to do so.
 
 When a plugin is updated, the version being updated will be sent the `Shutdown` action. And the new version will be sent a `Startup` action.
 
@@ -105,7 +104,6 @@ For example, if your plugin displays some user interface elements within Sketch,
 The same goes for any persistent data that your plugin maintains. Any unsaved information should be written to disk when `Shutdown` is called.
 
 Do not include code in the `Startup` handler that could be run later.
-
 
 ### Troubleshooting
 

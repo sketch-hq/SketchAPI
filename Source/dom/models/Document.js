@@ -1,12 +1,14 @@
-import { toArray } from 'util'
+import { toArray, isNativeObject } from 'util'
 import { WrappedObject, DefinedPropertiesKey } from '../WrappedObject'
 import { Page } from '../layers/Page'
 import { Selection } from './Selection'
-import { getURLFromPath } from '../utils'
+import { getURLFromPath, isWrappedObject } from '../utils'
 import { wrapObject } from '../wrapNativeObject'
 import { Types } from '../enums'
 import { Factory } from '../Factory'
 import { StyleType } from '../style/Style'
+import { ColorAsset, GradientAsset } from '../assets'
+import { SharedStyle } from './SharedStyle'
 
 export const SaveModeType = {
   Save: NSSaveOperation,
@@ -16,13 +18,33 @@ export const SaveModeType = {
 
 /* eslint-disable no-use-before-define, typescript/no-use-before-define */
 export function getDocuments() {
-  const app = NSDocumentController.sharedDocumentController()
-  return toArray(app.documents()).map(Document.fromNative.bind(Document))
+  return toArray(NSApp.orderedDocuments())
+    .filter(doc => doc.isKindOfClass(MSDocument))
+    .map(Document.fromNative.bind(Document))
 }
 
 export function getSelectedDocument() {
-  const app = NSDocumentController.sharedDocumentController()
-  const nativeDocument = app.currentDocument()
+  let nativeDocument
+
+  if (!nativeDocument) {
+    const app = NSDocumentController.sharedDocumentController()
+    nativeDocument = app.currentDocument()
+  }
+
+  // skpm will define context as a global so let's use that if available
+  if (!nativeDocument && typeof context !== 'undefined') {
+    /* eslint-disable no-undef */
+    nativeDocument =
+      context.actionContext && context.actionContext.document
+        ? context.actionContext.document
+        : context.document
+    /* eslint-enable no-undef */
+  }
+
+  // if there is no current document, let's just try to pick the first one
+  if (!nativeDocument) {
+    ;[nativeDocument] = NSApplication.sharedApplication().orderedDocuments()
+  }
   if (!nativeDocument) {
     return undefined
   }
@@ -67,7 +89,7 @@ export class Document extends WrappedObject {
 
   _getMSDocument() {
     let msdocument = this._object
-    if (msdocument && String(msdocument.class()) === 'MSDocumentData') {
+    if (msdocument && msdocument.isKindOfClass(MSDocumentData)) {
       // we only have an MSDocumentData instead of a MSDocument
       // let's try to get back to the MSDocument
       msdocument = msdocument.delegate()
@@ -81,8 +103,8 @@ export class Document extends WrappedObject {
 
     if (
       msdocument &&
-      (String(msdocument.class()) === 'MSDocumentData' ||
-        String(msdocument.class()) === 'MSImmutableDocumentData')
+      (msdocument.isKindOfClass(MSDocumentData) ||
+        msdocument.isKindOfClass(MSImmutableDocumentData))
     ) {
       return msdocument
     }
@@ -166,6 +188,9 @@ export class Document extends WrappedObject {
   }
 
   getSharedLayerStyles() {
+    console.warn(
+      `\`document.getSharedLayerStyles()\` is deprecated. Use \`document.sharedLayerStyles\` instead.`
+    )
     const documentData = this._getMSDocumentData()
     return toArray(documentData.allLayerStyles()).map(wrapObject)
   }
@@ -175,6 +200,9 @@ export class Document extends WrappedObject {
   }
 
   getSharedTextStyles() {
+    console.warn(
+      `\`document.getSharedTextStyles()\` is deprecated. Use \`document.sharedTextStyles\` instead.`
+    )
     const documentData = this._getMSDocumentData()
     return toArray(documentData.allTextStyles()).map(wrapObject)
   }
@@ -386,18 +414,28 @@ Document.define('pages', {
     if (this.isImmutable()) {
       return
     }
-    // remove the existing pages
-    this._object.removePages_detachInstances(this._object.pages(), true)
+
+    const pagesToRemove = this.pages.reduce((prev, p) => {
+      prev[p.id] = p.sketchObject // eslint-disable-line
+      return prev
+    }, {})
 
     toArray(pages)
       .map(p => wrapObject(p, Types.Page))
       .forEach(page => {
         page.parent = this // eslint-disable-line
+        delete pagesToRemove[page.id]
       })
+
+    // remove the previous pages
+    this._getMSDocumentData().removePages_detachInstances(
+      Object.keys(pagesToRemove).map(id => pagesToRemove[id]),
+      true
+    )
   },
   insertItem(item, index) {
     if (this.isImmutable()) {
-      return
+      return undefined
     }
     const wrapped = wrapObject(item, Types.Page)
     if (wrapped._object.documentData()) {
@@ -405,18 +443,15 @@ Document.define('pages', {
         .documentData()
         .removePages_detachInstances([wrapped._object], false)
     }
-    if (typeof this._object.insertPage_atIndex === 'function') {
-      this._object.insertPage_atIndex(wrapped._object, index)
-    } else {
-      this._object.documentData().insertPage_atIndex(wrapped._object, index)
-    }
+    this._getMSDocumentData().insertPage_atIndex(wrapped._object, index)
+    return wrapped
   },
   removeItem(index) {
     if (this.isImmutable()) {
       return undefined
     }
     const removed = this._object.pages()[index]
-    this._object.removePages_detachInstances([removed], true)
+    this._getMSDocumentData().removePages_detachInstances([removed], true)
     return Page.fromNative(removed)
   },
 })
@@ -433,6 +468,11 @@ Document.define('selectedLayers', {
   get() {
     return new Selection(this.selectedPage)
   },
+  set(layers) {
+    this.selectedPage.sketchObject.changeSelectionBySelectingLayers(
+      (layers.layers || layers || []).map(l => wrapObject(l).sketchObject)
+    )
+  },
 })
 
 /**
@@ -447,12 +487,31 @@ Document.define('selectedPage', {
   get() {
     return Page.fromNative(this._object.currentPage())
   },
+  set(page) {
+    const wrapped = wrapObject(page, Types.Page)
+    if (
+      wrapped._object.documentData() &&
+      String(wrapped._object.documentData().objectID()) !== this.id
+    ) {
+      wrapped._object
+        .documentData()
+        .removePages_detachInstances([wrapped._object], false)
+      wrapped.parent = this
+    }
+    wrapped.selected = true
+  },
 })
 
 Document.define('path', {
   get() {
-    const url =
-      this._tempURL || (this._getMSDocument() || { fileURL() {} }).fileURL()
+    let url = this._tempURL
+
+    if (!url) {
+      const msDocument = this._getMSDocument()
+      if (msDocument && msDocument.fileURL) {
+        url = msDocument.fileURL()
+      }
+    }
     if (url) {
       return String(url.absoluteString()).replace('file://', '')
     }
@@ -470,3 +529,226 @@ Document.define('path', {
     })
   },
 })
+
+/**
+ * A list of document colors
+ *
+ * @return {Array<ColorAsset>} A mutable array of color assets defined in the document
+ */
+Document.define('colors', {
+  array: true,
+  get() {
+    if (!this._object) {
+      return []
+    }
+    const documentData = this._getMSDocumentData()
+    return toArray(documentData.assets().colorAssets()).map(a =>
+      ColorAsset.fromNative(a)
+    )
+  },
+  set(colors) {
+    if (this.isImmutable()) {
+      return
+    }
+    const assets = this._getMSDocumentData().assets()
+    assets.removeAllColorAssets()
+    toArray(colors)
+      .map(c => ColorAsset.from(c))
+      .forEach(c => {
+        assets.addColorAsset(c._object)
+      })
+  },
+  insertItem(color, index) {
+    if (this.isImmutable()) {
+      return undefined
+    }
+    const assets = this._getMSDocumentData().assets()
+    const wrapped = ColorAsset.from(color)
+    assets.insertColorAsset_atIndex(wrapped._object, index)
+    return wrapped
+  },
+  removeItem(index) {
+    if (this.isImmutable()) {
+      return undefined
+    }
+    const documentData = this._getMSDocumentData()
+    return documentData.assets().removeColorAssetAtIndex(index)
+  },
+})
+
+/**
+ * A list of document gradients
+ *
+ * @return {Array<GradientAsset>} A mutable array of gradient assets defined in the document
+ */
+Document.define('gradients', {
+  array: true,
+  get() {
+    if (!this._object) {
+      return []
+    }
+    const documentData = this._getMSDocumentData()
+    return toArray(documentData.assets().gradientAssets()).map(a =>
+      GradientAsset.fromNative(a)
+    )
+  },
+  set(gradients) {
+    if (this.isImmutable()) {
+      return
+    }
+    const assets = this._getMSDocumentData().assets()
+    assets.removeAllGradientAssets()
+    toArray(gradients)
+      .map(c => GradientAsset.from(c))
+      .forEach(c => {
+        assets.addGradientAsset(c._object)
+      })
+  },
+  insertItem(gradient, index) {
+    if (this.isImmutable()) {
+      return undefined
+    }
+    const assets = this._getMSDocumentData().assets()
+    const wrapped = GradientAsset.from(gradient)
+    assets.insertGradientAsset_atIndex(wrapped._object, index)
+    return wrapped
+  },
+  removeItem(index) {
+    if (this.isImmutable()) {
+      return undefined
+    }
+    const documentData = this._getMSDocumentData()
+    return documentData.assets().removeGradientAssetAtIndex(index)
+  },
+})
+
+function isLocalSharedStyle(libraryController) {
+  return item => {
+    if (isWrappedObject(item)) {
+      return (
+        !libraryController.libraryForShareableObject(item.sketchObject) &&
+        !item.sketchObject.foreignObject()
+      )
+    }
+    if (isNativeObject(item)) {
+      return (
+        !!libraryController.libraryForShareableObject(item) &&
+        !!item.foreignObject()
+      )
+    }
+    return true
+  }
+}
+
+function sharedStyleDescriptor(type) {
+  const config = {
+    localStyles: type === 'layer' ? 'layerStyles' : 'layerTextStyles',
+    foreignStyles:
+      type === 'layer' ? 'foreignLayerStyles' : 'foreignTextStyles',
+    type: type === 'layer' ? 1 : 2,
+  }
+
+  return {
+    array: true,
+    get() {
+      if (!this._object) {
+        return []
+      }
+      const documentData = this._getMSDocumentData()
+      const localStyles = toArray(documentData[config.localStyles]().objects())
+      const foreignStyles = toArray(documentData[config.foreignStyles]()).map(
+        foreign => foreign.localSharedStyle()
+      )
+      return foreignStyles.concat(localStyles).map(wrapObject)
+    },
+    set(sharedLayerStyles) {
+      if (this.isImmutable()) {
+        return
+      }
+      const documentData = this._getMSDocumentData()
+      const container = documentData.sharedObjectContainerOfType(config.type)
+
+      // remove the existing shared styles
+      container.removeAllSharedObjects()
+
+      const libraryController = AppController.sharedInstance().librariesController()
+
+      container.addSharedObjects(
+        toArray(sharedLayerStyles)
+          .filter(isLocalSharedStyle(libraryController))
+          .map(item => {
+            let sharedStyle
+
+            if (isWrappedObject(item)) {
+              sharedStyle = item.sketchObject
+            } else if (isNativeObject(item)) {
+              sharedStyle = item
+            } else {
+              const wrappedStyle = wrapObject(item.style, Types.Style)
+
+              sharedStyle = MSSharedStyle.alloc().initWithName_style(
+                item.name,
+                wrappedStyle.sketchObject
+              )
+            }
+            return sharedStyle
+          })
+      )
+    },
+    insertItem(item, index) {
+      if (this.isImmutable()) {
+        return undefined
+      }
+
+      const documentData = this._getMSDocumentData()
+
+      const realIndex = Math.max(
+        index - documentData[config.foreignStyles]().length,
+        0
+      )
+
+      let sharedStyle
+
+      if (isWrappedObject(item)) {
+        sharedStyle = item.sketchObject
+      } else if (isNativeObject(item)) {
+        sharedStyle = item
+      } else {
+        const wrappedStyle = wrapObject(item.style, Types.Style)
+
+        sharedStyle = MSSharedStyle.alloc().initWithName_style(
+          item.name,
+          wrappedStyle.sketchObject
+        )
+      }
+
+      const container = documentData.sharedObjectContainerOfType(config.type)
+
+      container.insertSharedObject_atIndex(sharedStyle, realIndex)
+
+      return new SharedStyle({ sketchObject: sharedStyle })
+    },
+    removeItem(index) {
+      if (this.isImmutable()) {
+        return undefined
+      }
+      const documentData = this._getMSDocumentData()
+
+      const realIndex = index - documentData[config.foreignStyles]().length
+
+      if (realIndex < 0) {
+        console.log('Cannot remove a foreign shared style')
+        return undefined
+      }
+
+      const container = documentData.sharedObjectContainerOfType(config.type)
+
+      const removed = container.objects()[realIndex]
+      container.removeSharedObjectAtIndex(realIndex)
+      return wrapObject(removed, Types.SharedStyle)
+    },
+  }
+}
+
+Document.define('sharedLayerStyles', sharedStyleDescriptor('layer'))
+Document.define('sharedTextStyles', sharedStyleDescriptor('text'))

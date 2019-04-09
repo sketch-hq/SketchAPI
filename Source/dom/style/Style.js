@@ -8,7 +8,7 @@ import { colorFromString, colorToString } from './Color'
 import { Shadow } from './Shadow'
 import { BorderOptions, Arrowhead, LineEnd, LineJoin } from './BorderOptions'
 import { Blur, BlurType } from './Blur'
-import { Fill, FillType } from './Fill'
+import { Fill, FillType, PatternFillType } from './Fill'
 import { Border, BorderPosition } from './Border'
 import { defineTextStyleProperties } from './Text'
 
@@ -57,10 +57,12 @@ const DEFAULT_STYLE = {
 export const StyleTypeMap = {
   1: 'Layer',
   2: 'Text',
+  3: 'Unknown',
 }
 export const StyleType = {
   Layer: 'Layer',
   Text: 'Text',
+  Unknown: 'Unknown',
 }
 
 /**
@@ -75,12 +77,17 @@ export class Style extends WrappedObject {
    *                              If `sketchObject` is provided, will wrap it.
    *                              Otherwise, creates a new native object.
    */
-  constructor(style = {}) {
+  constructor(style = {}, parentType) {
     if (!style.sketchObject) {
-      // eslint-disable-next-line no-param-reassign
+      /* eslint-disable no-param-reassign */
       style = Object.assign({}, DEFAULT_STYLE, style)
-      // eslint-disable-next-line no-param-reassign
+
       style.sketchObject = MSDefaultStyle.defaultStyle()
+      if (parentType === Types.Text) {
+        style.sketchObject.textStyle = MSTextStyle.alloc().init()
+        style.sketchObject.textStyle().attributes = MSDefaultTextStyle.defaultTextStyle()
+      }
+      /* eslint-enable no-param-reassign */
     }
 
     super(style)
@@ -121,14 +128,15 @@ export class Style extends WrappedObject {
     if (!layer) {
       return undefined
     }
-    const className = String(layer.class())
-    if (className !== 'MSTextLayer' && className !== 'MSImmutableTextLayer') {
+
+    const isImmutableTextLayer = layer.isKindOfClass(MSImmutableTextLayer)
+
+    if (!layer.isKindOfClass(MSTextLayer) && !isImmutableTextLayer) {
       return undefined
     }
-    const immutableLayer =
-      className === 'MSImmutableTextLayer'
-        ? layer
-        : layer.immutableModelObject()
+    const immutableLayer = isImmutableTextLayer
+      ? layer
+      : layer.immutableModelObject()
 
     const storage = immutableLayer.createTextStorage()
     const layoutManager = storage.layoutManagers().firstObject()
@@ -192,6 +200,7 @@ Style.define('blur', {
 })
 
 Style.FillType = FillType
+Style.PatternFillType = PatternFillType
 Style.define('fills', {
   array: true,
   get() {
@@ -206,6 +215,7 @@ Style.define('fills', {
     const arr = toArray(this._object.fills())
     arr.splice(index, 0, item)
     this.fills = arr
+    return Fill.fromNative(Fill.toNative(item))
   },
   removeItem(index) {
     const arr = toArray(this._object.fills())
@@ -230,6 +240,7 @@ Style.define('borders', {
     const arr = toArray(this._object.borders())
     arr.splice(index, 0, item)
     this.borders = arr
+    return Border.fromNative(Border.toNative(item))
   },
   removeItem(index) {
     const arr = toArray(this._object.borders())
@@ -252,6 +263,7 @@ Style.define('shadows', {
     const arr = toArray(this._object.shadows())
     arr.splice(index, 0, item)
     this.shadows = arr
+    return Shadow.fromNative(Shadow.toNative(MSStyleShadow, item))
   },
   removeItem(index) {
     const arr = toArray(this._object.shadows())
@@ -276,6 +288,7 @@ Style.define('innerShadows', {
     const arr = toArray(this._object.innerShadows())
     arr.splice(index, 0, item)
     this.innerShadows = arr
+    return Shadow.fromNative(Shadow.toNative(MSStyleInnerShadow, item))
   },
   removeItem(index) {
     const arr = toArray(this._object.innerShadows())

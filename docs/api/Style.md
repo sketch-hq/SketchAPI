@@ -37,8 +37,8 @@ The style of a Layer.
 | borderOptions<span class="arg-type">[BorderOptions](#borderoptions)</span>                                                                                                                                                                        | The options that the borders share.                                                                                                                                                                                                                                                      |
 | shadows<span class="arg-type">[Shadow](#shadow)[]</span>                                                                                                                                                                                          | The shadows of a Layer.                                                                                                                                                                                                                                                                  |
 | innerShadows<span class="arg-type">[Shadow](#shadow)[]</span>                                                                                                                                                                                     | The inner shadows of a Layer.                                                                                                                                                                                                                                                            |
-| alignment<span class="arg-type">[Alignment](#textalignment)[]</span>                                                                                                                                                                              | The horizontal alignment of the text of a Text Layer                                                                                                                                                                                                                                     |
-| verticalAlignment<span class="arg-type">[VerticalAlignment](#textverticalalignment)[]</span>                                                                                                                                                      | The vertical alignment of the text of a Text Layer                                                                                                                                                                                                                                       |
+| alignment<span class="arg-type">[Alignment](#textalignment)</span>                                                                                                                                                                                | The horizontal alignment of the text of a Text Layer                                                                                                                                                                                                                                     |
+| verticalAlignment<span class="arg-type">[VerticalAlignment](#textverticalalignment)</span>                                                                                                                                                        | The vertical alignment of the text of a Text Layer                                                                                                                                                                                                                                       |
 | kerning<span class="arg-type">number / null</span>                                                                                                                                                                                                | The kerning between letters of a Text Layer. `null` means that the kerning will be the one defined by the font.                                                                                                                                                                          |
 | lineHeight<span class="arg-type">number / null</span>                                                                                                                                                                                             | The height of a line of text in a Text Layer. `null` means "automatic".                                                                                                                                                                                                                  |
 | paragraphSpacing<span class="arg-type">number</span>                                                                                                                                                                                              | The space between 2 paragraphs of text in a Text Layer.                                                                                                                                                                                                                                  |
@@ -168,14 +168,18 @@ shape.style.fills = [
 ]
 ```
 
-An object that represent a Fill.
+An object that represent a Fill. `color`, `gradient` and `pattern` will always be defined regardless of the type of the fill.
 
-| Properties                                                   |                                                  |
-| ------------------------------------------------------------ | ------------------------------------------------ |
-| fill<span class="arg-type">[FillType](#stylefilltype)</span> | The type of the fill.                            |
-| color<span class="arg-type">string</span>                    | A rgba hex-string (`#000000ff` is opaque black). |
-| gradient<span class="arg-type">[Gradient](#gradient)</span>  | The gradient of the fill.                        |
-| enabled<span class="arg-type">boolean</span>                 | Whether the fill is active or not.               |
+| Properties                                                                                |                                                  |
+| ----------------------------------------------------------------------------------------- | ------------------------------------------------ |
+| fill<span class="arg-type">[FillType](#stylefilltype)</span>                              | The type of the fill.                            |
+| color<span class="arg-type">string</span>                                                 | A rgba hex-string (`#000000ff` is opaque black). |
+| gradient<span class="arg-type">[Gradient](#gradient)</span>                               | The gradient of the fill.                        |
+| pattern<span class="arg-type">object</span>                                               | The pattern of the fill.                         |
+| pattern.patternType<span class="arg-type">[PatternFillType](#stylepatternfilltype)</span> | How the pattern should fill the layer.           |
+| pattern.image<span class="arg-type">[ImageData](#imagedata) / null</span>                 | The image of tile of the pattern.                |
+| pattern.tileScale<span class="arg-type">number</span>                                     | The scale applied to the tile of the pattern.    |
+| enabled<span class="arg-type">boolean</span>                                              | Whether the fill is active or not.               |
 
 ## `Style.FillType`
 
@@ -190,7 +194,21 @@ Enumeration of the types of fill.
 | `Color`    |
 | `Gradient` |
 | `Pattern`  |
-| `Noise`    |
+
+## `Style.PatternFillType`
+
+```javascript
+Style.PatternFillType.Fit
+```
+
+Enumeration of the types of pattern fill.
+
+| Value     |
+| --------- |
+| `Tile`    |
+| `Fill`    |
+| `Stretch` |
+| `Fit`     |
 
 ## Border
 
@@ -362,12 +380,13 @@ shape.style.fills = [
 
 An object that represent a Gradient.
 
-| Properties                                                                   |                                           |
-| ---------------------------------------------------------------------------- | ----------------------------------------- |
-| gradientType<span class="arg-type">[GradientType](#stylegradienttype)</span> | The type of the Gradient.                 |
-| from<span class="arg-type">[Point](#point)</span>                            | The position of the start of the Gradient |
-| to<span class="arg-type">[Point](#point)</span>                              | The position of the end of the Gradient.  |
-| stops<span class="arg-type">[GradientStop](#gradientstop)[]</span>           | The different stops of the Gradient       |
+| Properties                                                                   |                                                                                                                                                                                                                        |
+| ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| gradientType<span class="arg-type">[GradientType](#stylegradienttype)</span> | The type of the Gradient.                                                                                                                                                                                              |
+| from<span class="arg-type">[Point](#point)</span>                            | The position of the start of the Gradient                                                                                                                                                                              |
+| to<span class="arg-type">[Point](#point)</span>                              | The position of the end of the Gradient.                                                                                                                                                                               |
+| aspectRatio<span class="arg-type">number</span>                              | When the gradient is `Radial`, the from and to points makes one axis of the ellipse of the gradient while the aspect ratio determine the length of the orthogonal axis (`aspectRatio === 1` means that it's a circle). |
+| stops<span class="arg-type">[GradientStop](#gradientstop)[]</span>           | The different stops of the Gradient                                                                                                                                                                                    |
 
 ## `Style.GradientType`
 

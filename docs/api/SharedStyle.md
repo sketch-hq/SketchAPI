@@ -9,43 +9,48 @@ var SharedStyle = require('sketch/dom').SharedStyle
 ```
 
 ```javascript
-var sharedStyle = SharedStyle.fromStyle({
+document.sharedTextStyles.push({
   name: 'Header 1',
   style: text.style,
-  document: document,
 })
 ```
 
 A shared style (either a layer style or a text style).
 
-| Properties                                                                 |                                                   |
-| -------------------------------------------------------------------------- | ------------------------------------------------- |
-| id<span class="arg-type">string</span>                                     | The unique ID of the Shared Style.                |
-| styleType<span class="arg-type">[SharedStyle.StyleType](#sharedstylestyletype)</span> | The type of the Shared Style (`Layer` or `Text`). |
-| name<span class="arg-type">string</span>                                   | The name of the Shared Style.                     |
-| style<span class="arg-type">[Style](#style)</span>                         | The Style value that is shared.                   |
+| Properties                                                                            |                                    |
+| ------------------------------------------------------------------------------------- | ---------------------------------- |
+| id<span class="arg-type">string</span>                                                | The unique ID of the Shared Style. |
+| styleType<span class="arg-type">[SharedStyle.StyleType](#sharedstylestyletype)</span> | The type of the Shared Style.      |
+| name<span class="arg-type">string</span>                                              | The name of the Shared Style.      |
+| style<span class="arg-type">[Style](#style)</span>                                    | The Style value that is shared.    |
+
+> Note that the `id` of a Shared Style coming from a Library might look like this: `FBFF821E-20F3-48C5-AEDC-89F97A8C2344[D1A683E0-5333-4EBE-977C-48F64F934E99]`.
+>
+> If you have a Symbol Instance which has a Layer using a Shared Style from a Library and a Layer in the Document using the same Shared Style from the Library, the style will be imported twice; once for use in the layer and once for use by the foreign Symbol. The reason for this is to do with syncing. If you change the Shared Style in the Library it will cause both the Symbol Instance and the Shared Style to be out-of-date in the document. This will be shown in the component sync sheet, but you can choose only to sync the Shared Style (or the Symbol). Using these “private” Shared Styles means that syncing just the shared style doesn’t implicitly also sync the symbol.
+>
+> The format of these symbol private shared style IDs is `SYMBOLID[STYLEID]` Where: `STYLEID` is the id of the original Shared Style in the original Library. And `SYMBOLID` is the new symbolId of the foreign symbol in the destination document.
+>
+> Where we have such as symbol private style, the same ID will be used both as the local ID and as the remote ID.
 
 ## Create a new Shared Style from a Style
 
 ```javascript
-var sharedStyle = SharedStyle.fromStyle({
+const newSharedStyle = SharedStyle.fromStyle({
+  name: 'Header 1',
+  style: layer.style,
+  document: document,
+})
+
+// you can also push to the shared styles arrays directly
+document.sharedTextStyles.push({
   name: 'Header 1',
   style: text.style,
-  document: document,
 })
 ```
 
 Create a new Shared Style with a specific name in a specific Document.
 
-| Parameters                                                                     |                                                              |
-| ------------------------------------------------------------------------------ | ------------------------------------------------------------ |
-| options.name<span class="arg-type">string - required</span>                    | The name of the Shared Style.                                |
-| options.style<span class="arg-type">[Style](#style) - required</span>          | The Style instance to use for the value of the Shared Style. |
-| options.document<span class="arg-type">[Document](#document) - required</span> | The Document in which the Shared Style will be created.      |
-
-### Returns
-
-A new SharedStyle
+> ⚠️You can only insert local shared styles (eg. not linked to a Library). `document.sharedLayerStyles` returns the foreign shared styles (eg. linked to a Library) concatenated with the local shared styles. So if you try to insert a new Shared Style at the beginning (using `unshift` for example), it will end up at the beginning of the local Shared Styles but that might not be the beginning of all the shared styles if there are some foreign.
 
 ## Get all the Instances
 
@@ -116,9 +121,10 @@ You can unlink a Shared Style from the Library it comes from and make it a local
 SharedStyle.StyleType.Text
 ```
 
-Enumeration of the type of Shared Style.
+Enumeration of the type of Shared Style. `Unknown` indicates the object is broken and Sketch can't determine the style type.
 
-| Value   |
-| ------- |
-| `Text`  |
-| `Layer` |
+| Value     |
+| --------- |
+| `Text`    |
+| `Layer`   |
+| `Unknown` |

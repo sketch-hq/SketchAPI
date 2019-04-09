@@ -125,21 +125,15 @@ SymbolMaster.define('symbolId', {
 SymbolMaster.define('overrides', {
   get() {
     // undefined when immutable
-    if (!this._object.overrideProperies) {
+    if (!this._object.overrideProperies || !this._object.availableOverrides) {
       return undefined
     }
     const overrideProperies = this._object.overrideProperies()
-    const overrides = toArray(this._object.availableOverrides())
-
-    // recursively find the overrides
-    function findChildrenOverrides(instance) {
-      const children = toArray(instance.children())
-      children.forEach(c => {
-        overrides.push(c)
-        findChildrenOverrides(c)
-      })
-    }
-    overrides.forEach(findChildrenOverrides)
+    const overrides = toArray(
+      MSAvailableOverride.flattenAvailableOverrides(
+        this._object.availableOverrides()
+      )
+    )
 
     return overrides.map(o => {
       const wrapped = Override.fromNative(o)
@@ -160,6 +154,9 @@ SymbolMaster.define('overrides', {
     })
   },
   set(overrides) {
+    if (this.isImmutable()) {
+      return
+    }
     overrides.forEach(o => {
       const overridePoint = MSOverridePoint.alloc().init()
       overridePoint.name = o.id

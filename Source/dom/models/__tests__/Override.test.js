@@ -52,6 +52,7 @@ test('should be able to set overrides', (context, document) => {
     isDefault: false,
     editable: true,
     affectedLayer: text.toJSON(),
+    selected: false,
   }
   delete result.affectedLayer.selected
   result.affectedLayer.style = instance.overrides[0].affectedLayer.style.toJSON()
@@ -81,7 +82,7 @@ test('should change a nested symbol', (context, document) => {
   document.selectedPage.layers = document.selectedPage.layers.concat(instance)
   expect(instance.overrides.length).toBe(3)
 
-  const override = instance.overrides[0]
+  const override = instance.overrides[1]
   override.value = nestedMaster2.symbolId
 
   const result = {
@@ -94,11 +95,12 @@ test('should change a nested symbol', (context, document) => {
     value: nestedMaster2.symbolId,
     isDefault: false,
     editable: true,
+    selected: false,
   }
   delete result.affectedLayer.overrides
   delete result.affectedLayer.selected
-  result.affectedLayer.style = instance.overrides[0].affectedLayer.style.toJSON()
-  expect(instance.overrides[0].toJSON()).toEqual(result)
+  result.affectedLayer.style = instance.overrides[1].affectedLayer.style.toJSON()
+  expect(instance.overrides[1].toJSON()).toEqual(result)
 })
 
 test('should handle image override', (context, document) => {
@@ -141,4 +143,36 @@ test('hidden layers should not be editable', (context, document) => {
   document.selectedPage.layers = document.selectedPage.layers.concat(instance)
 
   expect(instance.overrides[0].editable).toBe(false)
+})
+
+test('should be able to select an override', (context, document) => {
+  const { master } = createSymbolMaster(document)
+  const instance = master.createNewInstance()
+  document.selectedPage.layers = document.selectedPage.layers.concat(instance)
+
+  expect(instance.overrides[0].selected).toBe(false)
+  expect(instance.selected).toBe(false)
+
+  instance.overrides[0].selected = true
+
+  expect(instance.overrides[0].selected).toBe(true)
+  expect(instance.selected).toBe(true)
+
+  instance.overrides[0].selected = false
+
+  expect(instance.overrides[0].selected).toBe(false)
+  expect(instance.selected).toBe(true)
+})
+
+test('should be able to access the frame of an override', (context, document) => {
+  const { master } = createSymbolMaster(document)
+  const instance = master.createNewInstance()
+  document.selectedPage.layers = document.selectedPage.layers.concat(instance)
+
+  expect(instance.overrides[0].getFrame().toJSON()).toEqual({
+    x: 0,
+    y: 0,
+    width: 55,
+    height: 14,
+  })
 })

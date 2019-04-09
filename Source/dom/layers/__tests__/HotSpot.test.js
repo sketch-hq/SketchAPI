@@ -1,12 +1,12 @@
 /* globals expect, test */
+import { canBeLogged } from '../../../test-utils'
 import { Artboard, Group, HotSpot } from '../..'
 
 test('should create a new HotSpot', () => {
   const hotspot = new HotSpot()
 
-  // check that a hotspot can be logged
-  log(hotspot)
   expect(hotspot.type).toEqual('HotSpot')
+  canBeLogged(hotspot, HotSpot)
 })
 
 test('should create a new HotSpot from a layer', (context, document) => {

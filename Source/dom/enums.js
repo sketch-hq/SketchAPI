@@ -28,4 +28,6 @@ export const Types = {
   Slice: 'Slice',
   ExportFormat: 'ExportFormat',
   CurvePoint: 'CurvePoint',
+  ColorAsset: 'ColorAsset',
+  GradientAsset: 'GradientAsset',
 }
