@@ -111,7 +111,7 @@ export class Layer extends WrappedObject {
   }
 
   /**
-   * Return a new layer
+   * Return one or more layers the were converted to outlines.
    */
   layersByConvertingToOutlines() {
     const converted = this._object.layersByConvertingToOutlines()

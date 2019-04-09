@@ -34,6 +34,18 @@ A new identical layer will be inserted into the parent of this layer.
 
 A new [Layer](#layer).
 
+## Convert the Layer to Outlines
+
+```js
+const layers = layer.layersByConvertingToOutlines()
+```
+
+Convert this layer to outlines.
+
+### Returns
+
+An array of new [Layer](#layer) objects representing the outlines of this layer.
+
 ## Remove the Layer
 
 ```javascript
