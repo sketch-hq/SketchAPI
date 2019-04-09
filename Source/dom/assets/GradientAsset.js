@@ -8,7 +8,7 @@ import { DefinedPropertiesKey } from '../WrappedObject'
 
 export class GradientAsset extends Asset {
   /**
-   * Create a ColorAsset from a varienty of objects
+   * Create a GradientAsset from a varienty of objects
    * - A native MSGradientAsset
    * - An MSGradient
    * - An dictionary of Gradient properties. see Gradient
