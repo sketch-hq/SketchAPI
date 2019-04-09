@@ -1,5 +1,8 @@
 {
-  "unreleased": ["[New] Add `isSelected` method on a CurvePoint"],
+  "unreleased": [
+    "[New] Add `isSelected` method on a CurvePoint",
+    "[New] Add layer.layersByConvertingToOutlines method to Layer"
+  ],
   "releases": {
     "54": [
       "[New] Add `colors` and `gradients` properties on Document",
