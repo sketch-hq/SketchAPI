@@ -6,12 +6,12 @@
 // let's get a hold on the Sketch API
 const sketch = require('sketch')
 
-export default function(context) {
-  // We are passed a context variable when we're run.
-  // We use this to get hold of the native Sketch document and wrap it.
-  const document = sketch.fromNative(context.document)
+// eslint-disable-next-line no-restricted-syntax
+export default function() {
+  // Get the selected (front-most) document
+  const document = sketch.getSelectedDocument()
 
-  // Next we want to extract the selected page of the selected (front-most) document
+  // Next we want to extract the selected page of the document
   const page = document.selectedPage
 
   // Now let's create a new text layer, and a traditional value...
@@ -33,4 +33,4 @@ export default function(context) {
 //
 // Obviously this is only the tip of the iceberg. Check out some of the other examples to see what else can be done.
 //
-// If you have questions, comments or any feedback, ping us at <developer@sketchapp.com>!
+// If you have questions, comments or any feedback, ping us at <developer@sketch.com>!

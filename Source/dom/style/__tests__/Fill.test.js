@@ -49,7 +49,6 @@ test('should get the fills', () => {
         ],
       },
       pattern: { patternType: 'Fill', image: null, tileScale: 1 },
-      noise: { noiseType: 'Original', intensity: 0 },
     },
     {
       color: '#11223344',
@@ -66,7 +65,6 @@ test('should get the fills', () => {
         ],
       },
       pattern: { patternType: 'Fill', image: null, tileScale: 1 },
-      noise: { noiseType: 'Original', intensity: 0 },
     },
   ])
 })
@@ -89,20 +87,4 @@ test('should set the pattern', () => {
   expect(style.fills[0].pattern.patternType).toBe('Fit')
   expect(style.fills[0].pattern.tileScale).toBe(2)
   expect(style.fills[0].pattern.image.type).toBe('ImageData')
-})
-
-test('should set the noise', () => {
-  const style = new Style()
-  style.fills = [
-    {
-      fill: 'Noise',
-      noise: {
-        noiseType: 'Black',
-        intensity: 1,
-      },
-    },
-  ]
-  expect(style.fills[0].fill).toBe('Noise')
-  expect(style.fills[0].noise.noiseType).toBe('Black')
-  expect(style.fills[0].noise.intensity).toBe(1)
 })

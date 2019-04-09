@@ -168,21 +168,18 @@ shape.style.fills = [
 ]
 ```
 
-An object that represent a Fill. `color`, `gradient`, `pattern` and `noise` will always be defined regardless of the type of the fill.
+An object that represent a Fill. `color`, `gradient` and `pattern` will always be defined regardless of the type of the fill.
 
-| Properties                                                                                |                                                   |
-| ----------------------------------------------------------------------------------------- | ------------------------------------------------- |
-| fill<span class="arg-type">[FillType](#stylefilltype)</span>                              | The type of the fill.                             |
-| color<span class="arg-type">string</span>                                                 | A rgba hex-string (`#000000ff` is opaque black).  |
-| gradient<span class="arg-type">[Gradient](#gradient)</span>                               | The gradient of the fill.                         |
-| pattern<span class="arg-type">object</span>                                               | The pattern of the fill.                          |
-| pattern.patternType<span class="arg-type">[PatternFillType](#stylepatternfilltype)</span> | How the pattern should fill the layer.            |
-| pattern.image<span class="arg-type">[ImageData](#imagedata) / null</span>                 | The image of tile of the pattern.                 |
-| pattern.tileScale<span class="arg-type">number</span>                                     | The scale applied to the tile of the pattern.     |
-| noise<span class="arg-type">object</span>                                                 | The noise of the fill.                            |
-| noise.noiseType<span class="arg-type">[NoiseType](#stylenoisetype)</span>                 | The type of the noise.                            |
-| noise.intensity<span class="arg-type">number</span>                                       | The intensity of the noise (between `0` and `1`). |
-| enabled<span class="arg-type">boolean</span>                                              | Whether the fill is active or not.                |
+| Properties                                                                                |                                                  |
+| ----------------------------------------------------------------------------------------- | ------------------------------------------------ |
+| fill<span class="arg-type">[FillType](#stylefilltype)</span>                              | The type of the fill.                            |
+| color<span class="arg-type">string</span>                                                 | A rgba hex-string (`#000000ff` is opaque black). |
+| gradient<span class="arg-type">[Gradient](#gradient)</span>                               | The gradient of the fill.                        |
+| pattern<span class="arg-type">object</span>                                               | The pattern of the fill.                         |
+| pattern.patternType<span class="arg-type">[PatternFillType](#stylepatternfilltype)</span> | How the pattern should fill the layer.           |
+| pattern.image<span class="arg-type">[ImageData](#imagedata) / null</span>                 | The image of tile of the pattern.                |
+| pattern.tileScale<span class="arg-type">number</span>                                     | The scale applied to the tile of the pattern.    |
+| enabled<span class="arg-type">boolean</span>                                              | Whether the fill is active or not.               |
 
 ## `Style.FillType`
 
@@ -197,7 +194,6 @@ Enumeration of the types of fill.
 | `Color`    |
 | `Gradient` |
 | `Pattern`  |
-| `Noise`    |
 
 ## `Style.PatternFillType`
 
@@ -213,21 +209,6 @@ Enumeration of the types of pattern fill.
 | `Fill`    |
 | `Stretch` |
 | `Fit`     |
-
-## `Style.NoiseType`
-
-```javascript
-Style.NoiseType.Black
-```
-
-Enumeration of the types of noise.
-
-| Value      |
-| ---------- |
-| `Original` |
-| `Black`    |
-| `White`    |
-| `Color`    |
 
 ## Border
 

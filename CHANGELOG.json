@@ -1,23 +1,25 @@
 {
-  "unreleased": [
-    "[New] Add `colors` and `gradients` properties on Document",
-    "[New] `export` now returns a Buffer if `options.output` is `false` and `options.formats` is an image format",
-    "[Improved] Shared styles are now document properties and can be mutated",
-    "[Improved] `console.clear` will now clear the DevTools console",
-    "[Improved] Be more aggressive in finding the selected document",
-    "[New] Add `noise` and `pattern` properties on Fill",
-    "[Fixed] Setting `flow` as `undefined` on a Layer",
-    "[Improved] `selectedPage` and `selectedLayers` can now be set on the Document",
-    "[New] Add some methods to deal with the Symbols Page",
-    "[Improved] `layer.duplicate` now works on a layer with no parent",
-    "[Fixed] `symbolInstance.master` now works on an immutable instance",
-    "[New] Add `aspectRatio` property to Gradient",
-    "[New] Add `selected` property on an Override",
-    "[New] Add `getFrame` method on an Override",
-    "[New] add `sketch.globalAssets` property",
-    "[Improved] `layer.index` can now be set"
-  ],
+  "unreleased": ["[New] Add `isSelected` method on a CurvePoint"],
   "releases": {
+    "54": [
+      "[New] Add `colors` and `gradients` properties on Document",
+      "[New] `export` now returns a Buffer if `options.output` is `false` and `options.formats` is an image format",
+      "[Improved] Shared styles are now document properties and can be mutated",
+      "[Improved] `console.clear` will now clear the DevTools console",
+      "[Improved] Be more aggressive in finding the selected document",
+      "[New] Add `pattern` properties on Fill",
+      "[Fixed] Setting `flow` as `undefined` on a Layer",
+      "[Improved] `selectedPage` and `selectedLayers` can now be set on the Document",
+      "[New] Add some methods to deal with the Symbols Page",
+      "[Improved] `layer.duplicate` now works on a layer with no parent",
+      "[Fixed] `symbolInstance.master` now works on an immutable instance",
+      "[New] Add `aspectRatio` property to Gradient",
+      "[New] Add `selected` property on an Override",
+      "[New] Add `getFrame` method on an Override",
+      "[New] add `sketch.globalAssets` property",
+      "[Improved] `layer.index` can now be set",
+      "[Fixed] `new Text({ style: {} })` now works as expected"
+    ],
     "53.1": ["[Fixed] Setting mutable colors where it should"],
     "53": [
       "[Improved] Obj-C exceptions will be thrown as JS Errors which will reference the exception in their `nativeException` property",
