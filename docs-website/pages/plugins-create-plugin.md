@@ -113,7 +113,7 @@ To verify the plugin has been updated, create or open a Sketch document and sele
 
 > **Quick tip:** Rebuild the plugin automatically after making changes by running `npm run watch` instead.
 
-## 2. Create manually
+## 2. Manual
 
 If you prefer using your own method to bundle the plugin you must make sure to have define the manifest correctly and include all scripts required for the plugin to run.
 
