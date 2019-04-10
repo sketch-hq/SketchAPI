@@ -43,7 +43,7 @@ The square bracket syntax of Objective-C is converted to dot-syntax in JavaScrip
 executeOperation_withObject_error()
 ```
 
-## Pointer
+## Pointers
 
 Some Objective-C selectors require pointer parameters. Since JavaScript does not support passing objects by reference CocoaScript provides `MOPointer`, a proxy object to create references from variables.
 
@@ -59,6 +59,19 @@ console.log(pointer.value())
 ```
 
 ## Use macOS Frameworks
+
+To use a macOS framework, it needs to be imported first. Please note that _Foundation_ and _CoreGraphics_ are imported by default.
+
+```js
+framework('AVFoundation')
+
+let url = NSURL.alloc().initWithString(
+  'https://cdn.sketchapp.com/assets/pages/home/prototyping-video1.mp4'
+)
+let asset = AVAsset.assetWithURL_(url)
+
+console.log(asset)
+```
 
 ## Next Steps
 
