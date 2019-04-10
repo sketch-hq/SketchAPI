@@ -63,6 +63,7 @@ body > section:nth-child(even):last-of-type ~ footer {
   background-color: rgba($action, 0.05);
   box-shadow: 0 1px 2px $border-dark;
   color: $text-dark;
+  margin-bottom: 1em;
 }
 
 .content > table th,
