@@ -1,7 +1,7 @@
 {
   "name": "hello_world",
   "description": "Pretty much the smallest example Sketch Plugin you could have.",
-  "author": "Mathieu Dutour <mathieu@bohemiancoding.com>",
+  "author": "Mathieu Dutour <mathieu@sketch.com>",
   "version": "2.0.0",
   "engines": {
     "sketch": ">=3.0"
