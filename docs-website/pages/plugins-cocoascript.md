@@ -1,7 +1,7 @@
 ---
 title: CocoaScript
 section: plugins
-chapter: Internal API
+chapter: Concepts
 permalink: /plugins/cocoascript
 
 # Previous developer documentation
@@ -73,7 +73,7 @@ let asset = AVAsset.assetWithURL_(url)
 console.log(asset)
 ```
 
-## Next Steps
+## Related resources
 
 Read more about how to use CocoaScript and macOS frameworks.
 
