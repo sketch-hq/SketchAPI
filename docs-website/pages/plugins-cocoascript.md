@@ -75,7 +75,8 @@ console.log(asset)
 
 ## Next Steps
 
-Read more about the internals of CocoaScript and macOS frameworks.
+Read more about how to use CocoaScript and macOS frameworks.
 
 - [Mocha `README`](https://github.com/logancollins/Mocha), please note that Mocha is now included in CocoaScript but the documentation remained on the original repository.
 - [Apple Developer Documentation](https://developer.apple.com/documentation)
+- [Not a hotdog — how to build an AI powered plugin for Sketch 🌭](https://blog.sketchapp.com/not-a-hotdog-how-to-build-an-ai-powered-plugin-for-sketch-463ea43c9464)
