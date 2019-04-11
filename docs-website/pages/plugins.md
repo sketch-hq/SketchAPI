@@ -26,7 +26,7 @@ If an update was updated, the previously installed version is kept in a separate
 ~/Library/Application Support/com.bohemiancoding.sketch3/PluginsWarehouse
 ```
 
-> **Quick tipp:** You can access the plugins folder by holding `alt` while opening the _Plugins_ menu in Sketch and then choose 'Reveal Plugins Folder'.
+> **Quick tip:** You can access the plugins folder by holding `alt` while opening the _Plugins_ menu in Sketch and then choose 'Reveal Plugins Folder'.
 
 ### Install a plugin
 
