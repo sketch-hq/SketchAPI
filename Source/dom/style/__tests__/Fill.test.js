@@ -28,6 +28,17 @@ test('should set the fills', () => {
     ],
   })
   expect(style3.sketchObject.fills().count()).toBe(2)
+
+  // should still work with `Fill.type`
+  const style4 = new Style({
+    fills: [
+      {
+        color: '#1234',
+        fill: Style.FillType.Color,
+      },
+    ],
+  })
+  expect(style4.sketchObject.fills().count()).toBe(1)
 })
 
 test('should get the fills', () => {
@@ -36,7 +47,7 @@ test('should get the fills', () => {
   expect(style.fills.map(f => f.toJSON())).toEqual([
     {
       color: '#11223344',
-      fill: 'Color',
+      fillType: 'Color',
       enabled: true,
       gradient: {
         gradientType: 'Linear',
@@ -52,7 +63,7 @@ test('should get the fills', () => {
     },
     {
       color: '#11223344',
-      fill: 'Color',
+      fillType: 'Color',
       enabled: true,
       gradient: {
         gradientType: 'Linear',
@@ -73,7 +84,7 @@ test('should set the pattern', () => {
   const style = new Style()
   style.fills = [
     {
-      fill: 'Pattern',
+      fillType: 'Pattern',
       pattern: {
         patternType: 'Fit',
         image: {
