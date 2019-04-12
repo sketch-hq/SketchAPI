@@ -13,7 +13,7 @@ The manifest is a JSON file that provides information about a plugin such as aut
 
 The example plugin below called _Select Shapes_ defines three commands _All_, _Circles_ and _Rectangles_ which can be accessed from _Plugins_ › _Select Shape_.
 
-It also includes an `appcast` URL for Sketch to automatically check if a new version of the plugin are available.
+It also includes an `appcast` URL for Sketch to automatically check if a new version of the plugin is available.
 
 ```json
 {
@@ -54,7 +54,7 @@ It also includes an `appcast` URL for Sketch to automatically check if a new ver
 
 #### `appcast`
 
-A URL to the plugin's appcast file containing information about the available versions including URLs to download specific versions. Sketch automatically checks this file for updates and notifies the user when there's an update available.
+A URL to the plugin's appcast file containing information about the available versions, including URLs to download specific versions. Sketch automatically checks this file for updates and notifies the user when there's an update available.
 
 #### `author`
 
@@ -66,7 +66,7 @@ Specifies how to contact the plugin author by email. This is optional.
 
 #### `bundleVersion`
 
-Specfies the version of the plugin bundle's metadata structure and file layout. This is optional, default `1`. No other versions are currently supported.
+Specifies the version of the plugin bundle's metadata structure and file layout. This is optional, default `1`. No other versions are currently supported.
 
 #### `compatibleVersion`
 
@@ -120,7 +120,7 @@ Provides a general description of what the plugin does.
 
 #### `disableCocoaScriptPreprocessor`
 
-Defines if the CocoaScript preprocessor should be used for the plugin's scripts. Set to true to use ES6 syntax and build systems like [skpm](https://skpm.io).
+Defines if the CocoaScript preprocessor should be used for the plugin's scripts. Set this to `true` to use ES6 syntax and build systems like [skpm](https://skpm.io).
 
 When disabled, `@import` and bracket syntax, i.e. `[obj hello: world]` are no longer supported.
 
@@ -128,7 +128,7 @@ This value is optional, default `false`, set to `true` when using `skpm`.
 
 #### `homepage`
 
-Specifies a the website address of where to find more information or provide feedback for the plugin. This is optional.
+Specifies a website address where users can find more information or provide feedback for the plugin. This is optional.
 
 #### `icon`
 
@@ -167,7 +167,7 @@ Specifies if the plugin can be run without an open Sketch document.
 
 #### `suppliesData`
 
-Specifies if the plugin is a data supplier. If set to `true` a visual identicator is displayed with the plugin within the preferance pane showing the list of all installed plugins.
+Specifies if the plugin is a data supplier. If set to `true` a visual indicator is displayed with the plugin within the preference pane showing the list of all installed plugins.
 
 #### `version`
 
