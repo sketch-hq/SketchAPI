@@ -17,7 +17,7 @@ Set the `scriptEditorFont` preference to the name of the custom font, e.g. SF Mo
 defaults write com.bohemiancoding.sketch3 scriptEditorFont "SF Mono Light"
 ```
 
-Adjust the font size setting the `scriptEditorFontSize` preference, default: 12.
+Adjust the font size setting with the `scriptEditorFontSize` preference. The default is 12.
 
 ```shell
 defaults write com.bohemiancoding.sketch3 scriptEditorFontSize 14
