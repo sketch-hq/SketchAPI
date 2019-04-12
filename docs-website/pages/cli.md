@@ -36,4 +36,4 @@ SKETCH=$(mdfind kMDItemCFBundleIdentifier == 'com.bohemiancoding.sketch3' | head
 
 ## Versioning
 
-Each Sketch release includes its own `sketchtool`. If your application is designed to work with a specific version of Sketch, make sure to use the correct path to the command.
+Each Sketch release includes its own `sketchtool`. If your application is designed to work with a specific version of Sketch, be sure to use the correct path to the command.
