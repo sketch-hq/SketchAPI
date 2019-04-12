@@ -9,7 +9,7 @@ redirect_from:
   - /introduction/cocoascript/
   - /guides/cocoascript/
 
-summary: Some more details on how to use CocoaScript
+summary: Further details on using CocoaScript
 
 order: 203
 ---
@@ -24,7 +24,7 @@ From CocoaScript’s `README`:
 
 ## Syntax
 
-The square bracket syntax of Objective-C is converted to dot-syntax in JavaScript. Internally CocoaScript creates opaque JavaScript proxy objects which have the following attributes.
+The square bracket syntax of Objective-C is converted to dot-syntax in JavaScript. Internally, CocoaScript creates opaque JavaScript proxy objects which have the following attributes:
 
 - Objective-C properties are also JavaScript properties.
 - Objective-C selectors are exposed as methods of the JavaScript proxy.
