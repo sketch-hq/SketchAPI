@@ -7,7 +7,7 @@ permalink: /plugins/javascript-environment
 order: 202
 ---
 
-Sketch runs JavaScript code in [JavaScriptCore](https://trac.webkit.org/wiki/JavaScriptCore), the JavaScript engine that powers Safari including full [ES6 support](https://webkit.org/blog/6756/es6-feature-complete/).
+Sketch runs JavaScript code in [JavaScriptCore](https://trac.webkit.org/wiki/JavaScriptCore), the JavaScript engine that powers Safari, with full [ES6 support](https://webkit.org/blog/6756/es6-feature-complete/).
 
 ## Polyfills
 
@@ -26,9 +26,9 @@ For network, I/O operations and other operations there are Node.js compatible po
 - [`timers`](https://github.com/skpm/timers)
 - [`util`](https://github.com/skpm/util)
 
-See all official polyfills [on Github](https://github.com/search?q=topic%3Apolyfill+org%3Askpm&type=Repositories).
+You can find all the official polyfills [on Github](https://github.com/search?q=topic%3Apolyfill+org%3Askpm&type=Repositories).
 
-> To see which modules are installed for a specific Sketch version see [`core-modules/package.json`](https://github.com/BohemianCoding/SketchAPI/blob/develop/core-modules/package.json) within the Sketch API and select the release branch for the version e.g. `release/53.2`.
+> To see which modules are installed for a specific Sketch version, head to [`core-modules/package.json`](https://github.com/BohemianCoding/SketchAPI/blob/develop/core-modules/package.json) within the Sketch API and select the release branch for the version e.g. `release/53.2`.
 
 ## Use macOS frameworks and dynamic Sketch runtime
 
