@@ -11,7 +11,7 @@ Use your preferred font with the built-in script editor in the _Run Script…_ p
 
 ### Use custom font
 
-Set the `scriptEditorFont` peference to the name of the custom font, e.g. SF Mono Light.
+Set the `scriptEditorFont` preference to the name of the custom font, e.g. SF Mono Light.
 
 ```shell
 defaults write com.bohemiancoding.sketch3 scriptEditorFont "SF Mono Light"
