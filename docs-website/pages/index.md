@@ -88,7 +88,7 @@ SKETCH=$(mdfind kMDItemCFBundleIdentifier == 'com.bohemiancoding.sketch3' | head
 
 ### Not a developer? Submit an idea
 
-Although you'll need some programming experience to extend Sketch yourself, you can alternatively [submit an idea](https://github.com/sketchplugins/plugin-requests/issues) to let us and the community know how you'd like to see Sketch extended.
+Although you'll need some programming experience to extend Sketch yourself, you can also [submit an idea](https://github.com/sketchplugins/plugin-requests/issues) to let us and the community know how you'd like to see Sketch extended.
 
 Take a look at the [list of plugins](https://sketch.com/extensions/plugins) the community has already built.
 
