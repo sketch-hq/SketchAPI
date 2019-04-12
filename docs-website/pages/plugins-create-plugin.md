@@ -11,7 +11,7 @@ redirect_from:
 order: 102
 ---
 
-Plugins can be created in two ways:
+You can create plugins in two ways:
 
 1. Using the Sketch Plugin Manager [`skpm`](https://github.com/skpm/skpm), the official utility to create, build and publish Sketch plugins.
 2. Manually by organizing all files yourself, directly or using a module bundler such as [Rollup](https://rollupjs.org) or [webpack](https://webpack.js.org).
