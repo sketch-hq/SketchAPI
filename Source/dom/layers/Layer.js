@@ -110,6 +110,14 @@ export class Layer extends WrappedObject {
     })
   }
 
+  /**
+   * Return one or more layers the were converted to outlines.
+   */
+  layersByConvertingToOutlines() {
+    const converted = this._object.layersByConvertingToOutlines()
+    return toArray(converted).map(l => wrapNativeObject(l))
+  }
+
   // @deprecated
   localRectToParentRect(rect) {
     console.warn(
