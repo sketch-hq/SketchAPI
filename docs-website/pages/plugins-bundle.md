@@ -13,11 +13,11 @@ redirect_from:
 order: 200
 ---
 
-A `.sketchplugin` is a folder containing a manifest, scripts and additional resources, such as images, using a specific file layout. It is a [macOS package](https://developer.apple.com/library/mac/documentation/CoreFoundation/Conceptual/CFBundles/DocumentPackages/DocumentPackages.html#//apple_ref/doc/uid/10000123i-CH106-SW1), arranged as a [macOS bundle](https://developer.apple.com/library/mac/documentation/CoreFoundation/Conceptual/CFBundles/AboutBundles/AboutBundles.html#//apple_ref/doc/uid/10000123i-CH100-SW1).
+A `.sketchplugin` is a folder containing a manifest, scripts and additional resources, such as images, in a specific file layout. It’s a [macOS package](https://developer.apple.com/library/mac/documentation/CoreFoundation/Conceptual/CFBundles/DocumentPackages/DocumentPackages.html#//apple_ref/doc/uid/10000123i-CH106-SW1), arranged as a [macOS bundle](https://developer.apple.com/library/mac/documentation/CoreFoundation/Conceptual/CFBundles/AboutBundles/AboutBundles.html#//apple_ref/doc/uid/10000123i-CH100-SW1).
 
-> Finder in macOS displays a Sketch plugin as a single file. To browse the bundle contents, select _Show Package Contents_ from the context menu after on the plugin bundle.
+Finder in macOS displays a Sketch plugin as a single file. To browse the bundle contents, select _Show Package Contents_ from the context menu after on the plugin bundle.
 
-Organise your plugin bundle manually or use [`skpm`](https://github.com/skpm/skpm) to generate it as part of the build process.
+You can organise your plugin bundle manually or use [`skpm`](https://github.com/skpm/skpm) to generate it as part of the build process.
 
 ## Folder structure
 
@@ -40,4 +40,4 @@ select-shapes.sketchplugin
 
 ## Plugin Manifest file
 
-For Sketch to initialize the plugin correctly, the `manifest.json` must be included in the plugin bundle. It defines how the scripts can be called, from the menu, a keyboard shortcut or triggered by user activity within Sketch. For more information see the [manifest documentation](/plugins/manifest).
+For Sketch to initialize the plugin correctly, the `manifest.json` must be included in the plugin bundle. It defines how the scripts can be called from either the menu or a keyboard shortcut, or triggered by user activity within Sketch. For more information, see the [manifest documentation](/plugins/manifest).
