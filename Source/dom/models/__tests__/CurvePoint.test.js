@@ -50,7 +50,7 @@ test('should be able to modify a CurvePoint', () => {
   })
 })
 
-if (isRunningOnJenkins()) {
+if (!isRunningOnJenkins()) {
   test('should show if a point is selected', () => {
     const document = new Document()
     const shape = new Shape({
