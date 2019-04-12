@@ -7,7 +7,7 @@ permalink: /plugins/external-text-editor
 order: 110
 ---
 
-Use your favourite text editor, such as [Atom](https://atom.io) or [Visual Studio Code](https://code.visualstudio.com), to write Sketch plugins by setting a user defaults on the command-line.
+Use your favourite text editor, such as [Atom](https://atom.io) or [Visual Studio Code](https://code.visualstudio.com), to write Sketch plugins by setting a user default on the command-line.
 
 ```shell
 defaults write com.bohemiancoding.sketch3 "Plugin Editor" "/usr/local/bin/code"
