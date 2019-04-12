@@ -13,27 +13,27 @@ redirect_from:
 order: 103
 ---
 
-When developing a Sketch plugin, chances are you will need some ways to know what is happening when your code is running.
+Use logs, Safari Web Inspector and the Sketch DevTools plugin to inspect and debug your plugin.
 
 ## Logs
 
-The most common way to debug a JavaScript code is to put a bunch of `console.log` at key steps. Unfortunately, JavaScriptCore (the [context in which a Sketch plugin is running](/guides/cocoascript/)) doesn't provide `console`. Instead, a special method called `log` is available.
+Use [`console`](https://developer.mozilla.org/en-US/docs/Web/API/console) to log anything in JavaScript. The resulting logs can be viewed in:
 
-There are several options to see those logs:
+- Safari Web Inspector Console
+- macOS _Console.app_ located in _Applications_ › _Utilities_
+- Sketch log file `~/Library/Logs/com.bohemiancoding.sketch3/Plugin Log.log`
 
-- Open Console.app and look for the sketch logs
-- Look at the `~/Library/Logs/com.bohemiancoding.sketch3/Plugin Output.log` file
-- Run `skpm log` which will output the file above (`skpm log -f` to stream the logs)
+> **Quick tip:** If you're using `skpm` run `skpm log -f` to stream logs on the command-line.
 
-`skpm` will polyfill `console` so that you can use `console.log` as usual. In addition to using the `log` method behind the scene, it will also forward the logs to [`sketch-dev-tools`](https://github.com/skpm/sketch-dev-tools).
+## Safari Web Inspector
 
-## `debugger` and variable inspection
+Connect the Safari Web Inspector to your plugin to debug your plugin. Sketch plugins are by default using a short-lived `JSContext`. For the debugger to connect
 
-When a plugin is running, Sketch creates a JavaScript context associated to it. It is possible to inspect this context using Safari.
+<img src="/images/developer/safari-develop-menu-inspector.png"
+     alt="Enable Safari Web Inspector and Debugger"
+     width="726" />
 
-In Safari, go to `Develop` > _`name of your machine`_ > `Automatically Show Web Inspector for JSContexts`. And you probably want to enable `Automatically Pause Connecting to JSContext` otherwise the inspector will close before you can interact with it (the context is destroyed when the script has finished running).
-
-Now you can use breakpoints in your code, inspect the value of variables at runtime, etc.
+> **Note:** The _Develop_ menu in Safari is not shown by default. To enable it, make sure to check the _Show Develop menu in menu bar_ option within _Preferences_ › _Advanced_.
 
 ## Objective-C classes introspection
 
@@ -58,6 +58,51 @@ mocha.classMethodsWithAncestors()
 mocha.protocols() // array of protocols the MSDocument class inherits from
 mocha.protocolsWithAncestors()
 ```
+
+## Troubleshooting
+
+### Reload scripts
+
+By default, Sketch caches plugins for performance reasons. Changes to plugins are therefor not automatically recognized. To force Sketch to always reload a plugin before running it set the following value in the user defaults.
+
+```sh
+defaults write com.bohemiancoding.sketch3 AlwaysReloadScript -bool YES
+```
+
+Sketch only reloads a plugin directly before it gets invoked. For scripts using a long-running JavaScript context Sketch must be restarted. If you are still using `coscript.setShouldKeepAround(false)` we encourage you to instead use [`fibers`](https://developer.sketch.com/reference/api/#async) which provide more granular control over the lifecycle of a JavaScript context.
+
+> **Note:** If you use `skpm`, the `AlwaysReloadScript` user default will be set to `YES` automatically.
+
+### Automatically restart Sketch after plugin changes
+
+If your plugin uses a long-running JavaScript context it can be useful during development to restart Sketch every time a change is made. This can be done automatically using the Unix utility [`entr`](http://entrproject.org).
+
+Install `entr` manually or using Homebrew.
+
+```sh
+brew install entr
+```
+
+Watch the plugin bundle for changes in any of the scripts and provide the path to Sketch.
+
+```sh
+find /path/to/my-plugin.sketchplugin -name '*js' | entr \
+  -r /Applications/Sketch.app/Contents/MacOS/Sketch
+```
+
+### Clear plugin cache manually
+
+The plugin cache contains the current and previously installed versions of plugins. To clear the cache remove the folder for a specific plugin or the entire cache `PluginsWarehouse` from:
+
+```sh
+~/Library/Application Support/com.bohemiancoding.sketch3/PluginsWarehouse
+```
+
+Sketch will recreate the cache next time a plugin gets initialized.
+
+### Ensure matching version number in `manifest.json` and appcast
+
+A plugin installation fails if the plugin version specified in the appcast does not match the version number in `manifest.json`.
 
 ## Sketch-dev-tools
 
@@ -103,26 +148,6 @@ Once you do that, you can tell your Plugin to call a method for every action by 
 }
 ```
 
-## Always reload scripts before running
-
-For performance reasons, Sketch caches the contents of the Plugins folder. This is very convenient for users, since Plugins run very fast, but makes your life hard if you’re a developer. That’s why we added a preference to disable this caching mechanism and force Sketch to always reload a Plugin’s code from disk:
-
-```shell
-defaults write com.bohemiancoding.sketch3 AlwaysReloadScript -bool YES
-```
-
-If you enable this, as soon as you save your script it will be ready for testing in Sketch (bye bye relaunching it just to test a small change!)
-
-Please note that this setting determines whether the source of the script is reloaded from disc whenever Sketch makes a new javascript context for the script. If it’s `NO`, the source is cached, if it’s `YES`, the source is always reloaded from disc.
-
-What it doesn’t do, however, is change when a new JavaScript context is made. For long-running scripts, the same context is held in memory (it has to be — the running script is using it) until the script exits. So if you’re testing a long-running script, you will still have to find a way to stop the script, so that the context gets thrown away (that usually means relaunching Sketch, or setting `coscript.setShouldKeepAround(false)`).
-
-### Always restarting sketch after changes to plugin JavaScript
-
-If you find yourself in the latter category, of needing to restart long-running JavaScript contexts regularly during development, the unix utility [`entr`](http://entrproject.org/) may come in handy. Given a list of files on stdin, it will run a command (or restart a long-running process given `-r`) every time one of those files is modified:
-
-`find /your/plugin/build/dest -name '*js' | entr -r /Applications/Sketch.app/Contents/MacOS/Sketch`
-
 #### In conjunction with WebView JavaScript
 
 And if you so happen to also have WebView JavaScript that doesn't require rebooting Sketch (because right-click + reload is fine), just make sure to avoid passing those files to `entr`:
@@ -140,10 +165,3 @@ defaults write com.bohemiancoding.sketch3 WebKitDeveloperExtras -bool true
 ```
 
 Then you can simply right-click on your web-view and click on `Inspect`. The inspector should show up.
-
-### Troubleshooting
-
-So you've followed all the steps, and your plugin is still not updating? Try these:
-
-- Remove the `PluginsWarehouse` folder that lives in `~/Library/Application Support/com.bohemiancoding.sketch3/`. This is where we cache plugin downloads, and if you've been testing different versions of your appcast, you probably have some old stuff there that's worth cleaning.
-- Make sure the `manifest.json` in your downloaded ZIP has a version number that matches the one in your appcast. If the appcast says the ZIP contains v1.2, but the actual ZIP says it's v1.1, the installation will not work.
