@@ -1,5 +1,8 @@
 {
-  "unreleased": ["[New] Add `isSelected` method on a CurvePoint"],
+  "unreleased": [
+    "[New] Add `isSelected` method on a CurvePoint",
+    "[Fixed] `getSelectedDocument()` could throw an error when no document was opened. Now it will return `undefined`"
+  ],
   "releases": {
     "54": [
       "[New] Add `colors` and `gradients` properties on Document",
