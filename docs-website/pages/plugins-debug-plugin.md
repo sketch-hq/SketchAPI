@@ -13,7 +13,7 @@ redirect_from:
 order: 103
 ---
 
-Use logs, Safari Web Inspector and the Sketch DevTools plugin to inspect and debug your plugin.
+Debug and inspect your plugin with the help of logs, Safari Web Inspector and the Sketch DevTools plugin.
 
 ## Logs
 
@@ -27,37 +27,51 @@ Use [`console`](https://developer.mozilla.org/en-US/docs/Web/API/console) to log
 
 ## Safari Web Inspector
 
-Connect the Safari Web Inspector to your plugin to debug your plugin. Sketch plugins are by default using a short-lived `JSContext`. For the debugger to connect
+When a plugin is run, Sketch initializes a new [JavaScript runtime environment](/plugins/javascript-environment) for it. By default this `JSContext` is short-lived and destroyed once the plugin command is completed. However, it is still possible to attach the debugger provided by the _Safari Web Inspector_. From the submenu matching you computer name in the _Develop_ menu, select:
+
+1. _Automatically Show Web Inspector for JSContexts_
+2. _Automatically Pause Connecting to JSContexts_ to set breakpoints in your source code.
 
 <img src="/images/developer/safari-develop-menu-inspector.png"
      alt="Enable Safari Web Inspector and Debugger"
      width="726" />
 
+Once done with debugging you may want to deselect these options again or Safari will open the Web Inspector for any plugin run within Sketch or other applications using `JSContext`.
+
 > **Note:** The _Develop_ menu in Safari is not shown by default. To enable it, make sure to check the _Show Develop menu in menu bar_ option within _Preferences_ › _Advanced_.
 
-## Objective-C classes introspection
+## Introspect the Objective-C runtime
 
-The plugin system in Sketch gives you full access to the app's internals and the core frameworks in macOS. Sketch is built using Objective-C and its classes are bridged to JavaScript. It is often useful to know what classes you are dealing with and what methods are defined on it.
-
-You can access those information with some introspection methods defined by the bridge. For example:
+Native Sketch objects are bridged from Objective-C to JavaScript. Query information about properties, class and instance methods as well as protocols using Mocha.
 
 ```js
-String(context.document.class()) // MSDocument
-
-var mocha = context.document.class().mocha()
-
-mocha.properties() // array of MSDocument specific properties defined on a MSDocument instance
-mocha.propertiesWithAncestors() // array of all the properties defined on a MSDocument instance
-
-mocha.instanceMethods() // array of methods defined on a MSDocument instance
-mocha.instanceMethodsWithAncestors()
-
-mocha.classMethods() // array of methods defined on the MSDocument class
-mocha.classMethodsWithAncestors()
-
-mocha.protocols() // array of protocols the MSDocument class inherits from
-mocha.protocolsWithAncestors()
+let mocha = context.document.class().mocha()
+console.log(mocha.properties())
 ```
+
+See the [Mocha documentation](https://github.com/logancollins/Mocha#introspecting-the-objective-c-runtime) for a complete list of available introspection methods.
+
+## Inspect Sketch documents with Sketch DevTools
+
+[Sketch DevTools](https://github.com/skpm/sketch-dev-tools) is a Sketch plugin that lets you inspect elements within a document without writing code.
+
+## Inspect a plugin's webview
+
+To inspect plugin user interfaces built using a webview you need to set a user default.
+
+```sh
+defaults write com.bohemiancoding.sketch3 WebKitDeveloperExtras -bool YES
+```
+
+If you're using a Beta version of Sketch make sure to use the correct application bundle identifier.
+
+```sh
+defaults write com.bohemiancoding.sketch3.beta WebKitDeveloperExtras -bool YES
+```
+
+DOM elements can be inspected by right-clicking inside the webview and select _Inspect Element_ which brings up the Safari Web Inspector. If you have JavaScript code supressing the context menu you can still inspect elements by selecting them directly within _Elements_ in Safari Web Inspector.
+
+> **Note:** If you're using `skpm`, the `WebKitDeveloperExtras` user default will be set to `YES` automatically.
 
 ## Troubleshooting
 
@@ -71,7 +85,7 @@ defaults write com.bohemiancoding.sketch3 AlwaysReloadScript -bool YES
 
 Sketch only reloads a plugin directly before it gets invoked. For scripts using a long-running JavaScript context Sketch must be restarted. If you are still using `coscript.setShouldKeepAround(false)` we encourage you to instead use [`fibers`](https://developer.sketch.com/reference/api/#async) which provide more granular control over the lifecycle of a JavaScript context.
 
-> **Note:** If you use `skpm`, the `AlwaysReloadScript` user default will be set to `YES` automatically.
+> **Note:** If you're using `skpm`, the `AlwaysReloadScript` user default will be set to `YES` automatically.
 
 ### Automatically restart Sketch after plugin changes
 
@@ -104,64 +118,42 @@ Sketch will recreate the cache next time a plugin gets initialized.
 
 A plugin installation fails if the plugin version specified in the appcast does not match the version number in `manifest.json`.
 
-## Sketch-dev-tools
+### Disable Safe Mode after plugin crashing Sketch
 
-We created a small Sketch specific tool to help you with debugging your plugins and hopefully make your life easier. It takes the form of a Sketch plugin that you can download [here](https://github.com/skpm/sketch-dev-tools/releases/latest) and launch with `cmd + option + j`.
+If a plugin causes Sketch to crash, Sketch uses _Safe Mode_ by default and disables all plugins next time it's launched. This behaviour can be disabled by setting a user default.
 
-If you spend non-trivial amounts of time developing Plugins for Sketch, there are some improvements you can make to your workflow using these preferences.
+```sh
+defaults write com.bohemiancoding.sketch3 disableAutomaticSafeMode YES
+```
 
-Since not all Sketch users are Plugin developers, it didn't make sense to give these preferences a UI in the Preferences panel. You'll need to use Terminal.app to enable / disable them.
+If you’re using the Beta version, you’ll need to run:
 
-## Disable safe mode reload behavior when your plugin crashes Sketch
+```sh
+defaults write com.bohemiancoding.sketch3.beta disableAutomaticSafeMode YES
+```
 
-If a plugin crashes sketch, we disable plugins when relaunching sketch to make sure users don't end up in an infinite crashing loop. When developing a plugin, it might crash Sketch before you fix the bug and this behavior can become annoying as you need to go to the plugin menu to re-enable you plugin. You can use `defaults write com.bohemiancoding.sketch3 disableAutomaticSafeMode true` to disable that behavior.
+To restore the default behavior, delete the user default.
 
-If you’re using the Beta version, you’ll need to run `defaults write com.bohemiancoding.sketch3.beta disableAutomaticSafeMode true`.
+```sh
+defaults delete com.bohemiancoding.sketch3 disableAutomaticSafeMode
+```
 
-If you want to restore the default behavior, run `defaults delete com.bohemiancoding.sketch3 disableAutomaticSafeMode`.
+### Handle all actions
 
-## Listen to all actions in the Action API
+For development purposes it can be helpful to subscribe to all [actions](/reference/action/). By default Sketch only forwards actions that have been explicitely specified in the plugin manifest. Set the `actionWildcardsAllowed` user default to `YES` to forward all actions.
 
-<p class="warning">
-  <strong>Warning:</strong> This is an extremely expensive operation, and will impact Sketch’s performance. Please use this <em>on your development system only</em> and <strong>never enable this on a customer’s computer</strong>.
-</p>
-
-When working with the new [Action API](/reference/action/) you might want to listen to multiple events (specially when trying to find _which_ event is the one you want to use).
-
-To do that, use the `actionWildcardsAllowed` preference. If set to `YES`, scripts are allowed to register a wildcard handler for events. This is off by default, and it could have a bad effect on performance, so handle it with care.
-
-```shell
+```sh
 defaults write com.bohemiancoding.sketch3 actionWildcardsAllowed -bool YES
 ```
 
-Once you do that, you can tell your Plugin to call a method for every action by adding a `*` key to your `handlers.actions` object in `manifest.json`:
+Update the manifest to include a generic action handler by specifying a action wildcard.
 
 ```diff
-{
-  ...
   "handlers": {
 +    "actions": {
-+      "*": "onActionHandler"
++      "*": "onAction"
 +    }
   }
-  ...
-}
 ```
 
-#### In conjunction with WebView JavaScript
-
-And if you so happen to also have WebView JavaScript that doesn't require rebooting Sketch (because right-click + reload is fine), just make sure to avoid passing those files to `entr`:
-
-`find ... | grep -v 'web\.js' | entr ...`
-
-## Inspect a WebView
-
-If your plugin is using a WebView, chances are that you will need to inspect it at some point.
-
-To do so, you need to add the preference:
-
-```shell
-defaults write com.bohemiancoding.sketch3 WebKitDeveloperExtras -bool true
-```
-
-Then you can simply right-click on your web-view and click on `Inspect`. The inspector should show up.
+> **Note:** Use wildcard action handlers for development and debugging only as they impact Sketch' performance negatively.
