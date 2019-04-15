@@ -1,5 +1,9 @@
 {
-  "unreleased": ["[New] Add `isSelected` method on a CurvePoint"],
+  "unreleased": [
+    "[New] Add `isSelected` method on a CurvePoint",
+    "[Improved] Improve consistency by deprecating `Fill.fill` in favor of `Fill.fileType` (to match `Border.fileType` and other types)",
+    "[Fixed] `getSelectedDocument()` could throw an error when no document was opened. Now it will return `undefined`"
+  ],
   "releases": {
     "54": [
       "[New] Add `colors` and `gradients` properties on Document",
