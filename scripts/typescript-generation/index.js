@@ -5,7 +5,13 @@ const path = require('path')
 const chalk = require('chalk')
 const parseHeader = require('./parse-header')
 const generateDeclaration = require('./generate-typescript-declaration')
-const { additionalClasses, additions } = require('./typescript-overrides')
+const {
+  additionalClasses,
+  additions,
+  additionalInterfaces,
+  additionalMethods,
+  additionalProperties,
+} = require('./typescript-overrides')
 
 const TYPES = path.join(__dirname, '../../types/sketch-internals__generated')
 const SKETCH_SOURCES_PATH = path.join(__dirname, '../../../../')
@@ -118,16 +124,23 @@ function generate() {
   console.log('Parsing Sketch Sources...')
   parseHeaders(SKETCH_SOURCES_PATH)
 
-  classes.NSObject.interfaces.push('NSObject')
-  classes.NSObject.methods.init = {
-    name: 'init',
-    bridgedName: 'init',
-    args: [],
-    returns: 'instancetype',
-    kind: 'class',
-    kindIndicator: '+',
-  }
-  console.log(classes.MSDocumentController)
+  Object.keys(additionalInterfaces).forEach(aClass => {
+    classes[aClass].interfaces = classes[aClass].interfaces.concat(
+      additionalInterfaces[aClass]
+    )
+  })
+
+  Object.keys(additionalMethods).forEach(aClass => {
+    Object.keys(additionalMethods[aClass]).forEach(method => {
+      classes[aClass].methods[method] = additionalMethods[aClass][method]
+    })
+  })
+
+  Object.keys(additionalProperties).forEach(aClass => {
+    Object.keys(additionalProperties[aClass]).forEach(prop => {
+      classes[aClass].properties[prop] = additionalProperties[aClass][prop]
+    })
+  })
 
   // add some classes manually
   additionalClasses.forEach(c => {

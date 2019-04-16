@@ -730,4 +730,36 @@ module.exports.classAdditions = {
   MSSharedObject: `
   updateToMatch: (instance: MSSharedObjectInstance) => void
 `,
+  MSSharedStyle: `
+  allInstances: () => MSStyle[]
+  allLayersInstances: () => MSStyledLayer[]
+`,
+}
+
+module.exports.additionalInterfaces = {
+  NSObject: ['NSObject'],
+}
+
+module.exports.additionalMethods = {
+  NSObject: {
+    init: {
+      name: 'init',
+      bridgedName: 'init',
+      args: [],
+      returns: 'instancetype',
+      kind: 'class',
+      kindIndicator: '+',
+    },
+  },
+}
+
+module.exports.additionalProperties = {
+  MSModelObject: {
+    foreignObject: {
+      name: 'foreignObject',
+      pointer: false,
+      type: '__kindof MSForeignObject ',
+      attributes: ['nonatomic', 'nullable', 'readonly'],
+    },
+  },
 }

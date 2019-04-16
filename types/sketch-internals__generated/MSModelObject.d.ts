@@ -29,7 +29,7 @@ interface MSModelObject extends MSModelObjectCommon, IMSModelObject {
   copyPropertiesToObject_options(objectCopy: any, options: MSModelCopyOptions): void;
   syncPropertiesFromObject(object: any): void;
 
-  foreignObject(): MSModelObject;
+  foreignObject(): MSForeignObject;
   isForeign(): boolean;
   UIMetadataKey(): NSString;
   cachedImmutableModelObject(): any;

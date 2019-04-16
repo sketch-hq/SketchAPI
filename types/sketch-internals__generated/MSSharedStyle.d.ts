@@ -3,6 +3,9 @@ interface MSSharedStyleUninitialized<InitializedType = MSSharedStyle> extends _M
 }
 
 interface MSSharedStyle extends _MSSharedStyle {
+
+  allInstances: () => MSStyle[]
+  allLayersInstances: () => MSStyledLayer[]
   resetReferencingInstances(): void;
 
   style(): MSStyle;

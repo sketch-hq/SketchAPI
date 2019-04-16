@@ -69,15 +69,15 @@ export class SharedStyle extends WrappedObject<MSSharedStyle> {
     const documentData = wrapObject(document)._getMSDocumentData()
     const wrappedStyle = wrapObject(style, Types.Style)
 
-    const sharedStyle = SharedStyle.fromNative(
+    const sharedStyle = SharedStyle.fromNative<MSSharedStyle, SharedStyle>(
       MSSharedStyle.alloc().initWithName_style(name, wrappedStyle.sketchObject)
-    )
+    )!
 
     const container = documentData.sharedObjectContainerOfType(
       wrappedStyle.sketchObject.type()
     )
 
-    container.addSharedObject(sharedStyle._object)
+    container.addSharedObject(sharedStyle.sketchObject)
 
     return sharedStyle
   }
