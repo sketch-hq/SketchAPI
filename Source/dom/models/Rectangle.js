@@ -1,6 +1,7 @@
 import { isNumber } from 'util'
 import { wrapObject } from '../wrapNativeObject'
 import { proxyProperty, initProxyProperties } from '../utils'
+import { Factory } from '../Factory'
 
 /**
  * Represents a rectangle.
@@ -129,4 +130,19 @@ export class Rectangle {
     )
     return new Rectangle(origin.x, origin.y, this.width, this.height)
   }
+
+  static fromNative(sketchObject) {
+    if (!sketchObject) {
+      return sketchObject
+    }
+    return new this(
+      sketchObject.origin().x,
+      sketchObject.origin().y,
+      sketchObject.size().width,
+      sketchObject.size().height
+    )
+  }
 }
+
+Factory.registerClass(Rectangle, MSRect)
+Factory.registerClass(Rectangle, MSImmutableRect)
