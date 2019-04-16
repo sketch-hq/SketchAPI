@@ -1,9 +1,9 @@
+import { toArray } from 'util'
 import { DefinedPropertiesKey } from '../WrappedObject'
 import { StyledLayer } from './StyledLayer'
 import { Rectangle } from '../models/Rectangle'
 import { Types } from '../enums'
 import { Factory } from '../Factory'
-import { toArray } from '../utils'
 import { wrapNativeObject, wrapObject } from '../wrapNativeObject'
 
 /**
@@ -42,7 +42,10 @@ export class Group extends StyledLayer {
    * Adjust the group to fit its children.
    */
   adjustToFit() {
-    this._object.resizeToFitChildrenWithOption_(0)
+    if (this.isImmutable()) {
+      return this
+    }
+    this._object.fixGeometryWithOptions(0)
     return this
   }
 }
@@ -50,19 +53,44 @@ export class Group extends StyledLayer {
 Group.type = Types.Group
 Group[DefinedPropertiesKey] = { ...StyledLayer[DefinedPropertiesKey] }
 Factory.registerClass(Group, MSLayerGroup)
+Factory.registerClass(Group, MSImmutableLayerGroup)
 
 Group.define('layers', {
+  array: true,
   get() {
     return toArray(this._object.layers()).map(wrapNativeObject)
   },
   set(layers) {
+    if (this.isImmutable()) {
+      return
+    }
     // remove the existing layers
-    toArray(this._object.layers()).forEach(l => l.removeFromParent())
+    this._object.removeAllLayers()
 
-    toArray(layers)
-      .map(wrapObject)
-      .forEach(layer => {
-        layer.parent = this // eslint-disable-line
-      })
+    this._object.addLayers(
+      toArray(layers)
+        .map(wrapObject)
+        .map(l => l._object)
+    )
+  },
+  insertItem(item, index) {
+    if (this.isImmutable()) {
+      return undefined
+    }
+    const layer = wrapObject(item)
+    if (layer._object.parentGroup()) {
+      layer._object.removeFromParent()
+    }
+    this._object.insertLayer_atIndex(layer._object, index)
+
+    return layer
+  },
+  removeItem(index) {
+    if (this.isImmutable()) {
+      return undefined
+    }
+    const item = wrapNativeObject(this._object.layers()[index])
+    this._object.removeLayerAtIndex(index)
+    return item
   },
 })

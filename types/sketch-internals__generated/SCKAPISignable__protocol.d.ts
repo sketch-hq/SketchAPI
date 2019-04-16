@@ -1,0 +1,5 @@
+interface ISCKAPISignable {
+
+  signableString(): NSString;
+}
+

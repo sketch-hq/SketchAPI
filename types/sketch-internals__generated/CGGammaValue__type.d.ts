@@ -1,0 +1,2 @@
+declare type CGGammaValue = number
+

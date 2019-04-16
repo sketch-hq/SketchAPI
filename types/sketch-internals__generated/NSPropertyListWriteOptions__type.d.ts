@@ -1,0 +1,2 @@
+declare type NSPropertyListWriteOptions = NSUInteger
+

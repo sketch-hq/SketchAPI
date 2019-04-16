@@ -1,0 +1,4 @@
+interface INSAccessibilityCheckBox {
+  accessibilityValue(): NSNumber;
+}
+

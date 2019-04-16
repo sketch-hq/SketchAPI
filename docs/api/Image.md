@@ -10,15 +10,24 @@ var Image = require('sketch/dom').Image
 
 An image layer. It is an instance of [Layer](#layer) so all the methods defined there are available.
 
-| Properties                                                 |                                                                                                 |
-| ---------------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
-| id<span class="arg-type">string</span>                     | The unique ID of the Image.                                                                     |
-| name<span class="arg-type">string</span>                   | The name of the Image                                                                           |
-| parent<span class="arg-type">[Group](#group)</span>        | The group the Image is in.                                                                      |
-| frame<span class="arg-type">[Rectangle](#rectangle)</span> | The frame of the Image. This is given in coordinates that are local to the parent of the layer. |
-| flow<span class="arg-type">[Flow](#flow)</span>            | The prototyping action associated with the Image.                                               |
-| style<span class="arg-type">[Style](#style)</span>         | The style of the Image.                                                                         |
-| image<span class="arg-type">[ImageData](#imagedata)</span> | The actual image of the layer.                                                                  |
+| Properties                                                                  |                                                                                                 |
+| --------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
+| id<span class="arg-type">string</span>                                      | The unique ID of the Image.                                                                     |
+| name<span class="arg-type">string</span>                                    | The name of the Image                                                                           |
+| parent<span class="arg-type">[Group](#group)</span>                         | The group the Image is in.                                                                      |
+| locked<span class="arg-type">boolean</span>                                 | If the Image is locked.                                                                         |
+| hidden<span class="arg-type">boolean</span>                                 | If the Image is hidden.                                                                         |
+| frame<span class="arg-type">[Rectangle](#rectangle)</span>                  | The frame of the Image. This is given in coordinates that are local to the parent of the layer. |
+| selected<span class="arg-type">boolean</span>                               | If the Image is selected.                                                                       |
+| flow<span class="arg-type">[Flow](#flow)</span>                             | The prototyping action associated with the Image.                                               |
+| exportFormats<span class="arg-type">[ExportFormat](#export-format)[]</span> | The export formats of the Image.                                                                |
+| transform<span class="arg-type">object</span>                               | The transformation applied to the Image.                                                        |
+| transform.rotation<span class="arg-type">number</span>                      | The rotation of the Image in degrees, clock-wise.                                               |
+| transform.flippedHorizontally<span class="arg-type">boolean</span>          | If the Image is horizontally flipped.                                                           |
+| transform.flippedVertically<span class="arg-type">boolean</span>            | If the Image is vertically flipped.                                                             |
+| style<span class="arg-type">[Style](#style)</span>                          | The style of the Image.                                                                         |
+| sharedStyleId<span class="arg-type">string / null</span>                    | The ID of the [SharedStyle](#shared-style) this Image is linked to if any.                      |
+| image<span class="arg-type">[ImageData](#imagedata)</span>                  | The actual image of the layer.                                                                  |
 
 ## Create a new Image
 
@@ -30,13 +39,14 @@ var imageLayer = new Image({
 
 The image property accept a wide range of input:
 
-* an [`ImageData`](#imagedata)
-* a native `NSImage`
-* a native `NSURL`
-* a native `MSImageData`
-* a string: path to the file to load the image from
-* an object with a `path` property: path to the file to load the image from
-* an object with a `base64` string: a base64 encoded image
+- an [`ImageData`](#imagedata)
+- a `Buffer`
+- a native `NSImage`
+- a native `NSURL`
+- a native `MSImageData`
+- a string: path to the file to load the image from
+- an object with a `path` property: path to the file to load the image from
+- an object with a `base64` string: a base64 encoded image
 
 ## `ImageData`
 

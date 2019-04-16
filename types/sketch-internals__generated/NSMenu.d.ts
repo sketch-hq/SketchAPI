@@ -1,0 +1,104 @@
+interface NSMenuUninitialized<InitializedType = NSMenu> extends NSObjectUninitialized<NSMenu> {
+  initWithTitle(title: NSString | string): InitializedType;
+  initWithCoder(decoder: NSCoder): InitializedType;
+}
+interface NSMenu extends NSObject, INSCopying, INSCoding, INSUserInterfaceItemIdentification, INSAccessibilityElement, INSAccessibility {
+  popUpMenuPositioningItem_atLocation_inView(item: NSMenuItem | null, location: NSPoint, view: NSView | null): boolean;
+  insertItem_atIndex(newItem: NSMenuItem, index: NSInteger): void;
+  addItem(newItem: NSMenuItem): void;
+  insertItemWithTitle_action_keyEquivalent_atIndex(string: NSString | string, selector: string | null, charCode: NSString | string, index: NSInteger): NSMenuItem;
+  addItemWithTitle_action_keyEquivalent(string: NSString | string, selector: string | null, charCode: NSString | string): NSMenuItem;
+  removeItemAtIndex(index: NSInteger): void;
+  removeItem(item: NSMenuItem): void;
+  setSubmenu_forItem(menu: NSMenu | null, item: NSMenuItem): void;
+  removeAllItems(): void;
+  itemAtIndex(index: NSInteger): NSMenuItem;
+  indexOfItem(item: NSMenuItem): NSInteger;
+  indexOfItemWithTitle(title: NSString | string): NSInteger;
+  indexOfItemWithTag(tag: NSInteger): NSInteger;
+  indexOfItemWithRepresentedObject(object: any | null): NSInteger;
+  indexOfItemWithSubmenu(submenu: NSMenu | null): NSInteger;
+  indexOfItemWithTarget_andAction(target: any | null, actionSelector: string | null): NSInteger;
+  itemWithTitle(title: NSString | string): NSMenuItem;
+  itemWithTag(tag: NSInteger): NSMenuItem;
+  update(): void;
+  performKeyEquivalent(event: NSEvent): boolean;
+  itemChanged(item: NSMenuItem): void;
+  performActionForItemAtIndex(index: NSInteger): void;
+  cancelTracking(): void;
+  cancelTrackingWithoutAnimation(): void;
+  submenuAction(sender: any | null): void;
+  setMenuRepresentation(menuRep: any): void;
+  menuRepresentation(): any;
+  setContextMenuRepresentation(menuRep: any): void;
+  contextMenuRepresentation(): any;
+  setTearOffMenuRepresentation(menuRep: any): void;
+  tearOffMenuRepresentation(): any;
+  attachedMenu(): NSMenu;
+  isAttached(): boolean;
+  sizeToFit(): void;
+  locationForSubmenu(submenu: NSMenu): NSPoint;
+  helpRequested(eventPtr: NSEvent): void;
+  addItemWithTitle_action(title: NSString | string, aSelector: string): NSMenuItem;
+  addItemWithTitle_small_target_action(title: NSString | string, smallFont: boolean, action: any, aSelector: string): NSMenuItem;
+  addItemWithTitle_target_action(title: NSString | string, aTarget: any, action: string): NSMenuItem;
+  addItemWithTitle_target_action_representedObject(title: NSString | string, aTarget: any, action: string, anObject: any): NSMenuItem;
+  addItemWithTitle_target_action_submenu(title: NSString | string, aTarget: any, action: string, submenu: NSMenu): NSMenuItem;
+  addItemWithTitle_target_action_image(title: NSString | string, target: any, action: string, image: NSImage): NSMenuItem;
+  addItemWithTitle_target_action_imageNamed(title: NSString | string, aTarget: any, action: string, image: NSString | string): NSMenuItem;
+  addSmallItalicItemWithTitle_target_action(aString: NSString | string, aTarget: any, aSelector: string): NSMenuItem;
+  addSmallItemWithTitle_target_action(aString: NSString | string, aTarget: any, aSelector: string): NSMenuItem;
+  addItemWithTitle_font_target_action(title: NSString | string, font: NSFont, aTarget: any, aSelector: string): NSMenuItem;
+  insertSortedLocalizedItem(newItem: NSMenuItem): void;
+  addItemsFromArray(array: NSArray<any> | any[]): void;
+  itemWithAction_ms(action: string): NSMenuItem;
+  removeItemWithAction_ms(action: string): void;
+  replaceItemWithAction_withMenuItem_ms(action: string, newItem: NSMenuItem): NSMenuItem;
+  replaceMenuItem_withMenuItem_ms(oldItem: NSMenuItem, newItem: NSMenuItem): void;
+  showPopUpMenuForEvent_relativeToRect_ofView(event: NSEvent, rect: NSRect, view: NSView): void;
+  showPopUpMenuForEvent_relativeToRect_ofView_deferred(event: NSEvent, rect: NSRect, view: NSView, defer: boolean): void;
+  showPopUpMenuForEvent_relativeToRect_ofView_deferred_triggerControlViewActionOnZeroItems(event: NSEvent, rect: NSRect, controlView: NSView, defer: boolean, triggerControlViewActionOnZeroItems: boolean): void;
+  parentMenuItem_bc(): NSMenuItem;
+
+  title(): NSString;
+  setTitle(title: NSString | string): void;
+  supermenu(): NSMenu;
+  setSupermenu(supermenu: NSMenu): void;
+  itemArray(): NSArray<any>;
+  setItemArray(itemArray: NSArray<any> | any[]): void;
+  numberOfItems(): NSInteger;
+  autoenablesItems(): boolean;
+  setAutoenablesItems(autoenablesItems: boolean): void;
+  delegate(): any;
+  setDelegate(delegate: any): void;
+  menuBarHeight(): CGFloat;
+  highlightedItem(): NSMenuItem;
+  minimumWidth(): CGFloat;
+  setMinimumWidth(minimumWidth: CGFloat): void;
+  size(): NSSize;
+  font(): NSFont;
+  setFont(font: NSFont): void;
+  allowsContextMenuPlugIns(): boolean;
+  setAllowsContextMenuPlugIns(allowsContextMenuPlugIns: boolean): void;
+  showsStateColumn(): boolean;
+  setShowsStateColumn(showsStateColumn: boolean): void;
+  userInterfaceLayoutDirection(): NSUserInterfaceLayoutDirection;
+  setUserInterfaceLayoutDirection(userInterfaceLayoutDirection: NSUserInterfaceLayoutDirection): void;
+  propertiesToUpdate(): NSMenuProperties;
+  menuChangedMessagesEnabled(): boolean;
+  setMenuChangedMessagesEnabled(menuChangedMessagesEnabled: boolean): void;
+  tornOff(): boolean;
+  isInMainMenu(): boolean;
+}
+declare const NSMenu: {
+  alloc(): NSMenuUninitialized;
+  class(): NSMenu;  popUpContextMenu_withEvent_forView(menu: NSMenu, event: NSEvent, view: NSView): void;
+  popUpContextMenu_withEvent_forView_withFont(menu: NSMenu, event: NSEvent, view: NSView, font: NSFont | null): void;
+  setMenuBarVisible(visible: boolean): void;
+  menuBarVisible(): boolean;
+  menuZone(): NSZone;
+  setMenuZone(zone: NSZone): void;
+  menuWithItems(menuItems: NSArray<any> | any[]): NSMenu;
+
+}
+

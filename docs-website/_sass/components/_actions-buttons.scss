@@ -1,0 +1,138 @@
+//Common styles
+.button {
+  display: inline-block;
+  position: relative; //For the states
+  padding: .5em 1.25em .625em; /*10px 24px (in EMs)*/
+  background: rgba( $action , .05);
+  color: $action;
+  border: 1px solid $action-border;
+  border-radius: $radius-normal;
+  //font-weight: $font-semibold;
+  box-shadow: 0 1px 1px 0 rgba( $sk-orange8 , .05 );
+  transition: all .25s $ease-out-quad;
+  &:hover,
+  &:active,
+  &:focus {
+    transform: translateY(-1px);
+    background: $action-high;
+    color: $text-light-high;
+    border-color: rgba( $action-high, .6 );
+    box-shadow: 0 4px 12px rgba( $sk-orange6 , .25 );
+  }
+
+  // Primary action button
+  &.full {
+    background: $action;
+    color: $text-light-high;
+    border: 0;
+    &:hover,
+    &:active,
+    &:focus {
+      background: $action-high;
+    }
+  }
+}
+
+.background-dark .button {
+  color: $action-light;
+  border-color: $action-light-border;
+  background-color: rgba( $action-light , .05);
+  box-shadow: 0 1px 1px 0 rgba( $sk-yellow8 , .2 );
+  &:hover,
+  &:active,
+  &:focus {
+    background: $action-light-high;
+    color: $sk-orange8;
+    border-color: rgba( $action-light-high, .6 );
+    box-shadow: 0 4px 12px rgba( $sk-yellow6 , .25 );
+  }
+
+  &.full {
+    background-color: $action-light;
+    color: $sk-orange8;
+    &:hover,
+    &:active,
+    &:focus {
+      background: $action-light-high;
+    }
+  }
+}
+
+.button.busy {
+  opacity: 1;
+  pointer-events: none;
+  user-select: none;
+  color: transparent;
+  position: relative;
+}
+
+.button.busy.error,
+.button.full.negative,
+.button.negative.busy.success {
+  background-color: $negative-high;
+}
+
+.button.busy.success {
+  background-color: $sk-green2;
+}
+
+.button::before,
+.button::after {
+  content: "";
+  width: 2rem;
+  height: 2rem;
+  position: absolute;
+  left: 50%;
+  margin-left: -1rem;
+  top: 50%;
+  margin-top: -1rem;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 2rem 2rem;
+  transform: scale(.8);
+  opacity: 0;
+  transition: all .25s linear;
+}
+
+.button.busy::before,
+.button.busy::after {
+  //transform: scale(1);
+  opacity: 1;
+}
+
+.button.loading::before {
+  background-image: url('data:image/svg+xml;utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2232%22%20height%3D%2232%22%20viewBox%3D%220%200%2032%2032%22%3E%3Cpath%20fill%3D%22none%22%20d%3D%22M0%200h32v32H0z%22%2F%3E%3Cpath%20fill%3D%22%23fff%22%20d%3D%22M.008%2016c-.005.163-.008.326-.008.49C0%2025.055%207.164%2032%2016%2032c8.837%200%2016-6.945%2016-15.51%200-.164-.003-.327-.008-.49-.267%208.34-7.324%2015.02-15.99%2015.02C7.33%2031.02.274%2024.34.007%2016z%22%3E%3C%2Fpath%3E%3C%2Fsvg%3E');
+  animation: spin .5s infinite linear;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.button.error::after {
+  background-image: url('data:image/svg+xml;utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2232%22%20height%3D%2232%22%20viewBox%3D%220%200%2032%2032%22%3E%3Ctitle%3Eerror%3C%2Ftitle%3E%3Cg%20fill%3D%22%23FFF%22%20fill-rule%3D%22evenodd%22%3E%3Cpath%20d%3D%22M21.79%2010.116a.672.672%200%200%200-.942%200l-4.86%204.813-4.864-4.816a.673.673%200%200%200-.943%200%20.657.657%200%200%200%200%20.934l4.865%204.81-4.862%204.815a.657.657%200%200%200%200%20.934c.26.256.684.256.944%200l4.863-4.814%204.86%204.813c.26.256.683.256.943%200a.657.657%200%200%200%200-.935l-4.86-4.813%204.86-4.81a.657.657%200%200%200%200-.935%22%2F%3E%3Cpath%20d%3D%22M16%20.037c-8.836%200-16%207.09-16%2015.84%200%208.748%207.164%2015.84%2016%2015.84s16-7.092%2016-15.84c0-8.75-7.164-15.84-16-15.84zm10.37%2026.107c-2.655%202.628-6.318%204.253-10.37%204.253s-7.715-1.625-10.37-4.253c-2.655-2.63-4.297-6.256-4.297-10.267%200-4.012%201.642-7.638%204.296-10.267C8.282%202.98%2011.945%201.357%2016%201.357S23.715%202.98%2026.37%205.61c2.655%202.63%204.297%206.255%204.297%2010.267%200%204.01-1.642%207.637-4.296%2010.267z%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E');
+}
+
+.button.success::after {
+  background-image: url('data:image/svg+xml;utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2232%22%20height%3D%2232%22%20viewBox%3D%220%200%2032%2032%22%3E%3Ctitle%3Esuccess%3C%2Ftitle%3E%3Cg%20fill%3D%22%23FFF%22%20fill-rule%3D%22evenodd%22%3E%3Cpath%20d%3D%22M16-.003c-8.836%200-16%207.163-16%2016%200%208.838%207.164%2016%2016%2016s16-7.162%2016-16c0-8.837-7.164-16-16-16zm10.37%2026.37c-2.655%202.656-6.318%204.297-10.37%204.297s-7.715-1.64-10.37-4.296a14.62%2014.62%200%200%201-4.297-10.37c0-4.053%201.642-7.715%204.296-10.37C8.282%202.97%2011.945%201.33%2016%201.33s7.715%201.64%2010.37%204.297c2.655%202.656%204.297%206.318%204.297%2010.37s-1.642%207.715-4.296%2010.37z%22%2F%3E%3Cpath%20d%3D%22M22.515%2011.223l-9.85%209.85L9%2017.403a.668.668%200%201%200-.944.943l4.14%204.14c.26.26.68.26.94%200l10.323-10.32a.676.676%200%200%200%200-.944.67.67%200%200%200-.947%200%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E');
+}
+
+@include tablet-and-above {
+  .button ~ small {
+    display: inline-block;
+    margin-left: .5rem;
+  }
+}
+
+@include tablet-and-below {
+  .button ~ small {
+    display: block;
+    margin-top: .5rem;
+  }
+}
+// TODO dim visited links

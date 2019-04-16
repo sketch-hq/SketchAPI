@@ -1,0 +1,21 @@
+declare enum MSTraits {
+  MSTraitStyled = 1<<8,
+  MSTraitText = 1<<9,
+  MSTraitImage = 1<<10,
+  MSTraitSlice = 1<<11,
+  MSTraitGroup = 1<<12,
+  MSTraitArtboard = 1<<13,
+  MSTraitShape = 1<<14,
+  MSTraitPage = 1<<15,
+  MSTraitContainer = 1<<16,
+  MSTraitRoot = 1<<17,
+  MSTraitPath = 1<<18,
+  MSTraitSymbolInstance = 1<<19,
+  MSTraitSymbolMaster = 1<<20,
+  MSTraitHotspot = 1<<21,
+  MSTraitExportable = 1<<22,
+  MSTraitShapeOrPath = 1<<23,
+  MSTraitAllTraits,
+  MSTraitNone = 0,
+}
+

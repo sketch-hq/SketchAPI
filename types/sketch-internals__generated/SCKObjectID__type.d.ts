@@ -1,0 +1,2 @@
+declare type SCKObjectID = NSString
+

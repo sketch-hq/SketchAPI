@@ -1,17 +1,24 @@
 import 'reflect-metadata'
+import { hookedArray } from './utils'
 import { Types } from './enums'
 
-type Descriptor<T extends WrappedObject<any>> = {
+export const DefinedPropertiesKey = '_DefinedPropertiesKey'
+
+type Descriptor<T extends WrappedObject<any>, U> = {
   exportable?: boolean
   enumerable?: boolean
   importable?: boolean
   depends?: string
   propertyName?: string
-  get: () => any
-  set?: (value: any) => void
+  get: () => U
+  set?: (value: U) => void
 } & ThisType<T>
 
-export const DefinedPropertiesKey = Symbol('DefinedPropertiesKey')
+type ArrayDescriptor<T extends WrappedObject<any>, U> = Descriptor<T, U[]> & {
+  set: (value: U[]) => void
+  insertItem: (item: U, index: number) => U | null
+  removeItem: (index: number) => U | null
+} & ThisType<T>
 
 /**
  * Define getter and setter for a property
@@ -24,8 +31,8 @@ export const DefinedPropertiesKey = Symbol('DefinedPropertiesKey')
  * @param {string} propertyName - the name of the property
  * @param {Object} descriptor - the descriptor for the property (see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty)
  */
-export function define<T extends WrappedObject<any>>(
-  descriptor: Descriptor<T>
+export function define<T extends WrappedObject<any>, U>(
+  descriptor: Descriptor<T, U>
 ) {
   return function(target: any, propertyName: string) {
     /* eslint-disable no-param-reassign */
@@ -50,7 +57,7 @@ export function define<T extends WrappedObject<any>>(
       typeof descriptor.get !== 'undefined' &&
       propertyName[0] !== '_'
 
-    let existingProperties: { [propertyName: string]: Descriptor<T> } =
+    let existingProperties: { [propertyName: string]: Descriptor<T, any> } =
       Reflect.getOwnMetadata(DefinedPropertiesKey, target) || {}
     existingProperties[propertyName] = descriptor
     Reflect.defineMetadata(DefinedPropertiesKey, existingProperties, target)
@@ -59,13 +66,156 @@ export function define<T extends WrappedObject<any>>(
   }
 }
 
+export function defineArray<T extends WrappedObject<any>, U>(
+  descriptor: ArrayDescriptor<T, U>
+) {
+  return function(target: any, propertyName: string) {
+    /* eslint-disable no-param-reassign */
+    descriptor.propertyName = propertyName
+
+    if (descriptor.enumerable == null) {
+      descriptor.enumerable = true
+    }
+
+    if (descriptor.exportable == null) {
+      descriptor.exportable = true
+    }
+
+    if (descriptor.importable == null) {
+      descriptor.importable = true
+    }
+
+    descriptor.importable =
+      descriptor.importable && typeof descriptor.set !== 'undefined'
+    descriptor.exportable =
+      descriptor.exportable &&
+      typeof descriptor.get !== 'undefined' &&
+      propertyName[0] !== '_'
+
+    const oldGet = descriptor.get
+    // eslint-disable-next-line no-param-reassign
+    descriptor.get = function get() {
+      const arr = oldGet.bind(this)()
+      return hookedArray(arr, this, descriptor)
+    }
+
+    let existingProperties: { [propertyName: string]: Descriptor<T, any> } =
+      Reflect.getOwnMetadata(DefinedPropertiesKey, target) || {}
+    existingProperties[propertyName] = descriptor
+    Reflect.defineMetadata(DefinedPropertiesKey, existingProperties, target)
+
+    Object.defineProperty(target, propertyName, descriptor)
+  }
+}
+
+export function defineObject<
+  T extends WrappedObject<any>,
+  U extends { [key: string]: any }
+>(
+  fields: {
+    [key: string]: Descriptor<T, any>
+  },
+  descriptor: {
+    exportable?: boolean
+    enumerable?: boolean
+    importable?: boolean
+    depends?: string
+  } = {}
+) {
+  return function(target: any, propertyName: string) {
+    const privateKey = `_${propertyName}`
+    const privateClassKey = `_${propertyName}Class`
+    class NestedProperty {
+      _keys: string[] = []
+
+      constructor(object: T) {
+        const self = this
+        Object.defineProperty(self, '_parent', {
+          enumerable: false,
+          value: object,
+        })
+        Object.defineProperty(self, '_object', {
+          enumerable: false,
+          value: object.sketchObject,
+        })
+        Object.defineProperty(self, '_keys', {
+          enumerable: false,
+          writable: true,
+          value: Object.keys(fields),
+        })
+
+        self._keys.forEach(field => {
+          Object.defineProperty(self, field, fields[field])
+        })
+      }
+
+      toJSON() {
+        return this._keys.reduce((prev, field) => {
+          // eslint-disable-next-line no-param-reassign
+          // @ts-ignore
+          prev[field] = this[field]
+          return prev
+        }, {})
+      }
+    }
+
+    // @ts-ignore
+    this[privateClassKey] = NestedProperty
+
+    const fullDescriptor = {
+      ...descriptor,
+      get(): U {
+        // @ts-ignore
+        if (this[privateKey]) {
+          // @ts-ignore
+          return this[privateKey]
+        }
+        // cache the instance
+        // @ts-ignore
+        const _NestedProperty = this.constructor[privateClassKey]
+        Object.defineProperty(this, privateKey, {
+          enumerable: false,
+          value: new _NestedProperty(this),
+        })
+        // @ts-ignore
+        return this[privateKey]
+      },
+      set(object: U) {
+        // @ts-ignore
+        const proxy = this[propertyName]
+        Object.keys(object).forEach(k => {
+          proxy[k] = object[k]
+        })
+      },
+      propertyName: propertyName,
+      enumerable: descriptor.enumerable == null ? true : descriptor.enumerable,
+      exportable: descriptor.exportable == null ? true : descriptor.exportable,
+      importable: descriptor.importable == null ? true : descriptor.importable,
+    }
+
+    fullDescriptor.importable =
+      fullDescriptor.importable && typeof fullDescriptor.set !== 'undefined'
+    fullDescriptor.exportable =
+      fullDescriptor.exportable &&
+      typeof fullDescriptor.get !== 'undefined' &&
+      propertyName[0] !== '_'
+
+    let existingProperties: { [propertyName: string]: Descriptor<T, any> } =
+      Reflect.getOwnMetadata(DefinedPropertiesKey, target) || {}
+    existingProperties[propertyName] = fullDescriptor
+    Reflect.defineMetadata(DefinedPropertiesKey, existingProperties, target)
+
+    Object.defineProperty(target, propertyName, fullDescriptor)
+  }
+}
+
 /**
  * Base class for all objects that
  * wrap Sketch classes.
  */
 
-export class WrappedObject<T> {
-  static type: Types;
+export class WrappedObject<T extends { className: () => NSString }> {
+  static type: Types
   static [DefinedPropertiesKey]: {}
 
   private readonly _object: T
@@ -90,20 +240,16 @@ export class WrappedObject<T> {
   })
   readonly id!: string
 
-  @define({
-    enumerable: false,
-    exportable: false,
-    get() {
-      return true
-    },
-  })
-  readonly _isWrappedObject!: boolean
-
   constructor(options: { sketchObject?: T }) {
     if (!options.sketchObject) {
       throw new Error('missing sketch object')
     }
     this._object = options.sketchObject
+
+    Object.defineProperty(this, '_isWrappedObject', {
+      enumerable: false,
+      value: true,
+    })
 
     this.update(options)
   }
@@ -127,7 +273,8 @@ export class WrappedObject<T> {
           propertyList[a].depends === b
         ) {
           return 1
-        } else if (
+        }
+        if (
           propertyList[b] &&
           propertyList[b].depends &&
           propertyList[b].depends === a
@@ -138,7 +285,10 @@ export class WrappedObject<T> {
       })
       .forEach(k => {
         if (!propertyList[k]) {
-          console.warn(`no idea what to do with "${k}" in ${this.type}`)
+          // ignore the properties that starts with _, they are workarounds
+          if (k && k[0] !== '_') {
+            console.warn(`no idea what to do with "${k}" in ${this.type}`)
+          }
           return
         }
 
@@ -155,10 +305,16 @@ export class WrappedObject<T> {
    *
    * @param {Object} object - The Sketch model object to wrap.
    */
-  static fromNative<U, T extends WrappedObject<U>>(
+  static fromNative<
+    U extends { className: () => NSString },
+    T extends WrappedObject<U>
+  >(
     this: { new (options: { sketchObject: U }): T },
-    sketchObject: U
-  ): T {
+    sketchObject?: U
+  ): T | null {
+    if (!sketchObject) {
+      return null
+    }
     return new this({
       sketchObject,
     })
@@ -187,12 +343,16 @@ export class WrappedObject<T> {
         })
       } else if (value && typeof value.toJSON === 'function') {
         json[k] = value.toJSON()
-      } else {
+      } else if (typeof value !== 'undefined') {
         json[k] = value
       }
     })
 
     return json
+  }
+
+  isImmutable() {
+    return /Immutable/.test(String(this.sketchObject.className()))
   }
 
   /**

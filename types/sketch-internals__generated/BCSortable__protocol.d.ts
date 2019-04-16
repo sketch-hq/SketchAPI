@@ -1,0 +1,5 @@
+interface IBCSortable {
+
+  name(): NSString;
+}
+

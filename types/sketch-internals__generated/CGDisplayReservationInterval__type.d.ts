@@ -1,0 +1,2 @@
+declare type CGDisplayReservationInterval = number
+

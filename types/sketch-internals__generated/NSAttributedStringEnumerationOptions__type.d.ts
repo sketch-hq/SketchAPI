@@ -1,0 +1,5 @@
+declare enum NSAttributedStringEnumerationOptions {
+  NSAttributedStringEnumerationReverse,
+  NSAttributedStringEnumerationLongestEffectiveRangeNotRequired,
+}
+

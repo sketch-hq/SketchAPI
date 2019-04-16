@@ -1,7 +1,8 @@
+import { isNativeObject } from 'util'
 import { DefinedPropertiesKey, WrappedObject } from '../WrappedObject'
 import { Types } from '../enums'
 import { Factory } from '../Factory'
-import { isWrappedObject, isNativeObject } from '../utils'
+import { isWrappedObject } from '../utils'
 import { wrapObject } from '../wrapNativeObject'
 
 // Mapping between animation type names and values.
@@ -39,12 +40,13 @@ export class Flow extends WrappedObject {
     }
 
     if (isNativeObject(flow)) {
-      const className = String(flow.class())
-      if (className !== 'MSFlowConnection') {
-        throw new Error(`Cannot create a flow from a ${className}`)
+      if (!flow.isKindOfClass(MSFlowConnection)) {
+        throw new Error(`Cannot create a flow from a ${String(flow.class())}`)
       }
       return Flow.fromNative(flow)
-    } else if (flow && (flow.target || flow.targetId)) {
+    }
+
+    if (flow && (flow.target || flow.targetId)) {
       return new Flow({
         sketchObject: MSFlowConnection.new(),
         ...flow,

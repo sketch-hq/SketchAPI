@@ -1,0 +1,6 @@
+declare enum NSMeasurementFormatterUnitOptions {
+  NSMeasurementFormatterUnitOptionsProvidedUnit,
+  NSMeasurementFormatterUnitOptionsNaturalScale,
+  NSMeasurementFormatterUnitOptionsTemperatureWithoutUnit,
+}
+

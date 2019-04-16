@@ -1,0 +1,2 @@
+declare type NSStreamSocketSecurityLevel = NSString
+

@@ -1,0 +1,2 @@
+declare type CAShapeLayerLineJoin = NSString
+

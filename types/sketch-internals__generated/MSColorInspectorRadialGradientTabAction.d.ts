@@ -1,0 +1,8 @@
+interface MSColorInspectorRadialGradientTabActionUninitialized<InitializedType = MSColorInspectorRadialGradientTabAction> extends MSColorInspectorModePickerActionUninitialized<MSColorInspectorRadialGradientTabAction> {}
+interface MSColorInspectorRadialGradientTabAction extends MSColorInspectorModePickerAction {
+}
+declare const MSColorInspectorRadialGradientTabAction: {
+  alloc(): MSColorInspectorRadialGradientTabActionUninitialized;
+  class(): MSColorInspectorRadialGradientTabAction;
+}
+

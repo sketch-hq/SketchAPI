@@ -1,0 +1,87 @@
+interface NSCollectionViewUninitialized<InitializedType = NSCollectionView> extends NSViewUninitialized<NSCollectionView> {}
+interface NSCollectionView extends NSView, INSDraggingSource, INSDraggingDestination {
+  reloadData(): void;
+  layoutAttributesForItemAtIndexPath(indexPath: NSIndexPath): NSCollectionViewLayoutAttributes;
+  layoutAttributesForSupplementaryElementOfKind_atIndexPath(kind: NSCollectionViewSupplementaryElementKind, indexPath: NSIndexPath): NSCollectionViewLayoutAttributes;
+  frameForItemAtIndex(index: NSUInteger): NSRect;
+  frameForItemAtIndex_withNumberOfItems(index: NSUInteger, numberOfItems: NSUInteger): NSRect;
+  numberOfItemsInSection(section: NSInteger): NSInteger;
+  selectItemsAtIndexPaths_scrollPosition(indexPaths: NSSet<any>, scrollPosition: NSCollectionViewScrollPosition): void;
+  deselectItemsAtIndexPaths(indexPaths: NSSet<any>): void;
+  selectAll(sender: any | null): IBAction;
+  deselectAll(sender: any | null): IBAction;
+  registerClass_forItemWithIdentifier(itemClass: any | null, identifier: NSUserInterfaceItemIdentifier): void;
+  registerNib_forItemWithIdentifier(nib: NSNib | null, identifier: NSUserInterfaceItemIdentifier): void;
+  registerClass_forSupplementaryViewOfKind_withIdentifier(viewClass: any | null, kind: NSCollectionViewSupplementaryElementKind, identifier: NSUserInterfaceItemIdentifier): void;
+  registerNib_forSupplementaryViewOfKind_withIdentifier(nib: NSNib | null, kind: NSCollectionViewSupplementaryElementKind, identifier: NSUserInterfaceItemIdentifier): void;
+  makeItemWithIdentifier_forIndexPath(identifier: NSUserInterfaceItemIdentifier, indexPath: NSIndexPath): NSCollectionViewItem;
+  makeSupplementaryViewOfKind_withIdentifier_forIndexPath(elementKind: NSCollectionViewSupplementaryElementKind, identifier: NSUserInterfaceItemIdentifier, indexPath: NSIndexPath): NSView;
+  itemAtIndex(index: NSUInteger): NSCollectionViewItem;
+  itemAtIndexPath(indexPath: NSIndexPath): NSCollectionViewItem;
+  visibleItems(): NSArray<any>;
+  indexPathsForVisibleItems(): NSSet<any>;
+  indexPathForItem(item: NSCollectionViewItem): NSIndexPath;
+  indexPathForItemAtPoint(point: NSPoint): NSIndexPath;
+  supplementaryViewForElementKind_atIndexPath(elementKind: NSCollectionViewSupplementaryElementKind, indexPath: NSIndexPath): NSView;
+  visibleSupplementaryViewsOfKind(elementKind: NSCollectionViewSupplementaryElementKind): NSArray<any>;
+  indexPathsForVisibleSupplementaryElementsOfKind(elementKind: NSCollectionViewSupplementaryElementKind): NSSet<any>;
+  insertSections(sections: NSIndexSet): void;
+  deleteSections(sections: NSIndexSet): void;
+  reloadSections(sections: NSIndexSet): void;
+  moveSection_toSection(section: NSInteger, newSection: NSInteger): void;
+  insertItemsAtIndexPaths(indexPaths: NSSet<any>): void;
+  deleteItemsAtIndexPaths(indexPaths: NSSet<any>): void;
+  reloadItemsAtIndexPaths(indexPaths: NSSet<any>): void;
+  moveItemAtIndexPath_toIndexPath(indexPath: NSIndexPath, newIndexPath: NSIndexPath): void;
+  performBatchUpdates_completionHandler(updates: Block, completionHandler: Block): void;
+  toggleSectionCollapse(sender: any): IBAction;
+  scrollToItemsAtIndexPaths_scrollPosition(indexPaths: NSSet<any>, scrollPosition: NSCollectionViewScrollPosition): void;
+  setDraggingSourceOperationMask_forLocal(dragOperationMask: NSDragOperation, localDestination: boolean): void;
+  draggingImageForItemsAtIndexPaths_withEvent_offset(indexPaths: NSSet<any>, event: NSEvent, dragImageOffset: NSPointPointer): NSImage;
+  draggingImageForItemsAtIndexes_withEvent_offset(indexes: NSIndexSet, event: NSEvent, dragImageOffset: NSPointPointer): NSImage;
+  newItemForRepresentedObject(object: any): NSCollectionViewItem;
+
+  dataSource(): any;
+  setDataSource(dataSource: any): void;
+  prefetchDataSource(): any;
+  setPrefetchDataSource(prefetchDataSource: any): void;
+  content(): NSArray<any>;
+  setContent(content: NSArray<any> | any[]): void;
+  delegate(): any;
+  setDelegate(delegate: any): void;
+  backgroundView(): NSView;
+  setBackgroundView(backgroundView: NSView): void;
+  backgroundViewScrollsWithContent(): boolean;
+  setBackgroundViewScrollsWithContent(backgroundViewScrollsWithContent: boolean): void;
+  collectionViewLayout(): NSCollectionViewLayout;
+  setCollectionViewLayout(collectionViewLayout: NSCollectionViewLayout): void;
+  backgroundColors(): NSArray<any>;
+  setBackgroundColors(backgroundColors: NSArray<any> | any[]): void;
+  numberOfSections(): NSInteger;
+  firstResponder(): boolean;
+  selectable(): boolean;
+  setSelectable(selectable: boolean): void;
+  allowsEmptySelection(): boolean;
+  setAllowsEmptySelection(allowsEmptySelection: boolean): void;
+  allowsMultipleSelection(): boolean;
+  setAllowsMultipleSelection(allowsMultipleSelection: boolean): void;
+  selectionIndexes(): NSIndexSet;
+  setSelectionIndexes(selectionIndexes: NSIndexSet): void;
+  selectionIndexPaths(): NSSet<any>;
+  setSelectionIndexPaths(selectionIndexPaths: NSSet<any>): void;
+  itemPrototype(): NSCollectionViewItem;
+  setItemPrototype(itemPrototype: NSCollectionViewItem): void;
+  maxNumberOfRows(): NSUInteger;
+  setMaxNumberOfRows(maxNumberOfRows: NSUInteger): void;
+  maxNumberOfColumns(): NSUInteger;
+  setMaxNumberOfColumns(maxNumberOfColumns: NSUInteger): void;
+  minItemSize(): NSSize;
+  setMinItemSize(minItemSize: NSSize): void;
+  maxItemSize(): NSSize;
+  setMaxItemSize(maxItemSize: NSSize): void;
+}
+declare const NSCollectionView: {
+  alloc(): NSCollectionViewUninitialized;
+  class(): NSCollectionView;
+}
+

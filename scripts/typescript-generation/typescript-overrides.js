@@ -439,6 +439,8 @@ declare const MSMathInspectorValueAdaptor: {
 module.exports.additions = `/****** OVERRIDES ********/
 
 // block alias
+declare type IMP = any
+declare type objc_selector = any
 declare type Block = any
 declare type BCVoidBlock = Block
 declare type CHStringAttributesCompareBlock = Block
@@ -632,6 +634,8 @@ interface ISCKDiff {}
 interface IMSLayer {}
 interface NSOpenGLLayer extends CALayer {}
 interface NSOpenGLLayerUninitialized<InitializedType = NSOpenGLLayer> extends CALayerUninitialized<NSOpenGLLayer> {}
+type NSAccessibilityAttributeName = any
+declare const NSApp: NSApplication
 
 /****** AUTO GENERATED ********/
 
@@ -699,6 +703,8 @@ module.exports.shouldHideMethods = {
   // NSMutableDictionary: ['setObject_forKeyedSubscript'],
 }
 
+module.exports.replaceMethods = {}
+
 module.exports.classAdditions = {
   NSDictionary: `
   [key: string]: ObjectType | Function;
@@ -706,8 +712,5 @@ module.exports.classAdditions = {
   NSArray: `
   [key: number]: ObjectType | Function;
   [key: string]: ObjectType | Function;
-`,
-  NSObject: `
-  description(): NSString;
 `,
 }

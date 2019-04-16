@@ -1,0 +1,2 @@
+declare type NSSizePointer = NSSize
+

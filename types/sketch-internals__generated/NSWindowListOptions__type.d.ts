@@ -1,0 +1,4 @@
+declare enum NSWindowListOptions {
+  NSWindowListOrderedFrontToBack,
+}
+

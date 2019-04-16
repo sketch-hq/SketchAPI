@@ -1,0 +1,22 @@
+declare enum CGEventType {
+  kCGEventNull,
+  kCGEventLeftMouseDown,
+  kCGEventLeftMouseUp,
+  kCGEventRightMouseDown,
+  kCGEventRightMouseUp,
+  kCGEventMouseMoved,
+  kCGEventLeftMouseDragged,
+  kCGEventRightMouseDragged,
+  kCGEventKeyDown,
+  kCGEventKeyUp,
+  kCGEventFlagsChanged,
+  kCGEventScrollWheel,
+  kCGEventTabletPointer,
+  kCGEventTabletProximity,
+  kCGEventOtherMouseDown,
+  kCGEventOtherMouseUp,
+  kCGEventOtherMouseDragged,
+  kCGEventTapDisabledByTimeout = 0xFFFFFFFE,
+  kCGEventTapDisabledByUserInput = 0xFFFFFFFF,
+}
+

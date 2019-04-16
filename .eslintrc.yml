@@ -1,5 +1,5 @@
 root: true
-parser: typescript-eslint-parser
+parser: '@typescript-eslint/parser'
 extends:
   - airbnb-base
   - prettier
@@ -35,7 +35,8 @@ globals:
   AppController: false
   MSImageData: false
   NSImage: false
-  MSModalInputSheet: false
+  NSTextField: false
+  NSSlider: false
   MSStyleFill: false
   MSStyleBorder: false
   MSColor: false
@@ -66,7 +67,9 @@ globals:
   MSStyleShadow: false
   MSStyleInnerShadow: false
   MSGradientStop: false
+  MSImmutableGradientStop: false
   MSGradient: false
+  MSImmutableGradient: false
   CGPointMake: false
   MSSharedLayerReference: false
   MSSharedTextReference: false
@@ -84,6 +87,80 @@ globals:
   MSForeignObjectProvider: false
   MSSharedStyle: false
   MSStyle: false
+  MSDataOverride: false
+  MSImmutableArtboardGroup: false
+  MSImmutableLayerGroup: false
+  MSImmutableHotspotLayer: false
+  MSImmutableBitmapLayer: false
+  MSImmutableLayer: false
+  MSImmutablePage: false
+  MSImmutableShapeGroup: false
+  MSStyledLayer: false
+  MSImmutableStyledLayer: false
+  MSImmutableSymbolInstance: false
+  MSImmutableSymbolMaster: false
+  MSImmutableTextLayer: false
+  MSImmutableDocumentData: false
+  MSShapePathLayer: false
+  MSOvalShape: false
+  MSPolygonShape: false
+  MSStarShape: false
+  MSTriangleShape: false
+  MSImmutableShapePathLayer: false
+  MSImmutableOvalShape: false
+  MSImmutablePolygonShape: false
+  MSImmutableStarShape: false
+  MSImmutableTriangleShape: false
+  MSImmutableRectangleShape: false
+  NSParagraphStyleAttributeName: false
+  NSParagraphStyle: false
+  MSTextStyle: false
+  NSKernAttributeName: false
+  NSFontAttributeName: false
+  NSFontManager: false
+  NSBoldFontMask: false
+  NSItalicFontMask: false
+  NSSmallCapsFontMask: false
+  NSCompressedFontMask: false
+  NSCondensedFontMask: false
+  NSExpandedFontMask: false
+  NSNarrowFontMask: false
+  NSPosterFontMask: false
+  MSDefaultTextStyle: false
+  NSUnderlineStyleAttributeName: false
+  NSStrikethroughStyleAttributeName: false
+  MSSliceLayer: false
+  MSImmutableSliceLayer: false
+  MSExportFormat: false
+  NSThread: false
+  MSTheme: false
+  MSCurvePoint: false
+  MSPath: false
+  SVGPathInterpreter: false
+  NSBezierPath: false
+  MSJSONDataArchiver: false
+  MSJSONDictionaryUnarchiver: false
+  MSArchiveHeader: false
+  NSUTF8StringEncoding: false
+  MSExportRequest: false
+  MSExportManager: false
+  NSFileManager: false
+  NSDataWritingWithoutOverwriting: false
+  MSColorAsset: false
+  MSGradientAsset: false
+  MSPersistentAssetCollection: false
+  MSOverrideProperty: false
+  MSOverridePoint: false
+  CGRectNull: false
+  NSColorSpace: false
+  NSColor: false
+  MSExporter: false
+  MSSVGImporter: false
+  MSPDFImporter: false
+  NSApp: false
+  CGPathGetBoundingBox: false
+  MSShapeEventHandler: false
+  NSIndexPath: false
 
 rules:
   ###########

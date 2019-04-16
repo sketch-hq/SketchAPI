@@ -1,0 +1,2 @@
+declare type MSSharedObjectInstance = MSModelObject
+

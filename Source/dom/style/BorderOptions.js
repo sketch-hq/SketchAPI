@@ -1,5 +1,5 @@
+import { toArray } from 'util'
 import { WrappedObject, DefinedPropertiesKey } from '../WrappedObject'
-import { toArray } from '../utils'
 import { Types } from '../enums'
 
 const ArrowheadMap = {
@@ -85,21 +85,15 @@ export class BorderOptions extends WrappedObject {
     }
     if (typeof optionsWithDefault.lineEnd !== 'undefined') {
       const lineEnd = LineEndMap[optionsWithDefault.lineEnd]
-      s
-        .borderOptions()
-        .setLineCapStyle(
-          typeof lineEnd !== 'undefined' ? lineEnd : optionsWithDefault.lineEnd
-        )
+      s.borderOptions().setLineCapStyle(
+        typeof lineEnd !== 'undefined' ? lineEnd : optionsWithDefault.lineEnd
+      )
     }
     if (typeof optionsWithDefault.lineJoin !== 'undefined') {
       const lineJoin = LineJoinMap[optionsWithDefault.lineJoin]
-      s
-        .borderOptions()
-        .setLineJoinStyle(
-          typeof lineJoin !== 'undefined'
-            ? lineJoin
-            : optionsWithDefault.lineJoin
-        )
+      s.borderOptions().setLineJoinStyle(
+        typeof lineJoin !== 'undefined' ? lineJoin : optionsWithDefault.lineJoin
+      )
     }
   }
 }

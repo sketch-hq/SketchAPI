@@ -1,0 +1,2 @@
+declare type CGDirectDisplayID = number
+

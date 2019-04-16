@@ -1,0 +1,4 @@
+interface INSAccessibilityImage {
+  accessibilityLabel(): NSString;
+}
+

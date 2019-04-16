@@ -66,5 +66,5 @@ Again, if there's any event you'd like to see added to the list, let us know and
 
 If you'd like to read more generally about the Action API, try these topics:
 
-* [Action API Reference](/reference/action/) - Learn about the full list of available actions.
-* [Additional Plugin Examples](https://github.com/BohemianCoding/SketchAPI/tree/develop/examples) - Take a look at our list of example plugin projects.
+- [Action API Reference](/reference/action/) - Learn about the full list of available actions.
+- [Additional Plugin Examples](https://github.com/BohemianCoding/SketchAPI/tree/develop/examples) - Take a look at our list of example plugin projects.

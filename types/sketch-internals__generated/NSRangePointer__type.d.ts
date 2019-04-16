@@ -1,0 +1,2 @@
+declare type NSRangePointer = NSRange
+

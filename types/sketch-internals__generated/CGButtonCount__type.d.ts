@@ -1,0 +1,2 @@
+declare type CGButtonCount = number
+

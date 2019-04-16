@@ -27,6 +27,20 @@ export class Page extends Group {
     super(page)
   }
 
+  static getSymbolsPage(document) {
+    if (!document) {
+      throw new Error('Need to provide a document')
+    }
+    const wrapped = wrapObject(document)
+    return wrapObject(wrapped._getMSDocumentData().symbolsPage())
+  }
+
+  static createSymbolsPage() {
+    return new Page({
+      name: MSPage.defaultSymbolsPageName(),
+    })
+  }
+
   // eslint-disable-next-line
   adjustToFit() {
     // obviously doesn't do anything
@@ -40,6 +54,9 @@ export class Page extends Group {
   }
 
   remove() {
+    if (this.isImmutable() || !this._object.documentData()) {
+      return this
+    }
     this._object
       .documentData()
       .removePages_detachInstances([this._object], true)
@@ -65,17 +82,32 @@ export class Page extends Group {
     // doesn't do anything
     return this
   }
+
+  // eslint-disable-next-line
+  getParentPage() {
+    return undefined
+  }
+
+  isSymbolsPage() {
+    if (!this._object.documentData()) {
+      return false
+    }
+    return this._object.documentData().symbolsPage() == this._object
+  }
 }
 
 Page.type = Types.Page
 Page[DefinedPropertiesKey] = { ...Group[DefinedPropertiesKey] }
 Factory.registerClass(Page, MSPage)
+Factory.registerClass(Page, MSImmutablePage)
 
 // override setting up a flow which doesn't make sense for a Page
 delete Page[DefinedPropertiesKey].flow
 delete Page[DefinedPropertiesKey].style
 delete Page[DefinedPropertiesKey].locked
 delete Page[DefinedPropertiesKey].hidden
+delete Page[DefinedPropertiesKey].exportFormats
+delete Page[DefinedPropertiesKey].transform
 
 // override setting up the parent as it's needs to a be a Document
 Page.define('parent', {
@@ -85,19 +117,30 @@ Page.define('parent', {
     return wrapNativeObject(this._object.documentData())
   },
   set(document) {
+    if (this.isImmutable()) {
+      return
+    }
+
     document = wrapObject(document) // eslint-disable-line
 
     if (this._object.documentData()) {
+      if (
+        document &&
+        this._object.documentData() == document._getMSDocumentData()
+      ) {
+        // if the parent is the same, then bail out
+        return
+      }
       this._object
         .documentData()
         .removePages_detachInstances([this._object], false)
     }
 
-    if (typeof document._object.addPage === 'function') {
-      document._object.addPage(this._object)
-    } else {
-      document._object.documentData().addPage(this._object)
+    if (!document) {
+      return
     }
+
+    document._getMSDocumentData().addPage(this._object)
   },
 })
 
@@ -111,10 +154,16 @@ Page.define('index', {
 
 Page.define('selected', {
   get() {
-    return this._object.documentData().currentPage() == this._object
+    if (this._object.documentData && this._object.documentData()) {
+      return this._object.documentData().currentPage() == this._object
+    }
+    return false
   },
 
   set(value) {
+    if (this.isImmutable()) {
+      return
+    }
     if (value) {
       this._object.documentData().setCurrentPage(this._object)
     } else {

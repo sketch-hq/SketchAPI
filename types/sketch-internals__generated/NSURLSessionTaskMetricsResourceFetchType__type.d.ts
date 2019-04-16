@@ -1,0 +1,7 @@
+declare enum NSURLSessionTaskMetricsResourceFetchType {
+  NSURLSessionTaskMetricsResourceFetchTypeUnknown,
+  NSURLSessionTaskMetricsResourceFetchTypeNetworkLoad,
+  NSURLSessionTaskMetricsResourceFetchTypeServerPush,
+  NSURLSessionTaskMetricsResourceFetchTypeLocalCache,
+}
+

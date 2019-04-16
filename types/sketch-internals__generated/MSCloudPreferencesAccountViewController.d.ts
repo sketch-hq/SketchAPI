@@ -1,0 +1,8 @@
+interface MSCloudPreferencesAccountViewControllerUninitialized<InitializedType = MSCloudPreferencesAccountViewController> extends MSCloudPreferencesViewControllerUninitialized<MSCloudPreferencesAccountViewController> {}
+interface MSCloudPreferencesAccountViewController extends MSCloudPreferencesViewController {
+}
+declare const MSCloudPreferencesAccountViewController: {
+  alloc(): MSCloudPreferencesAccountViewControllerUninitialized;
+  class(): MSCloudPreferencesAccountViewController;
+}
+

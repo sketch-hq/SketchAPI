@@ -1,0 +1,10 @@
+declare enum NSDateComponentsFormatterZeroFormattingBehavior {
+  NSDateComponentsFormatterZeroFormattingBehaviorNone,
+  NSDateComponentsFormatterZeroFormattingBehaviorDefault,
+  NSDateComponentsFormatterZeroFormattingBehaviorDropLeading,
+  NSDateComponentsFormatterZeroFormattingBehaviorDropMiddle,
+  NSDateComponentsFormatterZeroFormattingBehaviorDropTrailing,
+  NSDateComponentsFormatterZeroFormattingBehaviorDropAll,
+  NSDateComponentsFormatterZeroFormattingBehaviorPad,
+}
+

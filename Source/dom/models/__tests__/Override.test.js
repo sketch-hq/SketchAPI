@@ -1,6 +1,5 @@
 /* globals expect, test */
 /* eslint-disable no-param-reassign */
-
 import { SymbolMaster, Text, Artboard, Image } from '../..'
 
 // using a base64 image cause I'm not sure where and how to keep assets that would work with both local and jenkins tests
@@ -35,12 +34,15 @@ test('should be able to set overrides', (context, document) => {
 
   expect(instance.overrides.length).toBe(1)
   const override = instance.overrides[0]
+  expect(override.isDefault).toBe(true)
   // check that an override can be logged
   log(override)
+
+  // override
   override.value = 'overridden'
 
   expect(instance.overrides.length).toBe(1)
-  expect(instance.overrides[0].toJSON()).toEqual({
+  const result = {
     type: 'Override',
     id: `${text.id}_stringValue`,
     path: text.id,
@@ -48,7 +50,13 @@ test('should be able to set overrides', (context, document) => {
     symbolOverride: false,
     value: 'overridden',
     isDefault: false,
-  })
+    editable: true,
+    affectedLayer: text.toJSON(),
+    selected: false,
+  }
+  delete result.affectedLayer.selected
+  result.affectedLayer.style = instance.overrides[0].affectedLayer.style.toJSON()
+  expect(instance.overrides[0].toJSON()).toEqual(result)
 })
 
 test('should change a nested symbol', (context, document) => {
@@ -74,18 +82,25 @@ test('should change a nested symbol', (context, document) => {
   document.selectedPage.layers = document.selectedPage.layers.concat(instance)
   expect(instance.overrides.length).toBe(3)
 
-  const override = instance.overrides[0]
+  const override = instance.overrides[1]
   override.value = nestedMaster2.symbolId
 
-  expect(instance.overrides[0].toJSON()).toEqual({
+  const result = {
     type: 'Override',
     id: `${nestedInstance.id}_symbolID`,
     path: nestedInstance.id,
     property: 'symbolID',
+    affectedLayer: nestedInstance.toJSON(),
     symbolOverride: true,
     value: nestedMaster2.symbolId,
     isDefault: false,
-  })
+    editable: true,
+    selected: false,
+  }
+  delete result.affectedLayer.overrides
+  delete result.affectedLayer.selected
+  result.affectedLayer.style = instance.overrides[1].affectedLayer.style.toJSON()
+  expect(instance.overrides[1].toJSON()).toEqual(result)
 })
 
 test('should handle image override', (context, document) => {
@@ -119,4 +134,45 @@ test('should handle image override', (context, document) => {
   expect(instance.overrides[0].property).toBe('image')
   expect(instance.overrides[0].isDefault).toBe(false)
   expect(instance.overrides[0].value.type).toBe('ImageData')
+})
+
+test('hidden layers should not be editable', (context, document) => {
+  const { master } = createSymbolMaster(document)
+  master.layers[0].hidden = true
+  const instance = master.createNewInstance()
+  document.selectedPage.layers = document.selectedPage.layers.concat(instance)
+
+  expect(instance.overrides[0].editable).toBe(false)
+})
+
+test('should be able to select an override', (context, document) => {
+  const { master } = createSymbolMaster(document)
+  const instance = master.createNewInstance()
+  document.selectedPage.layers = document.selectedPage.layers.concat(instance)
+
+  expect(instance.overrides[0].selected).toBe(false)
+  expect(instance.selected).toBe(false)
+
+  instance.overrides[0].selected = true
+
+  expect(instance.overrides[0].selected).toBe(true)
+  expect(instance.selected).toBe(true)
+
+  instance.overrides[0].selected = false
+
+  expect(instance.overrides[0].selected).toBe(false)
+  expect(instance.selected).toBe(true)
+})
+
+test('should be able to access the frame of an override', (context, document) => {
+  const { master } = createSymbolMaster(document)
+  const instance = master.createNewInstance()
+  document.selectedPage.layers = document.selectedPage.layers.concat(instance)
+
+  expect(instance.overrides[0].getFrame().toJSON()).toEqual({
+    x: 0,
+    y: 0,
+    width: 55,
+    height: 14,
+  })
 })

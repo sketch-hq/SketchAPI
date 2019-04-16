@@ -1,7 +1,9 @@
+import { isNativeObject } from 'util'
+import { Buffer } from 'buffer'
 import { DefinedPropertiesKey, WrappedObject } from '../WrappedObject'
 import { Types } from '../enums'
 import { Factory } from '../Factory'
-import { isWrappedObject, isNativeObject } from '../utils'
+import { isWrappedObject } from '../utils'
 
 /**
  * An MSImageData. This is not exposed, only used by Image
@@ -9,6 +11,7 @@ import { isWrappedObject, isNativeObject } from '../utils'
 export class ImageData extends WrappedObject {
   /**
    * can accept a wide range of input:
+   * - a Buffer
    * - a wrapped ImageData
    * - a native NSImage
    * - a native NSURL
@@ -24,17 +27,18 @@ export class ImageData extends WrappedObject {
 
     let nsImage
     if (isNativeObject(image)) {
-      const className = String(image.class())
-      if (className === 'NSImage') {
+      if (image.isKindOfClass(NSImage)) {
         nsImage = image
-      } else if (className === 'NSData') {
+      } else if (image.isKindOfClass(NSData)) {
         nsImage = NSImage.alloc().initWithData(image)
-      } else if (className === 'NSURL') {
+      } else if (image.isKindOfClass(NSURL)) {
         nsImage = NSImage.alloc().initWithContentsOfURL(image)
-      } else if (className === 'MSImageData') {
+      } else if (image.isKindOfClass(MSImageData)) {
         return ImageData.fromNative(image)
       } else {
-        throw new Error(`Cannot create an image from a ${className}`)
+        throw new Error(
+          `Cannot create an image from a ${String(image.class())}`
+        )
       }
     } else if (typeof image === 'string' || (image && image.path)) {
       nsImage = NSImage.alloc().initByReferencingFile(image.path || image)
@@ -48,8 +52,10 @@ export class ImageData extends WrappedObject {
       } catch (err) {
         throw new Error(err)
       }
+    } else if (Buffer.isBuffer(image)) {
+      nsImage = NSImage.alloc().initWithData(image.toNSData())
     } else {
-      throw new Error('`image` needs to be a string')
+      throw new Error('`image` needs to be a Buffer')
     }
 
     return ImageData.fromNative(MSImageData.alloc().initWithImage(nsImage))

@@ -1,0 +1,115 @@
+interface NSDictionaryUninitialized<KeyType, ObjectType, InitializedType = NSDictionary<KeyType, ObjectType>> extends NSObjectUninitialized<NSDictionary<KeyType, ObjectType>> {
+  init(): InitializedType;
+  initWithObjects_forKeys_count(objects: ObjectType[], keys: KeyType[], cnt: NSUInteger): InitializedType;
+  initWithCoder(aDecoder: NSCoder): InitializedType;
+  initWithContentsOfFile(path: NSString | string): InitializedType;
+  initWithContentsOfURL(url: NSURL): InitializedType;
+  initWithObjectsAndKeys(firstObject: any, ...args: any[]): InitializedType;
+  initWithDictionary(otherDictionary: NSDictionary<any, any> | {[key: string]: any}): InitializedType;
+  initWithDictionary_copyItems(otherDictionary: NSDictionary<any, any> | {[key: string]: any}, flag: boolean): InitializedType;
+  initWithObjects_forKeys(objects: NSArray<any> | any[], keys: NSArray<any> | any[]): InitializedType;
+  initWithContentsOfURL_error(url: NSURL, error: NSError): InitializedType;
+}
+interface NSDictionary<KeyType, ObjectType> extends NSObject, INSCopying, INSMutableCopying, INSSecureCoding, INSFastEnumeration {
+
+  [key: string]: ObjectType | Function;
+  objectForKey(aKey: KeyType): ObjectType;
+  keyEnumerator(): NSEnumerator<any>;
+  allKeysForObject(anObject: ObjectType): NSArray<any>;
+  descriptionWithLocale(locale: any | null): NSString;
+  descriptionWithLocale_indent(locale: any | null, level: NSUInteger): NSString;
+  isEqualToDictionary(otherDictionary: NSDictionary<any, any> | {[key: string]: any}): boolean;
+  objectEnumerator(): NSEnumerator<any>;
+  objectsForKeys_notFoundMarker(keys: NSArray<any> | any[], marker: ObjectType): NSArray<any>;
+  writeToURL_error(url: NSURL, error: NSError): boolean;
+  keysSortedByValueUsingSelector(comparator: string): NSArray<any>;
+  getObjects_andKeys_count(objects: ObjectType[], keys: KeyType[], count: NSUInteger): void;
+  objectForKeyedSubscript(key: KeyType): ObjectType;
+  enumerateKeysAndObjectsUsingBlock(block: Block): void;
+  enumerateKeysAndObjectsWithOptions_usingBlock(opts: NSEnumerationOptions, block: Block): void;
+  keysSortedByValueUsingComparator(cmptr: NSComparator): NSArray<any>;
+  keysSortedByValueWithOptions_usingComparator(opts: NSSortOptions, cmptr: NSComparator): NSArray<any>;
+  keysOfEntriesPassingTest(predicate: Block): NSSet<any>;
+  keysOfEntriesWithOptions_passingTest(opts: NSEnumerationOptions, predicate: Block): NSSet<any>;
+  getObjects_andKeys(objects: ObjectType[], keys: KeyType[]): void;
+  writeToFile_atomically(path: NSString | string, useAuxiliaryFile: boolean): boolean;
+  writeToURL_atomically(url: NSURL, atomically: boolean): boolean;
+  countByEnumeratingWithState_objects_count(state: NSFastEnumerationState, buffer: any[], len: NSUInteger): NSUInteger;
+  fileSize(): number;
+  fileModificationDate(): NSDate;
+  fileType(): NSString;
+  filePosixPermissions(): NSUInteger;
+  fileOwnerAccountName(): NSString;
+  fileGroupOwnerAccountName(): NSString;
+  fileSystemNumber(): NSInteger;
+  fileSystemFileNumber(): NSUInteger;
+  fileExtensionHidden(): boolean;
+  fileHFSCreatorCode(): OSType;
+  fileHFSTypeCode(): OSType;
+  fileIsImmutable(): boolean;
+  fileIsAppendOnly(): boolean;
+  fileCreationDate(): NSDate;
+  fileOwnerAccountID(): NSNumber;
+  fileGroupOwnerAccountID(): NSNumber;
+  valueForKey(key: NSString | string): ObjectType;
+  stringForKey_bc(aKey: any): NSString;
+  arrayForKey_bc(aKey: any): NSArray<any>;
+  dictionaryForKey_bc(aKey: any): NSDictionary<any, any>;
+  numberForKey_bc(aKey: any): NSNumber;
+  boolForKey_bc(aKey: any): boolean;
+  urlForKey_bc(key: any): NSURL;
+  dictionaryByAddingOrRemovingObject_forKey(object: any, key: any): NSDictionary<KeyType, ObjectType>;
+  mutableCopyDeep(): any;
+  dictionaryByAddingDictionary(dictionary: NSDictionary<any, any> | {[key: string]: any}): NSDictionary<any, any>;
+  filter(block: BCDictionaryFilterBlock): NSDictionary<any, any>;
+  dictionaryByReplacing_usingBlock(key: any, block: Block): NSDictionary<any, any>;
+  dictionaryByMappingKeys_bc(map: NSDictionary<any, any> | {[key: string]: any}): NSDictionary<any, any>;
+  dictionaryByReverseMappingKeys_bc(map: NSDictionary<any, any> | {[key: string]: any}): NSDictionary<any, any>;
+  mo_objectForKeyedSubscript(key: any): any;
+  valueForKey_intoBool(key: NSString | string, valueOut: boolean): any;
+  valueForKey_intoDouble(key: NSString | string, valueOut: number): any;
+  pointForKey(key: NSString | string): CGPoint;
+  sizeForKey(key: NSString | string): CGSize;
+  rectForKey(key: NSString | string): CGRect;
+  dictionaryWithoutKey(key: NSString | string): NSDictionary<any, any>;
+  objectForKey_ofType(aKey: any, type: any): any;
+  dateForKey(key: NSString | string): NSDate;
+  urlForKey(key: NSString | string): NSURL;
+  boolForKey(key: NSString | string): boolean;
+  objectForKeys_ofType(possibleKeys: NSArray<any> | any[], type: any): any;
+  cloudObjectForKey_ofType_parentObject(key: NSString | string, type: any, parent: SCKObject | null): SCKObject;
+  cloudObjectArrayForKey_ofType_parentObject(key: NSString | string, type: any, parent: SCKObject | null): NSArray<any>;
+  sizeForWidthKey_heightKey(widthKey: any, heightKey: any): CGSize;
+  pointForXKey_yKey(xKey: any, yKey: any): CGPoint;
+  rectForXKey_yKey_widthKey_heightKey(xKey: any, yKey: any, widthKey: any, heightKey: any): CGRect;
+  prepareStringAttributesForEncoding(): NSDictionary<any, any>;
+  prepareStringAttributesAfterDecoding(): NSDictionary<any, any>;
+  dictionaryByMappingFontToFontDescriptors(): NSDictionary<any, any>;
+  dictionaryByMappingFontDescriptorsToFont(): NSDictionary<any, any>;
+  dictionaryByRefreshingFontDescriptors(): NSDictionary<any, any>;
+  dictionaryByMappingComponentsDictionaryToMSImmutableColor(): NSDictionary<any, any>;
+  dictionaryByConvertingNSColorsToMSImmutableColorsInColorSpace(colorSpace: NSColorSpace): NSDictionary<any, any>;
+  dictionaryByConvertingMSImmutableColorsToNSColorsInColorSpace(colorSpace: NSColorSpace): NSDictionary<any, any>;
+  dictionaryByTranslatingNSColorsToMSImmutableColorsInColorSpace(colorSpace: NSColorSpace): NSDictionary<any, any>;
+
+  count(): NSUInteger;
+  allKeys(): NSArray<any>;
+  allValues(): NSArray<any>;
+  description(): NSString;
+  descriptionInStringsFileFormat(): NSString;
+}
+declare const NSDictionary: {
+  alloc<KeyType, ObjectType>(): NSDictionaryUninitialized<KeyType, ObjectType>;
+  class(): NSDictionary;  dictionaryWithContentsOfFile(path: NSString | string): NSDictionary<any, any>;
+  dictionaryWithContentsOfURL(url: NSURL): NSDictionary<any, any>;
+  dictionary<KeyType, ObjectType>(): NSDictionary<KeyType, ObjectType>;
+  dictionaryWithObject_forKey<KeyType, ObjectType>(object: ObjectType, key: KeyType): NSDictionary<KeyType, ObjectType>;
+  dictionaryWithObjects_forKeys_count<KeyType, ObjectType>(objects: ObjectType[], keys: KeyType[], cnt: NSUInteger): NSDictionary<KeyType, ObjectType>;
+  dictionaryWithObjectsAndKeys<KeyType, ObjectType>(firstObject: any, ...args: any[]): NSDictionary<KeyType, ObjectType>;
+  dictionaryWithDictionary<KeyType, ObjectType>(dict: NSDictionary<any, any> | {[key: string]: any}): NSDictionary<KeyType, ObjectType>;
+  dictionaryWithObjects_forKeys<KeyType, ObjectType>(objects: NSArray<any> | any[], keys: NSArray<any> | any[]): NSDictionary<KeyType, ObjectType>;
+  dictionaryWithContentsOfURL_error(url: NSURL, error: NSError): NSDictionary<any, any>;
+  sharedKeySetForKeys(keys: NSArray<any> | any[]): any;
+
+}
+

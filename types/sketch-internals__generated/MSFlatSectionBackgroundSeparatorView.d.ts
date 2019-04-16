@@ -1,0 +1,8 @@
+interface MSFlatSectionBackgroundSeparatorViewUninitialized<InitializedType = MSFlatSectionBackgroundSeparatorView> extends MSSectionBackgroundSeparatorViewUninitialized<MSFlatSectionBackgroundSeparatorView> {}
+interface MSFlatSectionBackgroundSeparatorView extends MSSectionBackgroundSeparatorView {
+}
+declare const MSFlatSectionBackgroundSeparatorView: {
+  alloc(): MSFlatSectionBackgroundSeparatorViewUninitialized;
+  class(): MSFlatSectionBackgroundSeparatorView;
+}
+

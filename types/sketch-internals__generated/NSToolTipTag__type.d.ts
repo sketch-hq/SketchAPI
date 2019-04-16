@@ -1,0 +1,2 @@
+declare type NSToolTipTag = NSInteger
+

@@ -1,0 +1,22 @@
+declare enum NSVisualEffectMaterial {
+  NSVisualEffectMaterialTitlebar = 3,
+  NSVisualEffectMaterialSelection = 4,
+  NSVisualEffectMaterialMenu = 5,
+  NSVisualEffectMaterialPopover = 6,
+  NSVisualEffectMaterialSidebar = 7,
+  NSVisualEffectMaterialHeaderView = 10,
+  NSVisualEffectMaterialSheet = 11,
+  NSVisualEffectMaterialWindowBackground = 12,
+  NSVisualEffectMaterialHUDWindow = 13,
+  NSVisualEffectMaterialFullScreenUI = 15,
+  NSVisualEffectMaterialToolTip = 17,
+  NSVisualEffectMaterialContentBackground = 18,
+  NSVisualEffectMaterialUnderWindowBackground = 21,
+  NSVisualEffectMaterialUnderPageBackground = 22,
+  NSVisualEffectMaterialAppearanceBased = 0,
+  NSVisualEffectMaterialLight = 1,
+  NSVisualEffectMaterialDark = 2,
+  NSVisualEffectMaterialMediumLight = 8,
+  NSVisualEffectMaterialUltraDark = 9,
+}
+

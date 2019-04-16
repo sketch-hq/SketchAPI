@@ -1,0 +1,2 @@
+declare type NSRectPointer = NSRect
+

@@ -1,0 +1,2 @@
+declare type CGGradientRef = any
+

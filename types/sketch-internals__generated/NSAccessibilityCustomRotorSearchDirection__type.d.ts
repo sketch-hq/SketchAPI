@@ -1,0 +1,5 @@
+declare enum NSAccessibilityCustomRotorSearchDirection {
+  NSAccessibilityCustomRotorSearchDirectionPrevious,
+  NSAccessibilityCustomRotorSearchDirectionNext,
+}
+

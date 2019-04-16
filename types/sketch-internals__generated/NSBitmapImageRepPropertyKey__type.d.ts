@@ -1,0 +1,2 @@
+declare type NSBitmapImageRepPropertyKey = NSString
+

@@ -1,0 +1,4 @@
+interface INSAccessibilityCustomRotorItemSearchDelegate {
+  rotor_resultForSearchParameters(rotor: NSAccessibilityCustomRotor, searchParameters: NSAccessibilityCustomRotorSearchParameters): NSAccessibilityCustomRotorItemResult;
+}
+

@@ -1,0 +1,2 @@
+declare type CGDisplayFadeReservationToken = number
+

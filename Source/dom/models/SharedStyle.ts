@@ -1,47 +1,36 @@
+import { toArray } from 'util'
 import { define, WrappedObject } from '../WrappedObject'
 import { Types } from '../enums'
 import { Factory } from '../Factory'
 import { wrapObject } from '../wrapNativeObject'
-import { toArray } from '../utils'
+import { StyleType } from '../style/Style'
 import { Style } from '../style/Style'
-
-const SharedStyleTypeMap = {
-  1: 'Layer',
-  2: 'Text',
-}
-export enum SharedStyleType {
-  Layer = 'Layer',
-  Text = 'Text',
-}
 
 /**
  * A Sketch shared style, either Text style or Layer Style.
  */
 export class SharedStyle extends WrappedObject<MSSharedStyle> {
   static type = Types.SharedStyle
-  static Type = SharedStyleType
+  static StyleType = StyleType
 
-  @define<SharedStyle>({
+  @define<SharedStyle, StyleType>({
     get() {
-      return (
-        SharedStyleTypeMap[this.sketchObject.style().type()] ||
-        this.sketchObject.style().type()
-      )
+      return this.style.type
     },
   })
-  readonly styleType!: SharedStyleType
+  readonly styleType!: StyleType
 
-  @define<SharedStyle>({
+  @define<SharedStyle, string>({
     get() {
       return String(this.sketchObject.name())
     },
     set(name) {
-      this.sketchObject.name = name
+      this.sketchObject.setName(name)
     },
   })
   name!: string
 
-  @define<SharedStyle>({
+  @define<SharedStyle, Style>({
     get() {
       return wrapObject(this.sketchObject.style())
     },
@@ -61,7 +50,9 @@ export class SharedStyle extends WrappedObject<MSSharedStyle> {
    */
   constructor(master: { sketchObject?: MSSharedStyle } = {}) {
     if (!master.sketchObject) {
-      throw new Error(`Cannot create a SharedStyle directly`)
+      throw new Error(
+        `Cannot create a SharedStyle directly, use \`document.sharedLayerStyles.push({ name, style })\` (or \`document.sharedTextStyles\`) instead.`
+      )
     }
     super(master)
   }
@@ -70,30 +61,25 @@ export class SharedStyle extends WrappedObject<MSSharedStyle> {
     name,
     style,
     document,
-  }: { name: string; style: Style; document: Document } = {}) {
+  }: {
+    name: string
+    style: Style
+    document: Document
+  }) {
     const documentData = wrapObject(document)._getMSDocumentData()
-    const wrappedInstance = wrapObject(style)
+    const wrappedStyle = wrapObject(style, Types.Style)
 
     const sharedStyle = SharedStyle.fromNative(
-      MSSharedStyle.alloc().initWithName_firstInstance(
-        name,
-        wrappedInstance.sketchObject
-      )
+      MSSharedStyle.alloc().initWithName_style(name, wrappedStyle.sketchObject)
     )
 
     const container = documentData.sharedObjectContainerOfType(
-      wrappedInstance.sketchObject.type()
+      wrappedStyle.sketchObject.type()
     )
 
-    container.addSharedObject(sharedStyle.sketchObject)
-    wrappedInstance.sharedStyleId = sharedStyle.id
+    container.addSharedObject(sharedStyle._object)
 
     return sharedStyle
-  }
-
-  // Returns a new Style instance linked to this SharedStyle, ready for adding to a layer
-  createNewInstance() {
-    return wrapObject(this.sketchObject.newInstance())
   }
 
   getAllInstances() {
@@ -108,6 +94,16 @@ export class SharedStyle extends WrappedObject<MSSharedStyle> {
     const libraryController = AppController.sharedInstance().librariesController()
     const lib = libraryController.libraryForShareableObject(this.sketchObject)
     if (!lib) {
+      const foreignObject = this.sketchObject.foreignObject()
+      if (foreignObject) {
+        return {
+          type: Types.Library,
+          id: String(foreignObject.libraryID()),
+          name: String(foreignObject.sourceLibraryName()),
+          enabled: false,
+          valid: false,
+        }
+      }
       return null
     }
     return wrapObject(lib)

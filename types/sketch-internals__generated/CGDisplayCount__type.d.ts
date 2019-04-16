@@ -1,0 +1,2 @@
+declare type CGDisplayCount = number
+

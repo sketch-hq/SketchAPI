@@ -1,0 +1,8 @@
+declare enum NSURLBookmarkCreationOptions {
+  NSURLBookmarkCreationPreferFileIDResolution,
+  NSURLBookmarkCreationMinimalBookmark,
+  NSURLBookmarkCreationSuitableForBookmarkFile,
+  NSURLBookmarkCreationWithSecurityScope,
+  NSURLBookmarkCreationSecurityScopeAllowOnlyReadAccess,
+}
+

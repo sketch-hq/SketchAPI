@@ -1,0 +1,5 @@
+interface INSTouchBarProvider {
+
+  touchBar(): NSTouchBar;
+}
+

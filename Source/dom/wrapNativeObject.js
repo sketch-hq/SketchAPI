@@ -1,6 +1,6 @@
+import { isNativeObject, isObject } from 'util'
 import { WrappedObject } from './WrappedObject'
-
-import { isNativeObject, isWrappedObject } from './utils'
+import { isWrappedObject } from './utils'
 import { Factory } from './Factory'
 
 /**
@@ -13,21 +13,27 @@ import { Factory } from './Factory'
  * @return {WrappedObject} A javascript object (subclass of WrappedObject), which represents the Sketch object we were given.
  */
 export function wrapNativeObject(nativeObject) {
-  let JsClass = Factory._nativeToBox[String(nativeObject.class())]
+  if (!nativeObject) {
+    return undefined
+  }
+
+  const className = String(nativeObject.class())
+
+  let JsClass = Factory._nativeToBox[className]
   if (!JsClass) {
-    console.warn(`no mapped wrapper for ${String(nativeObject.class())}`)
+    console.warn(`no mapped wrapper for ${className}`)
     JsClass = WrappedObject
   }
 
   return JsClass.fromNative(nativeObject)
 }
 
-export function wrapObject(object) {
+export function wrapObject(object, defaultType) {
   if (!object) {
-    return object
+    return undefined
   }
 
-  if (isNativeObject(object)) {
+  if (isNativeObject(object) && !isObject(object)) {
     return wrapNativeObject(object)
   }
   if (isWrappedObject(object)) {
@@ -36,7 +42,7 @@ export function wrapObject(object) {
 
   const { type, ...rest } = object
 
-  if (!type) {
+  if (!type && !defaultType) {
     throw new Error(
       `You need to specify a "type" when creating a nested layer. Received: ${JSON.stringify(
         object,
@@ -46,5 +52,5 @@ export function wrapObject(object) {
     )
   }
 
-  return Factory.create(type, rest)
+  return Factory.create(type || defaultType, rest)
 }

@@ -1,0 +1,2 @@
+declare type NSTextStorageEditedOptions = NSUInteger
+

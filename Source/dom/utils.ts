@@ -1,46 +1,22 @@
 import { WrappedObject } from './WrappedObject'
 
-export function getDocumentData(
-  document: MSDocument | MSDocumentData | WrappedObject<any>
-): MSDocumentData {
-  function isMSDocument(doc: any): doc is MSDocument {
-    return doc && typeof doc.documentData !== 'undefined'
-  }
-
-  if (isWrappedObject(document)) {
-    if (document.sketchObject.documentData) {
-      return document.sketchObject.documentData()
-    }
-    throw new Error("Couldn't find the document data")
-  } else if (isMSDocument(document)) {
-    return document.documentData()
-  }
-  return document
-}
-
-export function toArray<T>(object: T[] | NSArray<T>): T[] {
-  if (Array.isArray(object)) {
-    return object
-  }
-  const arr = []
-  for (let j = 0; j < (object || []).count(); j += 1) {
-    arr.push(object.objectAtIndex(j)!)
-  }
-  return arr
-}
-
-export function isNativeObject(object: any): boolean {
-  return object && object.class && typeof object.class === 'function'
-}
-
 export function isWrappedObject(object: any): object is WrappedObject<any> {
   return object && !!object._isWrappedObject
+}
+
+export function isKindOfClass<T extends NSObject>(
+  nsObject: NSObject,
+  aClass: T
+): nsObject is T {
+  return nsObject.isKindOfClass(aClass)
 }
 
 export function getURLFromPath(path: string | NSURL): NSURL {
   return typeof path === 'string'
     ? NSURL.fileURLWithPath(
-        NSString.stringWithString(path).stringByExpandingTildeInPath()
+        NSString.stringWithString(
+          path.replace(/^file:\/\//, '')
+        ).stringByExpandingTildeInPath()
       )
     : path
 }
@@ -114,4 +90,81 @@ export function proxyProperty(
       },
     })
   }
+}
+
+export function FloatingPointNumber(x) {
+  // 32-bits numbers
+  const precision = 7
+  // cast to number to handle NSInteger and such
+  const number = Number(x)
+  return Number(number.toFixed(precision))
+}
+
+/*
+  This function returns an array which mutating methods (`reverse`, `pop`, etc.)
+  have been hooked so that they can trigger a mutation in the Sketch model
+
+  * descriptor needs `set`, `removeItem` and `insertItem`
+*/
+export function hookedArray(arr, binding, descriptor) {
+  if (!Array.isArray(arr)) {
+    return arr
+  }
+
+  arr.reverse = () => {
+    Array.prototype.reverse.apply(arr)
+    descriptor.set.bind(binding)(arr)
+  }
+  arr.sort = compareFunction => {
+    Array.prototype.reverse.apply(arr, [compareFunction])
+    descriptor.set.bind(binding)(arr)
+  }
+  arr.fill = (value, start, end) => {
+    Array.prototype.reverse.apply(arr, [value, start, end])
+    descriptor.set.bind(binding)(arr)
+  }
+
+  arr.splice = (start, count, ...items) => {
+    if (start < 0) {
+      // eslint-disable-next-line no-param-reassign
+      start += arr.length
+    }
+    if (!start || start < 0 || start > arr.length) {
+      // eslint-disable-next-line no-param-reassign
+      start = 0
+    }
+
+    if (typeof count === 'undefined' || count > arr.length - start) {
+      // eslint-disable-next-line no-param-reassign
+      count = arr.length - start
+    }
+
+    const removedItems = []
+
+    for (let i = start; i < count + start; i += 1) {
+      removedItems.push(descriptor.removeItem.bind(binding)(i))
+    }
+
+    const addedItems = []
+
+    items.forEach((item, i) => {
+      addedItems.push(descriptor.insertItem.bind(binding)(item, start + i))
+    })
+
+    // call the native function
+    Array.prototype.splice.apply(arr, [start, count, ...addedItems])
+    return removedItems
+  }
+
+  arr.push = (...items) => {
+    arr.splice(arr.length, 0, ...items)
+    return arr.length
+  }
+  arr.unshift = (...items) => {
+    arr.splice(0, 0, ...items)
+    return arr.length
+  }
+  arr.pop = () => arr.splice(arr.length - 1)[0]
+  arr.shift = () => arr.splice(0, 1)[0]
+  return arr
 }

@@ -1,0 +1,8 @@
+interface MSIncludeBackgroundColorInExportInspectorItemUninitialized<InitializedType = MSIncludeBackgroundColorInExportInspectorItem> extends MSInspectorItemUninitialized<MSIncludeBackgroundColorInExportInspectorItem> {}
+interface MSIncludeBackgroundColorInExportInspectorItem extends MSInspectorItem {
+}
+declare const MSIncludeBackgroundColorInExportInspectorItem: {
+  alloc(): MSIncludeBackgroundColorInExportInspectorItemUninitialized;
+  class(): MSIncludeBackgroundColorInExportInspectorItem;
+}
+

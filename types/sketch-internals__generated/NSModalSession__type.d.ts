@@ -1,0 +1,2 @@
+declare type NSModalSession = any
+

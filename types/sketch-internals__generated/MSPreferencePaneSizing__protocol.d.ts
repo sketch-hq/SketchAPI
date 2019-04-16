@@ -1,0 +1,4 @@
+interface IMSPreferencePaneSizing {
+  preferredSize(): NSSize;
+}
+

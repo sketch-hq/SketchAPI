@@ -1,0 +1,2 @@
+declare type NSAppleEventManagerSuspensionID = any
+

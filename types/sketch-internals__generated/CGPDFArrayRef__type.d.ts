@@ -1,0 +1,2 @@
+declare type CGPDFArrayRef = any
+

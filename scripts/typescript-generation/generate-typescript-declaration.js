@@ -156,42 +156,42 @@ function typeInfo(type, classes) {
   let extension = _inheritanceWithGenerics.shift()
   const protocols = _inheritanceWithGenerics
 
-  protocols.forEach(p => {
-    const protocol = classes[`${p}__protocol`]
-    if (protocol) {
-      const protocolMethods = toArray(protocol.methods).filter(
-        method => !shouldSkipMethod(method, type)
-      )
-      protocolMethods.forEach(m => methods.push(m))
-      Object.keys(protocol.properties).forEach(m => {
-        if (!type.properties[m]) {
-          // eslint-disable-next-line
-          type.properties[m] = protocol.properties[m]
-        }
-      })
-    }
-  })
+  // protocols.forEach(p => {
+  //   const protocol = classes[`${p}__protocol`]
+  //   if (protocol) {
+  //     const protocolMethods = toArray(protocol.methods).filter(
+  //       method => !shouldSkipMethod(method, type)
+  //     )
+  //     protocolMethods.forEach(m => methods.push(m))
+  //     Object.keys(protocol.properties).forEach(m => {
+  //       if (!type.properties[m]) {
+  //         // eslint-disable-next-line
+  //         type.properties[m] = protocol.properties[m]
+  //       }
+  //     })
+  //   }
+  // })
 
   if (
     extension &&
     extension.indexOf('<') === -1 &&
     (!classes[extension] || extension === type.name)
   ) {
-    const protocol = classes[`${extension}__protocol`]
+    // const protocol = classes[`${extension}__protocol`]
     extension = `I${extension}`
 
-    if (protocol) {
-      const protocolMethods = toArray(protocol.methods).filter(
-        method => !shouldSkipMethod(method, type)
-      )
-      protocolMethods.forEach(m => methods.push(m))
-      Object.keys(protocol.properties).forEach(m => {
-        if (!type.properties[m]) {
-          // eslint-disable-next-line
-          type.properties[m] = protocol.properties[m]
-        }
-      })
-    }
+    // if (protocol) {
+    //   const protocolMethods = toArray(protocol.methods).filter(
+    //     method => !shouldSkipMethod(method, type)
+    //   )
+    //   protocolMethods.forEach(m => methods.push(m))
+    //   Object.keys(protocol.properties).forEach(m => {
+    //     if (!type.properties[m]) {
+    //       // eslint-disable-next-line
+    //       type.properties[m] = protocol.properties[m]
+    //     }
+    //   })
+    // }
   }
 
   if (extension && typesMap[extension]) {
@@ -409,6 +409,12 @@ function shouldIgnore(name, info) {
 }
 
 function printMethod(method, info) {
+  if (
+    overrides.replaceMethods[info.type.name] &&
+    overrides.replaceMethods[info.type.name][method.name]
+  ) {
+    return `  ${overrides.replaceMethods[info.type.name][method.name]}`
+  }
   const returnType = convertType(method.returns, info.name)
   const isInitMethod = method.bridgedName.match(initMethod)
   if (isInitMethod) {
@@ -437,7 +443,9 @@ function printUninitialized(info, classes) {
 
   let { extension } = info
   if (extension) {
-    if (extension.indexOf('<') !== -1) {
+    if (extension[0] === 'I') {
+      extension = undefined
+    } else if (extension.indexOf('<') !== -1) {
       extension = extension.split('<')
       const name = extension.shift()
       extension.unshift(`${name}Uninitialized`)
@@ -481,10 +489,15 @@ function printGlobalConstant(info, classes, staticMethods, staticProperties) {
 declare const ${info.type.name}: {
   alloc${info.generics ? `<${info.generics}>` : ''}(): ${
     info.uninitializedName
-  };${each(staticMethods, method => printMethod(method, info, classes), {
-    newLineStart: false,
-    newLineEnd: true,
-  })}${each(
+  };
+  class(): ${info.type.name};${each(
+    staticMethods,
+    method => printMethod(method, info, classes),
+    {
+      newLineStart: false,
+      newLineEnd: true,
+    }
+  )}${each(
     staticProperties,
     property =>
       `${shouldIgnore(property.name, info) ? `  // ` : ''}  ${
@@ -493,10 +506,8 @@ declare const ${info.type.name}: {
         property.attributes.indexOf('readonly') === -1
           ? `
 ${
-              shouldIgnore(`set${capitalize(property.name)}`, info)
-                ? `  // `
-                : ''
-            }  set${capitalize(property.name)}(${
+  shouldIgnore(`set${capitalize(property.name)}`, info) ? `  // ` : ''
+}  set${capitalize(property.name)}(${
               reservedMap[property.name]
                 ? reservedMap[property.name]
                 : property.name
@@ -580,7 +591,7 @@ module.exports = function generateDeclaration(type, classes) {
 
   return `${printUninitialized(info, classes)}interface ${
     info.name
-  }${inheritance(info.extenstion, info.protocols)} {
+  }${inheritance(info.extension, info.protocols)} {
 ${overrides.classAdditions[type.name] || ''}${each(
     instanceMethods,
     method => printMethod(method, info, classes),
@@ -597,10 +608,8 @@ ${overrides.classAdditions[type.name] || ''}${each(
         property.attributes.indexOf('readonly') === -1
           ? `
 ${
-              shouldIgnore(`set${capitalize(property.name)}`, info)
-                ? `  // `
-                : ''
-            }  set${capitalize(property.name)}(${
+  shouldIgnore(`set${capitalize(property.name)}`, info) ? `  // ` : ''
+}  set${capitalize(property.name)}(${
               reservedMap[property.name]
                 ? reservedMap[property.name]
                 : property.name

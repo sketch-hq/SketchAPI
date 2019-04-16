@@ -21,42 +21,70 @@ shape.style.fills = [
     fillType: Style.FillType.Color,
   },
 ]
+
+text.style.textUnderline = 'double dash-dot'
 ```
 
 The style of a Layer.
 
-| Properties                                                                   |                                                                           |
-| ---------------------------------------------------------------------------- | ------------------------------------------------------------------------- |
-| opacity<span class="arg-type">number</span>                                  | The opacity of a Layer, between 0 (transparent) and 1 (opaque).           |
-| blendingMode<span class="arg-type">[BlendingMode](#styleblendingMode)</span> | The opacity of a Layer, between 0 (transparent) and 1 (opaque).           |
-| blur<span class="arg-type">[Blur](#blur)</span>                              | The blur applied to the Layer.                                            |
-| fills<span class="arg-type">[Fill](#fill)[]</span>                           | The fills of a Layer.                                                     |
-| borders<span class="arg-type">[Border](#border)[]</span>                     | The borders of a Layer.                                                   |
-| borderOptions<span class="arg-type">[BorderOptions](#borderoptions)</span>   | The options that the borders share.                                       |
-| shadows<span class="arg-type">[Shadow](#shadow)[]</span>                     | The shadows of a Layer.                                                   |
-| innerShadows<span class="arg-type">[Shadow](#shadow)[]</span>                | The inner shadows of a Layer.                                             |
-| sharedStyleId<span class="arg-type">string / null</span>                     | The ID of the [SharedStyle](#sharedstyle) this style is linked to if any. |
+| Properties                                                                                                                                                                                                                                        |                                                                                                                                                                                                                                                                                          |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| opacity<span class="arg-type">number</span>                                                                                                                                                                                                       | The opacity of a Layer, between 0 (transparent) and 1 (opaque).                                                                                                                                                                                                                          |
+| blendingMode<span class="arg-type">[BlendingMode](#styleblendingMode)</span>                                                                                                                                                                      | The opacity of a Layer, between 0 (transparent) and 1 (opaque).                                                                                                                                                                                                                          |
+| blur<span class="arg-type">[Blur](#blur)</span>                                                                                                                                                                                                   | The blur applied to the Layer.                                                                                                                                                                                                                                                           |
+| fills<span class="arg-type">[Fill](#fill)[]</span>                                                                                                                                                                                                | The fills of a Layer.                                                                                                                                                                                                                                                                    |
+| borders<span class="arg-type">[Border](#border)[]</span>                                                                                                                                                                                          | The borders of a Layer.                                                                                                                                                                                                                                                                  |
+| borderOptions<span class="arg-type">[BorderOptions](#borderoptions)</span>                                                                                                                                                                        | The options that the borders share.                                                                                                                                                                                                                                                      |
+| shadows<span class="arg-type">[Shadow](#shadow)[]</span>                                                                                                                                                                                          | The shadows of a Layer.                                                                                                                                                                                                                                                                  |
+| innerShadows<span class="arg-type">[Shadow](#shadow)[]</span>                                                                                                                                                                                     | The inner shadows of a Layer.                                                                                                                                                                                                                                                            |
+| alignment<span class="arg-type">[Alignment](#textalignment)</span>                                                                                                                                                                                | The horizontal alignment of the text of a Text Layer                                                                                                                                                                                                                                     |
+| verticalAlignment<span class="arg-type">[VerticalAlignment](#textverticalalignment)</span>                                                                                                                                                        | The vertical alignment of the text of a Text Layer                                                                                                                                                                                                                                       |
+| kerning<span class="arg-type">number / null</span>                                                                                                                                                                                                | The kerning between letters of a Text Layer. `null` means that the kerning will be the one defined by the font.                                                                                                                                                                          |
+| lineHeight<span class="arg-type">number / null</span>                                                                                                                                                                                             | The height of a line of text in a Text Layer. `null` means "automatic".                                                                                                                                                                                                                  |
+| paragraphSpacing<span class="arg-type">number</span>                                                                                                                                                                                              | The space between 2 paragraphs of text in a Text Layer.                                                                                                                                                                                                                                  |
+| textColor<span class="arg-type">string</span>                                                                                                                                                                                                     | A rgba hex-string (`#000000ff` is opaque black) of the color of the text in a Text Layer.                                                                                                                                                                                                |
+| fontSize<span class="arg-type">number</span>                                                                                                                                                                                                      | The size of the font in a Text Layer.                                                                                                                                                                                                                                                    |
+| textTransform<span class="arg-type">'none' / 'uppercase' / 'lowercase'</span>                                                                                                                                                                     | The transform applied to the text of a Text Layer.                                                                                                                                                                                                                                       |
+| fontFamily<span class="arg-type">string</span>                                                                                                                                                                                                    | The name of the font family of a Text Layer. `'system'` means the font family of the OS (`'.SF NS Text'` on macOS 10.14).                                                                                                                                                                |
+| fontWeight<span class="arg-type">number</span>                                                                                                                                                                                                    | The weight of the font of a Text Layer. Goes from 0 to 12, 0 being the thinest and 12 being the boldest. Not every weight are available for every fonts. When setting a font weight that does not exist for the current font family, the closest weight that exists will be set instead. |
+| fontStyle<span class="arg-type">'italic' / undefined</span>                                                                                                                                                                                       | The style of the font of a Text Layer.                                                                                                                                                                                                                                                   |
+| fontVariant<span class="arg-type">'small-caps' / undefined</span>                                                                                                                                                                                 | The variant of the font of a Text Layer.                                                                                                                                                                                                                                                 |
+| fontStretch<span class="arg-type">'compressed' / 'condensed' / 'narrow' / 'expanded' / 'poster' / undefined</span>                                                                                                                                | The size variant of the font of a Text Layer.                                                                                                                                                                                                                                            |
+| textUnderline<span class="arg-type">string: `<line-style> [<line-pattern>] ['by-word']` / undefined where `<line-style>` can be `single` / `thick` / `double` and `<line-pattern>` can be `dot` / `dash` / `dash-dot` / `dash-dot-dot`</span>     | The underline decoration of a Text Layer.                                                                                                                                                                                                                                                |
+| textStrikethrough<span class="arg-type">string: `<line-style> [<line-pattern>] ['by-word']` / undefined where `<line-style>` can be `single` / `thick` / `double` and `<line-pattern>` can be `dot` / `dash` / `dash-dot` / `dash-dot-dot`</span> | The strikethrough decoration of a Text Layer.                                                                                                                                                                                                                                            |
 
-## Check if the Style is in sync with its Shared Style
+## Get the default line height
 
 ```javascript
-var isOutOfSync = style.isOutOfSyncWithSharedStyle()
+var defaultlineHeight = style.getDefaultLineHeight()
+```
+
+When no line height is specified, `style.lineHeight` will be `undefined`. You can get the default line height of the font using `style.getDefaultLineHeight()`.
+
+### Returns
+
+A number if the layer is a Text layer or `undefined`.
+
+## Check if the Style is in sync with a Shared Style
+
+```javascript
+var isOutOfSync = style.isOutOfSyncWithSharedStyle(sharedStyle)
 ```
 
 ### Returns
 
-Wether the Style has some differences with the [Shared Style](#sharedstyle) it is linked to. In case it isn't linked to any, returns `false`.
+Whether the Style has some differences with a [Shared Style](#shared-style).
 
-## Sync the Style with its Shared Style
+## Sync the Style with a Shared Style
 
 ```javascript
-style.syncWithSharedStyle()
+style.syncWithSharedStyle(sharedStyle)
 ```
 
 The style instance will be updated with the value of the Shared Style.
 
 ```javascript
-var sharedStyle = style.sharedStyle
+var sharedStyle = styledLayer.sharedStyle
 sharedStyle.style = style
 ```
 
@@ -112,7 +140,7 @@ An object that represent the blur of the layer.
 | center<span class="arg-type">object</span>                       | The center of the blur (only used when the blur type is `Zoom`.   |
 | center.x<span class="arg-type">number</span>                     | The horizontal coordinate of the center of the blur.              |
 | center.y<span class="arg-type">number</span>                     | The vertical coordinate of the center of the blur.                |
-| enabled<span class="arg-type">boolean</span>                     | Wether the fill is active or not.                                 |
+| enabled<span class="arg-type">boolean</span>                     | Whether the fill is active or not.                                |
 
 ## `Style.BlurType`
 
@@ -135,19 +163,23 @@ Enumeration of the type of a blur.
 shape.style.fills = [
   {
     color: '#c0ffee',
-    fill: Style.FillType.Color,
+    fillType: Style.FillType.Color,
   },
 ]
 ```
 
-An object that represent a Fill.
+An object that represent a Fill. `color`, `gradient` and `pattern` will always be defined regardless of the type of the fill.
 
-| Properties                                                   |                                                  |
-| ------------------------------------------------------------ | ------------------------------------------------ |
-| fill<span class="arg-type">[FillType](#stylefilltype)</span> | The type of the fill.                            |
-| color<span class="arg-type">string</span>                    | A rgba hex-string (`#000000ff` is opaque black). |
-| gradient<span class="arg-type">[Gradient](#gradient)</span>  | The gradient of the fill.                        |
-| enabled<span class="arg-type">boolean</span>                 | Wether the fill is active or not.                |
+| Properties                                                                                |                                                  |
+| ----------------------------------------------------------------------------------------- | ------------------------------------------------ |
+| fillType<span class="arg-type">[FillType](#stylefilltype)</span>                          | The type of the fill.                            |
+| color<span class="arg-type">string</span>                                                 | A rgba hex-string (`#000000ff` is opaque black). |
+| gradient<span class="arg-type">[Gradient](#gradient)</span>                               | The gradient of the fill.                        |
+| pattern<span class="arg-type">object</span>                                               | The pattern of the fill.                         |
+| pattern.patternType<span class="arg-type">[PatternFillType](#stylepatternfilltype)</span> | How the pattern should fill the layer.           |
+| pattern.image<span class="arg-type">[ImageData](#imagedata) / null</span>                 | The image of tile of the pattern.                |
+| pattern.tileScale<span class="arg-type">number</span>                                     | The scale applied to the tile of the pattern.    |
+| enabled<span class="arg-type">boolean</span>                                              | Whether the fill is active or not.               |
 
 ## `Style.FillType`
 
@@ -162,7 +194,21 @@ Enumeration of the types of fill.
 | `Color`    |
 | `Gradient` |
 | `Pattern`  |
-| `Noise`    |
+
+## `Style.PatternFillType`
+
+```javascript
+Style.PatternFillType.Fit
+```
+
+Enumeration of the types of pattern fill.
+
+| Value     |
+| --------- |
+| `Tile`    |
+| `Fill`    |
+| `Stretch` |
+| `Fit`     |
 
 ## Border
 
@@ -183,7 +229,7 @@ An object that represent a Border.
 | fillType<span class="arg-type">[FillType](#stylefilltype)</span>             | The type of the fill of the border.              |
 | color<span class="arg-type">string</span>                                    | A rgba hex-string (`#000000ff` is opaque black). |
 | gradient<span class="arg-type">[Gradient](#gradient)</span>                  | The gradient of the fill.                        |
-| enabled<span class="arg-type">boolean</span>                                 | Wether the border is active or not.              |
+| enabled<span class="arg-type">boolean</span>                                 | Whether the border is active or not.             |
 | position<span class="arg-type">[BorderPosition](#styleborderposition)</span> | The position of the border.                      |
 | thickness<span class="arg-type">number</span>                                | The thickness of the border.                     |
 
@@ -295,7 +341,7 @@ An object that represent a Shadow.
 | x<span class="arg-type">number</span>        | The horizontal offset of the shadow.             |
 | y<span class="arg-type">number</span>        | The vertical offset of the shadow.               |
 | spread<span class="arg-type">number</span>   | The spread of the shadow.                        |
-| enabled<span class="arg-type">boolean</span> | Wether the fill is active or not.                |
+| enabled<span class="arg-type">boolean</span> | Whether the fill is active or not.               |
 
 ## Gradient
 
@@ -334,12 +380,13 @@ shape.style.fills = [
 
 An object that represent a Gradient.
 
-| Properties                                                                   |                                           |
-| ---------------------------------------------------------------------------- | ----------------------------------------- |
-| gradientType<span class="arg-type">[GradientType](#stylegradienttype)</span> | The type of the Gradient.                 |
-| from<span class="arg-type">[Point](#point)</span>                            | The position of the start of the Gradient |
-| to<span class="arg-type">[Point](#point)</span>                              | The position of the end of the Gradient.  |
-| stops<span class="arg-type">[GradientStop](#gradientstop)[]</span>           | The different stops of the Gradient       |
+| Properties                                                                   |                                                                                                                                                                                                                        |
+| ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| gradientType<span class="arg-type">[GradientType](#stylegradienttype)</span> | The type of the Gradient.                                                                                                                                                                                              |
+| from<span class="arg-type">[Point](#point)</span>                            | The position of the start of the Gradient                                                                                                                                                                              |
+| to<span class="arg-type">[Point](#point)</span>                              | The position of the end of the Gradient.                                                                                                                                                                               |
+| aspectRatio<span class="arg-type">number</span>                              | When the gradient is `Radial`, the from and to points makes one axis of the ellipse of the gradient while the aspect ratio determine the length of the orthogonal axis (`aspectRatio === 1` means that it's a circle). |
+| stops<span class="arg-type">[GradientStop](#gradientstop)[]</span>           | The different stops of the Gradient                                                                                                                                                                                    |
 
 ## `Style.GradientType`
 

@@ -23,4 +23,11 @@ export const enum Types {
   HotSpot = 'HotSpot',
   ImportableObject = 'ImportableObject',
   SharedStyle = 'SharedStyle',
+  DataOverride = 'DataOverride',
+  ShapePath = 'ShapePath',
+  Slice = 'Slice',
+  ExportFormat = 'ExportFormat',
+  CurvePoint = 'CurvePoint',
+  ColorAsset = 'ColorAsset',
+  GradientAsset = 'GradientAsset',
 }

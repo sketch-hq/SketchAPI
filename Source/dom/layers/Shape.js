@@ -1,5 +1,5 @@
 import { DefinedPropertiesKey } from '../WrappedObject'
-import { StyledLayer } from './StyledLayer'
+import { Group } from './Group'
 import { Types } from '../enums'
 import { Factory } from '../Factory'
 import { Rectangle } from '../models/Rectangle'
@@ -7,9 +7,9 @@ import { Rectangle } from '../models/Rectangle'
 // TODO: set and modify path
 
 /**
- * Represents a shape layer (a rectangle, oval, path, etc).
+ * Represents a shape group (which contains some layers with boolean ops).
  */
-export class Shape extends StyledLayer {
+export class Shape extends Group {
   /**
    * Make a new shape object.
    *
@@ -26,12 +26,14 @@ export class Shape extends StyledLayer {
 
       super(shape)
 
-      const frame = this._object.frame()
-      this.sketchObject.addLayer(
-        MSRectangleShape.alloc().initWithFrame(
-          CGRectMake(0, 0, frame.width(), frame.height())
+      if (!shape.layers) {
+        const frame = this._object.frame()
+        this.sketchObject.addLayer(
+          MSRectangleShape.alloc().initWithFrame(
+            CGRectMake(0, 0, frame.width(), frame.height())
+          )
         )
-      )
+      }
     } else {
       super(shape)
     }
@@ -39,5 +41,6 @@ export class Shape extends StyledLayer {
 }
 
 Shape.type = Types.Shape
-Shape[DefinedPropertiesKey] = { ...StyledLayer[DefinedPropertiesKey] }
+Shape[DefinedPropertiesKey] = { ...Group[DefinedPropertiesKey] }
 Factory.registerClass(Shape, MSShapeGroup)
+Factory.registerClass(Shape, MSImmutableShapeGroup)

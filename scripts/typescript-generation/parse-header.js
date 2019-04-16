@@ -14,7 +14,7 @@ const interfaceRegex = /@interface ([^ \n(<:]+)(<[^>]+>)?(\([^ \n]+\))?( ?: ([^ 
 const protocolRegex = /@protocol ([^ \n]+)( ?: ?([^ \n<]+)( ?<([^>\n]+)>)?)?([\s\S])*?@end/gm
 const structRegex = /typedef struct ([^ {]* )?{([\s\S]*?)}\s*([^;]*)?;/gm
 const typeAliasRegex = /typedef ([^;,\n]+|[^;,\n]+<[^;\n>]+>) ([^;\n]+);/g
-const enumRegex = /typedef (?:(?:NS_OPTIONS|NS_ENUM|CF_ENUM) ?\([^,]*,([^)]*)\)|enum ([^{:]*) ?:? ?(?:[^{:]*)) ?\n?{([\s\S]*?)}([^;]*);/gm
+const enumRegex = /typedef (?:(?:NS_OPTIONS|NS_ENUM|CF_ENUM|NS_CLOSED_ENUM) ?\([^,]*,([^)]*)\)|enum ([^{:]*) ?:? ?(?:[^{:]*)) ?\n?{([\s\S]*?)}([^;]*);/gm
 
 const methodsRegex = /([+-]) \(([^\)]+)\)([^;]+);/g
 const methodNameRegex = /([^:]+)(:\s?\((([^\(\)]*\([\S ]*?\^[^\(\)]*\)\s*\()*[^\)]*\)*)\)\s?([^ \n,]+))*/g
@@ -78,6 +78,10 @@ function parseMethodsAndProperties(data, headerData) {
       return
     }
 
+    if (name.match('OBJC_ARC_UNAVAILABLE')) {
+      return
+    }
+
     headerData.methods[name] = {
       name,
       bridgedName: name.replace(/:/g, '_').replace(/_$/g, ''),
@@ -108,7 +112,7 @@ function parseMethodsAndProperties(data, headerData) {
   })
 }
 
-module.exports = function parseHeader(data) {
+module.exports = function parseHeader(data /* filePath */) {
   data = data
     .replace(/\/\*[\s\S]*?\*\//gm, '')
     .replace(/\/\/[^\n]*/g, '')
@@ -124,6 +128,7 @@ module.exports = function parseHeader(data) {
     .replace(/ NS_EXTENSIBLE_STRING_ENUM/g, '')
     .replace(/ NS_TYPED_EXTENSIBLE_ENUM/g, '')
     .replace(/ _NS_TYPED_EXTENSIBLE_ENUM/g, '')
+
   const allHeaderData = []
 
   // INTERFACE
@@ -233,7 +238,7 @@ module.exports = function parseHeader(data) {
       members: [],
     }
 
-    headerData.name = match[3].trim() || match[1].trim()
+    headerData.name = (match[3] || '').trim() || match[1].trim()
 
     // MEMBERS
     forEachMatch(structMembersRegex, match[2], member => {
@@ -289,8 +294,8 @@ module.exports = function parseHeader(data) {
       name: match[1]
         ? match[1].trim()
         : match[4]
-          ? match[4].trim()
-          : match[2].trim(),
+        ? match[4].trim()
+        : match[2].trim(),
       members: [],
     }
 

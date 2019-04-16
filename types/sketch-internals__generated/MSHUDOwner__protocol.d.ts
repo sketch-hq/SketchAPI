@@ -1,0 +1,5 @@
+interface IMSHUDOwner {
+
+  hud(): MSHUDWindowController;
+}
+

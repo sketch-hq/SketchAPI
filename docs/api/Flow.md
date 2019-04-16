@@ -24,7 +24,7 @@ layer.flow = {
 }
 ```
 
-You can create a action without specifying an animation type, it will use the default one.
+You can create an action without specifying an animation type, it will use the default one.
 
 ```javascript
 layer.flow = {
@@ -32,7 +32,7 @@ layer.flow = {
 }
 ```
 
-You can create a action by using the ID of an Artboard instead of the artboard.
+You can create an action by using the ID of an Artboard instead of the artboard.
 
 ```javascript
 layer.flow = {

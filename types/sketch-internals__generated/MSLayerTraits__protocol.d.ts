@@ -1,0 +1,4 @@
+interface IMSLayerTraits {
+  traits(): MSTraits;
+}
+

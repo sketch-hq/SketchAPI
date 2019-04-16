@@ -1,0 +1,2 @@
+declare type NSHashTableOptions = NSUInteger
+

@@ -10,10 +10,17 @@ var Document = require('sketch/dom').Document
 
 A Sketch document.
 
-| Properties                                         |                                |
-| -------------------------------------------------- | ------------------------------ |
-| id<span class="arg-type">string</span>             | The unique ID of the document. |
-| pages<span class="arg-type">[Page](#page)[]</span> | The pages of the document.     |
+| Properties                                                                    |                                                                                                                    |
+| ----------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| id<span class="arg-type">string</span>                                        | The unique ID of the document.                                                                                     |
+| pages<span class="arg-type">[Page](#page)[]</span>                            | The pages of the document.                                                                                         |
+| selectedPage<span class="arg-type">[Page](#page)</span>                       | The selected page of the Document.                                                                                 |
+| selectedLayers<span class="arg-type">[Selection](#selection)</span>           | The Selection of the layers that the user has selected in the currently selected page.                             |
+| path<span class="arg-type">string</span>                                      | The path to the document (or the appcast URL in case of a Document from a remote Library).                         |
+| sharedLayerStyles<span class="arg-type">[SharedStyle](#shared-style)[]</span> | The list of all shared layer styles defined in the document.                                                       |
+| sharedTextStyles<span class="arg-type">[SharedStyle](#shared-style)[]</span>  | The list of all shared text styles defined in the document.                                                        |
+| colors<span class="arg-type">[ColorAsset](#color-asset)[]</span>              | A list of color assets defined in the document. Mutating the returned array will update the document colors.       |
+| gradients<span class="arg-type">[GradientAsset](#gradient-asset)[]</span>     | A list of gradient assets defined in the document. Mutating the returned array will update the document gradients. |
 
 ## Access the selected Document
 
@@ -73,30 +80,6 @@ A method to open an existing sketch document or ask the user to open one. The me
 | path<span class="arg-type">string</span>       | The path to the document to open. If `undefined`, the user will be asked to select one.                                                                  |
 | callback<span class="arg-type">function</span> | A function called after the document is opened. It is called with an `Error` if opening the Document was unsuccessful and a `Document` (or `undefined`). |
 
-## Get the selected Page
-
-```javascript
-var page = document.selectedPage
-```
-
-A read-only property to get the current page that the user has selected.
-
-### Returns
-
-Return a [Page](#page) object.
-
-## Get the selected Layers
-
-```javascript
-var selection = document.selectedLayers
-```
-
-A read-only property to get the layers that the user has selected in the currently selected page.
-
-### Returns
-
-Returns a [Selection](#selection) object.
-
 ## Find a Layer by Id
 
 ```javascript
@@ -135,18 +118,6 @@ A method to help find the layers in this document which have the given name.
 
 Return an array of [Layer](#layer).
 
-## Get all the Shared Layer Styles
-
-```javascript
-var symbols = document.getSharedLayerStyles()
-```
-
-A method to get all shared layer styles defined in the document.
-
-### Returns
-
-Return an array of the layer [SharedStyle](#sharedstyle) objects defined in the document.
-
 ## Find a Shared Layer Style
 
 ```javascript
@@ -161,19 +132,7 @@ A method to help find a shared style in the document.
 
 ### Returns
 
-Return a [SharedStyle](#sharedstyle) object or `undefined` if it's not found.
-
-## Get all the Shared Text Styles
-
-```javascript
-var symbols = document.getSharedTextStyles()
-```
-
-A method to get all shared text styles defined in the document.
-
-### Returns
-
-Return an array of the text [SharedStyle](#sharedstyle) objects defined in the document.
+Return a [SharedStyle](#shared-style) object or `undefined` if it's not found.
 
 ## Find a Shared Text Style
 
@@ -189,7 +148,7 @@ A method to help find a shared style in the document.
 
 ### Returns
 
-Return a [SharedStyle](#sharedstyle) object or `undefined` if it's not found.
+Return a [SharedStyle](#shared-style) object or `undefined` if it's not found.
 
 ## Get all the Symbol Masters
 
@@ -250,7 +209,7 @@ A method to save a document to a specific path or ask the user to choose where t
 | Parameters                                                          |                                                                                                                      |
 | ------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- |
 | path<span class="arg-type">string</span>                            | The path where the document will be saved. If `undefined`, the user will be asked to select one.                     |
-| options<span class="arg-type">object</span>                         | The options for the save operation (only used when specifing a path).                                                |
+| options<span class="arg-type">object</span>                         | The options for the save operation (only used when specifying a path).                                               |
 | options.saveMode<span class="arg-type">[SaveMode](#savemode)</span> | The way to save the document.                                                                                        |
 | callback<span class="arg-type">function</span>                      | A function called after the document is saved. It is called with an `Error` if saving the Document was unsuccessful. |
 

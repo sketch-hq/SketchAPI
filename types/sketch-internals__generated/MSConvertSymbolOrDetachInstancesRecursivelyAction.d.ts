@@ -1,0 +1,9 @@
+interface MSConvertSymbolOrDetachInstancesRecursivelyActionUninitialized<InitializedType = MSConvertSymbolOrDetachInstancesRecursivelyAction> extends MSBaseConvertSymbolOrDetachInstancesActionUninitialized<MSConvertSymbolOrDetachInstancesRecursivelyAction> {}
+interface MSConvertSymbolOrDetachInstancesRecursivelyAction extends MSBaseConvertSymbolOrDetachInstancesAction {
+  detachSymbolInstancesRecursively(sender: any): IBAction;
+}
+declare const MSConvertSymbolOrDetachInstancesRecursivelyAction: {
+  alloc(): MSConvertSymbolOrDetachInstancesRecursivelyActionUninitialized;
+  class(): MSConvertSymbolOrDetachInstancesRecursivelyAction;
+}
+

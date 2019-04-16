@@ -1,0 +1,100 @@
+interface NSFileManagerUninitialized<InitializedType = NSFileManager> extends NSObjectUninitialized<NSFileManager> {}
+interface NSFileManager extends NSObject {
+  mountedVolumeURLsIncludingResourceValuesForKeys_options(propertyKeys: NSArray<any> | any[] | null, options: NSVolumeEnumerationOptions): NSArray<any>;
+  unmountVolumeAtURL_options_completionHandler(url: NSURL, mask: NSFileManagerUnmountOptions, completionHandler: Block): void;
+  contentsOfDirectoryAtURL_includingPropertiesForKeys_options_error(url: NSURL, keys: NSArray<any> | any[] | null, mask: NSDirectoryEnumerationOptions, error: NSError): NSArray<any>;
+  URLsForDirectory_inDomains(directory: NSSearchPathDirectory, domainMask: NSSearchPathDomainMask): NSArray<any>;
+  URLForDirectory_inDomain_appropriateForURL_create_error(directory: NSSearchPathDirectory, domain: NSSearchPathDomainMask, url: NSURL | null, shouldCreate: boolean, error: NSError): NSURL;
+  getRelationship_ofDirectoryAtURL_toItemAtURL_error(outRelationship: NSURLRelationship, directoryURL: NSURL, otherURL: NSURL, error: NSError): boolean;
+  getRelationship_ofDirectory_inDomain_toItemAtURL_error(outRelationship: NSURLRelationship, directory: NSSearchPathDirectory, domainMask: NSSearchPathDomainMask, url: NSURL, error: NSError): boolean;
+  createDirectoryAtURL_withIntermediateDirectories_attributes_error(url: NSURL, createIntermediates: boolean, attributes: NSDictionary<any, any> | {[key: string]: any} | null, error: NSError): boolean;
+  createSymbolicLinkAtURL_withDestinationURL_error(url: NSURL, destURL: NSURL, error: NSError): boolean;
+  setAttributes_ofItemAtPath_error(attributes: NSDictionary<any, any> | {[key: string]: any}, path: NSString | string, error: NSError): boolean;
+  createDirectoryAtPath_withIntermediateDirectories_attributes_error(path: NSString | string, createIntermediates: boolean, attributes: NSDictionary<any, any> | {[key: string]: any} | null, error: NSError): boolean;
+  contentsOfDirectoryAtPath_error(path: NSString | string, error: NSError): NSArray<any>;
+  subpathsOfDirectoryAtPath_error(path: NSString | string, error: NSError): NSArray<any>;
+  attributesOfItemAtPath_error(path: NSString | string, error: NSError): NSDictionary<any, any>;
+  attributesOfFileSystemForPath_error(path: NSString | string, error: NSError): NSDictionary<any, any>;
+  createSymbolicLinkAtPath_withDestinationPath_error(path: NSString | string, destPath: NSString | string, error: NSError): boolean;
+  destinationOfSymbolicLinkAtPath_error(path: NSString | string, error: NSError): NSString;
+  copyItemAtPath_toPath_error(srcPath: NSString | string, dstPath: NSString | string, error: NSError): boolean;
+  moveItemAtPath_toPath_error(srcPath: NSString | string, dstPath: NSString | string, error: NSError): boolean;
+  linkItemAtPath_toPath_error(srcPath: NSString | string, dstPath: NSString | string, error: NSError): boolean;
+  removeItemAtPath_error(path: NSString | string, error: NSError): boolean;
+  copyItemAtURL_toURL_error(srcURL: NSURL, dstURL: NSURL, error: NSError): boolean;
+  moveItemAtURL_toURL_error(srcURL: NSURL, dstURL: NSURL, error: NSError): boolean;
+  linkItemAtURL_toURL_error(srcURL: NSURL, dstURL: NSURL, error: NSError): boolean;
+  removeItemAtURL_error(URL: NSURL, error: NSError): boolean;
+  trashItemAtURL_resultingItemURL_error(url: NSURL, outResultingURL: NSURL, error: NSError): boolean;
+  fileAttributesAtPath_traverseLink(path: NSString | string, yorn: boolean): NSDictionary<any, any>;
+  changeFileAttributes_atPath(attributes: NSDictionary<any, any> | {[key: string]: any}, path: NSString | string): boolean;
+  directoryContentsAtPath(path: NSString | string): NSArray<any>;
+  fileSystemAttributesAtPath(path: NSString | string): NSDictionary<any, any>;
+  pathContentOfSymbolicLinkAtPath(path: NSString | string): NSString;
+  createSymbolicLinkAtPath_pathContent(path: NSString | string, otherpath: NSString | string): boolean;
+  createDirectoryAtPath_attributes(path: NSString | string, attributes: NSDictionary<any, any> | {[key: string]: any}): boolean;
+  linkPath_toPath_handler(src: NSString | string, dest: NSString | string, handler: any | null): boolean;
+  copyPath_toPath_handler(src: NSString | string, dest: NSString | string, handler: any | null): boolean;
+  movePath_toPath_handler(src: NSString | string, dest: NSString | string, handler: any | null): boolean;
+  removeFileAtPath_handler(path: NSString | string, handler: any | null): boolean;
+  changeCurrentDirectoryPath(path: NSString | string): boolean;
+  fileExistsAtPath(path: NSString | string): boolean;
+  fileExistsAtPath_isDirectory(path: NSString | string, isDirectory: boolean | null): boolean;
+  isReadableFileAtPath(path: NSString | string): boolean;
+  isWritableFileAtPath(path: NSString | string): boolean;
+  isExecutableFileAtPath(path: NSString | string): boolean;
+  isDeletableFileAtPath(path: NSString | string): boolean;
+  contentsEqualAtPath_andPath(path1: NSString | string, path2: NSString | string): boolean;
+  displayNameAtPath(path: NSString | string): NSString;
+  componentsToDisplayForPath(path: NSString | string): NSArray<any>;
+  enumeratorAtPath(path: NSString | string): NSDirectoryEnumerator<any>;
+  enumeratorAtURL_includingPropertiesForKeys_options_errorHandler(url: NSURL, keys: NSArray<any> | any[] | null, mask: NSDirectoryEnumerationOptions, handler: Block | null): NSDirectoryEnumerator<any>;
+  subpathsAtPath(path: NSString | string): NSArray<any>;
+  contentsAtPath(path: NSString | string): NSData;
+  createFileAtPath_contents_attributes(path: NSString | string, data: NSData | null, attr: NSDictionary<any, any> | {[key: string]: any} | null): boolean;
+  fileSystemRepresentationWithPath(path: NSString | string): string;
+  stringWithFileSystemRepresentation_length(str: string, len: NSUInteger): NSString;
+  replaceItemAtURL_withItemAtURL_backupItemName_options_resultingItemURL_error(originalItemURL: NSURL, newItemURL: NSURL, backupItemName: NSString | string | null, options: NSFileManagerItemReplacementOptions, resultingURL: NSURL, error: NSError): boolean;
+  setUbiquitous_itemAtURL_destinationURL_error(flag: boolean, url: NSURL, destinationURL: NSURL, error: NSError): boolean;
+  isUbiquitousItemAtURL(url: NSURL): boolean;
+  startDownloadingUbiquitousItemAtURL_error(url: NSURL, error: NSError): boolean;
+  evictUbiquitousItemAtURL_error(url: NSURL, error: NSError): boolean;
+  URLForUbiquityContainerIdentifier(containerIdentifier: NSString | string | null): NSURL;
+  URLForPublishingUbiquitousItemAtURL_expirationDate_error(url: NSURL, outDate: NSDate, error: NSError): NSURL;
+  getFileProviderServicesForItemAtURL_completionHandler(url: NSURL, completionHandler: Block): void;
+  containerURLForSecurityApplicationGroupIdentifier(groupIdentifier: NSString | string): NSURL;
+  homeDirectoryForUser(userName: NSString | string): NSURL;
+  visibleSubpathsOfDirectory(path: NSString | string): NSArray<any>;
+  createDirectoryIfNecessary(directory: NSString | string): boolean;
+  fileExistsAtURL(url: NSURL): boolean;
+  shallowSubpathsOfDirectoryAtURL(url: NSURL): NSArray<any>;
+  shallowSubpathURLsOfDirectoryAtURL(url: NSURL): NSArray<any>;
+  shallowFilenamesOfDirectoryAtURL_withURLResourceValues_forURLResourceKey(url: NSURL, urlResourceValues: NSSet<any>, resourceKey: NSURLResourceKey): NSArray<any>;
+  isFolderAtPath(path: NSString | string): boolean;
+  isFolderAtURL(url: NSURL): boolean;
+  uniqueURL(url: NSURL): NSURL;
+  temporaryFolderURL(): NSURL;
+  temporaryFolderURLWithName(name: NSString | string): NSURL;
+  temporaryFileURLWithName_extension(name: NSString | string, extension: NSString | string): NSURL;
+  temporaryFileURLToReplaceURL(url: NSURL): NSURL;
+  temporaryFileURLWithExtension(extension: NSString | string): NSURL;
+  _temporaryFilesRootForURL(url: NSURL): NSURL;
+  visibleSubpathsOfDirectoryWithoutGoingIntoPackages(path: NSString | string): NSArray<any>;
+  visibleSubpathsOfDirectoryAtURLWithoutGoingIntoPackages(url: NSURL): NSArray<any>;
+
+  delegate(): any;
+  setDelegate(delegate: any): void;
+  currentDirectoryPath(): NSString;
+  ubiquityIdentityToken(): any;
+  homeDirectoryForCurrentUser(): NSURL;
+  temporaryDirectory(): NSURL;
+}
+declare const NSFileManager: {
+  alloc(): NSFileManagerUninitialized;
+  class(): NSFileManager;  fileManagerWithAuthorization(authorization: NSWorkspaceAuthorization): NSFileManager;
+  _setTemporaryFilesRootToURL(rootURL: NSURL): void;
+
+  defaultManager(): NSFileManager;
+
+}
+

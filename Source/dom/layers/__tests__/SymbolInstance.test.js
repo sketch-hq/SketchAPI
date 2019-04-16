@@ -1,43 +1,32 @@
 /* globals expect, test */
 /* eslint-disable no-param-reassign */
-
 import { SymbolInstance } from '../..'
-import { createSymbolMaster } from '../../../test-utils'
+import { createSymbolMaster, canBeLogged } from '../../../test-utils'
 
-test(
-  'should create a instance by setting the master property',
-  (context, document) => {
-    const { master } = createSymbolMaster(document)
-    const instance = new SymbolInstance({
-      master,
-    })
-    // check that an instance can be logged
-    log(instance)
-    expect(instance.type).toBe('SymbolInstance')
-    expect(instance.master).toBe(null)
-    // by default, it's not anywhere in the document
-    expect(master.getAllInstances()).toEqual([])
+test('should create a instance by setting the master property', (context, document) => {
+  const { master } = createSymbolMaster(document)
+  const instance = new SymbolInstance({
+    parent: document.selectedPage,
+    master,
+  })
 
-    // add the instance to the page
-    document.selectedPage.layers = document.selectedPage.layers.concat(instance)
-    expect(master.getAllInstances()).toEqual([instance])
-    expect(instance.master).toEqual(master)
-  }
-)
+  expect(instance.type).toBe('SymbolInstance')
+  expect(instance.master).toEqual(master)
+  expect(master.getAllInstances()).toEqual([instance])
 
-test(
-  'should create a instance by setting the symbolId property',
-  (context, document) => {
-    const { master } = createSymbolMaster(document)
-    const instance = new SymbolInstance({
-      symbolId: master.symbolId,
-      parent: document.selectedPage,
-    })
-    expect(instance.type).toBe('SymbolInstance')
-    expect(master.getAllInstances()).toEqual([instance])
-    expect(instance.master).toEqual(master)
-  }
-)
+  canBeLogged(instance, SymbolInstance)
+})
+
+test('should create a instance by setting the symbolId property', (context, document) => {
+  const { master } = createSymbolMaster(document)
+  const instance = new SymbolInstance({
+    symbolId: master.symbolId,
+    parent: document.selectedPage,
+  })
+  expect(instance.type).toBe('SymbolInstance')
+  expect(master.getAllInstances()).toEqual([instance])
+  expect(instance.master).toEqual(master)
+})
 
 test('should have overrides', (context, document) => {
   const { master, text } = createSymbolMaster(document)
@@ -46,7 +35,7 @@ test('should have overrides', (context, document) => {
 
   expect(instance.overrides.length).toBe(1)
   const override = instance.overrides[0]
-  expect(override.toJSON()).toEqual({
+  const result = {
     type: 'Override',
     id: `${text.id}_stringValue`,
     path: text.id,
@@ -54,5 +43,23 @@ test('should have overrides', (context, document) => {
     symbolOverride: false,
     value: 'Test value',
     isDefault: true,
+    editable: true,
+    affectedLayer: text.toJSON(),
+    selected: false,
+  }
+  delete result.affectedLayer.selected
+  result.affectedLayer.style = instance.overrides[0].affectedLayer.style.toJSON()
+  expect(override.toJSON()).toEqual(result)
+})
+
+test('should detach an instance', (context, document) => {
+  const { master } = createSymbolMaster(document)
+  const instance = new SymbolInstance({
+    symbolId: master.symbolId,
+    parent: document.selectedPage,
   })
+  expect(instance.type).toBe('SymbolInstance')
+
+  const group = instance.detach()
+  expect(group.type).toBe('Group')
 })

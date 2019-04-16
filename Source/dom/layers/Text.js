@@ -28,12 +28,11 @@ const TextAlignment = {
   natural: 'natural', // Indicates the default alignment for script
 }
 
-export const TextAlignmentMap = {
-  left: 0, // Visually left aligned
-  right: 1, // Visually right aligned
-  center: 2, // Visually centered
-  justified: 3, // Fully-justified. The last line in a paragraph is natural-aligned.
-  natural: 4, // Indicates the default alignment for script
+// Mapping between vertical text alignment names and values.
+const VerticalTextAlignment = {
+  top: 'top', // Visually top aligned
+  center: 'center', // Visually center aligned
+  bottom: 'bottom', // Visually bottom aligned
 }
 
 /**
@@ -57,7 +56,9 @@ export class Text extends StyledLayer {
 
     super(text)
 
-    this.adjustToFit()
+    if (!text.frame) {
+      this.adjustToFit()
+    }
   }
 
   /**
@@ -66,6 +67,12 @@ export class Text extends StyledLayer {
    * @param {NSFont} value The font to use.
    */
   set font(value) {
+    console.warn(
+      '`Text.font` is deprecated. Use `Text.style.fontFamily` instead'
+    )
+    if (this.isImmutable()) {
+      return
+    }
     this._object.font = value
   }
 
@@ -75,6 +82,12 @@ export class Text extends StyledLayer {
    * @param {number} size The system font size to use.
    */
   set systemFontSize(size) {
+    console.warn(
+      '`Text.systemFontSize = size` is deprecated. Use `Text.style.fontFamily = "system"; Text.style.fontSize = size` instead.'
+    )
+    if (this.isImmutable()) {
+      return
+    }
     this._object.setFont(NSFont.systemFontOfSize_(size))
   }
 
@@ -82,6 +95,9 @@ export class Text extends StyledLayer {
    * Adjust the frame of the layer to fit its contents.
    */
   adjustToFit() {
+    if (this.isImmutable()) {
+      return this
+    }
     this._object.adjustFrameToFit()
     return this
   }
@@ -92,44 +108,69 @@ export class Text extends StyledLayer {
    * @return {array} The line fragments. Each one is a dictionary containing a rectangle, and a baseline offset.
    */
   get fragments() {
+    const { text } = this
     const textLayer = this._object
-    const storage = textLayer.immutableModelObject().createTextStorage()
-    const layout = storage.layoutManagers().firstObject()
-    const actualCharacterRangePtr = MOPointer.new()
-    const charRange = NSMakeRange(0, storage.length())
-    const drawingPoint = textLayer.drawingPointForText()
+    const storage = this.isImmutable()
+      ? textLayer.createTextStorage()
+      : textLayer.immutableModelObject().createTextStorage()
 
-    layout.glyphRangeForCharacterRange_actualCharacterRange_(
-      charRange,
-      actualCharacterRangePtr
-    )
-    const glyphRange = actualCharacterRangePtr.value()
+    const layout = storage.layoutManagers().firstObject()
+    const textContainer = layout.textContainers().firstObject()
+
+    const numberOfGlyphs = layout.numberOfGlyphs()
+    const drawingPoint = textLayer.drawingPointForText()
 
     const fragments = []
     let currentLocation = 0
-    while (currentLocation < NSMaxRange(glyphRange)) {
-      const effectiveRangePtr = MOPointer.new()
-      const localRect = layout.lineFragmentRectForGlyphAtIndex_effectiveRange_(
+    while (currentLocation < numberOfGlyphs) {
+      // Get end of line index
+      const lineRangeStorage = NSMakeRange(0, 0)
+      const lineRangePtr = MOPointer.alloc().initWithValue(lineRangeStorage)
+
+      layout.lineFragmentRectForGlyphAtIndex_effectiveRange(
         currentLocation,
-        effectiveRangePtr
+        lineRangePtr
       )
+
+      const range = lineRangePtr.value()
+      const endOfLineIndex = NSMaxRange(range)
+
+      //	Get bounding rect
+      //	Also ignore empty line ends and hard line breaks
+      let rangeLength =
+        Math.min(endOfLineIndex, numberOfGlyphs) - currentLocation
+
+      const lineText = text.substr(currentLocation, rangeLength)
+      const trimmedLineText = lineText.trimRight()
+
+      rangeLength -= lineText.length - trimmedLineText.length
+
+      const glyphRange = NSMakeRange(currentLocation, rangeLength)
+      const lineRect = layout.boundingRectForGlyphRange_inTextContainer(
+        glyphRange,
+        textContainer
+      )
+
       const rect = new Rectangle(
-        localRect.origin.x + drawingPoint.x,
-        localRect.origin.y + drawingPoint.y,
-        localRect.size.width,
-        localRect.size.height
+        lineRect.origin.x + drawingPoint.x,
+        lineRect.origin.y + drawingPoint.y,
+        lineRect.size.width,
+        lineRect.size.height
       )
-      const effectiveRange = effectiveRangePtr.value()
+
+      // get baseline offset
       const baselineOffset = layout
         .typesetter()
-        .baselineOffsetInLayoutManager_glyphIndex_(layout, currentLocation)
+        .baselineOffsetInLayoutManager_glyphIndex(layout, currentLocation)
 
       fragments.push({
         rect,
         baselineOffset,
-        range: effectiveRange,
+        range,
       })
-      currentLocation = NSMaxRange(effectiveRange) + 1
+
+      // move to the next line
+      currentLocation = endOfLineIndex
     }
 
     return fragments
@@ -139,6 +180,7 @@ export class Text extends StyledLayer {
 Text.type = Types.Text
 Text[DefinedPropertiesKey] = { ...StyledLayer[DefinedPropertiesKey] }
 Factory.registerClass(Text, MSTextLayer)
+Factory.registerClass(Text, MSImmutableTextLayer)
 
 Text.define('text', {
   get() {
@@ -152,43 +194,32 @@ Text.define('text', {
    * @param {string} value The text to use.
    */
   set(value) {
-    const object = this._object
-    object.stringValue = value
-    if (!object.nameIsFixed()) {
-      object.name = value
+    if (this.isImmutable()) {
+      return
     }
+    const object = this._object
+    object.replaceTextPreservingAttributeRanges(value)
+    object.updateNameFromStorage()
   },
 })
 
 Text.Alignment = TextAlignment
-Text.define('alignment', {
-  /**
-   * The alignment of the layer.
-   * This will be one of the values: "left", "center", "right", "justified", "natural".
-   *
-   * @return {string} The alignment mode.
-   */
-  get() {
-    const raw = this._object.textAlignment()
-    return (
-      Object.keys(TextAlignmentMap).find(
-        key => TextAlignmentMap[key] === raw
-      ) || raw
-    )
-  },
+Text.VerticalAlignment = VerticalTextAlignment
 
-  /**
-   * Set the alignment of the layer.
-   *
-   * The mode supplied can be a string or a number.
-   * If it's a string, it should be one of the values: "left", "center", "right", "justified", "natural".
-   *
-   * @param {string} mode The alignment mode to use.
-   */
+Text.define('alignment', {
+  enumerable: false,
+  exportable: false,
+  get() {
+    console.warn(
+      '`Text.alignment` is deprecated. Use `Text.style.alignment` instead'
+    )
+    return this.style.alignment
+  },
   set(mode) {
-    const translated = TextAlignmentMap[mode]
-    this._object.textAlignment =
-      typeof translated !== 'undefined' ? translated : mode
+    console.warn(
+      '`Text.alignment` is deprecated. Use `Text.style.alignment` instead'
+    )
+    this.style.alignment = mode
   },
 })
 
@@ -203,6 +234,9 @@ Text.define('lineSpacing', {
     )
   },
   set(mode) {
+    if (this.isImmutable()) {
+      return
+    }
     const translated = TextLineSpacingBehaviourMap[mode]
     const lineSpacingBehaviour =
       typeof translated !== 'undefined' ? translated : mode
@@ -223,6 +257,9 @@ Text.define('fixedWidth', {
     return this._object.textBehaviour() === TextBehaviour.fixedWidth
   },
   set(fixed) {
+    if (this.isImmutable()) {
+      return
+    }
     if (fixed) {
       this._object.textBehaviour = TextBehaviour.fixedWidth
     } else {

@@ -1,0 +1,23 @@
+declare enum NSXMLDTDNodeKind {
+  NSXMLEntityGeneralKind = 1,
+  NSXMLEntityParsedKind,
+  NSXMLEntityUnparsedKind,
+  NSXMLEntityParameterKind,
+  NSXMLEntityPredefined,
+  NSXMLAttributeCDATAKind,
+  NSXMLAttributeIDKind,
+  NSXMLAttributeIDRefKind,
+  NSXMLAttributeIDRefsKind,
+  NSXMLAttributeEntityKind,
+  NSXMLAttributeEntitiesKind,
+  NSXMLAttributeNMTokenKind,
+  NSXMLAttributeNMTokensKind,
+  NSXMLAttributeEnumerationKind,
+  NSXMLAttributeNotationKind,
+  NSXMLElementDeclarationUndefinedKind,
+  NSXMLElementDeclarationEmptyKind,
+  NSXMLElementDeclarationAnyKind,
+  NSXMLElementDeclarationMixedKind,
+  NSXMLElementDeclarationElementKind,
+}
+

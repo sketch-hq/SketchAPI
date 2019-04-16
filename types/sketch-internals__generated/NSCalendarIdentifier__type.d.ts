@@ -1,0 +1,2 @@
+declare type NSCalendarIdentifier = NSString
+

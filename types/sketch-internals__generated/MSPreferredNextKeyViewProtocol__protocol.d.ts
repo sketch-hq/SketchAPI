@@ -1,0 +1,5 @@
+interface IMSPreferredNextKeyViewProtocol {
+
+  preferredNextKeyView(): NSView;
+}
+

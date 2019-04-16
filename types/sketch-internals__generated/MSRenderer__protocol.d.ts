@@ -1,0 +1,3 @@
+interface IMSRenderer extends NSObject {
+}
+

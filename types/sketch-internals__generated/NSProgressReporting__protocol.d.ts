@@ -1,0 +1,5 @@
+interface INSProgressReporting {
+
+  progress(): NSProgress;
+}
+

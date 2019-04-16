@@ -1,13 +1,13 @@
 /* globals expect, test */
-
-import { Text, TextAlignmentMap, TextLineSpacingBehaviourMap } from '../Text'
-import { Rectangle } from '../../models/Rectangle'
+import { isRunningOnJenkins, canBeLogged } from '../../../test-utils'
+import { Text, Rectangle } from '../..'
+import { TextLineSpacingBehaviourMap } from '../Text'
+import { TextAlignmentMap } from '../../style/Text'
 
 test('should create a Text layer', () => {
   const text = new Text()
-  // check that a text can be logged
-  log(text)
   expect(text.type).toBe('Text')
+  canBeLogged(text, Text)
 })
 
 test('should be able to change the text value', () => {
@@ -38,11 +38,15 @@ test('should change the text alignment', () => {
   Object.keys(Text.Alignment).forEach(key => {
     // test setting by name
     text.alignment = key
-    expect(text.alignment).toBe(Text.Alignment[key])
+    expect(text.alignment).toBe(
+      Text.Alignment[key] === 'natural' ? 'left' : Text.Alignment[key]
+    )
 
     // test setting by value
     text.alignment = TextAlignmentMap[key]
-    expect(text.alignment).toBe(Text.Alignment[key])
+    expect(text.alignment).toBe(
+      Text.Alignment[key] === 'natural' ? 'left' : Text.Alignment[key]
+    )
   })
 })
 
@@ -79,3 +83,62 @@ test('should fix the width', () => {
 
   expect(text.fixedWidth).toBe(true)
 })
+
+// on Jenkins, this throws an `AddressSanitizer: heap-buffer-overflow` error
+// so we'll just skip it on there for now
+if (!isRunningOnJenkins()) {
+  test('should return the fragments of a text layer', () => {
+    let text = new Text({
+      text: 'blah',
+    })
+
+    let { fragments } = text
+
+    expect(fragments.length).toBe(1)
+    expect(fragments[0].baselineOffset).toBe(3)
+    expect(Number(fragments[0].range.location)).toBe(0)
+    expect(Number(fragments[0].range.length)).toBe(4)
+    expect(fragments[0].rect.toJSON()).toEqual({
+      x: 0,
+      y: 0,
+      width: 22.6875,
+      height: 14,
+    })
+
+    // https://github.com/BohemianCoding/SketchAPI/issues/144
+    text = new Text({
+      text: 'Test\nHello\n123\no',
+    })
+    // eslint-disable-next-line
+    fragments = text.fragments
+
+    expect(fragments.length).toBe(4)
+    expect(fragments[0].baselineOffset).toBe(3)
+    expect(Number(fragments[0].range.location)).toBe(0)
+    expect(Number(fragments[0].range.length)).toBe(5)
+    expect(fragments[0].rect.toJSON()).toEqual({
+      x: 0,
+      y: 0,
+      width: 22.0078125,
+      height: 14,
+    })
+    expect(fragments[1].baselineOffset).toBe(3)
+    expect(Number(fragments[1].range.location)).toBe(5)
+    expect(Number(fragments[1].range.length)).toBe(6)
+    expect(fragments[1].rect.toJSON()).toEqual({
+      x: 0,
+      y: 14,
+      width: 27.345703125,
+      height: 14,
+    })
+    expect(fragments[2].baselineOffset).toBe(3)
+    expect(Number(fragments[2].range.location)).toBe(11)
+    expect(Number(fragments[2].range.length)).toBe(4)
+    expect(fragments[2].rect.toJSON()).toEqual({
+      x: 0,
+      y: 28,
+      width: 20.021484375,
+      height: 14,
+    })
+  })
+}

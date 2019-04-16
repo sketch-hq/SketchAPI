@@ -1,0 +1,2 @@
+declare type NSLocaleKey = NSString
+

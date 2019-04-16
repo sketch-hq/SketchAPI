@@ -1,0 +1,20 @@
+declare enum SUError {
+  SUAppcastParseError = 1000,
+  SUNoUpdateError = 1001,
+  SUAppcastError = 1002,
+  SURunningFromDiskImageError = 1003,
+  SUTemporaryDirectoryError = 2000,
+  SUDownloadError = 2001,
+  SUUnarchivingError = 3000,
+  SUSignatureError = 3001,
+  SUFileCopyFailure = 4000,
+  SUAuthenticationFailure = 4001,
+  SUMissingUpdateError = 4002,
+  SUMissingInstallerToolError = 4003,
+  SURelaunchError = 4004,
+  SUInstallationError = 4005,
+  SUDowngradeError = 4006,
+  SUInstallationCancelledError = 4007,
+  SUSystemPowerOffError = 5000,
+}
+

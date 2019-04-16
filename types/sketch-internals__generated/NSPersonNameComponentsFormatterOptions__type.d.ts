@@ -1,0 +1,4 @@
+declare enum NSPersonNameComponentsFormatterOptions {
+  NSPersonNameComponentsFormatterPhonetic,
+}
+

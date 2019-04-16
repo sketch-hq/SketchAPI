@@ -1,0 +1,6 @@
+declare enum BCTableRowViewExpansionTransitionState {
+  BCTableRowViewExpansionTransitionStateAtRest,
+  BCTableRowViewExpansionTransitionStateCollapsing,
+  BCTableRowViewExpansionTransitionStateExpanding,
+}
+

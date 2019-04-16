@@ -1,3 +1,4 @@
+import { isNumber } from 'util'
 import { wrapObject } from '../wrapNativeObject'
 import { proxyProperty, initProxyProperties } from '../utils'
 
@@ -17,17 +18,21 @@ export class Rectangle {
   constructor(x, y, width, height) {
     initProxyProperties(this)
 
-    proxyProperty(this, 'x', parseFloat(x))
-    proxyProperty(this, 'y', parseFloat(y))
-    proxyProperty(this, 'width', parseFloat(width))
-    proxyProperty(this, 'height', parseFloat(height))
-
-    // if the argument is object
-    if (typeof x === 'object' && typeof x.x === 'number') {
-      this._x = parseFloat(x.x)
-      this._y = parseFloat(x.y)
-      this._width = parseFloat(x.width)
-      this._height = parseFloat(x.height)
+    if (x && x.origin && isNumber(x.origin.x)) {
+      proxyProperty(this, 'x', parseFloat(x.origin.x))
+      proxyProperty(this, 'y', parseFloat(x.origin.y))
+      proxyProperty(this, 'width', parseFloat(x.size.width))
+      proxyProperty(this, 'height', parseFloat(x.size.height))
+    } else if (x && isNumber(x.x)) {
+      proxyProperty(this, 'x', parseFloat(x.x))
+      proxyProperty(this, 'y', parseFloat(x.y))
+      proxyProperty(this, 'width', parseFloat(x.width))
+      proxyProperty(this, 'height', parseFloat(x.height))
+    } else {
+      proxyProperty(this, 'x', parseFloat(x))
+      proxyProperty(this, 'y', parseFloat(y))
+      proxyProperty(this, 'width', parseFloat(width))
+      proxyProperty(this, 'height', parseFloat(height))
     }
   }
 
@@ -66,6 +71,10 @@ export class Rectangle {
     return CGRectMake(this._x, this._y, this._width, this._height)
   }
 
+  asNSRect() {
+    return NSMakeRect(this._x, this._y, this._width, this._height)
+  }
+
   /**
    * Return a string description of the rectangle.
    *
@@ -98,11 +107,11 @@ export class Rectangle {
       if (
         !toLayer ||
         !toLayer.sketchObject ||
-        !toLayer.sketchObject.convertPoint_fromLayer
+        !toLayer.sketchObject.convertPoint_fromCoordinateSpace
       ) {
-        throw new Error(`Expected a Layer, got ${to}`)
+        throw new Error(`Expected a coordinate space, got ${to}`)
       }
-      const origin = toLayer.sketchObject.convertPoint_fromLayer(
+      const origin = toLayer.sketchObject.convertPoint_fromCoordinateSpace(
         NSMakePoint(this.x, this.y),
         null
       )
@@ -110,11 +119,11 @@ export class Rectangle {
     }
     if (
       !fromLayer.sketchObject ||
-      !fromLayer.sketchObject.convertPoint_toLayer
+      !fromLayer.sketchObject.convertPoint_toCoordinateSpace
     ) {
-      throw new Error(`Expected a Layer, got ${from}`)
+      throw new Error(`Expected a coordinate space, got ${from}`)
     }
-    const origin = fromLayer.sketchObject.convertPoint_toLayer(
+    const origin = fromLayer.sketchObject.convertPoint_toCoordinateSpace(
       NSMakePoint(this.x, this.y),
       toLayer ? toLayer.sketchObject : null
     )

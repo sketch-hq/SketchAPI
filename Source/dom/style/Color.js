@@ -1,11 +1,10 @@
-import { isNativeObject } from '../utils'
+import { isNativeObject } from 'util'
 
 /**
- * Given a string description of a color, return an MSColor.
+ * Given a string description of a color, return an MSImmutableColor.
  */
 export function colorFromString(value) {
-  const immutable = MSImmutableColor.colorWithSVGString_(value)
-  return MSColor.alloc().initWithImmutableObject_(immutable)
+  return MSImmutableColor.colorWithSVGString_(value)
 }
 
 /**
@@ -34,11 +33,18 @@ export class Color {
     }
     let nativeColor
     if (isNativeObject(object)) {
-      const className = String(object.class())
-      if (className === 'MSColor') {
+      if (object.isKindOfClass(MSColor)) {
+        nativeColor = MSImmutableColor.alloc().initWithMutableModelObject(
+          object
+        )
+      } else if (object.isKindOfClass(MSImmutableColor)) {
         nativeColor = object
+      } else if (object.isKindOfClass(NSColor)) {
+        nativeColor = MSImmutableColor.colorWithNSColor(object)
       } else {
-        throw new Error(`Cannot create a color from a ${className}`)
+        throw new Error(
+          `Cannot create a color from a ${String(object.class())}`
+        )
       }
     } else if (typeof object === 'string') {
       nativeColor = colorFromString(object)
@@ -51,5 +57,13 @@ export class Color {
 
   toString() {
     return colorToString(this._object)
+  }
+
+  toMSColor() {
+    return this._object.newMutableCounterpart()
+  }
+
+  toMSImmutableColor() {
+    return this._object
   }
 }

@@ -36,47 +36,92 @@ Show an alert with a custom title and message. The alert is modal, so it will st
 | title<span class="arg-type">string - required</span> | The title of the alert.  |
 | text<span class="arg-type">string - required</span>  | The text of the message. |
 
-## Get a string input from the user
+## Get an input from the user
 
-```js
-var string = UI.getStringFromUser("What's your name?", 'Appleseed')
+```javascript
+UI.getInputFromUser(
+  "What's your name?",
+  {
+    initialValue: 'Appleseed',
+  },
+  (err, value) => {
+    if (err) {
+      // most likely the user canceled the input
+      return
+    }
+  }
+)
 ```
 
-Shows a simple input sheet which displays a message, and asks for a single string input.
+```javascript
+UI.getInputFromUser("What's your favorite design tool?", {
+  type: UI.INPUT_TYPE.selection,
+  possibleValues: ['Sketch', 'Paper']
+}, (err, value) => {
+  if (err) {
+    // most likely the user canceled the input
+    return
+  }
+})
+```
 
-| Parameters                                             |                                        |
-| ------------------------------------------------------ | -------------------------------------- |
-| message<span class="arg-type">string - required</span> | The prompt message to show.            |
-| initialValue<span class="arg-type">string</span>       | The initial value of the input string. |
+<!--
+```javascript
+UI.getInputFromUser(
+  "What's the opacity of the new layer?",
+  {
+    type: UI.INPUT_TYPE.slider,
+  },
+  (err, value) => {
+    if (err) {
+      // most likely the user canceled the input
+      return
+    }
+  }
+)
+```
+-->
 
-### Returns
+Shows a simple input sheet which displays a message, and asks for an input from the user.
 
-The string that the user input.
+| Parameters                                                                              |                                                                                                                                                                                          |
+| --------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| message<span class="arg-type">string - required</span>                                  | The prompt message to show.                                                                                                                                                              |
+| options<span class="arg-type">object</span>                                             | Options to customize the input sheet. Most of the options depends on the type of the input.                                                                                              |
+| option.description<span class="arg-type">string</span>                                  | A secondary text to describe with more details the input.                                                                                                                                |
+| option.type<span class="arg-type">[Input Type](#uiinput_type)</span>                    | The type of the input.                                                                                                                                                                   |
+| option.initialValue<span class="arg-type">string / number</span>                        | The initial value of the input.   |
+| option.possibleValues<span class="arg-type">string[] - required with a selection</span> | The possible choices that the user can make. Only used for a `selection` input.                                                                                                          |
+| callback<span class="arg-type">function</span>                                          | A function called after the user entered the input. It is called with an `Error` if the user canceled the input and a `string` or `number` depending on the input type (or `undefined`). |
 
-## Make the user select an option
+<!--
+| option.maxValue<span class="arg-type">number</span>                                     | The maximal value. Only used for a `slider` input. Defaults to `1`.                                                                                                                      |
+| option.minValue<span class="arg-type">number</span>                                     | The maximal value. Only used for a `slider` input. Defaults to `0`.                                                                                                                      |
+| option.increment<span class="arg-type">number</span>                                    | Restricts the possible values to multiple of the increment. Only used for a `slider` input.                                                                                             |-->
+
+### `UI.INPUT_TYPE`
 
 ```js
-var options = ['Sketch']
-var selection = UI.getSelectionFromUser(
-  "What's your favorite design tool?",
-  options
-)
+UI.INPUT_TYPE.selection
+```
 
-var ok = selection[2]
-var value = options[selection[1]]
-if (ok) {
-  // do something
+The enumeration of the different input types.
+
+| Values      |
+| ----------- |
+| `string`    |
+| `selection` |
+
+## Get the theme of Sketch
+
+```js
+var theme = UI.getTheme()
+
+if (theme === 'dark') {
+  // shows UI in dark theme
+} else {
+  // shows UI in light theme
 }
 ```
 
-Shows an input sheet which displays a popup with a series of options, from which the user is asked to choose.
-
-| Parameters                                             |                                            |
-| ------------------------------------------------------ | ------------------------------------------ |
-| message<span class="arg-type">string - required</span> | The prompt message to show.                |
-| items<span class="arg-type">string[] - required</span> | An array of option items.                  |
-| selectedIndex<span class="arg-type">number</span>      | The index of the item to select initially. |
-
-### Returns
-
-An array with a response code, the selected index and `ok`. The code will be one of `NSAlertFirstButtonReturn` or `NSAlertSecondButtonReturn`. The selection will be the integer index of the selected item. `ok` is the boolean `code === NSAlertFirstButtonReturn`.
+Sketch has 2 themes: `light` and `dark`. If your plugin has some custom UI, it should support both as well.

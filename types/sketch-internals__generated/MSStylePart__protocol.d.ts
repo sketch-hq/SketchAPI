@@ -1,0 +1,5 @@
+interface IMSStylePart {
+
+  isEnabled(): boolean;
+}
+

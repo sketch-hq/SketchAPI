@@ -9,14 +9,21 @@ const libraryChanges = touchedFiles.filter(
   filePath => LIB_REGEX.test(filePath) && filePath.indexOf('__tests__') === -1
 )
 
-function matchingTest(dir: string, name: string) {
+function hasMatchingTest(change: string) {
+  const { dir, name } = path.parse(change)
   const testPath = path.join(dir, '__tests__', `${name}.test.js`)
   return touchedFiles.find(f => f === testPath)
 }
 
-function matchingDoc(dir: string, name: string) {
+function hasMatchingDoc(change: string) {
+  const { name } = path.parse(change)
   const docPath = path.join('docs', 'api', `${name}.md`)
   return touchedFiles.find(f => f === docPath)
+}
+
+function hasMatchingTypes(change: string) {
+  // placeholder which will be filed when we have typescript types
+  return !!change
 }
 
 /**
@@ -80,23 +87,6 @@ const ignoredFilesForTests = [
   'Source/index.js',
 ]
 
-// Warn if there are library changes, but not tests
-libraryChanges.forEach(change => {
-  if (ignoredFilesForTests.indexOf(change) >= 0) {
-    return
-  }
-  const { dir, name } = path.parse(change)
-  if (!matchingTest(dir, name)) {
-    warn(
-      `\`${change}\` changed, but not its tests. That's OK as long as you're refactoring.`
-    )
-  }
-})
-
-/**
- * CHECK FOR DOCS
- */
-
 const ignoredFilesForDocs = [
   'Source/async/index.js',
   'Source/data-supplier/index.js',
@@ -112,15 +102,24 @@ const ignoredFilesForDocs = [
   'Source/index.js',
 ]
 
-// Warn if there are library changes, but not docs
+const ignoredFilesForTypes: string[] = []
+
+// Warn if there are library changes, but not tests
 libraryChanges.forEach(change => {
-  if (ignoredFilesForDocs.indexOf(change) >= 0) {
-    return
-  }
-  const { dir, name } = path.parse(change)
-  if (!matchingDoc(dir, name)) {
+  const missingMatchingTest =
+    ignoredFilesForTests.indexOf(change) === -1 && !hasMatchingTest(change)
+  const missingMatchingDoc =
+    ignoredFilesForDocs.indexOf(change) === -1 && !hasMatchingDoc(change)
+  const missingMatchingTypes =
+    ignoredFilesForTypes.indexOf(change) === -1 && !hasMatchingTypes(change)
+
+  if (missingMatchingTest || missingMatchingDoc || missingMatchingTypes) {
     warn(
-      `\`${change}\` changed, but not its doc. That's OK as long as you're refactoring.`
+      `\`${change}\` changed, but not:
+  ${missingMatchingDoc ? '- 📚 its docs\n' : ''}${
+        missingMatchingTest ? '- 🧪 its tests\n' : ''
+      }${missingMatchingTypes ? '- ⌨️ its types\n' : ''}
+That's OK as long as you're refactoring.`
     )
   }
 })

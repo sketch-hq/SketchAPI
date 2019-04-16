@@ -1,10 +1,10 @@
-import { isWrappedObject, getDocumentData } from '../dom/utils'
+import * as util from 'util'
+import { getDocumentData } from './utils'
 
 function getPluginIdentifier() {
   if (!__command.pluginBundle()) {
-    throw new Error(
-      'It seems that the command is not running in a plugin. Bundle your command in a plugin to use the Settings API.'
-    )
+    // if we run a script from the Run Script panel, it won't have a bundle
+    return 'com.sketchapp.temporary-script'
   }
   return __command.pluginBundle().identifier()
 }
@@ -38,7 +38,7 @@ export function globalSettingForKey(key) {
  */
 export function setGlobalSettingForKey(key, value) {
   const store = NSUserDefaults.standardUserDefaults()
-  const stringifiedValue = JSON.stringify(value)
+  const stringifiedValue = JSON.stringify(value, (k, v) => util.toJSObject(v))
   if (!stringifiedValue) {
     store.removeObjectForKey(key)
   } else {
@@ -58,7 +58,7 @@ export function settingForKey(key) {
   const store = NSUserDefaults.alloc().initWithSuiteName(
     `${SUITE_PREFIX}${getPluginIdentifier()}`
   )
-  const value = store.objectForKey_(key)
+  const value = store.objectForKey(key)
 
   if (typeof value === 'undefined' || value == 'undefined' || value === null) {
     return undefined
@@ -76,7 +76,7 @@ export function setSettingForKey(key, value) {
   const store = NSUserDefaults.alloc().initWithSuiteName(
     `${SUITE_PREFIX}${getPluginIdentifier()}`
   )
-  const stringifiedValue = JSON.stringify(value)
+  const stringifiedValue = JSON.stringify(value, (k, v) => util.toJSObject(v))
   if (!stringifiedValue) {
     store.removeObjectForKey(key)
   } else {
@@ -84,10 +84,24 @@ export function setSettingForKey(key, value) {
   }
 }
 
+function getNativeStorageObject(layer) {
+  let object
+  if (!layer._isWrappedObject) {
+    object = layer
+  } else if (layer.type === 'DataOverride') {
+    object = layer.sketchObject.availableOverride().overrideValue()
+  } else if (layer.type === 'Override') {
+    object = layer.sketchObject.overrideValue()
+  } else {
+    object = layer.sketchObject
+  }
+  return object
+}
+
 export function layerSettingForKey(layer, key) {
   const value = __command.valueForKey_onLayer(
     key,
-    isWrappedObject(layer) ? layer.sketchObject : layer
+    getNativeStorageObject(layer)
   )
 
   if (typeof value === 'undefined' || value == 'undefined' || value === null) {
@@ -97,10 +111,14 @@ export function layerSettingForKey(layer, key) {
 }
 
 export function setLayerSettingForKey(layer, key, value) {
+  let stringifiedValue = JSON.stringify(value, (k, v) => util.toJSObject(v))
+  if (!stringifiedValue) {
+    stringifiedValue = null
+  }
   __command.setValue_forKey_onLayer(
-    JSON.stringify(value),
+    stringifiedValue,
     key,
-    isWrappedObject(layer) ? layer.sketchObject : layer
+    getNativeStorageObject(layer)
   )
 }
 
@@ -116,5 +134,38 @@ export function documentSettingForKey(document, key) {
 
 export function setDocumentSettingForKey(document, key, value) {
   const documentData = getDocumentData(document)
-  __command.setValue_forKey_onDocument(JSON.stringify(value), key, documentData)
+  let stringifiedValue = JSON.stringify(value, (k, v) => util.toJSObject(v))
+  if (!stringifiedValue) {
+    stringifiedValue = null
+  }
+  __command.setValue_forKey_onDocument(stringifiedValue, key, documentData)
+}
+
+export function sessionVariable(key) {
+  const threadDic = NSThread.mainThread().threadDictionary()
+
+  const value = threadDic.objectForKey(
+    `${SUITE_PREFIX}${getPluginIdentifier()}.${key}`
+  )
+
+  if (typeof value === 'undefined' || value == 'undefined' || value === null) {
+    return undefined
+  }
+  return JSON.parse(value)
+}
+
+export function setSessionVariable(key, value) {
+  const threadDic = NSThread.mainThread().threadDictionary()
+
+  const stringifiedValue = JSON.stringify(value, (k, v) => util.toJSObject(v))
+  if (!stringifiedValue) {
+    threadDic.removeObjectForKey(
+      `${SUITE_PREFIX}${getPluginIdentifier()}.${key}`
+    )
+  } else {
+    threadDic.setObject_forKey_(
+      stringifiedValue,
+      `${SUITE_PREFIX}${getPluginIdentifier()}.${key}`
+    )
+  }
 }

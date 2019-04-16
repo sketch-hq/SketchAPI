@@ -1,0 +1,5 @@
+interface IMSColorUser {
+
+  colorUserColorUse(): MSColorUse;
+}
+

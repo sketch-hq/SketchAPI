@@ -1,0 +1,20 @@
+declare enum NSCellAttribute {
+  NSCellDisabled = 0,
+  NSCellState = 1,
+  NSPushInCell = 2,
+  NSCellEditable = 3,
+  NSChangeGrayCell = 4,
+  NSCellHighlighted = 5,
+  NSCellLightsByContents = 6,
+  NSCellLightsByGray = 7,
+  NSChangeBackgroundCell = 8,
+  NSCellLightsByBackground = 9,
+  NSCellIsBordered = 10,
+  NSCellHasOverlappingImage = 11,
+  NSCellHasImageHorizontal = 12,
+  NSCellHasImageOnLeftOrBottom = 13,
+  NSCellChangesContents = 14,
+  NSCellIsInsetButton = 15,
+  NSCellAllowsMixedState = 16,
+}
+

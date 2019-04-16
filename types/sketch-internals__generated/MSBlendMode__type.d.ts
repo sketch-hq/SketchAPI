@@ -1,0 +1,21 @@
+declare enum MSBlendMode {
+  MSBlendModeNormal = 0,
+  MSBlendModeDarken = 1,
+  MSBlendModeMultiply = 2,
+  MSBlendModeColorBurn = 3,
+  MSBlendModeLighten = 4,
+  MSBlendModeScreen = 5,
+  MSBlendModeColorDodge = 6,
+  MSBlendModeOverlay = 7,
+  MSBlendModeSoftLight = 8,
+  MSBlendModeHardLight = 9,
+  MSBlendModeDifference = 10,
+  MSBlendModeExclusion = 11,
+  MSBlendModeHue = 12,
+  MSBlendModeSaturation = 13,
+  MSBlendModeColor = 14,
+  MSBlendModeLuminosity = 15,
+  MSBlendModePlusDarker = 16,
+  MSBlendModePlusLighter = 17,
+}
+

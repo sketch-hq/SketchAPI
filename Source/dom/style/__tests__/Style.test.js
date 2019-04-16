@@ -1,8 +1,6 @@
 /* globals expect, test */
-
-import { Shape } from '../..'
+import { Shape, Style } from '../..'
 import { createSharedStyle } from '../../../test-utils'
-import { Style } from '../Style'
 
 test('should change the opacity', () => {
   const style = new Style()
@@ -30,37 +28,33 @@ test('default style should not have any fills', () => {
   expect(style.sketchObject.fills().count()).toBe(0)
 })
 
-test(
-  'should be in and out of sync with its shared style',
-  (context, document) => {
-    const { sharedStyle } = createSharedStyle(document, Shape)
-    const style = sharedStyle.createNewInstance()
-    // add styles to layers
-    // eslint-disable-next-line
-    const shape = new Shape({
-      parent: document.selectedPage,
-      style,
-    })
+test('should be in and out of sync with its shared style', (context, document) => {
+  const { sharedStyle } = createSharedStyle(document, Shape)
 
-    expect(style.isOutOfSyncWithSharedStyle()).toBe(false)
+  const shape = new Shape({
+    parent: document.selectedPage,
+    sharedStyle,
+  })
+  const { style } = shape
 
-    sharedStyle.style.opacity = 0.5
+  expect(style.isOutOfSyncWithSharedStyle(sharedStyle)).toBe(false)
 
-    expect(style.isOutOfSyncWithSharedStyle()).toBe(true)
-    expect(style.opacity).toBe(1)
+  sharedStyle.style.opacity = 0.5
 
-    style.syncWithSharedStyle()
+  expect(style.isOutOfSyncWithSharedStyle(sharedStyle)).toBe(true)
+  expect(style.opacity).toBe(1)
 
-    expect(style.isOutOfSyncWithSharedStyle()).toBe(false)
-    expect(style.opacity).toBe(0.5)
+  style.syncWithSharedStyle(sharedStyle)
 
-    style.opacity = 1
+  expect(style.isOutOfSyncWithSharedStyle(sharedStyle)).toBe(false)
+  expect(style.opacity).toBe(0.5)
 
-    expect(style.isOutOfSyncWithSharedStyle()).toBe(true)
+  style.opacity = 1
 
-    sharedStyle.style = style
+  expect(style.isOutOfSyncWithSharedStyle(sharedStyle)).toBe(true)
 
-    expect(style.isOutOfSyncWithSharedStyle()).toBe(false)
-    expect(sharedStyle.style.opacity).toBe(1)
-  }
-)
+  sharedStyle.style = style
+
+  expect(style.isOutOfSyncWithSharedStyle(sharedStyle)).toBe(false)
+  expect(sharedStyle.style.opacity).toBe(1)
+})

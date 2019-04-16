@@ -1,0 +1,2 @@
+declare type CGRefreshRate = number
+

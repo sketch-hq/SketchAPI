@@ -1,0 +1,17 @@
+declare enum NSApplicationPresentationOptions {
+  NSApplicationPresentationDefault = 0,
+  NSApplicationPresentationAutoHideDock,
+  NSApplicationPresentationHideDock,
+  NSApplicationPresentationAutoHideMenuBar,
+  NSApplicationPresentationHideMenuBar,
+  NSApplicationPresentationDisableAppleMenu,
+  NSApplicationPresentationDisableProcessSwitching,
+  NSApplicationPresentationDisableForceQuit,
+  NSApplicationPresentationDisableSessionTermination,
+  NSApplicationPresentationDisableHideApplication,
+  NSApplicationPresentationDisableMenuBarTransparency,
+  NSApplicationPresentationFullScreen,
+  NSApplicationPresentationAutoHideToolbar,
+  NSApplicationPresentationDisableCursorLocationAssistance,
+}
+

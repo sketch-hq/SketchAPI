@@ -1,0 +1,4 @@
+interface INSAccessibilityRadioButton {
+  accessibilityValue(): NSNumber;
+}
+

@@ -1,0 +1,4 @@
+interface INSAccessibilityProgressIndicator {
+  //   accessibilityValue(): NSNumber;
+}
+

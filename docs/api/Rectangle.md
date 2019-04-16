@@ -1,6 +1,6 @@
 ---
 title: Rectangle
-order: 210
+order: 212
 section: models
 ---
 
@@ -41,7 +41,7 @@ Return this rectangle (useful if you want to chain the calls).
 var newRect = rect.scale(scaleWidth, scaleHeight)
 ```
 
-Adjust the rectangle by scaling it. The `scaleHeight` argument can be ommited to apply the same factor on both the width and the height.
+Adjust the rectangle by scaling it. The `scaleHeight` argument can be omitted to apply the same factor on both the width and the height.
 
 ### Returns
 
@@ -75,7 +75,7 @@ Each layer defines its own system of coordinates (with its origin at the top lef
 | change.from<span class="arg-type">[Layer](#layer)</span> | The layer in which the rectangle's coordinates are expressed.     |
 | change.to<span class="arg-type">[Layer](#layer)</span>   | The layer in which the rectangle's coordinates will be expressed. |
 
-Both `from` and `to` can be ommited (but not at the same time) to change the basis from/to the Page coordinates.
+Both `from` and `to` can be omitted (but not at the same time) to change the basis from/to the Page coordinates.
 
 ## Get a `CGRect`
 
@@ -84,3 +84,11 @@ var cgRect = rect.asCGRect()
 ```
 
 Return the Rectangle as a [`CGRect`](https://developer.apple.com/documentation/coregraphics/cgrect?language=objc).
+
+## Get an `NSRect`
+
+```javascript
+var nsRect = rect.asNSRect()
+```
+
+Return the Rectangle as a [`NSRect`](https://developer.apple.com/documentation/foundation/nsrect?language=objc).

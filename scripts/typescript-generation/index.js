@@ -1,16 +1,13 @@
 #!/usr/bin/env node
 
-const fs = require('fs-extra')
+const fs = require('fs')
 const path = require('path')
 const chalk = require('chalk')
 const parseHeader = require('./parse-header')
 const generateDeclaration = require('./generate-typescript-declaration')
 const { additionalClasses, additions } = require('./typescript-overrides')
 
-const TYPES = path.join(
-  __dirname,
-  '../../types/sketch-internals__generated.d.ts'
-)
+const TYPES = path.join(__dirname, '../../types/sketch-internals__generated')
 const SKETCH_SOURCES_PATH = path.join(__dirname, '../../../../')
 const MACOS_FOUNDATION_PATH =
   '/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/Foundation.framework/Headers'
@@ -20,6 +17,8 @@ const MACOS_CORE_GRAPHICS_PATH =
   '/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/CoreGraphics.framework/Headers'
 const MACOS_QUARTZ_CORE_PATH =
   '/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/QuartzCore.framework/Headers'
+const MACOS_SYSTEM_PATH =
+  '/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/objc'
 
 function generate() {
   const now = Date.now()
@@ -61,65 +60,85 @@ function generate() {
         return
       }
       let data = fs.readFileSync(filePath, 'utf8')
-      if (data) {
-        data = parseHeader(data)
-        data.forEach(obj => {
-          const key = `${obj.name}${
-            obj.protocol
-              ? '__protocol'
-              : obj.struct
-                ? '__type'
-                : obj.typeAlias
-                  ? '__type'
-                  : obj.enum
-                    ? '__type'
-                    : ''
-          }`
-
-          if (!obj.struct && !obj.typeAlias && !obj.enum && classes[key]) {
-            // merge
-            if (!classes[key].extends) {
-              classes[key].extends = obj.extends
-            }
-
-            Array.from(obj.interfaces).forEach(i =>
-              classes[key].interfaces.push(i)
-            )
-
-            Object.keys(obj.methods).forEach(k => {
-              classes[key].methods[k] = obj.methods[k]
-            })
-            Object.keys(obj.properties).forEach(k => {
-              classes[key].properties[k] = obj.properties[k]
-            })
-          } else {
-            classes[key] = obj
-          }
-        })
+      if (!data) {
+        return
       }
+      data = parseHeader(data, filePath)
+
+      // if (filePath.match('NSApplication.h')) {
+      //   console.log(data)
+      // }
+
+      data.forEach(obj => {
+        const key = `${obj.name}${
+          obj.protocol
+            ? '__protocol'
+            : obj.struct
+            ? '__type'
+            : obj.typeAlias
+            ? '__type'
+            : obj.enum
+            ? '__type'
+            : ''
+        }`
+
+        if (!obj.struct && !obj.typeAlias && !obj.enum && classes[key]) {
+          // merge
+          if (!classes[key].extends) {
+            classes[key].extends = obj.extends
+          }
+
+          Array.from(obj.interfaces).forEach(i =>
+            classes[key].interfaces.push(i)
+          )
+
+          Object.keys(obj.methods).forEach(k => {
+            classes[key].methods[k] = obj.methods[k]
+          })
+          Object.keys(obj.properties).forEach(k => {
+            classes[key].properties[k] = obj.properties[k]
+          })
+        } else {
+          classes[key] = obj
+        }
+      })
     })
   }
 
+  console.log('Parsing System include...')
+  parseHeaders(MACOS_SYSTEM_PATH)
+  console.log('Parsing Quartz Core...')
   parseHeaders(MACOS_QUARTZ_CORE_PATH)
+  console.log('Parsing Core Graphics...')
   parseHeaders(MACOS_CORE_GRAPHICS_PATH)
+  console.log('Parsing Foundation...')
   parseHeaders(MACOS_FOUNDATION_PATH)
+  console.log('Parsing AppKit...')
   parseHeaders(MACOS_APPKIT_PATH)
+  console.log('Parsing Sketch Sources...')
   parseHeaders(SKETCH_SOURCES_PATH)
+
+  classes.NSObject.interfaces.push('NSObject')
 
   // add some classes manually
   additionalClasses.forEach(c => {
     classes[c.name] = c
   })
 
-  fs.ensureFileSync(TYPES)
-  const file = fs.createWriteStream(TYPES)
-  file.write(additions)
+  try {
+    fs.mkdirSync(TYPES)
+  } catch (err) {
+    // ignore
+  }
+
+  fs.writeFileSync(path.join(TYPES, '__manually-defined.d.ts'), additions)
 
   Object.keys(classes).forEach(className => {
-    file.write(generateDeclaration(classes[className], classes))
+    const generated = generateDeclaration(classes[className], classes)
+    if (generated.trim()) {
+      fs.writeFileSync(path.join(TYPES, `${className}.d.ts`), generated)
+    }
   })
-
-  file.close()
 
   console.log(
     `${chalk.green('Done')} ${chalk.dim(`in ${Date.now() - now}ms!`)}`

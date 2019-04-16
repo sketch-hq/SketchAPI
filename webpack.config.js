@@ -1,8 +1,8 @@
 const path = require('path')
 const webpack = require('webpack')
+const babelLoader = require('@skpm/builder/lib/utils/babelLoader').default({})
 
-const PRODUCTION =
-  process.argv.indexOf('-p') !== -1 || process.env.NODE_ENV === 'production'
+const PRODUCTION = process.env.NODE_ENV !== 'development'
 
 // heuristic to know if we are inside the Sketch repo
 const IS_BC_BUILD = /\/Modules\/SketchAPI$/.test(__dirname)
@@ -24,25 +24,23 @@ const ENTRIES = [
   { entry: './Source/ui/index.ts', output: 'SketchAPI_ui.js' },
 ]
 
+const CORE_MODULES = Object.keys(
+  require('./core-modules/package.json').dependencies
+).map(k => k.replace('@skpm/', ''))
+
+babelLoader.test = /\.(ts|js)$/
+babelLoader.use.options.presets.push('@babel/preset-typescript')
+
 const config = {
+  mode: PRODUCTION ? 'production' : 'development',
   resolve: {
     // Add '.ts' as resolvable extensions.
     extensions: ['.ts', '.js', '.json'],
   },
   module: {
     rules: [
-      // All files with a '.ts' or '.js' extension will be handled by 'awesome-typescript-loader'.
-      {
-        test: /\.(ts|js)$/,
-        use: [
-          {
-            loader: 'awesome-typescript-loader',
-            options: {
-              useCache: true,
-            },
-          },
-        ],
-      },
+      // All files with a '.ts' or '.js' extension will be handled by 'babel-loader'.
+      babelLoader,
     ],
   },
   plugins: [
@@ -52,6 +50,15 @@ const config = {
         API_VERSION: JSON.stringify(process.env.npm_package_version),
       },
     }),
+  ],
+  externals: [
+    (context, request, callback) => {
+      // core modules shipped in Sketch
+      if (CORE_MODULES.indexOf(request) !== -1) {
+        return callback(null, `commonjs ${request}`)
+      }
+      return callback()
+    },
   ],
 }
 
@@ -68,3 +75,4 @@ module.exports = ENTRIES.map(({ entry, output }) => ({
 }))
 
 module.exports.config = config
+module.exports.CORE_MODULES = CORE_MODULES

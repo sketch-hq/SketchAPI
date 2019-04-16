@@ -1,22 +1,19 @@
 /* globals expect, test */
-import { Group } from '../Group'
-import { Page } from '../Page'
+import { canBeLogged } from '../../../test-utils'
+import { Group, Page } from '../..'
 
-test(
-  'should return a Selection with the selected layers of the page',
-  (context, document) => {
-    const page = document.selectedPage
-    // check that an artboard can be logged
-    log(page)
-    const selection = page.selectedLayers
-    expect(selection.isEmpty).toBe(true)
+test('should return a Selection with the selected layers of the page', (context, document) => {
+  const page = document.selectedPage
+  const selection = page.selectedLayers
+  expect(selection.isEmpty).toBe(true)
 
-    const group = new Group({ parent: page, name: 'Test', selected: true })
+  const group = new Group({ parent: page, name: 'Test', selected: true })
 
-    expect(group.selected).toBe(true)
-    expect(selection.isEmpty).toBe(false)
-  }
-)
+  expect(group.selected).toBe(true)
+  expect(selection.isEmpty).toBe(false)
+
+  canBeLogged(page, Page)
+})
 
 test('should create a page', (context, document) => {
   const page = new Page({ parent: document })
@@ -45,7 +42,7 @@ test('should remove a page', (context, document) => {
   expect(document.pages[0]).toEqual(page)
 })
 
-test('should return wether a page is selected or not', (context, document) => {
+test('should return whether a page is selected or not', (context, document) => {
   const page = document.selectedPage
   expect(page.selected).toBe(true)
 
@@ -60,4 +57,23 @@ test('should return wether a page is selected or not', (context, document) => {
   newPage.remove()
   expect(newPage.selected).toBe(false)
   expect(page.selected).toBe(true)
+})
+
+test('should return if the page is the Symbols page', (context, document) => {
+  const page = new Page({ parent: document })
+  expect(page.isSymbolsPage()).toBe(false)
+  page.name = 'Symbols'
+  expect(page.isSymbolsPage()).toBe(true)
+})
+
+test('should create the Symbols page', (context, document) => {
+  const page = Page.createSymbolsPage()
+  page.parent = document
+  expect(page.isSymbolsPage()).toBe(true)
+})
+
+test('should get the Symbols page', (context, document) => {
+  const page = Page.createSymbolsPage()
+  page.parent = document
+  expect(Page.getSymbolsPage(document)).toEqual(page)
 })

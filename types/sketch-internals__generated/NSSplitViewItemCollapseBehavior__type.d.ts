@@ -1,0 +1,7 @@
+declare enum NSSplitViewItemCollapseBehavior {
+  NSSplitViewItemCollapseBehaviorDefault,
+  NSSplitViewItemCollapseBehaviorPreferResizingSplitViewWithFixedSiblings,
+  NSSplitViewItemCollapseBehaviorPreferResizingSiblingsWithFixedSplitView,
+  NSSplitViewItemCollapseBehaviorUseConstraints,
+}
+

@@ -1,6 +1,6 @@
 ---
 title: Text
-order: 307
+order: 308
 section: layers
 ---
 
@@ -10,18 +10,26 @@ var Text = require('sketch/dom').Text
 
 A text layer. It is an instance of [Layer](#layer) so all the methods defined there are available.
 
-| Properties                                                               |                                                                                                |
-| ------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------- |
-| id<span class="arg-type">string</span>                                   | The unique ID of the Text.                                                                     |
-| name<span class="arg-type">string</span>                                 | The name of the Text                                                                           |
-| parent<span class="arg-type">[Group](#group)</span>                      | The group the Text is in.                                                                      |
-| frame<span class="arg-type">[Rectangle](#rectangle)</span>               | The frame of the Text. This is given in coordinates that are local to the parent of the layer. |
-| flow<span class="arg-type">[Flow](#flow)</span>                          | The prototyping action associated with the Text.                                               |
-| style<span class="arg-type">[Style](#style)</span>                       | The style of the Text.                                                                         |
-| text<span class="arg-type">string</span>                                 | The string value of the text layer.                                                            |
-| alignment<span class="arg-type">[Alignment](#textalignment)</span>       | The alignment of the layer.                                                                    |
-| lineSpacing<span class="arg-type">[LineSpacing](#textlinespacing)</span> | The line spacing of the layer.                                                                 |
-| fixedWidth<span class="arg-type">boolean</span>                          | Wether the layer should have a fixed width or a flexible width.                                |
+| Properties                                                                  |                                                                                                |
+| --------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| id<span class="arg-type">string</span>                                      | The unique ID of the Text.                                                                     |
+| name<span class="arg-type">string</span>                                    | The name of the Text                                                                           |
+| parent<span class="arg-type">[Group](#group)</span>                         | The group the Text is in.                                                                      |
+| locked<span class="arg-type">boolean</span>                                 | If the Text is locked.                                                                         |
+| hidden<span class="arg-type">boolean</span>                                 | If the Text is hidden.                                                                         |
+| frame<span class="arg-type">[Rectangle](#rectangle)</span>                  | The frame of the Text. This is given in coordinates that are local to the parent of the layer. |
+| selected<span class="arg-type">boolean</span>                               | If the Text is selected.                                                                       |
+| flow<span class="arg-type">[Flow](#flow)</span>                             | The prototyping action associated with the Text.                                               |
+| exportFormats<span class="arg-type">[ExportFormat](#export-format)[]</span> | The export formats of the Symbol Master.                                                       |
+| transform<span class="arg-type">object</span>                               | The transformation applied to the Text.                                                        |
+| transform.rotation<span class="arg-type">number</span>                      | The rotation of the Text in degrees, clock-wise.                                               |
+| transform.flippedHorizontally<span class="arg-type">boolean</span>          | If the Text is horizontally flipped.                                                           |
+| transform.flippedVertically<span class="arg-type">boolean</span>            | If the Text is vertically flipped.                                                             |
+| style<span class="arg-type">[Style](#style)</span>                          | The style of the Text.                                                                         |
+| sharedStyleId<span class="arg-type">string / null</span>                    | The ID of the [SharedStyle](#shared-style) this Text is linked to if any.                      |
+| text<span class="arg-type">string</span>                                    | The string value of the text layer.                                                            |
+| lineSpacing<span class="arg-type">[LineSpacing](#textlinespacing)</span>    | The line spacing of the layer.                                                                 |
+| fixedWidth<span class="arg-type">boolean</span>                             | Whether the layer should have a fixed width or a flexible width.                               |
 
 ## Create a new Text
 
@@ -43,30 +51,6 @@ Adjust the Text to fit its value.
 ### Returns
 
 The current Text (useful if you want to chain the calls).
-
-## font
-
-```javascript
-text.font = myNSFont
-```
-
-Set the font of the text layer.
-
-| Parameters                                          |                                    |
-| --------------------------------------------------- | ---------------------------------- |
-| font<span class="arg-type">NSFont - required</span> | The font to set on the Text layer. |
-
-## systemFontSize
-
-```javascript
-text.systemFontSize = 16
-```
-
-Set the font of the text layer as the system font of the given size.
-
-| Parameters                                               |                              |
-| -------------------------------------------------------- | ---------------------------- |
-| pointSize<span class="arg-type">number - required</span> | The size of the font to set. |
 
 ## fragments
 
@@ -90,7 +74,20 @@ Enumeration of the alignments of the text.
 | `right`   | Visually right aligned                                            |
 | `center`  | Visually centered                                                 |
 | `justify` | Fully-justified. The last line in a paragraph is natural-aligned. |
-| `natural` | Indicates the default alignment for script                        |
+
+## `Text.VerticalAlignment`
+
+```javascript
+Text.VerticalAlignment.center
+```
+
+Enumeration of the vertical alignments of the text.
+
+| Value    |                              |
+| -------- | ---------------------------- |
+| `top`    | Visually top aligned         |
+| `center` | Visually vertically centered |
+| `bottom` | Visually bottom aligned      |
 
 ## `Text.LineSpacing`
 
@@ -98,7 +95,7 @@ Enumeration of the alignments of the text.
 Text.LineSpacing.constantBaseline
 ```
 
-Enumeration of the line spacing behaviour for the text.
+Enumeration of the line spacing behavior for the text.
 
 | Value              |                                                         |
 | ------------------ | ------------------------------------------------------- |

@@ -1,0 +1,2 @@
+declare type NSUInteger = number
+

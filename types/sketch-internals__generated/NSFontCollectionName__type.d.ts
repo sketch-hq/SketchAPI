@@ -1,0 +1,2 @@
+declare type NSFontCollectionName = NSString
+
