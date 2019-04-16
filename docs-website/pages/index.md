@@ -11,7 +11,7 @@ layout: single-page
 
 ## [Plugins](/plugins)
 
-Add to and customize the functionality of Sketch using JavaScript or Objective-C.
+Add to and customize the functionality of Sketch using JavaScript or Objective-C. Modify the document using Sketch's APIs, add your own user interface or integrate Sketch with your product or other applications.
 
 [View documentation](/plugins)
 
