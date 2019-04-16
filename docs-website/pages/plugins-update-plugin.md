@@ -7,79 +7,55 @@ permalink: /plugins/update-a-plugin
 order: 106
 ---
 
-## Publishing an update
+To publish a new version of a plugin, use either the [Sketch Plugin Manager `skpm`](https://github.com/skpm/skpm) or create a new release and add it to the _appcast_ manually.
 
-From Sketch v45 onwards Sketch provides an officially supported mechanism for updating plugins within the app.
+### 1. Use `skpm`
 
-If your plugin already has its own update mechanism built into it, we encourage that you move to using the new system. This will improve the user experience, since users will be able to manage all installed plugins inside a tab in the app’s Preferences panel.
+Updating a plugin using `skpm` does four things:
 
-On launch, we check for updates for all installed plugins, and if there’s any, we show a badge on Sketch’s window. Clicking it will take the user to the app’s Preferences, where they’ll be able to update their plugins.
+1. Update the plugin version specified in the [plugin manifest](/plugins/plugin-manifest)
+1. Create a downloadable ZIP archive.
+1. Create a GitHub release.
+1. Update the `.appcast.xml` with the latest release information.
 
-Currently Sketch only allows the user to update to the latest version. Future versions of Sketch may provide additional options for the user to select which plugin version can be downloaded and installed.
+Run the following command providing either a specific version number of bump the existing version by `path`, `minor` or `major`. For more available options see `skpm publish --help`.
 
-You have two solution to opt-in this update mechanism:
-
-### 1. Using `skpm`
-
-By running `skpm publish`, it will automatically publish the updated version of your plugin and make sure Sketch can pick it up.
-
-### 2. Manual
-
-There is an additional entry in the `manifest.json` file contained within your plugin bundle that you need to define for updating to work.
-
-The entry is called `appcast`, and it is a string specifying a URL to the appcast file.
-
-#### The `appcast.xml` file
-
-The appcast file contains information about updates to the plugin, like the versions of available updates and where the updates can be downloaded from. Sketch downloads this file to determine if there are plugin updates available.
-
-The Appcast conforms to the Sparkle defined appcast described in the [Sparkle Documentation](https://sparkle-project.org/documentation/) and on the [Publishing an Update page](https://sparkle-project.org/documentation/publishing/#publishing-an-update). For Sketch plugins, only .zip files are supported as enclosures.
-
-The minimum and maximum system version do not refer to the version of the operating system when used for plugins. Exactly how they will be used in a later version of Sketch is still undecided.
-
-The following Appcast example lists three different versions of the plugin. Each version has its own download link and brief description text.
-
-```xml
-<?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" xmlns:dc="http://purl.org/dc/elements/1.1/">
-  <channel>
-    <title>Hello World Sketch Test Plugin</title>
-    <link>http://sparkle-project.org/files/sparkletestcast.xml</link>
-    <description>Brilliant Hello World Plugin</description>
-    <language>en</language>
-    <item>
-      <title>Version 1.1</title>
-      <description>
-        <![CDATA[
-            <ul>
-              <li>Minor update v1.1</li>
-            </ul>
-          ]]>
-      </description>
-      <enclosure url="https://brillianthello.sketchplugins.com/files/HelloWorldSketchPluginTestv11.zip" sparkle:version="1.1"/>
-    </item>
-    <item>
-      <title>Version 1.2</title>
-      <description>
-        <![CDATA[
-            <ul>
-            <li>Minor update v1.2</li>
-            </ul>
-          ]]>
-      </description>
-      <enclosure url="https://brillianthello.sketchplugins.com/files/HelloWorldSketchPluginTestv12.zip" sparkle:version="1.2"/>
-    </item>
-    <item>
-      <title>Version 2.0</title>
-      <description>
-        <![CDATA[
-            <ul>
-            <li>Major update v2.0</li>
-            </ul>
-          ]]>
-      </description>
-      <enclosure url="https://brillianthello.sketchplugins.com/files/HelloWorldSketchPluginTestv20.zip" sparkle:version="2.0"/>
-    </item>
-  </channel>
-</rss>
+```sh
+skpm publish <version>
 ```
+
+> **Note:** If the previous version was not included in the official listing before `skpm` will also open a pull request on [`plugin-directory`](https://github.com/sketchplugins/plugin-directory) to submit it unless the command is run with the `--skip-registry` command-line argument.
+
+### 2. Update manually
+
+Similar to [publishing the initial release](/plugins/publish-a-plugin), follow the steps below to release a new version of your plugin.
+
+1. Update the version number in the [plugin manifest](/plugins/plugin-manifest)
+1. Create a ZIP archive of the plugin bundle, e.g. `select-shapes.sketchplugin` › `select-shapes.sketchplugin-1.1.zip`.
+1. Upload the archive to a location where it can be downloaded from.
+1. Add a version entry to the appcast XML file on the server as shown in the following example for a new version `1.1` of the _Select Shapes_ plugin.
+   ```xml
+   <?xml version="1.0" encoding="utf-8"?>
+   <rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" xmlns:dc="http://purl.org/dc/elements/1.1/">
+   <channel>
+   <title>Select Shapes Sketch Plugin</title>
+   <link>http://sparkle-project.org/files/sparkletestcast.xml</link>
+   <description>Quickly select all or just specific shape types</description>
+   <language>en</language>
+   <item>
+     <title>Version 1.0</title>
+     <description>
+       🚀 Select all shapes or just circles and rectangles.
+     </description>
+     <enclosure url="https://example.com/select-shapes.sketchplugin-1.0.zip" sparkle:version="1.0"/>
+   </item>
+   <item>
+     <title>Version 1.1</title>
+     <description>
+       You can now specifically select boolean shapes.
+     </description>
+     <enclosure url="https://example.com/select-shapes.sketchplugin-1.1.zip" sparkle:version="1.1"/>
+   </item>
+   </channel>
+   </rss>
+   ```
