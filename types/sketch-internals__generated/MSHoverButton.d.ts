@@ -14,11 +14,7 @@ declare const MSHoverButton: {
   buttonWithImage_target_action(image: NSImage, target: any | null, action: string | null): MSHoverButton;
   checkboxWithTitle_target_action(title: NSString | string, target: any | null, action: string | null): MSHoverButton;
   radioButtonWithTitle_target_action(title: NSString | string, target: any | null, action: string | null): MSHoverButton;
-  cellClass(): any;,
-          {
-            newLineStart: true,
-            newLineEnd: false,
-          }
+  cellClass(): any;
   setCellClass(cellClass: any): void;
 
 }

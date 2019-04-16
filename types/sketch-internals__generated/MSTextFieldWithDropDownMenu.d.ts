@@ -13,11 +13,7 @@ declare const MSTextFieldWithDropDownMenu: {
   wrappingLabelWithString(stringValue: NSString | string): MSTextFieldWithDropDownMenu;
   labelWithAttributedString(attributedStringValue: NSAttributedString): MSTextFieldWithDropDownMenu;
   textFieldWithString(stringValue: NSString | string): MSTextFieldWithDropDownMenu;
-  cellClass(): any;,
-          {
-            newLineStart: true,
-            newLineEnd: false,
-          }
+  cellClass(): any;
   setCellClass(cellClass: any): void;
   requiresConstraintBasedLayout(): boolean;
   focusView(): NSView;

@@ -6,11 +6,7 @@ interface MSDefaultLayoutGrid extends MSDefaultArchive {
 declare const MSDefaultLayoutGrid: {
   alloc(): MSDefaultLayoutGridUninitialized;
   class(): MSDefaultLayoutGrid;
-  defaultLayout(): MSLayoutGrid;,
-          {
-            newLineStart: true,
-            newLineEnd: false,
-          }
+  defaultLayout(): MSLayoutGrid;
   setDefaultLayout(defaultLayout: MSLayoutGrid): void;
   accessInstanceVariablesDirectly(): boolean;
 

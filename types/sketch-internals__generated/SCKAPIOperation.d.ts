@@ -13,11 +13,7 @@ declare const SCKAPIOperation: {
   alloc(): SCKAPIOperationUninitialized;
   class(): SCKAPIOperation;
   defaultURLSession(): NSURLSession;
-  clientID(): NSString;,
-          {
-            newLineStart: true,
-            newLineEnd: false,
-          }
+  clientID(): NSString;
   setClientID(clientID: NSString | string): void;
   accessInstanceVariablesDirectly(): boolean;
 

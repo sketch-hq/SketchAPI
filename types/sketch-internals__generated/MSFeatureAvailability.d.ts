@@ -33,36 +33,16 @@ declare const MSFeatureAvailability: {
   mo_mocha(): MOClassDescription;
   isSelectorExcludedFromMochaScript(selector: string): boolean;
   selectorForMochaPropertyName(propertyName: NSString | string): string;
-  libraryStylesEnabled(): boolean;,
-          {
-            newLineStart: true,
-            newLineEnd: false,
-          }
+  libraryStylesEnabled(): boolean;
   setLibraryStylesEnabled(libraryStylesEnabled: boolean): void;
   feature14414Enabled(): boolean;
-  isComponentsPanelEnabled(): boolean;,
-          {
-            newLineStart: true,
-            newLineEnd: false,
-          }
+  isComponentsPanelEnabled(): boolean;
   setIsComponentsPanelEnabled(isComponentsPanelEnabled: boolean): void;
-  builtInRemoteLibrariesEnabled(): boolean;,
-          {
-            newLineStart: true,
-            newLineEnd: false,
-          }
+  builtInRemoteLibrariesEnabled(): boolean;
   setBuiltInRemoteLibrariesEnabled(builtInRemoteLibrariesEnabled: boolean): void;
-  cloudDocumentsEnabled(): boolean;,
-          {
-            newLineStart: true,
-            newLineEnd: false,
-          }
+  cloudDocumentsEnabled(): boolean;
   setCloudDocumentsEnabled(cloudDocumentsEnabled: boolean): void;
-  inferredLayoutEnabled(): boolean;,
-          {
-            newLineStart: true,
-            newLineEnd: false,
-          }
+  inferredLayoutEnabled(): boolean;
   setInferredLayoutEnabled(inferredLayoutEnabled: boolean): void;
   accessInstanceVariablesDirectly(): boolean;
 

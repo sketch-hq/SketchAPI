@@ -16,11 +16,7 @@ interface MSStylePartPreviewButton extends MSInspectorButton {
 declare const MSStylePartPreviewButton: {
   alloc(): MSStylePartPreviewButtonUninitialized;
   class(): MSStylePartPreviewButton;
-  cellClass(): any;,
-          {
-            newLineStart: true,
-            newLineEnd: false,
-          }
+  cellClass(): any;
   setCellClass(cellClass: any): void;
 
 }

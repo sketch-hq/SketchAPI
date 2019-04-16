@@ -8,11 +8,7 @@ declare const MSInspectorSegmentedControl: {
   class(): MSInspectorSegmentedControl;
   segmentedControlWithLabels_trackingMode_target_action(labels: NSArray<any> | any[], trackingMode: NSSegmentSwitchTracking, target: any | null, action: string | null): MSInspectorSegmentedControl;
   segmentedControlWithImages_trackingMode_target_action(images: NSArray<any> | any[], trackingMode: NSSegmentSwitchTracking, target: any | null, action: string | null): MSInspectorSegmentedControl;
-  cellClass(): any;,
-          {
-            newLineStart: true,
-            newLineEnd: false,
-          }
+  cellClass(): any;
   setCellClass(cellClass: any): void;
   requiresConstraintBasedLayout(): boolean;
   focusView(): NSView;

@@ -625,11 +625,7 @@ declare const NSWindow: {
   menuChanged(menu: NSMenu): void;
   defaultAnimationForKey(key: NSAnimatablePropertyKey): any;
   defaultDepthLimit(): NSWindowDepth;
-  allowsAutomaticWindowTabbing(): boolean;,
-          {
-            newLineStart: true,
-            newLineEnd: false,
-          }
+  allowsAutomaticWindowTabbing(): boolean;
   setAllowsAutomaticWindowTabbing(allowsAutomaticWindowTabbing: boolean): void;
   userTabbingPreference(): NSWindowUserTabbingPreference;
   restorableStateKeyPaths(): NSArray<any>;

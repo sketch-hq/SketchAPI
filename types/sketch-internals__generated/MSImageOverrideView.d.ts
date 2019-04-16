@@ -11,11 +11,7 @@ declare const MSImageOverrideView: {
   alloc(): MSImageOverrideViewUninitialized;
   class(): MSImageOverrideView;
   imageViewWithImage(image: NSImage): MSImageOverrideView;
-  cellClass(): any;,
-          {
-            newLineStart: true,
-            newLineEnd: false,
-          }
+  cellClass(): any;
   setCellClass(cellClass: any): void;
   requiresConstraintBasedLayout(): boolean;
   focusView(): NSView;

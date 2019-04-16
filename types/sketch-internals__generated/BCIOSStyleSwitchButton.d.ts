@@ -11,11 +11,7 @@ declare const BCIOSStyleSwitchButton: {
   buttonWithImage_target_action(image: NSImage, target: any | null, action: string | null): BCIOSStyleSwitchButton;
   checkboxWithTitle_target_action(title: NSString | string, target: any | null, action: string | null): BCIOSStyleSwitchButton;
   radioButtonWithTitle_target_action(title: NSString | string, target: any | null, action: string | null): BCIOSStyleSwitchButton;
-  cellClass(): any;,
-          {
-            newLineStart: true,
-            newLineEnd: false,
-          }
+  cellClass(): any;
   setCellClass(cellClass: any): void;
 
 }

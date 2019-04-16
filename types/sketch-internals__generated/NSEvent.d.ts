@@ -113,11 +113,7 @@ declare const NSEvent: {
   isSelectorExcludedFromMochaScript(selector: string): boolean;
   selectorForMochaPropertyName(propertyName: NSString | string): string;
   modifierFlags(): NSEventModifierFlags;
-  mouseCoalescingEnabled(): boolean;,
-          {
-            newLineStart: true,
-            newLineEnd: false,
-          }
+  mouseCoalescingEnabled(): boolean;
   setMouseCoalescingEnabled(mouseCoalescingEnabled: boolean): void;
   swipeTrackingFromScrollEventsEnabled(): boolean;
   mouseLocation(): NSPoint;

@@ -59,11 +59,7 @@ declare const NSSavePanel: {
   class(): NSSavePanel;
   savePanel(): NSSavePanel;
   defaultDepthLimit(): NSWindowDepth;
-  allowsAutomaticWindowTabbing(): boolean;,
-          {
-            newLineStart: true,
-            newLineEnd: false,
-          }
+  allowsAutomaticWindowTabbing(): boolean;
   setAllowsAutomaticWindowTabbing(allowsAutomaticWindowTabbing: boolean): void;
   userTabbingPreference(): NSWindowUserTabbingPreference;
   restorableStateKeyPaths(): NSArray<any>;

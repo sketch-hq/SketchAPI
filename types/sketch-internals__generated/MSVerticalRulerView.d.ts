@@ -6,11 +6,7 @@ interface MSVerticalRulerView extends MSRulerView {
 declare const MSVerticalRulerView: {
   alloc(): MSVerticalRulerViewUninitialized;
   class(): MSVerticalRulerView;
-  rulerDraggingLocked(): boolean;,
-          {
-            newLineStart: true,
-            newLineEnd: false,
-          }
+  rulerDraggingLocked(): boolean;
   setRulerDraggingLocked(rulerDraggingLocked: boolean): void;
   requiresConstraintBasedLayout(): boolean;
   focusView(): NSView;

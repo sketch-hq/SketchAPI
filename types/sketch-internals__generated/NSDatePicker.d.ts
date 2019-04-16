@@ -44,11 +44,7 @@ declare const NSDatePicker: {
   inpectorBorderPathForRectWithMaxRadius(rect: NSRect): NSBezierPath;
   inpectorBorderPathForRect_borderRadius(rect: NSRect, borderRadius: CGFloat): NSBezierPath;
   inpectorFocusRingPathForRect(rect: NSRect): NSBezierPath;
-  cellClass(): any;,
-          {
-            newLineStart: true,
-            newLineEnd: false,
-          }
+  cellClass(): any;
   setCellClass(cellClass: any): void;
   requiresConstraintBasedLayout(): boolean;
   focusView(): NSView;

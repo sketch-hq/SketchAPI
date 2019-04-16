@@ -40,11 +40,7 @@ declare const NSHelpManager: {
   isSelectorExcludedFromMochaScript(selector: string): boolean;
   selectorForMochaPropertyName(propertyName: NSString | string): string;
   sharedHelpManager(): NSHelpManager;
-  contextHelpModeActive(): boolean;,
-          {
-            newLineStart: true,
-            newLineEnd: false,
-          }
+  contextHelpModeActive(): boolean;
   setContextHelpModeActive(contextHelpModeActive: boolean): void;
   accessInstanceVariablesDirectly(): boolean;
 

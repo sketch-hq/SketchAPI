@@ -21,11 +21,7 @@ declare const NSTokenField: {
   textFieldWithString(stringValue: NSString | string): NSTokenField;
   defaultCompletionDelay(): NSTimeInterval;
   defaultTokenizingCharacterSet(): NSCharacterSet;
-  cellClass(): any;,
-          {
-            newLineStart: true,
-            newLineEnd: false,
-          }
+  cellClass(): any;
   setCellClass(cellClass: any): void;
   requiresConstraintBasedLayout(): boolean;
   focusView(): NSView;

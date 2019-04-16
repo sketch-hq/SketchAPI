@@ -7,11 +7,7 @@ declare const MSImageView: {
   alloc(): MSImageViewUninitialized;
   class(): MSImageView;
   imageViewWithImage(image: NSImage): MSImageView;
-  cellClass(): any;,
-          {
-            newLineStart: true,
-            newLineEnd: false,
-          }
+  cellClass(): any;
   setCellClass(cellClass: any): void;
   requiresConstraintBasedLayout(): boolean;
   focusView(): NSView;

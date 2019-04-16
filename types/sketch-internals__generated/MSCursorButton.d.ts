@@ -14,11 +14,7 @@ declare const MSCursorButton: {
   buttonWithImage_target_action(image: NSImage, target: any | null, action: string | null): MSCursorButton;
   checkboxWithTitle_target_action(title: NSString | string, target: any | null, action: string | null): MSCursorButton;
   radioButtonWithTitle_target_action(title: NSString | string, target: any | null, action: string | null): MSCursorButton;
-  cellClass(): any;,
-          {
-            newLineStart: true,
-            newLineEnd: false,
-          }
+  cellClass(): any;
   setCellClass(cellClass: any): void;
 
 }

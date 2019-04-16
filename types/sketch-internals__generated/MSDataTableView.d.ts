@@ -6,11 +6,7 @@ interface MSDataTableView extends BCKeyEventActionTableView {
 declare const MSDataTableView: {
   alloc(): MSDataTableViewUninitialized;
   class(): MSDataTableView;
-  cellClass(): any;,
-          {
-            newLineStart: true,
-            newLineEnd: false,
-          }
+  cellClass(): any;
   setCellClass(cellClass: any): void;
   requiresConstraintBasedLayout(): boolean;
   focusView(): NSView;

@@ -8,11 +8,7 @@ interface MSShareableObjectPopUpButton extends NSPopUpButton {
 declare const MSShareableObjectPopUpButton: {
   alloc(): MSShareableObjectPopUpButtonUninitialized;
   class(): MSShareableObjectPopUpButton;
-  cellClass(): any;,
-          {
-            newLineStart: true,
-            newLineEnd: false,
-          }
+  cellClass(): any;
   setCellClass(cellClass: any): void;
 
 }

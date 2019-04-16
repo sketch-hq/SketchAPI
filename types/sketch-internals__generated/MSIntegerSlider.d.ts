@@ -8,11 +8,7 @@ declare const MSIntegerSlider: {
   class(): MSIntegerSlider;
   sliderWithTarget_action(target: any | null, action: string | null): MSIntegerSlider;
   sliderWithValue_minValue_maxValue_target_action(value: number, minValue: number, maxValue: number, target: any | null, action: string | null): MSIntegerSlider;
-  cellClass(): any;,
-          {
-            newLineStart: true,
-            newLineEnd: false,
-          }
+  cellClass(): any;
   setCellClass(cellClass: any): void;
   requiresConstraintBasedLayout(): boolean;
   focusView(): NSView;

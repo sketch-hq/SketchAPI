@@ -59,19 +59,11 @@ declare const NSTimeZone: {
   isSelectorExcludedFromMochaScript(selector: string): boolean;
   selectorForMochaPropertyName(propertyName: NSString | string): string;
   systemTimeZone(): NSTimeZone;
-  defaultTimeZone(): NSTimeZone;,
-          {
-            newLineStart: true,
-            newLineEnd: false,
-          }
+  defaultTimeZone(): NSTimeZone;
   setDefaultTimeZone(defaultTimeZone: NSTimeZone): void;
   localTimeZone(): NSTimeZone;
   knownTimeZoneNames(): NSArray<any>;
-  abbreviationDictionary(): NSDictionary<any, any>;,
-          {
-            newLineStart: true,
-            newLineEnd: false,
-          }
+  abbreviationDictionary(): NSDictionary<any, any>;
   setAbbreviationDictionary(abbreviationDictionary: NSDictionary<any, any> | {[key: string]: any}): void;
   timeZoneDataVersion(): NSString;
   supportsSecureCoding(): boolean;

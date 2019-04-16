@@ -1,5 +1,5 @@
 import { toArray } from 'util'
-import { WrappedObject, DefinedPropertiesKey } from '../WrappedObject'
+import { WrappedObject, DefinedPropertiesKey, define } from '../WrappedObject'
 import { Factory } from '../Factory'
 import { wrapObject } from '../wrapNativeObject'
 import { Types } from '../enums'
@@ -11,6 +11,9 @@ import { Blur, BlurType } from './Blur'
 import { Fill, FillType, PatternFillType } from './Fill'
 import { Border, BorderPosition } from './Border'
 import { defineTextStyleProperties } from './Text'
+import { SharedStyle } from '../models/SharedStyle'
+import { StyledLayer } from '../layers/StyledLayer'
+import { isKindOfClass } from '../utils'
 
 const BlendingModeMap = {
   Normal: 0,
@@ -31,23 +34,23 @@ const BlendingModeMap = {
   Luminosity: 15,
 }
 
-const BlendingMode = {
-  Normal: 'Normal',
-  Darken: 'Darken',
-  Multiply: 'Multiply',
-  ColorBurn: 'ColorBurn',
-  Lighten: 'Lighten',
-  Screen: 'Screen',
-  ColorDodge: 'ColorDodge',
-  Overlay: 'Overlay',
-  SoftLight: 'SoftLight',
-  HardLight: 'HardLight',
-  Difference: 'Difference',
-  Exclusion: 'Exclusion',
-  Hue: 'Hue',
-  Saturation: 'Saturation',
-  Color: 'Color',
-  Luminosity: 'Luminosity',
+enum BlendingMode {
+  Normal = 'Normal',
+  Darken = 'Darken',
+  Multiply = 'Multiply',
+  ColorBurn = 'ColorBurn',
+  Lighten = 'Lighten',
+  Screen = 'Screen',
+  ColorDodge = 'ColorDodge',
+  Overlay = 'Overlay',
+  SoftLight = 'SoftLight',
+  HardLight = 'HardLight',
+  Difference = 'Difference',
+  Exclusion = 'Exclusion',
+  Hue = 'Hue',
+  Saturation = 'Saturation',
+  Color = 'Color',
+  Luminosity = 'Luminosity',
 }
 
 const DEFAULT_STYLE = {
@@ -69,7 +72,69 @@ export enum StyleType {
  * Represents a Sketch layer style.
  */
 
-export class Style extends WrappedObject {
+export class Style extends WrappedObject<MSStyle> {
+  static type = Types.Style
+  static GradientType = GradientType
+  static BlendingMode = BlendingMode
+  static Arrowhead = Arrowhead
+  static LineEnd = LineEnd
+  static LineJoin = LineJoin
+  static BlurType = BlurType
+  static FillType = FillType
+  static PatternFillType = PatternFillType
+  static BorderPosition = BorderPosition
+  static StyleType = StyleType
+
+  @define<Style, number>({
+    get() {
+      return this.sketchObject.contextSettings().opacity()
+    },
+    set(opacity) {
+      this.sketchObject
+        .contextSettings()
+        .setOpacity(Math.min(Math.max(opacity, 0), 1))
+    },
+  })
+  opacity!: number
+
+  @define<Style, BlendingMode>({
+    get() {
+      const mode = this.sketchObject.contextSettings().blendMode()
+      return (
+        Object.keys(BlendingModeMap).find(
+          key => BlendingModeMap[key] === mode
+        ) || mode
+      )
+    },
+    set(mode) {
+      const blendingMode = BlendingModeMap[mode]
+      this.sketchObject
+        .contextSettings()
+        .setBlendMode(typeof blendingMode !== 'undefined' ? blendingMode : mode)
+    },
+  })
+  blendingMode!: BlendingMode
+
+  @define<Style, BorderOptions>({
+    get() {
+      return BorderOptions.fromNative(this.sketchObject)!
+    },
+    set(borderOptions) {
+      BorderOptions.updateNative(this.sketchObject, borderOptions)
+    },
+  })
+  borderOptions!: BorderOptions
+
+  @define<Style, StyleType>({
+    get() {
+      return this.sketchObject.textStyle() &&
+        this.sketchObject.textStyle().attributes()[NSFontAttributeName]
+        ? StyleType.Text
+        : StyleType.Layer
+    },
+  })
+  styleType!: StyleType
+
   /**
    * Make a new style object.
    *
@@ -77,15 +142,17 @@ export class Style extends WrappedObject {
    *                              If `sketchObject` is provided, will wrap it.
    *                              Otherwise, creates a new native object.
    */
-  constructor(style = {}, parentType) {
+  constructor(style: { sketchObject?: MSStyle } = {}, parentType?: Types) {
     if (!style.sketchObject) {
       /* eslint-disable no-param-reassign */
       style = Object.assign({}, DEFAULT_STYLE, style)
 
       style.sketchObject = MSDefaultStyle.defaultStyle()
       if (parentType === Types.Text) {
-        style.sketchObject.textStyle = MSTextStyle.alloc().init()
-        style.sketchObject.textStyle().attributes = MSDefaultTextStyle.defaultTextStyle()
+        style.sketchObject.setTextStyle(MSTextStyle.alloc().init())
+        style.sketchObject
+          .textStyle()
+          .setAttributes(MSDefaultTextStyle.defaultTextStyle())
       }
       /* eslint-enable no-param-reassign */
     }
@@ -93,48 +160,55 @@ export class Style extends WrappedObject {
     super(style)
   }
 
-  static colorFromString(color) {
+  static colorFromString(color: string) {
     return colorFromString(color)
   }
 
-  static colorToString(value) {
+  static colorToString(value: MSColor | MSImmutableColor) {
     return colorToString(value)
   }
 
-  isOutOfSyncWithSharedStyle(sharedStyle) {
-    return !!wrapObject(sharedStyle).sketchObject.isOutOfSyncWithInstance(
-      this._object
-    )
+  isOutOfSyncWithSharedStyle(sharedStyle: SharedStyle) {
+    const wrapped = wrapObject(sharedStyle)
+    if (!wrapped || !(wrapped instanceof SharedStyle)) {
+      return false
+    }
+    return !!wrapped.sketchObject.isOutOfSyncWithInstance(this.sketchObject)
   }
 
-  syncWithSharedStyle(sharedStyle) {
-    this._object.syncWithTemplateInstance(
-      wrapObject(sharedStyle).style.sketchObject
-    )
+  syncWithSharedStyle(sharedStyle: SharedStyle) {
+    const wrapped = wrapObject(sharedStyle)
+    if (!wrapped || !(wrapped instanceof SharedStyle)) {
+      return
+    }
+    this.sketchObject.syncWithTemplateInstance(wrapped.style.sketchObject)
   }
 
-  getParentLayer() {
-    if (this._object.parentLayer) {
-      return wrapObject(this._object.parentLayer())
+  getParentLayer(): StyledLayer | null {
+    if (this.sketchObject.parentLayer) {
+      return wrapObject(this.sketchObject.parentLayer()) || null
     }
     return null
   }
 
   getDefaultLineHeight() {
-    if (!this._object.parentLayer) {
+    if (!this.sketchObject.parentLayer) {
       return undefined
     }
-    const layer = this._object.parentLayer()
+    const layer = this.sketchObject.parentLayer()
     if (!layer) {
       return undefined
     }
 
-    const isImmutableTextLayer = layer.isKindOfClass(MSImmutableTextLayer)
+    const isImmutableTextLayer = isKindOfClass(
+      layer,
+      MSImmutableTextLayer.class()
+    )
 
-    if (!layer.isKindOfClass(MSTextLayer) && !isImmutableTextLayer) {
+    if (!isKindOfClass(layer, MSTextLayer.class()) && !isImmutableTextLayer) {
       return undefined
     }
-    const immutableLayer = isImmutableTextLayer
+    const immutableLayer: MSImmutableTextLayer = isImmutableTextLayer
       ? layer
       : layer.immutableModelObject()
 
@@ -149,47 +223,6 @@ Style.type = Types.Style
 Style[DefinedPropertiesKey] = { ...WrappedObject[DefinedPropertiesKey] }
 Factory.registerClass(Style, MSStyle)
 
-Style.GradientType = GradientType
-
-Style.define('opacity', {
-  get() {
-    return this._object.contextSettings().opacity()
-  },
-  set(opacity) {
-    this._object.contextSettings().setOpacity(Math.min(Math.max(opacity, 0), 1))
-  },
-})
-
-Style.BlendingMode = BlendingMode
-Style.define('blendingMode', {
-  get() {
-    const mode = this._object.contextSettings().blendMode()
-    return (
-      Object.keys(BlendingModeMap).find(key => BlendingModeMap[key] === mode) ||
-      mode
-    )
-  },
-  set(mode) {
-    const blendingMode = BlendingModeMap[mode]
-    this._object
-      .contextSettings()
-      .setBlendMode(typeof blendingMode !== 'undefined' ? blendingMode : mode)
-  },
-})
-
-Style.Arrowhead = Arrowhead
-Style.LineEnd = LineEnd
-Style.LineJoin = LineJoin
-Style.define('borderOptions', {
-  get() {
-    return BorderOptions.fromNative(this._object)
-  },
-  set(borderOptions) {
-    BorderOptions.updateNative(this._object, borderOptions)
-  },
-})
-
-Style.BlurType = BlurType
 Style.define('blur', {
   get() {
     return Blur.fromNative(this._object.blur())
@@ -199,8 +232,6 @@ Style.define('blur', {
   },
 })
 
-Style.FillType = FillType
-Style.PatternFillType = PatternFillType
 Style.define('fills', {
   array: true,
   get() {
@@ -225,7 +256,6 @@ Style.define('fills', {
   },
 })
 
-Style.BorderPosition = BorderPosition
 Style.define('borders', {
   array: true,
   get() {
@@ -295,16 +325,6 @@ Style.define('innerShadows', {
     const removed = arr.splice(index, 1)
     this.innerShadows = arr
     return Shadow.fromNative(removed[0])
-  },
-})
-
-Style.StyleType = StyleType
-Style.define('styleType', {
-  get() {
-    return this._object.textStyle() &&
-      this._object.textStyle().attributes()[NSFontAttributeName]
-      ? StyleType.Text
-      : StyleType.Layer
   },
 })
 

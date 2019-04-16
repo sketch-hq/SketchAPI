@@ -15,11 +15,7 @@ declare const MSTextLabelForUpDownField: {
   wrappingLabelWithString(stringValue: NSString | string): MSTextLabelForUpDownField;
   labelWithAttributedString(attributedStringValue: NSAttributedString): MSTextLabelForUpDownField;
   textFieldWithString(stringValue: NSString | string): MSTextLabelForUpDownField;
-  cellClass(): any;,
-          {
-            newLineStart: true,
-            newLineEnd: false,
-          }
+  cellClass(): any;
   setCellClass(cellClass: any): void;
   requiresConstraintBasedLayout(): boolean;
   focusView(): NSView;

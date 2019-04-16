@@ -81,11 +81,7 @@ declare const NSDateFormatter: {
   class(): NSDateFormatter;
   localizedStringFromDate_dateStyle_timeStyle(date: NSDate, dstyle: NSDateFormatterStyle, tstyle: NSDateFormatterStyle): NSString;
   dateFormatFromTemplate_options_locale(tmplate: NSString | string, opts: NSUInteger, locale: NSLocale | null): NSString;
-  defaultFormatterBehavior(): NSDateFormatterBehavior;,
-          {
-            newLineStart: true,
-            newLineEnd: false,
-          }
+  defaultFormatterBehavior(): NSDateFormatterBehavior;
   setDefaultFormatterBehavior(defaultFormatterBehavior: NSDateFormatterBehavior): void;
 
 }

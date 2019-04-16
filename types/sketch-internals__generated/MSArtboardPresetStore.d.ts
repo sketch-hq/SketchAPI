@@ -41,17 +41,9 @@ declare const MSArtboardPresetStore: {
   mo_mocha(): MOClassDescription;
   isSelectorExcludedFromMochaScript(selector: string): boolean;
   selectorForMochaPropertyName(propertyName: NSString | string): string;
-  systemCategories(): NSArray<any>;,
-          {
-            newLineStart: true,
-            newLineEnd: false,
-          }
+  systemCategories(): NSArray<any>;
   setSystemCategories(systemCategories: NSArray<any> | any[]): void;
-  indexOfLastSelectedCategory(): NSUInteger;,
-          {
-            newLineStart: true,
-            newLineEnd: false,
-          }
+  indexOfLastSelectedCategory(): NSUInteger;
   setIndexOfLastSelectedCategory(indexOfLastSelectedCategory: NSUInteger): void;
   accessInstanceVariablesDirectly(): boolean;
 

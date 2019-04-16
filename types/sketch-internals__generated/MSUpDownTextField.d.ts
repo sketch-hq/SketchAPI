@@ -58,11 +58,7 @@ declare const MSUpDownTextField: {
   labelWithAttributedString(attributedStringValue: NSAttributedString): MSUpDownTextField;
   textFieldWithString(stringValue: NSString | string): MSUpDownTextField;
   accessInstanceVariablesDirectly(): boolean;
-  cellClass(): any;,
-          {
-            newLineStart: true,
-            newLineEnd: false,
-          }
+  cellClass(): any;
   setCellClass(cellClass: any): void;
   requiresConstraintBasedLayout(): boolean;
   focusView(): NSView;

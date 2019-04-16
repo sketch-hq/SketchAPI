@@ -6,11 +6,7 @@ interface MSArtboardPresetsTableView extends NSTableView {
 declare const MSArtboardPresetsTableView: {
   alloc(): MSArtboardPresetsTableViewUninitialized;
   class(): MSArtboardPresetsTableView;
-  cellClass(): any;,
-          {
-            newLineStart: true,
-            newLineEnd: false,
-          }
+  cellClass(): any;
   setCellClass(cellClass: any): void;
   requiresConstraintBasedLayout(): boolean;
   focusView(): NSView;

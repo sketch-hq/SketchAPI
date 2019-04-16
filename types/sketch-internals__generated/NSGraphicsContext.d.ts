@@ -61,11 +61,7 @@ declare const NSGraphicsContext: {
   mo_mocha(): MOClassDescription;
   isSelectorExcludedFromMochaScript(selector: string): boolean;
   selectorForMochaPropertyName(propertyName: NSString | string): string;
-  currentContext(): NSGraphicsContext;,
-          {
-            newLineStart: true,
-            newLineEnd: false,
-          }
+  currentContext(): NSGraphicsContext;
   setCurrentContext(currentContext: NSGraphicsContext): void;
   accessInstanceVariablesDirectly(): boolean;
 

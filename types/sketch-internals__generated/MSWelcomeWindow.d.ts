@@ -16,11 +16,7 @@ declare const MSWelcomeWindow: {
   windowWithContentViewController(contentViewController: NSViewController): MSWelcomeWindow;
   menuChanged(menu: NSMenu): void;
   defaultDepthLimit(): NSWindowDepth;
-  allowsAutomaticWindowTabbing(): boolean;,
-          {
-            newLineStart: true,
-            newLineEnd: false,
-          }
+  allowsAutomaticWindowTabbing(): boolean;
   setAllowsAutomaticWindowTabbing(allowsAutomaticWindowTabbing: boolean): void;
   userTabbingPreference(): NSWindowUserTabbingPreference;
   restorableStateKeyPaths(): NSArray<any>;

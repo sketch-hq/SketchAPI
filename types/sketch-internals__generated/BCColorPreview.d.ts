@@ -19,11 +19,7 @@ interface BCColorPreview extends NSPopUpButton, INSMenuDelegate {
 declare const BCColorPreview: {
   alloc(): BCColorPreviewUninitialized;
   class(): BCColorPreview;
-  cellClass(): any;,
-          {
-            newLineStart: true,
-            newLineEnd: false,
-          }
+  cellClass(): any;
   setCellClass(cellClass: any): void;
 
 }

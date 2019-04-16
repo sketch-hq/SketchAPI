@@ -42,11 +42,7 @@ declare const NSAppearance: {
   mo_mocha(): MOClassDescription;
   isSelectorExcludedFromMochaScript(selector: string): boolean;
   selectorForMochaPropertyName(propertyName: NSString | string): string;
-  currentAppearance(): NSAppearance;,
-          {
-            newLineStart: true,
-            newLineEnd: false,
-          }
+  currentAppearance(): NSAppearance;
   setCurrentAppearance(currentAppearance: NSAppearance): void;
   supportsSecureCoding(): boolean;
   accessInstanceVariablesDirectly(): boolean;

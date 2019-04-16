@@ -6,11 +6,7 @@ interface BCHueColorPicker extends BCColorPickerSliderView {
 declare const BCHueColorPicker: {
   alloc(): BCHueColorPickerUninitialized;
   class(): BCHueColorPicker;
-  cellClass(): any;,
-          {
-            newLineStart: true,
-            newLineEnd: false,
-          }
+  cellClass(): any;
   setCellClass(cellClass: any): void;
   requiresConstraintBasedLayout(): boolean;
   focusView(): NSView;

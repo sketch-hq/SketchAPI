@@ -727,9 +727,11 @@ module.exports.classAdditions = {
   [key: number]: ObjectType | Function;
   [key: string]: ObjectType | Function;
 `,
+  // define in `.m`
   MSSharedObject: `
   updateToMatch: (instance: MSSharedObjectInstance) => void
 `,
+  // define in `.m`
   MSSharedStyle: `
   allInstances: () => MSStyle[]
   allLayersInstances: () => MSStyledLayer[]

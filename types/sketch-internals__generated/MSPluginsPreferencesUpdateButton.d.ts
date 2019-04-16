@@ -14,11 +14,7 @@ declare const MSPluginsPreferencesUpdateButton: {
   buttonWithImage_target_action(image: NSImage, target: any | null, action: string | null): MSPluginsPreferencesUpdateButton;
   checkboxWithTitle_target_action(title: NSString | string, target: any | null, action: string | null): MSPluginsPreferencesUpdateButton;
   radioButtonWithTitle_target_action(title: NSString | string, target: any | null, action: string | null): MSPluginsPreferencesUpdateButton;
-  cellClass(): any;,
-          {
-            newLineStart: true,
-            newLineEnd: false,
-          }
+  cellClass(): any;
   setCellClass(cellClass: any): void;
 
 }

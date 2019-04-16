@@ -10,11 +10,7 @@ declare const BCHexTextField: {
   wrappingLabelWithString(stringValue: NSString | string): BCHexTextField;
   labelWithAttributedString(attributedStringValue: NSAttributedString): BCHexTextField;
   textFieldWithString(stringValue: NSString | string): BCHexTextField;
-  cellClass(): any;,
-          {
-            newLineStart: true,
-            newLineEnd: false,
-          }
+  cellClass(): any;
   setCellClass(cellClass: any): void;
   requiresConstraintBasedLayout(): boolean;
   focusView(): NSView;

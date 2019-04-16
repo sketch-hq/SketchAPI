@@ -8,11 +8,7 @@ interface MSStyleOverridePopupButton extends NSPopUpButton {
 declare const MSStyleOverridePopupButton: {
   alloc(): MSStyleOverridePopupButtonUninitialized;
   class(): MSStyleOverridePopupButton;
-  cellClass(): any;,
-          {
-            newLineStart: true,
-            newLineEnd: false,
-          }
+  cellClass(): any;
   setCellClass(cellClass: any): void;
 
 }

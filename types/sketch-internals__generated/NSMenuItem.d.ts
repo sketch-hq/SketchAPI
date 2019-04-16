@@ -388,11 +388,7 @@ declare const NSMenuItem: {
   mo_mocha(): MOClassDescription;
   isSelectorExcludedFromMochaScript(selector: string): boolean;
   selectorForMochaPropertyName(propertyName: NSString | string): string;
-  usesUserKeyEquivalents(): boolean;,
-          {
-            newLineStart: true,
-            newLineEnd: false,
-          }
+  usesUserKeyEquivalents(): boolean;
   setUsesUserKeyEquivalents(usesUserKeyEquivalents: boolean): void;
   accessInstanceVariablesDirectly(): boolean;
 

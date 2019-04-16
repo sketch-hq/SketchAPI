@@ -6,11 +6,7 @@ interface MSDefaultGrid extends MSDefaultArchive {
 declare const MSDefaultGrid: {
   alloc(): MSDefaultGridUninitialized;
   class(): MSDefaultGrid;
-  defaultGrid(): MSSimpleGrid;,
-          {
-            newLineStart: true,
-            newLineEnd: false,
-          }
+  defaultGrid(): MSSimpleGrid;
   setDefaultGrid(defaultGrid: MSSimpleGrid): void;
   accessInstanceVariablesDirectly(): boolean;
 

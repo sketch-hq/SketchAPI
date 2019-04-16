@@ -184,11 +184,7 @@ declare const NSColor: {
   currentControlTint(): NSControlTint;
   highlightColor(): NSColor;
   shadowColor(): NSColor;
-  ignoresAlpha(): boolean;,
-          {
-            newLineStart: true,
-            newLineEnd: false,
-          }
+  ignoresAlpha(): boolean;
   setIgnoresAlpha(ignoresAlpha: boolean): void;
   controlHighlightColor(): NSColor;
   controlLightHighlightColor(): NSColor;

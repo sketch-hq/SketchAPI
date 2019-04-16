@@ -8,11 +8,7 @@ declare const MSUpDownMiniTextField: {
   class(): MSUpDownMiniTextField;
   multipleValuesPlaceholderString(): NSString;
   accessInstanceVariablesDirectly(): boolean;
-  cellClass(): any;,
-          {
-            newLineStart: true,
-            newLineEnd: false,
-          }
+  cellClass(): any;
   setCellClass(cellClass: any): void;
   requiresConstraintBasedLayout(): boolean;
   focusView(): NSView;

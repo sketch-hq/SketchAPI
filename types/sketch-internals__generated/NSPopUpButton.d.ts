@@ -50,11 +50,7 @@ declare const NSPopUpButton: {
   buttonWithImage_target_action(image: NSImage, target: any | null, action: string | null): NSPopUpButton;
   checkboxWithTitle_target_action(title: NSString | string, target: any | null, action: string | null): NSPopUpButton;
   radioButtonWithTitle_target_action(title: NSString | string, target: any | null, action: string | null): NSPopUpButton;
-  cellClass(): any;,
-          {
-            newLineStart: true,
-            newLineEnd: false,
-          }
+  cellClass(): any;
   setCellClass(cellClass: any): void;
 
 }

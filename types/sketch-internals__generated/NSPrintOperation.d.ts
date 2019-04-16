@@ -75,11 +75,7 @@ declare const NSPrintOperation: {
   mo_mocha(): MOClassDescription;
   isSelectorExcludedFromMochaScript(selector: string): boolean;
   selectorForMochaPropertyName(propertyName: NSString | string): string;
-  currentOperation(): NSPrintOperation;,
-          {
-            newLineStart: true,
-            newLineEnd: false,
-          }
+  currentOperation(): NSPrintOperation;
   setCurrentOperation(currentOperation: NSPrintOperation): void;
   accessInstanceVariablesDirectly(): boolean;
 

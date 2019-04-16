@@ -6,11 +6,7 @@ interface MSOverlayButton extends MSInspectorButton {
 declare const MSOverlayButton: {
   alloc(): MSOverlayButtonUninitialized;
   class(): MSOverlayButton;
-  cellClass(): any;,
-          {
-            newLineStart: true,
-            newLineEnd: false,
-          }
+  cellClass(): any;
   setCellClass(cellClass: any): void;
 
 }

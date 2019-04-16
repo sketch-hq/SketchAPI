@@ -37,11 +37,7 @@ interface MSRulerView extends NSView {
 declare const MSRulerView: {
   alloc(): MSRulerViewUninitialized;
   class(): MSRulerView;
-  rulerDraggingLocked(): boolean;,
-          {
-            newLineStart: true,
-            newLineEnd: false,
-          }
+  rulerDraggingLocked(): boolean;
   setRulerDraggingLocked(rulerDraggingLocked: boolean): void;
   requiresConstraintBasedLayout(): boolean;
   focusView(): NSView;

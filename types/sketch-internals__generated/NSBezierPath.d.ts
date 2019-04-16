@@ -175,41 +175,17 @@ declare const NSBezierPath: {
   mo_mocha(): MOClassDescription;
   isSelectorExcludedFromMochaScript(selector: string): boolean;
   selectorForMochaPropertyName(propertyName: NSString | string): string;
-  defaultMiterLimit(): CGFloat;,
-          {
-            newLineStart: true,
-            newLineEnd: false,
-          }
+  defaultMiterLimit(): CGFloat;
   setDefaultMiterLimit(defaultMiterLimit: CGFloat): void;
-  defaultFlatness(): CGFloat;,
-          {
-            newLineStart: true,
-            newLineEnd: false,
-          }
+  defaultFlatness(): CGFloat;
   setDefaultFlatness(defaultFlatness: CGFloat): void;
-  defaultWindingRule(): NSWindingRule;,
-          {
-            newLineStart: true,
-            newLineEnd: false,
-          }
+  defaultWindingRule(): NSWindingRule;
   setDefaultWindingRule(defaultWindingRule: NSWindingRule): void;
-  defaultLineCapStyle(): NSLineCapStyle;,
-          {
-            newLineStart: true,
-            newLineEnd: false,
-          }
+  defaultLineCapStyle(): NSLineCapStyle;
   setDefaultLineCapStyle(defaultLineCapStyle: NSLineCapStyle): void;
-  defaultLineJoinStyle(): NSLineJoinStyle;,
-          {
-            newLineStart: true,
-            newLineEnd: false,
-          }
+  defaultLineJoinStyle(): NSLineJoinStyle;
   setDefaultLineJoinStyle(defaultLineJoinStyle: NSLineJoinStyle): void;
-  defaultLineWidth(): CGFloat;,
-          {
-            newLineStart: true,
-            newLineEnd: false,
-          }
+  defaultLineWidth(): CGFloat;
   setDefaultLineWidth(defaultLineWidth: CGFloat): void;
   supportsSecureCoding(): boolean;
   accessInstanceVariablesDirectly(): boolean;

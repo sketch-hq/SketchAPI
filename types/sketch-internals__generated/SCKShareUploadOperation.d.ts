@@ -14,11 +14,7 @@ interface SCKShareUploadOperation extends SCKAPIOperation, INSProgressReporting 
 declare const SCKShareUploadOperation: {
   alloc(): SCKShareUploadOperationUninitialized;
   class(): SCKShareUploadOperation;
-  clientID(): NSString;,
-          {
-            newLineStart: true,
-            newLineEnd: false,
-          }
+  clientID(): NSString;
   setClientID(clientID: NSString | string): void;
   accessInstanceVariablesDirectly(): boolean;
 

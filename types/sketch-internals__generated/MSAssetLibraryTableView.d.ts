@@ -6,11 +6,7 @@ interface MSAssetLibraryTableView extends BCKeyEventActionTableView {
 declare const MSAssetLibraryTableView: {
   alloc(): MSAssetLibraryTableViewUninitialized;
   class(): MSAssetLibraryTableView;
-  cellClass(): any;,
-          {
-            newLineStart: true,
-            newLineEnd: false,
-          }
+  cellClass(): any;
   setCellClass(cellClass: any): void;
   requiresConstraintBasedLayout(): boolean;
   focusView(): NSView;

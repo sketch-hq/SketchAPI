@@ -6,11 +6,7 @@ interface MSInspectorPopUpButton extends NSPopUpButton {
 declare const MSInspectorPopUpButton: {
   alloc(): MSInspectorPopUpButtonUninitialized;
   class(): MSInspectorPopUpButton;
-  cellClass(): any;,
-          {
-            newLineStart: true,
-            newLineEnd: false,
-          }
+  cellClass(): any;
   setCellClass(cellClass: any): void;
 
 }

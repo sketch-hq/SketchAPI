@@ -13,11 +13,7 @@ declare const MSWelcomeCollectionTextField: {
   wrappingLabelWithString(stringValue: NSString | string): MSWelcomeCollectionTextField;
   labelWithAttributedString(attributedStringValue: NSAttributedString): MSWelcomeCollectionTextField;
   textFieldWithString(stringValue: NSString | string): MSWelcomeCollectionTextField;
-  cellClass(): any;,
-          {
-            newLineStart: true,
-            newLineEnd: false,
-          }
+  cellClass(): any;
   setCellClass(cellClass: any): void;
   requiresConstraintBasedLayout(): boolean;
   focusView(): NSView;

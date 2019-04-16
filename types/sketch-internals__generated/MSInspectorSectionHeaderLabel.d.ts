@@ -10,11 +10,7 @@ declare const MSInspectorSectionHeaderLabel: {
   wrappingLabelWithString(stringValue: NSString | string): MSInspectorSectionHeaderLabel;
   labelWithAttributedString(attributedStringValue: NSAttributedString): MSInspectorSectionHeaderLabel;
   textFieldWithString(stringValue: NSString | string): MSInspectorSectionHeaderLabel;
-  cellClass(): any;,
-          {
-            newLineStart: true,
-            newLineEnd: false,
-          }
+  cellClass(): any;
   setCellClass(cellClass: any): void;
   requiresConstraintBasedLayout(): boolean;
   focusView(): NSView;

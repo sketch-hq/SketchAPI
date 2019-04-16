@@ -12,11 +12,7 @@ declare const MSThemeImageView: {
   alloc(): MSThemeImageViewUninitialized;
   class(): MSThemeImageView;
   imageViewWithImage(image: NSImage): MSThemeImageView;
-  cellClass(): any;,
-          {
-            newLineStart: true,
-            newLineEnd: false,
-          }
+  cellClass(): any;
   setCellClass(cellClass: any): void;
   requiresConstraintBasedLayout(): boolean;
   focusView(): NSView;

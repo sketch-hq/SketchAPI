@@ -6,11 +6,7 @@ interface MSPlainButton extends MSHoverButton {
 declare const MSPlainButton: {
   alloc(): MSPlainButtonUninitialized;
   class(): MSPlainButton;
-  cellClass(): any;,
-          {
-            newLineStart: true,
-            newLineEnd: false,
-          }
+  cellClass(): any;
   setCellClass(cellClass: any): void;
 
 }

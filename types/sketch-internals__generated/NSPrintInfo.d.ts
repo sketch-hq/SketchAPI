@@ -82,11 +82,7 @@ declare const NSPrintInfo: {
   mo_mocha(): MOClassDescription;
   isSelectorExcludedFromMochaScript(selector: string): boolean;
   selectorForMochaPropertyName(propertyName: NSString | string): string;
-  sharedPrintInfo(): NSPrintInfo;,
-          {
-            newLineStart: true,
-            newLineEnd: false,
-          }
+  sharedPrintInfo(): NSPrintInfo;
   setSharedPrintInfo(sharedPrintInfo: NSPrintInfo): void;
   defaultPrinter(): NSPrinter;
   accessInstanceVariablesDirectly(): boolean;

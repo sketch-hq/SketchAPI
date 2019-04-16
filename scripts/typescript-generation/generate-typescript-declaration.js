@@ -526,11 +526,7 @@ declare const ${info.type.name}: {
         property.name
       }(): ${convertType(property.type, info.name)};${
         property.attributes.indexOf('readonly') === -1
-          ? `,
-          {
-            newLineStart: true,
-            newLineEnd: false,
-          }
+          ? `
 ${
   shouldIgnore(`set${capitalize(property.name)}`, info) ? `  // ` : ''
 }  set${capitalize(property.name)}(${

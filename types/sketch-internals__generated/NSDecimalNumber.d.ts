@@ -54,11 +54,7 @@ declare const NSDecimalNumber: {
   minimumDecimalNumber(): NSDecimalNumber;
   maximumDecimalNumber(): NSDecimalNumber;
   notANumber(): NSDecimalNumber;
-  defaultBehavior(): any;,
-          {
-            newLineStart: true,
-            newLineEnd: false,
-          }
+  defaultBehavior(): any;
   setDefaultBehavior(defaultBehavior: any): void;
 
 }

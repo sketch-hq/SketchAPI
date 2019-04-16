@@ -2,6 +2,7 @@ import { isNativeObject, isObject } from 'util'
 import { WrappedObject } from './WrappedObject'
 import { isWrappedObject } from './utils'
 import { Factory } from './Factory'
+import { Types } from './enums'
 
 /**
  * Return a wrapped version of a Sketch object.
@@ -12,12 +13,14 @@ import { Factory } from './Factory'
  * @param {object} sketchObject The underlying sketch object that we're wrapping.
  * @return {WrappedObject} A javascript object (subclass of WrappedObject), which represents the Sketch object we were given.
  */
-export function wrapNativeObject(nativeObject) {
+export function wrapNativeObject<T = WrappedObject<any>>(
+  nativeObject: NSObject
+): T | undefined {
   if (!nativeObject) {
     return undefined
   }
 
-  const className = String(nativeObject.class())
+  const className = String(nativeObject.className())
 
   let JsClass = Factory._nativeToBox[className]
   if (!JsClass) {
@@ -28,7 +31,10 @@ export function wrapNativeObject(nativeObject) {
   return JsClass.fromNative(nativeObject)
 }
 
-export function wrapObject(object, defaultType) {
+export function wrapObject<T = WrappedObject<any>>(
+  object: NSObject | WrappedObject<any> | undefined | { type: Types },
+  defaultType?: Types
+): T | undefined {
   if (!object) {
     return undefined
   }
@@ -37,7 +43,7 @@ export function wrapObject(object, defaultType) {
     return wrapNativeObject(object)
   }
   if (isWrappedObject(object)) {
-    return object
+    return (object as unknown) as T
   }
 
   const { type, ...rest } = object

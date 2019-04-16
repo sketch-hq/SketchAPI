@@ -11,11 +11,7 @@ declare const MSFinishEditingButton: {
   buttonWithImage_target_action(image: NSImage, target: any | null, action: string | null): MSFinishEditingButton;
   checkboxWithTitle_target_action(title: NSString | string, target: any | null, action: string | null): MSFinishEditingButton;
   radioButtonWithTitle_target_action(title: NSString | string, target: any | null, action: string | null): MSFinishEditingButton;
-  cellClass(): any;,
-          {
-            newLineStart: true,
-            newLineEnd: false,
-          }
+  cellClass(): any;
   setCellClass(cellClass: any): void;
 
 }

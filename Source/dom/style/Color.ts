@@ -1,17 +1,18 @@
 import { isNativeObject } from 'util'
+import { isKindOfClass } from '../utils'
 
 /**
  * Given a string description of a color, return an MSImmutableColor.
  */
-export function colorFromString(value) {
-  return MSImmutableColor.colorWithSVGString_(value)
+export function colorFromString(value: string) {
+  return MSImmutableColor.colorWithSVGString(value)
 }
 
 /**
  * Given a MSColor, return string description of a color.
  */
-export function colorToString(value) {
-  function toHex(v) {
+export function colorToString(value: MSColor | MSImmutableColor) {
+  function toHex(v: number) {
     // eslint-disable-next-line
     return (Math.round(v * 255) | (1 << 8)).toString(16).slice(1)
   }
@@ -23,23 +24,25 @@ export function colorToString(value) {
 }
 
 export class Color {
-  constructor(nativeColor) {
+  private _object: MSImmutableColor
+
+  constructor(nativeColor: MSImmutableColor) {
     this._object = nativeColor
   }
 
-  static from(object) {
+  static from(object: MSColor | MSImmutableColor | NSColor | string) {
     if (!object) {
       return undefined
     }
-    let nativeColor
+    let nativeColor: MSImmutableColor
     if (isNativeObject(object)) {
-      if (object.isKindOfClass(MSColor)) {
+      if (isKindOfClass(object, MSColor.class())) {
         nativeColor = MSImmutableColor.alloc().initWithMutableModelObject(
           object
         )
-      } else if (object.isKindOfClass(MSImmutableColor)) {
+      } else if (isKindOfClass(object, MSImmutableColor.class())) {
         nativeColor = object
-      } else if (object.isKindOfClass(NSColor)) {
+      } else if (isKindOfClass(object, NSColor.class())) {
         nativeColor = MSImmutableColor.colorWithNSColor(object)
       } else {
         throw new Error(
@@ -59,7 +62,7 @@ export class Color {
     return colorToString(this._object)
   }
 
-  toMSColor() {
+  toMSColor(): MSColor {
     return this._object.newMutableCounterpart()
   }
 

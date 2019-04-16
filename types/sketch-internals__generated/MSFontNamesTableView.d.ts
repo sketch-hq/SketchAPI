@@ -9,11 +9,7 @@ interface MSFontNamesTableView extends NSTableView {
 declare const MSFontNamesTableView: {
   alloc(): MSFontNamesTableViewUninitialized;
   class(): MSFontNamesTableView;
-  cellClass(): any;,
-          {
-            newLineStart: true,
-            newLineEnd: false,
-          }
+  cellClass(): any;
   setCellClass(cellClass: any): void;
   requiresConstraintBasedLayout(): boolean;
   focusView(): NSView;

@@ -10,11 +10,7 @@ declare const SCKOAuthAPIOperation: {
   class(): SCKOAuthAPIOperation;
   refreshAuthentication_handler(session: SCKAPISession, handler: SCKOAuthAPIHandler): void;
   refreshLicenseWithAuthentication_handler(authentication: SCKAPISession, handler: SCKOAuthAPIHandler): void;
-  clientID(): NSString;,
-          {
-            newLineStart: true,
-            newLineEnd: false,
-          }
+  clientID(): NSString;
   setClientID(clientID: NSString | string): void;
   accessInstanceVariablesDirectly(): boolean;
 

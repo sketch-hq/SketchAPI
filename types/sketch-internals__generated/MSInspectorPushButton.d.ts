@@ -6,11 +6,7 @@ interface MSInspectorPushButton extends MSInspectorButton {
 declare const MSInspectorPushButton: {
   alloc(): MSInspectorPushButtonUninitialized;
   class(): MSInspectorPushButton;
-  cellClass(): any;,
-          {
-            newLineStart: true,
-            newLineEnd: false,
-          }
+  cellClass(): any;
   setCellClass(cellClass: any): void;
 
 }

@@ -43,11 +43,7 @@ declare const NSScroller: {
   inpectorFocusRingPathForRect(rect: NSRect): NSBezierPath;
   compatibleWithOverlayScrollers(): boolean;
   preferredScrollerStyle(): NSScrollerStyle;
-  cellClass(): any;,
-          {
-            newLineStart: true,
-            newLineEnd: false,
-          }
+  cellClass(): any;
   setCellClass(cellClass: any): void;
   requiresConstraintBasedLayout(): boolean;
   focusView(): NSView;

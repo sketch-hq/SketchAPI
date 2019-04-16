@@ -15,7 +15,7 @@ export class SharedStyle extends WrappedObject<MSSharedStyle> {
 
   @define<SharedStyle, StyleType>({
     get() {
-      return this.style.type
+      return this.style.styleType
     },
   })
   readonly styleType!: StyleType

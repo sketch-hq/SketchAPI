@@ -6,11 +6,7 @@ interface MSDefaultStyle extends MSDefaultArchive {
 declare const MSDefaultStyle: {
   alloc(): MSDefaultStyleUninitialized;
   class(): MSDefaultStyle;
-  defaultStyle(): MSStyle;,
-          {
-            newLineStart: true,
-            newLineEnd: false,
-          }
+  defaultStyle(): MSStyle;
   setDefaultStyle(defaultStyle: MSStyle): void;
   accessInstanceVariablesDirectly(): boolean;
 

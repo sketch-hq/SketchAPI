@@ -8,11 +8,7 @@ declare const MSDefaultTextStyle: {
   class(): MSDefaultTextStyle;
   recordTextStyleForLayer(layer: MSTextLayer): void;
   textStyleFromLayer(layer: MSTextLayer): NSDictionary<any, any>;
-  defaultTextStyle(): NSDictionary<any, any>;,
-          {
-            newLineStart: true,
-            newLineEnd: false,
-          }
+  defaultTextStyle(): NSDictionary<any, any>;
   setDefaultTextStyle(defaultTextStyle: NSDictionary<any, any> | {[key: string]: any}): void;
   accessInstanceVariablesDirectly(): boolean;
 

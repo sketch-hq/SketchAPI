@@ -6,11 +6,7 @@ interface MSAboutLinkButton extends MSHoverButton {
 declare const MSAboutLinkButton: {
   alloc(): MSAboutLinkButtonUninitialized;
   class(): MSAboutLinkButton;
-  cellClass(): any;,
-          {
-            newLineStart: true,
-            newLineEnd: false,
-          }
+  cellClass(): any;
   setCellClass(cellClass: any): void;
 
 }

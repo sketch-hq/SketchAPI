@@ -10,11 +10,7 @@ declare const SCKRestAPIOperation: {
   alloc(): SCKRestAPIOperationUninitialized;
   class(): SCKRestAPIOperation;
   executeRequest_completionHandler(request: SCKAPIURLRequest, handler: Block): void;
-  clientID(): NSString;,
-          {
-            newLineStart: true,
-            newLineEnd: false,
-          }
+  clientID(): NSString;
   setClientID(clientID: NSString | string): void;
   accessInstanceVariablesDirectly(): boolean;
 

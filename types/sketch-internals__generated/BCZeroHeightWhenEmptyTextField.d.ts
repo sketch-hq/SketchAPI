@@ -13,11 +13,7 @@ declare const BCZeroHeightWhenEmptyTextField: {
   wrappingLabelWithString(stringValue: NSString | string): BCZeroHeightWhenEmptyTextField;
   labelWithAttributedString(attributedStringValue: NSAttributedString): BCZeroHeightWhenEmptyTextField;
   textFieldWithString(stringValue: NSString | string): BCZeroHeightWhenEmptyTextField;
-  cellClass(): any;,
-          {
-            newLineStart: true,
-            newLineEnd: false,
-          }
+  cellClass(): any;
   setCellClass(cellClass: any): void;
   requiresConstraintBasedLayout(): boolean;
   focusView(): NSView;

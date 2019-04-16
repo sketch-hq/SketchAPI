@@ -10,11 +10,7 @@ declare const MSColorHexField: {
   wrappingLabelWithString(stringValue: NSString | string): MSColorHexField;
   labelWithAttributedString(attributedStringValue: NSAttributedString): MSColorHexField;
   textFieldWithString(stringValue: NSString | string): MSColorHexField;
-  cellClass(): any;,
-          {
-            newLineStart: true,
-            newLineEnd: false,
-          }
+  cellClass(): any;
   setCellClass(cellClass: any): void;
   requiresConstraintBasedLayout(): boolean;
   focusView(): NSView;

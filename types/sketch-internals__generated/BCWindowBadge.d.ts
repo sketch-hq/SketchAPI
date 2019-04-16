@@ -14,11 +14,7 @@ declare const BCWindowBadge: {
   buttonWithImage_target_action(image: NSImage, target: any | null, action: string | null): BCWindowBadge;
   checkboxWithTitle_target_action(title: NSString | string, target: any | null, action: string | null): BCWindowBadge;
   radioButtonWithTitle_target_action(title: NSString | string, target: any | null, action: string | null): BCWindowBadge;
-  cellClass(): any;,
-          {
-            newLineStart: true,
-            newLineEnd: false,
-          }
+  cellClass(): any;
   setCellClass(cellClass: any): void;
 
 }

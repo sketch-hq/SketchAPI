@@ -10,11 +10,7 @@ declare const MSInspectorTextField: {
   wrappingLabelWithString(stringValue: NSString | string): MSInspectorTextField;
   labelWithAttributedString(attributedStringValue: NSAttributedString): MSInspectorTextField;
   textFieldWithString(stringValue: NSString | string): MSInspectorTextField;
-  cellClass(): any;,
-          {
-            newLineStart: true,
-            newLineEnd: false,
-          }
+  cellClass(): any;
   setCellClass(cellClass: any): void;
   requiresConstraintBasedLayout(): boolean;
   focusView(): NSView;

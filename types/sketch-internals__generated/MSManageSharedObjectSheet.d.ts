@@ -8,11 +8,7 @@ declare const MSManageSharedObjectSheet: {
   class(): MSManageSharedObjectSheet;
   runForWindow(window: NSWindow): any;
   runForWindow_withObject(window: NSWindow, obj: any): any;
-  tabIndex(): MSManageSharedObjectSheetTabIndex;,
-          {
-            newLineStart: true,
-            newLineEnd: false,
-          }
+  tabIndex(): MSManageSharedObjectSheetTabIndex;
   setTabIndex(tabIndex: MSManageSharedObjectSheetTabIndex): void;
   accessInstanceVariablesDirectly(): boolean;
 

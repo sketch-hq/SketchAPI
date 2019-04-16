@@ -11,11 +11,7 @@ interface MSStylePartPreviewButtonWithBlendMode extends MSStylePartPreviewButton
 declare const MSStylePartPreviewButtonWithBlendMode: {
   alloc(): MSStylePartPreviewButtonWithBlendModeUninitialized;
   class(): MSStylePartPreviewButtonWithBlendMode;
-  cellClass(): any;,
-          {
-            newLineStart: true,
-            newLineEnd: false,
-          }
+  cellClass(): any;
   setCellClass(cellClass: any): void;
 
 }

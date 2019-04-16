@@ -13,11 +13,7 @@ interface MSGradientBarView extends BCColorPickerSliderView {
 declare const MSGradientBarView: {
   alloc(): MSGradientBarViewUninitialized;
   class(): MSGradientBarView;
-  cellClass(): any;,
-          {
-            newLineStart: true,
-            newLineEnd: false,
-          }
+  cellClass(): any;
   setCellClass(cellClass: any): void;
   requiresConstraintBasedLayout(): boolean;
   focusView(): NSView;

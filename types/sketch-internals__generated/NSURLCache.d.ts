@@ -49,11 +49,7 @@ declare const NSURLCache: {
   mo_mocha(): MOClassDescription;
   isSelectorExcludedFromMochaScript(selector: string): boolean;
   selectorForMochaPropertyName(propertyName: NSString | string): string;
-  sharedURLCache(): NSURLCache;,
-          {
-            newLineStart: true,
-            newLineEnd: false,
-          }
+  sharedURLCache(): NSURLCache;
   setSharedURLCache(sharedURLCache: NSURLCache): void;
   accessInstanceVariablesDirectly(): boolean;
 

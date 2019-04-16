@@ -6,11 +6,7 @@ interface MSPatternImageView extends MSImageView {
 declare const MSPatternImageView: {
   alloc(): MSPatternImageViewUninitialized;
   class(): MSPatternImageView;
-  cellClass(): any;,
-          {
-            newLineStart: true,
-            newLineEnd: false,
-          }
+  cellClass(): any;
   setCellClass(cellClass: any): void;
   requiresConstraintBasedLayout(): boolean;
   focusView(): NSView;

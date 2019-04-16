@@ -10,11 +10,7 @@ declare const MSOverrideTextField: {
   wrappingLabelWithString(stringValue: NSString | string): MSOverrideTextField;
   labelWithAttributedString(attributedStringValue: NSAttributedString): MSOverrideTextField;
   textFieldWithString(stringValue: NSString | string): MSOverrideTextField;
-  cellClass(): any;,
-          {
-            newLineStart: true,
-            newLineEnd: false,
-          }
+  cellClass(): any;
   setCellClass(cellClass: any): void;
   requiresConstraintBasedLayout(): boolean;
   focusView(): NSView;
