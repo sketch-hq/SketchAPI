@@ -1,4 +1,5 @@
 interface NSCollectionViewUninitialized<InitializedType = NSCollectionView> extends NSViewUninitialized<NSCollectionView> {}
+
 interface NSCollectionView extends NSView, INSDraggingSource, INSDraggingDestination {
   reloadData(): void;
   layoutAttributesForItemAtIndexPath(indexPath: NSIndexPath): NSCollectionViewLayoutAttributes;
@@ -40,6 +41,20 @@ interface NSCollectionView extends NSView, INSDraggingSource, INSDraggingDestina
   draggingImageForItemsAtIndexPaths_withEvent_offset(indexPaths: NSSet<any>, event: NSEvent, dragImageOffset: NSPointPointer): NSImage;
   draggingImageForItemsAtIndexes_withEvent_offset(indexes: NSIndexSet, event: NSEvent, dragImageOffset: NSPointPointer): NSImage;
   newItemForRepresentedObject(object: any): NSCollectionViewItem;
+  draggingSession_sourceOperationMaskForDraggingContext(session: NSDraggingSession, context: NSDraggingContext): NSDragOperation;
+  draggingSession_willBeginAtPoint(session: NSDraggingSession, screenPoint: NSPoint): void;
+  draggingSession_movedToPoint(session: NSDraggingSession, screenPoint: NSPoint): void;
+  draggingSession_endedAtPoint_operation(session: NSDraggingSession, screenPoint: NSPoint, operation: NSDragOperation): void;
+  ignoreModifierKeysForDraggingSession(session: NSDraggingSession): boolean;
+  draggingEntered(sender: any): NSDragOperation;
+  draggingUpdated(sender: any): NSDragOperation;
+  draggingExited(sender: any | null): void;
+  prepareForDragOperation(sender: any): boolean;
+  performDragOperation(sender: any): boolean;
+  concludeDragOperation(sender: any | null): void;
+  draggingEnded(sender: any): void;
+  wantsPeriodicDraggingUpdates(): boolean;
+  updateDraggingItemsForDrag(sender: any | null): void;
 
   dataSource(): any;
   setDataSource(dataSource: any): void;
@@ -80,8 +95,16 @@ interface NSCollectionView extends NSView, INSDraggingSource, INSDraggingDestina
   maxItemSize(): NSSize;
   setMaxItemSize(maxItemSize: NSSize): void;
 }
+
 declare const NSCollectionView: {
   alloc(): NSCollectionViewUninitialized;
   class(): NSCollectionView;
+  requiresConstraintBasedLayout(): boolean;
+  focusView(): NSView;
+  defaultMenu(): NSMenu;
+  compatibleWithResponsiveScrolling(): boolean;
+  defaultFocusRingType(): NSFocusRingType;
+  restorableStateKeyPaths(): NSArray<any>;
+
 }
 

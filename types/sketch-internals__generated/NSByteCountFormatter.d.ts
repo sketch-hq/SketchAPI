@@ -1,4 +1,5 @@
 interface NSByteCountFormatterUninitialized<InitializedType = NSByteCountFormatter> extends NSFormatterUninitialized<NSByteCountFormatter> {}
+
 interface NSByteCountFormatter extends NSFormatter {
   stringFromByteCount(byteCount: number): NSString;
 
@@ -21,9 +22,10 @@ interface NSByteCountFormatter extends NSFormatter {
   formattingContext(): NSFormattingContext;
   setFormattingContext(formattingContext: NSFormattingContext): void;
 }
+
 declare const NSByteCountFormatter: {
   alloc(): NSByteCountFormatterUninitialized;
-  class(): NSByteCountFormatter;  stringFromByteCount_countStyle(byteCount: number, countStyle: NSByteCountFormatterCountStyle): NSString;
-
+  class(): NSByteCountFormatter;
+  stringFromByteCount_countStyle(byteCount: number, countStyle: NSByteCountFormatterCountStyle): NSString;
 }
 

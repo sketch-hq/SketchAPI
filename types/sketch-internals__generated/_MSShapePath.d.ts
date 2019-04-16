@@ -1,4 +1,5 @@
 interface _MSShapePathUninitialized<InitializedType = _MSShapePath> extends MSModelObjectUninitialized<_MSShapePath> {}
+
 interface _MSShapePath extends MSModelObject {
   addCurvePoint(value: MSCurvePoint): void;
   addCurvePoints(points: NSArray<any> | any[]): void;
@@ -20,8 +21,11 @@ interface _MSShapePath extends MSModelObject {
   points(): NSArray<any>;
   setPoints(points: NSArray<any> | any[]): void;
 }
+
 declare const _MSShapePath: {
   alloc(): _MSShapePathUninitialized;
   class(): _MSShapePath;
+  immutableClass(): any;
+  allowsFaulting(): boolean;
 }
 

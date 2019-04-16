@@ -1,5 +1,8 @@
 interface NSImageViewUninitialized<InitializedType = NSImageView> extends NSControlUninitialized<NSImageView> {}
+
 interface NSImageView extends NSControl, INSAccessibilityImage, INSMenuItemValidation {
+  accessibilityLabel(): NSString;
+  validateMenuItem(menuItem: NSMenuItem): boolean;
 
   image(): NSImage;
   setImage(image: NSImage): void;
@@ -18,9 +21,28 @@ interface NSImageView extends NSControl, INSAccessibilityImage, INSMenuItemValid
   allowsCutCopyPaste(): boolean;
   setAllowsCutCopyPaste(allowsCutCopyPaste: boolean): void;
 }
+
 declare const NSImageView: {
   alloc(): NSImageViewUninitialized;
-  class(): NSImageView;  imageViewWithImage(image: NSImage): NSImageView;
+  class(): NSImageView;
+  imageViewWithImage(image: NSImage): NSImageView;
+  inpectorBorderPathForRect(rect: NSRect): NSBezierPath;
+  inpectorCheckmarkBorderPathForRect(rect: NSRect): NSBezierPath;
+  inpectorBorderPathForRectWithMaxRadius(rect: NSRect): NSBezierPath;
+  inpectorBorderPathForRect_borderRadius(rect: NSRect, borderRadius: CGFloat): NSBezierPath;
+  inpectorFocusRingPathForRect(rect: NSRect): NSBezierPath;
+  cellClass(): any;,
+          {
+            newLineStart: true,
+            newLineEnd: false,
+          }
+  setCellClass(cellClass: any): void;
+  requiresConstraintBasedLayout(): boolean;
+  focusView(): NSView;
+  defaultMenu(): NSMenu;
+  compatibleWithResponsiveScrolling(): boolean;
+  defaultFocusRingType(): NSFocusRingType;
+  restorableStateKeyPaths(): NSArray<any>;
 
 }
 

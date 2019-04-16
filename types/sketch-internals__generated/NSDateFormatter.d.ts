@@ -1,6 +1,7 @@
 interface NSDateFormatterUninitialized<InitializedType = NSDateFormatter> extends NSFormatterUninitialized<NSDateFormatter> {}
+
 interface NSDateFormatter extends NSFormatter {
-  getObjectValue_forString_range_error(obj: any, string: NSString | string, rangep: NSRange, error: NSError): boolean;
+  getObjectValue_forString_range_error(obj: any, string: NSString | string, rangep: NSRange, error: MOPointer<NSError>): boolean;
   stringFromDate(date: NSDate): NSString;
   dateFromString(string: NSString | string): NSDate;
   setLocalizedDateFormatFromTemplate(dateFormatTemplate: NSString | string): void;
@@ -74,12 +75,17 @@ interface NSDateFormatter extends NSFormatter {
   doesRelativeDateFormatting(): boolean;
   setDoesRelativeDateFormatting(doesRelativeDateFormatting: boolean): void;
 }
+
 declare const NSDateFormatter: {
   alloc(): NSDateFormatterUninitialized;
-  class(): NSDateFormatter;  localizedStringFromDate_dateStyle_timeStyle(date: NSDate, dstyle: NSDateFormatterStyle, tstyle: NSDateFormatterStyle): NSString;
+  class(): NSDateFormatter;
+  localizedStringFromDate_dateStyle_timeStyle(date: NSDate, dstyle: NSDateFormatterStyle, tstyle: NSDateFormatterStyle): NSString;
   dateFormatFromTemplate_options_locale(tmplate: NSString | string, opts: NSUInteger, locale: NSLocale | null): NSString;
-
-  defaultFormatterBehavior(): NSDateFormatterBehavior;
+  defaultFormatterBehavior(): NSDateFormatterBehavior;,
+          {
+            newLineStart: true,
+            newLineEnd: false,
+          }
   setDefaultFormatterBehavior(defaultFormatterBehavior: NSDateFormatterBehavior): void;
 
 }

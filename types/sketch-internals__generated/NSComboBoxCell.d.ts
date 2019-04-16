@@ -1,4 +1,5 @@
 interface NSComboBoxCellUninitialized<InitializedType = NSComboBoxCell> extends NSTextFieldCellUninitialized<NSComboBoxCell> {}
+
 interface NSComboBoxCell extends NSTextFieldCell {
   reloadData(): void;
   noteNumberOfItemsChanged(): void;
@@ -38,6 +39,7 @@ interface NSComboBoxCell extends NSTextFieldCell {
   objectValueOfSelectedItem(): any;
   objectValues(): NSArray<any>;
 }
+
 declare const NSComboBoxCell: {
   alloc(): NSComboBoxCellUninitialized;
   class(): NSComboBoxCell;

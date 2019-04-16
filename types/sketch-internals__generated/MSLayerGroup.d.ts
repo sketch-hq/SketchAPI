@@ -1,4 +1,5 @@
 interface MSLayerGroupUninitialized<InitializedType = MSLayerGroup> extends _MSLayerGroupUninitialized<MSLayerGroup> {}
+
 interface MSLayerGroup extends _MSLayerGroup, IMSLayerGroup {
   prepareAsMaskContainer(): void;
   enumerateLayersAvoidingFaultingWithOptions_passingTest_usingBlock(options: MSLayerEnumeratorFlags, predicate: MSLayerIteratorTestBlock, enumeratorBlock: MSLayerIteratorBlock): void;
@@ -21,11 +22,13 @@ interface MSLayerGroup extends _MSLayerGroup, IMSLayerGroup {
   hasInferredLayout(): boolean;
   setHasInferredLayout(hasInferredLayout: boolean): void;
   isAutomaticScalingEnabled(): boolean;
+  layers(): NSArray<any>;
 }
+
 declare const MSLayerGroup: {
   alloc(): MSLayerGroupUninitialized;
-  class(): MSLayerGroup;  groupWithLayer(layer: MSLayer): MSLayerGroup;
+  class(): MSLayerGroup;
+  groupWithLayer(layer: MSLayer): MSLayerGroup;
   groupWithLayers(layers: MSLayerArray): MSLayerGroup;
-
 }
 

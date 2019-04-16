@@ -1,4 +1,5 @@
 interface MSSharedStyleContainerUninitialized<InitializedType = MSSharedStyleContainer> extends _MSSharedStyleContainerUninitialized<MSSharedStyleContainer> {}
+
 interface MSSharedStyleContainer extends _MSSharedStyleContainer {
   removeSharedStyle(sharedStyle: MSSharedStyle): void;
   sharedStyleWithID(sharedStyleID: NSString | string): MSSharedStyle;
@@ -8,6 +9,7 @@ interface MSSharedStyleContainer extends _MSSharedStyleContainer {
   validStyleType(): MSSharedStyleType;
   sharedStyles(): NSArray<any>;
 }
+
 declare const MSSharedStyleContainer: {
   alloc(): MSSharedStyleContainerUninitialized;
   class(): MSSharedStyleContainer;

@@ -1,4 +1,5 @@
 interface MOBridgeSupportStringConstantUninitialized<InitializedType = MOBridgeSupportStringConstant> extends MOBridgeSupportSymbolUninitialized<MOBridgeSupportStringConstant> {}
+
 interface MOBridgeSupportStringConstant extends MOBridgeSupportSymbol {
 
   value(): NSString;
@@ -6,8 +7,11 @@ interface MOBridgeSupportStringConstant extends MOBridgeSupportSymbol {
   hasNSString(): boolean;
   setHasNSString(hasNSString: boolean): void;
 }
+
 declare const MOBridgeSupportStringConstant: {
   alloc(): MOBridgeSupportStringConstantUninitialized;
   class(): MOBridgeSupportStringConstant;
+  accessInstanceVariablesDirectly(): boolean;
+
 }
 

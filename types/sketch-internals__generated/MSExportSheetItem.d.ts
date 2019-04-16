@@ -1,4 +1,5 @@
 interface MSExportSheetItemUninitialized<InitializedType = MSExportSheetItem> extends NSCollectionViewItemUninitialized<MSExportSheetItem> {}
+
 interface MSExportSheetItem extends NSCollectionViewItem {
 
   previewContainer(): NSView;
@@ -14,6 +15,7 @@ interface MSExportSheetItem extends NSCollectionViewItem {
   isExportable(): boolean;
   setIsExportable(isExportable: boolean): void;
 }
+
 declare const MSExportSheetItem: {
   alloc(): MSExportSheetItemUninitialized;
   class(): MSExportSheetItem;

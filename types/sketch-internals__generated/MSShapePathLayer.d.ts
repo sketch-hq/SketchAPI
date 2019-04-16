@@ -1,4 +1,5 @@
 interface MSShapePathLayerUninitialized<InitializedType = MSShapePathLayer> extends _MSShapePathLayerUninitialized<MSShapePathLayer> {}
+
 interface MSShapePathLayer extends _MSShapePathLayer, IMSPathLayer {
   resetPoints(): void;
   resetPointsBasedOnUserInteraction(): void;
@@ -18,6 +19,8 @@ interface MSShapePathLayer extends _MSShapePathLayer, IMSPathLayer {
   adjustGeometryToBoundsRect(targetBounds: NSRect): void;
   cornerForLinePointAtIndex(index: NSUInteger): BCCorner;
   insertionCursor(): NSCursor;
+  simplify(): void;
+  reversePath(): void;
 
   slope(): CGFloat;
   isEditing(): boolean;
@@ -27,14 +30,19 @@ interface MSShapePathLayer extends _MSShapePathLayer, IMSPathLayer {
   canFlatten(): boolean;
   pathInFrame(): MSPath;
   setPathInFrame(pathInFrame: MSPath): void;
+  isClosed(): boolean;
+  setIsClosed(isClosed: boolean): void;
+  edited(): boolean;
+  setEdited(edited: boolean): void;
 }
+
 declare const MSShapePathLayer: {
   alloc(): MSShapePathLayerUninitialized;
-  class(): MSShapePathLayer;  layerWithPath(path: MSPath): MSShapePathLayer;
+  class(): MSShapePathLayer;
+  layerWithPath(path: MSPath): MSShapePathLayer;
   layerWithPath_integralFrame(path: MSPath, makeIntegral: boolean): MSShapePathLayer;
   layerWithShapeGroupSubpath(subPath: MSPath): MSShapePathLayer;
   shapeWithRect(rect: NSRect): MSRectangleShape;
   performBatchEdits(edits: Block): void;
-
 }
 

@@ -1,4 +1,5 @@
 interface MSClickGestureRecognizerUninitialized<InitializedType = MSClickGestureRecognizer> extends MSGestureRecognizerUninitialized<MSClickGestureRecognizer> {}
+
 interface MSClickGestureRecognizer extends MSGestureRecognizer {
 
   buttonMask(): NSUInteger;
@@ -6,6 +7,7 @@ interface MSClickGestureRecognizer extends MSGestureRecognizer {
   numberOfClicksRequired(): NSInteger;
   setNumberOfClicksRequired(numberOfClicksRequired: NSInteger): void;
 }
+
 declare const MSClickGestureRecognizer: {
   alloc(): MSClickGestureRecognizerUninitialized;
   class(): MSClickGestureRecognizer;

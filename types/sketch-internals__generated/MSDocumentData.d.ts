@@ -1,4 +1,5 @@
 interface MSDocumentDataUninitialized<InitializedType = MSDocumentData> extends _MSDocumentDataUninitialized<MSDocumentData> {}
+
 interface MSDocumentData extends _MSDocumentData, IMSDocumentData {
   enumerateColorConvertiblesIgnoringForeignSymbols(block: MSColorConvertibleHandler): void;
   replaceInstancesOfColor_withColor_ignoreAlphaWhenMatching_replaceAlphaOfOriginalColor(color: MSColor, replacementColor: MSColor, ignoreAlphaWhenMatching: boolean, replaceAlphaOfOriginalColor: boolean): void;
@@ -50,7 +51,9 @@ interface MSDocumentData extends _MSDocumentData, IMSDocumentData {
   fontList(): MSFontList;
   selectedOverrides(): NSArray<any>;
   setSelectedOverrides(selectedOverrides: NSArray<any> | any[]): void;
+  pages(): NSArray<any>;
 }
+
 declare const MSDocumentData: {
   alloc(): MSDocumentDataUninitialized;
   class(): MSDocumentData;

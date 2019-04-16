@@ -1,4 +1,5 @@
 interface NSTextTableUninitialized<InitializedType = NSTextTable> extends NSTextBlockUninitialized<NSTextTable> {}
+
 interface NSTextTable extends NSTextBlock {
   rectForBlock_layoutAtPoint_inRect_textContainer_characterRange(block: NSTextTableBlock, startingPoint: NSPoint, rect: NSRect, textContainer: NSTextContainer, charRange: NSRange): NSRect;
   boundsRectForBlock_contentRect_inRect_textContainer_characterRange(block: NSTextTableBlock, contentRect: NSRect, rect: NSRect, textContainer: NSTextContainer, charRange: NSRange): NSRect;
@@ -13,8 +14,11 @@ interface NSTextTable extends NSTextBlock {
   hidesEmptyCells(): boolean;
   setHidesEmptyCells(hidesEmptyCells: boolean): void;
 }
+
 declare const NSTextTable: {
   alloc(): NSTextTableUninitialized;
   class(): NSTextTable;
+  accessInstanceVariablesDirectly(): boolean;
+
 }
 

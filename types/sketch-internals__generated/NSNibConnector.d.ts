@@ -1,7 +1,11 @@
-interface NSNibConnectorUninitialized<InitializedType = NSNibConnector> extends NSObjectUninitialized<NSNibConnector> {}
+interface NSNibConnectorUninitialized<InitializedType = NSNibConnector> extends NSObjectUninitialized<NSNibConnector> {
+  initWithCoder(aDecoder: NSCoder): InitializedType;
+}
+
 interface NSNibConnector extends NSObject, INSCoding {
   replaceObject_withObject(oldObject: any, newObject: any): void;
   establishConnection(): void;
+  encodeWithCoder(aCoder: NSCoder): void;
 
   source(): any;
   setSource(source: any): void;
@@ -10,8 +14,37 @@ interface NSNibConnector extends NSObject, INSCoding {
   label(): NSString;
   setLabel(label: NSString | string): void;
 }
+
 declare const NSNibConnector: {
   alloc(): NSNibConnectorUninitialized;
   class(): NSNibConnector;
+  load(): void;
+  instancesRespondToSelector(aSelector: string): boolean;
+  conformsToProtocol(protocol: Protocol): boolean;
+  instanceMethodForSelector(aSelector: string): IMP;
+  isSubclassOfClass(aClass: any): boolean;
+  hash(): NSUInteger;
+  superclass(): any;
+  description(): NSString;
+  debugDescription(): NSString;
+  useStoredAccessor(): boolean;
+  keyPathsForValuesAffectingValueForKey(key: NSString | string): NSSet<any>;
+  automaticallyNotifiesObserversForKey(key: NSString | string): boolean;
+  setKeys_triggerChangeNotificationsForDependentKey(keys: NSArray<any> | any[], dependentKey: NSString | string): void;
+  classFallbacksForKeyedArchiver(): NSArray<any>;
+  classForKeyedUnarchiver(): any;
+  version(): NSInteger;
+  setVersion(aVersion: NSInteger): void;
+  cancelPreviousPerformRequestsWithTarget_selector_object(aTarget: any, aSelector: string, anArgument: any | null): void;
+  cancelPreviousPerformRequestsWithTarget(aTarget: any): void;
+  exposeBinding(binding: NSBindingName): void;
+  setDefaultPlaceholder_forMarker_withBinding(placeholder: any | null, marker: any | null, binding: NSBindingName): void;
+  defaultPlaceholderForMarker_withBinding(marker: any | null, binding: NSBindingName): any;
+  mo_swizzleAdditions(): void;
+  mo_mocha(): MOClassDescription;
+  isSelectorExcludedFromMochaScript(selector: string): boolean;
+  selectorForMochaPropertyName(propertyName: NSString | string): string;
+  accessInstanceVariablesDirectly(): boolean;
+
 }
 

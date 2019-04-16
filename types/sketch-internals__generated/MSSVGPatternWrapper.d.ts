@@ -1,4 +1,5 @@
 interface MSSVGPatternWrapperUninitialized<InitializedType = MSSVGPatternWrapper> extends MSXMLElementWrapperUninitialized<MSSVGPatternWrapper> {}
+
 interface MSSVGPatternWrapper extends MSXMLElementWrapper {
 
   preserveAspectRatio(): NSString;
@@ -20,8 +21,11 @@ interface MSSVGPatternWrapper extends MSXMLElementWrapper {
   href(): NSString;
   setHref(href: NSString | string): void;
 }
+
 declare const MSSVGPatternWrapper: {
   alloc(): MSSVGPatternWrapperUninitialized;
   class(): MSSVGPatternWrapper;
+  elementName(): NSString;
+  element(): MSSVGPatternWrapper;
 }
 

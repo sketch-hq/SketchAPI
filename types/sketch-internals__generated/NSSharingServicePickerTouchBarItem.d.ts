@@ -1,4 +1,5 @@
 interface NSSharingServicePickerTouchBarItemUninitialized<InitializedType = NSSharingServicePickerTouchBarItem> extends NSTouchBarItemUninitialized<NSSharingServicePickerTouchBarItem> {}
+
 interface NSSharingServicePickerTouchBarItem extends NSTouchBarItem {
 
   delegate(): any;
@@ -10,6 +11,7 @@ interface NSSharingServicePickerTouchBarItem extends NSTouchBarItem {
   buttonImage(): NSImage;
   setButtonImage(buttonImage: NSImage): void;
 }
+
 declare const NSSharingServicePickerTouchBarItem: {
   alloc(): NSSharingServicePickerTouchBarItemUninitialized;
   class(): NSSharingServicePickerTouchBarItem;

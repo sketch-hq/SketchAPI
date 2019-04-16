@@ -1,4 +1,5 @@
 interface MSSVGMorphologyUninitialized<InitializedType = MSSVGMorphology> extends MSSVGfeFilterPrimitiveUninitialized<MSSVGMorphology> {}
+
 interface MSSVGMorphology extends MSSVGfeFilterPrimitive {
 
   in(): NSString;
@@ -8,8 +9,10 @@ interface MSSVGMorphology extends MSSVGfeFilterPrimitive {
   radius(): CGFloat;
   setRadius(radius: CGFloat): void;
 }
+
 declare const MSSVGMorphology: {
   alloc(): MSSVGMorphologyUninitialized;
   class(): MSSVGMorphology;
+  filter(): MSSVGMorphology;
 }
 

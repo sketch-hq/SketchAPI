@@ -1,4 +1,5 @@
 interface MSPopoverActionUninitialized<InitializedType = MSPopoverAction> extends MSDocumentActionUninitialized<MSPopoverAction> {}
+
 interface MSPopoverAction extends MSDocumentAction {
   showPopover(sender: any): void;
   closePopover(): void;
@@ -7,9 +8,13 @@ interface MSPopoverAction extends MSDocumentAction {
   popoverViewController(): NSViewController;
   popoverVisible(): boolean;
 }
+
 declare const MSPopoverAction: {
   alloc(): MSPopoverActionUninitialized;
-  class(): MSPopoverAction;  popoverClass(): any;
+  class(): MSPopoverAction;
+  popoverClass(): any;
+  restorableStateKeyPaths(): NSArray<any>;
+  accessInstanceVariablesDirectly(): boolean;
 
 }
 

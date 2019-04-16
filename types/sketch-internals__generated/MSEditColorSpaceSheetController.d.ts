@@ -1,4 +1,5 @@
 interface MSEditColorSpaceSheetControllerUninitialized<InitializedType = MSEditColorSpaceSheetController> extends CHSheetControllerUninitialized<MSEditColorSpaceSheetController> {}
+
 interface MSEditColorSpaceSheetController extends CHSheetController {
   pickColorSpace(sender: any): IBAction;
   pickChangeLogic(sender: any): IBAction;
@@ -19,8 +20,13 @@ interface MSEditColorSpaceSheetController extends CHSheetController {
   convertDescriptionTextField(): NSTextField;
   setConvertDescriptionTextField(convertDescriptionTextField: NSTextField): void;
 }
+
 declare const MSEditColorSpaceSheetController: {
   alloc(): MSEditColorSpaceSheetControllerUninitialized;
   class(): MSEditColorSpaceSheetController;
+  runForWindow(window: NSWindow): any;
+  runForWindow_withObject(window: NSWindow, obj: any): any;
+  accessInstanceVariablesDirectly(): boolean;
+
 }
 

@@ -2,6 +2,7 @@ interface MSPluginManagerUninitialized<InitializedType = MSPluginManager> extend
   initialisePlugins(): InitializedType;
   initWithPluginsFolderURLs_updater_pluginStateManager(pluginsFolderURLs: NSArray<any> | any[] | null, updater: any | null, stateManager: MSPluginManagingState | null): InitializedType;
 }
+
 interface MSPluginManager extends NSObject, ICOFlowDelegate {
   enablePlugin(pluginBundle: MSPluginBundle): void;
   disablePlugin(pluginBundle: MSPluginBundle): void;
@@ -24,13 +25,14 @@ interface MSPluginManager extends NSObject, ICOFlowDelegate {
   isPluginUpdateDownloadedWithIdentifier_version(identifier: NSString | string, version: NSString | string): boolean;
   downloadPluginUpdate_withVersion_completionHandler(pluginIdentifier: NSString | string, pluginVersion: NSString | string, downloadCompletionHandler: Block): void;
   downloadAndInstallPluginWithIdentifier_version_downloadCompletionHandler(identifier: NSString | string, version: NSString | string, downloadCompletionHandler: Block): void;
-  installPluginWithIdentifier_version_error(identifier: NSString | string, version: NSString | string, error: NSError): boolean;
+  installPluginWithIdentifier_version_error(identifier: NSString | string, version: NSString | string, error: MOPointer<NSError>): boolean;
   isPluginWithIdentifier_incompatibleWithVersion(identifier: NSString | string, version: NSString | string): boolean;
   cancelDownloadingPluginVersions(): void;
   clearPluginsCache(): void;
   clearFolderMonitors(): void;
   registerIncompatiblePlugins(): void;
   downloadRemotePluginsBlacklist(): void;
+  didClearEventStack(coscript: COScript): void;
 
   pluginsFolderURLs(): NSArray<any>;
   mainPluginsFolderURL(): NSURL;
@@ -49,14 +51,42 @@ interface MSPluginManager extends NSObject, ICOFlowDelegate {
   logAction(): any;
   setLogAction(logAction: any): void;
 }
+
 declare const MSPluginManager: {
   alloc(): MSPluginManagerUninitialized;
-  class(): MSPluginManager;  mainPluginsFolderURL(): NSURL;
+  class(): MSPluginManager;
+  mainPluginsFolderURL(): NSURL;
   defaultPluginURL(): NSURL;
   pluginsURLs(): NSArray<any>;
   warehousePluginFolderForIdentifier_withVersion(identifier: NSString | string, version: NSString | string): NSURL;
-
+  load(): void;
+  instancesRespondToSelector(aSelector: string): boolean;
+  conformsToProtocol(protocol: Protocol): boolean;
+  instanceMethodForSelector(aSelector: string): IMP;
+  isSubclassOfClass(aClass: any): boolean;
+  hash(): NSUInteger;
+  superclass(): any;
+  description(): NSString;
+  debugDescription(): NSString;
+  useStoredAccessor(): boolean;
+  keyPathsForValuesAffectingValueForKey(key: NSString | string): NSSet<any>;
+  automaticallyNotifiesObserversForKey(key: NSString | string): boolean;
+  setKeys_triggerChangeNotificationsForDependentKey(keys: NSArray<any> | any[], dependentKey: NSString | string): void;
+  classFallbacksForKeyedArchiver(): NSArray<any>;
+  classForKeyedUnarchiver(): any;
+  version(): NSInteger;
+  setVersion(aVersion: NSInteger): void;
+  cancelPreviousPerformRequestsWithTarget_selector_object(aTarget: any, aSelector: string, anArgument: any | null): void;
+  cancelPreviousPerformRequestsWithTarget(aTarget: any): void;
+  exposeBinding(binding: NSBindingName): void;
+  setDefaultPlaceholder_forMarker_withBinding(placeholder: any | null, marker: any | null, binding: NSBindingName): void;
+  defaultPlaceholderForMarker_withBinding(marker: any | null, binding: NSBindingName): any;
+  mo_swizzleAdditions(): void;
+  mo_mocha(): MOClassDescription;
+  isSelectorExcludedFromMochaScript(selector: string): boolean;
+  selectorForMochaPropertyName(propertyName: NSString | string): string;
   pluginsWarehouseURL(): NSURL;
+  accessInstanceVariablesDirectly(): boolean;
 
 }
 

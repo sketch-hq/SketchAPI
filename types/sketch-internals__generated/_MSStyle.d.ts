@@ -1,4 +1,5 @@
 interface _MSStyleUninitialized<InitializedType = _MSStyle> extends MSModelObjectUninitialized<_MSStyle> {}
+
 interface _MSStyle extends MSModelObject {
   addStyleBorder(value: MSStyleBorder): void;
   addStyleBorders(borders: NSArray<any> | any[]): void;
@@ -76,8 +77,11 @@ interface _MSStyle extends MSModelObject {
   textStyle(): MSTextStyle;
   setTextStyle(textStyle: MSTextStyle): void;
 }
+
 declare const _MSStyle: {
   alloc(): _MSStyleUninitialized;
   class(): _MSStyle;
+  immutableClass(): any;
+  allowsFaulting(): boolean;
 }
 

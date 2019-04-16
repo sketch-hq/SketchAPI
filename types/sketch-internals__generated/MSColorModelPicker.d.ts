@@ -1,4 +1,5 @@
 interface MSColorModelPickerUninitialized<InitializedType = MSColorModelPicker> extends NSViewControllerUninitialized<MSColorModelPicker> {}
+
 interface MSColorModelPicker extends NSViewController {
 
   colorModel(): MSComponentColorModel;
@@ -6,8 +7,12 @@ interface MSColorModelPicker extends NSViewController {
   delegate(): any;
   setDelegate(delegate: any): void;
 }
+
 declare const MSColorModelPicker: {
   alloc(): MSColorModelPickerUninitialized;
   class(): MSColorModelPicker;
+  restorableStateKeyPaths(): NSArray<any>;
+  accessInstanceVariablesDirectly(): boolean;
+
 }
 

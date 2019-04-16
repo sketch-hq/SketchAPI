@@ -1,4 +1,5 @@
 interface BITCrashManagerUninitialized<InitializedType = BITCrashManager> extends BITHockeyBaseManagerUninitialized<BITCrashManager> {}
+
 interface BITCrashManager extends BITHockeyBaseManager {
   setCrashCallbacks(callbacks: BITCrashManagerCallbacks): void;
   handleUserInput_withUserProvidedMetaData(userInput: BITCrashManagerUserInput, userProvidedMetaData: BITCrashMetaData): boolean;
@@ -15,6 +16,7 @@ interface BITCrashManager extends BITHockeyBaseManager {
   lastSessionCrashDetails(): BITCrashDetails;
   timeintervalCrashInLastSessionOccured(): NSTimeInterval;
 }
+
 declare const BITCrashManager: {
   alloc(): BITCrashManagerUninitialized;
   class(): BITCrashManager;

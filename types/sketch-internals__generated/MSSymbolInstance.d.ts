@@ -1,4 +1,5 @@
 interface MSSymbolInstanceUninitialized<InitializedType = MSSymbolInstance> extends _MSSymbolInstanceUninitialized<MSSymbolInstance> {}
+
 interface MSSymbolInstance extends _MSSymbolInstance {
   overrideMatchingPoint(point: MSOverridePoint): MSAvailableOverride;
   symbolMaster(): MSSymbolMaster;
@@ -22,6 +23,7 @@ interface MSSymbolInstance extends _MSSymbolInstance {
   modifiedMaster(): MSImmutableSymbolMaster;
   influencingSymbolIDs(): NSSet<any>;
 }
+
 declare const MSSymbolInstance: {
   alloc(): MSSymbolInstanceUninitialized;
   class(): MSSymbolInstance;

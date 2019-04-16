@@ -1,4 +1,5 @@
 interface NSStackViewUninitialized<InitializedType = NSStackView> extends NSViewUninitialized<NSStackView> {}
+
 interface NSStackView extends NSView {
   setCustomSpacing_afterView(spacing: CGFloat, view: NSView): void;
   customSpacingAfterView(view: NSView): CGFloat;
@@ -37,9 +38,17 @@ interface NSStackView extends NSView {
   hasEqualSpacing(): boolean;
   setHasEqualSpacing(hasEqualSpacing: boolean): void;
 }
+
 declare const NSStackView: {
   alloc(): NSStackViewUninitialized;
-  class(): NSStackView;  stackViewWithViews(views: NSArray<any> | any[]): NSStackView;
+  class(): NSStackView;
+  stackViewWithViews(views: NSArray<any> | any[]): NSStackView;
+  requiresConstraintBasedLayout(): boolean;
+  focusView(): NSView;
+  defaultMenu(): NSMenu;
+  compatibleWithResponsiveScrolling(): boolean;
+  defaultFocusRingType(): NSFocusRingType;
+  restorableStateKeyPaths(): NSArray<any>;
 
 }
 

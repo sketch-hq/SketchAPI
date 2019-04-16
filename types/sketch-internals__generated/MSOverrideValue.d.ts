@@ -1,6 +1,7 @@
 interface MSOverrideValueUninitialized<InitializedType = MSOverrideValue> extends _MSOverrideValueUninitialized<MSOverrideValue> {
   initWithName_value(name: NSString | string, value: NSObject): InitializedType;
 }
+
 interface MSOverrideValue extends _MSOverrideValue {
   addPredecessor(predecessor: MSOverrideValue): void;
 
@@ -9,6 +10,7 @@ interface MSOverrideValue extends _MSOverrideValue {
   predecessor(): MSOverrideValue;
   attributeName(): NSString;
 }
+
 declare const MSOverrideValue: {
   alloc(): MSOverrideValueUninitialized;
   class(): MSOverrideValue;

@@ -1,4 +1,5 @@
 interface MSDragToSelectGestureRecognizerUninitialized<InitializedType = MSDragToSelectGestureRecognizer> extends MSDragGestureRecognizerUninitialized<MSDragToSelectGestureRecognizer> {}
+
 interface MSDragToSelectGestureRecognizer extends MSDragGestureRecognizer {
   selectionRect(): NSRect;
 
@@ -8,6 +9,7 @@ interface MSDragToSelectGestureRecognizer extends MSDragGestureRecognizer {
   initialSelection(): NSArray<any>;
   setInitialSelection(initialSelection: NSArray<any> | any[]): void;
 }
+
 declare const MSDragToSelectGestureRecognizer: {
   alloc(): MSDragToSelectGestureRecognizerUninitialized;
   class(): MSDragToSelectGestureRecognizer;

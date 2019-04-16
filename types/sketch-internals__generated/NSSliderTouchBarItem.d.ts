@@ -1,4 +1,5 @@
 interface NSSliderTouchBarItemUninitialized<InitializedType = NSSliderTouchBarItem> extends NSTouchBarItemUninitialized<NSSliderTouchBarItem> {}
+
 interface NSSliderTouchBarItem extends NSTouchBarItem {
 
   view(): NSView;
@@ -19,6 +20,7 @@ interface NSSliderTouchBarItem extends NSTouchBarItem {
   customizationLabel(): NSString;
   setCustomizationLabel(customizationLabel: NSString | string): void;
 }
+
 declare const NSSliderTouchBarItem: {
   alloc(): NSSliderTouchBarItemUninitialized;
   class(): NSSliderTouchBarItem;

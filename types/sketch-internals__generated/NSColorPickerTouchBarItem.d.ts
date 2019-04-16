@@ -1,4 +1,5 @@
 interface NSColorPickerTouchBarItemUninitialized<InitializedType = NSColorPickerTouchBarItem> extends NSTouchBarItemUninitialized<NSColorPickerTouchBarItem> {}
+
 interface NSColorPickerTouchBarItem extends NSTouchBarItem {
 
   color(): NSColor;
@@ -18,12 +19,13 @@ interface NSColorPickerTouchBarItem extends NSTouchBarItem {
   enabled(): boolean;
   setEnabled(enabled: boolean): void;
 }
+
 declare const NSColorPickerTouchBarItem: {
   alloc(): NSColorPickerTouchBarItemUninitialized;
-  class(): NSColorPickerTouchBarItem;  colorPickerWithIdentifier(identifier: NSTouchBarItemIdentifier): NSColorPickerTouchBarItem;
+  class(): NSColorPickerTouchBarItem;
+  colorPickerWithIdentifier(identifier: NSTouchBarItemIdentifier): NSColorPickerTouchBarItem;
   textColorPickerWithIdentifier(identifier: NSTouchBarItemIdentifier): NSColorPickerTouchBarItem;
   strokeColorPickerWithIdentifier(identifier: NSTouchBarItemIdentifier): NSColorPickerTouchBarItem;
   colorPickerWithIdentifier_buttonImage(identifier: NSTouchBarItemIdentifier, image: NSImage): NSColorPickerTouchBarItem;
-
 }
 

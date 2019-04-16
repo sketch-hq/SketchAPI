@@ -1,4 +1,5 @@
 interface MSStylePartPreviewButtonUninitialized<InitializedType = MSStylePartPreviewButton> extends MSInspectorButtonUninitialized<MSStylePartPreviewButton> {}
+
 interface MSStylePartPreviewButton extends MSInspectorButton {
   drawButton(): void;
 
@@ -11,8 +12,16 @@ interface MSStylePartPreviewButton extends MSInspectorButton {
   dragOwner(): any;
   setDragOwner(dragOwner: any): void;
 }
+
 declare const MSStylePartPreviewButton: {
   alloc(): MSStylePartPreviewButtonUninitialized;
   class(): MSStylePartPreviewButton;
+  cellClass(): any;,
+          {
+            newLineStart: true,
+            newLineEnd: false,
+          }
+  setCellClass(cellClass: any): void;
+
 }
 

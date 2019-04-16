@@ -1,4 +1,5 @@
 interface _SVGStrokeUninitialized<InitializedType = _SVGStroke> extends SVGElementUninitialized<_SVGStroke> {}
+
 interface _SVGStroke extends SVGElement {
   primitiveSetGradient(gradient: any): void;
   primitiveSetPattern(pattern: any): void;
@@ -22,11 +23,13 @@ interface _SVGStroke extends SVGElement {
   usedBy(): NSSet<any>;
   setUsedBy(usedBy: NSSet<any>): void;
 }
+
 declare const _SVGStroke: {
   alloc(): _SVGStrokeUninitialized;
-  class(): _SVGStroke;  propertyNames(): NSArray<any>;
+  class(): _SVGStroke;
+  propertyNames(): NSArray<any>;
   relationshipNames(): NSArray<any>;
   attributeNames(): NSArray<any>;
-
+  elementOfType_xml_importer_parent(type: NSString | string, xml: NSXMLElement, importer: SVGImporter, parent: SVGElement): SVGElement;
 }
 

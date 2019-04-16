@@ -1,4 +1,5 @@
 interface MSTextHeaderInspectorItemUninitialized<InitializedType = MSTextHeaderInspectorItem> extends MSCollapsibleHeaderInspectorItemUninitialized<MSTextHeaderInspectorItem> {}
+
 interface MSTextHeaderInspectorItem extends MSCollapsibleHeaderInspectorItem {
 
   detailSettingsButton(): NSButton;
@@ -12,6 +13,7 @@ interface MSTextHeaderInspectorItem extends MSCollapsibleHeaderInspectorItem {
   delegate(): any;
   setDelegate(delegate: any): void;
 }
+
 declare const MSTextHeaderInspectorItem: {
   alloc(): MSTextHeaderInspectorItemUninitialized;
   class(): MSTextHeaderInspectorItem;

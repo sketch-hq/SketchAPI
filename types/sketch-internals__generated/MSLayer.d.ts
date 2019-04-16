@@ -1,6 +1,7 @@
 interface MSLayerUninitialized<InitializedType = MSLayer> extends _MSLayerUninitialized<MSLayer> {
   initWithFrame(frame: NSRect): InitializedType;
 }
+
 interface MSLayer extends _MSLayer, IMSLayer, INSCopying, IMSRectDelegate {
   hudDescription(): NSString;
   layerDidResizeFromInspector(axis: BCAxis): void;
@@ -98,6 +99,8 @@ interface MSLayer extends _MSLayer, IMSLayer, INSCopying, IMSRectDelegate {
   shouldDrawSelectionStroke(): boolean;
   cornerRectType(): MSDotRectType;
   shouldFlattenAfterRotate(): boolean;
+  copyWithZone(zone: NSZone | null): any;
+  rect_didChangeFromRect(rect: MSRect, oldRect: NSRect): void;
 
   canChangeBooleanOperation(): boolean;
   isActivePartInBooleanOperation(): boolean;
@@ -143,13 +146,14 @@ interface MSLayer extends _MSLayer, IMSLayer, INSCopying, IMSRectDelegate {
   transformStruct(): CHTransformStruct;
   setTransformStruct(transformStruct: CHTransformStruct): void;
 }
+
 declare const MSLayer: {
   alloc(): MSLayerUninitialized;
-  class(): MSLayer;  alignLayers_withMode_toKey_pixelFit(layerArray: MSLayerArray, mode: MSLayerAlignmentMode, key: NSString | string, shouldPixelFit: boolean): void;
+  class(): MSLayer;
+  alignLayers_withMode_toKey_pixelFit(layerArray: MSLayerArray, mode: MSLayerAlignmentMode, key: NSString | string, shouldPixelFit: boolean): void;
   userVisibleRotationForRotation(r: CGFloat): CGFloat;
   rotationForUserVisibleRotation(r: CGFloat): CGFloat;
   layerWithPath(path: MSPath): MSStyledLayer;
   makeLayerNamesUnique_withOptions(layers: NSArray<any> | any[], options: MSLayerRenameOptions): void;
-
 }
 

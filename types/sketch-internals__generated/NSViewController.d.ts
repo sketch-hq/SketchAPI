@@ -1,6 +1,7 @@
 interface NSViewControllerUninitialized<InitializedType = NSViewController> extends NSResponderUninitialized<NSViewController> {
   initWithNibName_bundle(nibNameOrNil: NSNibName | null, nibBundleOrNil: NSBundle | null): InitializedType;
 }
+
 interface NSViewController extends NSResponder, INSEditor, INSSeguePerforming, INSUserInterfaceItemIdentification {
   loadView(): void;
   commitEditingWithDelegate_didCommitSelector_contextInfo(delegate: any | null, didCommitSelector: string | null, contextInfo: void | null): void;
@@ -33,6 +34,13 @@ interface NSViewController extends NSResponder, INSEditor, INSSeguePerforming, I
   addChildViewController_fittingIntoView(childController: NSViewController, containerView: NSView): void;
   inspectorController(): MSInspectorController;
   reloadInspectorStack(sender: any): IBAction;
+  discardEditing(): void;
+  commitEditing(): boolean;
+  commitEditingWithDelegate_didCommitSelector_contextInfo(delegate: any | null, didCommitSelector: string | null, contextInfo: void | null): void;
+  commitEditingAndReturnError(error: MOPointer<NSError>): boolean;
+  prepareForSegue_sender(segue: NSStoryboardSegue, sender: any | null): void;
+  performSegueWithIdentifier_sender(identifier: NSStoryboardSegueIdentifier, sender: any | null): void;
+  shouldPerformSegueWithIdentifier_sender(identifier: NSStoryboardSegueIdentifier, sender: any | null): boolean;
 
   nibName(): NSNibName;
   nibBundle(): NSBundle;
@@ -59,9 +67,15 @@ interface NSViewController extends NSResponder, INSEditor, INSSeguePerforming, I
   preferredMinimumSize(): NSSize;
   preferredMaximumSize(): NSSize;
   rootViewController(): NSViewController;
+  identifier(): NSUserInterfaceItemIdentifier;
+  setIdentifier(identifier: NSUserInterfaceItemIdentifier): void;
 }
+
 declare const NSViewController: {
   alloc(): NSViewControllerUninitialized;
   class(): NSViewController;
+  restorableStateKeyPaths(): NSArray<any>;
+  accessInstanceVariablesDirectly(): boolean;
+
 }
 

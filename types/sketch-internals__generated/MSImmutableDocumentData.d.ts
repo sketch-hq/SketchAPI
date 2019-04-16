@@ -1,4 +1,5 @@
 interface MSImmutableDocumentDataUninitialized<InitializedType = MSImmutableDocumentData> extends _MSImmutableDocumentDataUninitialized<MSImmutableDocumentData> {}
+
 interface MSImmutableDocumentData extends _MSImmutableDocumentData, IMSDocumentData {
   defaultPagesArray(): NSArray<any>;
   usedFontNames(): NSSet<any>;
@@ -24,10 +25,12 @@ interface MSImmutableDocumentData extends _MSImmutableDocumentData, IMSDocumentD
   fontNames(): NSSet<any>;
   unavailableFontNames(): NSSet<any>;
   containsUnavailableFontNames(): boolean;
+  pages(): NSArray<any>;
 }
+
 declare const MSImmutableDocumentData: {
   alloc(): MSImmutableDocumentDataUninitialized;
-  class(): MSImmutableDocumentData;  loadDocumentDataWithMetadata_textPreviewData_loadBlock(metadata: NSDictionary<any, any> | {[key: string]: any}, textPreviewData: NSData | null, loadBlock: Block): MSImmutableDocumentData;
-
+  class(): MSImmutableDocumentData;
+  loadDocumentDataWithMetadata_textPreviewData_loadBlock(metadata: NSDictionary<any, any> | {[key: string]: any}, textPreviewData: NSData | null, loadBlock: Block): MSImmutableDocumentData;
 }
 

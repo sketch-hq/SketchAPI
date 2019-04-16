@@ -1,7 +1,8 @@
 interface NSLayoutManagerUninitialized<InitializedType = NSLayoutManager> extends NSObjectUninitialized<NSLayoutManager> {
-  init(): InitializedType;
   initWithCoder(coder: NSCoder): InitializedType;
+  initWithCoder(aDecoder: NSCoder): InitializedType;
 }
+
 interface NSLayoutManager extends NSObject, INSCoding {
   replaceTextStorage(newTextStorage: NSTextStorage): void;
   addTextContainer(container: NSTextContainer): void;
@@ -114,6 +115,7 @@ interface NSLayoutManager extends NSObject, INSCoding {
   showPackedGlyphs_length_glyphRange_atPoint_font_color_printingAdjustment(glyphs: string, glyphLen: NSUInteger, glyphRange: NSRange, point: NSPoint, font: NSFont, color: NSColor, printingAdjustment: NSSize): void;
   temporaryAttributesForKey(key: NSString | string): NSDictionary<any, any>;
   setTemporaryAttributes_forKey(attrs: NSDictionary<any, any> | {[key: string]: any}, key: NSString | string): void;
+  encodeWithCoder(aCoder: NSCoder): void;
 
   textStorage(): NSTextStorage;
   setTextStorage(textStorage: NSTextStorage): void;
@@ -152,8 +154,37 @@ interface NSLayoutManager extends NSObject, INSCoding {
   glyphGenerator(): NSGlyphGenerator;
   setGlyphGenerator(glyphGenerator: NSGlyphGenerator): void;
 }
+
 declare const NSLayoutManager: {
   alloc(): NSLayoutManagerUninitialized;
   class(): NSLayoutManager;
+  load(): void;
+  instancesRespondToSelector(aSelector: string): boolean;
+  conformsToProtocol(protocol: Protocol): boolean;
+  instanceMethodForSelector(aSelector: string): IMP;
+  isSubclassOfClass(aClass: any): boolean;
+  hash(): NSUInteger;
+  superclass(): any;
+  description(): NSString;
+  debugDescription(): NSString;
+  useStoredAccessor(): boolean;
+  keyPathsForValuesAffectingValueForKey(key: NSString | string): NSSet<any>;
+  automaticallyNotifiesObserversForKey(key: NSString | string): boolean;
+  setKeys_triggerChangeNotificationsForDependentKey(keys: NSArray<any> | any[], dependentKey: NSString | string): void;
+  classFallbacksForKeyedArchiver(): NSArray<any>;
+  classForKeyedUnarchiver(): any;
+  version(): NSInteger;
+  setVersion(aVersion: NSInteger): void;
+  cancelPreviousPerformRequestsWithTarget_selector_object(aTarget: any, aSelector: string, anArgument: any | null): void;
+  cancelPreviousPerformRequestsWithTarget(aTarget: any): void;
+  exposeBinding(binding: NSBindingName): void;
+  setDefaultPlaceholder_forMarker_withBinding(placeholder: any | null, marker: any | null, binding: NSBindingName): void;
+  defaultPlaceholderForMarker_withBinding(marker: any | null, binding: NSBindingName): any;
+  mo_swizzleAdditions(): void;
+  mo_mocha(): MOClassDescription;
+  isSelectorExcludedFromMochaScript(selector: string): boolean;
+  selectorForMochaPropertyName(propertyName: NSString | string): string;
+  accessInstanceVariablesDirectly(): boolean;
+
 }
 

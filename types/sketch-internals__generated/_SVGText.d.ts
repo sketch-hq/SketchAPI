@@ -1,4 +1,5 @@
 interface _SVGTextUninitialized<InitializedType = _SVGText> extends SVGDrawableElementUninitialized<_SVGText> {}
+
 interface _SVGText extends SVGDrawableElement {
 
   adjustSpacingAndGlyphs(): boolean;
@@ -20,11 +21,12 @@ interface _SVGText extends SVGDrawableElement {
   y(): number;
   setY(y: number): void;
 }
+
 declare const _SVGText: {
   alloc(): _SVGTextUninitialized;
-  class(): _SVGText;  propertyNames(): NSArray<any>;
+  class(): _SVGText;
+  propertyNames(): NSArray<any>;
   relationshipNames(): NSArray<any>;
   attributeNames(): NSArray<any>;
-
 }
 

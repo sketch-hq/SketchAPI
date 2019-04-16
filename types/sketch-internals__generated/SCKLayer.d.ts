@@ -1,4 +1,5 @@
 interface SCKLayerUninitialized<InitializedType = SCKLayer> extends SCKObjectUninitialized<SCKLayer> {}
+
 interface SCKLayer extends SCKObject {
   diffComparedTo(object: SCKLayer): SCKLayerDiff;
 
@@ -8,6 +9,7 @@ interface SCKLayer extends SCKObject {
   artboard(): SCKArtboard;
   isFixedToViewport(): boolean;
 }
+
 declare const SCKLayer: {
   alloc(): SCKLayerUninitialized;
   class(): SCKLayer;

@@ -1,4 +1,5 @@
 interface _SVGEllipseShapeUninitialized<InitializedType = _SVGEllipseShape> extends SVGBasicShapeUninitialized<_SVGEllipseShape> {}
+
 interface _SVGEllipseShape extends SVGBasicShape {
 
   cx(): number;
@@ -10,11 +11,12 @@ interface _SVGEllipseShape extends SVGBasicShape {
   ry(): number;
   setRy(ry: number): void;
 }
+
 declare const _SVGEllipseShape: {
   alloc(): _SVGEllipseShapeUninitialized;
-  class(): _SVGEllipseShape;  propertyNames(): NSArray<any>;
+  class(): _SVGEllipseShape;
+  propertyNames(): NSArray<any>;
   relationshipNames(): NSArray<any>;
   attributeNames(): NSArray<any>;
-
 }
 

@@ -1,5 +1,4 @@
 interface NSOrderedSetUninitialized<ObjectType, InitializedType = NSOrderedSet<ObjectType>> extends NSObjectUninitialized<NSOrderedSet<ObjectType>> {
-  init(): InitializedType;
   initWithObjects_count(objects: ObjectType[], cnt: NSUInteger): InitializedType;
   initWithCoder(aDecoder: NSCoder): InitializedType;
   initWithObject(object: ObjectType): InitializedType;
@@ -13,6 +12,7 @@ interface NSOrderedSetUninitialized<ObjectType, InitializedType = NSOrderedSet<O
   initWithSet(set: NSSet<any>): InitializedType;
   initWithSet_copyItems(set: NSSet<any>, flag: boolean): InitializedType;
 }
+
 interface NSOrderedSet<ObjectType> extends NSObject, INSCopying, INSMutableCopying, INSSecureCoding, INSFastEnumeration {
   valueForKey(key: NSString | string): any;
   setValue_forKey(value: any | null, key: NSString | string): void;
@@ -49,6 +49,9 @@ interface NSOrderedSet<ObjectType> extends NSObject, INSCopying, INSMutableCopyi
   filteredOrderedSetUsingPredicate(p: NSPredicate): NSOrderedSet<any>;
   sortedArrayUsingDescriptors(sortDescriptors: NSArray<any> | any[]): NSArray<any>;
   mo_objectForIndexedSubscript(idx: NSUInteger): any;
+  copyWithZone(zone: NSZone | null): any;
+  mutableCopyWithZone(zone: NSZone | null): any;
+  countByEnumeratingWithState_objects_count(state: NSFastEnumerationState, buffer: any[], len: NSUInteger): NSUInteger;
 
   count(): NSUInteger;
   firstObject(): ObjectType;
@@ -58,9 +61,11 @@ interface NSOrderedSet<ObjectType> extends NSObject, INSCopying, INSMutableCopyi
   set(): NSSet<any>;
   description(): NSString;
 }
+
 declare const NSOrderedSet: {
   alloc<ObjectType>(): NSOrderedSetUninitialized<ObjectType>;
-  class(): NSOrderedSet;  orderedSet<ObjectType>(): NSOrderedSet<ObjectType>;
+  class(): NSOrderedSet;
+  orderedSet<ObjectType>(): NSOrderedSet<ObjectType>;
   orderedSetWithObject<ObjectType>(object: ObjectType): NSOrderedSet<ObjectType>;
   orderedSetWithObjects_count<ObjectType>(objects: ObjectType[], cnt: NSUInteger): NSOrderedSet<ObjectType>;
   orderedSetWithObjects<ObjectType>(firstObj: ObjectType, ...args: any[]): NSOrderedSet<ObjectType>;
@@ -70,6 +75,34 @@ declare const NSOrderedSet: {
   orderedSetWithArray_range_copyItems<ObjectType>(array: NSArray<any> | any[], range: NSRange, flag: boolean): NSOrderedSet<ObjectType>;
   orderedSetWithSet<ObjectType>(set: NSSet<any>): NSOrderedSet<ObjectType>;
   orderedSetWithSet_copyItems<ObjectType>(set: NSSet<any>, flag: boolean): NSOrderedSet<ObjectType>;
+  load(): void;
+  instancesRespondToSelector(aSelector: string): boolean;
+  conformsToProtocol(protocol: Protocol): boolean;
+  instanceMethodForSelector(aSelector: string): IMP;
+  isSubclassOfClass(aClass: any): boolean;
+  hash(): NSUInteger;
+  superclass(): any;
+  description(): NSString;
+  debugDescription(): NSString;
+  useStoredAccessor(): boolean;
+  keyPathsForValuesAffectingValueForKey(key: NSString | string): NSSet<any>;
+  automaticallyNotifiesObserversForKey(key: NSString | string): boolean;
+  setKeys_triggerChangeNotificationsForDependentKey(keys: NSArray<any> | any[], dependentKey: NSString | string): void;
+  classFallbacksForKeyedArchiver(): NSArray<any>;
+  classForKeyedUnarchiver(): any;
+  version(): NSInteger;
+  setVersion(aVersion: NSInteger): void;
+  cancelPreviousPerformRequestsWithTarget_selector_object(aTarget: any, aSelector: string, anArgument: any | null): void;
+  cancelPreviousPerformRequestsWithTarget(aTarget: any): void;
+  exposeBinding(binding: NSBindingName): void;
+  setDefaultPlaceholder_forMarker_withBinding(placeholder: any | null, marker: any | null, binding: NSBindingName): void;
+  defaultPlaceholderForMarker_withBinding(marker: any | null, binding: NSBindingName): any;
+  mo_swizzleAdditions(): void;
+  mo_mocha(): MOClassDescription;
+  isSelectorExcludedFromMochaScript(selector: string): boolean;
+  selectorForMochaPropertyName(propertyName: NSString | string): string;
+  supportsSecureCoding(): boolean;
+  accessInstanceVariablesDirectly(): boolean;
 
 }
 

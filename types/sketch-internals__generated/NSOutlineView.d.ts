@@ -1,4 +1,5 @@
 interface NSOutlineViewUninitialized<InitializedType = NSOutlineView> extends NSTableViewUninitialized<NSOutlineView> {}
+
 interface NSOutlineView extends NSTableView, INSAccessibilityOutline {
   isExpandable(item: any | null): boolean;
   numberOfChildrenOfItem(item: any | null): NSInteger;
@@ -56,6 +57,7 @@ interface NSOutlineView extends NSTableView, INSAccessibilityOutline {
   floatingGroupRow(): NSInteger;
   floatingGroupRowView(): NSTableRowView;
 }
+
 declare const NSOutlineView: {
   alloc(): NSOutlineViewUninitialized;
   class(): NSOutlineView;

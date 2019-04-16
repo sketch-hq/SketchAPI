@@ -1,6 +1,7 @@
 interface MSUpDownControllerUninitialized<InitializedType = MSUpDownController> extends NSResponderUninitialized<MSUpDownController> {
   initWithTextField_createStepper(field: NSTextField, makeStepper: boolean): InitializedType;
 }
+
 interface MSUpDownController extends NSResponder {
   becomeFirstResponder(): boolean;
   textDidEndEditing(): void;
@@ -20,8 +21,12 @@ interface MSUpDownController extends NSResponder {
   setIncrementDecrementDelegate(incrementDecrementDelegate: any): void;
   textField(): NSTextField;
 }
+
 declare const MSUpDownController: {
   alloc(): MSUpDownControllerUninitialized;
   class(): MSUpDownController;
+  restorableStateKeyPaths(): NSArray<any>;
+  accessInstanceVariablesDirectly(): boolean;
+
 }
 

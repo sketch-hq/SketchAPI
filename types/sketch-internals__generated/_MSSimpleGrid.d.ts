@@ -1,4 +1,5 @@
 interface _MSSimpleGridUninitialized<InitializedType = _MSSimpleGrid> extends MSBaseGridUninitialized<_MSSimpleGrid> {}
+
 interface _MSSimpleGrid extends MSBaseGrid {
 
   gridSize(): NSInteger;
@@ -6,6 +7,7 @@ interface _MSSimpleGrid extends MSBaseGrid {
   thickGridTimes(): NSInteger;
   setThickGridTimes(thickGridTimes: NSInteger): void;
 }
+
 declare const _MSSimpleGrid: {
   alloc(): _MSSimpleGridUninitialized;
   class(): _MSSimpleGrid;

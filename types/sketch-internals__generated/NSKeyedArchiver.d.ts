@@ -1,8 +1,8 @@
 interface NSKeyedArchiverUninitialized<InitializedType = NSKeyedArchiver> extends NSCoderUninitialized<NSKeyedArchiver> {
   initRequiringSecureCoding(requiresSecureCoding: boolean): InitializedType;
-  init(): InitializedType;
   initForWritingWithMutableData(data: NSMutableData): InitializedType;
 }
+
 interface NSKeyedArchiver extends NSCoder {
   finishEncoding(): void;
   setClassName_forClass(codedName: NSString | string | null, cls: any): void;
@@ -25,11 +25,14 @@ interface NSKeyedArchiver extends NSCoder {
   requiresSecureCoding(): boolean;
   setRequiresSecureCoding(requiresSecureCoding: boolean): void;
 }
+
 declare const NSKeyedArchiver: {
   alloc(): NSKeyedArchiverUninitialized;
-  class(): NSKeyedArchiver;  archivedDataWithRootObject_requiringSecureCoding_error(object: any, requiresSecureCoding: boolean, error: NSError): NSData;
+  class(): NSKeyedArchiver;
+  archivedDataWithRootObject_requiringSecureCoding_error(object: any, requiresSecureCoding: boolean, error: MOPointer<NSError>): NSData;
   archivedDataWithRootObject(rootObject: any): NSData;
   archiveRootObject_toFile(rootObject: any, path: NSString | string): boolean;
+  accessInstanceVariablesDirectly(): boolean;
 
 }
 

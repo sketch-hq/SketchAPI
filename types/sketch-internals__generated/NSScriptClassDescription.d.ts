@@ -1,6 +1,7 @@
 interface NSScriptClassDescriptionUninitialized<InitializedType = NSScriptClassDescription> extends NSClassDescriptionUninitialized<NSScriptClassDescription> {
   initWithSuiteName_className_dictionary(suiteName: NSString | string, className: NSString | string, classDeclaration: NSDictionary<any, any> | {[key: string]: any} | null): InitializedType;
 }
+
 interface NSScriptClassDescription extends NSClassDescription {
   matchesAppleEventCode(appleEventCode: number): boolean;
   supportsCommand(commandDescription: NSScriptCommandDescription): boolean;
@@ -23,9 +24,15 @@ interface NSScriptClassDescription extends NSClassDescription {
   appleEventCode(): number;
   defaultSubcontainerAttributeKey(): NSString;
 }
+
 declare const NSScriptClassDescription: {
   alloc(): NSScriptClassDescriptionUninitialized;
-  class(): NSScriptClassDescription;  classDescriptionForClass(aClass: any): NSScriptClassDescription;
+  class(): NSScriptClassDescription;
+  classDescriptionForClass(aClass: any): NSScriptClassDescription;
+  registerClassDescription_forClass(description: NSClassDescription, aClass: any): void;
+  invalidateClassDescriptionCache(): void;
+  classDescriptionForClass(aClass: any): NSClassDescription;
+  accessInstanceVariablesDirectly(): boolean;
 
 }
 

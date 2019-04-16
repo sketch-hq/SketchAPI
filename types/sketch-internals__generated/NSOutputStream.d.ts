@@ -4,17 +4,24 @@ interface NSOutputStreamUninitialized<InitializedType = NSOutputStream> extends 
   initWithURL_append(url: NSURL, shouldAppend: boolean): InitializedType;
   initToFileAtPath_append(path: NSString | string, shouldAppend: boolean): InitializedType;
 }
+
 interface NSOutputStream extends NSStream {
   write_maxLength(buffer: number, len: NSUInteger): NSInteger;
 
   hasSpaceAvailable(): boolean;
 }
+
 declare const NSOutputStream: {
   alloc(): NSOutputStreamUninitialized;
-  class(): NSOutputStream;  outputStreamToMemory(): NSOutputStream;
+  class(): NSOutputStream;
+  outputStreamToMemory(): NSOutputStream;
   outputStreamToBuffer_capacity(buffer: number, capacity: NSUInteger): NSOutputStream;
   outputStreamToFileAtPath_append(path: NSString | string, shouldAppend: boolean): NSOutputStream;
   outputStreamWithURL_append(url: NSURL, shouldAppend: boolean): NSOutputStream;
+  getStreamsToHostWithName_port_inputStream_outputStream(hostname: NSString | string, port: NSInteger, inputStream: NSInputStream, outputStream: NSOutputStream): void;
+  getStreamsToHost_port_inputStream_outputStream(host: NSHost, port: NSInteger, inputStream: NSInputStream, outputStream: NSOutputStream): void;
+  getBoundStreamsWithBufferSize_inputStream_outputStream(bufferSize: NSUInteger, inputStream: NSInputStream, outputStream: NSOutputStream): void;
+  accessInstanceVariablesDirectly(): boolean;
 
 }
 

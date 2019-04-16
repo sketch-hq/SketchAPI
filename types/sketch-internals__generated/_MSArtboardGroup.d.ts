@@ -1,4 +1,5 @@
 interface _MSArtboardGroupUninitialized<InitializedType = _MSArtboardGroup> extends MSLayerGroupUninitialized<_MSArtboardGroup> {}
+
 interface _MSArtboardGroup extends MSLayerGroup {
 
   hasBackgroundColor(): boolean;
@@ -24,8 +25,11 @@ interface _MSArtboardGroup extends MSLayerGroup {
   verticalRulerData(): MSRulerData;
   setVerticalRulerData(verticalRulerData: MSRulerData): void;
 }
+
 declare const _MSArtboardGroup: {
   alloc(): _MSArtboardGroupUninitialized;
   class(): _MSArtboardGroup;
+  groupWithLayer(layer: MSLayer): _MSArtboardGroup;
+  groupWithLayers(layers: MSLayerArray): _MSArtboardGroup;
 }
 

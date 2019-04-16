@@ -1,4 +1,5 @@
 interface MSRulerDataUninitialized<InitializedType = MSRulerData> extends _MSRulerDataUninitialized<MSRulerData> {}
+
 interface MSRulerData extends _MSRulerData {
   addGuide(): void;
   addGuideWithValue(value: CGFloat): void;
@@ -10,6 +11,7 @@ interface MSRulerData extends _MSRulerData {
   guideAtIndex(index: NSUInteger): CGFloat;
   setValue_forGuideAtIndex(value: CGFloat, index: NSUInteger): void;
 }
+
 declare const MSRulerData: {
   alloc(): MSRulerDataUninitialized;
   class(): MSRulerData;

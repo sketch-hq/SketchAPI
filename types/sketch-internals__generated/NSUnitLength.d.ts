@@ -1,9 +1,12 @@
 interface NSUnitLengthUninitialized<InitializedType = NSUnitLength> extends NSDimensionUninitialized<NSUnitLength> {}
+
 interface NSUnitLength extends NSDimension, INSSecureCoding {
 }
+
 declare const NSUnitLength: {
   alloc(): NSUnitLengthUninitialized;
   class(): NSUnitLength;
+  baseUnit(): NSUnitLength;
   megameters(): NSUnitLength;
   kilometers(): NSUnitLength;
   hectometers(): NSUnitLength;
@@ -26,6 +29,8 @@ declare const NSUnitLength: {
   furlongs(): NSUnitLength;
   astronomicalUnits(): NSUnitLength;
   parsecs(): NSUnitLength;
+  supportsSecureCoding(): boolean;
+  accessInstanceVariablesDirectly(): boolean;
 
 }
 

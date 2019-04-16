@@ -1,6 +1,7 @@
 interface NSCollectionViewTransitionLayoutUninitialized<InitializedType = NSCollectionViewTransitionLayout> extends NSCollectionViewLayoutUninitialized<NSCollectionViewTransitionLayout> {
   initWithCurrentLayout_nextLayout(currentLayout: NSCollectionViewLayout, newLayout: NSCollectionViewLayout): InitializedType;
 }
+
 interface NSCollectionViewTransitionLayout extends NSCollectionViewLayout {
   updateValue_forAnimatedKey(value: CGFloat, key: NSCollectionViewTransitionLayoutAnimatedKey): void;
   valueForAnimatedKey(key: NSCollectionViewTransitionLayoutAnimatedKey): CGFloat;
@@ -10,8 +11,13 @@ interface NSCollectionViewTransitionLayout extends NSCollectionViewLayout {
   currentLayout(): NSCollectionViewLayout;
   nextLayout(): NSCollectionViewLayout;
 }
+
 declare const NSCollectionViewTransitionLayout: {
   alloc(): NSCollectionViewTransitionLayoutUninitialized;
   class(): NSCollectionViewTransitionLayout;
+  layoutAttributesClass(): any;
+  invalidationContextClass(): any;
+  accessInstanceVariablesDirectly(): boolean;
+
 }
 

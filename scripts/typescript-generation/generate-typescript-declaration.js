@@ -106,6 +106,14 @@ function shouldSkipMethod(method, type) {
   return false
 }
 
+function isStaticMethod(method) {
+  return method.kind == 'class'
+}
+
+function isStaticProperty(property) {
+  return property.attributes.some(a => a === 'class')
+}
+
 function typeInfo(type, classes) {
   const methods = toArray(type.methods).filter(
     method => !shouldSkipMethod(method, type)
@@ -156,42 +164,56 @@ function typeInfo(type, classes) {
   let extension = _inheritanceWithGenerics.shift()
   const protocols = _inheritanceWithGenerics
 
-  // protocols.forEach(p => {
-  //   const protocol = classes[`${p}__protocol`]
-  //   if (protocol) {
-  //     const protocolMethods = toArray(protocol.methods).filter(
-  //       method => !shouldSkipMethod(method, type)
-  //     )
-  //     protocolMethods.forEach(m => methods.push(m))
-  //     Object.keys(protocol.properties).forEach(m => {
-  //       if (!type.properties[m]) {
-  //         // eslint-disable-next-line
-  //         type.properties[m] = protocol.properties[m]
-  //       }
-  //     })
-  //   }
-  // })
+  protocols.forEach(p => {
+    const protocol = classes[`${p}__protocol`]
+    if (protocol) {
+      const protocolMethods = toArray(protocol.methods).filter(
+        method => !shouldSkipMethod(method, type)
+      )
+      protocolMethods.forEach(m => methods.push(m))
+      Object.keys(protocol.properties).forEach(m => {
+        if (!type.properties[m]) {
+          // eslint-disable-next-line
+          type.properties[m] = protocol.properties[m]
+        }
+      })
+    }
+  })
 
-  if (
+  if (extension && classes[extension] && extension !== type.name) {
+    const protocolMethods = toArray(classes[extension].methods).filter(
+      method => !shouldSkipMethod(method, type) && isStaticMethod(method)
+    )
+    protocolMethods.forEach(m => methods.push(m))
+    Object.keys(classes[extension].properties).forEach(m => {
+      if (
+        !type.properties[m] &&
+        isStaticProperty(classes[extension].properties[m])
+      ) {
+        // eslint-disable-next-line
+        type.properties[m] = classes[extension].properties[m]
+      }
+    })
+  } else if (
     extension &&
     extension.indexOf('<') === -1 &&
     (!classes[extension] || extension === type.name)
   ) {
-    // const protocol = classes[`${extension}__protocol`]
+    const protocol = classes[`${extension}__protocol`]
     extension = `I${extension}`
 
-    // if (protocol) {
-    //   const protocolMethods = toArray(protocol.methods).filter(
-    //     method => !shouldSkipMethod(method, type)
-    //   )
-    //   protocolMethods.forEach(m => methods.push(m))
-    //   Object.keys(protocol.properties).forEach(m => {
-    //     if (!type.properties[m]) {
-    //       // eslint-disable-next-line
-    //       type.properties[m] = protocol.properties[m]
-    //     }
-    //   })
-    // }
+    if (protocol) {
+      const protocolMethods = toArray(protocol.methods).filter(
+        method => !shouldSkipMethod(method, type) && isStaticMethod(method)
+      )
+      protocolMethods.forEach(m => methods.push(m))
+      Object.keys(protocol.properties).forEach(m => {
+        if (!type.properties[m] && isStaticProperty(protocol.properties[m])) {
+          // eslint-disable-next-line
+          type.properties[m] = protocol.properties[m]
+        }
+      })
+    }
   }
 
   if (extension && typesMap[extension]) {
@@ -226,14 +248,6 @@ function inheritance(extension, protocols) {
         (protocols || []).length > 0 ? `, I${protocols.join(', I')}` : ''
       }`
     : ''
-}
-
-function isStaticMethod(method) {
-  return method.kind == 'class'
-}
-
-function isStaticProperty(property) {
-  return property.attributes.some(a => a === 'class')
 }
 
 function split(methods, splitter) {
@@ -299,6 +313,8 @@ function convertType(type, className) {
   const arrayMatch = arrayRegex.exec(tsType)
   tsType = tsType.replace(arrayRegex, '').trim()
 
+  const isPointer = tsType.match(/\*\*$/)
+
   while (tsType.endsWith('*')) {
     tsType = trimEnd(tsType, '*')
     tsType = tsType.trim()
@@ -331,6 +347,10 @@ function convertType(type, className) {
 
   if (tsType.indexOf(`(^`) != -1 || tsType.indexOf(`^)`) != -1) {
     return `Block`
+  }
+
+  if (isPointer) {
+    return `MOPointer<${tsType}>`
   }
 
   return tsType
@@ -477,6 +497,7 @@ function printUninitialized(info, classes) {
     },
     { newLineStart: true, newLineEnd: true }
   )}}
+
 `
 }
 
@@ -486,6 +507,7 @@ function printGlobalConstant(info, classes, staticMethods, staticProperties) {
   }
 
   return `
+
 declare const ${info.type.name}: {
   alloc${info.generics ? `<${info.generics}>` : ''}(): ${
     info.uninitializedName
@@ -494,8 +516,8 @@ declare const ${info.type.name}: {
     staticMethods,
     method => printMethod(method, info, classes),
     {
-      newLineStart: false,
-      newLineEnd: true,
+      newLineStart: true,
+      newLineEnd: false,
     }
   )}${each(
     staticProperties,
@@ -504,7 +526,11 @@ declare const ${info.type.name}: {
         property.name
       }(): ${convertType(property.type, info.name)};${
         property.attributes.indexOf('readonly') === -1
-          ? `
+          ? `,
+          {
+            newLineStart: true,
+            newLineEnd: false,
+          }
 ${
   shouldIgnore(`set${capitalize(property.name)}`, info) ? `  // ` : ''
 }  set${capitalize(property.name)}(${

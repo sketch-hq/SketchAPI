@@ -1,4 +1,5 @@
 interface NSSearchFieldCellUninitialized<InitializedType = NSSearchFieldCell> extends NSTextFieldCellUninitialized<NSSearchFieldCell> {}
+
 interface NSSearchFieldCell extends NSTextFieldCell {
   resetSearchButtonCell(): void;
   resetCancelButtonCell(): void;
@@ -23,6 +24,7 @@ interface NSSearchFieldCell extends NSTextFieldCell {
   sendsSearchStringImmediately(): boolean;
   setSendsSearchStringImmediately(sendsSearchStringImmediately: boolean): void;
 }
+
 declare const NSSearchFieldCell: {
   alloc(): NSSearchFieldCellUninitialized;
   class(): NSSearchFieldCell;

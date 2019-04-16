@@ -1,4 +1,5 @@
 interface MSUpDownComboBoxUninitialized<InitializedType = MSUpDownComboBox> extends NSComboBoxUninitialized<MSUpDownComboBox> {}
+
 interface MSUpDownComboBox extends NSComboBox {
 
   refreshDelegate(): any;
@@ -8,6 +9,7 @@ interface MSUpDownComboBox extends NSComboBox {
   minimumIncrementValue(): CGFloat;
   setMinimumIncrementValue(minimumIncrementValue: CGFloat): void;
 }
+
 declare const MSUpDownComboBox: {
   alloc(): MSUpDownComboBoxUninitialized;
   class(): MSUpDownComboBox;

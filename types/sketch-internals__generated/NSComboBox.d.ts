@@ -1,4 +1,5 @@
 interface NSComboBoxUninitialized<InitializedType = NSComboBox> extends NSTextFieldUninitialized<NSComboBox> {}
+
 interface NSComboBox extends NSTextField {
   reloadData(): void;
   noteNumberOfItemsChanged(): void;
@@ -39,8 +40,13 @@ interface NSComboBox extends NSTextField {
   objectValueOfSelectedItem(): any;
   objectValues(): NSArray<any>;
 }
+
 declare const NSComboBox: {
   alloc(): NSComboBoxUninitialized;
   class(): NSComboBox;
+  labelWithString(stringValue: NSString | string): NSComboBox;
+  wrappingLabelWithString(stringValue: NSString | string): NSComboBox;
+  labelWithAttributedString(attributedStringValue: NSAttributedString): NSComboBox;
+  textFieldWithString(stringValue: NSString | string): NSComboBox;
 }
 

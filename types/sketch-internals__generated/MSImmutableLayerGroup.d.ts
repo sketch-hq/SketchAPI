@@ -1,4 +1,5 @@
 interface MSImmutableLayerGroupUninitialized<InitializedType = MSImmutableLayerGroup> extends _MSImmutableLayerGroupUninitialized<MSImmutableLayerGroup> {}
+
 interface MSImmutableLayerGroup extends _MSImmutableLayerGroup, IMSLayerGroup {
   axisForInferredLayouts(): BCAxisMask;
   influenceRectClipsToBounds(): boolean;
@@ -11,7 +12,9 @@ interface MSImmutableLayerGroup extends _MSImmutableLayerGroup, IMSLayerGroup {
   hasInferredLayout(): boolean;
   mirrorExportScale(): CGFloat;
   mirrorViewPortSize(): CGSize;
+  layers(): NSArray<any>;
 }
+
 declare const MSImmutableLayerGroup: {
   alloc(): MSImmutableLayerGroupUninitialized;
   class(): MSImmutableLayerGroup;

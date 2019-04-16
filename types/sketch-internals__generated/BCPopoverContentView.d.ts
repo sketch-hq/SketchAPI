@@ -1,4 +1,5 @@
 interface BCPopoverContentViewUninitialized<InitializedType = BCPopoverContentView> extends NSViewUninitialized<BCPopoverContentView> {}
+
 interface BCPopoverContentView extends NSView {
   availableContentRect(): NSRect;
 
@@ -9,8 +10,16 @@ interface BCPopoverContentView extends NSView {
   arrowPosition(): CGFloat;
   setArrowPosition(arrowPosition: CGFloat): void;
 }
+
 declare const BCPopoverContentView: {
   alloc(): BCPopoverContentViewUninitialized;
   class(): BCPopoverContentView;
+  requiresConstraintBasedLayout(): boolean;
+  focusView(): NSView;
+  defaultMenu(): NSMenu;
+  compatibleWithResponsiveScrolling(): boolean;
+  defaultFocusRingType(): NSFocusRingType;
+  restorableStateKeyPaths(): NSArray<any>;
+
 }
 

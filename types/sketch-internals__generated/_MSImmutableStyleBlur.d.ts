@@ -1,4 +1,5 @@
 interface _MSImmutableStyleBlurUninitialized<InitializedType = _MSImmutableStyleBlur> extends MSImmutableStylePartUninitialized<_MSImmutableStyleBlur> {}
+
 interface _MSImmutableStyleBlur extends MSImmutableStylePart {
 
   center(): NSPoint;
@@ -7,6 +8,7 @@ interface _MSImmutableStyleBlur extends MSImmutableStylePart {
   saturation(): CGFloat;
   type(): MSStyleBlurType;
 }
+
 declare const _MSImmutableStyleBlur: {
   alloc(): _MSImmutableStyleBlurUninitialized;
   class(): _MSImmutableStyleBlur;

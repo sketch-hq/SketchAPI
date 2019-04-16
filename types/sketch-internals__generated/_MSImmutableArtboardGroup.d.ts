@@ -1,4 +1,5 @@
 interface _MSImmutableArtboardGroupUninitialized<InitializedType = _MSImmutableArtboardGroup> extends MSImmutableLayerGroupUninitialized<_MSImmutableArtboardGroup> {}
+
 interface _MSImmutableArtboardGroup extends MSImmutableLayerGroup {
 
   hasBackgroundColor(): boolean;
@@ -13,6 +14,7 @@ interface _MSImmutableArtboardGroup extends MSImmutableLayerGroup {
   layout(): MSImmutableLayoutGrid;
   verticalRulerData(): MSImmutableRulerData;
 }
+
 declare const _MSImmutableArtboardGroup: {
   alloc(): _MSImmutableArtboardGroupUninitialized;
   class(): _MSImmutableArtboardGroup;

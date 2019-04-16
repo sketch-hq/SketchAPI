@@ -1,4 +1,5 @@
 interface SVGGradientUninitialized<InitializedType = SVGGradient> extends _SVGGradientUninitialized<SVGGradient> {}
+
 interface SVGGradient extends _SVGGradient {
   from(): NSPoint;
   to(): NSPoint;
@@ -6,8 +7,12 @@ interface SVGGradient extends _SVGGradient {
 
   usesAbsoluteUnits(): boolean;
 }
+
 declare const SVGGradient: {
   alloc(): SVGGradientUninitialized;
   class(): SVGGradient;
+  propertyNames(): NSArray<any>;
+  relationshipNames(): NSArray<any>;
+  attributeNames(): NSArray<any>;
 }
 

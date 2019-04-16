@@ -1,4 +1,5 @@
 interface MSStackViewUninitialized<InitializedType = MSStackView> extends NSViewUninitialized<MSStackView> {}
+
 interface MSStackView extends NSView {
   stack(sender: any): IBAction;
 
@@ -13,8 +14,16 @@ interface MSStackView extends NSView {
   keyResponder(): any;
   setKeyResponder(keyResponder: any): void;
 }
+
 declare const MSStackView: {
   alloc(): MSStackViewUninitialized;
   class(): MSStackView;
+  requiresConstraintBasedLayout(): boolean;
+  focusView(): NSView;
+  defaultMenu(): NSMenu;
+  compatibleWithResponsiveScrolling(): boolean;
+  defaultFocusRingType(): NSFocusRingType;
+  restorableStateKeyPaths(): NSArray<any>;
+
 }
 

@@ -1,4 +1,5 @@
 interface MSSVGColorMatrixUninitialized<InitializedType = MSSVGColorMatrix> extends MSSVGfeFilterPrimitiveUninitialized<MSSVGColorMatrix> {}
+
 interface MSSVGColorMatrix extends MSSVGfeFilterPrimitive {
 
   in(): NSString;
@@ -8,9 +9,11 @@ interface MSSVGColorMatrix extends MSSVGfeFilterPrimitive {
   values(): NSString;
   setValues(values: NSString | string): void;
 }
+
 declare const MSSVGColorMatrix: {
   alloc(): MSSVGColorMatrixUninitialized;
-  class(): MSSVGColorMatrix;  colorMatrixForColor(color: MSImmutableColor): MSSVGColorMatrix;
-
+  class(): MSSVGColorMatrix;
+  colorMatrixForColor(color: MSImmutableColor): MSSVGColorMatrix;
+  filter(): MSSVGColorMatrix;
 }
 

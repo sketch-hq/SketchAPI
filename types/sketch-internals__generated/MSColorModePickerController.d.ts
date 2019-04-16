@@ -1,4 +1,5 @@
 interface MSColorModePickerControllerUninitialized<InitializedType = MSColorModePickerController> extends NSViewControllerUninitialized<MSColorModePickerController> {}
+
 interface MSColorModePickerController extends NSViewController {
   setFillType_gradientType(fillType: BCFillType, gradientType: MSGradientType): void;
   switchToColorTabAtIndex(index: NSUInteger): IBAction;
@@ -9,8 +10,12 @@ interface MSColorModePickerController extends NSViewController {
   styleParts(): NSArray<any>;
   setStyleParts(styleParts: NSArray<any> | any[]): void;
 }
+
 declare const MSColorModePickerController: {
   alloc(): MSColorModePickerControllerUninitialized;
   class(): MSColorModePickerController;
+  restorableStateKeyPaths(): NSArray<any>;
+  accessInstanceVariablesDirectly(): boolean;
+
 }
 

@@ -1,4 +1,5 @@
 interface MSExportFormatViewControllerUninitialized<InitializedType = MSExportFormatViewController> extends NSViewControllerUninitialized<MSExportFormatViewController> {}
+
 interface MSExportFormatViewController extends NSViewController {
   prepare(): void;
   removeExportFormat(sender: any): IBAction;
@@ -22,8 +23,12 @@ interface MSExportFormatViewController extends NSViewController {
   drawOldFashioned(): boolean;
   setDrawOldFashioned(drawOldFashioned: boolean): void;
 }
+
 declare const MSExportFormatViewController: {
   alloc(): MSExportFormatViewControllerUninitialized;
   class(): MSExportFormatViewController;
+  restorableStateKeyPaths(): NSArray<any>;
+  accessInstanceVariablesDirectly(): boolean;
+
 }
 

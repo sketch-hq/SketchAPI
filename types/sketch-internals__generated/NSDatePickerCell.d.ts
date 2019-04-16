@@ -1,4 +1,5 @@
 interface NSDatePickerCellUninitialized<InitializedType = NSDatePickerCell> extends NSActionCellUninitialized<NSDatePickerCell> {}
+
 interface NSDatePickerCell extends NSActionCell {
 
   datePickerStyle(): NSDatePickerStyle;
@@ -30,8 +31,13 @@ interface NSDatePickerCell extends NSActionCell {
   delegate(): any;
   setDelegate(delegate: any): void;
 }
+
 declare const NSDatePickerCell: {
   alloc(): NSDatePickerCellUninitialized;
   class(): NSDatePickerCell;
+  prefersTrackingUntilMouseUp(): boolean;
+  defaultMenu(): NSMenu;
+  defaultFocusRingType(): NSFocusRingType;
+
 }
 

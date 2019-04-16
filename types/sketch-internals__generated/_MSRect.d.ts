@@ -1,4 +1,5 @@
 interface _MSRectUninitialized<InitializedType = _MSRect> extends MSModelObjectUninitialized<_MSRect> {}
+
 interface _MSRect extends MSModelObject {
 
   constrainProportions(): boolean;
@@ -12,8 +13,11 @@ interface _MSRect extends MSModelObject {
   y(): CGFloat;
   setY(y: CGFloat): void;
 }
+
 declare const _MSRect: {
   alloc(): _MSRectUninitialized;
   class(): _MSRect;
+  immutableClass(): any;
+  allowsFaulting(): boolean;
 }
 

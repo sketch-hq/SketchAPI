@@ -1,4 +1,5 @@
 interface NSTabViewUninitialized<InitializedType = NSTabView> extends NSViewUninitialized<NSTabView> {}
+
 interface NSTabView extends NSView {
   selectTabViewItem(tabViewItem: NSTabViewItem | null): void;
   selectTabViewItemAtIndex(index: NSInteger): void;
@@ -41,8 +42,16 @@ interface NSTabView extends NSView {
   controlTint(): NSControlTint;
   setControlTint(controlTint: NSControlTint): void;
 }
+
 declare const NSTabView: {
   alloc(): NSTabViewUninitialized;
   class(): NSTabView;
+  requiresConstraintBasedLayout(): boolean;
+  focusView(): NSView;
+  defaultMenu(): NSMenu;
+  compatibleWithResponsiveScrolling(): boolean;
+  defaultFocusRingType(): NSFocusRingType;
+  restorableStateKeyPaths(): NSArray<any>;
+
 }
 

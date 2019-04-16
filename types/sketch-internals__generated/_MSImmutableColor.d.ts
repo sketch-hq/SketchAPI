@@ -1,4 +1,5 @@
 interface _MSImmutableColorUninitialized<InitializedType = _MSImmutableColor> extends MSImmutableModelObjectUninitialized<_MSImmutableColor> {}
+
 interface _MSImmutableColor extends MSImmutableModelObject {
 
   alpha(): CGFloat;
@@ -6,8 +7,11 @@ interface _MSImmutableColor extends MSImmutableModelObject {
   green(): CGFloat;
   red(): CGFloat;
 }
+
 declare const _MSImmutableColor: {
   alloc(): _MSImmutableColorUninitialized;
   class(): _MSImmutableColor;
+  mutableClass(): any;
+  traitsForPropertyName(name: NSString | string): MSPropertyTraits;
 }
 

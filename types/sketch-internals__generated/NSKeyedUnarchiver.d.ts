@@ -1,8 +1,8 @@
 interface NSKeyedUnarchiverUninitialized<InitializedType = NSKeyedUnarchiver> extends NSCoderUninitialized<NSKeyedUnarchiver> {
-  initForReadingFromData_error(data: NSData, error: NSError): InitializedType;
-  init(): InitializedType;
+  initForReadingFromData_error(data: NSData, error: MOPointer<NSError>): InitializedType;
   initForReadingWithData(data: NSData): InitializedType;
 }
+
 interface NSKeyedUnarchiver extends NSCoder {
   finishDecoding(): void;
   setClass_forClassName(cls: any | null, codedName: NSString | string): void;
@@ -24,12 +24,15 @@ interface NSKeyedUnarchiver extends NSCoder {
   decodingFailurePolicy(): NSDecodingFailurePolicy;
   setDecodingFailurePolicy(decodingFailurePolicy: NSDecodingFailurePolicy): void;
 }
+
 declare const NSKeyedUnarchiver: {
   alloc(): NSKeyedUnarchiverUninitialized;
-  class(): NSKeyedUnarchiver;  unarchivedObjectOfClass_fromData_error(cls: any, data: NSData, error: NSError): any;
-  unarchivedObjectOfClasses_fromData_error(classes: NSSet<any>, data: NSData, error: NSError): any;
+  class(): NSKeyedUnarchiver;
+  unarchivedObjectOfClass_fromData_error(cls: any, data: NSData, error: MOPointer<NSError>): any;
+  unarchivedObjectOfClasses_fromData_error(classes: NSSet<any>, data: NSData, error: MOPointer<NSError>): any;
   unarchiveObjectWithData(data: NSData): any;
   unarchiveObjectWithFile(path: NSString | string): any;
+  accessInstanceVariablesDirectly(): boolean;
 
 }
 

@@ -1,4 +1,5 @@
 interface NSDateIntervalFormatterUninitialized<InitializedType = NSDateIntervalFormatter> extends NSFormatterUninitialized<NSDateIntervalFormatter> {}
+
 interface NSDateIntervalFormatter extends NSFormatter {
   stringFromDate_toDate(fromDate: NSDate, toDate: NSDate): NSString;
   stringFromDateInterval(dateInterval: NSDateInterval): NSString;
@@ -16,6 +17,7 @@ interface NSDateIntervalFormatter extends NSFormatter {
   timeStyle(): NSDateIntervalFormatterStyle;
   setTimeStyle(timeStyle: NSDateIntervalFormatterStyle): void;
 }
+
 declare const NSDateIntervalFormatter: {
   alloc(): NSDateIntervalFormatterUninitialized;
   class(): NSDateIntervalFormatter;

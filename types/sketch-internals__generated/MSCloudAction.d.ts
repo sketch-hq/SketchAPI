@@ -1,4 +1,5 @@
 interface MSCloudActionUninitialized<InitializedType = MSCloudAction> extends MSPopoverActionUninitialized<MSCloudAction> {}
+
 interface MSCloudAction extends MSPopoverAction {
   startUploadUpdating_ownedByOrganization(existingShare: SCKShare | null, organization: SCKOrganization | null): void;
   refreshShareWithHandler(handler: Block): void;
@@ -13,13 +14,15 @@ interface MSCloudAction extends MSPopoverAction {
   setRefreshOperation(refreshOperation: SCKAPIOperation): void;
   canCloseImmediately(): boolean;
 }
+
 declare const MSCloudAction: {
   alloc(): MSCloudActionUninitialized;
-  class(): MSCloudAction;  isErrorRecoverable(error: NSError): boolean;
+  class(): MSCloudAction;
+  isErrorRecoverable(error: NSError): boolean;
   cloudError_addingRecoveryOptionsWithAttempter(error: NSError, attempter: any): NSError;
   attemptRecoveryFromCloudError_optionIndex(error: NSError, recoveryOptionIndex: NSUInteger): void;
   prepareTerminationWithHandler(handler: Block): void;
-
+  popoverClass(): any;
   userController(): SCKUserController;
   cloudEnabled(): boolean;
   shouldPrepareForTermination(): boolean;

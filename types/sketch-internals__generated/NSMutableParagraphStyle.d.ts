@@ -1,4 +1,5 @@
 interface NSMutableParagraphStyleUninitialized<InitializedType = NSMutableParagraphStyle> extends NSParagraphStyleUninitialized<NSMutableParagraphStyle> {}
+
 interface NSMutableParagraphStyle extends NSParagraphStyle {
   addTabStop(anObject: NSTextTab): void;
   removeTabStop(anObject: NSTextTab): void;
@@ -48,8 +49,15 @@ interface NSMutableParagraphStyle extends NSParagraphStyle {
   fixedLineHeight_ms(): CGFloat;
   setFixedLineHeight_ms(fixedLineHeight_ms: CGFloat): void;
 }
+
 declare const NSMutableParagraphStyle: {
   alloc(): NSMutableParagraphStyleUninitialized;
   class(): NSMutableParagraphStyle;
+  defaultWritingDirectionForLanguage(languageName: NSString | string | null): NSWritingDirection;
+  paragraphStyleWithAlignment_ms(alignment: NSTextAlignment): NSMutableParagraphStyle;
+  defaultParagraphStyle(): NSParagraphStyle;
+  supportsSecureCoding(): boolean;
+  accessInstanceVariablesDirectly(): boolean;
+
 }
 

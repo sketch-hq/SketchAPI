@@ -1,6 +1,7 @@
 interface NSWhoseSpecifierUninitialized<InitializedType = NSWhoseSpecifier> extends NSScriptObjectSpecifierUninitialized<NSWhoseSpecifier> {
   initWithContainerClassDescription_containerSpecifier_key_test(classDesc: NSScriptClassDescription, container: NSScriptObjectSpecifier | null, property: NSString | string, test: NSScriptWhoseTest): InitializedType;
 }
+
 interface NSWhoseSpecifier extends NSScriptObjectSpecifier {
 
   test(): NSScriptWhoseTest;
@@ -14,8 +15,12 @@ interface NSWhoseSpecifier extends NSScriptObjectSpecifier {
   endSubelementIndex(): NSInteger;
   setEndSubelementIndex(endSubelementIndex: NSInteger): void;
 }
+
 declare const NSWhoseSpecifier: {
   alloc(): NSWhoseSpecifierUninitialized;
   class(): NSWhoseSpecifier;
+  objectSpecifierWithDescriptor(descriptor: NSAppleEventDescriptor): NSScriptObjectSpecifier;
+  accessInstanceVariablesDirectly(): boolean;
+
 }
 

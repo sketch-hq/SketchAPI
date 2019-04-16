@@ -1,4 +1,5 @@
 interface MSPageUninitialized<InitializedType = MSPage> extends _MSPageUninitialized<MSPage> {}
+
 interface MSPage extends _MSPage, IMSRootLayer {
   selectedLayers(): MSLayerArray;
   artboardWithID(objectID: any): MSArtboardGroup;
@@ -27,11 +28,20 @@ interface MSPage extends _MSPage, IMSRootLayer {
   symbols(): NSArray<any>;
   exportableLayers(): NSArray<any>;
   currentRoot(): MSLayerGroup;
+  grid(): MSSimpleGrid;
+  setGrid(grid: MSSimpleGrid): void;
+  layout(): MSLayoutGrid;
+  setLayout(layout: MSLayoutGrid): void;
+  rulerBase(): NSPoint;
+  setRulerBase(rulerBase: NSPoint): void;
+  contentBounds(): NSRect;
+  rect(): CGRect;
 }
+
 declare const MSPage: {
   alloc(): MSPageUninitialized;
-  class(): MSPage;  page(): MSPage;
+  class(): MSPage;
+  page(): MSPage;
   defaultSymbolsPageName(): NSString;
-
 }
 

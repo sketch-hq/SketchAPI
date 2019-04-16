@@ -1,6 +1,7 @@
 interface MSModelObjectUninitialized<InitializedType = MSModelObject> extends MSModelObjectCommonUninitialized<MSModelObject> {
   initWithImmutableModelObject(immutableBase: MSImmutableModelObject): InitializedType;
 }
+
 interface MSModelObject extends MSModelObjectCommon, IMSModelObject {
   correctInvalidGamma(): void;
   cachedValueForKey(key: any): any;
@@ -39,11 +40,15 @@ interface MSModelObject extends MSModelObjectCommon, IMSModelObject {
   immutableModelObject(): any;
   isFault(): boolean;
   parentGroup(): MSLayerGroup;
+  modelObjectCacheGeneration(): MSModelObjectCacheGeneration;
 }
+
 declare const MSModelObject: {
   alloc(): MSModelObjectUninitialized;
-  class(): MSModelObject;  immutableClass(): any;
+  class(): MSModelObject;
+  immutableClass(): any;
   allowsFaulting(): boolean;
-
+  generateObjectID(): any;
+  defaultName(): NSString;
 }
 

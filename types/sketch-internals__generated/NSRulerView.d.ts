@@ -1,6 +1,7 @@
 interface NSRulerViewUninitialized<InitializedType = NSRulerView> extends NSViewUninitialized<NSRulerView> {
   initWithScrollView_orientation(scrollView: NSScrollView | null, orientation: NSRulerOrientation): InitializedType;
 }
+
 interface NSRulerView extends NSView {
   addMarker(marker: NSRulerMarker): void;
   removeMarker(marker: NSRulerMarker): void;
@@ -34,9 +35,17 @@ interface NSRulerView extends NSView {
   setAccessoryView(accessoryView: NSView): void;
   flipped(): boolean;
 }
+
 declare const NSRulerView: {
   alloc(): NSRulerViewUninitialized;
-  class(): NSRulerView;  registerUnitWithName_abbreviation_unitToPointsConversionFactor_stepUpCycle_stepDownCycle(unitName: NSRulerViewUnitName, abbreviation: NSString | string, conversionFactor: CGFloat, stepUpCycle: NSArray<any> | any[], stepDownCycle: NSArray<any> | any[]): void;
+  class(): NSRulerView;
+  registerUnitWithName_abbreviation_unitToPointsConversionFactor_stepUpCycle_stepDownCycle(unitName: NSRulerViewUnitName, abbreviation: NSString | string, conversionFactor: CGFloat, stepUpCycle: NSArray<any> | any[], stepDownCycle: NSArray<any> | any[]): void;
+  requiresConstraintBasedLayout(): boolean;
+  focusView(): NSView;
+  defaultMenu(): NSMenu;
+  compatibleWithResponsiveScrolling(): boolean;
+  defaultFocusRingType(): NSFocusRingType;
+  restorableStateKeyPaths(): NSArray<any>;
 
 }
 

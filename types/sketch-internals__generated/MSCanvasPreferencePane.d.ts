@@ -1,4 +1,5 @@
 interface MSCanvasPreferencePaneUninitialized<InitializedType = MSCanvasPreferencePane> extends MSPreferencePaneUninitialized<MSCanvasPreferencePane> {}
+
 interface MSCanvasPreferencePane extends MSPreferencePane {
   adjustSnapColorAction(sender: any): IBAction;
   adjustFlowColorAction(sender: any): IBAction;
@@ -8,8 +9,13 @@ interface MSCanvasPreferencePane extends MSPreferencePane {
   flowColorLabel(): NSTextField;
   setFlowColorLabel(flowColorLabel: NSTextField): void;
 }
+
 declare const MSCanvasPreferencePane: {
   alloc(): MSCanvasPreferencePaneUninitialized;
   class(): MSCanvasPreferencePane;
+  identifier(): NSString;
+  title(): NSString;
+  toolbarIcon(): NSImage;
+  nibName(): NSString;
 }
 

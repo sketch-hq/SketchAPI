@@ -1,5 +1,7 @@
 interface MSRotateEventHandlerUninitialized<InitializedType = MSRotateEventHandler> extends MSNormalBaseEventHandlerUninitialized<MSRotateEventHandler> {}
+
 interface MSRotateEventHandler extends MSNormalBaseEventHandler, INSTouchBarDelegate {
+  touchBar_makeItemForIdentifier(touchBar: NSTouchBar, identifier: NSTouchBarItemIdentifier): NSTouchBarItem;
 
   exitOnMouseUp(): boolean;
   setExitOnMouseUp(exitOnMouseUp: boolean): void;
@@ -11,9 +13,14 @@ interface MSRotateEventHandler extends MSNormalBaseEventHandler, INSTouchBarDele
   setRotationCenterPoint(rotationCenterPoint: NSPoint): void;
   rotationItems(): NSArray<any>;
 }
+
 declare const MSRotateEventHandler: {
   alloc(): MSRotateEventHandlerUninitialized;
-  class(): MSRotateEventHandler;  cursorForDegrees(degrees: NSInteger): NSCursor;
+  class(): MSRotateEventHandler;
+  cursorForDegrees(degrees: NSInteger): NSCursor;
+  cursorForCorner_ofCoordinateSpace(corner: BCCorner, coordinateSpace: any | null): NSCursor;
+  accessInstanceVariablesDirectly(): boolean;
+  restorableStateKeyPaths(): NSArray<any>;
 
 }
 

@@ -1,4 +1,5 @@
 interface CATextLayerUninitialized<InitializedType = CATextLayer> extends CALayerUninitialized<CATextLayer> {}
+
 interface CATextLayer extends CALayer {
 
   string(): any;
@@ -18,8 +19,17 @@ interface CATextLayer extends CALayer {
   allowsFontSubpixelQuantization(): boolean;
   setAllowsFontSubpixelQuantization(allowsFontSubpixelQuantization: boolean): void;
 }
+
 declare const CATextLayer: {
   alloc(): CATextLayerUninitialized;
   class(): CATextLayer;
+  layer(): CATextLayer;
+  defaultValueForKey(key: NSString | string): any;
+  needsDisplayForKey(key: NSString | string): boolean;
+  defaultActionForKey(event: NSString | string): any;
+  layerWithRemoteClientId(client_id: number): CALayer;
+  supportsSecureCoding(): boolean;
+  accessInstanceVariablesDirectly(): boolean;
+
 }
 

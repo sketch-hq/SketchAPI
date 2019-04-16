@@ -2,6 +2,7 @@ interface FBBezierCurveUninitialized<InitializedType = FBBezierCurve> extends NS
   initWithEndPoint1_controlPoint1_controlPoint2_endPoint2_contour(endPoint1: FBPoint, controlPoint1: FBPoint, controlPoint2: FBPoint, endPoint2: FBPoint, contour: FBBezierContour): InitializedType;
   initWithLineStartPoint_endPoint_contour(startPoint: FBPoint, endPoint: FBPoint, contour: FBBezierContour): InitializedType;
 }
+
 interface FBBezierCurve extends NSObject {
   checkForLine(): void;
   doesHaveIntersectionsWithBezierCurve(curve: FBBezierCurve): boolean;
@@ -75,11 +76,40 @@ interface FBBezierCurve extends NSObject {
   crossings(): NSArray<any>;
   hasCrossings(): boolean;
 }
+
 declare const FBBezierCurve: {
   alloc(): FBBezierCurveUninitialized;
-  class(): FBBezierCurve;  bezierCurvesFromBezierPath(path: FBBezierPath): NSArray<any>;
+  class(): FBBezierCurve;
+  bezierCurvesFromBezierPath(path: FBBezierPath): NSArray<any>;
   bezierCurveWithLineStartPoint_endPoint(startPoint: FBPoint, endPoint: FBPoint): FBBezierCurve;
   bezierCurveWithEndPoint1_controlPoint1_controlPoint2_endPoint2(endPoint1: FBPoint, controlPoint1: FBPoint, controlPoint2: FBPoint, endPoint2: FBPoint): FBBezierCurve;
+  load(): void;
+  instancesRespondToSelector(aSelector: string): boolean;
+  conformsToProtocol(protocol: Protocol): boolean;
+  instanceMethodForSelector(aSelector: string): IMP;
+  isSubclassOfClass(aClass: any): boolean;
+  hash(): NSUInteger;
+  superclass(): any;
+  description(): NSString;
+  debugDescription(): NSString;
+  useStoredAccessor(): boolean;
+  keyPathsForValuesAffectingValueForKey(key: NSString | string): NSSet<any>;
+  automaticallyNotifiesObserversForKey(key: NSString | string): boolean;
+  setKeys_triggerChangeNotificationsForDependentKey(keys: NSArray<any> | any[], dependentKey: NSString | string): void;
+  classFallbacksForKeyedArchiver(): NSArray<any>;
+  classForKeyedUnarchiver(): any;
+  version(): NSInteger;
+  setVersion(aVersion: NSInteger): void;
+  cancelPreviousPerformRequestsWithTarget_selector_object(aTarget: any, aSelector: string, anArgument: any | null): void;
+  cancelPreviousPerformRequestsWithTarget(aTarget: any): void;
+  exposeBinding(binding: NSBindingName): void;
+  setDefaultPlaceholder_forMarker_withBinding(placeholder: any | null, marker: any | null, binding: NSBindingName): void;
+  defaultPlaceholderForMarker_withBinding(marker: any | null, binding: NSBindingName): any;
+  mo_swizzleAdditions(): void;
+  mo_mocha(): MOClassDescription;
+  isSelectorExcludedFromMochaScript(selector: string): boolean;
+  selectorForMochaPropertyName(propertyName: NSString | string): string;
+  accessInstanceVariablesDirectly(): boolean;
 
 }
 

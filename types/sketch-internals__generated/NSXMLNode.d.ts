@@ -1,17 +1,17 @@
 interface NSXMLNodeUninitialized<InitializedType = NSXMLNode> extends NSObjectUninitialized<NSXMLNode> {
-  init(): InitializedType;
   initWithKind(kind: NSXMLNodeKind): InitializedType;
   initWithKind_options(kind: NSXMLNodeKind, options: NSXMLNodeOptions): InitializedType;
 }
+
 interface NSXMLNode extends NSObject, INSCopying {
   setStringValue_resolvingEntities(string: NSString | string, resolve: boolean): void;
   childAtIndex(index: NSUInteger): NSXMLNode;
   detach(): void;
   XMLStringWithOptions(options: NSXMLNodeOptions): NSString;
   canonicalXMLStringPreservingComments(comments: boolean): NSString;
-  nodesForXPath_error(xpath: NSString | string, error: NSError): NSArray<any>;
-  objectsForXQuery_constants_error(xquery: NSString | string, constants: NSDictionary<any, any> | {[key: string]: any} | null, error: NSError): NSArray<any>;
-  objectsForXQuery_error(xquery: NSString | string, error: NSError): NSArray<any>;
+  nodesForXPath_error(xpath: NSString | string, error: MOPointer<NSError>): NSArray<any>;
+  objectsForXQuery_constants_error(xquery: NSString | string, constants: NSDictionary<any, any> | {[key: string]: any} | null, error: MOPointer<NSError>): NSArray<any>;
+  objectsForXQuery_error(xquery: NSString | string, error: MOPointer<NSError>): NSArray<any>;
   doubleValueFromAttributeWithName(name: NSString | string): number;
   doubleValue(): number;
   doubleValueWithScale(scale: CGFloat): number;
@@ -23,6 +23,7 @@ interface NSXMLNode extends NSObject, INSCopying {
   rectValue(): NSRect;
   simplifyAttributesIgnoringElements_attributes(elementsToIgnore: NSArray<any> | any[], attributesToIgnore: NSArray<any> | any[]): NSArray<any>;
   cssClassNamesWithBase(base: NSString | string): NSArray<any>;
+  copyWithZone(zone: NSZone | null): any;
 
   kind(): NSXMLNodeKind;
   name(): NSString;
@@ -49,9 +50,11 @@ interface NSXMLNode extends NSObject, INSCopying {
   description(): NSString;
   XMLString(): NSString;
 }
+
 declare const NSXMLNode: {
   alloc(): NSXMLNodeUninitialized;
-  class(): NSXMLNode;  document(): any;
+  class(): NSXMLNode;
+  document(): any;
   documentWithRootElement(element: NSXMLElement): any;
   elementWithName(name: NSString | string): any;
   elementWithName_URI(name: NSString | string, URI: NSString | string): any;
@@ -74,6 +77,33 @@ declare const NSXMLNode: {
   attributeWithName_numberValue(name: NSString | string, value: CGFloat): any;
   attributeWithName_percentageValue(name: NSString | string, value: CGFloat): any;
   attributeWithName_percentageFractionalValue(name: NSString | string, value: CGFloat): any;
+  load(): void;
+  instancesRespondToSelector(aSelector: string): boolean;
+  conformsToProtocol(protocol: Protocol): boolean;
+  instanceMethodForSelector(aSelector: string): IMP;
+  isSubclassOfClass(aClass: any): boolean;
+  hash(): NSUInteger;
+  superclass(): any;
+  description(): NSString;
+  debugDescription(): NSString;
+  useStoredAccessor(): boolean;
+  keyPathsForValuesAffectingValueForKey(key: NSString | string): NSSet<any>;
+  automaticallyNotifiesObserversForKey(key: NSString | string): boolean;
+  setKeys_triggerChangeNotificationsForDependentKey(keys: NSArray<any> | any[], dependentKey: NSString | string): void;
+  classFallbacksForKeyedArchiver(): NSArray<any>;
+  classForKeyedUnarchiver(): any;
+  version(): NSInteger;
+  setVersion(aVersion: NSInteger): void;
+  cancelPreviousPerformRequestsWithTarget_selector_object(aTarget: any, aSelector: string, anArgument: any | null): void;
+  cancelPreviousPerformRequestsWithTarget(aTarget: any): void;
+  exposeBinding(binding: NSBindingName): void;
+  setDefaultPlaceholder_forMarker_withBinding(placeholder: any | null, marker: any | null, binding: NSBindingName): void;
+  defaultPlaceholderForMarker_withBinding(marker: any | null, binding: NSBindingName): any;
+  mo_swizzleAdditions(): void;
+  mo_mocha(): MOClassDescription;
+  isSelectorExcludedFromMochaScript(selector: string): boolean;
+  selectorForMochaPropertyName(propertyName: NSString | string): string;
+  accessInstanceVariablesDirectly(): boolean;
 
 }
 

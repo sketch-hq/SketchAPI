@@ -1,6 +1,7 @@
 interface BCDownloadManagerUninitialized<InitializedType = BCDownloadManager> {
   initWithSessionConfiguration_delegate_completionHandler(sessionConfiguration: NSURLSessionConfiguration, delegate: any | null, completionHandler: Block | null): InitializedType;
 }
+
 interface BCDownloadManager {
   addDownloadTaskWithDownloadRequestURL(downloadRequestURL: NSURL): NSString;
   addDownloadTaskWithDownloadRequest(downloadRequest: NSURLRequest): NSString;
@@ -19,6 +20,7 @@ interface BCDownloadManager {
   numberOfUnfinishedDownloadTasks(): NSInteger;
   allTasksIdentifiers(): NSArray<any>;
 }
+
 declare const BCDownloadManager: {
   alloc(): BCDownloadManagerUninitialized;
   class(): BCDownloadManager;

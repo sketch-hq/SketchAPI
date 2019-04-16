@@ -1,4 +1,5 @@
 interface MOBridgeSupportOpaqueUninitialized<InitializedType = MOBridgeSupportOpaque> extends MOBridgeSupportSymbolUninitialized<MOBridgeSupportOpaque> {}
+
 interface MOBridgeSupportOpaque extends MOBridgeSupportSymbol {
 
   type(): NSString;
@@ -8,8 +9,11 @@ interface MOBridgeSupportOpaque extends MOBridgeSupportSymbol {
   hasMagicCookie(): boolean;
   setHasMagicCookie(hasMagicCookie: boolean): void;
 }
+
 declare const MOBridgeSupportOpaque: {
   alloc(): MOBridgeSupportOpaqueUninitialized;
   class(): MOBridgeSupportOpaque;
+  accessInstanceVariablesDirectly(): boolean;
+
 }
 

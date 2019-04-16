@@ -1,4 +1,5 @@
 interface MSGeneralPreferencePaneUninitialized<InitializedType = MSGeneralPreferencePane> extends MSPreferencePaneUninitialized<MSGeneralPreferencePane> {}
+
 interface MSGeneralPreferencePane extends MSPreferencePane {
   analyticsAction(sender: any): IBAction;
   pickDefaultColorSpace(sender: any): IBAction;
@@ -20,8 +21,13 @@ interface MSGeneralPreferencePane extends MSPreferencePane {
   mainContainerView(): NSView;
   setMainContainerView(mainContainerView: NSView): void;
 }
+
 declare const MSGeneralPreferencePane: {
   alloc(): MSGeneralPreferencePaneUninitialized;
   class(): MSGeneralPreferencePane;
+  identifier(): NSString;
+  title(): NSString;
+  toolbarIcon(): NSImage;
+  nibName(): NSString;
 }
 

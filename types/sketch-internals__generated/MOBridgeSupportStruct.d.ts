@@ -1,4 +1,5 @@
 interface MOBridgeSupportStructUninitialized<InitializedType = MOBridgeSupportStruct> extends MOBridgeSupportSymbolUninitialized<MOBridgeSupportStruct> {}
+
 interface MOBridgeSupportStruct extends MOBridgeSupportSymbol {
 
   type(): NSString;
@@ -8,8 +9,11 @@ interface MOBridgeSupportStruct extends MOBridgeSupportSymbol {
   opaque(): boolean;
   setOpaque(opaque: boolean): void;
 }
+
 declare const MOBridgeSupportStruct: {
   alloc(): MOBridgeSupportStructUninitialized;
   class(): MOBridgeSupportStruct;
+  accessInstanceVariablesDirectly(): boolean;
+
 }
 

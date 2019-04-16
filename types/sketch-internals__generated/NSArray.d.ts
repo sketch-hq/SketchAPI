@@ -1,14 +1,14 @@
 interface NSArrayUninitialized<ObjectType, InitializedType = NSArray<ObjectType>> extends NSObjectUninitialized<NSArray<ObjectType>> {
-  init(): InitializedType;
   initWithObjects_count(objects: ObjectType[], cnt: NSUInteger): InitializedType;
   initWithCoder(aDecoder: NSCoder): InitializedType;
   initWithObjects(firstObj: ObjectType, ...args: any[]): InitializedType;
   initWithArray(array: NSArray<any> | any[]): InitializedType;
   initWithArray_copyItems(array: NSArray<any> | any[], flag: boolean): InitializedType;
-  initWithContentsOfURL_error(url: NSURL, error: NSError): InitializedType;
+  initWithContentsOfURL_error(url: NSURL, error: MOPointer<NSError>): InitializedType;
   initWithContentsOfFile(path: NSString | string): InitializedType;
   initWithContentsOfURL(url: NSURL): InitializedType;
 }
+
 interface NSArray<ObjectType> extends NSObject, INSCopying, INSMutableCopying, INSSecureCoding, INSFastEnumeration {
 
   [key: number]: ObjectType | Function;
@@ -30,7 +30,7 @@ interface NSArray<ObjectType> extends NSObject, INSCopying, INSMutableCopying, I
   reverseObjectEnumerator(): NSEnumerator<any>;
   sortedArrayUsingSelector(comparator: string): NSArray<any>;
   subarrayWithRange(range: NSRange): NSArray<any>;
-  writeToURL_error(url: NSURL, error: NSError): boolean;
+  writeToURL_error(url: NSURL, error: MOPointer<NSError>): boolean;
   makeObjectsPerformSelector(aSelector: string): void;
   makeObjectsPerformSelector_withObject(aSelector: string, argument: any | null): void;
   objectsAtIndexes(indexes: NSIndexSet): NSArray<any>;
@@ -102,6 +102,9 @@ interface NSArray<ObjectType> extends NSObject, INSCopying, INSMutableCopying, I
   mo_objectForIndexedSubscript(idx: NSUInteger): any;
   cloudObjectsOfType_parentObject(type: any, parent: SCKObject | null): NSArray<any>;
   length(): NSUInteger;
+  copyWithZone(zone: NSZone | null): any;
+  mutableCopyWithZone(zone: NSZone | null): any;
+  countByEnumeratingWithState_objects_count(state: NSFastEnumerationState, buffer: any[], len: NSUInteger): NSUInteger;
 
   count(): NSUInteger;
   description(): NSString;
@@ -109,19 +112,49 @@ interface NSArray<ObjectType> extends NSObject, INSCopying, INSMutableCopying, I
   lastObject(): ObjectType;
   sortedArrayHint(): NSData;
 }
+
 declare const NSArray: {
   alloc<ObjectType>(): NSArrayUninitialized<ObjectType>;
-  class(): NSArray;  array<ObjectType>(): NSArray<ObjectType>;
+  class(): NSArray;
+  array<ObjectType>(): NSArray<ObjectType>;
   arrayWithObject<ObjectType>(anObject: ObjectType): NSArray<ObjectType>;
   arrayWithObjects_count<ObjectType>(objects: ObjectType[], cnt: NSUInteger): NSArray<ObjectType>;
   arrayWithObjects<ObjectType>(firstObj: ObjectType, ...args: any[]): NSArray<ObjectType>;
   arrayWithArray<ObjectType>(array: NSArray<any> | any[]): NSArray<ObjectType>;
-  arrayWithContentsOfURL_error(url: NSURL, error: NSError): NSArray<any>;
+  arrayWithContentsOfURL_error(url: NSURL, error: MOPointer<NSError>): NSArray<any>;
   arrayWithContentsOfFile(path: NSString | string): NSArray<any>;
   arrayWithContentsOfURL(url: NSURL): NSArray<any>;
   flattenedArrays(arrays: NSArray<any> | any[]): NSArray<any>;
   arrayWithCapacity_fill(count: NSUInteger, block: Block): any;
   arrayByMergingArrays(array: NSArray<any> | any[]): NSArray<any>;
+  load(): void;
+  instancesRespondToSelector(aSelector: string): boolean;
+  conformsToProtocol(protocol: Protocol): boolean;
+  instanceMethodForSelector(aSelector: string): IMP;
+  isSubclassOfClass(aClass: any): boolean;
+  hash(): NSUInteger;
+  superclass(): any;
+  description(): NSString;
+  debugDescription(): NSString;
+  useStoredAccessor(): boolean;
+  keyPathsForValuesAffectingValueForKey(key: NSString | string): NSSet<any>;
+  automaticallyNotifiesObserversForKey(key: NSString | string): boolean;
+  setKeys_triggerChangeNotificationsForDependentKey(keys: NSArray<any> | any[], dependentKey: NSString | string): void;
+  classFallbacksForKeyedArchiver(): NSArray<any>;
+  classForKeyedUnarchiver(): any;
+  version(): NSInteger;
+  setVersion(aVersion: NSInteger): void;
+  cancelPreviousPerformRequestsWithTarget_selector_object(aTarget: any, aSelector: string, anArgument: any | null): void;
+  cancelPreviousPerformRequestsWithTarget(aTarget: any): void;
+  exposeBinding(binding: NSBindingName): void;
+  setDefaultPlaceholder_forMarker_withBinding(placeholder: any | null, marker: any | null, binding: NSBindingName): void;
+  defaultPlaceholderForMarker_withBinding(marker: any | null, binding: NSBindingName): any;
+  mo_swizzleAdditions(): void;
+  mo_mocha(): MOClassDescription;
+  isSelectorExcludedFromMochaScript(selector: string): boolean;
+  selectorForMochaPropertyName(propertyName: NSString | string): string;
+  supportsSecureCoding(): boolean;
+  accessInstanceVariablesDirectly(): boolean;
 
 }
 

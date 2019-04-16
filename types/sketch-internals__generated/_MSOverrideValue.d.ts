@@ -1,4 +1,5 @@
 interface _MSOverrideValueUninitialized<InitializedType = _MSOverrideValue> extends MSModelObjectUninitialized<_MSOverrideValue> {}
+
 interface _MSOverrideValue extends MSModelObject {
 
   overrideName(): NSString;
@@ -6,8 +7,11 @@ interface _MSOverrideValue extends MSModelObject {
   value(): NSObject;
   setValue(value: NSObject): void;
 }
+
 declare const _MSOverrideValue: {
   alloc(): _MSOverrideValueUninitialized;
   class(): _MSOverrideValue;
+  immutableClass(): any;
+  allowsFaulting(): boolean;
 }
 

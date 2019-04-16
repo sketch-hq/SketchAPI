@@ -1,4 +1,5 @@
 interface MSCloudSigninWindowControllerUninitialized<InitializedType = MSCloudSigninWindowController> extends NSWindowControllerUninitialized<MSCloudSigninWindowController> {}
+
 interface MSCloudSigninWindowController extends NSWindowController {
 
   environment(): SCKAPIEnvironment;
@@ -9,8 +10,12 @@ interface MSCloudSigninWindowController extends NSWindowController {
   password(): NSString;
   setPassword(password: NSString | string): void;
 }
+
 declare const MSCloudSigninWindowController: {
   alloc(): MSCloudSigninWindowControllerUninitialized;
   class(): MSCloudSigninWindowController;
+  restorableStateKeyPaths(): NSArray<any>;
+  accessInstanceVariablesDirectly(): boolean;
+
 }
 

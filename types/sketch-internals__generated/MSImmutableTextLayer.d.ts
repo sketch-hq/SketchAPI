@@ -1,4 +1,5 @@
 interface MSImmutableTextLayerUninitialized<InitializedType = MSImmutableTextLayer> extends _MSImmutableTextLayerUninitialized<MSImmutableTextLayer> {}
+
 interface MSImmutableTextLayer extends _MSImmutableTextLayer, IMSFirstLineTypesetterDelegate {
   defaultLineHeight(layoutManager: NSLayoutManager): CGFloat;
   startingPositionOnPath(shape: NSBezierPath): CGFloat;
@@ -12,6 +13,7 @@ interface MSImmutableTextLayer extends _MSImmutableTextLayer, IMSFirstLineTypese
   drawingPointForText(): NSPoint;
   createTextStorage(): NSTextStorage;
   textStoragePoolInCache(cache: BCCache): MSTextStoragePool;
+  baselineAdjustmentForLayoutManager(layoutManager: NSLayoutManager): CGFloat;
 
   fontSize(): CGFloat;
   stringValue(): NSString;
@@ -23,6 +25,7 @@ interface MSImmutableTextLayer extends _MSImmutableTextLayer, IMSFirstLineTypese
   shouldUseBezierRepresentationForRendering(): boolean;
   isEditingText(): boolean;
 }
+
 declare const MSImmutableTextLayer: {
   alloc(): MSImmutableTextLayerUninitialized;
   class(): MSImmutableTextLayer;

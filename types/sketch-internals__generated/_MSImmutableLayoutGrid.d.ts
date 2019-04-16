@@ -1,4 +1,5 @@
 interface _MSImmutableLayoutGridUninitialized<InitializedType = _MSImmutableLayoutGrid> extends MSImmutableBaseGridUninitialized<_MSImmutableLayoutGrid> {}
+
 interface _MSImmutableLayoutGrid extends MSImmutableBaseGrid {
 
   columnWidth(): CGFloat;
@@ -13,8 +14,10 @@ interface _MSImmutableLayoutGrid extends MSImmutableBaseGrid {
   rowHeightMultiplication(): CGFloat;
   totalWidth(): CGFloat;
 }
+
 declare const _MSImmutableLayoutGrid: {
   alloc(): _MSImmutableLayoutGridUninitialized;
   class(): _MSImmutableLayoutGrid;
+  displayableAtZoom(zoom: CGFloat): boolean;
 }
 

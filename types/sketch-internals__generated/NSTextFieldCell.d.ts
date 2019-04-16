@@ -1,4 +1,5 @@
 interface NSTextFieldCellUninitialized<InitializedType = NSTextFieldCell> extends NSActionCellUninitialized<NSTextFieldCell> {}
+
 interface NSTextFieldCell extends NSActionCell {
   setUpFieldEditorAttributes(textObj: NSText): NSText;
   setWantsNotificationForMarkedText(flag: boolean): void;
@@ -18,8 +19,13 @@ interface NSTextFieldCell extends NSActionCell {
   allowedInputSourceLocales(): NSArray<any>;
   setAllowedInputSourceLocales(allowedInputSourceLocales: NSArray<any> | any[]): void;
 }
+
 declare const NSTextFieldCell: {
   alloc(): NSTextFieldCellUninitialized;
   class(): NSTextFieldCell;
+  prefersTrackingUntilMouseUp(): boolean;
+  defaultMenu(): NSMenu;
+  defaultFocusRingType(): NSFocusRingType;
+
 }
 

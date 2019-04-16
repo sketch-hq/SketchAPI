@@ -1,5 +1,5 @@
 interface NSFileWrapperUninitialized<InitializedType = NSFileWrapper> extends NSObjectUninitialized<NSFileWrapper> {
-  initWithURL_options_error(url: NSURL, options: NSFileWrapperReadingOptions, outError: NSError): InitializedType;
+  initWithURL_options_error(url: NSURL, options: NSFileWrapperReadingOptions, outError: MOPointer<NSError>): InitializedType;
   initDirectoryWithFileWrappers(childrenByPreferredName: NSDictionary<any, any> | {[key: string]: any}): InitializedType;
   initRegularFileWithContents(contents: NSData): InitializedType;
   initSymbolicLinkWithDestinationURL(url: NSURL): InitializedType;
@@ -8,10 +8,11 @@ interface NSFileWrapperUninitialized<InitializedType = NSFileWrapper> extends NS
   initWithPath(path: NSString | string): InitializedType;
   initSymbolicLinkWithDestination(path: NSString | string): InitializedType;
 }
+
 interface NSFileWrapper extends NSObject, INSSecureCoding {
   matchesContentsOfURL(url: NSURL): boolean;
-  readFromURL_options_error(url: NSURL, options: NSFileWrapperReadingOptions, outError: NSError): boolean;
-  writeToURL_options_originalContentsURL_error(url: NSURL, options: NSFileWrapperWritingOptions, originalContentsURL: NSURL | null, outError: NSError): boolean;
+  readFromURL_options_error(url: NSURL, options: NSFileWrapperReadingOptions, outError: MOPointer<NSError>): boolean;
+  writeToURL_options_originalContentsURL_error(url: NSURL, options: NSFileWrapperWritingOptions, originalContentsURL: NSURL | null, outError: MOPointer<NSError>): boolean;
   addFileWrapper(child: NSFileWrapper): NSString;
   addRegularFileWithContents_preferredFilename(data: NSData, fileName: NSString | string): NSString;
   removeFileWrapper(child: NSFileWrapper): void;
@@ -39,8 +40,38 @@ interface NSFileWrapper extends NSObject, INSSecureCoding {
   icon(): NSImage;
   setIcon(icon: NSImage): void;
 }
+
 declare const NSFileWrapper: {
   alloc(): NSFileWrapperUninitialized;
   class(): NSFileWrapper;
+  load(): void;
+  instancesRespondToSelector(aSelector: string): boolean;
+  conformsToProtocol(protocol: Protocol): boolean;
+  instanceMethodForSelector(aSelector: string): IMP;
+  isSubclassOfClass(aClass: any): boolean;
+  hash(): NSUInteger;
+  superclass(): any;
+  description(): NSString;
+  debugDescription(): NSString;
+  useStoredAccessor(): boolean;
+  keyPathsForValuesAffectingValueForKey(key: NSString | string): NSSet<any>;
+  automaticallyNotifiesObserversForKey(key: NSString | string): boolean;
+  setKeys_triggerChangeNotificationsForDependentKey(keys: NSArray<any> | any[], dependentKey: NSString | string): void;
+  classFallbacksForKeyedArchiver(): NSArray<any>;
+  classForKeyedUnarchiver(): any;
+  version(): NSInteger;
+  setVersion(aVersion: NSInteger): void;
+  cancelPreviousPerformRequestsWithTarget_selector_object(aTarget: any, aSelector: string, anArgument: any | null): void;
+  cancelPreviousPerformRequestsWithTarget(aTarget: any): void;
+  exposeBinding(binding: NSBindingName): void;
+  setDefaultPlaceholder_forMarker_withBinding(placeholder: any | null, marker: any | null, binding: NSBindingName): void;
+  defaultPlaceholderForMarker_withBinding(marker: any | null, binding: NSBindingName): any;
+  mo_swizzleAdditions(): void;
+  mo_mocha(): MOClassDescription;
+  isSelectorExcludedFromMochaScript(selector: string): boolean;
+  selectorForMochaPropertyName(propertyName: NSString | string): string;
+  supportsSecureCoding(): boolean;
+  accessInstanceVariablesDirectly(): boolean;
+
 }
 

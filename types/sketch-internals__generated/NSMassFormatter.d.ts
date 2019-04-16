@@ -1,4 +1,5 @@
 interface NSMassFormatterUninitialized<InitializedType = NSMassFormatter> extends NSFormatterUninitialized<NSMassFormatter> {}
+
 interface NSMassFormatter extends NSFormatter {
   stringFromValue_unit(value: number, unit: NSMassFormatterUnit): NSString;
   stringFromKilograms(numberInKilograms: number): NSString;
@@ -13,8 +14,11 @@ interface NSMassFormatter extends NSFormatter {
   forPersonMassUse(): boolean;
   setForPersonMassUse(forPersonMassUse: boolean): void;
 }
+
 declare const NSMassFormatter: {
   alloc(): NSMassFormatterUninitialized;
   class(): NSMassFormatter;
+  accessInstanceVariablesDirectly(): boolean;
+
 }
 

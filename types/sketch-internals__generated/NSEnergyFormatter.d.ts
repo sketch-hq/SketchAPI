@@ -1,4 +1,5 @@
 interface NSEnergyFormatterUninitialized<InitializedType = NSEnergyFormatter> extends NSFormatterUninitialized<NSEnergyFormatter> {}
+
 interface NSEnergyFormatter extends NSFormatter {
   stringFromValue_unit(value: number, unit: NSEnergyFormatterUnit): NSString;
   stringFromJoules(numberInJoules: number): NSString;
@@ -13,6 +14,7 @@ interface NSEnergyFormatter extends NSFormatter {
   forFoodEnergyUse(): boolean;
   setForFoodEnergyUse(forFoodEnergyUse: boolean): void;
 }
+
 declare const NSEnergyFormatter: {
   alloc(): NSEnergyFormatterUninitialized;
   class(): NSEnergyFormatter;

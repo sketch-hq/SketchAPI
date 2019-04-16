@@ -1,4 +1,5 @@
 interface MSEditArtboardPresetViewControllerUninitialized<InitializedType = MSEditArtboardPresetViewController> extends NSViewControllerUninitialized<MSEditArtboardPresetViewController> {}
+
 interface MSEditArtboardPresetViewController extends NSViewController {
 
   preset(): MSArtboardPreset;
@@ -6,8 +7,12 @@ interface MSEditArtboardPresetViewController extends NSViewController {
   delegate(): any;
   setDelegate(delegate: any): void;
 }
+
 declare const MSEditArtboardPresetViewController: {
   alloc(): MSEditArtboardPresetViewControllerUninitialized;
   class(): MSEditArtboardPresetViewController;
+  restorableStateKeyPaths(): NSArray<any>;
+  accessInstanceVariablesDirectly(): boolean;
+
 }
 

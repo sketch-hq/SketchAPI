@@ -1,4 +1,5 @@
 interface NSProgressIndicatorUninitialized<InitializedType = NSProgressIndicator> extends NSViewUninitialized<NSProgressIndicator> {}
+
 interface NSProgressIndicator extends NSView, INSAccessibilityProgressIndicator {
   incrementBy(delta: number): void;
   startAnimation(sender: any | null): void;
@@ -7,6 +8,7 @@ interface NSProgressIndicator extends NSView, INSAccessibilityProgressIndicator 
   animationDelay(): NSTimeInterval;
   setAnimationDelay(delay: NSTimeInterval): void;
   animate(sender: any | null): void;
+  accessibilityValue(): NSNumber;
 
   indeterminate(): boolean;
   setIndeterminate(indeterminate: boolean): void;
@@ -29,8 +31,16 @@ interface NSProgressIndicator extends NSView, INSAccessibilityProgressIndicator 
   displayedWhenStopped(): boolean;
   setDisplayedWhenStopped(displayedWhenStopped: boolean): void;
 }
+
 declare const NSProgressIndicator: {
   alloc(): NSProgressIndicatorUninitialized;
   class(): NSProgressIndicator;
+  requiresConstraintBasedLayout(): boolean;
+  focusView(): NSView;
+  defaultMenu(): NSMenu;
+  compatibleWithResponsiveScrolling(): boolean;
+  defaultFocusRingType(): NSFocusRingType;
+  restorableStateKeyPaths(): NSArray<any>;
+
 }
 

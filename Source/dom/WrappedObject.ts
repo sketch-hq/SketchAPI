@@ -10,14 +10,20 @@ type Descriptor<T extends WrappedObject<any>, U> = {
   importable?: boolean
   depends?: string
   propertyName?: string
-  get: () => U
-  set?: (value: U) => void
+  get: (this: T) => U
+  set?: (this: T, value: U) => void
 } & ThisType<T>
 
-type ArrayDescriptor<T extends WrappedObject<any>, U> = Descriptor<T, U[]> & {
-  set: (value: U[]) => void
-  insertItem: (item: U, index: number) => U | null
-  removeItem: (index: number) => U | null
+type ArrayDescriptor<T extends WrappedObject<any>, U> = {
+  exportable?: boolean
+  enumerable?: boolean
+  importable?: boolean
+  depends?: string
+  propertyName?: string
+  get: (this: T) => U[]
+  set: (this: T, value: U[]) => void
+  insertItem: (this: T, item: U, index: number) => U | null
+  removeItem: (this: T, index: number) => U | null
 } & ThisType<T>
 
 /**
@@ -96,7 +102,7 @@ export function defineArray<T extends WrappedObject<any>, U>(
     // eslint-disable-next-line no-param-reassign
     descriptor.get = function get() {
       const arr = oldGet.bind(this)()
-      return hookedArray(arr, this, descriptor)
+      return hookedArray<U>(arr, this, descriptor)
     }
 
     let existingProperties: { [propertyName: string]: Descriptor<T, any> } =

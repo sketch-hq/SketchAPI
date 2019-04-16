@@ -1,9 +1,12 @@
 interface NSUnitMassUninitialized<InitializedType = NSUnitMass> extends NSDimensionUninitialized<NSUnitMass> {}
+
 interface NSUnitMass extends NSDimension, INSSecureCoding {
 }
+
 declare const NSUnitMass: {
   alloc(): NSUnitMassUninitialized;
   class(): NSUnitMass;
+  baseUnit(): NSUnitMass;
   kilograms(): NSUnitMass;
   grams(): NSUnitMass;
   decigrams(): NSUnitMass;
@@ -20,6 +23,8 @@ declare const NSUnitMass: {
   carats(): NSUnitMass;
   ouncesTroy(): NSUnitMass;
   slugs(): NSUnitMass;
+  supportsSecureCoding(): boolean;
+  accessInstanceVariablesDirectly(): boolean;
 
 }
 

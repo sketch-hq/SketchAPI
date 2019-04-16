@@ -1,4 +1,5 @@
 interface NSStepperCellUninitialized<InitializedType = NSStepperCell> extends NSActionCellUninitialized<NSStepperCell> {}
+
 interface NSStepperCell extends NSActionCell {
 
   minValue(): number;
@@ -12,8 +13,13 @@ interface NSStepperCell extends NSActionCell {
   autorepeat(): boolean;
   setAutorepeat(autorepeat: boolean): void;
 }
+
 declare const NSStepperCell: {
   alloc(): NSStepperCellUninitialized;
   class(): NSStepperCell;
+  prefersTrackingUntilMouseUp(): boolean;
+  defaultMenu(): NSMenu;
+  defaultFocusRingType(): NSFocusRingType;
+
 }
 

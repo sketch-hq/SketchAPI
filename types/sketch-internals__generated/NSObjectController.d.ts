@@ -1,6 +1,7 @@
 interface NSObjectControllerUninitialized<InitializedType = NSObjectController> extends NSControllerUninitialized<NSObjectController> {
   initWithContent(content: any | null): InitializedType;
 }
+
 interface NSObjectController extends NSController {
   prepareContent(): void;
   newObject(): any;
@@ -9,7 +10,7 @@ interface NSObjectController extends NSController {
   add(sender: any | null): IBAction;
   remove(sender: any | null): IBAction;
   validateUserInterfaceItem(item: any): boolean;
-  fetchWithRequest_merge_error(fetchRequest: NSFetchRequest | null, merge: boolean, error: NSError): boolean;
+  fetchWithRequest_merge_error(fetchRequest: NSFetchRequest | null, merge: boolean, error: MOPointer<NSError>): boolean;
   fetch(sender: any | null): IBAction;
   defaultFetchRequest(): NSFetchRequest;
 
@@ -34,8 +35,11 @@ interface NSObjectController extends NSController {
   usesLazyFetching(): boolean;
   setUsesLazyFetching(usesLazyFetching: boolean): void;
 }
+
 declare const NSObjectController: {
   alloc(): NSObjectControllerUninitialized;
   class(): NSObjectController;
+  accessInstanceVariablesDirectly(): boolean;
+
 }
 

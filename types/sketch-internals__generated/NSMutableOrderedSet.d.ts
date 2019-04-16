@@ -1,6 +1,7 @@
 interface NSMutableOrderedSetUninitialized<ObjectType, InitializedType = NSMutableOrderedSet<ObjectType>> extends NSOrderedSetUninitialized<ObjectType, NSMutableOrderedSet<ObjectType>> {
   initWithCapacity(numItems: NSUInteger): InitializedType;
 }
+
 interface NSMutableOrderedSet<ObjectType> extends NSOrderedSet<ObjectType> {
   insertObject_atIndex(object: ObjectType, idx: NSUInteger): void;
   removeObjectAtIndex(idx: NSUInteger): void;
@@ -33,9 +34,10 @@ interface NSMutableOrderedSet<ObjectType> extends NSOrderedSet<ObjectType> {
   sortUsingDescriptors(sortDescriptors: NSArray<any> | any[]): void;
   mo_setObject_forIndexedSubscript(obj: any, idx: NSUInteger): void;
 }
+
 declare const NSMutableOrderedSet: {
   alloc<ObjectType>(): NSMutableOrderedSetUninitialized<ObjectType>;
-  class(): NSMutableOrderedSet;  orderedSetWithCapacity<ObjectType>(numItems: NSUInteger): NSMutableOrderedSet<ObjectType>;
-
+  class(): NSMutableOrderedSet;
+  orderedSetWithCapacity<ObjectType>(numItems: NSUInteger): NSMutableOrderedSet<ObjectType>;
 }
 

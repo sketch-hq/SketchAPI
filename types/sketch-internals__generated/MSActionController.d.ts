@@ -1,4 +1,5 @@
 interface MSActionControllerUninitialized<InitializedType = MSActionController> extends NSResponderUninitialized<MSActionController> {}
+
 interface MSActionController extends NSResponder {
   registerAction(action: MSAction): void;
   actionForID(actionIdentifier: NSString | string): MSAction;
@@ -17,8 +18,12 @@ interface MSActionController extends NSResponder {
   singleKeyShortcuts(): NSDictionary<any, any>;
   setSingleKeyShortcuts(singleKeyShortcuts: NSDictionary<any, any> | {[key: string]: any}): void;
 }
+
 declare const MSActionController: {
   alloc(): MSActionControllerUninitialized;
   class(): MSActionController;
+  restorableStateKeyPaths(): NSArray<any>;
+  accessInstanceVariablesDirectly(): boolean;
+
 }
 

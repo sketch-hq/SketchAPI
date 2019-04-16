@@ -1,6 +1,7 @@
 import { toArray, isNativeObject } from 'util'
 import { WrappedObject, define, defineArray } from '../WrappedObject'
 import { Page } from '../layers/Page'
+import { Layer } from '../layers/Layer'
 import { Selection } from './Selection'
 import { getURLFromPath, isWrappedObject, isKindOfClass } from '../utils'
 import { wrapObject } from '../wrapNativeObject'
@@ -20,7 +21,7 @@ export enum SaveModeType {
 export function getDocuments() {
   return toArray<MSDocument>(NSApp.orderedDocuments())
     .filter(doc => doc.isKindOfClass(MSDocument))
-    .map(Document.fromNative.bind(Document))
+    .map(doc => Document.fromNative<MSDocument | MSDocumentData, Document>(doc))
 }
 
 export function getSelectedDocument() {
@@ -28,7 +29,7 @@ export function getSelectedDocument() {
 
   if (!nativeDocument) {
     const app = NSDocumentController.sharedDocumentController()
-    nativeDocument = app.currentDocument()
+    nativeDocument = app.currentDocument() as MSDocument
   }
 
   // skpm will define context as a global so let's use that if available
@@ -52,7 +53,9 @@ export function getSelectedDocument() {
   if (!nativeDocument) {
     return undefined
   }
-  return Document.fromNative(nativeDocument)
+  return Document.fromNative<MSDocument | MSDocumentData, Document>(
+    nativeDocument
+  )
 }
 /* eslint-enable */
 
@@ -85,7 +88,7 @@ function sharedStyleDescriptor(type: 'layer' | 'text') {
   }
 
   return {
-    get() {
+    get(this: Document) {
       if (!this.sketchObject) {
         return []
       }
@@ -97,6 +100,7 @@ function sharedStyleDescriptor(type: 'layer' | 'text') {
       return foreignStyles.concat(localStyles).map(wrapObject)
     },
     set(
+      this: Document,
       sharedLayerStyles:
         | MSSharedStyle[]
         | SharedStyle[]
@@ -105,7 +109,7 @@ function sharedStyleDescriptor(type: 'layer' | 'text') {
       if (this.isImmutable()) {
         return
       }
-      const documentData = this._getMSDocumentData()
+      const documentData = this._getMSDocumentData() as MSDocumentData
       const container = documentData.sharedObjectContainerOfType(config.type)
 
       // remove the existing shared styles
@@ -138,6 +142,7 @@ function sharedStyleDescriptor(type: 'layer' | 'text') {
       )
     },
     insertItem(
+      this: Document,
       item: MSSharedStyle | SharedStyle | { style: Style; name: string },
       index: number
     ) {
@@ -145,7 +150,7 @@ function sharedStyleDescriptor(type: 'layer' | 'text') {
         return null
       }
 
-      const documentData = this._getMSDocumentData()
+      const documentData = this._getMSDocumentData() as MSDocumentData
 
       const realIndex = Math.max(
         index - documentData[config.foreignStyles]().length,
@@ -173,11 +178,11 @@ function sharedStyleDescriptor(type: 'layer' | 'text') {
 
       return new SharedStyle({ sketchObject: sharedStyle })
     },
-    removeItem(index: number) {
+    removeItem(this: Document, index: number) {
       if (this.isImmutable()) {
         return undefined
       }
-      const documentData = this._getMSDocumentData()
+      const documentData = this._getMSDocumentData() as MSDocumentData
 
       const realIndex = index - documentData[config.foreignStyles]().length
 
@@ -242,7 +247,8 @@ export class Document extends WrappedObject<MSDocument | MSDocumentData> {
         })
 
       // remove the previous pages
-      this._getMSDocumentData().removePages_detachInstances(
+      const documentData = this._getMSDocumentData() as MSDocumentData
+      documentData.removePages_detachInstances(
         Object.keys(pagesToRemove).map(id => pagesToRemove[id]),
         true
       )
@@ -257,7 +263,8 @@ export class Document extends WrappedObject<MSDocument | MSDocumentData> {
           .documentData()
           .removePages_detachInstances([wrapped._object], false)
       }
-      this._getMSDocumentData().insertPage_atIndex(wrapped._object, index)
+      const documentData = this._getMSDocumentData() as MSDocumentData
+      documentData.insertPage_atIndex(wrapped._object, index)
       return wrapped
     },
     removeItem(index) {
@@ -265,7 +272,8 @@ export class Document extends WrappedObject<MSDocument | MSDocumentData> {
         return null
       }
       const removed: MSPage = this.sketchObject.pages()[index]
-      this._getMSDocumentData().removePages_detachInstances([removed], true)
+      const documentData = this._getMSDocumentData() as MSDocumentData
+      documentData.removePages_detachInstances([removed], true)
       return Page.fromNative(removed)
     },
   })
@@ -369,7 +377,7 @@ export class Document extends WrappedObject<MSDocument | MSDocumentData> {
       if (this.isImmutable()) {
         return
       }
-      const assets = this._getMSDocumentData().assets()
+      const assets = (this._getMSDocumentData() as MSDocumentData).assets()
       assets.removeAllColorAssets()
       toArray(colors)
         .map(c => ColorAsset.from(c)!)
@@ -381,7 +389,7 @@ export class Document extends WrappedObject<MSDocument | MSDocumentData> {
       if (this.isImmutable()) {
         return null
       }
-      const assets = this._getMSDocumentData().assets()
+      const assets = (this._getMSDocumentData() as MSDocumentData).assets()
       const wrapped = ColorAsset.from(color)!
       assets.insertColorAsset_atIndex(wrapped.sketchObject, index)
       return wrapped
@@ -390,10 +398,8 @@ export class Document extends WrappedObject<MSDocument | MSDocumentData> {
       if (this.isImmutable()) {
         return null
       }
-      const documentData = this._getMSDocumentData()
-      return ColorAsset.from(
-        documentData.assets().removeColorAssetAtIndex(index)
-      )!
+      const assets = (this._getMSDocumentData() as MSDocumentData).assets()
+      return ColorAsset.from(assets.removeColorAssetAtIndex(index))!
     },
   })
   colors!: ColorAsset[]
@@ -417,7 +423,7 @@ export class Document extends WrappedObject<MSDocument | MSDocumentData> {
       if (this.isImmutable()) {
         return
       }
-      const assets = this._getMSDocumentData().assets()
+      const assets = (this._getMSDocumentData() as MSDocumentData).assets()
       assets.removeAllGradientAssets()
       toArray(gradients)
         .map(c => GradientAsset.from(c)!)
@@ -429,7 +435,7 @@ export class Document extends WrappedObject<MSDocument | MSDocumentData> {
       if (this.isImmutable()) {
         return null
       }
-      const assets = this._getMSDocumentData().assets()
+      const assets = (this._getMSDocumentData() as MSDocumentData).assets()
       const wrapped = GradientAsset.from(gradient)!
       assets.insertGradientAsset_atIndex(wrapped.sketchObject, index)
       return wrapped
@@ -438,10 +444,8 @@ export class Document extends WrappedObject<MSDocument | MSDocumentData> {
       if (this.isImmutable()) {
         return null
       }
-      const documentData = this._getMSDocumentData()
-      return GradientAsset.from(
-        documentData.assets().removeGradientAssetAtIndex(index)
-      )!
+      const assets = (this._getMSDocumentData() as MSDocumentData).assets()
+      return GradientAsset.from(assets.removeGradientAssetAtIndex(index))!
     },
   })
   gradients!: GradientAsset[]
@@ -463,7 +467,7 @@ export class Document extends WrappedObject<MSDocument | MSDocumentData> {
     if (!document.sketchObject) {
       const app = NSDocumentController.sharedDocumentController()
 
-      const error = MOPointer.alloc().init()
+      const error = MOPointer.alloc<NSError>().init()
 
       // eslint-disable-next-line no-param-reassign
       document.sketchObject = app.openUntitledDocumentAndDisplay_error(
@@ -472,7 +476,7 @@ export class Document extends WrappedObject<MSDocument | MSDocumentData> {
       ) as MSDocument
 
       if (error.value() !== null) {
-        throw new Error(error.value())
+        throw new Error(String(error.value()))
       }
 
       if (!document.sketchObject) {
@@ -499,8 +503,8 @@ export class Document extends WrappedObject<MSDocument | MSDocumentData> {
 
     if (
       msdocument &&
-      (msdocument.isKindOfClass(MSDocumentData) ||
-        msdocument.isKindOfClass(MSImmutableDocumentData))
+      (isKindOfClass(msdocument, MSDocumentData.class()) ||
+        isKindOfClass(msdocument, MSImmutableDocumentData.class()))
     ) {
       return msdocument
     }
@@ -586,8 +590,7 @@ export class Document extends WrappedObject<MSDocument | MSDocumentData> {
     console.warn(
       `\`document.getSharedLayerStyles()\` is deprecated. Use \`document.sharedLayerStyles\` instead.`
     )
-    const documentData = this._getMSDocumentData()
-    return toArray(documentData.allLayerStyles()).map(wrapObject)
+    return this.sharedLayerStyles
   }
 
   getSharedTextStyleWithID(sharedId: string) {
@@ -598,8 +601,7 @@ export class Document extends WrappedObject<MSDocument | MSDocumentData> {
     console.warn(
       `\`document.getSharedTextStyles()\` is deprecated. Use \`document.sharedTextStyles\` instead.`
     )
-    const documentData = this._getMSDocumentData()
-    return toArray(documentData.allTextStyles()).map(wrapObject)
+    return this.sharedTextStyles
   }
 
   /**
@@ -619,7 +621,7 @@ export class Document extends WrappedObject<MSDocument | MSDocumentData> {
 
   static open(
     path?: string,
-    callback?: (err: Error | null, document?: Document) => void
+    callback?: (err: Error | null, document?: Document | null) => void
   ) {
     if (typeof path === 'function') {
       /* eslint-disable no-param-reassign */
@@ -637,7 +639,8 @@ export class Document extends WrappedObject<MSDocument | MSDocumentData> {
       dialog.setCanChooseDirectories(false)
       dialog.setAllowsMultipleSelection(false)
       const buttonClicked = dialog.runModal()
-      if (buttonClicked != NSOKButton) {
+      const OkButton = 1
+      if (buttonClicked != OkButton) {
         if (callback) callback(null, undefined)
         return undefined
       }
@@ -650,7 +653,7 @@ export class Document extends WrappedObject<MSDocument | MSDocumentData> {
         true,
         coscript,
         (
-          _document: MSDocument | MSDocumentData,
+          _document: MSDocument,
           documentWasAlreadyOpen: boolean,
           err?: NSException
         ) => {
@@ -659,7 +662,12 @@ export class Document extends WrappedObject<MSDocument | MSDocumentData> {
               if (err && !err.isEqual(NSNull.null())) {
                 callback(new Error(String(err.description())))
               } else {
-                callback(null, Document.fromNative(_document))
+                callback(
+                  null,
+                  Document.fromNative<MSDocument | MSDocumentData, Document>(
+                    _document
+                  )
+                )
               }
             }
             fiber.cleanup()
@@ -672,28 +680,31 @@ export class Document extends WrappedObject<MSDocument | MSDocumentData> {
 
       // return the current document to maintain backward compatibility
       // but that's not the right document...
-      const document = app.currentDocument()
-      return Document.fromNative(document as MSDocument | MSDocumentData)
+      return Document.getSelectedDocument()
     }
 
     let document
     const url = getURLFromPath(path)
 
     if (app.documentForURL(url)) {
-      document = Document.fromNative(app.documentForURL(url))
+      document = Document.fromNative<MSDocument | MSDocumentData, Document>(
+        app.documentForURL(url) as MSDocument
+      )
       if (callback) callback(null, document)
       return document
     }
 
-    const error = MOPointer.alloc().init()
+    const error = MOPointer.alloc<NSError>().init()
 
     document = app.openDocumentWithContentsOfURL_display_error(url, true, error)
 
     if (error.value() !== null) {
-      throw new Error(error.value())
+      throw new Error(String(error.value()))
     }
 
-    document = Document.fromNative(document)
+    document = Document.fromNative<MSDocument | MSDocumentData, Document>(
+      document
+    )
 
     if (callback) callback(null, document)
     return document
@@ -701,7 +712,10 @@ export class Document extends WrappedObject<MSDocument | MSDocumentData> {
 
   save(
     path?: string,
-    options?: { saveMode?: SaveModeType },
+    options?: {
+      saveMode?: SaveModeType | NSSaveOperationType
+      iKnowThatImOverwritingAFolder?: boolean
+    },
     callback?: (err: Error | null, document: Document) => void
   ) {
     /* eslint-disable no-param-reassign */
@@ -730,8 +744,11 @@ export class Document extends WrappedObject<MSDocument | MSDocumentData> {
       return
     }
 
-    const url = getURLFromPath(path) || this._tempURL
-    const { saveMode, iKnowThatImOverwritingAFolder } = options || {}
+    const url = path ? getURLFromPath(path) : this._tempURL!
+    const { saveMode, iKnowThatImOverwritingAFolder } = options || {
+      saveMode: SaveModeType.SaveAs,
+      iKnowThatImOverwritingAFolder: false,
+    }
 
     if (
       (!url.pathExtension() || !String(url.pathExtension())) &&
@@ -744,7 +761,7 @@ export class Document extends WrappedObject<MSDocument | MSDocumentData> {
 
     const fiber = coscript.createFiber()
 
-    const nativeSaveMode =
+    const nativeSaveMode: NSSaveOperationType =
       (saveMode && SaveModeType[saveMode]) || saveMode || SaveModeType.SaveAs
     const that = this
     msdocument.saveDocumentToURL_saveMode_context_callback(

@@ -2,6 +2,7 @@ interface MSTextLayerUninitialized<InitializedType = MSTextLayer> extends _MSTex
   initWithAttributedString_documentColorSpace_maxWidth(attributedString: NSAttributedString | null, colorSpace: NSColorSpace, maxWidth: CGFloat): InitializedType;
   initWithFrame_attributes_documentColorSpace_type(aRect: NSRect, attributes: NSDictionary<any, any> | {[key: string]: any} | null, colorSpace: NSColorSpace, behaviourType: BCTextBehaviourType): InitializedType;
 }
+
 interface MSTextLayer extends _MSTextLayer, IMSFirstLineTypesetterDelegate, IMSColorConvertible {
   layersByConvertingToOutlines(): NSArray<any>;
   changeFont(sender: any | null): void;
@@ -26,6 +27,8 @@ interface MSTextLayer extends _MSTextLayer, IMSFirstLineTypesetterDelegate, IMSC
   checkTextBehaviourAndClippingAfterResizeFromCorner_mayClip(corner: BCCorner, mayClip: boolean): void;
   shouldStorePDFPreviews(): boolean;
   PDFPreview(): MSImageData;
+  baselineAdjustmentForLayoutManager(layoutManager: NSLayoutManager): CGFloat;
+  convertColorsUsing(converter: any): void;
 
   supportsVerticalAlignment(): boolean;
   previousRectCache(): NSRect;
@@ -51,9 +54,11 @@ interface MSTextLayer extends _MSTextLayer, IMSFirstLineTypesetterDelegate, IMSC
   editingDelegate(): any;
   setEditingDelegate(editingDelegate: any): void;
 }
+
 declare const MSTextLayer: {
   alloc(): MSTextLayerUninitialized;
-  class(): MSTextLayer;  canSetTextAlignmentForLayers(layers: MSLayerArray): boolean;
+  class(): MSTextLayer;
+  canSetTextAlignmentForLayers(layers: MSLayerArray): boolean;
   setTextAlignment_forLayers(alignment: NSTextAlignment, layers: MSLayerArray): void;
   menuItemStateForAlignment_forLayers(alignment: NSTextAlignment, layers: MSLayerArray): NSInteger;
   canSetTextVerticalAlignmentForLayers(layers: MSLayerArray): boolean;
@@ -61,6 +66,5 @@ declare const MSTextLayer: {
   menuItemStateForTextVerticalAlignment_forLayers(alignment: MSTextStyleVerticalAlignment, layers: MSLayerArray): NSInteger;
   maintainTextLayerBaselinesForLayers_inBlock(textLayers: NSArray<any> | any[], block: BCVoidBlock): void;
   defaultValue(): NSString;
-
 }
 

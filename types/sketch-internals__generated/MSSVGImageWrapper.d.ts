@@ -1,4 +1,5 @@
 interface MSSVGImageWrapperUninitialized<InitializedType = MSSVGImageWrapper> extends MSXMLElementWrapperUninitialized<MSSVGImageWrapper> {}
+
 interface MSSVGImageWrapper extends MSXMLElementWrapper {
 
   externalResourcesRequired(): NSString;
@@ -18,8 +19,11 @@ interface MSSVGImageWrapper extends MSXMLElementWrapper {
   href(): NSString;
   setHref(href: NSString | string): void;
 }
+
 declare const MSSVGImageWrapper: {
   alloc(): MSSVGImageWrapperUninitialized;
   class(): MSSVGImageWrapper;
+  elementName(): NSString;
+  element(): MSSVGImageWrapper;
 }
 

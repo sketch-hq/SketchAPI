@@ -1,4 +1,5 @@
 interface SCKAPIOperationUninitialized<InitializedType = SCKAPIOperation> extends BCURLOperationUninitialized<SCKAPIOperation> {}
+
 interface SCKAPIOperation extends BCURLOperation {
   refreshAuthentication(): void;
   processData_response_error(data: NSData | null, response: NSHTTPURLResponse | null, error: NSError | null): void;
@@ -7,11 +8,18 @@ interface SCKAPIOperation extends BCURLOperation {
   error(): NSError;
   setError(error: NSError): void;
 }
+
 declare const SCKAPIOperation: {
   alloc(): SCKAPIOperationUninitialized;
   class(): SCKAPIOperation;
-  clientID(): NSString;
+  defaultURLSession(): NSURLSession;
+  clientID(): NSString;,
+          {
+            newLineStart: true,
+            newLineEnd: false,
+          }
   setClientID(clientID: NSString | string): void;
+  accessInstanceVariablesDirectly(): boolean;
 
 }
 

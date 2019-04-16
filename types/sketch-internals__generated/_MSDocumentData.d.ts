@@ -1,4 +1,5 @@
 interface _MSDocumentDataUninitialized<InitializedType = _MSDocumentData> extends MSModelObjectUninitialized<_MSDocumentData> {}
+
 interface _MSDocumentData extends MSModelObject {
   addForeignLayerStyle(value: MSForeignLayerStyle): void;
   addForeignLayerStyles(foreignLayerStyles: NSArray<any> | any[]): void;
@@ -72,8 +73,11 @@ interface _MSDocumentData extends MSModelObject {
   pages(): NSArray<any>;
   setPages(pages: NSArray<any> | any[]): void;
 }
+
 declare const _MSDocumentData: {
   alloc(): _MSDocumentDataUninitialized;
   class(): _MSDocumentData;
+  immutableClass(): any;
+  allowsFaulting(): boolean;
 }
 

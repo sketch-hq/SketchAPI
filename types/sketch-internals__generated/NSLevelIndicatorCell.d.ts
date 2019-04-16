@@ -1,6 +1,7 @@
 interface NSLevelIndicatorCellUninitialized<InitializedType = NSLevelIndicatorCell> extends NSActionCellUninitialized<NSLevelIndicatorCell> {
   initWithLevelIndicatorStyle(levelIndicatorStyle: NSLevelIndicatorStyle): InitializedType;
 }
+
 interface NSLevelIndicatorCell extends NSActionCell {
   rectOfTickMarkAtIndex(index: NSInteger): NSRect;
   tickMarkValueAtIndex(index: NSInteger): number;
@@ -22,8 +23,13 @@ interface NSLevelIndicatorCell extends NSActionCell {
   numberOfMajorTickMarks(): NSInteger;
   setNumberOfMajorTickMarks(numberOfMajorTickMarks: NSInteger): void;
 }
+
 declare const NSLevelIndicatorCell: {
   alloc(): NSLevelIndicatorCellUninitialized;
   class(): NSLevelIndicatorCell;
+  prefersTrackingUntilMouseUp(): boolean;
+  defaultMenu(): NSMenu;
+  defaultFocusRingType(): NSFocusRingType;
+
 }
 

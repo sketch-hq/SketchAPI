@@ -1,4 +1,5 @@
 interface MSImmutableBitmapLayerUninitialized<InitializedType = MSImmutableBitmapLayer> extends _MSImmutableBitmapLayerUninitialized<MSImmutableBitmapLayer> {}
+
 interface MSImmutableBitmapLayer extends _MSImmutableBitmapLayer {
   NSImage(): NSImage;
 
@@ -7,6 +8,7 @@ interface MSImmutableBitmapLayer extends _MSImmutableBitmapLayer {
   image(): MSImageData;
   setImage(image: MSImageData): void;
 }
+
 declare const MSImmutableBitmapLayer: {
   alloc(): MSImmutableBitmapLayerUninitialized;
   class(): MSImmutableBitmapLayer;

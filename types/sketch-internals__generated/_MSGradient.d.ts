@@ -1,4 +1,5 @@
 interface _MSGradientUninitialized<InitializedType = _MSGradient> extends MSModelObjectUninitialized<_MSGradient> {}
+
 interface _MSGradient extends MSModelObject {
   addGradientStop(value: MSGradientStop): void;
   addGradientStops(stops: NSArray<any> | any[]): void;
@@ -24,8 +25,11 @@ interface _MSGradient extends MSModelObject {
   stops(): NSArray<any>;
   setStops(stops: NSArray<any> | any[]): void;
 }
+
 declare const _MSGradient: {
   alloc(): _MSGradientUninitialized;
   class(): _MSGradient;
+  immutableClass(): any;
+  allowsFaulting(): boolean;
 }
 

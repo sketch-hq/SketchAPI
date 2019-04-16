@@ -1,4 +1,5 @@
 interface NSCollectionViewFlowLayoutUninitialized<InitializedType = NSCollectionViewFlowLayout> extends NSCollectionViewLayoutUninitialized<NSCollectionViewFlowLayout> {}
+
 interface NSCollectionViewFlowLayout extends NSCollectionViewLayout {
   sectionAtIndexIsCollapsed(sectionIndex: NSUInteger): boolean;
   collapseSectionAtIndex(sectionIndex: NSUInteger): void;
@@ -25,8 +26,12 @@ interface NSCollectionViewFlowLayout extends NSCollectionViewLayout {
   sectionFootersPinToVisibleBounds(): boolean;
   setSectionFootersPinToVisibleBounds(sectionFootersPinToVisibleBounds: boolean): void;
 }
+
 declare const NSCollectionViewFlowLayout: {
   alloc(): NSCollectionViewFlowLayoutUninitialized;
   class(): NSCollectionViewFlowLayout;
+  layoutAttributesClass(): any;
+  invalidationContextClass(): any;
+
 }
 

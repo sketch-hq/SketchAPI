@@ -1,4 +1,5 @@
 interface NSButtonUninitialized<InitializedType = NSButton> extends NSControlUninitialized<NSButton> {}
+
 interface NSButton extends NSControl, INSUserInterfaceValidations, INSAccessibilityButton, INSUserInterfaceCompression {
   setButtonType(type: NSButtonType): void;
   setPeriodicDelay_interval(delay: number, interval: number): void;
@@ -9,6 +10,11 @@ interface NSButton extends NSControl, INSUserInterfaceValidations, INSAccessibil
   minimumSizeWithPrioritizedCompressionOptions(prioritizedOptions: NSArray<any> | any[]): NSSize;
   setNextState(): void;
   setTitleWithMnemonic(stringWithAmpersand: NSString | string): void;
+  validateUserInterfaceItem(item: any): boolean;
+  accessibilityLabel(): NSString;
+  accessibilityPerformPress(): boolean;
+  compressWithPrioritizedCompressionOptions(prioritizedOptions: NSArray<any> | any[]): void;
+  minimumSizeWithPrioritizedCompressionOptions(prioritizedOptions: NSArray<any> | any[]): NSSize;
 
   title(): NSString;
   setTitle(title: NSString | string): void;
@@ -56,13 +62,26 @@ interface NSButton extends NSControl, INSUserInterfaceValidations, INSAccessibil
   sound(): NSSound;
   setSound(sound: NSSound): void;
 }
+
 declare const NSButton: {
   alloc(): NSButtonUninitialized;
-  class(): NSButton;  buttonWithTitle_image_target_action(title: NSString | string, image: NSImage, target: any | null, action: string | null): NSButton;
+  class(): NSButton;
+  buttonWithTitle_image_target_action(title: NSString | string, image: NSImage, target: any | null, action: string | null): NSButton;
   buttonWithTitle_target_action(title: NSString | string, target: any | null, action: string | null): NSButton;
   buttonWithImage_target_action(image: NSImage, target: any | null, action: string | null): NSButton;
   checkboxWithTitle_target_action(title: NSString | string, target: any | null, action: string | null): NSButton;
   radioButtonWithTitle_target_action(title: NSString | string, target: any | null, action: string | null): NSButton;
+  inpectorBorderPathForRect(rect: NSRect): NSBezierPath;
+  inpectorCheckmarkBorderPathForRect(rect: NSRect): NSBezierPath;
+  inpectorBorderPathForRectWithMaxRadius(rect: NSRect): NSBezierPath;
+  inpectorBorderPathForRect_borderRadius(rect: NSRect, borderRadius: CGFloat): NSBezierPath;
+  inpectorFocusRingPathForRect(rect: NSRect): NSBezierPath;
+  cellClass(): any;,
+          {
+            newLineStart: true,
+            newLineEnd: false,
+          }
+  setCellClass(cellClass: any): void;
 
 }
 

@@ -2,6 +2,7 @@ interface NSMatrixUninitialized<InitializedType = NSMatrix> extends NSControlUni
   initWithFrame_mode_prototype_numberOfRows_numberOfColumns(frameRect: NSRect, mode: NSMatrixMode, cell: NSCell, rowsHigh: NSInteger, colsWide: NSInteger): InitializedType;
   initWithFrame_mode_cellClass_numberOfRows_numberOfColumns(frameRect: NSRect, mode: NSMatrixMode, factoryId: any | null, rowsHigh: NSInteger, colsWide: NSInteger): InitializedType;
 }
+
 interface NSMatrix extends NSControl, INSUserInterfaceValidations, INSViewToolTipOwner {
   makeCellAtRow_column(row: NSInteger, col: NSInteger): NSCell;
   sendAction_to_forAllCells(selector: string, object: any, flag: boolean): void;
@@ -52,6 +53,8 @@ interface NSMatrix extends NSControl, INSUserInterfaceValidations, INSViewToolTi
   resetCursorRects(): void;
   setToolTip_forCell(toolTipString: NSString | string | null, cell: NSCell): void;
   toolTipForCell(cell: NSCell): NSString;
+  validateUserInterfaceItem(item: any): boolean;
+  view_stringForToolTip_point_userData(view: NSView, tag: NSToolTipTag, point: NSPoint, data: void | null): NSString;
 
   cellClass(): any;
   setCellClass(cellClass: any): void;
@@ -98,8 +101,21 @@ interface NSMatrix extends NSControl, INSUserInterfaceValidations, INSViewToolTi
   keyCell(): NSCell;
   setKeyCell(keyCell: NSCell): void;
 }
+
 declare const NSMatrix: {
   alloc(): NSMatrixUninitialized;
   class(): NSMatrix;
+  inpectorBorderPathForRect(rect: NSRect): NSBezierPath;
+  inpectorCheckmarkBorderPathForRect(rect: NSRect): NSBezierPath;
+  inpectorBorderPathForRectWithMaxRadius(rect: NSRect): NSBezierPath;
+  inpectorBorderPathForRect_borderRadius(rect: NSRect, borderRadius: CGFloat): NSBezierPath;
+  inpectorFocusRingPathForRect(rect: NSRect): NSBezierPath;
+  requiresConstraintBasedLayout(): boolean;
+  focusView(): NSView;
+  defaultMenu(): NSMenu;
+  compatibleWithResponsiveScrolling(): boolean;
+  defaultFocusRingType(): NSFocusRingType;
+  restorableStateKeyPaths(): NSArray<any>;
+
 }
 

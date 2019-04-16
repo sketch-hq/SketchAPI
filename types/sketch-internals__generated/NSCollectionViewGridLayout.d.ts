@@ -1,4 +1,5 @@
 interface NSCollectionViewGridLayoutUninitialized<InitializedType = NSCollectionViewGridLayout> extends NSCollectionViewLayoutUninitialized<NSCollectionViewGridLayout> {}
+
 interface NSCollectionViewGridLayout extends NSCollectionViewLayout {
 
   margins(): NSEdgeInsets;
@@ -18,8 +19,12 @@ interface NSCollectionViewGridLayout extends NSCollectionViewLayout {
   backgroundColors(): NSArray<any>;
   setBackgroundColors(backgroundColors: NSArray<any> | any[]): void;
 }
+
 declare const NSCollectionViewGridLayout: {
   alloc(): NSCollectionViewGridLayoutUninitialized;
   class(): NSCollectionViewGridLayout;
+  layoutAttributesClass(): any;
+  invalidationContextClass(): any;
+
 }
 

@@ -1,5 +1,4 @@
 interface NSStringUninitialized<InitializedType = NSString> extends NSObjectUninitialized<NSString> {
-  init(): InitializedType;
   initWithCoder(aDecoder: NSCoder): InitializedType;
   initWithCharactersNoCopy_length_freeWhenDone(characters: unichar, length: NSUInteger, freeBuffer: boolean): InitializedType;
   initWithCharacters_length(characters: unichar, length: NSUInteger): InitializedType;
@@ -13,16 +12,17 @@ interface NSStringUninitialized<InitializedType = NSString> extends NSObjectUnin
   initWithBytes_length_encoding(bytes: void, len: NSUInteger, encoding: NSStringEncoding): InitializedType;
   initWithBytesNoCopy_length_encoding_freeWhenDone(bytes: void, len: NSUInteger, encoding: NSStringEncoding, freeBuffer: boolean): InitializedType;
   initWithCString_encoding(nullTerminatedCString: string, encoding: NSStringEncoding): InitializedType;
-  initWithContentsOfURL_encoding_error(url: NSURL, enc: NSStringEncoding, error: NSError): InitializedType;
-  initWithContentsOfFile_encoding_error(path: NSString | string, enc: NSStringEncoding, error: NSError): InitializedType;
-  initWithContentsOfURL_usedEncoding_error(url: NSURL, enc: NSStringEncoding | null, error: NSError): InitializedType;
-  initWithContentsOfFile_usedEncoding_error(path: NSString | string, enc: NSStringEncoding | null, error: NSError): InitializedType;
+  initWithContentsOfURL_encoding_error(url: NSURL, enc: NSStringEncoding, error: MOPointer<NSError>): InitializedType;
+  initWithContentsOfFile_encoding_error(path: NSString | string, enc: NSStringEncoding, error: MOPointer<NSError>): InitializedType;
+  initWithContentsOfURL_usedEncoding_error(url: NSURL, enc: NSStringEncoding | null, error: MOPointer<NSError>): InitializedType;
+  initWithContentsOfFile_usedEncoding_error(path: NSString | string, enc: NSStringEncoding | null, error: MOPointer<NSError>): InitializedType;
   initWithContentsOfFile(path: NSString | string): InitializedType;
   initWithContentsOfURL(url: NSURL): InitializedType;
   initWithCStringNoCopy_length_freeWhenDone(bytes: string, length: NSUInteger, freeBuffer: boolean): InitializedType;
   initWithCString_length(bytes: string, length: NSUInteger): InitializedType;
   initWithCString(bytes: string): InitializedType;
 }
+
 interface NSString extends NSObject, INSCopying, INSMutableCopying, INSSecureCoding {
   variantFittingPresentationWidth(width: NSInteger): NSString;
   linguisticTagsInRange_scheme_options_orthography_tokenRanges(range: NSRange, scheme: NSLinguisticTagScheme, options: NSLinguisticTaggerOptions, orthography: NSOrthography | null, tokenRanges: NSArray<any> | any[]): NSArray<any>;
@@ -90,8 +90,8 @@ interface NSString extends NSObject, INSCopying, INSMutableCopying, INSSecureCod
   stringByReplacingOccurrencesOfString_withString(target: NSString | string, replacement: NSString | string): NSString;
   stringByReplacingCharactersInRange_withString(range: NSRange, replacement: NSString | string): NSString;
   stringByApplyingTransform_reverse(transform: NSStringTransform, reverse: boolean): NSString;
-  writeToURL_atomically_encoding_error(url: NSURL, useAuxiliaryFile: boolean, enc: NSStringEncoding, error: NSError): boolean;
-  writeToFile_atomically_encoding_error(path: NSString | string, useAuxiliaryFile: boolean, enc: NSStringEncoding, error: NSError): boolean;
+  writeToURL_atomically_encoding_error(url: NSURL, useAuxiliaryFile: boolean, enc: NSStringEncoding, error: MOPointer<NSError>): boolean;
+  writeToFile_atomically_encoding_error(path: NSString | string, useAuxiliaryFile: boolean, enc: NSStringEncoding, error: MOPointer<NSError>): boolean;
   propertyList(): any;
   propertyListFromStringsFileFormat(): NSDictionary<any, any>;
   cString(): string;
@@ -170,6 +170,8 @@ interface NSString extends NSObject, INSCopying, INSMutableCopying, INSSecureCod
   numberValueByUsingNumberFormatter(): NSNumber;
   uniqueSlugUsingEarlierSlugs(earlierSlugs: NSMutableDictionary<any, any> | {[key: string]: any} | null): NSString;
   svgURL(): NSString;
+  copyWithZone(zone: NSZone | null): any;
+  mutableCopyWithZone(zone: NSZone | null): any;
 
   pathComponents(): NSArray<any>;
   absolutePath(): boolean;
@@ -207,9 +209,11 @@ interface NSString extends NSObject, INSCopying, INSMutableCopying, INSSecureCod
   stringByRemovingPercentEncoding(): NSString;
   slug(): NSString;
 }
+
 declare const NSString: {
   alloc(): NSStringUninitialized;
-  class(): NSString;  pathWithComponents(components: NSArray<any> | any[]): NSString;
+  class(): NSString;
+  pathWithComponents(components: NSArray<any> | any[]): NSString;
   localizedNameOfStringEncoding(encoding: NSStringEncoding): NSString;
   string(): NSString;
   stringWithString(string: NSString | string): NSString;
@@ -218,10 +222,10 @@ declare const NSString: {
   stringWithFormat(format: NSString | string, ...args: any[]): NSString;
   localizedStringWithFormat(format: NSString | string, ...args: any[]): NSString;
   stringWithCString_encoding(cString: string, enc: NSStringEncoding): NSString;
-  stringWithContentsOfURL_encoding_error(url: NSURL, enc: NSStringEncoding, error: NSError): NSString;
-  stringWithContentsOfFile_encoding_error(path: NSString | string, enc: NSStringEncoding, error: NSError): NSString;
-  stringWithContentsOfURL_usedEncoding_error(url: NSURL, enc: NSStringEncoding | null, error: NSError): NSString;
-  stringWithContentsOfFile_usedEncoding_error(path: NSString | string, enc: NSStringEncoding | null, error: NSError): NSString;
+  stringWithContentsOfURL_encoding_error(url: NSURL, enc: NSStringEncoding, error: MOPointer<NSError>): NSString;
+  stringWithContentsOfFile_encoding_error(path: NSString | string, enc: NSStringEncoding, error: MOPointer<NSError>): NSString;
+  stringWithContentsOfURL_usedEncoding_error(url: NSURL, enc: NSStringEncoding | null, error: MOPointer<NSError>): NSString;
+  stringWithContentsOfFile_usedEncoding_error(path: NSString | string, enc: NSStringEncoding | null, error: MOPointer<NSError>): NSString;
   stringEncodingForData_encodingOptions_convertedString_usedLossyConversion(data: NSData, opts: NSDictionary<any, any> | {[key: string]: any} | null, string: NSString | string, usedLossyConversion: boolean | null): NSStringEncoding;
   stringWithContentsOfFile(path: NSString | string): any;
   stringWithContentsOfURL(url: NSURL): any;
@@ -236,9 +240,36 @@ declare const NSString: {
   svgStringWithPercentageValue(value: CGFloat): NSString;
   svgStringWithPercentageFractionalValue(value: CGFloat): NSString;
   stringWithInt_suffix(anInt: NSInteger, suffix: NSString | string): NSString;
-
+  load(): void;
+  instancesRespondToSelector(aSelector: string): boolean;
+  conformsToProtocol(protocol: Protocol): boolean;
+  instanceMethodForSelector(aSelector: string): IMP;
+  isSubclassOfClass(aClass: any): boolean;
+  hash(): NSUInteger;
+  superclass(): any;
+  description(): NSString;
+  debugDescription(): NSString;
+  useStoredAccessor(): boolean;
+  keyPathsForValuesAffectingValueForKey(key: NSString | string): NSSet<any>;
+  automaticallyNotifiesObserversForKey(key: NSString | string): boolean;
+  setKeys_triggerChangeNotificationsForDependentKey(keys: NSArray<any> | any[], dependentKey: NSString | string): void;
+  classFallbacksForKeyedArchiver(): NSArray<any>;
+  classForKeyedUnarchiver(): any;
+  version(): NSInteger;
+  setVersion(aVersion: NSInteger): void;
+  cancelPreviousPerformRequestsWithTarget_selector_object(aTarget: any, aSelector: string, anArgument: any | null): void;
+  cancelPreviousPerformRequestsWithTarget(aTarget: any): void;
+  exposeBinding(binding: NSBindingName): void;
+  setDefaultPlaceholder_forMarker_withBinding(placeholder: any | null, marker: any | null, binding: NSBindingName): void;
+  defaultPlaceholderForMarker_withBinding(marker: any | null, binding: NSBindingName): any;
+  mo_swizzleAdditions(): void;
+  mo_mocha(): MOClassDescription;
+  isSelectorExcludedFromMochaScript(selector: string): boolean;
+  selectorForMochaPropertyName(propertyName: NSString | string): string;
   availableStringEncodings(): NSStringEncoding;
   defaultCStringEncoding(): NSStringEncoding;
+  supportsSecureCoding(): boolean;
+  accessInstanceVariablesDirectly(): boolean;
 
 }
 

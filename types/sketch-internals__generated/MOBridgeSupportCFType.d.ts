@@ -1,4 +1,5 @@
 interface MOBridgeSupportCFTypeUninitialized<InitializedType = MOBridgeSupportCFType> extends MOBridgeSupportSymbolUninitialized<MOBridgeSupportCFType> {}
+
 interface MOBridgeSupportCFType extends MOBridgeSupportSymbol {
 
   type(): NSString;
@@ -10,8 +11,11 @@ interface MOBridgeSupportCFType extends MOBridgeSupportSymbol {
   getTypeIDFunctionName(): NSString;
   setGetTypeIDFunctionName(getTypeIDFunctionName: NSString | string): void;
 }
+
 declare const MOBridgeSupportCFType: {
   alloc(): MOBridgeSupportCFTypeUninitialized;
   class(): MOBridgeSupportCFType;
+  accessInstanceVariablesDirectly(): boolean;
+
 }
 

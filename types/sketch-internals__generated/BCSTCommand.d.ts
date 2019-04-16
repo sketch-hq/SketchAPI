@@ -1,4 +1,5 @@
 interface BCSTCommandUninitialized<InitializedType = BCSTCommand> extends ECCommandLineCommandUninitialized<BCSTCommand> {}
+
 interface BCSTCommand extends ECCommandLineCommand {
   processDocumentsAtPaths_engine(paths: NSArray<any> | any[], engine: ECCommandLineEngine): ECCommandLineResult;
   processDocumentURL_engine(documentURL: NSURL, engine: ECCommandLineEngine): ECCommandLineResult;
@@ -12,8 +13,12 @@ interface BCSTCommand extends ECCommandLineCommand {
   filteredArtboardsForPage_engine(page: MSPage, engine: ECCommandLineEngine): NSArray<any>;
   shouldExportLayer_forMatch(layer: MSLayer, nameOrID: NSString | string): boolean;
 }
+
 declare const BCSTCommand: {
   alloc(): BCSTCommandUninitialized;
   class(): BCSTCommand;
+  commandWithName_info_parentCommand(name: NSString | string, info: NSDictionary<any, any> | {[key: string]: any}, parentCommand: ECCommandLineCommand): ECCommandLineCommand;
+  accessInstanceVariablesDirectly(): boolean;
+
 }
 

@@ -1,4 +1,5 @@
 interface CATransitionUninitialized<InitializedType = CATransition> extends CAAnimationUninitialized<CATransition> {}
+
 interface CATransition extends CAAnimation {
 
   type(): CATransitionType;
@@ -12,8 +13,13 @@ interface CATransition extends CAAnimation {
   filter(): any;
   setFilter(filter: any): void;
 }
+
 declare const CATransition: {
   alloc(): CATransitionUninitialized;
   class(): CATransition;
+  animation(): CATransition;
+  defaultValueForKey(key: NSString | string): any;
+  accessInstanceVariablesDirectly(): boolean;
+
 }
 

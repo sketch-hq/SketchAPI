@@ -1,4 +1,5 @@
 interface CAEmitterLayerUninitialized<InitializedType = CAEmitterLayer> extends CALayerUninitialized<CAEmitterLayer> {}
+
 interface CAEmitterLayer extends CALayer {
 
   emitterCells(): NSArray<any>;
@@ -32,8 +33,17 @@ interface CAEmitterLayer extends CALayer {
   seed(): number;
   setSeed(seed: number): void;
 }
+
 declare const CAEmitterLayer: {
   alloc(): CAEmitterLayerUninitialized;
   class(): CAEmitterLayer;
+  layer(): CAEmitterLayer;
+  defaultValueForKey(key: NSString | string): any;
+  needsDisplayForKey(key: NSString | string): boolean;
+  defaultActionForKey(event: NSString | string): any;
+  layerWithRemoteClientId(client_id: number): CALayer;
+  supportsSecureCoding(): boolean;
+  accessInstanceVariablesDirectly(): boolean;
+
 }
 

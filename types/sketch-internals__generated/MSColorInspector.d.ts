@@ -1,4 +1,5 @@
 interface MSColorInspectorUninitialized<InitializedType = MSColorInspector> extends NSViewControllerUninitialized<MSColorInspector> {}
+
 interface MSColorInspector extends NSViewController {
   validateEnableButtons(): void;
   stack(): void;
@@ -17,10 +18,14 @@ interface MSColorInspector extends NSViewController {
   setDelegate(delegate: any): void;
   colorModePickerController(): MSColorModePickerController;
 }
+
 declare const MSColorInspector: {
   alloc(): MSColorInspectorUninitialized;
-  class(): MSColorInspector;  presentColorInspectorPopoverForViewController_document_globalAssets_relativeToView_setupHandler(viewController: NSViewController, document: MSDocument, globalAssets: MSPersistentAssetCollection, positioningView: NSView, setupHandler: MSColorInspectorSetupBlock): BCPopover;
+  class(): MSColorInspector;
+  presentColorInspectorPopoverForViewController_document_globalAssets_relativeToView_setupHandler(viewController: NSViewController, document: MSDocument, globalAssets: MSPersistentAssetCollection, positioningView: NSView, setupHandler: MSColorInspectorSetupBlock): BCPopover;
   presentColorInspectorPopoverWithDelegate_document_globalAssets_relativeToView_setupHandler(delegate: any, document: MSDocument, globalAssets: MSPersistentAssetCollection, positioningView: NSView, setupHandler: MSColorInspectorSetupBlock): BCPopover;
+  restorableStateKeyPaths(): NSArray<any>;
+  accessInstanceVariablesDirectly(): boolean;
 
 }
 

@@ -1,4 +1,5 @@
 interface MSBorderInspectorViewControllerUninitialized<InitializedType = MSBorderInspectorViewController> extends MSColorStylePartInspectorViewControllerUninitialized<MSBorderInspectorViewController> {}
+
 interface MSBorderInspectorViewController extends MSColorStylePartInspectorViewController {
   enableAction(sender: any): IBAction;
 
@@ -7,8 +8,10 @@ interface MSBorderInspectorViewController extends MSColorStylePartInspectorViewC
   thicknessField(): MSUpDownTextField;
   setThicknessField(thicknessField: MSUpDownTextField): void;
 }
+
 declare const MSBorderInspectorViewController: {
   alloc(): MSBorderInspectorViewControllerUninitialized;
   class(): MSBorderInspectorViewController;
+  fillTypeStringForFillType(fillType: BCFillType): NSString;
 }
 

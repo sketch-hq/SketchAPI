@@ -1,4 +1,5 @@
 interface CASpringAnimationUninitialized<InitializedType = CASpringAnimation> extends CABasicAnimationUninitialized<CASpringAnimation> {}
+
 interface CASpringAnimation extends CABasicAnimation {
 
   mass(): CGFloat;
@@ -11,8 +12,11 @@ interface CASpringAnimation extends CABasicAnimation {
   setInitialVelocity(initialVelocity: CGFloat): void;
   settlingDuration(): CFTimeInterval;
 }
+
 declare const CASpringAnimation: {
   alloc(): CASpringAnimationUninitialized;
   class(): CASpringAnimation;
+  accessInstanceVariablesDirectly(): boolean;
+
 }
 

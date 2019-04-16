@@ -1,4 +1,5 @@
 interface MSAssetPickerControllerUninitialized<InitializedType = MSAssetPickerController> extends NSViewControllerUninitialized<MSAssetPickerController> {}
+
 interface MSAssetPickerController extends NSViewController {
   addAsset(asset: any): void;
   switchToDataSourceAtIndex(index: NSUInteger): void;
@@ -16,8 +17,12 @@ interface MSAssetPickerController extends NSViewController {
   setHighlightedAsset(highlightedAsset: any): void;
   hasContent(): boolean;
 }
+
 declare const MSAssetPickerController: {
   alloc(): MSAssetPickerControllerUninitialized;
   class(): MSAssetPickerController;
+  restorableStateKeyPaths(): NSArray<any>;
+  accessInstanceVariablesDirectly(): boolean;
+
 }
 

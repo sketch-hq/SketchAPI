@@ -1,4 +1,5 @@
 interface NSTreeControllerUninitialized<InitializedType = NSTreeController> extends NSObjectControllerUninitialized<NSTreeController> {}
+
 interface NSTreeController extends NSObjectController {
   rearrangeObjects(): void;
   add(sender: any | null): IBAction;
@@ -47,8 +48,11 @@ interface NSTreeController extends NSObjectController {
   selectionIndexPath(): NSIndexPath;
   selectedNodes(): NSArray<any>;
 }
+
 declare const NSTreeController: {
   alloc(): NSTreeControllerUninitialized;
   class(): NSTreeController;
+  accessInstanceVariablesDirectly(): boolean;
+
 }
 

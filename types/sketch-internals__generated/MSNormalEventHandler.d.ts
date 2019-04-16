@@ -1,4 +1,5 @@
 interface MSNormalEventHandlerUninitialized<InitializedType = MSNormalEventHandler> extends MSNormalBaseEventHandlerUninitialized<MSNormalEventHandler> {}
+
 interface MSNormalEventHandler extends MSNormalBaseEventHandler {
   selectLayer(sender: any): IBAction;
   ignoreNextKeyDownEventUntilModifiersChange(): void;
@@ -15,8 +16,13 @@ interface MSNormalEventHandler extends MSNormalBaseEventHandler {
   highlightedItem(): NSObject;
   setHighlightedItem(highlightedItem: NSObject): void;
 }
+
 declare const MSNormalEventHandler: {
   alloc(): MSNormalEventHandlerUninitialized;
   class(): MSNormalEventHandler;
+  cursorForCorner_ofCoordinateSpace(corner: BCCorner, coordinateSpace: any | null): NSCursor;
+  accessInstanceVariablesDirectly(): boolean;
+  restorableStateKeyPaths(): NSArray<any>;
+
 }
 

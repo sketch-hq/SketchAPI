@@ -1,4 +1,5 @@
 interface NSFontPanelUninitialized<InitializedType = NSFontPanel> extends NSPanelUninitialized<NSFontPanel> {}
+
 interface NSFontPanel extends NSPanel {
   setPanelFont_isMultiple(fontObj: NSFont, flag: boolean): void;
   panelConvertFont(fontObj: NSFont): NSFont;
@@ -11,6 +12,7 @@ interface NSFontPanel extends NSPanel {
   enabled(): boolean;
   setEnabled(enabled: boolean): void;
 }
+
 declare const NSFontPanel: {
   alloc(): NSFontPanelUninitialized;
   class(): NSFontPanel;

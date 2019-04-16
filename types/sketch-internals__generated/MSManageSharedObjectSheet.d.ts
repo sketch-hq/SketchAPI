@@ -1,11 +1,20 @@
 interface MSManageSharedObjectSheetUninitialized<InitializedType = MSManageSharedObjectSheet> extends CHSheetControllerUninitialized<MSManageSharedObjectSheet> {}
+
 interface MSManageSharedObjectSheet extends CHSheetController {
 }
+
 declare const MSManageSharedObjectSheet: {
   alloc(): MSManageSharedObjectSheetUninitialized;
   class(): MSManageSharedObjectSheet;
-  tabIndex(): MSManageSharedObjectSheetTabIndex;
+  runForWindow(window: NSWindow): any;
+  runForWindow_withObject(window: NSWindow, obj: any): any;
+  tabIndex(): MSManageSharedObjectSheetTabIndex;,
+          {
+            newLineStart: true,
+            newLineEnd: false,
+          }
   setTabIndex(tabIndex: MSManageSharedObjectSheetTabIndex): void;
+  accessInstanceVariablesDirectly(): boolean;
 
 }
 

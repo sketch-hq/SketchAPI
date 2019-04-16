@@ -1,4 +1,5 @@
 interface MSAssetCollectionUninitialized<InitializedType = MSAssetCollection> extends _MSAssetCollectionUninitialized<MSAssetCollection> {}
+
 interface MSAssetCollection extends _MSAssetCollection {
   numberOfAssetsOfType(type: MSAsset): NSUInteger;
   addAsset(asset: any): void;
@@ -10,6 +11,7 @@ interface MSAssetCollection extends _MSAssetCollection {
   indexesOfAsset(asset: any): NSIndexSet;
   moveAssetAtIndex_beforeObjectAtIndex_ofType(fromIndex: NSUInteger, toIndex: NSUInteger, type: MSAsset): boolean;
 }
+
 declare const MSAssetCollection: {
   alloc(): MSAssetCollectionUninitialized;
   class(): MSAssetCollection;

@@ -1,4 +1,5 @@
 interface NSScrubberFlowLayoutUninitialized<InitializedType = NSScrubberFlowLayout> extends NSScrubberLayoutUninitialized<NSScrubberFlowLayout> {}
+
 interface NSScrubberFlowLayout extends NSScrubberLayout {
   invalidateLayoutForItemsAtIndexes(invalidItemIndexes: NSIndexSet): void;
 
@@ -7,8 +8,12 @@ interface NSScrubberFlowLayout extends NSScrubberLayout {
   itemSize(): NSSize;
   setItemSize(itemSize: NSSize): void;
 }
+
 declare const NSScrubberFlowLayout: {
   alloc(): NSScrubberFlowLayoutUninitialized;
   class(): NSScrubberFlowLayout;
+  layoutAttributesClass(): any;
+  accessInstanceVariablesDirectly(): boolean;
+
 }
 

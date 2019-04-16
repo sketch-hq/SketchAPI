@@ -1,10 +1,18 @@
 interface NSPathCellUninitialized<InitializedType = NSPathCell> extends NSActionCellUninitialized<NSPathCell> {}
+
 interface NSPathCell extends NSActionCell, INSMenuItemValidation, INSOpenSavePanelDelegate {
   setObjectValue(obj: any | null): void;
   rectOfPathComponentCell_withFrame_inView(cell: NSPathComponentCell, frame: NSRect, view: NSView): NSRect;
   pathComponentCellAtPoint_withFrame_inView(point: NSPoint, frame: NSRect, view: NSView): NSPathComponentCell;
   mouseEntered_withFrame_inView(event: NSEvent, frame: NSRect, view: NSView): void;
   mouseExited_withFrame_inView(event: NSEvent, frame: NSRect, view: NSView): void;
+  validateMenuItem(menuItem: NSMenuItem): boolean;
+  panel_shouldEnableURL(sender: any, url: NSURL): boolean;
+  panel_validateURL_error(sender: any, url: NSURL, outError: MOPointer<NSError>): boolean;
+  panel_didChangeToDirectoryURL(sender: any, url: NSURL | null): void;
+  panel_userEnteredFilename_confirmed(sender: any, filename: NSString | string, okFlag: boolean): NSString;
+  panel_willExpand(sender: any, expanding: boolean): void;
+  panelSelectionDidChange(sender: any | null): void;
 
   pathStyle(): NSPathStyle;
   setPathStyle(pathStyle: NSPathStyle): void;
@@ -26,10 +34,14 @@ interface NSPathCell extends NSActionCell, INSMenuItemValidation, INSOpenSavePan
   placeholderAttributedString(): NSAttributedString;
   setPlaceholderAttributedString(placeholderAttributedString: NSAttributedString): void;
 }
+
 declare const NSPathCell: {
   alloc(): NSPathCellUninitialized;
   class(): NSPathCell;
   pathComponentCellClass(): any;
+  prefersTrackingUntilMouseUp(): boolean;
+  defaultMenu(): NSMenu;
+  defaultFocusRingType(): NSFocusRingType;
 
 }
 

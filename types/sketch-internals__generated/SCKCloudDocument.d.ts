@@ -1,4 +1,5 @@
 interface SCKCloudDocumentUninitialized<InitializedType = SCKCloudDocument> extends SCKDocumentUninitialized<SCKCloudDocument> {}
+
 interface SCKCloudDocument extends SCKDocument {
   diffComparedTo(object: SCKCloudDocument): SCKCloudDocumentDiff;
 
@@ -7,6 +8,7 @@ interface SCKCloudDocument extends SCKDocument {
   isProcessing(): boolean;
   metaImageURL(): NSURL;
 }
+
 declare const SCKCloudDocument: {
   alloc(): SCKCloudDocumentUninitialized;
   class(): SCKCloudDocument;

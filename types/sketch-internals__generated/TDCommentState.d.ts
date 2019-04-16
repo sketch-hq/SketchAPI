@@ -1,4 +1,5 @@
 interface TDCommentStateUninitialized<InitializedType = TDCommentState> extends TDTokenizerStateUninitialized<TDCommentState> {}
+
 interface TDCommentState extends TDTokenizerState {
   addSingleLineStartSymbol(start: NSString | string): void;
   removeSingleLineStartSymbol(start: NSString | string): void;
@@ -10,6 +11,7 @@ interface TDCommentState extends TDTokenizerState {
   balancesEOFTerminatedComments(): boolean;
   setBalancesEOFTerminatedComments(balancesEOFTerminatedComments: boolean): void;
 }
+
 declare const TDCommentState: {
   alloc(): TDCommentStateUninitialized;
   class(): TDCommentState;

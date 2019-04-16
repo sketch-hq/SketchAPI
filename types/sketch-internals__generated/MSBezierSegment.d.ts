@@ -3,6 +3,7 @@ interface MSBezierSegmentUninitialized<InitializedType = MSBezierSegment> extend
   initWithEndPoint1_endPoint2_controlPoint(endPoint1: CGPoint, endPoint2: CGPoint, controlPoint: CGPoint): InitializedType;
   initWithEndPoint1_endPoint2_controlPoint1_controlPoint2(endPoint1: CGPoint, endPoint2: CGPoint, controlPoint1: CGPoint, controlPoint2: CGPoint): InitializedType;
 }
+
 interface MSBezierSegment extends NSObject, INSCopying {
   segmentWithEndPoint1(endPoint1: CGPoint): MSBezierSegment;
   segmentWithEndPoint2(endPoint2: CGPoint): MSBezierSegment;
@@ -37,6 +38,7 @@ interface MSBezierSegment extends NSObject, INSCopying {
   controlPointBounds(): CGRect;
   bezierPath(): NSBezierPath;
   FBBezierCurve(): FBBezierCurve;
+  copyWithZone(zone: NSZone | null): any;
 
   segmentType(): MSBezierSegmentType;
   endPoint1(): CGPoint;
@@ -56,12 +58,41 @@ interface MSBezierSegment extends NSObject, INSCopying {
   flatness(): CGFloat;
   transformForXAxisAlignment(): CGAffineTransform;
 }
+
 declare const MSBezierSegment: {
   alloc(): MSBezierSegmentUninitialized;
-  class(): MSBezierSegment;  lineSegmentWithEndPoint1_endPoint2(endPoint1: CGPoint, endPoint2: CGPoint): MSBezierSegment;
+  class(): MSBezierSegment;
+  lineSegmentWithEndPoint1_endPoint2(endPoint1: CGPoint, endPoint2: CGPoint): MSBezierSegment;
   quadraticSegmentWithEndPoint1_endPoint2_controlPoint(endPoint1: CGPoint, endPoint2: CGPoint, controlPoint: CGPoint): MSBezierSegment;
   cubicSegmentWithEndPoint1_endPoint2_controlPoint1_controlPoint2(endPoint1: CGPoint, endPoint2: CGPoint, controlPoint1: CGPoint, controlPoint2: CGPoint): MSBezierSegment;
   segmentWithFBBezierCurve(curve: FBBezierCurve): MSBezierSegment;
+  load(): void;
+  instancesRespondToSelector(aSelector: string): boolean;
+  conformsToProtocol(protocol: Protocol): boolean;
+  instanceMethodForSelector(aSelector: string): IMP;
+  isSubclassOfClass(aClass: any): boolean;
+  hash(): NSUInteger;
+  superclass(): any;
+  description(): NSString;
+  debugDescription(): NSString;
+  useStoredAccessor(): boolean;
+  keyPathsForValuesAffectingValueForKey(key: NSString | string): NSSet<any>;
+  automaticallyNotifiesObserversForKey(key: NSString | string): boolean;
+  setKeys_triggerChangeNotificationsForDependentKey(keys: NSArray<any> | any[], dependentKey: NSString | string): void;
+  classFallbacksForKeyedArchiver(): NSArray<any>;
+  classForKeyedUnarchiver(): any;
+  version(): NSInteger;
+  setVersion(aVersion: NSInteger): void;
+  cancelPreviousPerformRequestsWithTarget_selector_object(aTarget: any, aSelector: string, anArgument: any | null): void;
+  cancelPreviousPerformRequestsWithTarget(aTarget: any): void;
+  exposeBinding(binding: NSBindingName): void;
+  setDefaultPlaceholder_forMarker_withBinding(placeholder: any | null, marker: any | null, binding: NSBindingName): void;
+  defaultPlaceholderForMarker_withBinding(marker: any | null, binding: NSBindingName): any;
+  mo_swizzleAdditions(): void;
+  mo_mocha(): MOClassDescription;
+  isSelectorExcludedFromMochaScript(selector: string): boolean;
+  selectorForMochaPropertyName(propertyName: NSString | string): string;
+  accessInstanceVariablesDirectly(): boolean;
 
 }
 

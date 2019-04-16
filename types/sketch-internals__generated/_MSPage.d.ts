@@ -1,4 +1,5 @@
 interface _MSPageUninitialized<InitializedType = _MSPage> extends MSLayerGroupUninitialized<_MSPage> {}
+
 interface _MSPage extends MSLayerGroup {
 
   includeInCloudUpload(): boolean;
@@ -12,8 +13,11 @@ interface _MSPage extends MSLayerGroup {
   verticalRulerData(): MSRulerData;
   setVerticalRulerData(verticalRulerData: MSRulerData): void;
 }
+
 declare const _MSPage: {
   alloc(): _MSPageUninitialized;
   class(): _MSPage;
+  groupWithLayer(layer: MSLayer): _MSPage;
+  groupWithLayers(layers: MSLayerArray): _MSPage;
 }
 

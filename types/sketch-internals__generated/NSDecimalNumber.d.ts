@@ -4,6 +4,7 @@ interface NSDecimalNumberUninitialized<InitializedType = NSDecimalNumber> extend
   initWithString(numberValue: NSString | string | null): InitializedType;
   initWithString_locale(numberValue: NSString | string | null, locale: any | null): InitializedType;
 }
+
 interface NSDecimalNumber extends NSNumber {
   descriptionWithLocale(locale: any | null): NSString;
   decimalNumberByAdding(decimalNumber: NSDecimalNumber): NSDecimalNumber;
@@ -25,19 +26,39 @@ interface NSDecimalNumber extends NSNumber {
   objCType(): string;
   doubleValue(): number;
 }
+
 declare const NSDecimalNumber: {
   alloc(): NSDecimalNumberUninitialized;
-  class(): NSDecimalNumber;  decimalNumberWithMantissa_exponent_isNegative(mantissa: number, exponent: number, flag: boolean): NSDecimalNumber;
+  class(): NSDecimalNumber;
+  decimalNumberWithMantissa_exponent_isNegative(mantissa: number, exponent: number, flag: boolean): NSDecimalNumber;
   decimalNumberWithDecimal(dcm: NSDecimal): NSDecimalNumber;
   decimalNumberWithString(numberValue: NSString | string | null): NSDecimalNumber;
   decimalNumberWithString_locale(numberValue: NSString | string | null, locale: any | null): NSDecimalNumber;
-
+  numberWithChar(value: string): NSNumber;
+  numberWithUnsignedChar(value: string): NSNumber;
+  numberWithShort(value: number): NSNumber;
+  numberWithUnsignedShort(value: number): NSNumber;
+  numberWithInt(value: number): NSNumber;
+  numberWithUnsignedInt(value: number): NSNumber;
+  numberWithLong(value: number): NSNumber;
+  numberWithUnsignedLong(value: number): NSNumber;
+  numberWithLongLong(value: number): NSNumber;
+  numberWithUnsignedLongLong(value: number): NSNumber;
+  numberWithFloat(value: number): NSNumber;
+  numberWithDouble(value: number): NSNumber;
+  numberWithBool(value: boolean): NSNumber;
+  numberWithInteger(value: NSInteger): NSNumber;
+  numberWithUnsignedInteger(value: NSUInteger): NSNumber;
   zero(): NSDecimalNumber;
   one(): NSDecimalNumber;
   minimumDecimalNumber(): NSDecimalNumber;
   maximumDecimalNumber(): NSDecimalNumber;
   notANumber(): NSDecimalNumber;
-  defaultBehavior(): any;
+  defaultBehavior(): any;,
+          {
+            newLineStart: true,
+            newLineEnd: false,
+          }
   setDefaultBehavior(defaultBehavior: any): void;
 
 }

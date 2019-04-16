@@ -1,4 +1,5 @@
 interface MSImmutableStyledLayerUninitialized<InitializedType = MSImmutableStyledLayer> extends _MSImmutableStyledLayerUninitialized<MSImmutableStyledLayer> {}
+
 interface MSImmutableStyledLayer extends _MSImmutableStyledLayer, IMSStyledLayer {
   bezierPathForStartDecorationOnPath(bezier: MSPath): MSPath;
   bezierPathForEndDecorationOnPath(bezier: MSPath): MSPath;
@@ -14,9 +15,10 @@ interface MSImmutableStyledLayer extends _MSImmutableStyledLayer, IMSStyledLayer
   shadowsFollowRotation(): boolean;
   shouldRasterize(): boolean;
 }
+
 declare const MSImmutableStyledLayer: {
   alloc(): MSImmutableStyledLayerUninitialized;
-  class(): MSImmutableStyledLayer;  cacheDecorations(): void;
-
+  class(): MSImmutableStyledLayer;
+  cacheDecorations(): void;
 }
 

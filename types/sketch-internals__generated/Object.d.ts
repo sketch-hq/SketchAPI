@@ -2,6 +2,7 @@ interface ObjectUninitialized<InitializedType = Object> {
   initialize(): InitializedType;
   init(): InitializedType;
 }
+
 interface Object {
   free(): any;
   copy(): any;
@@ -35,9 +36,11 @@ interface Object {
   startArchiving(stream: void): any;
   finishUnarchiving(): any;
 }
+
 declare const Object: {
   alloc(): ObjectUninitialized;
-  class(): Object;  new(): any;
+  class(): Object;
+  new(): any;
   alloc(): any;
   allocFromZone(zone: void): any;
   instancesRespondTo(aSelector: string): boolean;
@@ -49,6 +52,5 @@ declare const Object: {
   setVersion(aVersion: number): any;
   finishLoading(header: mach_header): any;
   startUnloading(): any;
-
 }
 

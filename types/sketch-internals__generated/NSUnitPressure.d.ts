@@ -1,9 +1,12 @@
 interface NSUnitPressureUninitialized<InitializedType = NSUnitPressure> extends NSDimensionUninitialized<NSUnitPressure> {}
+
 interface NSUnitPressure extends NSDimension, INSSecureCoding {
 }
+
 declare const NSUnitPressure: {
   alloc(): NSUnitPressureUninitialized;
   class(): NSUnitPressure;
+  baseUnit(): NSUnitPressure;
   newtonsPerMetersSquared(): NSUnitPressure;
   gigapascals(): NSUnitPressure;
   megapascals(): NSUnitPressure;
@@ -14,6 +17,8 @@ declare const NSUnitPressure: {
   millibars(): NSUnitPressure;
   millimetersOfMercury(): NSUnitPressure;
   poundsForcePerSquareInch(): NSUnitPressure;
+  supportsSecureCoding(): boolean;
+  accessInstanceVariablesDirectly(): boolean;
 
 }
 

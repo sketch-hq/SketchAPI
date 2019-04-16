@@ -1,4 +1,5 @@
 interface _SVGGradientUninitialized<InitializedType = _SVGGradient> extends SVGElementUninitialized<_SVGGradient> {}
+
 interface _SVGGradient extends SVGElement {
   primitiveAddLinkedFromObject(object: any): void;
   primitiveRemoveLinkedFromObject(object: any): void;
@@ -29,11 +30,13 @@ interface _SVGGradient extends SVGElement {
   usedByStrokes(): NSSet<any>;
   setUsedByStrokes(usedByStrokes: NSSet<any>): void;
 }
+
 declare const _SVGGradient: {
   alloc(): _SVGGradientUninitialized;
-  class(): _SVGGradient;  propertyNames(): NSArray<any>;
+  class(): _SVGGradient;
+  propertyNames(): NSArray<any>;
   relationshipNames(): NSArray<any>;
   attributeNames(): NSArray<any>;
-
+  elementOfType_xml_importer_parent(type: NSString | string, xml: NSXMLElement, importer: SVGImporter, parent: SVGElement): SVGElement;
 }
 

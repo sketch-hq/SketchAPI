@@ -1,7 +1,8 @@
 interface NSColorUninitialized<InitializedType = NSColor> extends NSObjectUninitialized<NSColor> {
-  init(): InitializedType;
   initWithCoder(coder: NSCoder): InitializedType;
+  initWithPasteboardPropertyList_ofType(propertyList: any, type: NSPasteboardType): InitializedType;
 }
+
 interface NSColor extends NSObject, INSCopying, INSSecureCoding, INSPasteboardReading, INSPasteboardWriting {
   colorUsingType(type: NSColorType): NSColor;
   colorUsingColorSpace(space: NSColorSpace): NSColor;
@@ -31,6 +32,10 @@ interface NSColor extends NSObject, INSCopying, INSSecureCoding, INSPasteboardRe
   stringValueWithAlpha(includeAlpha: boolean): NSString;
   hexValue(): NSString;
   colorTranslatedToColorSpace(colorSpace: NSColorSpace): NSColor;
+  copyWithZone(zone: NSZone | null): any;
+  writableTypesForPasteboard(pasteboard: NSPasteboard): NSArray<any>;
+  writingOptionsForType_pasteboard(type: NSPasteboardType, pasteboard: NSPasteboard): NSPasteboardWritingOptions;
+  pasteboardPropertyListForType(type: NSPasteboardType): any;
 
   type(): NSColorType;
   catalogNameComponent(): NSColorListName;
@@ -56,9 +61,11 @@ interface NSColor extends NSObject, INSCopying, INSSecureCoding, INSPasteboardRe
   colorSpaceName(): NSColorSpaceName;
   manifestComponents(): NSArray<any>;
 }
+
 declare const NSColor: {
   alloc(): NSColorUninitialized;
-  class(): NSColor;  colorWithColorSpace_components_count(space: NSColorSpace, components: CGFloat, numberOfComponents: NSInteger): NSColor;
+  class(): NSColor;
+  colorWithColorSpace_components_count(space: NSColorSpace, components: CGFloat, numberOfComponents: NSInteger): NSColor;
   colorWithSRGBRed_green_blue_alpha(red: CGFloat, green: CGFloat, blue: CGFloat, alpha: CGFloat): NSColor;
   colorWithGenericGamma22White_alpha(white: CGFloat, alpha: CGFloat): NSColor;
   colorWithDisplayP3Red_green_blue_alpha(red: CGFloat, green: CGFloat, blue: CGFloat, alpha: CGFloat): NSColor;
@@ -89,7 +96,34 @@ declare const NSColor: {
   tintColorNormalDark(): NSColor;
   tintColorMild(): NSColor;
   tintColorMildDark(): NSColor;
-
+  readableTypesForPasteboard(pasteboard: NSPasteboard): NSArray<any>;
+  readingOptionsForType_pasteboard(type: NSPasteboardType, pasteboard: NSPasteboard): NSPasteboardReadingOptions;
+  load(): void;
+  instancesRespondToSelector(aSelector: string): boolean;
+  conformsToProtocol(protocol: Protocol): boolean;
+  instanceMethodForSelector(aSelector: string): IMP;
+  isSubclassOfClass(aClass: any): boolean;
+  hash(): NSUInteger;
+  superclass(): any;
+  description(): NSString;
+  debugDescription(): NSString;
+  useStoredAccessor(): boolean;
+  keyPathsForValuesAffectingValueForKey(key: NSString | string): NSSet<any>;
+  automaticallyNotifiesObserversForKey(key: NSString | string): boolean;
+  setKeys_triggerChangeNotificationsForDependentKey(keys: NSArray<any> | any[], dependentKey: NSString | string): void;
+  classFallbacksForKeyedArchiver(): NSArray<any>;
+  classForKeyedUnarchiver(): any;
+  version(): NSInteger;
+  setVersion(aVersion: NSInteger): void;
+  cancelPreviousPerformRequestsWithTarget_selector_object(aTarget: any, aSelector: string, anArgument: any | null): void;
+  cancelPreviousPerformRequestsWithTarget(aTarget: any): void;
+  exposeBinding(binding: NSBindingName): void;
+  setDefaultPlaceholder_forMarker_withBinding(placeholder: any | null, marker: any | null, binding: NSBindingName): void;
+  defaultPlaceholderForMarker_withBinding(marker: any | null, binding: NSBindingName): any;
+  mo_swizzleAdditions(): void;
+  mo_mocha(): MOClassDescription;
+  isSelectorExcludedFromMochaScript(selector: string): boolean;
+  selectorForMochaPropertyName(propertyName: NSString | string): string;
   blackColor(): NSColor;
   darkGrayColor(): NSColor;
   lightGrayColor(): NSColor;
@@ -150,7 +184,11 @@ declare const NSColor: {
   currentControlTint(): NSControlTint;
   highlightColor(): NSColor;
   shadowColor(): NSColor;
-  ignoresAlpha(): boolean;
+  ignoresAlpha(): boolean;,
+          {
+            newLineStart: true,
+            newLineEnd: false,
+          }
   setIgnoresAlpha(ignoresAlpha: boolean): void;
   controlHighlightColor(): NSColor;
   controlLightHighlightColor(): NSColor;
@@ -165,6 +203,8 @@ declare const NSColor: {
   secondarySelectedControlColor(): NSColor;
   alternateSelectedControlColor(): NSColor;
   controlAlternatingRowBackgroundColors(): NSArray<any>;
+  supportsSecureCoding(): boolean;
+  accessInstanceVariablesDirectly(): boolean;
 
 }
 

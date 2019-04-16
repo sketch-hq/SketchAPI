@@ -2,6 +2,7 @@ interface MSGradientUninitialized<InitializedType = MSGradient> extends _MSGradi
   initBlankGradient(): InitializedType;
   initWithNSGradient(nsGradient: NSGradient): InitializedType;
 }
+
 interface MSGradient extends _MSGradient {
   NSGradientWithColorSpace(colorSpace: NSColorSpace): NSGradient;
   conditionedEllipseLength(): CGFloat;
@@ -22,6 +23,7 @@ interface MSGradient extends _MSGradient {
   svgPositionIsAbsolute(): boolean;
   setSvgPositionIsAbsolute(svgPositionIsAbsolute: boolean): void;
 }
+
 declare const MSGradient: {
   alloc(): MSGradientUninitialized;
   class(): MSGradient;

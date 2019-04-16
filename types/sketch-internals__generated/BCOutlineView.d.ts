@@ -1,4 +1,5 @@
 interface BCOutlineViewUninitialized<InitializedType = BCOutlineView> extends NSOutlineViewUninitialized<BCOutlineView> {}
+
 interface BCOutlineView extends NSOutlineView {
   applyAppearance(): void;
   processMouseEventTakingFloatingStateOfRowViewIntoAccount_atRow_withBlock(rowView: NSTableRowView, row: NSInteger, eventProcessingBlock: BCVoidBlock): void;
@@ -31,6 +32,7 @@ interface BCOutlineView extends NSOutlineView {
   useHighlightedBackgroundColor(): boolean;
   setUseHighlightedBackgroundColor(useHighlightedBackgroundColor: boolean): void;
 }
+
 declare const BCOutlineView: {
   alloc(): BCOutlineViewUninitialized;
   class(): BCOutlineView;

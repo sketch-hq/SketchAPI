@@ -1,4 +1,5 @@
 interface NSSearchFieldUninitialized<InitializedType = NSSearchField> extends NSTextFieldUninitialized<NSSearchField> {}
+
 interface NSSearchField extends NSTextField {
   rectForSearchTextWhenCentered(isCentered: boolean): NSRect;
   rectForSearchButtonWhenCentered(isCentered: boolean): NSRect;
@@ -21,8 +22,13 @@ interface NSSearchField extends NSTextField {
   centersPlaceholder(): boolean;
   setCentersPlaceholder(centersPlaceholder: boolean): void;
 }
+
 declare const NSSearchField: {
   alloc(): NSSearchFieldUninitialized;
   class(): NSSearchField;
+  labelWithString(stringValue: NSString | string): NSSearchField;
+  wrappingLabelWithString(stringValue: NSString | string): NSSearchField;
+  labelWithAttributedString(attributedStringValue: NSAttributedString): NSSearchField;
+  textFieldWithString(stringValue: NSString | string): NSSearchField;
 }
 

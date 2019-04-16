@@ -1,4 +1,5 @@
 interface MSImmutableLayerUninitialized<InitializedType = MSImmutableLayer> extends _MSImmutableLayerUninitialized<MSImmutableLayer> {}
+
 interface MSImmutableLayer extends _MSImmutableLayer, IMSLayer, IMSLayerTraits {
   influenceRectEdgePaddingsThatDoNotCascadeInDocument(document: MSImmutableDocumentData): BCEdgePaddings;
   absoluteRectForAncestorGroups(ancestors: NSArray<any> | any[]): NSRect;
@@ -40,6 +41,7 @@ interface MSImmutableLayer extends _MSImmutableLayer, IMSLayer, IMSLayerTraits {
   addDefaultFillAttributes_exporter(attributes: NSMutableArray<any> | any[], exporter: SketchSVGExporter): void;
   shouldIncludeInSVGExport(exporter: SketchSVGExporter): boolean;
   addSVGAttributes_exporter(attributes: NSMutableArray<any> | any[], exporter: SketchSVGExporter): void;
+  traits(): MSTraits;
 
   center(): NSPoint;
   transform(): NSAffineTransform;
@@ -57,6 +59,7 @@ interface MSImmutableLayer extends _MSImmutableLayer, IMSLayer, IMSLayerTraits {
   unavailableFontNames(): NSSet<any>;
   dataSupplierIdentifier(): NSString;
 }
+
 declare const MSImmutableLayer: {
   alloc(): MSImmutableLayerUninitialized;
   class(): MSImmutableLayer;

@@ -1,4 +1,5 @@
 interface _MSSharedObjectContainerUninitialized<InitializedType = _MSSharedObjectContainer> extends MSModelObjectUninitialized<_MSSharedObjectContainer> {}
+
 interface _MSSharedObjectContainer extends MSModelObject {
   addSharedObject(value: MSSharedObject): void;
   addSharedObjects(objects: NSArray<any> | any[]): void;
@@ -16,8 +17,11 @@ interface _MSSharedObjectContainer extends MSModelObject {
   objects(): NSArray<any>;
   setObjects(objects: NSArray<any> | any[]): void;
 }
+
 declare const _MSSharedObjectContainer: {
   alloc(): _MSSharedObjectContainerUninitialized;
   class(): _MSSharedObjectContainer;
+  immutableClass(): any;
+  allowsFaulting(): boolean;
 }
 

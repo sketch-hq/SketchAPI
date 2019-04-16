@@ -1,4 +1,5 @@
 interface NSURLHandleUninitialized<InitializedType = NSURLHandle> {}
+
 interface NSURLHandle {
   status(): NSURLHandleStatus;
   failureReason(): NSString;
@@ -20,12 +21,13 @@ interface NSURLHandle {
   beginLoadInBackground(): void;
   endLoadInBackground(): void;
 }
+
 declare const NSURLHandle: {
   alloc(): NSURLHandleUninitialized;
-  class(): NSURLHandle;  registerURLHandleClass(anURLHandleSubclass: any): void;
+  class(): NSURLHandle;
+  registerURLHandleClass(anURLHandleSubclass: any): void;
   URLHandleClassForURL(anURL: NSURL): any;
   canInitWithURL(anURL: NSURL): boolean;
   cachedHandleForURL(anURL: NSURL): NSURLHandle;
-
 }
 

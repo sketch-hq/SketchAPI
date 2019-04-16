@@ -1,4 +1,5 @@
 interface NSTextFieldUninitialized<InitializedType = NSTextField> extends NSControlUninitialized<NSTextField> {}
+
 interface NSTextField extends NSControl, INSUserInterfaceValidations, INSAccessibilityNavigableStaticText {
   selectText(sender: any | null): void;
   textShouldBeginEditing(textObject: NSText): boolean;
@@ -7,6 +8,11 @@ interface NSTextField extends NSControl, INSUserInterfaceValidations, INSAccessi
   textDidEndEditing(notification: NSNotification): void;
   textDidChange(notification: NSNotification): void;
   setTitleWithMnemonic(stringWithAmpersand: NSString | string): void;
+  validateUserInterfaceItem(item: any): boolean;
+  accessibilityStringForRange(range: NSRange): NSString;
+  accessibilityLineForIndex(index: NSInteger): NSInteger;
+  accessibilityRangeForLine(lineNumber: NSInteger): NSRange;
+  accessibilityFrameForRange(range: NSRange): NSRect;
 
   placeholderString(): NSString;
   setPlaceholderString(placeholderString: NSString | string): void;
@@ -47,12 +53,31 @@ interface NSTextField extends NSControl, INSUserInterfaceValidations, INSAccessi
   setImportsGraphics(importsGraphics: boolean): void;
   isEditingText(): boolean;
 }
+
 declare const NSTextField: {
   alloc(): NSTextFieldUninitialized;
-  class(): NSTextField;  labelWithString(stringValue: NSString | string): NSTextField;
+  class(): NSTextField;
+  labelWithString(stringValue: NSString | string): NSTextField;
   wrappingLabelWithString(stringValue: NSString | string): NSTextField;
   labelWithAttributedString(attributedStringValue: NSAttributedString): NSTextField;
   textFieldWithString(stringValue: NSString | string): NSTextField;
+  inpectorBorderPathForRect(rect: NSRect): NSBezierPath;
+  inpectorCheckmarkBorderPathForRect(rect: NSRect): NSBezierPath;
+  inpectorBorderPathForRectWithMaxRadius(rect: NSRect): NSBezierPath;
+  inpectorBorderPathForRect_borderRadius(rect: NSRect, borderRadius: CGFloat): NSBezierPath;
+  inpectorFocusRingPathForRect(rect: NSRect): NSBezierPath;
+  cellClass(): any;,
+          {
+            newLineStart: true,
+            newLineEnd: false,
+          }
+  setCellClass(cellClass: any): void;
+  requiresConstraintBasedLayout(): boolean;
+  focusView(): NSView;
+  defaultMenu(): NSMenu;
+  compatibleWithResponsiveScrolling(): boolean;
+  defaultFocusRingType(): NSFocusRingType;
+  restorableStateKeyPaths(): NSArray<any>;
 
 }
 

@@ -1,4 +1,5 @@
 interface NSPathControlUninitialized<InitializedType = NSPathControl> extends NSControlUninitialized<NSPathControl> {}
+
 interface NSPathControl extends NSControl {
   setDraggingSourceOperationMask_forLocal(mask: NSDragOperation, isLocal: boolean): void;
   clickedPathComponentCell(): NSPathComponentCell;
@@ -29,8 +30,27 @@ interface NSPathControl extends NSControl {
   menu(): NSMenu;
   setMenu(menu: NSMenu): void;
 }
+
 declare const NSPathControl: {
   alloc(): NSPathControlUninitialized;
   class(): NSPathControl;
+  inpectorBorderPathForRect(rect: NSRect): NSBezierPath;
+  inpectorCheckmarkBorderPathForRect(rect: NSRect): NSBezierPath;
+  inpectorBorderPathForRectWithMaxRadius(rect: NSRect): NSBezierPath;
+  inpectorBorderPathForRect_borderRadius(rect: NSRect, borderRadius: CGFloat): NSBezierPath;
+  inpectorFocusRingPathForRect(rect: NSRect): NSBezierPath;
+  cellClass(): any;,
+          {
+            newLineStart: true,
+            newLineEnd: false,
+          }
+  setCellClass(cellClass: any): void;
+  requiresConstraintBasedLayout(): boolean;
+  focusView(): NSView;
+  defaultMenu(): NSMenu;
+  compatibleWithResponsiveScrolling(): boolean;
+  defaultFocusRingType(): NSFocusRingType;
+  restorableStateKeyPaths(): NSArray<any>;
+
 }
 

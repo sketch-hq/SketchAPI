@@ -1,4 +1,5 @@
 interface BCMagicWandUninitialized<InitializedType = BCMagicWand> extends NSOperationUninitialized<BCMagicWand> {}
+
 interface BCMagicWand extends NSOperation {
 
   startPoint(): NSPoint;
@@ -8,8 +9,11 @@ interface BCMagicWand extends NSOperation {
   bitmap(): NSBitmapImageRep;
   setBitmap(bitmap: NSBitmapImageRep): void;
 }
+
 declare const BCMagicWand: {
   alloc(): BCMagicWandUninitialized;
   class(): BCMagicWand;
+  accessInstanceVariablesDirectly(): boolean;
+
 }
 

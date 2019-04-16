@@ -1,4 +1,5 @@
 interface NSOpenPanelUninitialized<InitializedType = NSOpenPanel> extends NSSavePanelUninitialized<NSOpenPanel> {}
+
 interface NSOpenPanel extends NSSavePanel {
   filenames(): NSArray<any>;
   beginSheetForDirectory_file_types_modalForWindow_modalDelegate_didEndSelector_contextInfo(path: NSString | string | null, name: NSString | string | null, fileTypes: NSArray<any> | any[] | null, docWindow: NSWindow | null, delegate: any | null, didEndSelector: string | null, contextInfo: void | null): void;
@@ -22,9 +23,11 @@ interface NSOpenPanel extends NSSavePanel {
   accessoryViewDisclosed(): boolean;
   setAccessoryViewDisclosed(accessoryViewDisclosed: boolean): void;
 }
+
 declare const NSOpenPanel: {
   alloc(): NSOpenPanelUninitialized;
-  class(): NSOpenPanel;  openPanel(): NSOpenPanel;
-
+  class(): NSOpenPanel;
+  openPanel(): NSOpenPanel;
+  savePanel(): NSSavePanel;
 }
 

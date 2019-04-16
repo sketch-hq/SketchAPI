@@ -1,10 +1,13 @@
 interface NSTableRowViewUninitialized<InitializedType = NSTableRowView> extends NSViewUninitialized<NSTableRowView> {}
+
 interface NSTableRowView extends NSView, INSAccessibilityRow {
   drawBackgroundInRect(dirtyRect: NSRect): void;
   drawSelectionInRect(dirtyRect: NSRect): void;
   drawSeparatorInRect(dirtyRect: NSRect): void;
   drawDraggingDestinationFeedbackInRect(dirtyRect: NSRect): void;
   viewAtColumn(column: NSInteger): any;
+  accessibilityIndex(): NSInteger;
+  accessibilityDisclosureLevel(): NSInteger;
 
   selectionHighlightStyle(): NSTableViewSelectionHighlightStyle;
   setSelectionHighlightStyle(selectionHighlightStyle: NSTableViewSelectionHighlightStyle): void;
@@ -31,8 +34,16 @@ interface NSTableRowView extends NSView, INSAccessibilityRow {
   setBackgroundColor(backgroundColor: NSColor): void;
   numberOfColumns(): NSInteger;
 }
+
 declare const NSTableRowView: {
   alloc(): NSTableRowViewUninitialized;
   class(): NSTableRowView;
+  requiresConstraintBasedLayout(): boolean;
+  focusView(): NSView;
+  defaultMenu(): NSMenu;
+  compatibleWithResponsiveScrolling(): boolean;
+  defaultFocusRingType(): NSFocusRingType;
+  restorableStateKeyPaths(): NSArray<any>;
+
 }
 

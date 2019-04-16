@@ -1,4 +1,5 @@
 interface BITFeedbackManagerUninitialized<InitializedType = BITFeedbackManager> extends BITHockeyBaseManagerUninitialized<BITFeedbackManager> {}
+
 interface BITFeedbackManager extends BITHockeyBaseManager {
   showFeedbackWindow(): void;
 
@@ -9,6 +10,7 @@ interface BITFeedbackManager extends BITHockeyBaseManager {
   showAlertOnIncomingMessages(): boolean;
   setShowAlertOnIncomingMessages(showAlertOnIncomingMessages: boolean): void;
 }
+
 declare const BITFeedbackManager: {
   alloc(): BITFeedbackManagerUninitialized;
   class(): BITFeedbackManager;

@@ -1,6 +1,7 @@
 interface NSMutableSetUninitialized<ObjectType, InitializedType = NSMutableSet<ObjectType>> extends NSSetUninitialized<ObjectType, NSMutableSet<ObjectType>> {
   initWithCapacity(numItems: NSUInteger): InitializedType;
 }
+
 interface NSMutableSet<ObjectType> extends NSSet<ObjectType> {
   filterUsingPredicate(predicate: NSPredicate): void;
   addObject(object: ObjectType): void;
@@ -13,9 +14,10 @@ interface NSMutableSet<ObjectType> extends NSSet<ObjectType> {
   setSet(otherSet: NSSet<any>): void;
   addObjectIfNotNil(anObject: any | null): void;
 }
+
 declare const NSMutableSet: {
   alloc<ObjectType>(): NSMutableSetUninitialized<ObjectType>;
-  class(): NSMutableSet;  setWithCapacity<ObjectType>(numItems: NSUInteger): NSMutableSet<ObjectType>;
-
+  class(): NSMutableSet;
+  setWithCapacity<ObjectType>(numItems: NSUInteger): NSMutableSet<ObjectType>;
 }
 

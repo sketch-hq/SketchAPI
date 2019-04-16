@@ -1,4 +1,5 @@
 interface MSLayerDragControllerUninitialized<InitializedType = MSLayerDragController> extends MSToolControllerUninitialized<MSLayerDragController> {}
+
 interface MSLayerDragController extends MSToolController {
   beginWithLayers_location(layers: MSLayerArray, location: NSPoint): void;
   updateWithState_location_duplicate(state: MSToolControllerState, location: NSPoint, duplicate: boolean): void;
@@ -22,6 +23,7 @@ interface MSLayerDragController extends MSToolController {
   userInterface(): any;
   setUserInterface(userInterface: any): void;
 }
+
 declare const MSLayerDragController: {
   alloc(): MSLayerDragControllerUninitialized;
   class(): MSLayerDragController;

@@ -1,4 +1,5 @@
 interface NSPathComponentCellUninitialized<InitializedType = NSPathComponentCell> extends NSTextFieldCellUninitialized<NSPathComponentCell> {}
+
 interface NSPathComponentCell extends NSTextFieldCell {
 
   image(): NSImage;
@@ -6,6 +7,7 @@ interface NSPathComponentCell extends NSTextFieldCell {
   URL(): NSURL;
   setURL(URL: NSURL): void;
 }
+
 declare const NSPathComponentCell: {
   alloc(): NSPathComponentCellUninitialized;
   class(): NSPathComponentCell;

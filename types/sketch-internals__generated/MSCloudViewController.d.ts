@@ -1,6 +1,7 @@
 interface MSCloudViewControllerUninitialized<InitializedType = MSCloudViewController> extends NSViewControllerUninitialized<MSCloudViewController> {
   initWithAction(action: MSCloudAction): InitializedType;
 }
+
 interface MSCloudViewController extends NSViewController {
   setContentViewController_animated(contentViewController: MSCloudBaseViewController, animated: boolean): void;
   resetContentViewController(sender: any): IBAction;
@@ -10,8 +11,12 @@ interface MSCloudViewController extends NSViewController {
   contentViewController(): MSCloudBaseViewController;
   setContentViewController(contentViewController: MSCloudBaseViewController): void;
 }
+
 declare const MSCloudViewController: {
   alloc(): MSCloudViewControllerUninitialized;
   class(): MSCloudViewController;
+  restorableStateKeyPaths(): NSArray<any>;
+  accessInstanceVariablesDirectly(): boolean;
+
 }
 

@@ -1,7 +1,7 @@
 interface CALayerUninitialized<InitializedType = CALayer> extends NSObjectUninitialized<CALayer> {
-  init(): InitializedType;
   initWithLayer(layer: any): InitializedType;
 }
+
 interface CALayer extends NSObject, INSSecureCoding, ICAMediaTiming {
   addConstraint(c: CAConstraint): void;
   presentationLayer(): CALayer;
@@ -153,14 +153,60 @@ interface CALayer extends NSObject, INSSecureCoding, ICAMediaTiming {
   style(): NSDictionary<any, any>;
   setStyle(style: NSDictionary<any, any> | {[key: string]: any}): void;
   visibleRect(): CGRect;
+  beginTime(): CFTimeInterval;
+  setBeginTime(beginTime: CFTimeInterval): void;
+  duration(): CFTimeInterval;
+  setDuration(duration: CFTimeInterval): void;
+  speed(): number;
+  setSpeed(speed: number): void;
+  timeOffset(): CFTimeInterval;
+  setTimeOffset(timeOffset: CFTimeInterval): void;
+  repeatCount(): number;
+  setRepeatCount(repeatCount: number): void;
+  repeatDuration(): CFTimeInterval;
+  setRepeatDuration(repeatDuration: CFTimeInterval): void;
+  autoreverses(): boolean;
+  setAutoreverses(autoreverses: boolean): void;
+  fillMode(): CAMediaTimingFillMode;
+  setFillMode(fillMode: CAMediaTimingFillMode): void;
 }
+
 declare const CALayer: {
   alloc(): CALayerUninitialized;
-  class(): CALayer;  layer(): CALayer;
+  class(): CALayer;
+  layer(): CALayer;
   defaultValueForKey(key: NSString | string): any;
   needsDisplayForKey(key: NSString | string): boolean;
   defaultActionForKey(event: NSString | string): any;
   layerWithRemoteClientId(client_id: number): CALayer;
+  load(): void;
+  instancesRespondToSelector(aSelector: string): boolean;
+  conformsToProtocol(protocol: Protocol): boolean;
+  instanceMethodForSelector(aSelector: string): IMP;
+  isSubclassOfClass(aClass: any): boolean;
+  hash(): NSUInteger;
+  superclass(): any;
+  description(): NSString;
+  debugDescription(): NSString;
+  useStoredAccessor(): boolean;
+  keyPathsForValuesAffectingValueForKey(key: NSString | string): NSSet<any>;
+  automaticallyNotifiesObserversForKey(key: NSString | string): boolean;
+  setKeys_triggerChangeNotificationsForDependentKey(keys: NSArray<any> | any[], dependentKey: NSString | string): void;
+  classFallbacksForKeyedArchiver(): NSArray<any>;
+  classForKeyedUnarchiver(): any;
+  version(): NSInteger;
+  setVersion(aVersion: NSInteger): void;
+  cancelPreviousPerformRequestsWithTarget_selector_object(aTarget: any, aSelector: string, anArgument: any | null): void;
+  cancelPreviousPerformRequestsWithTarget(aTarget: any): void;
+  exposeBinding(binding: NSBindingName): void;
+  setDefaultPlaceholder_forMarker_withBinding(placeholder: any | null, marker: any | null, binding: NSBindingName): void;
+  defaultPlaceholderForMarker_withBinding(marker: any | null, binding: NSBindingName): any;
+  mo_swizzleAdditions(): void;
+  mo_mocha(): MOClassDescription;
+  isSelectorExcludedFromMochaScript(selector: string): boolean;
+  selectorForMochaPropertyName(propertyName: NSString | string): string;
+  supportsSecureCoding(): boolean;
+  accessInstanceVariablesDirectly(): boolean;
 
 }
 

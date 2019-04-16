@@ -1,4 +1,5 @@
 interface _MSExportPresetUninitialized<InitializedType = _MSExportPreset> extends MSModelObjectUninitialized<_MSExportPreset> {}
+
 interface _MSExportPreset extends MSModelObject {
   addExportFormat(value: MSExportFormat): void;
   addExportFormats(exportFormats: NSArray<any> | any[]): void;
@@ -20,8 +21,11 @@ interface _MSExportPreset extends MSModelObject {
   exportFormats(): NSArray<any>;
   setExportFormats(exportFormats: NSArray<any> | any[]): void;
 }
+
 declare const _MSExportPreset: {
   alloc(): _MSExportPresetUninitialized;
   class(): _MSExportPreset;
+  immutableClass(): any;
+  allowsFaulting(): boolean;
 }
 

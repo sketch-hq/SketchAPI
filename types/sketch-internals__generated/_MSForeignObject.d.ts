@@ -1,4 +1,5 @@
 interface _MSForeignObjectUninitialized<InitializedType = _MSForeignObject> extends MSModelObjectUninitialized<_MSForeignObject> {}
+
 interface _MSForeignObject extends MSModelObject {
 
   libraryID(): NSString;
@@ -8,8 +9,11 @@ interface _MSForeignObject extends MSModelObject {
   symbolPrivate(): boolean;
   setSymbolPrivate(symbolPrivate: boolean): void;
 }
+
 declare const _MSForeignObject: {
   alloc(): _MSForeignObjectUninitialized;
   class(): _MSForeignObject;
+  immutableClass(): any;
+  allowsFaulting(): boolean;
 }
 

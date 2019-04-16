@@ -1,4 +1,5 @@
 interface NSSegmentedControlUninitialized<InitializedType = NSSegmentedControl> extends NSControlUninitialized<NSSegmentedControl> {}
+
 interface NSSegmentedControl extends NSControl, INSUserInterfaceCompression {
   selectSegmentWithTag(tag: NSInteger): boolean;
   setWidth_forSegment(width: CGFloat, segment: NSInteger): void;
@@ -25,6 +26,8 @@ interface NSSegmentedControl extends NSControl, INSUserInterfaceCompression {
   alignmentForSegment(segment: NSInteger): NSTextAlignment;
   compressWithPrioritizedCompressionOptions(prioritizedOptions: NSArray<any> | any[]): void;
   minimumSizeWithPrioritizedCompressionOptions(prioritizedOptions: NSArray<any> | any[]): NSSize;
+  compressWithPrioritizedCompressionOptions(prioritizedOptions: NSArray<any> | any[]): void;
+  minimumSizeWithPrioritizedCompressionOptions(prioritizedOptions: NSArray<any> | any[]): NSSize;
 
   segmentCount(): NSInteger;
   setSegmentCount(segmentCount: NSInteger): void;
@@ -44,10 +47,29 @@ interface NSSegmentedControl extends NSControl, INSUserInterfaceCompression {
   setSegmentDistribution(segmentDistribution: NSSegmentDistribution): void;
   activeCompressionOptions(): NSUserInterfaceCompressionOptions;
 }
+
 declare const NSSegmentedControl: {
   alloc(): NSSegmentedControlUninitialized;
-  class(): NSSegmentedControl;  segmentedControlWithLabels_trackingMode_target_action(labels: NSArray<any> | any[], trackingMode: NSSegmentSwitchTracking, target: any | null, action: string | null): NSSegmentedControl;
+  class(): NSSegmentedControl;
+  segmentedControlWithLabels_trackingMode_target_action(labels: NSArray<any> | any[], trackingMode: NSSegmentSwitchTracking, target: any | null, action: string | null): NSSegmentedControl;
   segmentedControlWithImages_trackingMode_target_action(images: NSArray<any> | any[], trackingMode: NSSegmentSwitchTracking, target: any | null, action: string | null): NSSegmentedControl;
+  inpectorBorderPathForRect(rect: NSRect): NSBezierPath;
+  inpectorCheckmarkBorderPathForRect(rect: NSRect): NSBezierPath;
+  inpectorBorderPathForRectWithMaxRadius(rect: NSRect): NSBezierPath;
+  inpectorBorderPathForRect_borderRadius(rect: NSRect, borderRadius: CGFloat): NSBezierPath;
+  inpectorFocusRingPathForRect(rect: NSRect): NSBezierPath;
+  cellClass(): any;,
+          {
+            newLineStart: true,
+            newLineEnd: false,
+          }
+  setCellClass(cellClass: any): void;
+  requiresConstraintBasedLayout(): boolean;
+  focusView(): NSView;
+  defaultMenu(): NSMenu;
+  compatibleWithResponsiveScrolling(): boolean;
+  defaultFocusRingType(): NSFocusRingType;
+  restorableStateKeyPaths(): NSArray<any>;
 
 }
 

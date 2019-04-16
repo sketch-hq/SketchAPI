@@ -1,9 +1,11 @@
 interface MSExportRequestUninitialized<InitializedType = MSExportRequest> extends NSObjectUninitialized<MSExportRequest> {}
+
 interface MSExportRequest extends NSObject, INSCopying {
   readSettingsFromDefaults(): void;
   configureForLayer_layerOptions_includedIDs(layer: MSLayer, layerOptions: MSExportLayerOptions, includedIDs: NSArray<any> | any[]): void;
   setNameFromID_exportFormat(objectID: NSString | string, format: MSImmutableExportFormat): void;
   configureForLayerAncestry_layerOptions_includedIDs(ancestry: MSImmutableLayerAncestry, layerOptions: MSExportLayerOptions, includedIDs: NSArray<any> | any[]): void;
+  copyWithZone(zone: NSZone | null): any;
 
   rect(): NSRect;
   setRect(rect: NSRect): void;
@@ -36,9 +38,11 @@ interface MSExportRequest extends NSObject, INSCopying {
   includeArtboardBackground(): boolean;
   setIncludeArtboardBackground(includeArtboardBackground: boolean): void;
 }
+
 declare const MSExportRequest: {
   alloc(): MSExportRequestUninitialized;
-  class(): MSExportRequest;  exportRequestsFromExportableLayer(layer: MSLayer): NSArray<any>;
+  class(): MSExportRequest;
+  exportRequestsFromExportableLayer(layer: MSLayer): NSArray<any>;
   exportRequestsFromExportableLayer_useIDForName(layer: MSLayer, useIDForName: boolean): NSArray<any>;
   exportRequestsFromExportableLayer_exportFormats_useIDForName(layer: MSLayer, exportFormats: NSArray<any> | any[], useIDForName: boolean): NSArray<any>;
   exportRequestsFromExportableLayer_inRect_useIDForName(layer: MSLayer, rect: NSRect, useIDForName: boolean): NSArray<any>;
@@ -49,6 +53,33 @@ declare const MSExportRequest: {
   exportRequestsFromLayerAncestry_exportFormats(layerAncestry: MSImmutableLayerAncestry, exportFormats: NSArray<any> | any[]): NSArray<any>;
   exportRequestsFromLayerAncestry_exportFormats_inRect(layerAncestry: MSImmutableLayerAncestry, exportFormats: NSArray<any> | any[], rect: NSRect): NSArray<any>;
   exportRequestFromLayerAncestry_exportFormat_inRect(ancestry: MSImmutableLayerAncestry, exportFormat: MSImmutableExportFormat, rect: NSRect): MSExportRequest;
+  load(): void;
+  instancesRespondToSelector(aSelector: string): boolean;
+  conformsToProtocol(protocol: Protocol): boolean;
+  instanceMethodForSelector(aSelector: string): IMP;
+  isSubclassOfClass(aClass: any): boolean;
+  hash(): NSUInteger;
+  superclass(): any;
+  description(): NSString;
+  debugDescription(): NSString;
+  useStoredAccessor(): boolean;
+  keyPathsForValuesAffectingValueForKey(key: NSString | string): NSSet<any>;
+  automaticallyNotifiesObserversForKey(key: NSString | string): boolean;
+  setKeys_triggerChangeNotificationsForDependentKey(keys: NSArray<any> | any[], dependentKey: NSString | string): void;
+  classFallbacksForKeyedArchiver(): NSArray<any>;
+  classForKeyedUnarchiver(): any;
+  version(): NSInteger;
+  setVersion(aVersion: NSInteger): void;
+  cancelPreviousPerformRequestsWithTarget_selector_object(aTarget: any, aSelector: string, anArgument: any | null): void;
+  cancelPreviousPerformRequestsWithTarget(aTarget: any): void;
+  exposeBinding(binding: NSBindingName): void;
+  setDefaultPlaceholder_forMarker_withBinding(placeholder: any | null, marker: any | null, binding: NSBindingName): void;
+  defaultPlaceholderForMarker_withBinding(marker: any | null, binding: NSBindingName): any;
+  mo_swizzleAdditions(): void;
+  mo_mocha(): MOClassDescription;
+  isSelectorExcludedFromMochaScript(selector: string): boolean;
+  selectorForMochaPropertyName(propertyName: NSString | string): string;
+  accessInstanceVariablesDirectly(): boolean;
 
 }
 

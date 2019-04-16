@@ -1,4 +1,5 @@
 interface NSDictionaryControllerUninitialized<InitializedType = NSDictionaryController> extends NSArrayControllerUninitialized<NSDictionaryController> {}
+
 interface NSDictionaryController extends NSArrayController {
   newObject(): NSDictionaryControllerKeyValuePair;
 
@@ -15,6 +16,7 @@ interface NSDictionaryController extends NSArrayController {
   localizedKeyTable(): NSString;
   setLocalizedKeyTable(localizedKeyTable: NSString | string): void;
 }
+
 declare const NSDictionaryController: {
   alloc(): NSDictionaryControllerUninitialized;
   class(): NSDictionaryController;

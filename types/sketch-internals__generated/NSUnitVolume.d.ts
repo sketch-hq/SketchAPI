@@ -1,9 +1,12 @@
 interface NSUnitVolumeUninitialized<InitializedType = NSUnitVolume> extends NSDimensionUninitialized<NSUnitVolume> {}
+
 interface NSUnitVolume extends NSDimension, INSSecureCoding {
 }
+
 declare const NSUnitVolume: {
   alloc(): NSUnitVolumeUninitialized;
   class(): NSUnitVolume;
+  baseUnit(): NSUnitVolume;
   megaliters(): NSUnitVolume;
   kiloliters(): NSUnitVolume;
   liters(): NSUnitVolume;
@@ -35,6 +38,8 @@ declare const NSUnitVolume: {
   imperialQuarts(): NSUnitVolume;
   imperialGallons(): NSUnitVolume;
   metricCups(): NSUnitVolume;
+  supportsSecureCoding(): boolean;
+  accessInstanceVariablesDirectly(): boolean;
 
 }
 

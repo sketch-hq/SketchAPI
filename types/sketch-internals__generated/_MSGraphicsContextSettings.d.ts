@@ -1,4 +1,5 @@
 interface _MSGraphicsContextSettingsUninitialized<InitializedType = _MSGraphicsContextSettings> extends MSModelObjectUninitialized<_MSGraphicsContextSettings> {}
+
 interface _MSGraphicsContextSettings extends MSModelObject {
 
   blendMode(): MSBlendMode;
@@ -6,8 +7,11 @@ interface _MSGraphicsContextSettings extends MSModelObject {
   opacity(): CGFloat;
   setOpacity(opacity: CGFloat): void;
 }
+
 declare const _MSGraphicsContextSettings: {
   alloc(): _MSGraphicsContextSettingsUninitialized;
   class(): _MSGraphicsContextSettings;
+  immutableClass(): any;
+  allowsFaulting(): boolean;
 }
 

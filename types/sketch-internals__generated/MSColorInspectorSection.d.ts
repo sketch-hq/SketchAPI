@@ -1,6 +1,7 @@
 interface MSColorInspectorSectionUninitialized<InitializedType = MSColorInspectorSection> extends NSViewControllerUninitialized<MSColorInspectorSection> {
   initWithDelegate(delegate: any): InitializedType;
 }
+
 interface MSColorInspectorSection extends NSViewController {
   createPresetFromCurrentSelection(): any;
   controlDidSelectAsset(asset: any): void;
@@ -31,11 +32,14 @@ interface MSColorInspectorSection extends NSViewController {
   styleParts(): NSArray<any>;
   setStyleParts(styleParts: NSArray<any> | any[]): void;
 }
+
 declare const MSColorInspectorSection: {
   alloc(): MSColorInspectorSectionUninitialized;
-  class(): MSColorInspectorSection;  drawCheckerboardBackgroundInRect_size_foreColor_backgroundColor(r: NSRect, size: CGFloat, color: CGColorRef, backgroundColor: CGColorRef): void;
-
+  class(): MSColorInspectorSection;
+  drawCheckerboardBackgroundInRect_size_foreColor_backgroundColor(r: NSRect, size: CGFloat, color: CGColorRef, backgroundColor: CGColorRef): void;
   presetPickerVisibilityDefaultsKey(): NSString;
+  restorableStateKeyPaths(): NSArray<any>;
+  accessInstanceVariablesDirectly(): boolean;
 
 }
 

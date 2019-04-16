@@ -9,26 +9,27 @@ interface NSURLUninitialized<InitializedType = NSURL> extends NSObjectUninitiali
   initWithString_relativeToURL(URLString: NSString | string, baseURL: NSURL | null): InitializedType;
   initWithDataRepresentation_relativeToURL(data: NSData, baseURL: NSURL | null): InitializedType;
   initAbsoluteURLWithDataRepresentation_relativeToURL(data: NSData, baseURL: NSURL | null): InitializedType;
-  initByResolvingBookmarkData_options_relativeToURL_bookmarkDataIsStale_error(bookmarkData: NSData, options: NSURLBookmarkResolutionOptions, relativeURL: NSURL | null, isStale: boolean, error: NSError): InitializedType;
+  initByResolvingBookmarkData_options_relativeToURL_bookmarkDataIsStale_error(bookmarkData: NSData, options: NSURLBookmarkResolutionOptions, relativeURL: NSURL | null, isStale: boolean, error: MOPointer<NSError>): InitializedType;
 }
+
 interface NSURL extends NSObject, INSSecureCoding, INSCopying {
   getFileSystemRepresentation_maxLength(buffer: string, maxBufferLength: NSUInteger): boolean;
-  checkResourceIsReachableAndReturnError_NS_SWIFT_NOTHROW(error: NSError): boolean;
+  checkResourceIsReachableAndReturnError_NS_SWIFT_NOTHROW(error: MOPointer<NSError>): boolean;
   isFileReferenceURL(): boolean;
   fileReferenceURL(): NSURL;
-  getResourceValue_forKey_error(value: any, key: NSURLResourceKey, error: NSError): boolean;
-  resourceValuesForKeys_error(keys: NSArray<any> | any[], error: NSError): NSDictionary<any, any>;
-  setResourceValue_forKey_error(value: any | null, key: NSURLResourceKey, error: NSError): boolean;
-  setResourceValues_error(keyedValues: NSDictionary<any, any> | {[key: string]: any}, error: NSError): boolean;
+  getResourceValue_forKey_error(value: any, key: NSURLResourceKey, error: MOPointer<NSError>): boolean;
+  resourceValuesForKeys_error(keys: NSArray<any> | any[], error: MOPointer<NSError>): NSDictionary<any, any>;
+  setResourceValue_forKey_error(value: any | null, key: NSURLResourceKey, error: MOPointer<NSError>): boolean;
+  setResourceValues_error(keyedValues: NSDictionary<any, any> | {[key: string]: any}, error: MOPointer<NSError>): boolean;
   removeCachedResourceValueForKey(key: NSURLResourceKey): void;
   removeAllCachedResourceValues(): void;
   setTemporaryResourceValue_forKey(value: any | null, key: NSURLResourceKey): void;
-  bookmarkDataWithOptions_includingResourceValuesForKeys_relativeToURL_error(options: NSURLBookmarkCreationOptions, keys: NSArray<any> | any[] | null, relativeURL: NSURL | null, error: NSError): NSData;
+  bookmarkDataWithOptions_includingResourceValuesForKeys_relativeToURL_error(options: NSURLBookmarkCreationOptions, keys: NSArray<any> | any[] | null, relativeURL: NSURL | null, error: MOPointer<NSError>): NSData;
   startAccessingSecurityScopedResource(): boolean;
   stopAccessingSecurityScopedResource(): void;
-  getPromisedItemResourceValue_forKey_error(value: any, key: NSURLResourceKey, error: NSError): boolean;
-  promisedItemResourceValuesForKeys_error(keys: NSArray<any> | any[], error: NSError): NSDictionary<any, any>;
-  checkPromisedItemIsReachableAndReturnError_NS_SWIFT_NOTHROW(error: NSError): boolean;
+  getPromisedItemResourceValue_forKey_error(value: any, key: NSURLResourceKey, error: MOPointer<NSError>): boolean;
+  promisedItemResourceValuesForKeys_error(keys: NSArray<any> | any[], error: MOPointer<NSError>): NSDictionary<any, any>;
+  checkPromisedItemIsReachableAndReturnError_NS_SWIFT_NOTHROW(error: MOPointer<NSError>): boolean;
   URLByAppendingPathComponent(pathComponent: NSString | string): NSURL;
   URLByAppendingPathComponent_isDirectory(pathComponent: NSString | string, isDirectory: boolean): NSURL;
   URLByAppendingPathExtension(pathExtension: NSString | string): NSURL;
@@ -47,6 +48,7 @@ interface NSURL extends NSObject, INSSecureCoding, INSCopying {
   isEqualToFileURL_bc(otherURL: NSURL): boolean;
   appendingCloudDeeplinkComponentsToArtboard(artboard: SCKArtboard | null): NSURL;
   appendingCloudDeeplinkComponentsInPageToArtboard(artboard: SCKArtboard | null): NSURL;
+  copyWithZone(zone: NSZone | null): any;
 
   dataRepresentation(): NSData;
   absoluteString(): NSString;
@@ -92,9 +94,11 @@ interface NSURL extends NSObject, INSSecureCoding, INSCopying {
   exportImageType(): NSString;
   mirrorCacheKey(): NSString;
 }
+
 declare const NSURL: {
   alloc(): NSURLUninitialized;
-  class(): NSURL;  fileURLWithPath_isDirectory_relativeToURL(path: NSString | string, isDir: boolean, baseURL: NSURL | null): NSURL;
+  class(): NSURL;
+  fileURLWithPath_isDirectory_relativeToURL(path: NSString | string, isDir: boolean, baseURL: NSURL | null): NSURL;
   fileURLWithPath_relativeToURL(path: NSString | string, baseURL: NSURL | null): NSURL;
   fileURLWithPath_isDirectory(path: NSString | string, isDir: boolean): NSURL;
   fileURLWithPath(path: NSString | string): NSURL;
@@ -103,17 +107,45 @@ declare const NSURL: {
   URLWithString_relativeToURL(URLString: NSString | string, baseURL: NSURL | null): NSURL;
   URLWithDataRepresentation_relativeToURL(data: NSData, baseURL: NSURL | null): NSURL;
   absoluteURLWithDataRepresentation_relativeToURL(data: NSData, baseURL: NSURL | null): NSURL;
-  URLByResolvingBookmarkData_options_relativeToURL_bookmarkDataIsStale_error(bookmarkData: NSData, options: NSURLBookmarkResolutionOptions, relativeURL: NSURL | null, isStale: boolean, error: NSError): NSURL;
+  URLByResolvingBookmarkData_options_relativeToURL_bookmarkDataIsStale_error(bookmarkData: NSData, options: NSURLBookmarkResolutionOptions, relativeURL: NSURL | null, isStale: boolean, error: MOPointer<NSError>): NSURL;
   resourceValuesForKeys_fromBookmarkData(keys: NSArray<any> | any[], bookmarkData: NSData): NSDictionary<any, any>;
-  writeBookmarkData_toURL_options_error(bookmarkData: NSData, bookmarkFileURL: NSURL, options: NSURLBookmarkFileCreationOptions, error: NSError): boolean;
-  bookmarkDataWithContentsOfURL_error(bookmarkFileURL: NSURL, error: NSError): NSData;
-  URLByResolvingAliasFileAtURL_options_error(url: NSURL, options: NSURLBookmarkResolutionOptions, error: NSError): NSURL;
+  writeBookmarkData_toURL_options_error(bookmarkData: NSData, bookmarkFileURL: NSURL, options: NSURLBookmarkFileCreationOptions, error: MOPointer<NSError>): boolean;
+  bookmarkDataWithContentsOfURL_error(bookmarkFileURL: NSURL, error: MOPointer<NSError>): NSData;
+  URLByResolvingAliasFileAtURL_options_error(url: NSURL, options: NSURLBookmarkResolutionOptions, error: MOPointer<NSError>): NSURL;
   fileURLWithPathComponents(components: NSArray<any> | any[]): NSURL;
   URLFromPasteboard(pasteBoard: NSPasteboard): NSURL;
   websiteRenewalURLForLicense(license: any | null): NSURL;
   websiteRenewalURLForLicenseKey(licenseKey: NSString | string | null): NSURL;
   websiteAvailableVersionsURLForLicense(license: any | null): NSURL;
   cloudShareURLWithShortID_environment(shortID: NSString | string, environment: SCKAPIEnvironment | null): NSURL;
+  load(): void;
+  instancesRespondToSelector(aSelector: string): boolean;
+  conformsToProtocol(protocol: Protocol): boolean;
+  instanceMethodForSelector(aSelector: string): IMP;
+  isSubclassOfClass(aClass: any): boolean;
+  hash(): NSUInteger;
+  superclass(): any;
+  description(): NSString;
+  debugDescription(): NSString;
+  useStoredAccessor(): boolean;
+  keyPathsForValuesAffectingValueForKey(key: NSString | string): NSSet<any>;
+  automaticallyNotifiesObserversForKey(key: NSString | string): boolean;
+  setKeys_triggerChangeNotificationsForDependentKey(keys: NSArray<any> | any[], dependentKey: NSString | string): void;
+  classFallbacksForKeyedArchiver(): NSArray<any>;
+  classForKeyedUnarchiver(): any;
+  version(): NSInteger;
+  setVersion(aVersion: NSInteger): void;
+  cancelPreviousPerformRequestsWithTarget_selector_object(aTarget: any, aSelector: string, anArgument: any | null): void;
+  cancelPreviousPerformRequestsWithTarget(aTarget: any): void;
+  exposeBinding(binding: NSBindingName): void;
+  setDefaultPlaceholder_forMarker_withBinding(placeholder: any | null, marker: any | null, binding: NSBindingName): void;
+  defaultPlaceholderForMarker_withBinding(marker: any | null, binding: NSBindingName): any;
+  mo_swizzleAdditions(): void;
+  mo_mocha(): MOClassDescription;
+  isSelectorExcludedFromMochaScript(selector: string): boolean;
+  selectorForMochaPropertyName(propertyName: NSString | string): string;
+  supportsSecureCoding(): boolean;
+  accessInstanceVariablesDirectly(): boolean;
 
 }
 

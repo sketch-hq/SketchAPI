@@ -1,4 +1,5 @@
 interface BCTableRowViewUninitialized<InitializedType = BCTableRowView> extends NSTableRowViewUninitialized<BCTableRowView> {}
+
 interface BCTableRowView extends NSTableRowView {
   refreshSelectionState(): void;
   refreshBadges(): void;
@@ -35,8 +36,16 @@ interface BCTableRowView extends NSTableRowView {
   isPreviousNodeSelected(): boolean;
   isNextNodeSelected(): boolean;
 }
+
 declare const BCTableRowView: {
   alloc(): BCTableRowViewUninitialized;
   class(): BCTableRowView;
+  requiresConstraintBasedLayout(): boolean;
+  focusView(): NSView;
+  defaultMenu(): NSMenu;
+  compatibleWithResponsiveScrolling(): boolean;
+  defaultFocusRingType(): NSFocusRingType;
+  restorableStateKeyPaths(): NSArray<any>;
+
 }
 

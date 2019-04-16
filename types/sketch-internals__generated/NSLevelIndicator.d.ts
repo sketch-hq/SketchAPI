@@ -1,4 +1,5 @@
 interface NSLevelIndicatorUninitialized<InitializedType = NSLevelIndicator> extends NSControlUninitialized<NSLevelIndicator> {}
+
 interface NSLevelIndicator extends NSControl {
   tickMarkValueAtIndex(index: NSInteger): number;
   rectOfTickMarkAtIndex(index: NSInteger): NSRect;
@@ -36,8 +37,27 @@ interface NSLevelIndicator extends NSControl {
   ratingPlaceholderImage(): NSImage;
   setRatingPlaceholderImage(ratingPlaceholderImage: NSImage): void;
 }
+
 declare const NSLevelIndicator: {
   alloc(): NSLevelIndicatorUninitialized;
   class(): NSLevelIndicator;
+  inpectorBorderPathForRect(rect: NSRect): NSBezierPath;
+  inpectorCheckmarkBorderPathForRect(rect: NSRect): NSBezierPath;
+  inpectorBorderPathForRectWithMaxRadius(rect: NSRect): NSBezierPath;
+  inpectorBorderPathForRect_borderRadius(rect: NSRect, borderRadius: CGFloat): NSBezierPath;
+  inpectorFocusRingPathForRect(rect: NSRect): NSBezierPath;
+  cellClass(): any;,
+          {
+            newLineStart: true,
+            newLineEnd: false,
+          }
+  setCellClass(cellClass: any): void;
+  requiresConstraintBasedLayout(): boolean;
+  focusView(): NSView;
+  defaultMenu(): NSMenu;
+  compatibleWithResponsiveScrolling(): boolean;
+  defaultFocusRingType(): NSFocusRingType;
+  restorableStateKeyPaths(): NSArray<any>;
+
 }
 

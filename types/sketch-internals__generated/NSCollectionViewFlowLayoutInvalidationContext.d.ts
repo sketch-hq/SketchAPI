@@ -1,4 +1,5 @@
 interface NSCollectionViewFlowLayoutInvalidationContextUninitialized<InitializedType = NSCollectionViewFlowLayoutInvalidationContext> extends NSCollectionViewLayoutInvalidationContextUninitialized<NSCollectionViewFlowLayoutInvalidationContext> {}
+
 interface NSCollectionViewFlowLayoutInvalidationContext extends NSCollectionViewLayoutInvalidationContext {
 
   invalidateFlowLayoutDelegateMetrics(): boolean;
@@ -6,6 +7,7 @@ interface NSCollectionViewFlowLayoutInvalidationContext extends NSCollectionView
   invalidateFlowLayoutAttributes(): boolean;
   setInvalidateFlowLayoutAttributes(invalidateFlowLayoutAttributes: boolean): void;
 }
+
 declare const NSCollectionViewFlowLayoutInvalidationContext: {
   alloc(): NSCollectionViewFlowLayoutInvalidationContextUninitialized;
   class(): NSCollectionViewFlowLayoutInvalidationContext;

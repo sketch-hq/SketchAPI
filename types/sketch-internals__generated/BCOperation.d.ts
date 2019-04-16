@@ -1,4 +1,5 @@
 interface BCOperationUninitialized<InitializedType = BCOperation> extends NSOperationUninitialized<BCOperation> {}
+
 interface BCOperation extends NSOperation {
 
   finished(): boolean;
@@ -8,8 +9,11 @@ interface BCOperation extends NSOperation {
   cancelled(): boolean;
   setCancelled(cancelled: boolean): void;
 }
+
 declare const BCOperation: {
   alloc(): BCOperationUninitialized;
   class(): BCOperation;
+  accessInstanceVariablesDirectly(): boolean;
+
 }
 

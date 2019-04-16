@@ -2,6 +2,7 @@ interface NSMachPortUninitialized<InitializedType = NSMachPort> extends NSPortUn
   initWithMachPort(machPort: number): InitializedType;
   initWithMachPort_options(machPort: number, f: NSMachPortOptions): InitializedType;
 }
+
 interface NSMachPort extends NSPort {
   setDelegate(anObject: any | null): void;
   delegate(): any;
@@ -10,10 +11,14 @@ interface NSMachPort extends NSPort {
 
   machPort(): number;
 }
+
 declare const NSMachPort: {
   alloc(): NSMachPortUninitialized;
-  class(): NSMachPort;  portWithMachPort(machPort: number): NSPort;
+  class(): NSMachPort;
+  portWithMachPort(machPort: number): NSPort;
   portWithMachPort_options(machPort: number, f: NSMachPortOptions): NSPort;
+  port(): NSPort;
+  accessInstanceVariablesDirectly(): boolean;
 
 }
 

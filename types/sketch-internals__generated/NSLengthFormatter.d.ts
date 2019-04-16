@@ -1,4 +1,5 @@
 interface NSLengthFormatterUninitialized<InitializedType = NSLengthFormatter> extends NSFormatterUninitialized<NSLengthFormatter> {}
+
 interface NSLengthFormatter extends NSFormatter {
   stringFromValue_unit(value: number, unit: NSLengthFormatterUnit): NSString;
   stringFromMeters(numberInMeters: number): NSString;
@@ -13,8 +14,11 @@ interface NSLengthFormatter extends NSFormatter {
   forPersonHeightUse(): boolean;
   setForPersonHeightUse(forPersonHeightUse: boolean): void;
 }
+
 declare const NSLengthFormatter: {
   alloc(): NSLengthFormatterUninitialized;
   class(): NSLengthFormatter;
+  accessInstanceVariablesDirectly(): boolean;
+
 }
 

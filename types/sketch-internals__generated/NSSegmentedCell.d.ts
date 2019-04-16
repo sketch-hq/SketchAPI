@@ -1,4 +1,5 @@
 interface NSSegmentedCellUninitialized<InitializedType = NSSegmentedCell> extends NSActionCellUninitialized<NSSegmentedCell> {}
+
 interface NSSegmentedCell extends NSActionCell {
   selectSegmentWithTag(tag: NSInteger): boolean;
   makeNextSegmentKey(): void;
@@ -33,8 +34,13 @@ interface NSSegmentedCell extends NSActionCell {
   segmentStyle(): NSSegmentStyle;
   setSegmentStyle(segmentStyle: NSSegmentStyle): void;
 }
+
 declare const NSSegmentedCell: {
   alloc(): NSSegmentedCellUninitialized;
   class(): NSSegmentedCell;
+  prefersTrackingUntilMouseUp(): boolean;
+  defaultMenu(): NSMenu;
+  defaultFocusRingType(): NSFocusRingType;
+
 }
 

@@ -2,6 +2,7 @@ interface MSRenderingContextCGUninitialized<InitializedType = MSRenderingContext
   initWithName_driver_context_renderingRequest(name: NSString | string, driver: MSRenderingDriver, cgContext: CGContextRef, renderingRequest: MSRenderingRequest): InitializedType;
   initWithName_driver_cgContext_contextIsVectorBacked_renderingRequest(name: NSString | string, driver: MSRenderingDriver, cgContext: CGContextRef, vectorBacked: boolean, renderingRequest: MSRenderingRequest): InitializedType;
 }
+
 interface MSRenderingContextCG extends MSRenderingContext {
   subContextWithCGContext_contextIsVectorBacked_pointScale_zoomLevel_options(cgContext: CGContextRef, vectorBacked: boolean, pointScale: CGFloat, zoomLevel: CGFloat, options: MSRenderingRequestOptions): MSRenderingContextCG;
   subContextForBackgroundBlurWithCGContext_backgroundBlurLayer_pointScale_rect(cgContext: CGContextRef, layer: MSImmutableLayer | null, pointScale: CGFloat, rect: CGRect): MSRenderingContextCG;
@@ -19,8 +20,11 @@ interface MSRenderingContextCG extends MSRenderingContext {
   setContextPool(contextPool: MSCGContextPool): void;
   graphicsContext(): NSGraphicsContext;
 }
+
 declare const MSRenderingContextCG: {
   alloc(): MSRenderingContextCGUninitialized;
   class(): MSRenderingContextCG;
+  accessInstanceVariablesDirectly(): boolean;
+
 }
 

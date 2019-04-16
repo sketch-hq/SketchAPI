@@ -1,4 +1,5 @@
 interface NSTextStorageUninitialized<InitializedType = NSTextStorage> extends NSMutableAttributedStringUninitialized<NSTextStorage> {}
+
 interface NSTextStorage extends NSMutableAttributedString {
   addLayoutManager(aLayoutManager: NSLayoutManager): void;
   removeLayoutManager(aLayoutManager: NSLayoutManager): void;
@@ -33,8 +34,14 @@ interface NSTextStorage extends NSMutableAttributedString {
   foregroundColor(): NSColor;
   setForegroundColor(foregroundColor: NSColor): void;
 }
+
 declare const NSTextStorage: {
   alloc(): NSTextStorageUninitialized;
   class(): NSTextStorage;
+  textTypes(): NSArray<any>;
+  textUnfilteredTypes(): NSArray<any>;
+  supportsSecureCoding(): boolean;
+  accessInstanceVariablesDirectly(): boolean;
+
 }
 

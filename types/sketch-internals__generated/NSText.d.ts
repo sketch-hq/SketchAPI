@@ -1,4 +1,5 @@
 interface NSTextUninitialized<InitializedType = NSText> extends NSViewUninitialized<NSText> {}
+
 interface NSText extends NSView, INSChangeSpelling, INSIgnoreMisspelledWords {
   replaceCharactersInRange_withString(range: NSRange, string: NSString | string): void;
   replaceCharactersInRange_withRTF(range: NSRange, rtfData: NSData): void;
@@ -31,6 +32,8 @@ interface NSText extends NSView, INSChangeSpelling, INSIgnoreMisspelledWords {
   showGuessPanel(sender: any | null): void;
   checkSpelling(sender: any | null): void;
   toggleRuler(sender: any | null): void;
+  changeSpelling(sender: any | null): void;
+  ignoreSpelling(sender: any | null): void;
 
   string(): NSString;
   setString(string: NSString | string): void;
@@ -72,8 +75,16 @@ interface NSText extends NSView, INSChangeSpelling, INSIgnoreMisspelledWords {
   verticallyResizable(): boolean;
   setVerticallyResizable(verticallyResizable: boolean): void;
 }
+
 declare const NSText: {
   alloc(): NSTextUninitialized;
   class(): NSText;
+  requiresConstraintBasedLayout(): boolean;
+  focusView(): NSView;
+  defaultMenu(): NSMenu;
+  compatibleWithResponsiveScrolling(): boolean;
+  defaultFocusRingType(): NSFocusRingType;
+  restorableStateKeyPaths(): NSArray<any>;
+
 }
 

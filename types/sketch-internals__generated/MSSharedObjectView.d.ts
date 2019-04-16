@@ -1,4 +1,5 @@
 interface MSSharedObjectViewUninitialized<InitializedType = MSSharedObjectView> extends NSViewUninitialized<MSSharedObjectView> {}
+
 interface MSSharedObjectView extends NSView {
 
   sharedObject(): MSShareableObject;
@@ -16,8 +17,16 @@ interface MSSharedObjectView extends NSView {
   hasShadow(): boolean;
   setHasShadow(hasShadow: boolean): void;
 }
+
 declare const MSSharedObjectView: {
   alloc(): MSSharedObjectViewUninitialized;
   class(): MSSharedObjectView;
+  requiresConstraintBasedLayout(): boolean;
+  focusView(): NSView;
+  defaultMenu(): NSMenu;
+  compatibleWithResponsiveScrolling(): boolean;
+  defaultFocusRingType(): NSFocusRingType;
+  restorableStateKeyPaths(): NSArray<any>;
+
 }
 

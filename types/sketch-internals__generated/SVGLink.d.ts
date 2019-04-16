@@ -1,8 +1,13 @@
 interface SVGLinkUninitialized<InitializedType = SVGLink> extends _SVGLinkUninitialized<SVGLink> {}
+
 interface SVGLink extends _SVGLink {
 }
+
 declare const SVGLink: {
   alloc(): SVGLinkUninitialized;
   class(): SVGLink;
+  propertyNames(): NSArray<any>;
+  relationshipNames(): NSArray<any>;
+  attributeNames(): NSArray<any>;
 }
 

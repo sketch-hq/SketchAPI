@@ -1,4 +1,5 @@
 interface CAShapeLayerUninitialized<InitializedType = CAShapeLayer> extends CALayerUninitialized<CAShapeLayer> {}
+
 interface CAShapeLayer extends CALayer {
 
   path(): CGPathRef;
@@ -26,8 +27,17 @@ interface CAShapeLayer extends CALayer {
   lineDashPattern(): NSArray<any>;
   setLineDashPattern(lineDashPattern: NSArray<any> | any[]): void;
 }
+
 declare const CAShapeLayer: {
   alloc(): CAShapeLayerUninitialized;
   class(): CAShapeLayer;
+  layer(): CAShapeLayer;
+  defaultValueForKey(key: NSString | string): any;
+  needsDisplayForKey(key: NSString | string): boolean;
+  defaultActionForKey(event: NSString | string): any;
+  layerWithRemoteClientId(client_id: number): CALayer;
+  supportsSecureCoding(): boolean;
+  accessInstanceVariablesDirectly(): boolean;
+
 }
 

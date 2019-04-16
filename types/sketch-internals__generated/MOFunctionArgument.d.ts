@@ -1,4 +1,5 @@
 interface MOFunctionArgumentUninitialized<InitializedType = MOFunctionArgument> extends NSObjectUninitialized<MOFunctionArgument> {}
+
 interface MOFunctionArgument extends NSObject {
   setTypeEncoding_withCustomStorage(typeEncoding: string, storagePtr: void): void;
   setPointerTypeEncoding_withCustomStorage(pointerTypeEncoding: NSString | string, storagePtr: void): void;
@@ -19,12 +20,14 @@ interface MOFunctionArgument extends NSObject {
   returnValue(): boolean;
   setReturnValue(returnValue: boolean): void;
   ffiType(): ffi_type;
-  storage(): void;
+  storage(): MOPointer<void>;
   typeDescription(): NSString;
 }
+
 declare const MOFunctionArgument: {
   alloc(): MOFunctionArgumentUninitialized;
-  class(): MOFunctionArgument;  getAlignment_ofTypeEncoding(alignment: size_t, encoding: string): boolean;
+  class(): MOFunctionArgument;
+  getAlignment_ofTypeEncoding(alignment: size_t, encoding: string): boolean;
   getSize_ofTypeEncoding(size: size_t, encoding: string): boolean;
   ffiTypeForTypeEncoding(encoding: string): ffi_type;
   descriptionOfTypeEncoding(encoding: string): NSString;
@@ -38,9 +41,36 @@ declare const MOFunctionArgument: {
   typeEncodingsFromStructureTypeEncoding_parsedCount(structureTypeEncoding: NSString | string, count: NSInteger): NSArray<any>;
   fromJSValue_inContext_typeEncoding_fullTypeEncoding_storage(value: JSValueRef, ctx: JSContextRef, typeEncoding: string, fullTypeEncoding: NSString | string, ptr: void): boolean;
   toJSValue_inContext_typeEncoding_fullTypeEncoding_storage(value: JSValueRef, ctx: JSContextRef, typeEncoding: string, fullTypeEncoding: NSString | string, ptr: void): boolean;
-  structureFromJSObject_inContext_inParentJSValueRef_cString_storage(object: JSObjectRef, ctx: JSContextRef, parentValue: JSValueRef, c: string, ptr: void): NSInteger;
-  structureToJSValue_inContext_cString_storage(value: JSValueRef, ctx: JSContextRef, c: string, ptr: void): NSInteger;
-  structureToJSValue_inContext_cString_storage_initialValues_initialValueCount_convertedValueCount(value: JSValueRef, ctx: JSContextRef, c: string, ptr: void, initialValues: JSValueRef, initialValueCount: NSInteger, convertedValueCount: NSInteger): NSInteger;
+  structureFromJSObject_inContext_inParentJSValueRef_cString_storage(object: JSObjectRef, ctx: JSContextRef, parentValue: JSValueRef, c: string, ptr: MOPointer<void>): NSInteger;
+  structureToJSValue_inContext_cString_storage(value: JSValueRef, ctx: JSContextRef, c: string, ptr: MOPointer<void>): NSInteger;
+  structureToJSValue_inContext_cString_storage_initialValues_initialValueCount_convertedValueCount(value: JSValueRef, ctx: JSContextRef, c: string, ptr: MOPointer<void>, initialValues: JSValueRef, initialValueCount: NSInteger, convertedValueCount: NSInteger): NSInteger;
+  load(): void;
+  instancesRespondToSelector(aSelector: string): boolean;
+  conformsToProtocol(protocol: Protocol): boolean;
+  instanceMethodForSelector(aSelector: string): IMP;
+  isSubclassOfClass(aClass: any): boolean;
+  hash(): NSUInteger;
+  superclass(): any;
+  description(): NSString;
+  debugDescription(): NSString;
+  useStoredAccessor(): boolean;
+  keyPathsForValuesAffectingValueForKey(key: NSString | string): NSSet<any>;
+  automaticallyNotifiesObserversForKey(key: NSString | string): boolean;
+  setKeys_triggerChangeNotificationsForDependentKey(keys: NSArray<any> | any[], dependentKey: NSString | string): void;
+  classFallbacksForKeyedArchiver(): NSArray<any>;
+  classForKeyedUnarchiver(): any;
+  version(): NSInteger;
+  setVersion(aVersion: NSInteger): void;
+  cancelPreviousPerformRequestsWithTarget_selector_object(aTarget: any, aSelector: string, anArgument: any | null): void;
+  cancelPreviousPerformRequestsWithTarget(aTarget: any): void;
+  exposeBinding(binding: NSBindingName): void;
+  setDefaultPlaceholder_forMarker_withBinding(placeholder: any | null, marker: any | null, binding: NSBindingName): void;
+  defaultPlaceholderForMarker_withBinding(marker: any | null, binding: NSBindingName): any;
+  mo_swizzleAdditions(): void;
+  mo_mocha(): MOClassDescription;
+  isSelectorExcludedFromMochaScript(selector: string): boolean;
+  selectorForMochaPropertyName(propertyName: NSString | string): string;
+  accessInstanceVariablesDirectly(): boolean;
 
 }
 

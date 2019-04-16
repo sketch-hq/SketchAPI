@@ -1,6 +1,7 @@
 interface NSCalendarUninitialized<InitializedType = NSCalendar> extends NSObjectUninitialized<NSCalendar> {
   initWithCalendarIdentifier(ident: NSCalendarIdentifier): InitializedType;
 }
+
 interface NSCalendar extends NSObject, INSCopying, INSSecureCoding {
   minimumRangeOfUnit(unit: NSCalendarUnit): NSRange;
   maximumRangeOfUnit(unit: NSCalendarUnit): NSRange;
@@ -37,6 +38,7 @@ interface NSCalendar extends NSObject, INSCopying, INSSecureCoding {
   dateBySettingUnit_value_ofDate_options(unit: NSCalendarUnit, v: NSInteger, date: NSDate, opts: NSCalendarOptions): NSDate;
   dateBySettingHour_minute_second_ofDate_options(h: NSInteger, m: NSInteger, s: NSInteger, date: NSDate, opts: NSCalendarOptions): NSDate;
   date_matchesComponents(date: NSDate, components: NSDateComponents): boolean;
+  copyWithZone(zone: NSZone | null): any;
 
   calendarIdentifier(): NSCalendarIdentifier;
   locale(): NSLocale;
@@ -68,12 +70,41 @@ interface NSCalendar extends NSObject, INSCopying, INSSecureCoding {
   AMSymbol(): NSString;
   PMSymbol(): NSString;
 }
+
 declare const NSCalendar: {
   alloc(): NSCalendarUninitialized;
-  class(): NSCalendar;  calendarWithIdentifier(calendarIdentifierConstant: NSCalendarIdentifier): NSCalendar;
-
+  class(): NSCalendar;
+  calendarWithIdentifier(calendarIdentifierConstant: NSCalendarIdentifier): NSCalendar;
+  load(): void;
+  instancesRespondToSelector(aSelector: string): boolean;
+  conformsToProtocol(protocol: Protocol): boolean;
+  instanceMethodForSelector(aSelector: string): IMP;
+  isSubclassOfClass(aClass: any): boolean;
+  hash(): NSUInteger;
+  superclass(): any;
+  description(): NSString;
+  debugDescription(): NSString;
+  useStoredAccessor(): boolean;
+  keyPathsForValuesAffectingValueForKey(key: NSString | string): NSSet<any>;
+  automaticallyNotifiesObserversForKey(key: NSString | string): boolean;
+  setKeys_triggerChangeNotificationsForDependentKey(keys: NSArray<any> | any[], dependentKey: NSString | string): void;
+  classFallbacksForKeyedArchiver(): NSArray<any>;
+  classForKeyedUnarchiver(): any;
+  version(): NSInteger;
+  setVersion(aVersion: NSInteger): void;
+  cancelPreviousPerformRequestsWithTarget_selector_object(aTarget: any, aSelector: string, anArgument: any | null): void;
+  cancelPreviousPerformRequestsWithTarget(aTarget: any): void;
+  exposeBinding(binding: NSBindingName): void;
+  setDefaultPlaceholder_forMarker_withBinding(placeholder: any | null, marker: any | null, binding: NSBindingName): void;
+  defaultPlaceholderForMarker_withBinding(marker: any | null, binding: NSBindingName): any;
+  mo_swizzleAdditions(): void;
+  mo_mocha(): MOClassDescription;
+  isSelectorExcludedFromMochaScript(selector: string): boolean;
+  selectorForMochaPropertyName(propertyName: NSString | string): string;
   currentCalendar(): NSCalendar;
   autoupdatingCurrentCalendar(): NSCalendar;
+  supportsSecureCoding(): boolean;
+  accessInstanceVariablesDirectly(): boolean;
 
 }
 

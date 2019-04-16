@@ -1,4 +1,5 @@
 interface NSVisualEffectViewUninitialized<InitializedType = NSVisualEffectView> extends NSViewUninitialized<NSVisualEffectView> {}
+
 interface NSVisualEffectView extends NSView {
 
   material(): NSVisualEffectMaterial;
@@ -13,8 +14,16 @@ interface NSVisualEffectView extends NSView {
   emphasized(): boolean;
   setEmphasized(emphasized: boolean): void;
 }
+
 declare const NSVisualEffectView: {
   alloc(): NSVisualEffectViewUninitialized;
   class(): NSVisualEffectView;
+  requiresConstraintBasedLayout(): boolean;
+  focusView(): NSView;
+  defaultMenu(): NSMenu;
+  compatibleWithResponsiveScrolling(): boolean;
+  defaultFocusRingType(): NSFocusRingType;
+  restorableStateKeyPaths(): NSArray<any>;
+
 }
 

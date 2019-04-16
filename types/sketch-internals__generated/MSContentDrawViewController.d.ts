@@ -1,4 +1,5 @@
 interface MSContentDrawViewControllerUninitialized<InitializedType = MSContentDrawViewController> extends NSViewControllerUninitialized<MSContentDrawViewController> {}
+
 interface MSContentDrawViewController extends NSViewController, IMSContentDrawViewDelegate {
   prepareForDealloc(): void;
 
@@ -19,9 +20,17 @@ interface MSContentDrawViewController extends NSViewController, IMSContentDrawVi
   flashController(): MSFlashController;
   document(): MSDocument;
   setDocument(document: MSDocument): void;
+  scrollOrigin(): NSPoint;
+  setScrollOrigin(scrollOrigin: NSPoint): void;
+  zoomValue(): CGFloat;
+  setZoomValue(zoomValue: CGFloat): void;
 }
+
 declare const MSContentDrawViewController: {
   alloc(): MSContentDrawViewControllerUninitialized;
   class(): MSContentDrawViewController;
+  restorableStateKeyPaths(): NSArray<any>;
+  accessInstanceVariablesDirectly(): boolean;
+
 }
 

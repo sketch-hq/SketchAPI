@@ -1,6 +1,7 @@
 interface COScriptUninitialized<InitializedType = COScript> extends NSObjectUninitialized<COScript> {
   initWithCoreModules_andName(coreModules: NSDictionary<any, any> | {[key: string]: any}, name: NSString | string): InitializedType;
 }
+
 interface COScript extends NSObject {
   addFiber(fiber: COSFiber): void;
   cleanupFibers(): void;
@@ -35,9 +36,11 @@ interface COScript extends NSObject {
   coreModuleMap(): NSDictionary<any, any>;
   setCoreModuleMap(coreModuleMap: NSDictionary<any, any> | {[key: string]: any}): void;
 }
+
 declare const COScript: {
   alloc(): COScriptUninitialized;
-  class(): COScript;  insertInMainMenu(): boolean;
+  class(): COScript;
+  insertInMainMenu(): boolean;
   loadBridgeSupportFileAtURL(url: NSURL): void;
   listen(): void;
   resetPlugins(): void;
@@ -48,6 +51,33 @@ declare const COScript: {
   currentCOScript(): COScript;
   setDebugController(debugController: any): any;
   setFlowDelegate(flowDelegate: any): any;
+  load(): void;
+  instancesRespondToSelector(aSelector: string): boolean;
+  conformsToProtocol(protocol: Protocol): boolean;
+  instanceMethodForSelector(aSelector: string): IMP;
+  isSubclassOfClass(aClass: any): boolean;
+  hash(): NSUInteger;
+  superclass(): any;
+  description(): NSString;
+  debugDescription(): NSString;
+  useStoredAccessor(): boolean;
+  keyPathsForValuesAffectingValueForKey(key: NSString | string): NSSet<any>;
+  automaticallyNotifiesObserversForKey(key: NSString | string): boolean;
+  setKeys_triggerChangeNotificationsForDependentKey(keys: NSArray<any> | any[], dependentKey: NSString | string): void;
+  classFallbacksForKeyedArchiver(): NSArray<any>;
+  classForKeyedUnarchiver(): any;
+  version(): NSInteger;
+  setVersion(aVersion: NSInteger): void;
+  cancelPreviousPerformRequestsWithTarget_selector_object(aTarget: any, aSelector: string, anArgument: any | null): void;
+  cancelPreviousPerformRequestsWithTarget(aTarget: any): void;
+  exposeBinding(binding: NSBindingName): void;
+  setDefaultPlaceholder_forMarker_withBinding(placeholder: any | null, marker: any | null, binding: NSBindingName): void;
+  defaultPlaceholderForMarker_withBinding(marker: any | null, binding: NSBindingName): any;
+  mo_swizzleAdditions(): void;
+  mo_mocha(): MOClassDescription;
+  isSelectorExcludedFromMochaScript(selector: string): boolean;
+  selectorForMochaPropertyName(propertyName: NSString | string): string;
+  accessInstanceVariablesDirectly(): boolean;
 
 }
 

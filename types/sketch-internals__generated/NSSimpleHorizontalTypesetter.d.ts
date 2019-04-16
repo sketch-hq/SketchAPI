@@ -1,4 +1,5 @@
 interface NSSimpleHorizontalTypesetterUninitialized<InitializedType = NSSimpleHorizontalTypesetter> extends NSTypesetterUninitialized<NSSimpleHorizontalTypesetter> {}
+
 interface NSSimpleHorizontalTypesetter extends NSTypesetter {
   currentLayoutManager(): NSLayoutManager;
   currentContainer(): NSTextContainer;
@@ -25,9 +26,15 @@ interface NSSimpleHorizontalTypesetter extends NSTypesetter {
   typesetterLaidOneGlyph(gl: NSTypesetterGlyphInfo): void;
   willSetLineFragmentRect_forGlyphRange_usedRect(rect: NSRect, range: NSRange, bRect: NSRect): void;
 }
+
 declare const NSSimpleHorizontalTypesetter: {
   alloc(): NSSimpleHorizontalTypesetterUninitialized;
-  class(): NSSimpleHorizontalTypesetter;  sharedInstance(): any;
+  class(): NSSimpleHorizontalTypesetter;
+  sharedInstance(): any;
+  printingAdjustmentInLayoutManager_forNominallySpacedGlyphRange_packedGlyphs_count(layoutMgr: NSLayoutManager, nominallySpacedGlyphsRange: NSRange, packedGlyphs: string, packedGlyphsCount: NSUInteger): NSSize;
+  sharedSystemTypesetterForBehavior(behavior: NSTypesetterBehavior): any;
+  sharedSystemTypesetter(): NSTypesetter;
+  defaultTypesetterBehavior(): NSTypesetterBehavior;
 
 }
 

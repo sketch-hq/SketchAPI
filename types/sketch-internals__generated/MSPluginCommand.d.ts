@@ -2,6 +2,7 @@ interface MSPluginCommandUninitialized<InitializedType = MSPluginCommand> extend
   initWithScript_identifier_name_handlers_shortcut_scope(script: MSPluginScript, identifier: NSString | string, name: NSString | string, handlers: NSDictionary<any, any> | {[key: string]: any}, shortcut: NSString | string, scope: MSPluginCommandScope): InitializedType;
   initWithScript_identifier_name_runHandler_scope(script: MSPluginScript, identifier: NSString | string, name: NSString | string, runHandler: NSString | string, scope: MSPluginCommandScope): InitializedType;
 }
+
 interface MSPluginCommand extends NSObject, ICOPrintController {
   runHandlerWithKey_context_manager(handlerKey: NSString | string, context: NSDictionary<any, any> | {[key: string]: any}, manager: MSPluginManager): NSString;
   runHandlerWithKey_context_manager_onComplete(handlerKey: NSString | string, context: NSDictionary<any, any> | {[key: string]: any}, manager: MSPluginManager, callback: Block): NSString;
@@ -15,7 +16,7 @@ interface MSPluginCommand extends NSObject, ICOPrintController {
   metadata(): NSDictionary<any, any>;
   print(value: any): void;
   logString(): NSString;
-  scriptHadException(e: NSException | Error): void;
+  scriptEncounteredException(e: NSException | Error): void;
   valueForKey_onLayer_forPluginIdentifier(key: NSString | string, layer: MSLayer, identifier: NSString | string): any;
   setValue_forKey_onLayer_forPluginIdentifier(value: any, key: NSString | string, layer: MSLayer, identifier: NSString | string): void;
   valueForKey_onLayer(key: NSString | string, layer: MSLayer): any;
@@ -24,6 +25,8 @@ interface MSPluginCommand extends NSObject, ICOPrintController {
   setValue_forKey_onDocument_forPluginIdentifier(value: any, key: NSString | string, document: MSDocumentData, identifier: NSString | string): void;
   valueForKey_onDocument(key: NSString | string, document: MSDocumentData): any;
   setValueForKey_forKey_onDocument(value: any, key: NSString | string, document: MSDocumentData): void;
+  scriptEncounteredException(exception: NSException | Error): void;
+  print(s: any): void;
 
   identifier(): NSString;
   commandSpecifier(): MSPluginCommandSpecifier;
@@ -38,9 +41,38 @@ interface MSPluginCommand extends NSObject, ICOPrintController {
   disableCocoaScriptPreprocessor(): boolean;
   setDisableCocoaScriptPreprocessor(disableCocoaScriptPreprocessor: boolean): void;
 }
+
 declare const MSPluginCommand: {
   alloc(): MSPluginCommandUninitialized;
-  class(): MSPluginCommand;  commandWithJSON_scripts_scriptsURL(commandJSON: any, scripts: NSMutableDictionary<any, any> | {[key: string]: any}, scriptsURL: NSURL): MSPluginCommand;
+  class(): MSPluginCommand;
+  commandWithJSON_scripts_scriptsURL(commandJSON: any, scripts: NSMutableDictionary<any, any> | {[key: string]: any}, scriptsURL: NSURL): MSPluginCommand;
+  load(): void;
+  instancesRespondToSelector(aSelector: string): boolean;
+  conformsToProtocol(protocol: Protocol): boolean;
+  instanceMethodForSelector(aSelector: string): IMP;
+  isSubclassOfClass(aClass: any): boolean;
+  hash(): NSUInteger;
+  superclass(): any;
+  description(): NSString;
+  debugDescription(): NSString;
+  useStoredAccessor(): boolean;
+  keyPathsForValuesAffectingValueForKey(key: NSString | string): NSSet<any>;
+  automaticallyNotifiesObserversForKey(key: NSString | string): boolean;
+  setKeys_triggerChangeNotificationsForDependentKey(keys: NSArray<any> | any[], dependentKey: NSString | string): void;
+  classFallbacksForKeyedArchiver(): NSArray<any>;
+  classForKeyedUnarchiver(): any;
+  version(): NSInteger;
+  setVersion(aVersion: NSInteger): void;
+  cancelPreviousPerformRequestsWithTarget_selector_object(aTarget: any, aSelector: string, anArgument: any | null): void;
+  cancelPreviousPerformRequestsWithTarget(aTarget: any): void;
+  exposeBinding(binding: NSBindingName): void;
+  setDefaultPlaceholder_forMarker_withBinding(placeholder: any | null, marker: any | null, binding: NSBindingName): void;
+  defaultPlaceholderForMarker_withBinding(marker: any | null, binding: NSBindingName): any;
+  mo_swizzleAdditions(): void;
+  mo_mocha(): MOClassDescription;
+  isSelectorExcludedFromMochaScript(selector: string): boolean;
+  selectorForMochaPropertyName(propertyName: NSString | string): string;
+  accessInstanceVariablesDirectly(): boolean;
 
 }
 

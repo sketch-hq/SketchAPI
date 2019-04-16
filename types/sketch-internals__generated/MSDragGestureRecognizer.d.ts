@@ -1,4 +1,5 @@
 interface MSDragGestureRecognizerUninitialized<InitializedType = MSDragGestureRecognizer> extends MSGestureRecognizerUninitialized<MSDragGestureRecognizer> {}
+
 interface MSDragGestureRecognizer extends MSGestureRecognizer {
   locationInLayer(layer: MSLayer | null): NSPoint;
   translationInLayer(layer: MSLayer | null): CGVector;
@@ -12,6 +13,7 @@ interface MSDragGestureRecognizer extends MSGestureRecognizer {
   setTranslationLocked(translationLocked: boolean): void;
   modifierFlags(): NSEventModifierFlags;
 }
+
 declare const MSDragGestureRecognizer: {
   alloc(): MSDragGestureRecognizerUninitialized;
   class(): MSDragGestureRecognizer;

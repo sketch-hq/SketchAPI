@@ -1,5 +1,7 @@
 interface NSPressGestureRecognizerUninitialized<InitializedType = NSPressGestureRecognizer> extends NSGestureRecognizerUninitialized<NSPressGestureRecognizer> {}
+
 interface NSPressGestureRecognizer extends NSGestureRecognizer, INSCoding {
+  encodeWithCoder(aCoder: NSCoder): void;
 
   buttonMask(): NSUInteger;
   setButtonMask(buttonMask: NSUInteger): void;
@@ -10,8 +12,11 @@ interface NSPressGestureRecognizer extends NSGestureRecognizer, INSCoding {
   numberOfTouchesRequired(): NSInteger;
   setNumberOfTouchesRequired(numberOfTouchesRequired: NSInteger): void;
 }
+
 declare const NSPressGestureRecognizer: {
   alloc(): NSPressGestureRecognizerUninitialized;
   class(): NSPressGestureRecognizer;
+  accessInstanceVariablesDirectly(): boolean;
+
 }
 

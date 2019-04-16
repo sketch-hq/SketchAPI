@@ -1,4 +1,5 @@
 interface MSDocumentUninitialized<InitializedType = MSDocument> extends NSDocumentUninitialized<MSDocument> {}
+
 interface MSDocument extends NSDocument, INSMenuDelegate, INSToolbarDelegate, INSWindowDelegate, IMSEventHandlerManagerDelegate, IMSDocumentDataDelegate, IMSMenuBuilderDelegate {
   actionClasses(): NSArray<any>;
   addLayerFromImageAtURL_toGroup_fitPixels_error(fileURL: NSURL, group: MSLayerGroup, fitPixels: boolean, outError: NSError): MSLayer;
@@ -61,6 +62,81 @@ interface MSDocument extends NSDocument, INSMenuDelegate, INSToolbarDelegate, IN
   historyMaker_didApplyHistoryUpdate(maker: MSHistoryMaker, update: MSHistoryUpdate): void;
   historyMakerDidRevertHistory(maker: MSHistoryMaker): void;
   historyMakerDidProgressHistory(maker: MSHistoryMaker): void;
+  menuNeedsUpdate(menu: NSMenu): void;
+  numberOfItemsInMenu(menu: NSMenu): NSInteger;
+  menu_updateItem_atIndex_shouldCancel(menu: NSMenu, item: NSMenuItem, index: NSInteger, shouldCancel: boolean): boolean;
+  menuHasKeyEquivalent_forEvent_target_action(menu: NSMenu, event: NSEvent, target: any, action: string): boolean;
+  menuWillOpen(menu: NSMenu): void;
+  menuDidClose(menu: NSMenu): void;
+  menu_willHighlightItem(menu: NSMenu, item: NSMenuItem | null): void;
+  confinementRectForMenu_onScreen(menu: NSMenu, screen: NSScreen | null): NSRect;
+  toolbar_itemForItemIdentifier_willBeInsertedIntoToolbar(toolbar: NSToolbar, itemIdentifier: NSToolbarItemIdentifier, flag: boolean): NSToolbarItem;
+  toolbarDefaultItemIdentifiers(toolbar: NSToolbar): NSArray<any>;
+  toolbarAllowedItemIdentifiers(toolbar: NSToolbar): NSArray<any>;
+  toolbarSelectableItemIdentifiers(toolbar: NSToolbar): NSArray<any>;
+  toolbarWillAddItem(notification: NSNotification): void;
+  toolbarDidRemoveItem(notification: NSNotification): void;
+  windowShouldClose(sender: NSWindow): boolean;
+  windowWillReturnFieldEditor_toObject(sender: NSWindow, client: any | null): any;
+  windowWillResize_toSize(sender: NSWindow, frameSize: NSSize): NSSize;
+  windowWillUseStandardFrame_defaultFrame(window: NSWindow, newFrame: NSRect): NSRect;
+  windowShouldZoom_toFrame(window: NSWindow, newFrame: NSRect): boolean;
+  windowWillReturnUndoManager(window: NSWindow): NSUndoManager;
+  window_willPositionSheet_usingRect(window: NSWindow, sheet: NSWindow, rect: NSRect): NSRect;
+  window_shouldPopUpDocumentPathMenu(window: NSWindow, menu: NSMenu): boolean;
+  window_shouldDragDocumentWithEvent_from_withPasteboard(window: NSWindow, event: NSEvent, dragImageLocation: NSPoint, pasteboard: NSPasteboard): boolean;
+  window_willUseFullScreenContentSize(window: NSWindow, proposedSize: NSSize): NSSize;
+  window_willUseFullScreenPresentationOptions(window: NSWindow, proposedOptions: NSApplicationPresentationOptions): NSApplicationPresentationOptions;
+  customWindowsToEnterFullScreenForWindow(window: NSWindow): NSArray<any>;
+  window_startCustomAnimationToEnterFullScreenWithDuration(window: NSWindow, duration: NSTimeInterval): void;
+  windowDidFailToEnterFullScreen(window: NSWindow): void;
+  customWindowsToExitFullScreenForWindow(window: NSWindow): NSArray<any>;
+  window_startCustomAnimationToExitFullScreenWithDuration(window: NSWindow, duration: NSTimeInterval): void;
+  customWindowsToEnterFullScreenForWindow_onScreen(window: NSWindow, screen: NSScreen): NSArray<any>;
+  window_startCustomAnimationToEnterFullScreenOnScreen_withDuration(window: NSWindow, screen: NSScreen, duration: NSTimeInterval): void;
+  windowDidFailToExitFullScreen(window: NSWindow): void;
+  window_willResizeForVersionBrowserWithMaxPreferredSize_maxAllowedSize(window: NSWindow, maxPreferredFrameSize: NSSize, maxAllowedFrameSize: NSSize): NSSize;
+  window_willEncodeRestorableState(window: NSWindow, state: NSCoder): void;
+  window_didDecodeRestorableState(window: NSWindow, state: NSCoder): void;
+  windowDidResize(notification: NSNotification): void;
+  windowDidExpose(notification: NSNotification): void;
+  windowWillMove(notification: NSNotification): void;
+  windowDidMove(notification: NSNotification): void;
+  windowDidBecomeKey(notification: NSNotification): void;
+  windowDidResignKey(notification: NSNotification): void;
+  windowDidBecomeMain(notification: NSNotification): void;
+  windowDidResignMain(notification: NSNotification): void;
+  windowWillClose(notification: NSNotification): void;
+  windowWillMiniaturize(notification: NSNotification): void;
+  windowDidMiniaturize(notification: NSNotification): void;
+  windowDidDeminiaturize(notification: NSNotification): void;
+  windowDidUpdate(notification: NSNotification): void;
+  windowDidChangeScreen(notification: NSNotification): void;
+  windowDidChangeScreenProfile(notification: NSNotification): void;
+  windowDidChangeBackingProperties(notification: NSNotification): void;
+  windowWillBeginSheet(notification: NSNotification): void;
+  windowDidEndSheet(notification: NSNotification): void;
+  windowWillStartLiveResize(notification: NSNotification): void;
+  windowDidEndLiveResize(notification: NSNotification): void;
+  windowWillEnterFullScreen(notification: NSNotification): void;
+  windowDidEnterFullScreen(notification: NSNotification): void;
+  windowWillExitFullScreen(notification: NSNotification): void;
+  windowDidExitFullScreen(notification: NSNotification): void;
+  windowWillEnterVersionBrowser(notification: NSNotification): void;
+  windowDidEnterVersionBrowser(notification: NSNotification): void;
+  windowWillExitVersionBrowser(notification: NSNotification): void;
+  windowDidExitVersionBrowser(notification: NSNotification): void;
+  windowDidChangeOcclusionState(notification: NSNotification): void;
+  eventHandlerManager_didChangeCurrentHandler(manager: MSEventHandlerManager, newHandler: MSEventHandler): void;
+  documentData_temporarilyHideSelectionForLayers(data: MSDocumentData, layers: NSArray<any> | any[]): void;
+  documentDidChange(document: MSDocumentData): void;
+  documentData_storeMetadata_forKey_object(data: MSDocumentData, metadata: any, key: NSString | string, object: MSModelObject): void;
+  documentData_metadataForKey_object(data: MSDocumentData, key: NSString | string, object: MSModelObject): any;
+  layerTreeLayoutDidChange(): void;
+  refreshOverlay(): void;
+  visibleCanvasRectForDocumentData(data: MSDocumentData): CGRect;
+  validateSelectionOfLayer_proposedIDsOfLayersToSelect(layer: MSLayer, proposedIDs: NSMutableSet<any>): boolean;
+  previewColorSpaceForItem(item: NSMenuItem): NSColorSpace;
 
   cloudShare(): SCKShare;
   setCloudShare(cloudShare: SCKShare): void;
@@ -108,10 +184,22 @@ interface MSDocument extends NSDocument, INSMenuDelegate, INSToolbarDelegate, IN
   setEditingLibraryWarning(editingLibraryWarning: any): void;
   isCurrent(): boolean;
 }
+
 declare const MSDocument: {
   alloc(): MSDocumentUninitialized;
-  class(): MSDocument;  currentDocument(): MSDocument;
+  class(): MSDocument;
+  currentDocument(): MSDocument;
   windowForSheet(): NSWindow;
+  canConcurrentlyReadDocumentsOfType(typeName: NSString | string): boolean;
+  isNativeType(type: NSString | string): boolean;
+  autosavesInPlace(): boolean;
+  preservesVersions(): boolean;
+  autosavesDrafts(): boolean;
+  readableTypes(): NSArray<any>;
+  writableTypes(): NSArray<any>;
+  usesUbiquitousStorage(): boolean;
+  restorableStateKeyPaths(): NSArray<any>;
+  accessInstanceVariablesDirectly(): boolean;
 
 }
 

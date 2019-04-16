@@ -1,4 +1,5 @@
 interface MSInlineUpDownTextFieldUninitialized<InitializedType = MSInlineUpDownTextField> extends MSUpDownTextFieldUninitialized<MSInlineUpDownTextField> {}
+
 interface MSInlineUpDownTextField extends MSUpDownTextField {
 
   inlineLabel(): NSString;
@@ -10,8 +11,10 @@ interface MSInlineUpDownTextField extends MSUpDownTextField {
   inlineToolTip(): NSString;
   setInlineToolTip(inlineToolTip: NSString | string): void;
 }
+
 declare const MSInlineUpDownTextField: {
   alloc(): MSInlineUpDownTextFieldUninitialized;
   class(): MSInlineUpDownTextField;
+  multipleValuesPlaceholderString(): NSString;
 }
 

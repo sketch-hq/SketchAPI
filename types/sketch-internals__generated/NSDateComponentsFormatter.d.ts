@@ -1,4 +1,5 @@
 interface NSDateComponentsFormatterUninitialized<InitializedType = NSDateComponentsFormatter> extends NSFormatterUninitialized<NSDateComponentsFormatter> {}
+
 interface NSDateComponentsFormatter extends NSFormatter {
   stringForObjectValue(obj: any | null): NSString;
   stringFromDateComponents(components: NSDateComponents): NSString;
@@ -29,9 +30,10 @@ interface NSDateComponentsFormatter extends NSFormatter {
   formattingContext(): NSFormattingContext;
   setFormattingContext(formattingContext: NSFormattingContext): void;
 }
+
 declare const NSDateComponentsFormatter: {
   alloc(): NSDateComponentsFormatterUninitialized;
-  class(): NSDateComponentsFormatter;  localizedStringFromDateComponents_unitsStyle(components: NSDateComponents, unitsStyle: NSDateComponentsFormatterUnitsStyle): NSString;
-
+  class(): NSDateComponentsFormatter;
+  localizedStringFromDateComponents_unitsStyle(components: NSDateComponents, unitsStyle: NSDateComponentsFormatterUnitsStyle): NSString;
 }
 

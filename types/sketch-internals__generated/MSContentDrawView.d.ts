@@ -1,4 +1,5 @@
 interface MSContentDrawViewUninitialized<InitializedType = MSContentDrawView> extends NSViewUninitialized<MSContentDrawView> {}
+
 interface MSContentDrawView extends NSView, IMSEventHandlerManagerDelegate, IMSTiledRendererHostView {
   setNeedsUpdateCursor(): void;
   scheduleRedraw(): void;
@@ -36,6 +37,10 @@ interface MSContentDrawView extends NSView, IMSEventHandlerManagerDelegate, IMST
   convertSizeToPage(aSize: NSSize): NSSize;
   beginImporting(): void;
   endImporting(): void;
+  eventHandlerManager_didChangeCurrentHandler(manager: MSEventHandlerManager, newHandler: MSEventHandler): void;
+  scheduleRedraw(): void;
+  hasUserFocus(): boolean;
+  driver(): MSRenderingDriver;
 
   tiledRenderer(): MSTiledRenderer;
   contentDrawViewParent(): MSContentDrawViewParent;
@@ -67,8 +72,16 @@ interface MSContentDrawView extends NSView, IMSEventHandlerManagerDelegate, IMST
   needsUpdateCursor(): boolean;
   zoomTool(): MSZoomTool;
 }
+
 declare const MSContentDrawView: {
   alloc(): MSContentDrawViewUninitialized;
   class(): MSContentDrawView;
+  requiresConstraintBasedLayout(): boolean;
+  focusView(): NSView;
+  defaultMenu(): NSMenu;
+  compatibleWithResponsiveScrolling(): boolean;
+  defaultFocusRingType(): NSFocusRingType;
+  restorableStateKeyPaths(): NSArray<any>;
+
 }
 

@@ -1,4 +1,5 @@
 interface MSExportSheetUninitialized<InitializedType = MSExportSheet> extends CHSheetControllerUninitialized<MSExportSheet> {}
+
 interface MSExportSheet extends CHSheetController {
   includeAllCheckboxAction(sender: any): IBAction;
   collectionView_newItemForRepresentedObject(collectionView: NSCollectionView, object: any): NSCollectionViewItem;
@@ -11,8 +12,13 @@ interface MSExportSheet extends CHSheetController {
   selectedSlices(): NSMutableArray<any>;
   setSelectedSlices(selectedSlices: NSMutableArray<any> | any[]): void;
 }
+
 declare const MSExportSheet: {
   alloc(): MSExportSheetUninitialized;
   class(): MSExportSheet;
+  runForWindow(window: NSWindow): any;
+  runForWindow_withObject(window: NSWindow, obj: any): any;
+  accessInstanceVariablesDirectly(): boolean;
+
 }
 

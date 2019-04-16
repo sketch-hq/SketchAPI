@@ -1,4 +1,5 @@
 interface SCKUserUninitialized<InitializedType = SCKUser> extends SCKObjectUninitialized<SCKUser> {}
+
 interface SCKUser extends SCKObject {
 
   name(): NSString;
@@ -7,8 +8,12 @@ interface SCKUser extends SCKObject {
   avatar(): SCKAvatar;
   organizations(): NSArray<any>;
 }
+
 declare const SCKUser: {
   alloc(): SCKUserUninitialized;
   class(): SCKUser;
+  supportsSecureCoding(): boolean;
+  accessInstanceVariablesDirectly(): boolean;
+
 }
 

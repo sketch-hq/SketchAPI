@@ -1,4 +1,5 @@
 interface _MSImmutableTextLayerUninitialized<InitializedType = _MSImmutableTextLayer> extends MSImmutableStyledLayerUninitialized<_MSImmutableTextLayer> {}
+
 interface _MSImmutableTextLayer extends MSImmutableStyledLayer {
 
   attributedString(): MSAttributedString;
@@ -9,8 +10,10 @@ interface _MSImmutableTextLayer extends MSImmutableStyledLayer {
   preview(): MSImageData;
   textBehaviour(): BCTextBehaviourType;
 }
+
 declare const _MSImmutableTextLayer: {
   alloc(): _MSImmutableTextLayerUninitialized;
   class(): _MSImmutableTextLayer;
+  cacheDecorations(): void;
 }
 

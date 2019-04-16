@@ -1,6 +1,7 @@
 interface NSArchiverUninitialized<InitializedType = NSArchiver> extends NSCoderUninitialized<NSArchiver> {
   initForWritingWithMutableData(mdata: NSMutableData): InitializedType;
 }
+
 interface NSArchiver extends NSCoder {
   encodeRootObject(rootObject: any): void;
   encodeConditionalObject(object: any | null): void;
@@ -10,10 +11,11 @@ interface NSArchiver extends NSCoder {
 
   archiverData(): NSMutableData;
 }
+
 declare const NSArchiver: {
   alloc(): NSArchiverUninitialized;
-  class(): NSArchiver;  archivedDataWithRootObject(rootObject: any): NSData;
+  class(): NSArchiver;
+  archivedDataWithRootObject(rootObject: any): NSData;
   archiveRootObject_toFile(rootObject: any, path: NSString | string): boolean;
-
 }
 

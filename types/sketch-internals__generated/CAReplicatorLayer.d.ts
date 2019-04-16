@@ -1,4 +1,5 @@
 interface CAReplicatorLayerUninitialized<InitializedType = CAReplicatorLayer> extends CALayerUninitialized<CAReplicatorLayer> {}
+
 interface CAReplicatorLayer extends CALayer {
 
   instanceCount(): NSInteger;
@@ -20,8 +21,17 @@ interface CAReplicatorLayer extends CALayer {
   instanceAlphaOffset(): number;
   setInstanceAlphaOffset(instanceAlphaOffset: number): void;
 }
+
 declare const CAReplicatorLayer: {
   alloc(): CAReplicatorLayerUninitialized;
   class(): CAReplicatorLayer;
+  layer(): CAReplicatorLayer;
+  defaultValueForKey(key: NSString | string): any;
+  needsDisplayForKey(key: NSString | string): boolean;
+  defaultActionForKey(event: NSString | string): any;
+  layerWithRemoteClientId(client_id: number): CALayer;
+  supportsSecureCoding(): boolean;
+  accessInstanceVariablesDirectly(): boolean;
+
 }
 

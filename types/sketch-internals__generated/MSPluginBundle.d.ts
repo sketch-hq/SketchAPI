@@ -2,6 +2,7 @@ interface MSPluginBundleUninitialized<InitializedType = MSPluginBundle> extends 
   initPluginBundleWithURL(url: NSURL): InitializedType;
   initWithName_identifier_commands_icon(name: NSString | string, identifier: NSString | string, commands: NSArray<any> | any[], icon: NSImage): InitializedType;
 }
+
 interface MSPluginBundle extends NSObject {
   writeToURL(url: NSURL): boolean;
   urlForResourceNamed(resourceName: NSString | string): NSURL;
@@ -30,10 +31,39 @@ interface MSPluginBundle extends NSObject {
   disableCocoaScriptPreprocessor(): boolean;
   setDisableCocoaScriptPreprocessor(disableCocoaScriptPreprocessor: boolean): void;
 }
+
 declare const MSPluginBundle: {
   alloc(): MSPluginBundleUninitialized;
-  class(): MSPluginBundle;  pluginBundleWithURL(url: NSURL): MSPluginBundle;
+  class(): MSPluginBundle;
+  pluginBundleWithURL(url: NSURL): MSPluginBundle;
   scriptDefaultTitle(): NSString;
+  load(): void;
+  instancesRespondToSelector(aSelector: string): boolean;
+  conformsToProtocol(protocol: Protocol): boolean;
+  instanceMethodForSelector(aSelector: string): IMP;
+  isSubclassOfClass(aClass: any): boolean;
+  hash(): NSUInteger;
+  superclass(): any;
+  description(): NSString;
+  debugDescription(): NSString;
+  useStoredAccessor(): boolean;
+  keyPathsForValuesAffectingValueForKey(key: NSString | string): NSSet<any>;
+  automaticallyNotifiesObserversForKey(key: NSString | string): boolean;
+  setKeys_triggerChangeNotificationsForDependentKey(keys: NSArray<any> | any[], dependentKey: NSString | string): void;
+  classFallbacksForKeyedArchiver(): NSArray<any>;
+  classForKeyedUnarchiver(): any;
+  version(): NSInteger;
+  setVersion(aVersion: NSInteger): void;
+  cancelPreviousPerformRequestsWithTarget_selector_object(aTarget: any, aSelector: string, anArgument: any | null): void;
+  cancelPreviousPerformRequestsWithTarget(aTarget: any): void;
+  exposeBinding(binding: NSBindingName): void;
+  setDefaultPlaceholder_forMarker_withBinding(placeholder: any | null, marker: any | null, binding: NSBindingName): void;
+  defaultPlaceholderForMarker_withBinding(marker: any | null, binding: NSBindingName): any;
+  mo_swizzleAdditions(): void;
+  mo_mocha(): MOClassDescription;
+  isSelectorExcludedFromMochaScript(selector: string): boolean;
+  selectorForMochaPropertyName(propertyName: NSString | string): string;
+  accessInstanceVariablesDirectly(): boolean;
 
 }
 

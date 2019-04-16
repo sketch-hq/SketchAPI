@@ -1,4 +1,5 @@
 interface MSSVGOffsetUninitialized<InitializedType = MSSVGOffset> extends MSSVGfeFilterPrimitiveUninitialized<MSSVGOffset> {}
+
 interface MSSVGOffset extends MSSVGfeFilterPrimitive {
 
   in(): NSString;
@@ -8,8 +9,10 @@ interface MSSVGOffset extends MSSVGfeFilterPrimitive {
   dy(): CGFloat;
   setDy(dy: CGFloat): void;
 }
+
 declare const MSSVGOffset: {
   alloc(): MSSVGOffsetUninitialized;
   class(): MSSVGOffset;
+  filter(): MSSVGOffset;
 }
 

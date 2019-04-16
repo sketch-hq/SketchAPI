@@ -92,7 +92,7 @@ export function proxyProperty(
   }
 }
 
-export function FloatingPointNumber(x) {
+export function FloatingPointNumber(x: number | NSInteger) {
   // 32-bits numbers
   const precision = 7
   // cast to number to handle NSInteger and such
@@ -106,7 +106,7 @@ export function FloatingPointNumber(x) {
 
   * descriptor needs `set`, `removeItem` and `insertItem`
 */
-export function hookedArray(arr, binding, descriptor) {
+export function hookedArray<T>(arr: T[], binding: any, descriptor: any) {
   if (!Array.isArray(arr)) {
     return arr
   }
@@ -114,17 +114,20 @@ export function hookedArray(arr, binding, descriptor) {
   arr.reverse = () => {
     Array.prototype.reverse.apply(arr)
     descriptor.set.bind(binding)(arr)
+    return arr
   }
   arr.sort = compareFunction => {
-    Array.prototype.reverse.apply(arr, [compareFunction])
+    Array.prototype.sort.apply(arr, [compareFunction])
     descriptor.set.bind(binding)(arr)
+    return arr
   }
   arr.fill = (value, start, end) => {
-    Array.prototype.reverse.apply(arr, [value, start, end])
+    Array.prototype.fill.apply(arr, [value, start, end])
     descriptor.set.bind(binding)(arr)
+    return arr
   }
 
-  arr.splice = (start, count, ...items) => {
+  arr.splice = (start: number, count?: number, ...items: T[]) => {
     if (start < 0) {
       // eslint-disable-next-line no-param-reassign
       start += arr.length
@@ -145,7 +148,7 @@ export function hookedArray(arr, binding, descriptor) {
       removedItems.push(descriptor.removeItem.bind(binding)(i))
     }
 
-    const addedItems = []
+    const addedItems: T[] = []
 
     items.forEach((item, i) => {
       addedItems.push(descriptor.insertItem.bind(binding)(item, start + i))

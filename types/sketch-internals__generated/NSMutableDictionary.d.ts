@@ -1,6 +1,7 @@
 interface NSMutableDictionaryUninitialized<KeyType, ObjectType, InitializedType = NSMutableDictionary<KeyType, ObjectType>> extends NSDictionaryUninitialized<KeyType, ObjectType, NSMutableDictionary<KeyType, ObjectType>> {
   initWithCapacity(numItems: NSUInteger): InitializedType;
 }
+
 interface NSMutableDictionary<KeyType, ObjectType> extends NSDictionary<KeyType, ObjectType> {
   removeObjectForKey(aKey: KeyType): void;
   setObject_forKey(anObject: ObjectType, aKey: KeyType): void;
@@ -34,12 +35,13 @@ interface NSMutableDictionary<KeyType, ObjectType> extends NSDictionary<KeyType,
   setIsSlice(isSlice: boolean): void;
   exportFileName(): NSString;
 }
+
 declare const NSMutableDictionary: {
   alloc<KeyType, ObjectType>(): NSMutableDictionaryUninitialized<KeyType, ObjectType>;
-  class(): NSMutableDictionary;  dictionaryWithCapacity<KeyType, ObjectType>(numItems: NSUInteger): NSMutableDictionary<KeyType, ObjectType>;
+  class(): NSMutableDictionary;
+  dictionaryWithCapacity<KeyType, ObjectType>(numItems: NSUInteger): NSMutableDictionary<KeyType, ObjectType>;
   dictionaryWithContentsOfFile(path: NSString | string): NSMutableDictionary<any, any>;
   dictionaryWithContentsOfURL(url: NSURL): NSMutableDictionary<any, any>;
   dictionaryWithSharedKeySet(keyset: any): NSMutableDictionary<any, any>;
-
 }
 

@@ -1,4 +1,5 @@
 interface NSGridViewUninitialized<InitializedType = NSGridView> extends NSViewUninitialized<NSGridView> {}
+
 interface NSGridView extends NSView {
   rowAtIndex(index: NSInteger): NSGridRow;
   indexOfRow(row: NSGridRow): NSInteger;
@@ -29,10 +30,18 @@ interface NSGridView extends NSView {
   columnSpacing(): CGFloat;
   setColumnSpacing(columnSpacing: CGFloat): void;
 }
+
 declare const NSGridView: {
   alloc(): NSGridViewUninitialized;
-  class(): NSGridView;  gridViewWithNumberOfColumns_rows(columnCount: NSInteger, rowCount: NSInteger): NSGridView;
+  class(): NSGridView;
+  gridViewWithNumberOfColumns_rows(columnCount: NSInteger, rowCount: NSInteger): NSGridView;
   gridViewWithViews(rows: NSArray<any> | any[]): NSGridView;
+  requiresConstraintBasedLayout(): boolean;
+  focusView(): NSView;
+  defaultMenu(): NSMenu;
+  compatibleWithResponsiveScrolling(): boolean;
+  defaultFocusRingType(): NSFocusRingType;
+  restorableStateKeyPaths(): NSArray<any>;
 
 }
 

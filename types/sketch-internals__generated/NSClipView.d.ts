@@ -1,4 +1,5 @@
 interface NSClipViewUninitialized<InitializedType = NSClipView> extends NSViewUninitialized<NSClipView> {}
+
 interface NSClipView extends NSView {
   viewFrameChanged(notification: NSNotification): void;
   viewBoundsChanged(notification: NSNotification): void;
@@ -24,8 +25,16 @@ interface NSClipView extends NSView {
   automaticallyAdjustsContentInsets(): boolean;
   setAutomaticallyAdjustsContentInsets(automaticallyAdjustsContentInsets: boolean): void;
 }
+
 declare const NSClipView: {
   alloc(): NSClipViewUninitialized;
   class(): NSClipView;
+  requiresConstraintBasedLayout(): boolean;
+  focusView(): NSView;
+  defaultMenu(): NSMenu;
+  compatibleWithResponsiveScrolling(): boolean;
+  defaultFocusRingType(): NSFocusRingType;
+  restorableStateKeyPaths(): NSArray<any>;
+
 }
 

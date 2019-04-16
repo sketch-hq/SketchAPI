@@ -1,4 +1,5 @@
 interface NSMovieViewUninitialized<InitializedType = NSMovieView> extends NSViewUninitialized<NSMovieView> {}
+
 interface NSMovieView extends NSView, INSMenuItemValidation, INSUserInterfaceValidations {
   setMovie(movie: NSMovie): void;
   movie(): NSMovie;
@@ -36,9 +37,19 @@ interface NSMovieView extends NSView, INSMenuItemValidation, INSUserInterfaceVal
   delete(sender: any): void;
   selectAll(sender: any): void;
   clear(sender: any): void;
+  validateMenuItem(menuItem: NSMenuItem): boolean;
+  validateUserInterfaceItem(item: any): boolean;
 }
+
 declare const NSMovieView: {
   alloc(): NSMovieViewUninitialized;
   class(): NSMovieView;
+  requiresConstraintBasedLayout(): boolean;
+  focusView(): NSView;
+  defaultMenu(): NSMenu;
+  compatibleWithResponsiveScrolling(): boolean;
+  defaultFocusRingType(): NSFocusRingType;
+  restorableStateKeyPaths(): NSArray<any>;
+
 }
 

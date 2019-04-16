@@ -1,4 +1,5 @@
 interface _MSCurvePointUninitialized<InitializedType = _MSCurvePoint> extends MSModelObjectUninitialized<_MSCurvePoint> {}
+
 interface _MSCurvePoint extends MSModelObject {
 
   cornerRadius(): CGFloat;
@@ -16,8 +17,11 @@ interface _MSCurvePoint extends MSModelObject {
   point(): NSPoint;
   setPoint(point: NSPoint): void;
 }
+
 declare const _MSCurvePoint: {
   alloc(): _MSCurvePointUninitialized;
   class(): _MSCurvePoint;
+  immutableClass(): any;
+  allowsFaulting(): boolean;
 }
 

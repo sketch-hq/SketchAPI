@@ -1,7 +1,9 @@
 interface NSObjectUninitialized<InitializedType = NSObject> {
   initialize(): InitializedType;
   initWithUnarchiver_migratingFrom_toVersion(unarchiver: MSBaseUnarchiver, fromVersion: NSInteger, toVersion: NSInteger): InitializedType;
+  init(): InitializedType;
 }
+
 interface NSObject extends INSObject {
   copy(): any;
   mutableCopy(): any;
@@ -14,13 +16,13 @@ interface NSObject extends INSObject {
   fileManager_willProcessPath(fm: NSFileManager, path: NSString | string): void;
   valueForKey(key: NSString | string): any;
   setValue_forKey(value: any | null, key: NSString | string): void;
-  validateValue_forKey_error(ioValue: any, inKey: NSString | string, outError: NSError): boolean;
+  validateValue_forKey_error(ioValue: any, inKey: NSString | string, outError: MOPointer<NSError>): boolean;
   mutableArrayValueForKey(key: NSString | string): NSMutableArray<any>;
   mutableOrderedSetValueForKey(key: NSString | string): NSMutableOrderedSet<any>;
   mutableSetValueForKey(key: NSString | string): NSMutableSet<any>;
   valueForKeyPath(keyPath: NSString | string): any;
   setValue_forKeyPath(value: any | null, keyPath: NSString | string): void;
-  validateValue_forKeyPath_error(ioValue: any, inKeyPath: NSString | string, outError: NSError): boolean;
+  validateValue_forKeyPath_error(ioValue: any, inKeyPath: NSString | string, outError: MOPointer<NSError>): boolean;
   mutableArrayValueForKeyPath(keyPath: NSString | string): NSMutableArray<any>;
   mutableOrderedSetValueForKeyPath(keyPath: NSString | string): NSMutableOrderedSet<any>;
   mutableSetValueForKeyPath(keyPath: NSString | string): NSMutableSet<any>;
@@ -120,7 +122,7 @@ interface NSObject extends INSObject {
   discardEditing(): void;
   commitEditing(): boolean;
   commitEditingWithDelegate_didCommitSelector_contextInfo(delegate: any | null, didCommitSelector: string | null, contextInfo: void | null): void;
-  commitEditingAndReturnError(error: NSError): boolean;
+  commitEditingAndReturnError(error: MOPointer<NSError>): boolean;
   objectDidBeginEditing(editor: any): void;
   objectDidEndEditing(editor: any): void;
   validateMenuItem(menuItem: NSMenuItem): boolean;
@@ -194,9 +196,11 @@ interface NSObject extends INSObject {
   BCCache_unblockingSelfOrDeferredObject(): NSObject;
   immutableModelObject(): any;
 }
+
 declare const NSObject: {
   alloc(): NSObjectUninitialized;
-  class(): NSObject;  load(): void;
+  class(): NSObject;
+  load(): void;
   instancesRespondToSelector(aSelector: string): boolean;
   conformsToProtocol(protocol: Protocol): boolean;
   instanceMethodForSelector(aSelector: string): IMP;
@@ -222,7 +226,6 @@ declare const NSObject: {
   mo_mocha(): MOClassDescription;
   isSelectorExcludedFromMochaScript(selector: string): boolean;
   selectorForMochaPropertyName(propertyName: NSString | string): string;
-
   accessInstanceVariablesDirectly(): boolean;
 
 }

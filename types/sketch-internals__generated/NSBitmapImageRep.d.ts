@@ -7,6 +7,7 @@ interface NSBitmapImageRepUninitialized<InitializedType = NSBitmapImageRep> exte
   initWithData(data: NSData): InitializedType;
   initForIncrementalLoad(): InitializedType;
 }
+
 interface NSBitmapImageRep extends NSImageRep, INSSecureCoding {
   getBitmapDataPlanes(data: string): void;
   getCompression_factor(compression: NSTIFFCompression | null, factor: number | null): void;
@@ -48,9 +49,11 @@ interface NSBitmapImageRep extends NSImageRep, INSSecureCoding {
   CGImage(): CGImageRef;
   colorSpace(): NSColorSpace;
 }
+
 declare const NSBitmapImageRep: {
   alloc(): NSBitmapImageRepUninitialized;
-  class(): NSBitmapImageRep;  imageRepsWithData(data: NSData): NSArray<any>;
+  class(): NSBitmapImageRep;
+  imageRepsWithData(data: NSData): NSArray<any>;
   imageRepWithData(data: NSData): NSBitmapImageRep;
   TIFFRepresentationOfImageRepsInArray(array: NSArray<any> | any[]): NSData;
   TIFFRepresentationOfImageRepsInArray_usingCompression_factor(array: NSArray<any> | any[], comp: NSTIFFCompression, factor: number): NSData;
@@ -59,6 +62,28 @@ declare const NSBitmapImageRep: {
   representationOfImageRepsInArray_usingType_properties(imageReps: NSArray<any> | any[], storageType: NSBitmapImageFileType, properties: NSDictionary<any, any> | {[key: string]: any}): NSData;
   bitmapImageRepWithSize_flags_colorSpace_drawingBlock(size: NSSize, flags: DKCGContextCreateFlags, space: NSColorSpace, block: CGContextDrawBlock): NSBitmapImageRep;
   bitmapImageRepWithSize_pixelSize_flags_colorSpace_drawingBlock(size: NSSize, pixelSize: NSSize, flags: DKCGContextCreateFlags, space: NSColorSpace, block: CGContextDrawBlock): NSBitmapImageRep;
+  registerImageRepClass(imageRepClass: any): void;
+  unregisterImageRepClass(imageRepClass: any): void;
+  imageRepClassForFileType(type: NSString | string): any;
+  imageRepClassForPasteboardType(type: NSPasteboardType): any;
+  imageRepClassForType(type: NSString | string): any;
+  imageRepClassForData(data: NSData): any;
+  canInitWithData(data: NSData): boolean;
+  imageUnfilteredFileTypes(): NSArray<any>;
+  imageUnfilteredPasteboardTypes(): NSArray<any>;
+  imageFileTypes(): NSArray<any>;
+  imagePasteboardTypes(): NSArray<any>;
+  canInitWithPasteboard(pasteboard: NSPasteboard): boolean;
+  imageRepsWithContentsOfFile(filename: NSString | string): NSArray<any>;
+  imageRepWithContentsOfFile(filename: NSString | string): NSImageRep;
+  imageRepsWithContentsOfURL(url: NSURL): NSArray<any>;
+  imageRepWithContentsOfURL(url: NSURL): NSImageRep;
+  imageRepsWithPasteboard(pasteboard: NSPasteboard): NSArray<any>;
+  imageRepWithPasteboard(pasteboard: NSPasteboard): NSImageRep;
+  supportsSecureCoding(): boolean;
+  registeredImageRepClasses(): NSArray<any>;
+  imageUnfilteredTypes(): NSArray<any>;
+  imageTypes(): NSArray<any>;
 
 }
 

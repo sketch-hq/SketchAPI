@@ -1,6 +1,6 @@
 interface ISUInstallerProtocol {
-  performInitialInstallation(error: NSError): boolean;
-  performFinalInstallationProgressBlock_error(cb: Block | null, error: NSError): boolean;
+  performInitialInstallation(error: MOPointer<NSError>): boolean;
+  performFinalInstallationProgressBlock_error(cb: Block | null, error: MOPointer<NSError>): boolean;
   canInstallSilently(): boolean;
   installationPath(): NSString;
 }

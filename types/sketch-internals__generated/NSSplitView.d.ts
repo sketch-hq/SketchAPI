@@ -1,4 +1,5 @@
 interface NSSplitViewUninitialized<InitializedType = NSSplitView> extends NSViewUninitialized<NSSplitView> {}
+
 interface NSSplitView extends NSView {
   drawDividerInRect(rect: NSRect): void;
   adjustSubviews(): void;
@@ -28,8 +29,16 @@ interface NSSplitView extends NSView {
   setArrangesAllSubviews(arrangesAllSubviews: boolean): void;
   arrangedSubviews(): NSArray<any>;
 }
+
 declare const NSSplitView: {
   alloc(): NSSplitViewUninitialized;
   class(): NSSplitView;
+  requiresConstraintBasedLayout(): boolean;
+  focusView(): NSView;
+  defaultMenu(): NSMenu;
+  compatibleWithResponsiveScrolling(): boolean;
+  defaultFocusRingType(): NSFocusRingType;
+  restorableStateKeyPaths(): NSArray<any>;
+
 }
 

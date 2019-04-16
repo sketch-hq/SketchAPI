@@ -1,4 +1,5 @@
 interface _SVGDrawableElementUninitialized<InitializedType = _SVGDrawableElement> extends SVGElementUninitialized<_SVGDrawableElement> {}
+
 interface _SVGDrawableElement extends SVGElement {
   primitiveSetClip(clip: any): void;
   primitiveSetFill(fill: any): void;
@@ -29,11 +30,13 @@ interface _SVGDrawableElement extends SVGElement {
   stroke(): SVGStroke;
   setStroke(stroke: SVGStroke): void;
 }
+
 declare const _SVGDrawableElement: {
   alloc(): _SVGDrawableElementUninitialized;
-  class(): _SVGDrawableElement;  propertyNames(): NSArray<any>;
+  class(): _SVGDrawableElement;
+  propertyNames(): NSArray<any>;
   relationshipNames(): NSArray<any>;
   attributeNames(): NSArray<any>;
-
+  elementOfType_xml_importer_parent(type: NSString | string, xml: NSXMLElement, importer: SVGImporter, parent: SVGElement): SVGElement;
 }
 

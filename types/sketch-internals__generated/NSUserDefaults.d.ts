@@ -1,8 +1,8 @@
 interface NSUserDefaultsUninitialized<InitializedType = NSUserDefaults> extends NSObjectUninitialized<NSUserDefaults> {
-  init(): InitializedType;
   initWithSuiteName(suitename: NSString | string | null): InitializedType;
   initWithUser(username: NSString | string): InitializedType;
 }
+
 interface NSUserDefaults extends NSObject {
   objectForKey(defaultName: NSString | string): any;
   setObject_forKey(value: any | null, defaultName: NSString | string): void;
@@ -41,11 +41,39 @@ interface NSUserDefaults extends NSObject {
 
   volatileDomainNames(): NSArray<any>;
 }
+
 declare const NSUserDefaults: {
   alloc(): NSUserDefaultsUninitialized;
-  class(): NSUserDefaults;  resetStandardUserDefaults(): void;
-
+  class(): NSUserDefaults;
+  resetStandardUserDefaults(): void;
+  load(): void;
+  instancesRespondToSelector(aSelector: string): boolean;
+  conformsToProtocol(protocol: Protocol): boolean;
+  instanceMethodForSelector(aSelector: string): IMP;
+  isSubclassOfClass(aClass: any): boolean;
+  hash(): NSUInteger;
+  superclass(): any;
+  description(): NSString;
+  debugDescription(): NSString;
+  useStoredAccessor(): boolean;
+  keyPathsForValuesAffectingValueForKey(key: NSString | string): NSSet<any>;
+  automaticallyNotifiesObserversForKey(key: NSString | string): boolean;
+  setKeys_triggerChangeNotificationsForDependentKey(keys: NSArray<any> | any[], dependentKey: NSString | string): void;
+  classFallbacksForKeyedArchiver(): NSArray<any>;
+  classForKeyedUnarchiver(): any;
+  version(): NSInteger;
+  setVersion(aVersion: NSInteger): void;
+  cancelPreviousPerformRequestsWithTarget_selector_object(aTarget: any, aSelector: string, anArgument: any | null): void;
+  cancelPreviousPerformRequestsWithTarget(aTarget: any): void;
+  exposeBinding(binding: NSBindingName): void;
+  setDefaultPlaceholder_forMarker_withBinding(placeholder: any | null, marker: any | null, binding: NSBindingName): void;
+  defaultPlaceholderForMarker_withBinding(marker: any | null, binding: NSBindingName): any;
+  mo_swizzleAdditions(): void;
+  mo_mocha(): MOClassDescription;
+  isSelectorExcludedFromMochaScript(selector: string): boolean;
+  selectorForMochaPropertyName(propertyName: NSString | string): string;
   standardUserDefaults(): NSUserDefaults;
+  accessInstanceVariablesDirectly(): boolean;
 
 }
 

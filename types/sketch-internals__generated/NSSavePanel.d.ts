@@ -1,4 +1,5 @@
 interface NSSavePanelUninitialized<InitializedType = NSSavePanel> extends NSPanelUninitialized<NSSavePanel> {}
+
 interface NSSavePanel extends NSPanel {
   validateVisibleColumns(): void;
   ok(sender: any | null): IBAction;
@@ -52,9 +53,20 @@ interface NSSavePanel extends NSPanel {
   tagNames(): NSArray<any>;
   setTagNames(tagNames: NSArray<any> | any[]): void;
 }
+
 declare const NSSavePanel: {
   alloc(): NSSavePanelUninitialized;
-  class(): NSSavePanel;  savePanel(): NSSavePanel;
+  class(): NSSavePanel;
+  savePanel(): NSSavePanel;
+  defaultDepthLimit(): NSWindowDepth;
+  allowsAutomaticWindowTabbing(): boolean;,
+          {
+            newLineStart: true,
+            newLineEnd: false,
+          }
+  setAllowsAutomaticWindowTabbing(allowsAutomaticWindowTabbing: boolean): void;
+  userTabbingPreference(): NSWindowUserTabbingPreference;
+  restorableStateKeyPaths(): NSArray<any>;
 
 }
 

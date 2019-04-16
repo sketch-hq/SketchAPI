@@ -1,4 +1,5 @@
 interface _MSStyleBorderOptionsUninitialized<InitializedType = _MSStyleBorderOptions> extends MSStylePartUninitialized<_MSStyleBorderOptions> {}
+
 interface _MSStyleBorderOptions extends MSStylePart {
 
   dashPattern(): NSArray<any>;
@@ -8,8 +9,11 @@ interface _MSStyleBorderOptions extends MSStylePart {
   lineJoinStyle(): NSLineJoinStyle;
   setLineJoinStyle(lineJoinStyle: NSLineJoinStyle): void;
 }
+
 declare const _MSStyleBorderOptions: {
   alloc(): _MSStyleBorderOptionsUninitialized;
   class(): _MSStyleBorderOptions;
+  stylesHaveEqualAppearance(styles: NSArray<any> | any[]): boolean;
+  defaultStylePartForStyle(style: MSStyle): MSStylePart;
 }
 

@@ -1,6 +1,7 @@
 interface NSMutableArrayUninitialized<ObjectType, InitializedType = NSMutableArray<ObjectType>> extends NSArrayUninitialized<ObjectType, NSMutableArray<ObjectType>> {
   initWithCapacity(numItems: NSUInteger): InitializedType;
 }
+
 interface NSMutableArray<ObjectType> extends NSArray<ObjectType> {
   addObject(anObject: ObjectType): void;
   insertObject_atIndex(anObject: ObjectType, index: NSUInteger): void;
@@ -44,12 +45,13 @@ interface NSMutableArray<ObjectType> extends NSArray<ObjectType> {
   addAttributeWithName_percentageFractionalValue(name: NSString | string, value: CGFloat): void;
   removeAttributeWithName(name: NSString | string): void;
 }
+
 declare const NSMutableArray: {
   alloc<ObjectType>(): NSMutableArrayUninitialized<ObjectType>;
-  class(): NSMutableArray;  arrayWithCapacity<ObjectType>(numItems: NSUInteger): NSMutableArray<ObjectType>;
+  class(): NSMutableArray;
+  arrayWithCapacity<ObjectType>(numItems: NSUInteger): NSMutableArray<ObjectType>;
   arrayWithContentsOfFile(path: NSString | string): NSMutableArray<any>;
   arrayWithContentsOfURL(url: NSURL): NSMutableArray<any>;
   arrayWithCapacity_fill(count: NSUInteger, block: Block): any;
-
 }
 

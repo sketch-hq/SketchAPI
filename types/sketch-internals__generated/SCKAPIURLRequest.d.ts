@@ -1,4 +1,5 @@
 interface SCKAPIURLRequestUninitialized<InitializedType = SCKAPIURLRequest> extends NSMutableURLRequestUninitialized<SCKAPIURLRequest> {}
+
 interface SCKAPIURLRequest extends NSMutableURLRequest, ISCKAPIRequest {
 
   environment(): SCKAPIEnvironment;
@@ -11,13 +12,18 @@ interface SCKAPIURLRequest extends NSMutableURLRequest, ISCKAPIRequest {
   setResultType(resultType: any): void;
   type(): SCKAPIURLRequestType;
   setType(type: SCKAPIURLRequestType): void;
+  urlRequest(): NSURLRequest;
 }
+
 declare const SCKAPIURLRequest: {
   alloc(): SCKAPIURLRequestUninitialized;
-  class(): SCKAPIURLRequest;  baseURLForEnvironment(environment: SCKAPIEnvironment): NSURL;
+  class(): SCKAPIURLRequest;
+  baseURLForEnvironment(environment: SCKAPIEnvironment): NSURL;
   requestWithPath_queryItems_environment(path: NSString | string, parameters: NSDictionary<any, any> | {[key: string]: any} | null, environment: SCKAPIEnvironment): SCKAPIURLRequest;
   requestWithPath_environment(path: NSString | string, environment: SCKAPIEnvironment): SCKAPIURLRequest;
   requestWithPath(path: NSString | string): SCKAPIURLRequest;
+  supportsSecureCoding(): boolean;
+  accessInstanceVariablesDirectly(): boolean;
 
 }
 

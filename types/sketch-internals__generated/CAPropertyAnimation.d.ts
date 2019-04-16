@@ -1,4 +1,5 @@
 interface CAPropertyAnimationUninitialized<InitializedType = CAPropertyAnimation> extends CAAnimationUninitialized<CAPropertyAnimation> {}
+
 interface CAPropertyAnimation extends CAAnimation {
 
   keyPath(): NSString;
@@ -10,9 +11,14 @@ interface CAPropertyAnimation extends CAAnimation {
   valueFunction(): CAValueFunction;
   setValueFunction(valueFunction: CAValueFunction): void;
 }
+
 declare const CAPropertyAnimation: {
   alloc(): CAPropertyAnimationUninitialized;
-  class(): CAPropertyAnimation;  animationWithKeyPath(path: NSString | string | null): CAPropertyAnimation;
+  class(): CAPropertyAnimation;
+  animationWithKeyPath(path: NSString | string | null): CAPropertyAnimation;
+  animation(): CAPropertyAnimation;
+  defaultValueForKey(key: NSString | string): any;
+  accessInstanceVariablesDirectly(): boolean;
 
 }
 

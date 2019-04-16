@@ -1,4 +1,5 @@
 interface NSColorPanelUninitialized<InitializedType = NSColorPanel> extends NSPanelUninitialized<NSColorPanel> {}
+
 interface NSColorPanel extends NSPanel {
   setAction(selector: string | null): void;
   setTarget(target: any | null): void;
@@ -20,12 +21,13 @@ interface NSColorPanel extends NSPanel {
   setColor(color: NSColor): void;
   alpha(): CGFloat;
 }
+
 declare const NSColorPanel: {
   alloc(): NSColorPanelUninitialized;
-  class(): NSColorPanel;  dragColor_withEvent_fromView(color: NSColor, event: NSEvent, sourceView: NSView): boolean;
+  class(): NSColorPanel;
+  dragColor_withEvent_fromView(color: NSColor, event: NSEvent, sourceView: NSView): boolean;
   setPickerMask(mask: NSColorPanelOptions): void;
   setPickerMode(mode: NSColorPanelMode): void;
-
   sharedColorPanel(): NSColorPanel;
   sharedColorPanelExists(): boolean;
 

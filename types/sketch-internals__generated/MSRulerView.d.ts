@@ -1,4 +1,5 @@
 interface MSRulerViewUninitialized<InitializedType = MSRulerView> extends NSViewUninitialized<MSRulerView> {}
+
 interface MSRulerView extends NSView {
   refreshGuideInDrawViewAtIndex(anIndex: NSUInteger): void;
   refreshGuideInDrawViewAtPosition(line: CGFloat): void;
@@ -32,11 +33,22 @@ interface MSRulerView extends NSView {
   temporaryRulerGuide(): CGFloat;
   setTemporaryRulerGuide(temporaryRulerGuide: CGFloat): void;
 }
+
 declare const MSRulerView: {
   alloc(): MSRulerViewUninitialized;
   class(): MSRulerView;
-  rulerDraggingLocked(): boolean;
+  rulerDraggingLocked(): boolean;,
+          {
+            newLineStart: true,
+            newLineEnd: false,
+          }
   setRulerDraggingLocked(rulerDraggingLocked: boolean): void;
+  requiresConstraintBasedLayout(): boolean;
+  focusView(): NSView;
+  defaultMenu(): NSMenu;
+  compatibleWithResponsiveScrolling(): boolean;
+  defaultFocusRingType(): NSFocusRingType;
+  restorableStateKeyPaths(): NSArray<any>;
 
 }
 

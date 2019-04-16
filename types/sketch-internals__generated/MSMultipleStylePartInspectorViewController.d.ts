@@ -1,4 +1,5 @@
 interface MSMultipleStylePartInspectorViewControllerUninitialized<InitializedType = MSMultipleStylePartInspectorViewController> extends NSViewControllerUninitialized<MSMultipleStylePartInspectorViewController> {}
+
 interface MSMultipleStylePartInspectorViewController extends NSViewController, IMSReorderingContainerDelegate {
   prepare(): void;
   prepareForReuse(): void;
@@ -19,6 +20,9 @@ interface MSMultipleStylePartInspectorViewController extends NSViewController, I
   shouldShowAdvancedOptionsButton(): boolean;
   lastEnabledStylePartController(): MSStylePartInspectorViewController;
   updateDisplayedValues(): void;
+  containerBackground_dragDidReorderChildAtIndex_toIndex(backgroundView: MSReorderingContainerView, fromIndex: NSUInteger, toIndex: NSUInteger): void;
+  startingOffsetForStackingContainerBackground(backgroundView: MSReorderingContainerView): CGFloat;
+  numberOfReorderableSubviewsForContainerBackground(backgroundView: MSReorderingContainerView): NSUInteger;
 
   layers(): NSArray<any>;
   setLayers(layers: NSArray<any> | any[]): void;
@@ -37,8 +41,12 @@ interface MSMultipleStylePartInspectorViewController extends NSViewController, I
   headerButton(): NSButton;
   setHeaderButton(headerButton: NSButton): void;
 }
+
 declare const MSMultipleStylePartInspectorViewController: {
   alloc(): MSMultipleStylePartInspectorViewControllerUninitialized;
   class(): MSMultipleStylePartInspectorViewController;
+  restorableStateKeyPaths(): NSArray<any>;
+  accessInstanceVariablesDirectly(): boolean;
+
 }
 

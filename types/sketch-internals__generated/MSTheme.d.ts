@@ -1,4 +1,5 @@
 interface MSThemeUninitialized<InitializedType = MSTheme> extends NSObjectUninitialized<MSTheme> {}
+
 interface MSTheme extends NSObject {
   layerListSelectionColorForWindow_isActiveOutlineView(window: NSWindow | null, isActive: boolean): NSColor;
   layerListSymbolOverrideSelectionColorForWindow_isActiveOutlineView(window: NSWindow | null, isActive: boolean): NSColor;
@@ -147,11 +148,39 @@ interface MSTheme extends NSObject {
   darkModeScheme(): MSThemeDarkModeScheme;
   setDarkModeScheme(darkModeScheme: MSThemeDarkModeScheme): void;
 }
+
 declare const MSTheme: {
   alloc(): MSThemeUninitialized;
-  class(): MSTheme;  setupAppearance(): void;
-
+  class(): MSTheme;
+  setupAppearance(): void;
+  load(): void;
+  instancesRespondToSelector(aSelector: string): boolean;
+  conformsToProtocol(protocol: Protocol): boolean;
+  instanceMethodForSelector(aSelector: string): IMP;
+  isSubclassOfClass(aClass: any): boolean;
+  hash(): NSUInteger;
+  superclass(): any;
+  description(): NSString;
+  debugDescription(): NSString;
+  useStoredAccessor(): boolean;
+  keyPathsForValuesAffectingValueForKey(key: NSString | string): NSSet<any>;
+  automaticallyNotifiesObserversForKey(key: NSString | string): boolean;
+  setKeys_triggerChangeNotificationsForDependentKey(keys: NSArray<any> | any[], dependentKey: NSString | string): void;
+  classFallbacksForKeyedArchiver(): NSArray<any>;
+  classForKeyedUnarchiver(): any;
+  version(): NSInteger;
+  setVersion(aVersion: NSInteger): void;
+  cancelPreviousPerformRequestsWithTarget_selector_object(aTarget: any, aSelector: string, anArgument: any | null): void;
+  cancelPreviousPerformRequestsWithTarget(aTarget: any): void;
+  exposeBinding(binding: NSBindingName): void;
+  setDefaultPlaceholder_forMarker_withBinding(placeholder: any | null, marker: any | null, binding: NSBindingName): void;
+  defaultPlaceholderForMarker_withBinding(marker: any | null, binding: NSBindingName): any;
+  mo_swizzleAdditions(): void;
+  mo_mocha(): MOClassDescription;
+  isSelectorExcludedFromMochaScript(selector: string): boolean;
+  selectorForMochaPropertyName(propertyName: NSString | string): string;
   sharedTheme(): MSTheme;
+  accessInstanceVariablesDirectly(): boolean;
 
 }
 

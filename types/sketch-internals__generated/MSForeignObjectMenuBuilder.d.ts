@@ -2,6 +2,7 @@ interface MSForeignObjectMenuBuilderUninitialized<InitializedType = MSForeignObj
   initWithCollector_delegate(collector: MSForeignObjectCollector, delegate: any): InitializedType;
   initWithProvider_delegate(provider: any, delegate: any): InitializedType;
 }
+
 interface MSForeignObjectMenuBuilder extends MSSortableObjectMenuBuilder {
   buildMenuItemsForMenu_withTarget_selector(menu: NSMenu, target: any, selector: string): NSArray<any>;
   buildMenuItemsForMenu_withAction(menu: NSMenu, action: MSAction): NSArray<any>;
@@ -16,9 +17,10 @@ interface MSForeignObjectMenuBuilder extends MSSortableObjectMenuBuilder {
   setRequiresLocalSubmenu(requiresLocalSubmenu: boolean): void;
   collector(): MSForeignObjectCollector;
 }
+
 declare const MSForeignObjectMenuBuilder: {
   alloc(): MSForeignObjectMenuBuilderUninitialized;
-  class(): MSForeignObjectMenuBuilder;  filterForReplacingSymbolInstances(layers: NSArray<any> | any[]): MSForeignObjectCollectionFilter;
-
+  class(): MSForeignObjectMenuBuilder;
+  filterForReplacingSymbolInstances(layers: NSArray<any> | any[]): MSForeignObjectCollectionFilter;
 }
 

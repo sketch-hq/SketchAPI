@@ -1,4 +1,5 @@
 interface _MSSymbolInstanceUninitialized<InitializedType = _MSSymbolInstance> extends MSStyledLayerUninitialized<_MSSymbolInstance> {}
+
 interface _MSSymbolInstance extends MSStyledLayer {
   addOverrideValue(value: MSOverrideValue): void;
   addOverrideValues(overrideValues: NSArray<any> | any[]): void;
@@ -24,8 +25,15 @@ interface _MSSymbolInstance extends MSStyledLayer {
   overrideValues(): NSArray<any>;
   setOverrideValues(overrideValues: NSArray<any> | any[]): void;
 }
+
 declare const _MSSymbolInstance: {
   alloc(): _MSSymbolInstanceUninitialized;
   class(): _MSSymbolInstance;
+  layerWithImageFromPasteboard(pasteboard: NSPasteboard): _MSSymbolInstance;
+  layerWithImageFromFileURL(fileURL: NSURL): _MSSymbolInstance;
+  pasteStyleFromPasteboardOnLayers_document(styledLayers: NSArray<any> | any[], document: MSDocumentData): void;
+  pasteStyleFromPasteboard_onLayers_document(pasteboard: NSPasteboard, styledLayers: NSArray<any> | any[], document: MSDocumentData): void;
+  pasteStyleDict_onLayers_document(style: NSDictionary<any, any> | {[key: string]: any}, styledLayers: NSArray<any> | any[], document: MSDocumentData): void;
+  supportedPasteboardTypesForStyleCopying(): NSArray<any>;
 }
 

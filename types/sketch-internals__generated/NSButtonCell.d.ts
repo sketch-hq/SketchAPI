@@ -1,4 +1,5 @@
 interface NSButtonCellUninitialized<InitializedType = NSButtonCell> extends NSActionCellUninitialized<NSButtonCell> {}
+
 interface NSButtonCell extends NSActionCell {
   setButtonType(type: NSButtonType): void;
   setPeriodicDelay_interval(delay: number, interval: number): void;
@@ -56,8 +57,13 @@ interface NSButtonCell extends NSActionCell {
   gradientType(): NSGradientType;
   setGradientType(gradientType: NSGradientType): void;
 }
+
 declare const NSButtonCell: {
   alloc(): NSButtonCellUninitialized;
   class(): NSButtonCell;
+  prefersTrackingUntilMouseUp(): boolean;
+  defaultMenu(): NSMenu;
+  defaultFocusRingType(): NSFocusRingType;
+
 }
 

@@ -1,4 +1,5 @@
 interface MSStyleUninitialized<InitializedType = MSStyle> extends _MSStyleUninitialized<MSStyle> {}
+
 interface MSStyle extends _MSStyle, IMSSharedObjectInstance, INSCopying {
   multiplyBy(size: CGFloat): void;
   enabledFills(): NSArray<any>;
@@ -17,6 +18,9 @@ interface MSStyle extends _MSStyle, IMSSharedObjectInstance, INSCopying {
   supportsAdvancedBorderSettings(): boolean;
   stylePartsOfType(type: MSStylePartType): NSArray<any>;
   addStylePartOfType(type: MSStylePartType): MSStylePart;
+  type(): MSSharedStyleType;
+  syncWithTemplateInstance(instance: any): void;
+  copyWithZone(zone: NSZone | null): any;
 
   primitiveTextStyle(): MSTextStyle;
   setPrimitiveTextStyle(primitiveTextStyle: MSTextStyle): void;
@@ -32,9 +36,10 @@ interface MSStyle extends _MSStyle, IMSSharedObjectInstance, INSCopying {
   thickestInnerStroke(): CGFloat;
   thickestStroke(): CGFloat;
 }
+
 declare const MSStyle: {
   alloc(): MSStyleUninitialized;
-  class(): MSStyle;  styleWithFillColor(color: MSColor): MSStyle;
-
+  class(): MSStyle;
+  styleWithFillColor(color: MSColor): MSStyle;
 }
 

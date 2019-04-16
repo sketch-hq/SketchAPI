@@ -1,4 +1,5 @@
 interface CAKeyframeAnimationUninitialized<InitializedType = CAKeyframeAnimation> extends CAPropertyAnimationUninitialized<CAKeyframeAnimation> {}
+
 interface CAKeyframeAnimation extends CAPropertyAnimation {
 
   values(): NSArray<any>;
@@ -20,8 +21,12 @@ interface CAKeyframeAnimation extends CAPropertyAnimation {
   rotationMode(): CAAnimationRotationMode;
   setRotationMode(rotationMode: CAAnimationRotationMode): void;
 }
+
 declare const CAKeyframeAnimation: {
   alloc(): CAKeyframeAnimationUninitialized;
   class(): CAKeyframeAnimation;
+  animationWithKeyPath(path: NSString | string | null): CAKeyframeAnimation;
+  accessInstanceVariablesDirectly(): boolean;
+
 }
 

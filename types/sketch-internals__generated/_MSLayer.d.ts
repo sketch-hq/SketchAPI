@@ -1,4 +1,5 @@
 interface _MSLayerUninitialized<InitializedType = _MSLayer> extends MSModelObjectUninitialized<_MSLayer> {}
+
 interface _MSLayer extends MSModelObject {
 
   booleanOperation(): MSBooleanOperation;
@@ -38,8 +39,11 @@ interface _MSLayer extends MSModelObject {
   frame(): MSRect;
   setFrame(frame: MSRect): void;
 }
+
 declare const _MSLayer: {
   alloc(): _MSLayerUninitialized;
   class(): _MSLayer;
+  immutableClass(): any;
+  allowsFaulting(): boolean;
 }
 

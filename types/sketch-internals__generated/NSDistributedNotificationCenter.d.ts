@@ -1,4 +1,5 @@
 interface NSDistributedNotificationCenterUninitialized<InitializedType = NSDistributedNotificationCenter> extends NSNotificationCenterUninitialized<NSDistributedNotificationCenter> {}
+
 interface NSDistributedNotificationCenter extends NSNotificationCenter {
   addObserver_selector_name_object_suspensionBehavior(observer: any, selector: string, name: NSNotificationName | null, object: NSString | string | null, suspensionBehavior: NSNotificationSuspensionBehavior): void;
   postNotificationName_object_userInfo_deliverImmediately(name: NSNotificationName, object: NSString | string | null, userInfo: NSDictionary<any, any> | {[key: string]: any} | null, deliverImmediately: boolean): void;
@@ -11,10 +12,13 @@ interface NSDistributedNotificationCenter extends NSNotificationCenter {
   suspended(): boolean;
   setSuspended(suspended: boolean): void;
 }
+
 declare const NSDistributedNotificationCenter: {
   alloc(): NSDistributedNotificationCenterUninitialized;
-  class(): NSDistributedNotificationCenter;  notificationCenterForType(notificationCenterType: NSDistributedNotificationCenterType): NSDistributedNotificationCenter;
+  class(): NSDistributedNotificationCenter;
+  notificationCenterForType(notificationCenterType: NSDistributedNotificationCenterType): NSDistributedNotificationCenter;
   defaultCenter(): NSDistributedNotificationCenter;
+  defaultCenter(): NSNotificationCenter;
 
 }
 

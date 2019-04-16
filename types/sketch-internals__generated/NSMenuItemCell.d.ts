@@ -1,4 +1,5 @@
 interface NSMenuItemCellUninitialized<InitializedType = NSMenuItemCell> extends NSButtonCellUninitialized<NSMenuItemCell> {}
+
 interface NSMenuItemCell extends NSButtonCell {
   setMenuView(menuView: NSMenuView | null): void;
   menuView(): NSMenuView;
@@ -26,8 +27,13 @@ interface NSMenuItemCell extends NSButtonCell {
   tag(): NSInteger;
   setTag(tag: NSInteger): void;
 }
+
 declare const NSMenuItemCell: {
   alloc(): NSMenuItemCellUninitialized;
   class(): NSMenuItemCell;
+  prefersTrackingUntilMouseUp(): boolean;
+  defaultMenu(): NSMenu;
+  defaultFocusRingType(): NSFocusRingType;
+
 }
 

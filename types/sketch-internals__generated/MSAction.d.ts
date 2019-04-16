@@ -1,4 +1,5 @@
 interface MSActionUninitialized<InitializedType = MSAction> extends NSResponderUninitialized<MSAction> {}
+
 interface MSAction extends NSResponder {
   menuItems(): NSArray<any>;
   menuItemsForMenu(menu: NSMenu | null): NSArray<any>;
@@ -34,9 +35,13 @@ interface MSAction extends NSResponder {
   validate(): boolean;
   validationStatus(): MSActionValidation;
 }
+
 declare const MSAction: {
   alloc(): MSActionUninitialized;
-  class(): MSAction;  imageName(): NSString;
+  class(): MSAction;
+  imageName(): NSString;
+  restorableStateKeyPaths(): NSArray<any>;
+  accessInstanceVariablesDirectly(): boolean;
 
 }
 

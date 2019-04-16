@@ -3,9 +3,11 @@ interface SCKAPISessionUninitialized<InitializedType = SCKAPISession> extends NS
   initWithTokenData_forUserID(data: NSData, userID: NSString | string): InitializedType;
   initWithToken_ofType_refreshToken_forUserID(token: NSString | string, tokenType: SCKAPISessionTokenType, refreshToken: NSString | string, userID: NSString | string): InitializedType;
 }
+
 interface SCKAPISession extends NSObject, INSCopying {
   setCurrentWithError(error: NSError): boolean;
   sessionWithRefreshToken(refreshToken: NSString | string): SCKAPISession;
+  copyWithZone(zone: NSZone | null): any;
 
   isCurrent(): boolean;
   refreshToken(): NSString;
@@ -17,11 +19,39 @@ interface SCKAPISession extends NSObject, INSCopying {
   isValid(): boolean;
   httpAuthorizationValue(): NSString;
 }
+
 declare const SCKAPISession: {
   alloc(): SCKAPISessionUninitialized;
-  class(): SCKAPISession;  invalidateCurrentCache(): void;
-
+  class(): SCKAPISession;
+  invalidateCurrentCache(): void;
+  load(): void;
+  instancesRespondToSelector(aSelector: string): boolean;
+  conformsToProtocol(protocol: Protocol): boolean;
+  instanceMethodForSelector(aSelector: string): IMP;
+  isSubclassOfClass(aClass: any): boolean;
+  hash(): NSUInteger;
+  superclass(): any;
+  description(): NSString;
+  debugDescription(): NSString;
+  useStoredAccessor(): boolean;
+  keyPathsForValuesAffectingValueForKey(key: NSString | string): NSSet<any>;
+  automaticallyNotifiesObserversForKey(key: NSString | string): boolean;
+  setKeys_triggerChangeNotificationsForDependentKey(keys: NSArray<any> | any[], dependentKey: NSString | string): void;
+  classFallbacksForKeyedArchiver(): NSArray<any>;
+  classForKeyedUnarchiver(): any;
+  version(): NSInteger;
+  setVersion(aVersion: NSInteger): void;
+  cancelPreviousPerformRequestsWithTarget_selector_object(aTarget: any, aSelector: string, anArgument: any | null): void;
+  cancelPreviousPerformRequestsWithTarget(aTarget: any): void;
+  exposeBinding(binding: NSBindingName): void;
+  setDefaultPlaceholder_forMarker_withBinding(placeholder: any | null, marker: any | null, binding: NSBindingName): void;
+  defaultPlaceholderForMarker_withBinding(marker: any | null, binding: NSBindingName): any;
+  mo_swizzleAdditions(): void;
+  mo_mocha(): MOClassDescription;
+  isSelectorExcludedFromMochaScript(selector: string): boolean;
+  selectorForMochaPropertyName(propertyName: NSString | string): string;
   hasCurrent(): boolean;
+  accessInstanceVariablesDirectly(): boolean;
 
 }
 

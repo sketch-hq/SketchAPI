@@ -1,4 +1,5 @@
 interface MSImmutableColorUninitialized<InitializedType = MSImmutableColor> extends _MSImmutableColorUninitialized<MSImmutableColor> {}
+
 interface MSImmutableColor extends _MSImmutableColor, IMSColor {
   NSColorWithColorSpace(colorSpace: NSColorSpace): NSColor;
   newCGColorWithColorSpace(colorSpace: CGColorSpaceRef): CGColorRef;
@@ -19,9 +20,11 @@ interface MSImmutableColor extends _MSImmutableColor, IMSColor {
   opaque(): boolean;
   manifestComponents(): NSArray<any>;
 }
+
 declare const MSImmutableColor: {
   alloc(): MSImmutableColorUninitialized;
-  class(): MSImmutableColor;  colorWithNSColor(color: NSColor): MSImmutableColor;
+  class(): MSImmutableColor;
+  colorWithNSColor(color: NSColor): MSImmutableColor;
   colorWithRed_green_blue_alpha(red: CGFloat, green: CGFloat, blue: CGFloat, alpha: CGFloat): MSImmutableColor;
   colorWithWhite_alpha(white: CGFloat, alpha: CGFloat): MSImmutableColor;
   colorWithIntegerRed_green_blue(red: NSInteger, green: NSInteger, blue: NSInteger): MSImmutableColor;
@@ -33,6 +36,5 @@ declare const MSImmutableColor: {
   hexValueForRed_green_blue(red: CGFloat, green: CGFloat, blue: CGFloat): NSString;
   namedColor(name: NSString | string): MSImmutableColor;
   colorWithSVGString(string: NSString | string): MSImmutableColor;
-
 }
 

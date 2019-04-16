@@ -1,4 +1,5 @@
 interface MSDragRectEventHandlerUninitialized<InitializedType = MSDragRectEventHandler> extends MSEventHandlerUninitialized<MSDragRectEventHandler> {}
+
 interface MSDragRectEventHandler extends MSEventHandler {
   performActionWithRect_fromLayer_constrainProportions(rect: NSRect, layer: MSLayer | null, constrainProportions: boolean): any;
   drawRectPreview(): void;
@@ -16,8 +17,10 @@ interface MSDragRectEventHandler extends MSEventHandler {
   insertionCursor(): NSCursor;
   setInsertionCursor(insertionCursor: NSCursor): void;
 }
+
 declare const MSDragRectEventHandler: {
   alloc(): MSDragRectEventHandlerUninitialized;
   class(): MSDragRectEventHandler;
+  eventHandlerWithManager(aManager: MSEventHandlerManager): any;
 }
 

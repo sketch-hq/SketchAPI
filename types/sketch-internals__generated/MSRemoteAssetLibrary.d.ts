@@ -1,6 +1,7 @@
 interface MSRemoteAssetLibraryUninitialized<InitializedType = MSRemoteAssetLibrary> extends MSAssetLibraryUninitialized<MSRemoteAssetLibrary> {
   initWithName_appcastURL_version_infoText(libraryName: NSString | string, appcastURL: NSURL, libraryVersion: NSString | string | null, infoText: NSString | string | null): InitializedType;
 }
+
 interface MSRemoteAssetLibrary extends MSAssetLibrary {
   assetLibraryUpdated(): void;
 
@@ -19,11 +20,15 @@ interface MSRemoteAssetLibrary extends MSAssetLibrary {
   updateAvailable(): boolean;
   fileName(): NSString;
 }
+
 declare const MSRemoteAssetLibrary: {
   alloc(): MSRemoteAssetLibraryUninitialized;
-  class(): MSRemoteAssetLibrary;  URLForApplicationSupportLibraryNamed(name: NSString | string): NSURL;
-
+  class(): MSRemoteAssetLibrary;
+  URLForApplicationSupportLibraryNamed(name: NSString | string): NSURL;
+  URLForTemplateLibraryNamed(name: NSString | string): NSURL;
+  assetLibraryStatusForDocumentErrorCode(errorCode: MSDocumentErrorCode): MSAssetLibraryStatus;
   assetLibraryFolder(): NSURL;
+  accessInstanceVariablesDirectly(): boolean;
 
 }
 

@@ -1,4 +1,5 @@
 interface MOBridgeSupportMethodUninitialized<InitializedType = MOBridgeSupportMethod> extends MOBridgeSupportSymbolUninitialized<MOBridgeSupportMethod> {}
+
 interface MOBridgeSupportMethod extends MOBridgeSupportSymbol {
   addArgument(argument: MOBridgeSupportArgument): void;
   removeArgument(argument: MOBridgeSupportArgument): void;
@@ -24,8 +25,11 @@ interface MOBridgeSupportMethod extends MOBridgeSupportSymbol {
   suggestion(): NSString;
   setSuggestion(suggestion: NSString | string): void;
 }
+
 declare const MOBridgeSupportMethod: {
   alloc(): MOBridgeSupportMethodUninitialized;
   class(): MOBridgeSupportMethod;
+  accessInstanceVariablesDirectly(): boolean;
+
 }
 

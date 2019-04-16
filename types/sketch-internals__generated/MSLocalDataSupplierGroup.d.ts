@@ -1,6 +1,7 @@
 interface MSLocalDataSupplierGroupUninitialized<InitializedType = MSLocalDataSupplierGroup> extends MSDataSupplierGroupUninitialized<MSLocalDataSupplierGroup> {
   initWithLocalDataSupplier_groupURL_delegate(localDataSupplier: MSLocalDataSupplier | null, groupURL: NSURL, delegate: any): InitializedType;
 }
+
 interface MSLocalDataSupplierGroup extends MSDataSupplierGroup {
   dataSupplierWithIdentifier(dataSupplierIdentifier: NSString | string): MSLocalDataSupplier;
 
@@ -10,9 +11,12 @@ interface MSLocalDataSupplierGroup extends MSDataSupplierGroup {
   anyLocalDataSupplier(): MSLocalDataSupplier;
   groupURL(): NSURL;
 }
+
 declare const MSLocalDataSupplierGroup: {
   alloc(): MSLocalDataSupplierGroupUninitialized;
-  class(): MSLocalDataSupplierGroup;  localDataSupplierGroupFromFileSystemURL_dataSupplierDelegate(fileSystemURL: NSURL, dataSupplierDelegate: any): MSLocalDataSupplierGroup;
+  class(): MSLocalDataSupplierGroup;
+  localDataSupplierGroupFromFileSystemURL_dataSupplierDelegate(fileSystemURL: NSURL, dataSupplierDelegate: any): MSLocalDataSupplierGroup;
+  accessInstanceVariablesDirectly(): boolean;
 
 }
 

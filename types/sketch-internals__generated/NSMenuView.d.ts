@@ -1,6 +1,7 @@
 interface NSMenuViewUninitialized<InitializedType = NSMenuView> extends NSViewUninitialized<NSMenuView> {
   initAsTearOff(): InitializedType;
 }
+
 interface NSMenuView extends NSView {
   setMenu(menu: NSMenu): void;
   menu(): NSMenu;
@@ -42,9 +43,17 @@ interface NSMenuView extends NSView {
   horizontalEdgePadding(): CGFloat;
   setHorizontalEdgePadding(pad: CGFloat): void;
 }
+
 declare const NSMenuView: {
   alloc(): NSMenuViewUninitialized;
-  class(): NSMenuView;  menuBarHeight(): CGFloat;
+  class(): NSMenuView;
+  menuBarHeight(): CGFloat;
+  requiresConstraintBasedLayout(): boolean;
+  focusView(): NSView;
+  defaultMenu(): NSMenu;
+  compatibleWithResponsiveScrolling(): boolean;
+  defaultFocusRingType(): NSFocusRingType;
+  restorableStateKeyPaths(): NSArray<any>;
 
 }
 

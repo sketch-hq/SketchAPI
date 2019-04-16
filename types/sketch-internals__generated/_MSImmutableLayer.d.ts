@@ -1,4 +1,5 @@
 interface _MSImmutableLayerUninitialized<InitializedType = _MSImmutableLayer> extends MSImmutableModelObjectUninitialized<_MSImmutableLayer> {}
+
 interface _MSImmutableLayer extends MSImmutableModelObject {
 
   booleanOperation(): MSBooleanOperation;
@@ -20,8 +21,11 @@ interface _MSImmutableLayer extends MSImmutableModelObject {
   flow(): MSImmutableFlowConnection;
   frame(): MSImmutableRect;
 }
+
 declare const _MSImmutableLayer: {
   alloc(): _MSImmutableLayerUninitialized;
   class(): _MSImmutableLayer;
+  mutableClass(): any;
+  traitsForPropertyName(name: NSString | string): MSPropertyTraits;
 }
 

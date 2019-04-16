@@ -1,4 +1,5 @@
 interface MSRulerViewLayerUninitialized<InitializedType = MSRulerViewLayer> extends CALayerUninitialized<MSRulerViewLayer> {}
+
 interface MSRulerViewLayer extends CALayer {
   drawBackground(): void;
   drawBackgroundForLabel_atPoint(string: NSString | string, p: NSPoint): void;
@@ -22,8 +23,17 @@ interface MSRulerViewLayer extends CALayer {
   parentView(): NSView;
   setParentView(parentView: NSView): void;
 }
+
 declare const MSRulerViewLayer: {
   alloc(): MSRulerViewLayerUninitialized;
   class(): MSRulerViewLayer;
+  layer(): MSRulerViewLayer;
+  defaultValueForKey(key: NSString | string): any;
+  needsDisplayForKey(key: NSString | string): boolean;
+  defaultActionForKey(event: NSString | string): any;
+  layerWithRemoteClientId(client_id: number): CALayer;
+  supportsSecureCoding(): boolean;
+  accessInstanceVariablesDirectly(): boolean;
+
 }
 

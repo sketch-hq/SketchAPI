@@ -1,4 +1,5 @@
 interface MSOffsetPathSheetUninitialized<InitializedType = MSOffsetPathSheet> extends MSCanvasUpdatingSheetUninitialized<MSOffsetPathSheet> {}
+
 interface MSOffsetPathSheet extends MSCanvasUpdatingSheet {
 
   offset(): CGFloat;
@@ -6,8 +7,11 @@ interface MSOffsetPathSheet extends MSCanvasUpdatingSheet {
   duplicateLayers(): boolean;
   setDuplicateLayers(duplicateLayers: boolean): void;
 }
+
 declare const MSOffsetPathSheet: {
   alloc(): MSOffsetPathSheetUninitialized;
   class(): MSOffsetPathSheet;
+  accessInstanceVariablesDirectly(): boolean;
+
 }
 

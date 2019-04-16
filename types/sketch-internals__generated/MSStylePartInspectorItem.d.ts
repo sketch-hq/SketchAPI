@@ -1,4 +1,5 @@
 interface MSStylePartInspectorItemUninitialized<InitializedType = MSStylePartInspectorItem> extends NSViewControllerUninitialized<MSStylePartInspectorItem> {}
+
 interface MSStylePartInspectorItem extends NSViewController {
   updateDisplayedValues(): void;
 
@@ -10,8 +11,12 @@ interface MSStylePartInspectorItem extends NSViewController {
   delegate(): any;
   setDelegate(delegate: any): void;
 }
+
 declare const MSStylePartInspectorItem: {
   alloc(): MSStylePartInspectorItemUninitialized;
   class(): MSStylePartInspectorItem;
+  restorableStateKeyPaths(): NSArray<any>;
+  accessInstanceVariablesDirectly(): boolean;
+
 }
 

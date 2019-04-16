@@ -1,4 +1,5 @@
 interface NSScrubberUninitialized<InitializedType = NSScrubber> extends NSViewUninitialized<NSScrubber> {}
+
 interface NSScrubber extends NSView {
   reloadData(): void;
   performSequentialBatchUpdates(updateBlock: Block): void;
@@ -43,8 +44,16 @@ interface NSScrubber extends NSView {
   backgroundView(): NSView;
   setBackgroundView(backgroundView: NSView): void;
 }
+
 declare const NSScrubber: {
   alloc(): NSScrubberUninitialized;
   class(): NSScrubber;
+  requiresConstraintBasedLayout(): boolean;
+  focusView(): NSView;
+  defaultMenu(): NSMenu;
+  compatibleWithResponsiveScrolling(): boolean;
+  defaultFocusRingType(): NSFocusRingType;
+  restorableStateKeyPaths(): NSArray<any>;
+
 }
 

@@ -2,7 +2,9 @@ interface NSCollectionViewLayoutUninitialized<InitializedType = NSCollectionView
   initialLayoutAttributesForAppearingItemAtIndexPath(itemIndexPath: NSIndexPath): InitializedType;
   initialLayoutAttributesForAppearingSupplementaryElementOfKind_atIndexPath(elementKind: NSCollectionViewSupplementaryElementKind, elementIndexPath: NSIndexPath): InitializedType;
   initialLayoutAttributesForAppearingDecorationElementOfKind_atIndexPath(elementKind: NSCollectionViewDecorationElementKind, decorationIndexPath: NSIndexPath): InitializedType;
+  initWithCoder(aDecoder: NSCoder): InitializedType;
 }
+
 interface NSCollectionViewLayout extends NSObject, INSCoding {
   invalidateLayout(): void;
   invalidateLayoutWithContext(context: NSCollectionViewLayoutInvalidationContext): void;
@@ -35,15 +37,44 @@ interface NSCollectionViewLayout extends NSObject, INSCoding {
   indexPathsToDeleteForDecorationViewOfKind(elementKind: NSCollectionViewDecorationElementKind): NSSet<any>;
   indexPathsToInsertForSupplementaryViewOfKind(elementKind: NSCollectionViewSupplementaryElementKind): NSSet<any>;
   indexPathsToInsertForDecorationViewOfKind(elementKind: NSCollectionViewDecorationElementKind): NSSet<any>;
+  encodeWithCoder(aCoder: NSCoder): void;
 
   collectionView(): NSCollectionView;
   collectionViewContentSize(): NSSize;
 }
+
 declare const NSCollectionViewLayout: {
   alloc(): NSCollectionViewLayoutUninitialized;
   class(): NSCollectionViewLayout;
+  load(): void;
+  instancesRespondToSelector(aSelector: string): boolean;
+  conformsToProtocol(protocol: Protocol): boolean;
+  instanceMethodForSelector(aSelector: string): IMP;
+  isSubclassOfClass(aClass: any): boolean;
+  hash(): NSUInteger;
+  superclass(): any;
+  description(): NSString;
+  debugDescription(): NSString;
+  useStoredAccessor(): boolean;
+  keyPathsForValuesAffectingValueForKey(key: NSString | string): NSSet<any>;
+  automaticallyNotifiesObserversForKey(key: NSString | string): boolean;
+  setKeys_triggerChangeNotificationsForDependentKey(keys: NSArray<any> | any[], dependentKey: NSString | string): void;
+  classFallbacksForKeyedArchiver(): NSArray<any>;
+  classForKeyedUnarchiver(): any;
+  version(): NSInteger;
+  setVersion(aVersion: NSInteger): void;
+  cancelPreviousPerformRequestsWithTarget_selector_object(aTarget: any, aSelector: string, anArgument: any | null): void;
+  cancelPreviousPerformRequestsWithTarget(aTarget: any): void;
+  exposeBinding(binding: NSBindingName): void;
+  setDefaultPlaceholder_forMarker_withBinding(placeholder: any | null, marker: any | null, binding: NSBindingName): void;
+  defaultPlaceholderForMarker_withBinding(marker: any | null, binding: NSBindingName): any;
+  mo_swizzleAdditions(): void;
+  mo_mocha(): MOClassDescription;
+  isSelectorExcludedFromMochaScript(selector: string): boolean;
+  selectorForMochaPropertyName(propertyName: NSString | string): string;
   layoutAttributesClass(): any;
   invalidationContextClass(): any;
+  accessInstanceVariablesDirectly(): boolean;
 
 }
 

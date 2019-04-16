@@ -1,6 +1,7 @@
 interface NSPopUpButtonUninitialized<InitializedType = NSPopUpButton> extends NSButtonUninitialized<NSPopUpButton> {
   initWithFrame_pullsDown(buttonFrame: NSRect, flag: boolean): InitializedType;
 }
+
 interface NSPopUpButton extends NSButton {
   addItemWithTitle(title: NSString | string): void;
   addItemsWithTitles(itemTitles: NSArray<any> | any[]): void;
@@ -40,8 +41,21 @@ interface NSPopUpButton extends NSButton {
   itemTitles(): NSArray<any>;
   titleOfSelectedItem(): NSString;
 }
+
 declare const NSPopUpButton: {
   alloc(): NSPopUpButtonUninitialized;
   class(): NSPopUpButton;
+  buttonWithTitle_image_target_action(title: NSString | string, image: NSImage, target: any | null, action: string | null): NSPopUpButton;
+  buttonWithTitle_target_action(title: NSString | string, target: any | null, action: string | null): NSPopUpButton;
+  buttonWithImage_target_action(image: NSImage, target: any | null, action: string | null): NSPopUpButton;
+  checkboxWithTitle_target_action(title: NSString | string, target: any | null, action: string | null): NSPopUpButton;
+  radioButtonWithTitle_target_action(title: NSString | string, target: any | null, action: string | null): NSPopUpButton;
+  cellClass(): any;,
+          {
+            newLineStart: true,
+            newLineEnd: false,
+          }
+  setCellClass(cellClass: any): void;
+
 }
 

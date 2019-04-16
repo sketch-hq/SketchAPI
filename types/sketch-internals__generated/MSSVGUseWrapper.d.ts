@@ -1,4 +1,5 @@
 interface MSSVGUseWrapperUninitialized<InitializedType = MSSVGUseWrapper> extends MSXMLElementWrapperUninitialized<MSSVGUseWrapper> {}
+
 interface MSSVGUseWrapper extends MSXMLElementWrapper {
 
   externalResourcesRequired(): NSString;
@@ -16,8 +17,11 @@ interface MSSVGUseWrapper extends MSXMLElementWrapper {
   href(): NSString;
   setHref(href: NSString | string): void;
 }
+
 declare const MSSVGUseWrapper: {
   alloc(): MSSVGUseWrapperUninitialized;
   class(): MSSVGUseWrapper;
+  elementName(): NSString;
+  element(): MSSVGUseWrapper;
 }
 

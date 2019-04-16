@@ -1,4 +1,5 @@
 interface BCLayerListFilterViewControllerUninitialized<InitializedType = BCLayerListFilterViewController> extends NSViewControllerUninitialized<BCLayerListFilterViewController> {}
+
 interface BCLayerListFilterViewController extends NSViewController {
   applyAppearance(): void;
   showFilterMenu(sender: any): IBAction;
@@ -7,8 +8,12 @@ interface BCLayerListFilterViewController extends NSViewController {
 
   filter(): BCFilterInfo;
 }
+
 declare const BCLayerListFilterViewController: {
   alloc(): BCLayerListFilterViewControllerUninitialized;
   class(): BCLayerListFilterViewController;
+  restorableStateKeyPaths(): NSArray<any>;
+  accessInstanceVariablesDirectly(): boolean;
+
 }
 

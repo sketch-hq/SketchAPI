@@ -2,6 +2,7 @@ interface SketchSVGExporterUninitialized<InitializedType = SketchSVGExporter> ex
   initWithImmutableDocument_exportRect_layerIDs_includeBackground(immutableDocument: MSImmutableDocumentData, exportRect: NSRect, layerIDs: NSSet<any>, includeBackground: boolean): InitializedType;
   initWithName_exportRequest(name: NSString | string, request: MSExportRequest): InitializedType;
 }
+
 interface SketchSVGExporter extends NSObject {
   exportLayers(layers: NSArray<any> | any[]): NSData;
   pushParent(layer: MSImmutableLayer): void;
@@ -29,8 +30,37 @@ interface SketchSVGExporter extends NSObject {
   currentSymbolInstance(): MSImmutableSymbolInstance;
   includeArtboardBackground(): boolean;
 }
+
 declare const SketchSVGExporter: {
   alloc(): SketchSVGExporterUninitialized;
   class(): SketchSVGExporter;
+  load(): void;
+  instancesRespondToSelector(aSelector: string): boolean;
+  conformsToProtocol(protocol: Protocol): boolean;
+  instanceMethodForSelector(aSelector: string): IMP;
+  isSubclassOfClass(aClass: any): boolean;
+  hash(): NSUInteger;
+  superclass(): any;
+  description(): NSString;
+  debugDescription(): NSString;
+  useStoredAccessor(): boolean;
+  keyPathsForValuesAffectingValueForKey(key: NSString | string): NSSet<any>;
+  automaticallyNotifiesObserversForKey(key: NSString | string): boolean;
+  setKeys_triggerChangeNotificationsForDependentKey(keys: NSArray<any> | any[], dependentKey: NSString | string): void;
+  classFallbacksForKeyedArchiver(): NSArray<any>;
+  classForKeyedUnarchiver(): any;
+  version(): NSInteger;
+  setVersion(aVersion: NSInteger): void;
+  cancelPreviousPerformRequestsWithTarget_selector_object(aTarget: any, aSelector: string, anArgument: any | null): void;
+  cancelPreviousPerformRequestsWithTarget(aTarget: any): void;
+  exposeBinding(binding: NSBindingName): void;
+  setDefaultPlaceholder_forMarker_withBinding(placeholder: any | null, marker: any | null, binding: NSBindingName): void;
+  defaultPlaceholderForMarker_withBinding(marker: any | null, binding: NSBindingName): any;
+  mo_swizzleAdditions(): void;
+  mo_mocha(): MOClassDescription;
+  isSelectorExcludedFromMochaScript(selector: string): boolean;
+  selectorForMochaPropertyName(propertyName: NSString | string): string;
+  accessInstanceVariablesDirectly(): boolean;
+
 }
 

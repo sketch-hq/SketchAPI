@@ -1,4 +1,5 @@
 interface NSFontUninitialized<InitializedType = NSFont> extends NSObjectUninitialized<NSFont> {}
+
 interface NSFont extends NSObject, INSCopying, INSSecureCoding {
   boundingRectForCGGlyph(glyph: CGGlyph): NSRect;
   advancementForCGGlyph(glyph: CGGlyph): NSSize;
@@ -28,6 +29,7 @@ interface NSFont extends NSObject, INSCopying, INSSecureCoding {
   positionOfGlyph_withRelation_toBaseGlyph_totalAdvancement_metricsExist(thisGlyph: NSGlyph, rel: NSGlyphRelation, baseGlyph: NSGlyph, adv: NSSizePointer, exist: boolean): NSPoint;
   localizedFamilyName(): NSString;
   addSVGAttributes(attributes: NSMutableArray<any> | any[]): void;
+  copyWithZone(zone: NSZone | null): any;
 
   fontName(): NSString;
   pointSize(): CGFloat;
@@ -56,9 +58,11 @@ interface NSFont extends NSObject, INSCopying, INSSecureCoding {
   screenFont(): NSFont;
   renderingMode(): NSFontRenderingMode;
 }
+
 declare const NSFont: {
   alloc(): NSFontUninitialized;
-  class(): NSFont;  fontWithName_size(fontName: NSString | string, fontSize: CGFloat): NSFont;
+  class(): NSFont;
+  fontWithName_size(fontName: NSString | string, fontSize: CGFloat): NSFont;
   fontWithName_matrix(fontName: NSString | string, fontMatrix: CGFloat): NSFont;
   fontWithDescriptor_size(fontDescriptor: NSFontDescriptor, fontSize: CGFloat): NSFont;
   fontWithDescriptor_textTransform(fontDescriptor: NSFontDescriptor, textTransform: NSAffineTransform | null): NSFont;
@@ -86,10 +90,37 @@ declare const NSFont: {
   setPreventsAutoActivation_bc(flag: boolean): void;
   fontWithName_size_bc(fontName: NSString | string, fontSize: CGFloat): NSFont;
   fontPreventingAutoActivationWithName_size_bc(fontName: NSString | string, fontSize: CGFloat): NSFont;
-
+  load(): void;
+  instancesRespondToSelector(aSelector: string): boolean;
+  conformsToProtocol(protocol: Protocol): boolean;
+  instanceMethodForSelector(aSelector: string): IMP;
+  isSubclassOfClass(aClass: any): boolean;
+  hash(): NSUInteger;
+  superclass(): any;
+  description(): NSString;
+  debugDescription(): NSString;
+  useStoredAccessor(): boolean;
+  keyPathsForValuesAffectingValueForKey(key: NSString | string): NSSet<any>;
+  automaticallyNotifiesObserversForKey(key: NSString | string): boolean;
+  setKeys_triggerChangeNotificationsForDependentKey(keys: NSArray<any> | any[], dependentKey: NSString | string): void;
+  classFallbacksForKeyedArchiver(): NSArray<any>;
+  classForKeyedUnarchiver(): any;
+  version(): NSInteger;
+  setVersion(aVersion: NSInteger): void;
+  cancelPreviousPerformRequestsWithTarget_selector_object(aTarget: any, aSelector: string, anArgument: any | null): void;
+  cancelPreviousPerformRequestsWithTarget(aTarget: any): void;
+  exposeBinding(binding: NSBindingName): void;
+  setDefaultPlaceholder_forMarker_withBinding(placeholder: any | null, marker: any | null, binding: NSBindingName): void;
+  defaultPlaceholderForMarker_withBinding(marker: any | null, binding: NSBindingName): any;
+  mo_swizzleAdditions(): void;
+  mo_mocha(): MOClassDescription;
+  isSelectorExcludedFromMochaScript(selector: string): boolean;
+  selectorForMochaPropertyName(propertyName: NSString | string): string;
   systemFontSize(): CGFloat;
   smallSystemFontSize(): CGFloat;
   labelFontSize(): CGFloat;
+  supportsSecureCoding(): boolean;
+  accessInstanceVariablesDirectly(): boolean;
 
 }
 

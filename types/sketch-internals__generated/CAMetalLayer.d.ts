@@ -1,4 +1,5 @@
 interface CAMetalLayerUninitialized<InitializedType = CAMetalLayer> extends CALayerUninitialized<CAMetalLayer> {}
+
 interface CAMetalLayer extends CALayer {
   nextDrawable(): any;
 
@@ -23,8 +24,17 @@ interface CAMetalLayer extends CALayer {
   allowsNextDrawableTimeout(): boolean;
   setAllowsNextDrawableTimeout(allowsNextDrawableTimeout: boolean): void;
 }
+
 declare const CAMetalLayer: {
   alloc(): CAMetalLayerUninitialized;
   class(): CAMetalLayer;
+  layer(): CAMetalLayer;
+  defaultValueForKey(key: NSString | string): any;
+  needsDisplayForKey(key: NSString | string): boolean;
+  defaultActionForKey(event: NSString | string): any;
+  layerWithRemoteClientId(client_id: number): CALayer;
+  supportsSecureCoding(): boolean;
+  accessInstanceVariablesDirectly(): boolean;
+
 }
 

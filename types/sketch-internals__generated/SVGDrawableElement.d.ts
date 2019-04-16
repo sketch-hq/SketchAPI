@@ -1,4 +1,5 @@
 interface SVGDrawableElementUninitialized<InitializedType = SVGDrawableElement> extends _SVGDrawableElementUninitialized<SVGDrawableElement> {}
+
 interface SVGDrawableElement extends _SVGDrawableElement {
   dontCollapse(): boolean;
   processStyles_parent(xml: NSXMLElement, parent: SVGDrawableElement): void;
@@ -8,8 +9,12 @@ interface SVGDrawableElement extends _SVGDrawableElement {
   deferredClipping(): NSXMLElement;
   setDeferredClipping(deferredClipping: NSXMLElement): void;
 }
+
 declare const SVGDrawableElement: {
   alloc(): SVGDrawableElementUninitialized;
   class(): SVGDrawableElement;
+  propertyNames(): NSArray<any>;
+  relationshipNames(): NSArray<any>;
+  attributeNames(): NSArray<any>;
 }
 

@@ -1,6 +1,7 @@
 interface MSColorPickerViewControllerUninitialized<InitializedType = MSColorPickerViewController> extends NSViewControllerUninitialized<MSColorPickerViewController> {
   initWithDelegate(delegate: any): InitializedType;
 }
+
 interface MSColorPickerViewController extends NSViewController, IMSKeyViewProvider {
   setColor_multipleValues(color: MSColor, multiple: boolean): void;
   setFrequentColors(frequentColors: NSArray<any> | any[]): void;
@@ -10,9 +11,16 @@ interface MSColorPickerViewController extends NSViewController, IMSKeyViewProvid
 
   color(): MSColor;
   setColor(color: MSColor): void;
+  firstKeyView(): NSView;
+  lastKeyView(): NSView;
+  preferredFirstResponder(): NSView;
 }
+
 declare const MSColorPickerViewController: {
   alloc(): MSColorPickerViewControllerUninitialized;
   class(): MSColorPickerViewController;
+  restorableStateKeyPaths(): NSArray<any>;
+  accessInstanceVariablesDirectly(): boolean;
+
 }
 

@@ -1,4 +1,5 @@
 interface MSHeaderInspectorItemUninitialized<InitializedType = MSHeaderInspectorItem> extends MSInspectorItemUninitialized<MSHeaderInspectorItem> {}
+
 interface MSHeaderInspectorItem extends MSInspectorItem {
   setButtonTarget_action_image_alternate(target: any, action: string, image: NSImage, alternateImage: NSImage): void;
   setLabelLeadingMargin(margin: NSUInteger): void;
@@ -20,8 +21,17 @@ interface MSHeaderInspectorItem extends MSInspectorItem {
   titleView(): NSView;
   setTitleView(titleView: NSView): void;
 }
+
 declare const MSHeaderInspectorItem: {
   alloc(): MSHeaderInspectorItemUninitialized;
   class(): MSHeaderInspectorItem;
+  itemForSection(section: MSBaseInspectorSection): MSHeaderInspectorItem;
+  filterSelection(layers: MSLayerArray): MSLayerArray;
+  canHandleSomeLayersOfSelection(layerArray: MSLayerArray): boolean;
+  canHandleLayer(layer: MSLayer): boolean;
+  adjustLayerHierarchyAfterEditingLayers(layers: MSLayerArray): boolean;
+  restorableStateKeyPaths(): NSArray<any>;
+  accessInstanceVariablesDirectly(): boolean;
+
 }
 

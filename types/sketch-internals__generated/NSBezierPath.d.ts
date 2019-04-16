@@ -1,4 +1,5 @@
 interface NSBezierPathUninitialized<InitializedType = NSBezierPath> extends NSObjectUninitialized<NSBezierPath> {}
+
 interface NSBezierPath extends NSObject, INSCopying, INSSecureCoding {
   moveToPoint(point: NSPoint): void;
   lineToPoint(point: NSPoint): void;
@@ -104,6 +105,7 @@ interface NSBezierPath extends NSObject, INSCopying, INSSecureCoding {
   fb_copyAttributesFrom(path: NSBezierPath): void;
   fb_appendPath(path: NSBezierPath): void;
   fb_appendElement(element: NSBezierElement): void;
+  copyWithZone(zone: NSZone | null): any;
 
   lineWidth(): CGFloat;
   setLineWidth(lineWidth: CGFloat): void;
@@ -125,9 +127,11 @@ interface NSBezierPath extends NSObject, INSCopying, INSSecureCoding {
   bounds(): NSRect;
   elementCount(): NSInteger;
 }
+
 declare const NSBezierPath: {
   alloc(): NSBezierPathUninitialized;
-  class(): NSBezierPath;  bezierPath(): NSBezierPath;
+  class(): NSBezierPath;
+  bezierPath(): NSBezierPath;
   bezierPathWithRect(rect: NSRect): NSBezierPath;
   bezierPathWithOvalInRect(rect: NSRect): NSBezierPath;
   bezierPathWithRoundedRect_xRadius_yRadius(rect: NSRect, xRadius: CGFloat, yRadius: CGFloat): NSBezierPath;
@@ -145,19 +149,70 @@ declare const NSBezierPath: {
   bezierPathWithSubPaths(subPaths: NSArray<any> | any[]): NSBezierPath;
   bezierPathFromSVGString(contents: NSString | string): NSBezierPath;
   bezierPathFromEPSString(aString: NSString | string): NSBezierPath;
-
-  defaultMiterLimit(): CGFloat;
+  load(): void;
+  instancesRespondToSelector(aSelector: string): boolean;
+  conformsToProtocol(protocol: Protocol): boolean;
+  instanceMethodForSelector(aSelector: string): IMP;
+  isSubclassOfClass(aClass: any): boolean;
+  hash(): NSUInteger;
+  superclass(): any;
+  description(): NSString;
+  debugDescription(): NSString;
+  useStoredAccessor(): boolean;
+  keyPathsForValuesAffectingValueForKey(key: NSString | string): NSSet<any>;
+  automaticallyNotifiesObserversForKey(key: NSString | string): boolean;
+  setKeys_triggerChangeNotificationsForDependentKey(keys: NSArray<any> | any[], dependentKey: NSString | string): void;
+  classFallbacksForKeyedArchiver(): NSArray<any>;
+  classForKeyedUnarchiver(): any;
+  version(): NSInteger;
+  setVersion(aVersion: NSInteger): void;
+  cancelPreviousPerformRequestsWithTarget_selector_object(aTarget: any, aSelector: string, anArgument: any | null): void;
+  cancelPreviousPerformRequestsWithTarget(aTarget: any): void;
+  exposeBinding(binding: NSBindingName): void;
+  setDefaultPlaceholder_forMarker_withBinding(placeholder: any | null, marker: any | null, binding: NSBindingName): void;
+  defaultPlaceholderForMarker_withBinding(marker: any | null, binding: NSBindingName): any;
+  mo_swizzleAdditions(): void;
+  mo_mocha(): MOClassDescription;
+  isSelectorExcludedFromMochaScript(selector: string): boolean;
+  selectorForMochaPropertyName(propertyName: NSString | string): string;
+  defaultMiterLimit(): CGFloat;,
+          {
+            newLineStart: true,
+            newLineEnd: false,
+          }
   setDefaultMiterLimit(defaultMiterLimit: CGFloat): void;
-  defaultFlatness(): CGFloat;
+  defaultFlatness(): CGFloat;,
+          {
+            newLineStart: true,
+            newLineEnd: false,
+          }
   setDefaultFlatness(defaultFlatness: CGFloat): void;
-  defaultWindingRule(): NSWindingRule;
+  defaultWindingRule(): NSWindingRule;,
+          {
+            newLineStart: true,
+            newLineEnd: false,
+          }
   setDefaultWindingRule(defaultWindingRule: NSWindingRule): void;
-  defaultLineCapStyle(): NSLineCapStyle;
+  defaultLineCapStyle(): NSLineCapStyle;,
+          {
+            newLineStart: true,
+            newLineEnd: false,
+          }
   setDefaultLineCapStyle(defaultLineCapStyle: NSLineCapStyle): void;
-  defaultLineJoinStyle(): NSLineJoinStyle;
+  defaultLineJoinStyle(): NSLineJoinStyle;,
+          {
+            newLineStart: true,
+            newLineEnd: false,
+          }
   setDefaultLineJoinStyle(defaultLineJoinStyle: NSLineJoinStyle): void;
-  defaultLineWidth(): CGFloat;
+  defaultLineWidth(): CGFloat;,
+          {
+            newLineStart: true,
+            newLineEnd: false,
+          }
   setDefaultLineWidth(defaultLineWidth: CGFloat): void;
+  supportsSecureCoding(): boolean;
+  accessInstanceVariablesDirectly(): boolean;
 
 }
 

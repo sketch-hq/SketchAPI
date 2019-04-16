@@ -1,4 +1,5 @@
 interface NSPopoverTouchBarItemUninitialized<InitializedType = NSPopoverTouchBarItem> extends NSTouchBarItemUninitialized<NSPopoverTouchBarItem> {}
+
 interface NSPopoverTouchBarItem extends NSTouchBarItem {
   showPopover(sender: any | null): void;
   dismissPopover(sender: any | null): void;
@@ -19,6 +20,7 @@ interface NSPopoverTouchBarItem extends NSTouchBarItem {
   showsCloseButton(): boolean;
   setShowsCloseButton(showsCloseButton: boolean): void;
 }
+
 declare const NSPopoverTouchBarItem: {
   alloc(): NSPopoverTouchBarItemUninitialized;
   class(): NSPopoverTouchBarItem;

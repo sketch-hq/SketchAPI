@@ -1,4 +1,5 @@
 interface MSStyleInspectorSectionUninitialized<InitializedType = MSStyleInspectorSection> extends MSNestedInspectorSectionUninitialized<MSStyleInspectorSection> {}
+
 interface MSStyleInspectorSection extends MSNestedInspectorSection {
   openPopoverForStylePart_atIndex_preferringNative(stylePart: MSStylePartType, index: NSUInteger, prefersNative: boolean): void;
   closeAnyColorPopover(): void;
@@ -14,8 +15,12 @@ interface MSStyleInspectorSection extends MSNestedInspectorSection {
   colorControlsViewController(): MSColorControlsInspectorViewController;
   hasContent(): boolean;
 }
+
 declare const MSStyleInspectorSection: {
   alloc(): MSStyleInspectorSectionUninitialized;
   class(): MSStyleInspectorSection;
+  restorableStateKeyPaths(): NSArray<any>;
+  accessInstanceVariablesDirectly(): boolean;
+
 }
 

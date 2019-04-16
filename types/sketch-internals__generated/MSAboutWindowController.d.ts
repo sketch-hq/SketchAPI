@@ -1,4 +1,5 @@
 interface MSAboutWindowControllerUninitialized<InitializedType = MSAboutWindowController> extends NSWindowControllerUninitialized<MSAboutWindowController> {}
+
 interface MSAboutWindowController extends NSWindowController {
   showAboutUsPage(sender: any): IBAction;
   showAcknowledgementsPage(sender: any): IBAction;
@@ -31,9 +32,13 @@ interface MSAboutWindowController extends NSWindowController {
   versionTextField(): NSTextField;
   setVersionTextField(versionTextField: NSTextField): void;
 }
+
 declare const MSAboutWindowController: {
   alloc(): MSAboutWindowControllerUninitialized;
-  class(): MSAboutWindowController;  showAboutWindow(): void;
+  class(): MSAboutWindowController;
+  showAboutWindow(): void;
+  restorableStateKeyPaths(): NSArray<any>;
+  accessInstanceVariablesDirectly(): boolean;
 
 }
 

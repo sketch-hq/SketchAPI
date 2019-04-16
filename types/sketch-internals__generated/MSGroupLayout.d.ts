@@ -1,4 +1,5 @@
 interface MSGroupLayoutUninitialized<InitializedType = MSGroupLayout> extends _MSGroupLayoutUninitialized<MSGroupLayout> {}
+
 interface MSGroupLayout extends _MSGroupLayout {
   groupDidResizeFromSize(oldSize: NSSize): void;
   desiredGroupLayerOrder(): NSArray<any>;
@@ -12,6 +13,7 @@ interface MSGroupLayout extends _MSGroupLayout {
   group(): MSLayerGroup;
   isInferredLayout(): boolean;
 }
+
 declare const MSGroupLayout: {
   alloc(): MSGroupLayoutUninitialized;
   class(): MSGroupLayout;

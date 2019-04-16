@@ -1,4 +1,5 @@
 interface MSOverrideRepresentationUninitialized<InitializedType = MSOverrideRepresentation> extends MSOverrideRepresentationBaseUninitialized<MSOverrideRepresentation> {}
+
 interface MSOverrideRepresentation extends MSOverrideRepresentationBase {
   copyAffectedLayerForPasteboard(): MSLayer;
   updateExpandedStateAfterSelection(): void;
@@ -16,6 +17,7 @@ interface MSOverrideRepresentation extends MSOverrideRepresentationBase {
   isSelected(): boolean;
   isAtRootLevel(): boolean;
 }
+
 declare const MSOverrideRepresentation: {
   alloc(): MSOverrideRepresentationUninitialized;
   class(): MSOverrideRepresentation;

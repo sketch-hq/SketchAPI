@@ -1,4 +1,5 @@
 interface MOBridgeSupportFunctionUninitialized<InitializedType = MOBridgeSupportFunction> extends MOBridgeSupportSymbolUninitialized<MOBridgeSupportFunction> {}
+
 interface MOBridgeSupportFunction extends MOBridgeSupportSymbol {
   addArgument(argument: MOBridgeSupportArgument): void;
   removeArgument(argument: MOBridgeSupportArgument): void;
@@ -14,8 +15,11 @@ interface MOBridgeSupportFunction extends MOBridgeSupportSymbol {
   returnValue(): MOBridgeSupportArgument;
   setReturnValue(returnValue: MOBridgeSupportArgument): void;
 }
+
 declare const MOBridgeSupportFunction: {
   alloc(): MOBridgeSupportFunctionUninitialized;
   class(): MOBridgeSupportFunction;
+  accessInstanceVariablesDirectly(): boolean;
+
 }
 

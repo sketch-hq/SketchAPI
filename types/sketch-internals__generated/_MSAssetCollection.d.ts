@@ -1,4 +1,5 @@
 interface _MSAssetCollectionUninitialized<InitializedType = _MSAssetCollection> extends MSModelObjectUninitialized<_MSAssetCollection> {}
+
 interface _MSAssetCollection extends MSModelObject {
   addColorAsset(value: MSColorAsset): void;
   addColorAssets(colorAssets: NSArray<any> | any[]): void;
@@ -48,8 +49,11 @@ interface _MSAssetCollection extends MSModelObject {
   imageCollection(): MSImageCollection;
   setImageCollection(imageCollection: MSImageCollection): void;
 }
+
 declare const _MSAssetCollection: {
   alloc(): _MSAssetCollectionUninitialized;
   class(): _MSAssetCollection;
+  immutableClass(): any;
+  allowsFaulting(): boolean;
 }
 

@@ -1,4 +1,5 @@
 interface _MSImmutableDocumentDataUninitialized<InitializedType = _MSImmutableDocumentData> extends MSImmutableModelObjectUninitialized<_MSImmutableDocumentData> {}
+
 interface _MSImmutableDocumentData extends MSImmutableModelObject {
 
   colorSpace(): MSColorSpace;
@@ -13,8 +14,11 @@ interface _MSImmutableDocumentData extends MSImmutableModelObject {
   layerTextStyles(): MSImmutableSharedTextStyleContainer;
   pages(): NSArray<any>;
 }
+
 declare const _MSImmutableDocumentData: {
   alloc(): _MSImmutableDocumentDataUninitialized;
   class(): _MSImmutableDocumentData;
+  mutableClass(): any;
+  traitsForPropertyName(name: NSString | string): MSPropertyTraits;
 }
 

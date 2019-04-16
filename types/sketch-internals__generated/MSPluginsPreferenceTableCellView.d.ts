@@ -1,4 +1,5 @@
 interface MSPluginsPreferenceTableCellViewUninitialized<InitializedType = MSPluginsPreferenceTableCellView> extends NSTableCellViewUninitialized<MSPluginsPreferenceTableCellView> {}
+
 interface MSPluginsPreferenceTableCellView extends NSTableCellView {
 
   updateAvailableContainer(): NSView;
@@ -22,8 +23,16 @@ interface MSPluginsPreferenceTableCellView extends NSTableCellView {
   tableCellWidthConstraint(): NSLayoutConstraint;
   setTableCellWidthConstraint(tableCellWidthConstraint: NSLayoutConstraint): void;
 }
+
 declare const MSPluginsPreferenceTableCellView: {
   alloc(): MSPluginsPreferenceTableCellViewUninitialized;
   class(): MSPluginsPreferenceTableCellView;
+  requiresConstraintBasedLayout(): boolean;
+  focusView(): NSView;
+  defaultMenu(): NSMenu;
+  compatibleWithResponsiveScrolling(): boolean;
+  defaultFocusRingType(): NSFocusRingType;
+  restorableStateKeyPaths(): NSArray<any>;
+
 }
 

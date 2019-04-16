@@ -1,4 +1,5 @@
 interface _MSImmutableSymbolInstanceUninitialized<InitializedType = _MSImmutableSymbolInstance> extends MSImmutableStyledLayerUninitialized<_MSImmutableSymbolInstance> {}
+
 interface _MSImmutableSymbolInstance extends MSImmutableStyledLayer {
 
   horizontalSpacing(): CGFloat;
@@ -7,8 +8,10 @@ interface _MSImmutableSymbolInstance extends MSImmutableStyledLayer {
   verticalSpacing(): CGFloat;
   overrideValues(): NSArray<any>;
 }
+
 declare const _MSImmutableSymbolInstance: {
   alloc(): _MSImmutableSymbolInstanceUninitialized;
   class(): _MSImmutableSymbolInstance;
+  cacheDecorations(): void;
 }
 

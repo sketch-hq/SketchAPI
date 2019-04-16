@@ -1,6 +1,7 @@
 interface SVGElementUninitialized<InitializedType = SVGElement> extends _SVGElementUninitialized<SVGElement> {
   initWithImporter_xml(importer: SVGImporter, xml: NSXMLElement): InitializedType;
 }
+
 interface SVGElement extends _SVGElement {
   elementOfType_xml_parent(type: NSString | string, xml: NSXMLElement, parent: SVGElement): SVGElement;
   process(): void;
@@ -30,9 +31,15 @@ interface SVGElement extends _SVGElement {
   importer(): SVGImporter;
   effectiveLayerName(): NSString;
 }
+
 declare const SVGElement: {
   alloc(): SVGElementUninitialized;
-  class(): SVGElement;  elementOfType_xml_importer_parent(type: NSString | string, xml: NSXMLElement, importer: SVGImporter, parent: SVGElement): SVGElement;
+  class(): SVGElement;
+  elementOfType_xml_importer_parent(type: NSString | string, xml: NSXMLElement, importer: SVGImporter, parent: SVGElement): SVGElement;
+  propertyNames(): NSArray<any>;
+  relationshipNames(): NSArray<any>;
+  attributeNames(): NSArray<any>;
+  accessInstanceVariablesDirectly(): boolean;
 
 }
 

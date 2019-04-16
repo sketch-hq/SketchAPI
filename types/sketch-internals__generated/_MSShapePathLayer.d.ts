@@ -1,4 +1,5 @@
 interface _MSShapePathLayerUninitialized<InitializedType = _MSShapePathLayer> extends MSStyledLayerUninitialized<_MSShapePathLayer> {}
+
 interface _MSShapePathLayer extends MSStyledLayer {
   addCurvePoint(value: MSCurvePoint): void;
   addCurvePoints(points: NSArray<any> | any[]): void;
@@ -22,8 +23,15 @@ interface _MSShapePathLayer extends MSStyledLayer {
   points(): NSArray<any>;
   setPoints(points: NSArray<any> | any[]): void;
 }
+
 declare const _MSShapePathLayer: {
   alloc(): _MSShapePathLayerUninitialized;
   class(): _MSShapePathLayer;
+  layerWithImageFromPasteboard(pasteboard: NSPasteboard): _MSShapePathLayer;
+  layerWithImageFromFileURL(fileURL: NSURL): _MSShapePathLayer;
+  pasteStyleFromPasteboardOnLayers_document(styledLayers: NSArray<any> | any[], document: MSDocumentData): void;
+  pasteStyleFromPasteboard_onLayers_document(pasteboard: NSPasteboard, styledLayers: NSArray<any> | any[], document: MSDocumentData): void;
+  pasteStyleDict_onLayers_document(style: NSDictionary<any, any> | {[key: string]: any}, styledLayers: NSArray<any> | any[], document: MSDocumentData): void;
+  supportedPasteboardTypesForStyleCopying(): NSArray<any>;
 }
 

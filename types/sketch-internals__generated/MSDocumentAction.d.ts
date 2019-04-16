@@ -1,6 +1,7 @@
 interface MSDocumentActionUninitialized<InitializedType = MSDocumentAction> extends MSActionUninitialized<MSDocumentAction> {
   initWithDocument(doc: MSDocument): InitializedType;
 }
+
 interface MSDocumentAction extends MSAction {
   touchBarItem(): NSTouchBarItem;
   makeTouchBarItem(): NSTouchBarItem;
@@ -29,8 +30,13 @@ interface MSDocumentAction extends MSAction {
   cachedTouchedBarItem(): NSTouchBarItem;
   setCachedTouchedBarItem(cachedTouchedBarItem: NSTouchBarItem): void;
 }
+
 declare const MSDocumentAction: {
   alloc(): MSDocumentActionUninitialized;
   class(): MSDocumentAction;
+  imageName(): NSString;
+  restorableStateKeyPaths(): NSArray<any>;
+  accessInstanceVariablesDirectly(): boolean;
+
 }
 

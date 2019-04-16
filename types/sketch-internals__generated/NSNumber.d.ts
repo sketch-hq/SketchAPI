@@ -15,6 +15,7 @@ interface NSNumberUninitialized<InitializedType = NSNumber> extends NSValueUnini
   initWithInteger(value: NSInteger): InitializedType;
   initWithUnsignedInteger(value: NSUInteger): InitializedType;
 }
+
 interface NSNumber extends NSValue {
   compare(otherNumber: NSNumber | number): NSComparisonResult;
   isEqualToNumber(number: NSNumber | number): boolean;
@@ -38,9 +39,11 @@ interface NSNumber extends NSValue {
   unsignedIntegerValue(): NSUInteger;
   stringValue(): NSString;
 }
+
 declare const NSNumber: {
   alloc(): NSNumberUninitialized;
-  class(): NSNumber;  numberWithChar(value: string): NSNumber;
+  class(): NSNumber;
+  numberWithChar(value: string): NSNumber;
   numberWithUnsignedChar(value: string): NSNumber;
   numberWithShort(value: number): NSNumber;
   numberWithUnsignedShort(value: number): NSNumber;
@@ -55,6 +58,20 @@ declare const NSNumber: {
   numberWithBool(value: boolean): NSNumber;
   numberWithInteger(value: NSInteger): NSNumber;
   numberWithUnsignedInteger(value: NSUInteger): NSNumber;
+  valueWithCATransform3D(t: CATransform3D): NSValue;
+  valueWithPoint(point: NSPoint): NSValue;
+  valueWithSize(size: NSSize): NSValue;
+  valueWithRect(rect: NSRect): NSValue;
+  valueWithEdgeInsets(insets: NSEdgeInsets): NSValue;
+  valueWithRange(range: NSRange): NSValue;
+  valueWithBytes_objCType(value: void, type: string): NSValue;
+  value_withObjCType(value: void, type: string): NSValue;
+  valueWithNonretainedObject(anObject: any | null): NSValue;
+  valueWithPointer(pointer: void | null): NSValue;
+  valueWithBCFloatRange(range: BCFloatRange): any;
+  valueWithCGVector(vector: CGVector): NSNumber;
+  supportsSecureCoding(): boolean;
+  accessInstanceVariablesDirectly(): boolean;
 
 }
 

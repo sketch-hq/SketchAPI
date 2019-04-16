@@ -1,4 +1,5 @@
 interface MSDefaultArchiveUninitialized<InitializedType = MSDefaultArchive> extends BCSingletonUninitialized<MSDefaultArchive> {}
+
 interface MSDefaultArchive extends BCSingleton {
   archivesNeedingMigration(): NSArray<any>;
   oldDefaultsName(): NSString;
@@ -9,8 +10,12 @@ interface MSDefaultArchive extends BCSingleton {
   defaultObject(): any;
   setDefaultObject(defaultObject: any): void;
 }
+
 declare const MSDefaultArchive: {
   alloc(): MSDefaultArchiveUninitialized;
   class(): MSDefaultArchive;
+  sharedInstance(): MSDefaultArchive;
+  accessInstanceVariablesDirectly(): boolean;
+
 }
 

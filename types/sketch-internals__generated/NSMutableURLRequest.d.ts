@@ -1,4 +1,5 @@
 interface NSMutableURLRequestUninitialized<InitializedType = NSMutableURLRequest> extends NSURLRequestUninitialized<NSMutableURLRequest> {}
+
 interface NSMutableURLRequest extends NSURLRequest {
   setValue_forHTTPHeaderField(value: NSString | string | null, field: NSString | string): void;
   addValue_forHTTPHeaderField(value: NSString | string, field: NSString | string): void;
@@ -28,8 +29,19 @@ interface NSMutableURLRequest extends NSURLRequest {
   HTTPShouldUsePipelining(): boolean;
   setHTTPShouldUsePipelining(HTTPShouldUsePipelining: boolean): void;
 }
+
 declare const NSMutableURLRequest: {
   alloc(): NSMutableURLRequestUninitialized;
   class(): NSMutableURLRequest;
+  requestWithURL(URL: NSURL): NSMutableURLRequest;
+  requestWithURL_cachePolicy_timeoutInterval(URL: NSURL, cachePolicy: NSURLRequestCachePolicy, timeoutInterval: NSTimeInterval): NSMutableURLRequest;
+  registerRequestWithLicenseKey_applicationID(licenseKey: NSString | string, applicationID: NSString | string): NSMutableURLRequest;
+  refreshRequestForLicense_applicationID(license: any, applicationID: NSString | string): NSMutableURLRequest;
+  trialRequestWithApplicationID(applicationID: NSString | string): NSMutableURLRequest;
+  unregisterRequestForLicense_applicationID(license: any, applicationID: NSString | string): NSMutableURLRequest;
+  metadataRequestForLicense(license: any | null): NSMutableURLRequest;
+  supportsSecureCoding(): boolean;
+  accessInstanceVariablesDirectly(): boolean;
+
 }
 

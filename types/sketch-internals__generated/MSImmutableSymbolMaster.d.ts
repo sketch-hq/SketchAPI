@@ -1,4 +1,5 @@
 interface MSImmutableSymbolMasterUninitialized<InitializedType = MSImmutableSymbolMaster> extends _MSImmutableSymbolMasterUninitialized<MSImmutableSymbolMaster> {}
+
 interface MSImmutableSymbolMaster extends _MSImmutableSymbolMaster {
   modifiedMasterByApplyingInstance_inDocument(instance: MSImmutableSymbolInstance, document: MSImmutableDocumentData): MSImmutableSymbolMaster;
   modifiedMasterWithOverrides_scale_size_inDocument(overrideValues: NSArray<any> | any[], scale: CGFloat, size: NSSize, document: MSImmutableDocumentData): MSImmutableSymbolMaster;
@@ -9,6 +10,7 @@ interface MSImmutableSymbolMaster extends _MSImmutableSymbolMaster {
   changeIdentifier(): NSInteger;
   overrideProperies(): NSDictionary<any, any>;
 }
+
 declare const MSImmutableSymbolMaster: {
   alloc(): MSImmutableSymbolMasterUninitialized;
   class(): MSImmutableSymbolMaster;

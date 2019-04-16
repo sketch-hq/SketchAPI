@@ -1,4 +1,5 @@
 interface MSMirrorWindowControllerUninitialized<InitializedType = MSMirrorWindowController> extends NSWindowControllerUninitialized<MSMirrorWindowController> {}
+
 interface MSMirrorWindowController extends NSWindowController {
   sortedArtboards(artboards: NSArray<any> | any[] | null): NSArray<any>;
   changeVisibleArtboardID(artboardID: NSString | string | null): void;
@@ -16,11 +17,15 @@ interface MSMirrorWindowController extends NSWindowController {
   startpoints(): NSArray<any>;
   currentURL(): NSURL;
 }
+
 declare const MSMirrorWindowController: {
   alloc(): MSMirrorWindowControllerUninitialized;
-  class(): MSMirrorWindowController;  sharedController(): MSMirrorWindowController;
+  class(): MSMirrorWindowController;
+  sharedController(): MSMirrorWindowController;
   show(): void;
   close(): void;
+  restorableStateKeyPaths(): NSArray<any>;
+  accessInstanceVariablesDirectly(): boolean;
 
 }
 

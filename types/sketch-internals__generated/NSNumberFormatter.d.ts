@@ -1,6 +1,7 @@
 interface NSNumberFormatterUninitialized<InitializedType = NSNumberFormatter> extends NSFormatterUninitialized<NSNumberFormatter> {}
+
 interface NSNumberFormatter extends NSFormatter {
-  getObjectValue_forString_range_error(obj: any, string: NSString | string, rangep: NSRange, error: NSError): boolean;
+  getObjectValue_forString_range_error(obj: any, string: NSString | string, rangep: NSRange, error: MOPointer<NSError>): boolean;
   stringFromNumber(number: NSNumber | number): NSString;
   numberFromString(string: NSString | string): NSNumber;
 
@@ -135,11 +136,14 @@ interface NSNumberFormatter extends NSFormatter {
   roundingBehavior(): NSDecimalNumberHandler;
   setRoundingBehavior(roundingBehavior: NSDecimalNumberHandler): void;
 }
+
 declare const NSNumberFormatter: {
   alloc(): NSNumberFormatterUninitialized;
-  class(): NSNumberFormatter;  localizedStringFromNumber_numberStyle(num: NSNumber | number, nstyle: NSNumberFormatterStyle): NSString;
+  class(): NSNumberFormatter;
+  localizedStringFromNumber_numberStyle(num: NSNumber | number, nstyle: NSNumberFormatterStyle): NSString;
   defaultFormatterBehavior(): NSNumberFormatterBehavior;
   setDefaultFormatterBehavior(behavior: NSNumberFormatterBehavior): void;
+  accessInstanceVariablesDirectly(): boolean;
 
 }
 

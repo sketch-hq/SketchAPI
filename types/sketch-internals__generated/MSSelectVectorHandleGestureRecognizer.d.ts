@@ -1,4 +1,5 @@
 interface MSSelectVectorHandleGestureRecognizerUninitialized<InitializedType = MSSelectVectorHandleGestureRecognizer> extends MSGestureRecognizerUninitialized<MSSelectVectorHandleGestureRecognizer> {}
+
 interface MSSelectVectorHandleGestureRecognizer extends MSGestureRecognizer {
 
   toggleSelection(): boolean;
@@ -6,8 +7,11 @@ interface MSSelectVectorHandleGestureRecognizer extends MSGestureRecognizer {
   delegate(): any;
   setDelegate(delegate: any): void;
 }
+
 declare const MSSelectVectorHandleGestureRecognizer: {
   alloc(): MSSelectVectorHandleGestureRecognizerUninitialized;
   class(): MSSelectVectorHandleGestureRecognizer;
+  accessInstanceVariablesDirectly(): boolean;
+
 }
 

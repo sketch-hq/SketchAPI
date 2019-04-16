@@ -1,4 +1,5 @@
 interface MSDragToMoveOrCopyGestureRecognizerUninitialized<InitializedType = MSDragToMoveOrCopyGestureRecognizer> extends MSDragGestureRecognizerUninitialized<MSDragToMoveOrCopyGestureRecognizer> {}
+
 interface MSDragToMoveOrCopyGestureRecognizer extends MSDragGestureRecognizer {
   translationInLayer(layer: MSLayer | null): CGVector;
   locationInLayer(layer: MSLayer | null): NSPoint;
@@ -20,6 +21,7 @@ interface MSDragToMoveOrCopyGestureRecognizer extends MSDragGestureRecognizer {
   copiedItems(): NSArray<any>;
   setCopiedItems(copiedItems: NSArray<any> | any[]): void;
 }
+
 declare const MSDragToMoveOrCopyGestureRecognizer: {
   alloc(): MSDragToMoveOrCopyGestureRecognizerUninitialized;
   class(): MSDragToMoveOrCopyGestureRecognizer;

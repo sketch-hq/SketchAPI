@@ -1,4 +1,5 @@
 interface NSATSTypesetterUninitialized<InitializedType = NSATSTypesetter> extends NSTypesetterUninitialized<NSATSTypesetter> {}
+
 interface NSATSTypesetter extends NSTypesetter {
   lineFragmentRectForProposedRect_remainingRect(proposedRect: NSRect, remainingRect: NSRectPointer): NSRect;
   substituteFontForFont(originalFont: NSFont): NSFont;
@@ -35,10 +36,15 @@ interface NSATSTypesetter extends NSTypesetter {
   layoutManager(): NSLayoutManager;
   currentTextContainer(): NSTextContainer;
 }
+
 declare const NSATSTypesetter: {
   alloc(): NSATSTypesetterUninitialized;
   class(): NSATSTypesetter;
+  printingAdjustmentInLayoutManager_forNominallySpacedGlyphRange_packedGlyphs_count(layoutMgr: NSLayoutManager, nominallySpacedGlyphsRange: NSRange, packedGlyphs: string, packedGlyphsCount: NSUInteger): NSSize;
+  sharedSystemTypesetterForBehavior(behavior: NSTypesetterBehavior): any;
   sharedTypesetter(): NSATSTypesetter;
+  sharedSystemTypesetter(): NSTypesetter;
+  defaultTypesetterBehavior(): NSTypesetterBehavior;
 
 }
 

@@ -1,6 +1,5 @@
-interface PDFScannerUninitialized<InitializedType = PDFScanner> extends NSObjectUninitialized<PDFScanner> {
-  init(): InitializedType;
-}
+interface PDFScannerUninitialized<InitializedType = PDFScanner> extends NSObjectUninitialized<PDFScanner> {}
+
 interface PDFScanner extends NSObject {
   scanPage_parser_isPasted(page: CGPDFPageRef, parser: PDFParser, isPasted: boolean): void;
   scanStream_dictionary(stream: CGPDFContentStreamRef, dictionary: NSDictionary<any, any> | {[key: string]: any}): void;
@@ -16,7 +15,7 @@ interface PDFScanner extends NSObject {
   popTransform(): NSAffineTransform;
   popArray(): NSArray<any>;
   popObject(): any;
-  colorSpaceWithInfo_mapping(info: any, mapping: PDFFunction): NSColorSpace;
+  colorSpaceWithInfo_mapping(info: any, mapping: MOPointer<PDFFunction>): NSColorSpace;
   gradientForPattern(pattern: PDFPattern): NSGradient;
   currentPoint(): NSPoint;
   currentLeading(): CGFloat;
@@ -82,11 +81,40 @@ interface PDFScanner extends NSObject {
   dictionary(): NSDictionary<any, any>;
   setDictionary(dictionary: NSDictionary<any, any> | {[key: string]: any}): void;
 }
+
 declare const PDFScanner: {
   alloc(): PDFScannerUninitialized;
-  class(): PDFScanner;  convertObject(object: CGPDFObjectRef): any;
+  class(): PDFScanner;
+  convertObject(object: CGPDFObjectRef): any;
   convertArray(array: CGPDFArrayRef): NSArray<any>;
   convertDictionary(dictionary: CGPDFDictionaryRef): NSDictionary<any, any>;
+  load(): void;
+  instancesRespondToSelector(aSelector: string): boolean;
+  conformsToProtocol(protocol: Protocol): boolean;
+  instanceMethodForSelector(aSelector: string): IMP;
+  isSubclassOfClass(aClass: any): boolean;
+  hash(): NSUInteger;
+  superclass(): any;
+  description(): NSString;
+  debugDescription(): NSString;
+  useStoredAccessor(): boolean;
+  keyPathsForValuesAffectingValueForKey(key: NSString | string): NSSet<any>;
+  automaticallyNotifiesObserversForKey(key: NSString | string): boolean;
+  setKeys_triggerChangeNotificationsForDependentKey(keys: NSArray<any> | any[], dependentKey: NSString | string): void;
+  classFallbacksForKeyedArchiver(): NSArray<any>;
+  classForKeyedUnarchiver(): any;
+  version(): NSInteger;
+  setVersion(aVersion: NSInteger): void;
+  cancelPreviousPerformRequestsWithTarget_selector_object(aTarget: any, aSelector: string, anArgument: any | null): void;
+  cancelPreviousPerformRequestsWithTarget(aTarget: any): void;
+  exposeBinding(binding: NSBindingName): void;
+  setDefaultPlaceholder_forMarker_withBinding(placeholder: any | null, marker: any | null, binding: NSBindingName): void;
+  defaultPlaceholderForMarker_withBinding(marker: any | null, binding: NSBindingName): any;
+  mo_swizzleAdditions(): void;
+  mo_mocha(): MOClassDescription;
+  isSelectorExcludedFromMochaScript(selector: string): boolean;
+  selectorForMochaPropertyName(propertyName: NSString | string): string;
+  accessInstanceVariablesDirectly(): boolean;
 
 }
 

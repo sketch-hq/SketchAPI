@@ -1,4 +1,5 @@
 interface _MSExportFormatUninitialized<InitializedType = _MSExportFormat> extends MSModelObjectUninitialized<_MSExportFormat> {}
+
 interface _MSExportFormat extends MSModelObject {
 
   absoluteSize(): CGFloat;
@@ -14,8 +15,11 @@ interface _MSExportFormat extends MSModelObject {
   visibleScaleType(): MSUserVisibleScaleType;
   setVisibleScaleType(visibleScaleType: MSUserVisibleScaleType): void;
 }
+
 declare const _MSExportFormat: {
   alloc(): _MSExportFormatUninitialized;
   class(): _MSExportFormat;
+  immutableClass(): any;
+  allowsFaulting(): boolean;
 }
 

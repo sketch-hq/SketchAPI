@@ -1,13 +1,20 @@
 interface MSDefaultTextStyleUninitialized<InitializedType = MSDefaultTextStyle> extends MSDefaultArchiveUninitialized<MSDefaultTextStyle> {}
+
 interface MSDefaultTextStyle extends MSDefaultArchive {
 }
+
 declare const MSDefaultTextStyle: {
   alloc(): MSDefaultTextStyleUninitialized;
-  class(): MSDefaultTextStyle;  recordTextStyleForLayer(layer: MSTextLayer): void;
+  class(): MSDefaultTextStyle;
+  recordTextStyleForLayer(layer: MSTextLayer): void;
   textStyleFromLayer(layer: MSTextLayer): NSDictionary<any, any>;
-
-  defaultTextStyle(): NSDictionary<any, any>;
+  defaultTextStyle(): NSDictionary<any, any>;,
+          {
+            newLineStart: true,
+            newLineEnd: false,
+          }
   setDefaultTextStyle(defaultTextStyle: NSDictionary<any, any> | {[key: string]: any}): void;
+  accessInstanceVariablesDirectly(): boolean;
 
 }
 

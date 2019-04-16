@@ -1,4 +1,4 @@
 interface ISUVersionDisplay {
-  formatVersion_andVersion(inOutVersionA: NSString | string, inOutVersionB: NSString | string): void;
+  formatVersion_andVersion(inOutVersionA: MOPointer<NSString>, inOutVersionB: MOPointer<NSString>): void;
 }
 

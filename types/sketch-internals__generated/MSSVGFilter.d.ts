@@ -1,4 +1,5 @@
 interface MSSVGFilterUninitialized<InitializedType = MSSVGFilter> extends MSXMLElementWrapperUninitialized<MSSVGFilter> {}
+
 interface MSSVGFilter extends MSXMLElementWrapper {
   addFilterItem(filterItem: NSXMLElement): void;
   addFilterOutput(string: NSString | string): void;
@@ -21,9 +22,12 @@ interface MSSVGFilter extends MSXMLElementWrapper {
   href(): NSString;
   setHref(href: NSString | string): void;
 }
+
 declare const MSSVGFilter: {
   alloc(): MSSVGFilterUninitialized;
-  class(): MSSVGFilter;  filter(): MSSVGFilter;
-
+  class(): MSSVGFilter;
+  filter(): MSSVGFilter;
+  elementName(): NSString;
+  element(): MSSVGFilter;
 }
 

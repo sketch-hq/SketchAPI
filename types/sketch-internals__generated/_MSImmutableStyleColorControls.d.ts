@@ -1,4 +1,5 @@
 interface _MSImmutableStyleColorControlsUninitialized<InitializedType = _MSImmutableStyleColorControls> extends MSImmutableStylePartUninitialized<_MSImmutableStyleColorControls> {}
+
 interface _MSImmutableStyleColorControls extends MSImmutableStylePart {
 
   brightness(): CGFloat;
@@ -6,6 +7,7 @@ interface _MSImmutableStyleColorControls extends MSImmutableStylePart {
   hue(): CGFloat;
   saturation(): CGFloat;
 }
+
 declare const _MSImmutableStyleColorControls: {
   alloc(): _MSImmutableStyleColorControlsUninitialized;
   class(): _MSImmutableStyleColorControls;

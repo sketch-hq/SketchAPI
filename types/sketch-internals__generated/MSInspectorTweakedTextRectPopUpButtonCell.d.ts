@@ -1,6 +1,8 @@
 interface MSInspectorTweakedTextRectPopUpButtonCellUninitialized<InitializedType = MSInspectorTweakedTextRectPopUpButtonCell> extends MSInspectorPopUpButtonCellUninitialized<MSInspectorTweakedTextRectPopUpButtonCell> {}
+
 interface MSInspectorTweakedTextRectPopUpButtonCell extends MSInspectorPopUpButtonCell {
 }
+
 declare const MSInspectorTweakedTextRectPopUpButtonCell: {
   alloc(): MSInspectorTweakedTextRectPopUpButtonCellUninitialized;
   class(): MSInspectorTweakedTextRectPopUpButtonCell;

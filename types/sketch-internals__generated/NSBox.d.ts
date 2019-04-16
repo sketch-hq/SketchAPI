@@ -1,4 +1,5 @@
 interface NSBoxUninitialized<InitializedType = NSBox> extends NSViewUninitialized<NSBox> {}
+
 interface NSBox extends NSView {
   sizeToFit(): void;
   setFrameFromContentFrame(contentFrame: NSRect): void;
@@ -32,8 +33,15 @@ interface NSBox extends NSView {
   borderType(): NSBorderType;
   setBorderType(borderType: NSBorderType): void;
 }
+
 declare const NSBox: {
   alloc(): NSBoxUninitialized;
   class(): NSBox;
+  requiresConstraintBasedLayout(): boolean;
+  focusView(): NSView;
+  defaultMenu(): NSMenu;
+  compatibleWithResponsiveScrolling(): boolean;
+  defaultFocusRingType(): NSFocusRingType;
+
 }
 

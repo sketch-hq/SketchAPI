@@ -1,4 +1,5 @@
 interface NSPersonNameComponentsFormatterUninitialized<InitializedType = NSPersonNameComponentsFormatter> extends NSFormatterUninitialized<NSPersonNameComponentsFormatter> {}
+
 interface NSPersonNameComponentsFormatter extends NSFormatter {
   stringFromPersonNameComponents(components: NSPersonNameComponents): NSString;
   annotatedStringFromPersonNameComponents(components: NSPersonNameComponents): NSAttributedString;
@@ -10,9 +11,12 @@ interface NSPersonNameComponentsFormatter extends NSFormatter {
   phonetic(): boolean;
   setPhonetic(phonetic: boolean): void;
 }
+
 declare const NSPersonNameComponentsFormatter: {
   alloc(): NSPersonNameComponentsFormatterUninitialized;
-  class(): NSPersonNameComponentsFormatter;  localizedStringFromPersonNameComponents_style_options(components: NSPersonNameComponents, nameFormatStyle: NSPersonNameComponentsFormatterStyle, nameOptions: NSPersonNameComponentsFormatterOptions): NSString;
+  class(): NSPersonNameComponentsFormatter;
+  localizedStringFromPersonNameComponents_style_options(components: NSPersonNameComponents, nameFormatStyle: NSPersonNameComponentsFormatterStyle, nameOptions: NSPersonNameComponentsFormatterOptions): NSString;
+  accessInstanceVariablesDirectly(): boolean;
 
 }
 

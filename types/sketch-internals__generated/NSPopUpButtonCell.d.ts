@@ -1,6 +1,7 @@
 interface NSPopUpButtonCellUninitialized<InitializedType = NSPopUpButtonCell> extends NSMenuItemCellUninitialized<NSPopUpButtonCell> {
   initTextCell_pullsDown(stringValue: NSString | string, pullDown: boolean): InitializedType;
 }
+
 interface NSPopUpButtonCell extends NSMenuItemCell, INSMenuItemValidation {
   addItemWithTitle(title: NSString | string): void;
   addItemsWithTitles(itemTitles: NSArray<any> | any[]): void;
@@ -25,6 +26,7 @@ interface NSPopUpButtonCell extends NSMenuItemCell, INSMenuItemValidation {
   attachPopUpWithFrame_inView(cellFrame: NSRect, controlView: NSView): void;
   dismissPopUp(): void;
   performClickWithFrame_inView(frame: NSRect, controlView: NSView): void;
+  validateMenuItem(menuItem: NSMenuItem): boolean;
 
   menu(): NSMenu;
   setMenu(menu: NSMenu): void;
@@ -48,8 +50,13 @@ interface NSPopUpButtonCell extends NSMenuItemCell, INSMenuItemValidation {
   arrowPosition(): NSPopUpArrowPosition;
   setArrowPosition(arrowPosition: NSPopUpArrowPosition): void;
 }
+
 declare const NSPopUpButtonCell: {
   alloc(): NSPopUpButtonCellUninitialized;
   class(): NSPopUpButtonCell;
+  prefersTrackingUntilMouseUp(): boolean;
+  defaultMenu(): NSMenu;
+  defaultFocusRingType(): NSFocusRingType;
+
 }
 

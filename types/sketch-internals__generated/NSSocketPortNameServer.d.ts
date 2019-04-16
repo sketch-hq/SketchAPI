@@ -1,4 +1,5 @@
 interface NSSocketPortNameServerUninitialized<InitializedType = NSSocketPortNameServer> extends NSPortNameServerUninitialized<NSSocketPortNameServer> {}
+
 interface NSSocketPortNameServer extends NSPortNameServer {
   portForName(name: NSString | string): NSPort;
   portForName_host(name: NSString | string, host: NSString | string | null): NSPort;
@@ -10,9 +11,13 @@ interface NSSocketPortNameServer extends NSPortNameServer {
   defaultNameServerPortNumber(): number;
   setDefaultNameServerPortNumber(defaultNameServerPortNumber: number): void;
 }
+
 declare const NSSocketPortNameServer: {
   alloc(): NSSocketPortNameServerUninitialized;
-  class(): NSSocketPortNameServer;  sharedInstance(): any;
+  class(): NSSocketPortNameServer;
+  sharedInstance(): any;
+  systemDefaultPortNameServer(): NSPortNameServer;
+  accessInstanceVariablesDirectly(): boolean;
 
 }
 

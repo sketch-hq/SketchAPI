@@ -2,6 +2,7 @@ interface MSCurvePointUninitialized<InitializedType = MSCurvePoint> extends _MSC
   initWithPoint(p: NSPoint): InitializedType;
   initWithPoint_curveTo_curveFrom(p: NSPoint, p2: NSPoint, p1: NSPoint): InitializedType;
 }
+
 interface MSCurvePoint extends _MSCurvePoint, IMSCurvePoint, INSCopying {
   changeCurveModeTo_usingPoint(m: MSCurveMode, pointType: MSPointType): void;
   isRounded(): boolean;
@@ -11,15 +12,17 @@ interface MSCurvePoint extends _MSCurvePoint, IMSCurvePoint, INSCopying {
   moveCurveFromTo(p: NSPoint): void;
   moveCurveToTo(p: NSPoint): void;
   multiplyBy(amount: CGFloat): void;
+  copyWithZone(zone: NSZone | null): any;
 
   isStraight(): boolean;
   isEffectivelyStraight(): boolean;
 }
+
 declare const MSCurvePoint: {
   alloc(): MSCurvePointUninitialized;
-  class(): MSCurvePoint;  point(): MSCurvePoint;
+  class(): MSCurvePoint;
+  point(): MSCurvePoint;
   pointWithPoint(p: NSPoint): MSCurvePoint;
   pointWithPoint_curveTo_curveFrom(p: NSPoint, p2: NSPoint, p1: NSPoint): MSCurvePoint;
-
 }
 

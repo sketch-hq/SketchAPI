@@ -1,4 +1,5 @@
 interface MSAssetCollectionLayoutUninitialized<InitializedType = MSAssetCollectionLayout> extends NSCollectionViewFlowLayoutUninitialized<MSAssetCollectionLayout> {}
+
 interface MSAssetCollectionLayout extends NSCollectionViewFlowLayout {
 
   updatedIndexes(): NSIndexSet;
@@ -8,8 +9,12 @@ interface MSAssetCollectionLayout extends NSCollectionViewFlowLayout {
   itemSizeMode(): MSAssetPickerItemSizeMode;
   setItemSizeMode(itemSizeMode: MSAssetPickerItemSizeMode): void;
 }
+
 declare const MSAssetCollectionLayout: {
   alloc(): MSAssetCollectionLayoutUninitialized;
   class(): MSAssetCollectionLayout;
+  layoutAttributesClass(): any;
+  invalidationContextClass(): any;
+
 }
 

@@ -1,4 +1,5 @@
 interface MSToggleVisibilityActionUninitialized<InitializedType = MSToggleVisibilityAction> extends MSDocumentActionUninitialized<MSToggleVisibilityAction> {}
+
 interface MSToggleVisibilityAction extends MSDocumentAction {
   show(): void;
   hide(): void;
@@ -7,8 +8,12 @@ interface MSToggleVisibilityAction extends MSDocumentAction {
 
   isActive(): boolean;
 }
+
 declare const MSToggleVisibilityAction: {
   alloc(): MSToggleVisibilityActionUninitialized;
   class(): MSToggleVisibilityAction;
+  restorableStateKeyPaths(): NSArray<any>;
+  accessInstanceVariablesDirectly(): boolean;
+
 }
 

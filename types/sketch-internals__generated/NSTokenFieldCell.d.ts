@@ -1,4 +1,5 @@
 interface NSTokenFieldCellUninitialized<InitializedType = NSTokenFieldCell> extends NSTextFieldCellUninitialized<NSTokenFieldCell> {}
+
 interface NSTokenFieldCell extends NSTextFieldCell {
 
   tokenStyle(): NSTokenStyle;
@@ -10,11 +11,15 @@ interface NSTokenFieldCell extends NSTextFieldCell {
   delegate(): any;
   setDelegate(delegate: any): void;
 }
+
 declare const NSTokenFieldCell: {
   alloc(): NSTokenFieldCellUninitialized;
   class(): NSTokenFieldCell;
   defaultCompletionDelay(): NSTimeInterval;
   defaultTokenizingCharacterSet(): NSCharacterSet;
+  prefersTrackingUntilMouseUp(): boolean;
+  defaultMenu(): NSMenu;
+  defaultFocusRingType(): NSFocusRingType;
 
 }
 

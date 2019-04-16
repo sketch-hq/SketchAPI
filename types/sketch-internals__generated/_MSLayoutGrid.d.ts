@@ -1,4 +1,5 @@
 interface _MSLayoutGridUninitialized<InitializedType = _MSLayoutGrid> extends MSBaseGridUninitialized<_MSLayoutGrid> {}
+
 interface _MSLayoutGrid extends MSBaseGrid {
 
   columnWidth(): CGFloat;
@@ -24,6 +25,7 @@ interface _MSLayoutGrid extends MSBaseGrid {
   totalWidth(): CGFloat;
   setTotalWidth(totalWidth: CGFloat): void;
 }
+
 declare const _MSLayoutGrid: {
   alloc(): _MSLayoutGridUninitialized;
   class(): _MSLayoutGrid;

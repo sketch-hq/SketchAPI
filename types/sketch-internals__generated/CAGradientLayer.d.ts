@@ -1,4 +1,5 @@
 interface CAGradientLayerUninitialized<InitializedType = CAGradientLayer> extends CALayerUninitialized<CAGradientLayer> {}
+
 interface CAGradientLayer extends CALayer {
 
   colors(): NSArray<any>;
@@ -12,8 +13,17 @@ interface CAGradientLayer extends CALayer {
   type(): CAGradientLayerType;
   setType(type: CAGradientLayerType): void;
 }
+
 declare const CAGradientLayer: {
   alloc(): CAGradientLayerUninitialized;
   class(): CAGradientLayer;
+  layer(): CAGradientLayer;
+  defaultValueForKey(key: NSString | string): any;
+  needsDisplayForKey(key: NSString | string): boolean;
+  defaultActionForKey(event: NSString | string): any;
+  layerWithRemoteClientId(client_id: number): CALayer;
+  supportsSecureCoding(): boolean;
+  accessInstanceVariablesDirectly(): boolean;
+
 }
 

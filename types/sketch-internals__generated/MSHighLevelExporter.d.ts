@@ -2,6 +2,7 @@ interface MSHighLevelExporterUninitialized<InitializedType = MSHighLevelExporter
   initWithDelegate(delegate: any): InitializedType;
   initWithDelegate_driver(delegate: any, driver: MSRenderingDriver): InitializedType;
 }
+
 interface MSHighLevelExporter extends NSObject {
   formatsToExport(): NSArray<any>;
   exportLayers(layers: NSArray<any> | any[]): boolean;
@@ -9,9 +10,38 @@ interface MSHighLevelExporter extends NSObject {
 
   delegate(): any;
 }
+
 declare const MSHighLevelExporter: {
   alloc(): MSHighLevelExporterUninitialized;
-  class(): MSHighLevelExporter;  exporterWithDelegate(delegate: any): MSHighLevelExporter;
+  class(): MSHighLevelExporter;
+  exporterWithDelegate(delegate: any): MSHighLevelExporter;
+  load(): void;
+  instancesRespondToSelector(aSelector: string): boolean;
+  conformsToProtocol(protocol: Protocol): boolean;
+  instanceMethodForSelector(aSelector: string): IMP;
+  isSubclassOfClass(aClass: any): boolean;
+  hash(): NSUInteger;
+  superclass(): any;
+  description(): NSString;
+  debugDescription(): NSString;
+  useStoredAccessor(): boolean;
+  keyPathsForValuesAffectingValueForKey(key: NSString | string): NSSet<any>;
+  automaticallyNotifiesObserversForKey(key: NSString | string): boolean;
+  setKeys_triggerChangeNotificationsForDependentKey(keys: NSArray<any> | any[], dependentKey: NSString | string): void;
+  classFallbacksForKeyedArchiver(): NSArray<any>;
+  classForKeyedUnarchiver(): any;
+  version(): NSInteger;
+  setVersion(aVersion: NSInteger): void;
+  cancelPreviousPerformRequestsWithTarget_selector_object(aTarget: any, aSelector: string, anArgument: any | null): void;
+  cancelPreviousPerformRequestsWithTarget(aTarget: any): void;
+  exposeBinding(binding: NSBindingName): void;
+  setDefaultPlaceholder_forMarker_withBinding(placeholder: any | null, marker: any | null, binding: NSBindingName): void;
+  defaultPlaceholderForMarker_withBinding(marker: any | null, binding: NSBindingName): any;
+  mo_swizzleAdditions(): void;
+  mo_mocha(): MOClassDescription;
+  isSelectorExcludedFromMochaScript(selector: string): boolean;
+  selectorForMochaPropertyName(propertyName: NSString | string): string;
+  accessInstanceVariablesDirectly(): boolean;
 
 }
 

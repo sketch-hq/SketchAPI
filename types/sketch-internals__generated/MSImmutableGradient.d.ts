@@ -1,4 +1,5 @@
 interface MSImmutableGradientUninitialized<InitializedType = MSImmutableGradient> extends _MSImmutableGradientUninitialized<MSImmutableGradient> {}
+
 interface MSImmutableGradient extends _MSImmutableGradient {
   defaultStopsArray(): NSArray<any>;
   conditionedEllipseLength(): CGFloat;
@@ -12,9 +13,10 @@ interface MSImmutableGradient extends _MSImmutableGradient {
 
   hasOpacity(): boolean;
 }
+
 declare const MSImmutableGradient: {
   alloc(): MSImmutableGradientUninitialized;
-  class(): MSImmutableGradient;  defaultGradientStops(): NSArray<any>;
-
+  class(): MSImmutableGradient;
+  defaultGradientStops(): NSArray<any>;
 }
 

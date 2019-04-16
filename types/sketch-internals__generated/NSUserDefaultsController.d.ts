@@ -1,6 +1,7 @@
 interface NSUserDefaultsControllerUninitialized<InitializedType = NSUserDefaultsController> extends NSControllerUninitialized<NSUserDefaultsController> {
   initWithDefaults_initialValues(defaults: NSUserDefaults | null, initialValues: NSDictionary<any, any> | {[key: string]: any} | null): InitializedType;
 }
+
 interface NSUserDefaultsController extends NSController {
   revert(sender: any | null): IBAction;
   save(sender: any | null): IBAction;
@@ -14,10 +15,12 @@ interface NSUserDefaultsController extends NSController {
   hasUnappliedChanges(): boolean;
   values(): any;
 }
+
 declare const NSUserDefaultsController: {
   alloc(): NSUserDefaultsControllerUninitialized;
   class(): NSUserDefaultsController;
   sharedUserDefaultsController(): NSUserDefaultsController;
+  accessInstanceVariablesDirectly(): boolean;
 
 }
 

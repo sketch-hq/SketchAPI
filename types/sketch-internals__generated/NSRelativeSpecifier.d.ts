@@ -1,6 +1,7 @@
 interface NSRelativeSpecifierUninitialized<InitializedType = NSRelativeSpecifier> extends NSScriptObjectSpecifierUninitialized<NSRelativeSpecifier> {
   initWithContainerClassDescription_containerSpecifier_key_relativePosition_baseSpecifier(classDesc: NSScriptClassDescription, container: NSScriptObjectSpecifier | null, property: NSString | string, relPos: NSRelativePosition, baseSpecifier: NSScriptObjectSpecifier | null): InitializedType;
 }
+
 interface NSRelativeSpecifier extends NSScriptObjectSpecifier {
 
   relativePosition(): NSRelativePosition;
@@ -8,8 +9,12 @@ interface NSRelativeSpecifier extends NSScriptObjectSpecifier {
   baseSpecifier(): NSScriptObjectSpecifier;
   setBaseSpecifier(baseSpecifier: NSScriptObjectSpecifier): void;
 }
+
 declare const NSRelativeSpecifier: {
   alloc(): NSRelativeSpecifierUninitialized;
   class(): NSRelativeSpecifier;
+  objectSpecifierWithDescriptor(descriptor: NSAppleEventDescriptor): NSScriptObjectSpecifier;
+  accessInstanceVariablesDirectly(): boolean;
+
 }
 

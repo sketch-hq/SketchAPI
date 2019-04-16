@@ -1,4 +1,5 @@
 interface MSImmutableStyleUninitialized<InitializedType = MSImmutableStyle> extends _MSImmutableStyleUninitialized<MSImmutableStyle> {}
+
 interface MSImmutableStyle extends _MSImmutableStyle {
   clearTextStyle(): void;
   boundingBoxForBiggestShadowSpreadForLayer(layer: MSImmutableLayer): NSRect;
@@ -35,6 +36,7 @@ interface MSImmutableStyle extends _MSImmutableStyle {
   hasEnabledOpaqueFill(): boolean;
   renderableFills(): NSArray<any>;
 }
+
 declare const MSImmutableStyle: {
   alloc(): MSImmutableStyleUninitialized;
   class(): MSImmutableStyle;

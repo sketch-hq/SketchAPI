@@ -1,9 +1,9 @@
 interface NSItemProviderUninitialized<InitializedType = NSItemProvider> extends NSObjectUninitialized<NSItemProvider> {
-  init(): InitializedType;
   initWithObject(object: any): InitializedType;
   initWithItem_typeIdentifier(item: any | null, typeIdentifier: NSString | string | null): InitializedType;
   initWithContentsOfURL(fileURL: NSURL): InitializedType;
 }
+
 interface NSItemProvider extends NSObject, INSCopying {
   registerDataRepresentationForTypeIdentifier_visibility_loadHandler(typeIdentifier: NSString | string, visibility: NSItemProviderRepresentationVisibility, loadHandler: Block): void;
   registerFileRepresentationForTypeIdentifier_fileOptions_visibility_loadHandler(typeIdentifier: NSString | string, fileOptions: NSItemProviderFileOptions, visibility: NSItemProviderRepresentationVisibility, loadHandler: Block): void;
@@ -22,6 +22,7 @@ interface NSItemProvider extends NSObject, INSCopying {
   loadPreviewImageWithOptions_completionHandler(options: NSDictionary<any, any> | {[key: string]: any}, completionHandler: NSItemProviderCompletionHandler): void;
   registerCloudKitShareWithPreparationHandler(preparationHandler: Block): void;
   registerCloudKitShare_container(share: CKShare, container: CKContainer): void;
+  copyWithZone(zone: NSZone | null): any;
 
   registeredTypeIdentifiers(): NSArray<any>;
   suggestedName(): NSString;
@@ -32,8 +33,37 @@ interface NSItemProvider extends NSObject, INSCopying {
   containerFrame(): NSRect;
   preferredPresentationSize(): NSSize;
 }
+
 declare const NSItemProvider: {
   alloc(): NSItemProviderUninitialized;
   class(): NSItemProvider;
+  load(): void;
+  instancesRespondToSelector(aSelector: string): boolean;
+  conformsToProtocol(protocol: Protocol): boolean;
+  instanceMethodForSelector(aSelector: string): IMP;
+  isSubclassOfClass(aClass: any): boolean;
+  hash(): NSUInteger;
+  superclass(): any;
+  description(): NSString;
+  debugDescription(): NSString;
+  useStoredAccessor(): boolean;
+  keyPathsForValuesAffectingValueForKey(key: NSString | string): NSSet<any>;
+  automaticallyNotifiesObserversForKey(key: NSString | string): boolean;
+  setKeys_triggerChangeNotificationsForDependentKey(keys: NSArray<any> | any[], dependentKey: NSString | string): void;
+  classFallbacksForKeyedArchiver(): NSArray<any>;
+  classForKeyedUnarchiver(): any;
+  version(): NSInteger;
+  setVersion(aVersion: NSInteger): void;
+  cancelPreviousPerformRequestsWithTarget_selector_object(aTarget: any, aSelector: string, anArgument: any | null): void;
+  cancelPreviousPerformRequestsWithTarget(aTarget: any): void;
+  exposeBinding(binding: NSBindingName): void;
+  setDefaultPlaceholder_forMarker_withBinding(placeholder: any | null, marker: any | null, binding: NSBindingName): void;
+  defaultPlaceholderForMarker_withBinding(marker: any | null, binding: NSBindingName): any;
+  mo_swizzleAdditions(): void;
+  mo_mocha(): MOClassDescription;
+  isSelectorExcludedFromMochaScript(selector: string): boolean;
+  selectorForMochaPropertyName(propertyName: NSString | string): string;
+  accessInstanceVariablesDirectly(): boolean;
+
 }
 

@@ -10,7 +10,9 @@ interface NSImageUninitialized<InitializedType = NSImage> extends NSObjectUninit
   initWithPasteboard(pasteboard: NSPasteboard): InitializedType;
   initWithDataIgnoringOrientation(data: NSData): InitializedType;
   initWithCGImage_size(cgImage: CGImageRef, size: NSSize): InitializedType;
+  initWithPasteboardPropertyList_ofType(propertyList: any, type: NSPasteboardType): InitializedType;
 }
+
 interface NSImage extends NSObject, INSCopying, INSSecureCoding, INSPasteboardReading, INSPasteboardWriting {
   setName(string: NSImageName | null): boolean;
   name(): NSImageName;
@@ -97,6 +99,10 @@ interface NSImage extends NSObject, INSCopying, INSSecureCoding, INSPasteboardRe
   hasEPSData(): boolean;
   EPSImageRep(): NSEPSImageRep;
   bitmapData(): NSData;
+  copyWithZone(zone: NSZone | null): any;
+  writableTypesForPasteboard(pasteboard: NSPasteboard): NSArray<any>;
+  writingOptionsForType_pasteboard(type: NSPasteboardType, pasteboard: NSPasteboard): NSPasteboardWritingOptions;
+  pasteboardPropertyListForType(type: NSPasteboardType): any;
 
   size(): NSSize;
   setSize(size: NSSize): void;
@@ -129,9 +135,11 @@ interface NSImage extends NSObject, INSCopying, INSSecureCoding, INSPasteboardRe
   setResizingMode(resizingMode: NSImageResizingMode): void;
   embeddedXlinkValue(): NSString;
 }
+
 declare const NSImage: {
   alloc(): NSImageUninitialized;
-  class(): NSImage;  imageNamed(name: NSImageName): NSImage;
+  class(): NSImage;
+  imageNamed(name: NSImageName): NSImage;
   imageWithSize_flipped_drawingHandler(size: NSSize, drawingHandlerShouldBeCalledWithFlippedContext: boolean, drawingHandler: Block): NSImage;
   imageUnfilteredFileTypes(): NSArray<any>;
   imageUnfilteredPasteboardTypes(): NSArray<any>;
@@ -148,9 +156,38 @@ declare const NSImage: {
   drawImageFlippedWithSize_withBlock(aSize: NSSize, aBlock: BCVoidBlock): NSImage;
   drawImageFlipped_withSize_withBlock(shouldFlip: boolean, aSize: NSSize, aBlock: BCVoidBlock): NSImage;
   imageFromDataArchive(data: NSData): NSImage;
-
+  readableTypesForPasteboard(pasteboard: NSPasteboard): NSArray<any>;
+  readingOptionsForType_pasteboard(type: NSPasteboardType, pasteboard: NSPasteboard): NSPasteboardReadingOptions;
+  load(): void;
+  instancesRespondToSelector(aSelector: string): boolean;
+  conformsToProtocol(protocol: Protocol): boolean;
+  instanceMethodForSelector(aSelector: string): IMP;
+  isSubclassOfClass(aClass: any): boolean;
+  hash(): NSUInteger;
+  superclass(): any;
+  description(): NSString;
+  debugDescription(): NSString;
+  useStoredAccessor(): boolean;
+  keyPathsForValuesAffectingValueForKey(key: NSString | string): NSSet<any>;
+  automaticallyNotifiesObserversForKey(key: NSString | string): boolean;
+  setKeys_triggerChangeNotificationsForDependentKey(keys: NSArray<any> | any[], dependentKey: NSString | string): void;
+  classFallbacksForKeyedArchiver(): NSArray<any>;
+  classForKeyedUnarchiver(): any;
+  version(): NSInteger;
+  setVersion(aVersion: NSInteger): void;
+  cancelPreviousPerformRequestsWithTarget_selector_object(aTarget: any, aSelector: string, anArgument: any | null): void;
+  cancelPreviousPerformRequestsWithTarget(aTarget: any): void;
+  exposeBinding(binding: NSBindingName): void;
+  setDefaultPlaceholder_forMarker_withBinding(placeholder: any | null, marker: any | null, binding: NSBindingName): void;
+  defaultPlaceholderForMarker_withBinding(marker: any | null, binding: NSBindingName): any;
+  mo_swizzleAdditions(): void;
+  mo_mocha(): MOClassDescription;
+  isSelectorExcludedFromMochaScript(selector: string): boolean;
+  selectorForMochaPropertyName(propertyName: NSString | string): string;
   imageTypes(): NSArray<any>;
   imageUnfilteredTypes(): NSArray<any>;
+  supportsSecureCoding(): boolean;
+  accessInstanceVariablesDirectly(): boolean;
 
 }
 

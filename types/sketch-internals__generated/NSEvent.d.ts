@@ -1,4 +1,7 @@
-interface NSEventUninitialized<InitializedType = NSEvent> extends NSObjectUninitialized<NSEvent> {}
+interface NSEventUninitialized<InitializedType = NSEvent> extends NSObjectUninitialized<NSEvent> {
+  initWithCoder(aDecoder: NSCoder): InitializedType;
+}
+
 interface NSEvent extends NSObject, INSCopying, INSCoding {
   touchesMatchingPhase_inView(phase: NSTouchPhase, view: NSView | null): NSSet<any>;
   allTouches(): NSSet<any>;
@@ -9,6 +12,8 @@ interface NSEvent extends NSObject, INSCopying, INSCoding {
   isDoubleClick(): boolean;
   isRightClick(): boolean;
   isOptionClick(): boolean;
+  copyWithZone(zone: NSZone | null): any;
+  encodeWithCoder(aCoder: NSCoder): void;
 
   type(): NSEventType;
   timestamp(): NSTimeInterval;
@@ -66,9 +71,11 @@ interface NSEvent extends NSObject, INSCopying, INSCoding {
   associatedEventsMask(): NSEventMask;
   pressureBehavior(): NSPressureBehavior;
 }
+
 declare const NSEvent: {
   alloc(): NSEventUninitialized;
-  class(): NSEvent;  eventWithEventRef(eventRef: void): NSEvent;
+  class(): NSEvent;
+  eventWithEventRef(eventRef: void): NSEvent;
   eventWithCGEvent(cgEvent: CGEventRef): NSEvent;
   startPeriodicEventsAfterDelay_withPeriod(delay: NSTimeInterval, period: NSTimeInterval): void;
   stopPeriodicEvents(): void;
@@ -79,9 +86,38 @@ declare const NSEvent: {
   addGlobalMonitorForEventsMatchingMask_handler(mask: NSEventMask, block: Block): any;
   addLocalMonitorForEventsMatchingMask_handler(mask: NSEventMask, block: Block): any;
   removeMonitor(eventMonitor: any): void;
-
+  load(): void;
+  instancesRespondToSelector(aSelector: string): boolean;
+  conformsToProtocol(protocol: Protocol): boolean;
+  instanceMethodForSelector(aSelector: string): IMP;
+  isSubclassOfClass(aClass: any): boolean;
+  hash(): NSUInteger;
+  superclass(): any;
+  description(): NSString;
+  debugDescription(): NSString;
+  useStoredAccessor(): boolean;
+  keyPathsForValuesAffectingValueForKey(key: NSString | string): NSSet<any>;
+  automaticallyNotifiesObserversForKey(key: NSString | string): boolean;
+  setKeys_triggerChangeNotificationsForDependentKey(keys: NSArray<any> | any[], dependentKey: NSString | string): void;
+  classFallbacksForKeyedArchiver(): NSArray<any>;
+  classForKeyedUnarchiver(): any;
+  version(): NSInteger;
+  setVersion(aVersion: NSInteger): void;
+  cancelPreviousPerformRequestsWithTarget_selector_object(aTarget: any, aSelector: string, anArgument: any | null): void;
+  cancelPreviousPerformRequestsWithTarget(aTarget: any): void;
+  exposeBinding(binding: NSBindingName): void;
+  setDefaultPlaceholder_forMarker_withBinding(placeholder: any | null, marker: any | null, binding: NSBindingName): void;
+  defaultPlaceholderForMarker_withBinding(marker: any | null, binding: NSBindingName): any;
+  mo_swizzleAdditions(): void;
+  mo_mocha(): MOClassDescription;
+  isSelectorExcludedFromMochaScript(selector: string): boolean;
+  selectorForMochaPropertyName(propertyName: NSString | string): string;
   modifierFlags(): NSEventModifierFlags;
-  mouseCoalescingEnabled(): boolean;
+  mouseCoalescingEnabled(): boolean;,
+          {
+            newLineStart: true,
+            newLineEnd: false,
+          }
   setMouseCoalescingEnabled(mouseCoalescingEnabled: boolean): void;
   swipeTrackingFromScrollEventsEnabled(): boolean;
   mouseLocation(): NSPoint;
@@ -89,6 +125,7 @@ declare const NSEvent: {
   doubleClickInterval(): NSTimeInterval;
   keyRepeatDelay(): NSTimeInterval;
   keyRepeatInterval(): NSTimeInterval;
+  accessInstanceVariablesDirectly(): boolean;
 
 }
 

@@ -1,4 +1,5 @@
 interface MSStylePartPreviewButtonWithBlendModeUninitialized<InitializedType = MSStylePartPreviewButtonWithBlendMode> extends MSStylePartPreviewButtonUninitialized<MSStylePartPreviewButtonWithBlendMode> {}
+
 interface MSStylePartPreviewButtonWithBlendMode extends MSStylePartPreviewButton {
 
   delegate(): any;
@@ -6,8 +7,16 @@ interface MSStylePartPreviewButtonWithBlendMode extends MSStylePartPreviewButton
   blendModes(): NSSet<any>;
   setBlendModes(blendModes: NSSet<any>): void;
 }
+
 declare const MSStylePartPreviewButtonWithBlendMode: {
   alloc(): MSStylePartPreviewButtonWithBlendModeUninitialized;
   class(): MSStylePartPreviewButtonWithBlendMode;
+  cellClass(): any;,
+          {
+            newLineStart: true,
+            newLineEnd: false,
+          }
+  setCellClass(cellClass: any): void;
+
 }
 

@@ -1,4 +1,5 @@
 interface _MSLayerGroupUninitialized<InitializedType = _MSLayerGroup> extends MSStyledLayerUninitialized<_MSLayerGroup> {}
+
 interface _MSLayerGroup extends MSStyledLayer {
   addLayer(value: MSLayer): void;
   addLayers(layers: NSArray<any> | any[]): void;
@@ -22,8 +23,15 @@ interface _MSLayerGroup extends MSStyledLayer {
   layers(): NSArray<any>;
   setLayers(layers: NSArray<any> | any[]): void;
 }
+
 declare const _MSLayerGroup: {
   alloc(): _MSLayerGroupUninitialized;
   class(): _MSLayerGroup;
+  layerWithImageFromPasteboard(pasteboard: NSPasteboard): _MSLayerGroup;
+  layerWithImageFromFileURL(fileURL: NSURL): _MSLayerGroup;
+  pasteStyleFromPasteboardOnLayers_document(styledLayers: NSArray<any> | any[], document: MSDocumentData): void;
+  pasteStyleFromPasteboard_onLayers_document(pasteboard: NSPasteboard, styledLayers: NSArray<any> | any[], document: MSDocumentData): void;
+  pasteStyleDict_onLayers_document(style: NSDictionary<any, any> | {[key: string]: any}, styledLayers: NSArray<any> | any[], document: MSDocumentData): void;
+  supportedPasteboardTypesForStyleCopying(): NSArray<any>;
 }
 

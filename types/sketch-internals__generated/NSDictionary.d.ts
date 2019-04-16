@@ -1,5 +1,4 @@
 interface NSDictionaryUninitialized<KeyType, ObjectType, InitializedType = NSDictionary<KeyType, ObjectType>> extends NSObjectUninitialized<NSDictionary<KeyType, ObjectType>> {
-  init(): InitializedType;
   initWithObjects_forKeys_count(objects: ObjectType[], keys: KeyType[], cnt: NSUInteger): InitializedType;
   initWithCoder(aDecoder: NSCoder): InitializedType;
   initWithContentsOfFile(path: NSString | string): InitializedType;
@@ -8,8 +7,9 @@ interface NSDictionaryUninitialized<KeyType, ObjectType, InitializedType = NSDic
   initWithDictionary(otherDictionary: NSDictionary<any, any> | {[key: string]: any}): InitializedType;
   initWithDictionary_copyItems(otherDictionary: NSDictionary<any, any> | {[key: string]: any}, flag: boolean): InitializedType;
   initWithObjects_forKeys(objects: NSArray<any> | any[], keys: NSArray<any> | any[]): InitializedType;
-  initWithContentsOfURL_error(url: NSURL, error: NSError): InitializedType;
+  initWithContentsOfURL_error(url: NSURL, error: MOPointer<NSError>): InitializedType;
 }
+
 interface NSDictionary<KeyType, ObjectType> extends NSObject, INSCopying, INSMutableCopying, INSSecureCoding, INSFastEnumeration {
 
   [key: string]: ObjectType | Function;
@@ -21,7 +21,7 @@ interface NSDictionary<KeyType, ObjectType> extends NSObject, INSCopying, INSMut
   isEqualToDictionary(otherDictionary: NSDictionary<any, any> | {[key: string]: any}): boolean;
   objectEnumerator(): NSEnumerator<any>;
   objectsForKeys_notFoundMarker(keys: NSArray<any> | any[], marker: ObjectType): NSArray<any>;
-  writeToURL_error(url: NSURL, error: NSError): boolean;
+  writeToURL_error(url: NSURL, error: MOPointer<NSError>): boolean;
   keysSortedByValueUsingSelector(comparator: string): NSArray<any>;
   getObjects_andKeys_count(objects: ObjectType[], keys: KeyType[], count: NSUInteger): void;
   objectForKeyedSubscript(key: KeyType): ObjectType;
@@ -91,6 +91,9 @@ interface NSDictionary<KeyType, ObjectType> extends NSObject, INSCopying, INSMut
   dictionaryByConvertingNSColorsToMSImmutableColorsInColorSpace(colorSpace: NSColorSpace): NSDictionary<any, any>;
   dictionaryByConvertingMSImmutableColorsToNSColorsInColorSpace(colorSpace: NSColorSpace): NSDictionary<any, any>;
   dictionaryByTranslatingNSColorsToMSImmutableColorsInColorSpace(colorSpace: NSColorSpace): NSDictionary<any, any>;
+  copyWithZone(zone: NSZone | null): any;
+  mutableCopyWithZone(zone: NSZone | null): any;
+  countByEnumeratingWithState_objects_count(state: NSFastEnumerationState, buffer: any[], len: NSUInteger): NSUInteger;
 
   count(): NSUInteger;
   allKeys(): NSArray<any>;
@@ -98,9 +101,11 @@ interface NSDictionary<KeyType, ObjectType> extends NSObject, INSCopying, INSMut
   description(): NSString;
   descriptionInStringsFileFormat(): NSString;
 }
+
 declare const NSDictionary: {
   alloc<KeyType, ObjectType>(): NSDictionaryUninitialized<KeyType, ObjectType>;
-  class(): NSDictionary;  dictionaryWithContentsOfFile(path: NSString | string): NSDictionary<any, any>;
+  class(): NSDictionary;
+  dictionaryWithContentsOfFile(path: NSString | string): NSDictionary<any, any>;
   dictionaryWithContentsOfURL(url: NSURL): NSDictionary<any, any>;
   dictionary<KeyType, ObjectType>(): NSDictionary<KeyType, ObjectType>;
   dictionaryWithObject_forKey<KeyType, ObjectType>(object: ObjectType, key: KeyType): NSDictionary<KeyType, ObjectType>;
@@ -108,8 +113,36 @@ declare const NSDictionary: {
   dictionaryWithObjectsAndKeys<KeyType, ObjectType>(firstObject: any, ...args: any[]): NSDictionary<KeyType, ObjectType>;
   dictionaryWithDictionary<KeyType, ObjectType>(dict: NSDictionary<any, any> | {[key: string]: any}): NSDictionary<KeyType, ObjectType>;
   dictionaryWithObjects_forKeys<KeyType, ObjectType>(objects: NSArray<any> | any[], keys: NSArray<any> | any[]): NSDictionary<KeyType, ObjectType>;
-  dictionaryWithContentsOfURL_error(url: NSURL, error: NSError): NSDictionary<any, any>;
+  dictionaryWithContentsOfURL_error(url: NSURL, error: MOPointer<NSError>): NSDictionary<any, any>;
   sharedKeySetForKeys(keys: NSArray<any> | any[]): any;
+  load(): void;
+  instancesRespondToSelector(aSelector: string): boolean;
+  conformsToProtocol(protocol: Protocol): boolean;
+  instanceMethodForSelector(aSelector: string): IMP;
+  isSubclassOfClass(aClass: any): boolean;
+  hash(): NSUInteger;
+  superclass(): any;
+  description(): NSString;
+  debugDescription(): NSString;
+  useStoredAccessor(): boolean;
+  keyPathsForValuesAffectingValueForKey(key: NSString | string): NSSet<any>;
+  automaticallyNotifiesObserversForKey(key: NSString | string): boolean;
+  setKeys_triggerChangeNotificationsForDependentKey(keys: NSArray<any> | any[], dependentKey: NSString | string): void;
+  classFallbacksForKeyedArchiver(): NSArray<any>;
+  classForKeyedUnarchiver(): any;
+  version(): NSInteger;
+  setVersion(aVersion: NSInteger): void;
+  cancelPreviousPerformRequestsWithTarget_selector_object(aTarget: any, aSelector: string, anArgument: any | null): void;
+  cancelPreviousPerformRequestsWithTarget(aTarget: any): void;
+  exposeBinding(binding: NSBindingName): void;
+  setDefaultPlaceholder_forMarker_withBinding(placeholder: any | null, marker: any | null, binding: NSBindingName): void;
+  defaultPlaceholderForMarker_withBinding(marker: any | null, binding: NSBindingName): any;
+  mo_swizzleAdditions(): void;
+  mo_mocha(): MOClassDescription;
+  isSelectorExcludedFromMochaScript(selector: string): boolean;
+  selectorForMochaPropertyName(propertyName: NSString | string): string;
+  supportsSecureCoding(): boolean;
+  accessInstanceVariablesDirectly(): boolean;
 
 }
 

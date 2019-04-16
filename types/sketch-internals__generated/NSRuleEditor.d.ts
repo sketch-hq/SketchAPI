@@ -1,4 +1,5 @@
 interface NSRuleEditorUninitialized<InitializedType = NSRuleEditor> extends NSControlUninitialized<NSRuleEditor> {}
+
 interface NSRuleEditor extends NSControl {
   reloadCriteria(): void;
   reloadPredicate(): void;
@@ -44,8 +45,27 @@ interface NSRuleEditor extends NSControl {
   displayValuesKeyPath(): NSString;
   setDisplayValuesKeyPath(displayValuesKeyPath: NSString | string): void;
 }
+
 declare const NSRuleEditor: {
   alloc(): NSRuleEditorUninitialized;
   class(): NSRuleEditor;
+  inpectorBorderPathForRect(rect: NSRect): NSBezierPath;
+  inpectorCheckmarkBorderPathForRect(rect: NSRect): NSBezierPath;
+  inpectorBorderPathForRectWithMaxRadius(rect: NSRect): NSBezierPath;
+  inpectorBorderPathForRect_borderRadius(rect: NSRect, borderRadius: CGFloat): NSBezierPath;
+  inpectorFocusRingPathForRect(rect: NSRect): NSBezierPath;
+  cellClass(): any;,
+          {
+            newLineStart: true,
+            newLineEnd: false,
+          }
+  setCellClass(cellClass: any): void;
+  requiresConstraintBasedLayout(): boolean;
+  focusView(): NSView;
+  defaultMenu(): NSMenu;
+  compatibleWithResponsiveScrolling(): boolean;
+  defaultFocusRingType(): NSFocusRingType;
+  restorableStateKeyPaths(): NSArray<any>;
+
 }
 

@@ -1,4 +1,5 @@
 interface MSNormalResizeLineEventHandlerUninitialized<InitializedType = MSNormalResizeLineEventHandler> extends MSNormalBaseEventHandlerUninitialized<MSNormalResizeLineEventHandler> {}
+
 interface MSNormalResizeLineEventHandler extends MSNormalBaseEventHandler {
 
   layer(): MSShapePathLayer;
@@ -8,8 +9,13 @@ interface MSNormalResizeLineEventHandler extends MSNormalBaseEventHandler {
   normalEventHandler(): MSNormalEventHandler;
   setNormalEventHandler(normalEventHandler: MSNormalEventHandler): void;
 }
+
 declare const MSNormalResizeLineEventHandler: {
   alloc(): MSNormalResizeLineEventHandlerUninitialized;
   class(): MSNormalResizeLineEventHandler;
+  cursorForCorner_ofCoordinateSpace(corner: BCCorner, coordinateSpace: any | null): NSCursor;
+  accessInstanceVariablesDirectly(): boolean;
+  restorableStateKeyPaths(): NSArray<any>;
+
 }
 

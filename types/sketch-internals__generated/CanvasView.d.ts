@@ -1,4 +1,5 @@
 interface CanvasViewUninitialized<InitializedType = CanvasView> extends NSViewUninitialized<CanvasView> {}
+
 interface CanvasView extends NSView {
 
   showPoints(): boolean;
@@ -8,8 +9,16 @@ interface CanvasView extends NSView {
   fitCurve(): boolean;
   setFitCurve(fitCurve: boolean): void;
 }
+
 declare const CanvasView: {
   alloc(): CanvasViewUninitialized;
   class(): CanvasView;
+  requiresConstraintBasedLayout(): boolean;
+  focusView(): NSView;
+  defaultMenu(): NSMenu;
+  compatibleWithResponsiveScrolling(): boolean;
+  defaultFocusRingType(): NSFocusRingType;
+  restorableStateKeyPaths(): NSArray<any>;
+
 }
 

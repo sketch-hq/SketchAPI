@@ -1,4 +1,5 @@
 interface NSColorWellUninitialized<InitializedType = NSColorWell> extends NSControlUninitialized<NSColorWell> {}
+
 interface NSColorWell extends NSControl {
   deactivate(): void;
   activate(exclusive: boolean): void;
@@ -11,8 +12,21 @@ interface NSColorWell extends NSControl {
   color(): NSColor;
   setColor(color: NSColor): void;
 }
+
 declare const NSColorWell: {
   alloc(): NSColorWellUninitialized;
   class(): NSColorWell;
+  inpectorBorderPathForRect(rect: NSRect): NSBezierPath;
+  inpectorCheckmarkBorderPathForRect(rect: NSRect): NSBezierPath;
+  inpectorBorderPathForRectWithMaxRadius(rect: NSRect): NSBezierPath;
+  inpectorBorderPathForRect_borderRadius(rect: NSRect, borderRadius: CGFloat): NSBezierPath;
+  inpectorFocusRingPathForRect(rect: NSRect): NSBezierPath;
+  cellClass(): any;,
+          {
+            newLineStart: true,
+            newLineEnd: false,
+          }
+  setCellClass(cellClass: any): void;
+
 }
 

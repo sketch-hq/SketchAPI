@@ -1,4 +1,5 @@
 interface NSArrayControllerUninitialized<InitializedType = NSArrayController> extends NSObjectControllerUninitialized<NSArrayController> {}
+
 interface NSArrayController extends NSObjectController {
   rearrangeObjects(): void;
   didChangeArrangementCriteria(): void;
@@ -49,6 +50,7 @@ interface NSArrayController extends NSObjectController {
   canSelectNext(): boolean;
   canSelectPrevious(): boolean;
 }
+
 declare const NSArrayController: {
   alloc(): NSArrayControllerUninitialized;
   class(): NSArrayController;

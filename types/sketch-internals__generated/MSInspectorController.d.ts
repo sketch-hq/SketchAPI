@@ -1,4 +1,5 @@
 interface MSInspectorControllerUninitialized<InitializedType = MSInspectorController> extends NSViewControllerUninitialized<MSInspectorController> {}
+
 interface MSInspectorController extends NSViewController, INSTouchBarDelegate {
   changeColor(sender: any): void;
   refreshIfNecessary(treeDiff: MSTreeDiff): void;
@@ -18,6 +19,7 @@ interface MSInspectorController extends NSViewController, INSTouchBarDelegate {
   openPopoverForStylePart_atIndex_preferringNative(stylePart: MSStylePartType, index: NSUInteger, prefersNative: boolean): void;
   adjustInspectorToColorPopover_sender(popover: BCPopover, sender: any): void;
   reloadTouchBars(): void;
+  touchBar_makeItemForIdentifier(touchBar: NSTouchBar, identifier: NSTouchBarItemIdentifier): NSTouchBarItem;
 
   currentController(): NSViewController;
   setCurrentController(currentController: NSViewController): void;
@@ -27,8 +29,12 @@ interface MSInspectorController extends NSViewController, INSTouchBarDelegate {
   setAlignmentBarHidden(alignmentBarHidden: boolean): void;
   sharedStyleInspectorVisible(): boolean;
 }
+
 declare const MSInspectorController: {
   alloc(): MSInspectorControllerUninitialized;
   class(): MSInspectorController;
+  accessInstanceVariablesDirectly(): boolean;
+  restorableStateKeyPaths(): NSArray<any>;
+
 }
 

@@ -1,4 +1,5 @@
 interface SCKFileUninitialized<InitializedType = SCKFile> extends SCKObjectUninitialized<SCKFile> {}
+
 interface SCKFile extends SCKObject {
 
   dimensions(): CGSize;
@@ -8,6 +9,7 @@ interface SCKFile extends SCKObject {
   url(): NSURL;
   type(): SCKFileImageType;
 }
+
 declare const SCKFile: {
   alloc(): SCKFileUninitialized;
   class(): SCKFile;

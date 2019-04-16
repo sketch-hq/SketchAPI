@@ -1,4 +1,5 @@
 interface SUBasicUpdateDriverUninitialized<InitializedType = SUBasicUpdateDriver> extends SUUpdateDriverUninitialized<SUBasicUpdateDriver> {}
+
 interface SUBasicUpdateDriver extends SUUpdateDriver, ISPUDownloaderDelegate {
   checkForUpdatesAtURL_host(URL: NSURL, host: SUHost): void;
   isItemNewer(ui: SUAppcastItem): boolean;
@@ -24,15 +25,21 @@ interface SUBasicUpdateDriver extends SUUpdateDriver, ISPUDownloaderDelegate {
   abortUpdate(): void;
   abortUpdateWithError(error: NSError): void;
   terminateApp(): void;
+  downloaderDidSetDestinationName_temporaryDirectory(destinationName: NSString | string, temporaryDirectory: NSString | string): void;
+  downloaderDidReceiveExpectedContentLength(expectedContentLength: number): void;
+  downloaderDidReceiveDataOfLength(length: number): void;
+  downloaderDidFinishWithTemporaryDownloadData(downloadData: SPUDownloadData): void;
+  downloaderDidFailWithError(error: NSError): void;
 
   updateItem(): SUAppcastItem;
   download(): SPUDownloader;
   downloadPath(): NSString;
 }
+
 declare const SUBasicUpdateDriver: {
   alloc(): SUBasicUpdateDriverUninitialized;
-  class(): SUBasicUpdateDriver;  hostSupportsItem(ui: SUAppcastItem): boolean;
+  class(): SUBasicUpdateDriver;
+  hostSupportsItem(ui: SUAppcastItem): boolean;
   bestItemFromAppcastItems_getDeltaItem_withHostVersion_comparator(appcastItems: NSArray<any> | any[], deltaItem: SUAppcastItem, hostVersion: NSString | string, comparator: any): SUAppcastItem;
-
 }
 

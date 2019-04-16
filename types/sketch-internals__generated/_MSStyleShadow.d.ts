@@ -1,4 +1,5 @@
 interface _MSStyleShadowUninitialized<InitializedType = _MSStyleShadow> extends MSStylePartUninitialized<_MSStyleShadow> {}
+
 interface _MSStyleShadow extends MSStylePart {
 
   blurRadius(): CGFloat;
@@ -14,8 +15,11 @@ interface _MSStyleShadow extends MSStylePart {
   contextSettings(): MSGraphicsContextSettings;
   setContextSettings(contextSettings: MSGraphicsContextSettings): void;
 }
+
 declare const _MSStyleShadow: {
   alloc(): _MSStyleShadowUninitialized;
   class(): _MSStyleShadow;
+  stylesHaveEqualAppearance(styles: NSArray<any> | any[]): boolean;
+  defaultStylePartForStyle(style: MSStyle): MSStylePart;
 }
 

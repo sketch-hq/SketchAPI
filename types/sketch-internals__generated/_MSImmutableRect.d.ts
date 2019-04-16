@@ -1,4 +1,5 @@
 interface _MSImmutableRectUninitialized<InitializedType = _MSImmutableRect> extends MSImmutableModelObjectUninitialized<_MSImmutableRect> {}
+
 interface _MSImmutableRect extends MSImmutableModelObject {
 
   constrainProportions(): boolean;
@@ -7,8 +8,11 @@ interface _MSImmutableRect extends MSImmutableModelObject {
   x(): CGFloat;
   y(): CGFloat;
 }
+
 declare const _MSImmutableRect: {
   alloc(): _MSImmutableRectUninitialized;
   class(): _MSImmutableRect;
+  mutableClass(): any;
+  traitsForPropertyName(name: NSString | string): MSPropertyTraits;
 }
 

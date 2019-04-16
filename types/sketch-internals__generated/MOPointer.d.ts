@@ -1,13 +1,13 @@
-interface MOPointerUninitialized<InitializedType = MOPointer> extends NSObjectUninitialized<MOPointer> {
-  initWithValue(value: any): InitializedType;
+interface MOPointerUninitialized<T, InitializedType = MOPointer<T>>
+  extends NSObjectUninitialized<MOPointer<T>> {
+  initWithValue(value: T): InitializedType
 }
-interface MOPointer extends NSObject {
-
-  value(): any;
-  setValue(value: any): void;
+interface MOPointer<T> extends NSObject {
+  value(): T
+  setValue(value: T): void
 }
 declare const MOPointer: {
-  alloc(): MOPointerUninitialized;
-  class(): MOPointer;
+  alloc<T>(): MOPointerUninitialized<T>
+  class<T>(): MOPointer<T>
 }
 

@@ -1,6 +1,7 @@
 interface MSImmutableSymbolInstanceUninitialized<InitializedType = MSImmutableSymbolInstance> extends _MSImmutableSymbolInstanceUninitialized<MSImmutableSymbolInstance> {
   initWithGroupForMigration(group: MSImmutableLayerGroup): InitializedType;
 }
+
 interface MSImmutableSymbolInstance extends _MSImmutableSymbolInstance {
   isScaled(): boolean;
   availableOverridesWithDocument(document: MSImmutableDocumentData): NSArray<any>;
@@ -18,6 +19,7 @@ interface MSImmutableSymbolInstance extends _MSImmutableSymbolInstance {
 
   overrides(): NSDictionary<any, any>;
 }
+
 declare const MSImmutableSymbolInstance: {
   alloc(): MSImmutableSymbolInstanceUninitialized;
   class(): MSImmutableSymbolInstance;

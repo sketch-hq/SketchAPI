@@ -1,4 +1,5 @@
 interface NSBrowserUninitialized<InitializedType = NSBrowser> extends NSControlUninitialized<NSBrowser> {}
+
 interface NSBrowser extends NSControl {
   loadColumnZero(): void;
   setCellClass(factoryId: any): void;
@@ -120,10 +121,16 @@ interface NSBrowser extends NSControl {
   backgroundColor(): NSColor;
   setBackgroundColor(backgroundColor: NSColor): void;
 }
+
 declare const NSBrowser: {
   alloc(): NSBrowserUninitialized;
-  class(): NSBrowser;  removeSavedColumnsWithAutosaveName(name: NSBrowserColumnsAutosaveName): void;
-
+  class(): NSBrowser;
+  removeSavedColumnsWithAutosaveName(name: NSBrowserColumnsAutosaveName): void;
+  inpectorBorderPathForRect(rect: NSRect): NSBezierPath;
+  inpectorCheckmarkBorderPathForRect(rect: NSRect): NSBezierPath;
+  inpectorBorderPathForRectWithMaxRadius(rect: NSRect): NSBezierPath;
+  inpectorBorderPathForRect_borderRadius(rect: NSRect, borderRadius: CGFloat): NSBezierPath;
+  inpectorFocusRingPathForRect(rect: NSRect): NSBezierPath;
   cellClass(): any;
 
 }

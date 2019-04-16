@@ -1,4 +1,5 @@
 interface _SVGFillUninitialized<InitializedType = _SVGFill> extends SVGElementUninitialized<_SVGFill> {}
+
 interface _SVGFill extends SVGElement {
   primitiveSetGradient(gradient: any): void;
   primitiveSetPattern(pattern: any): void;
@@ -18,11 +19,13 @@ interface _SVGFill extends SVGElement {
   usedBy(): NSSet<any>;
   setUsedBy(usedBy: NSSet<any>): void;
 }
+
 declare const _SVGFill: {
   alloc(): _SVGFillUninitialized;
-  class(): _SVGFill;  propertyNames(): NSArray<any>;
+  class(): _SVGFill;
+  propertyNames(): NSArray<any>;
   relationshipNames(): NSArray<any>;
   attributeNames(): NSArray<any>;
-
+  elementOfType_xml_importer_parent(type: NSString | string, xml: NSXMLElement, importer: SVGImporter, parent: SVGElement): SVGElement;
 }
 

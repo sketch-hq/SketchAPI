@@ -1,4 +1,5 @@
 interface MSSVGCompositeUninitialized<InitializedType = MSSVGComposite> extends MSSVGfeFilterPrimitiveUninitialized<MSSVGComposite> {}
+
 interface MSSVGComposite extends MSSVGfeFilterPrimitive {
 
   in(): NSString;
@@ -16,8 +17,10 @@ interface MSSVGComposite extends MSSVGfeFilterPrimitive {
   k4(): CGFloat;
   setK4(k4: CGFloat): void;
 }
+
 declare const MSSVGComposite: {
   alloc(): MSSVGCompositeUninitialized;
   class(): MSSVGComposite;
+  filter(): MSSVGComposite;
 }
 

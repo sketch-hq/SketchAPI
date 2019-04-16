@@ -1,4 +1,5 @@
 interface NSSliderCellUninitialized<InitializedType = NSSliderCell> extends NSActionCellUninitialized<NSSliderCell> {}
+
 interface NSSliderCell extends NSActionCell {
   knobRectFlipped(flipped: boolean): NSRect;
   barRectFlipped(flipped: boolean): NSRect;
@@ -40,10 +41,13 @@ interface NSSliderCell extends NSActionCell {
   allowsTickMarkValuesOnly(): boolean;
   setAllowsTickMarkValuesOnly(allowsTickMarkValuesOnly: boolean): void;
 }
+
 declare const NSSliderCell: {
   alloc(): NSSliderCellUninitialized;
   class(): NSSliderCell;
   prefersTrackingUntilMouseUp(): boolean;
+  defaultMenu(): NSMenu;
+  defaultFocusRingType(): NSFocusRingType;
 
 }
 

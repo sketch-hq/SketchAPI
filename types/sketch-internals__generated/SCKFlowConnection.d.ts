@@ -1,4 +1,5 @@
 interface SCKFlowConnectionUninitialized<InitializedType = SCKFlowConnection> extends SCKObjectUninitialized<SCKFlowConnection> {}
+
 interface SCKFlowConnection extends SCKObject {
   diffComparedTo(object: SCKFlowConnection): SCKFlowConnectionDiff;
 
@@ -7,6 +8,7 @@ interface SCKFlowConnection extends SCKObject {
   animationType(): NSString;
   layer(): SCKLayer;
 }
+
 declare const SCKFlowConnection: {
   alloc(): SCKFlowConnectionUninitialized;
   class(): SCKFlowConnection;

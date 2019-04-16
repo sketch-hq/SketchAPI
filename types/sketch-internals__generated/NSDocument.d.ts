@@ -1,11 +1,11 @@
 interface NSDocumentUninitialized<InitializedType = NSDocument> extends NSObjectUninitialized<NSDocument> {
-  init(): InitializedType;
-  initWithType_error(typeName: NSString | string, outError: NSError): InitializedType;
-  initWithContentsOfURL_ofType_error(url: NSURL, typeName: NSString | string, outError: NSError): InitializedType;
-  initForURL_withContentsOfURL_ofType_error(urlOrNil: NSURL | null, contentsURL: NSURL, typeName: NSString | string, outError: NSError): InitializedType;
+  initWithType_error(typeName: NSString | string, outError: MOPointer<NSError>): InitializedType;
+  initWithContentsOfURL_ofType_error(url: NSURL, typeName: NSString | string, outError: MOPointer<NSError>): InitializedType;
+  initForURL_withContentsOfURL_ofType_error(urlOrNil: NSURL | null, contentsURL: NSURL, typeName: NSString | string, outError: MOPointer<NSError>): InitializedType;
   initWithContentsOfFile_ofType(absolutePath: NSString | string, typeName: NSString | string): InitializedType;
   initWithContentsOfURL_ofType(url: NSURL, typeName: NSString | string): InitializedType;
 }
+
 interface NSDocument extends NSObject, INSEditorRegistration, INSFilePresenter, INSMenuItemValidation, INSUserInterfaceValidations {
   performActivityWithSynchronousWaiting_usingBlock(waitSynchronously: boolean, block: Block): void;
   continueActivityUsingBlock(block: Block): void;
@@ -13,17 +13,17 @@ interface NSDocument extends NSObject, INSEditorRegistration, INSFilePresenter, 
   performSynchronousFileAccessUsingBlock(block: Block): void;
   performAsynchronousFileAccessUsingBlock(block: Block): void;
   revertDocumentToSaved(sender: any | null): IBAction;
-  revertToContentsOfURL_ofType_error(url: NSURL, typeName: NSString | string, outError: NSError): boolean;
-  readFromURL_ofType_error(url: NSURL, typeName: NSString | string, outError: NSError): boolean;
-  readFromFileWrapper_ofType_error(fileWrapper: NSFileWrapper, typeName: NSString | string, outError: NSError): boolean;
-  readFromData_ofType_error(data: NSData, typeName: NSString | string, outError: NSError): boolean;
-  writeToURL_ofType_error(url: NSURL, typeName: NSString | string, outError: NSError): boolean;
-  fileWrapperOfType_error(typeName: NSString | string, outError: NSError): NSFileWrapper;
-  dataOfType_error(typeName: NSString | string, outError: NSError): NSData;
+  revertToContentsOfURL_ofType_error(url: NSURL, typeName: NSString | string, outError: MOPointer<NSError>): boolean;
+  readFromURL_ofType_error(url: NSURL, typeName: NSString | string, outError: MOPointer<NSError>): boolean;
+  readFromFileWrapper_ofType_error(fileWrapper: NSFileWrapper, typeName: NSString | string, outError: MOPointer<NSError>): boolean;
+  readFromData_ofType_error(data: NSData, typeName: NSString | string, outError: MOPointer<NSError>): boolean;
+  writeToURL_ofType_error(url: NSURL, typeName: NSString | string, outError: MOPointer<NSError>): boolean;
+  fileWrapperOfType_error(typeName: NSString | string, outError: MOPointer<NSError>): NSFileWrapper;
+  dataOfType_error(typeName: NSString | string, outError: MOPointer<NSError>): NSData;
   unblockUserInteraction(): void;
-  writeSafelyToURL_ofType_forSaveOperation_error(url: NSURL, typeName: NSString | string, saveOperation: NSSaveOperationType, outError: NSError): boolean;
-  writeToURL_ofType_forSaveOperation_originalContentsURL_error(url: NSURL, typeName: NSString | string, saveOperation: NSSaveOperationType, absoluteOriginalContentsURL: NSURL | null, outError: NSError): boolean;
-  fileAttributesToWriteToURL_ofType_forSaveOperation_originalContentsURL_error(url: NSURL, typeName: NSString | string, saveOperation: NSSaveOperationType, absoluteOriginalContentsURL: NSURL | null, outError: NSError): NSDictionary<any, any>;
+  writeSafelyToURL_ofType_forSaveOperation_error(url: NSURL, typeName: NSString | string, saveOperation: NSSaveOperationType, outError: MOPointer<NSError>): boolean;
+  writeToURL_ofType_forSaveOperation_originalContentsURL_error(url: NSURL, typeName: NSString | string, saveOperation: NSSaveOperationType, absoluteOriginalContentsURL: NSURL | null, outError: MOPointer<NSError>): boolean;
+  fileAttributesToWriteToURL_ofType_forSaveOperation_originalContentsURL_error(url: NSURL, typeName: NSString | string, saveOperation: NSSaveOperationType, absoluteOriginalContentsURL: NSURL | null, outError: MOPointer<NSError>): NSDictionary<any, any>;
   saveDocument(sender: any | null): IBAction;
   saveDocumentAs(sender: any | null): IBAction;
   saveDocumentTo(sender: any | null): IBAction;
@@ -33,7 +33,7 @@ interface NSDocument extends NSObject, INSEditorRegistration, INSFilePresenter, 
   saveToURL_ofType_forSaveOperation_delegate_didSaveSelector_contextInfo(url: NSURL, typeName: NSString | string, saveOperation: NSSaveOperationType, delegate: any | null, didSaveSelector: string | null, contextInfo: void | null): void;
   saveToURL_ofType_forSaveOperation_completionHandler(url: NSURL, typeName: NSString | string, saveOperation: NSSaveOperationType, completionHandler: Block): void;
   canAsynchronouslyWriteToURL_ofType_forSaveOperation(url: NSURL, typeName: NSString | string, saveOperation: NSSaveOperationType): boolean;
-  checkAutosavingSafetyAndReturnError(outError: NSError): boolean;
+  checkAutosavingSafetyAndReturnError(outError: MOPointer<NSError>): boolean;
   scheduleAutosaving(): void;
   autosaveDocumentWithDelegate_didAutosaveSelector_contextInfo(delegate: any | null, didAutosaveSelector: string | null, contextInfo: void | null): void;
   autosaveWithImplicitCancellability_completionHandler(autosavingIsImplicitlyCancellable: boolean, completionHandler: Block): void;
@@ -43,7 +43,7 @@ interface NSDocument extends NSObject, INSEditorRegistration, INSFilePresenter, 
   close(): void;
   duplicateDocument(sender: any | null): IBAction;
   duplicateDocumentWithDelegate_didDuplicateSelector_contextInfo(delegate: any | null, didDuplicateSelector: string | null, contextInfo: void | null): void;
-  duplicateAndReturnError(outError: NSError): NSDocument;
+  duplicateAndReturnError(outError: MOPointer<NSError>): NSDocument;
   renameDocument(sender: any | null): IBAction;
   moveDocumentToUbiquityContainer(sender: any | null): IBAction;
   moveDocument(sender: any | null): IBAction;
@@ -61,7 +61,7 @@ interface NSDocument extends NSObject, INSEditorRegistration, INSFilePresenter, 
   shouldChangePrintInfo(newPrintInfo: NSPrintInfo): boolean;
   printDocument(sender: any | null): IBAction;
   printDocumentWithSettings_showPrintPanel_delegate_didPrintSelector_contextInfo(printSettings: NSDictionary<any, any> | {[key: string]: any}, showPrintPanel: boolean, delegate: any | null, didPrintSelector: string | null, contextInfo: void | null): void;
-  printOperationWithSettings_error(printSettings: NSDictionary<any, any> | {[key: string]: any}, outError: NSError): NSPrintOperation;
+  printOperationWithSettings_error(printSettings: NSDictionary<any, any> | {[key: string]: any}, outError: MOPointer<NSError>): NSPrintOperation;
   runModalPrintOperation_delegate_didRunSelector_contextInfo(printOperation: NSPrintOperation, delegate: any | null, didRunSelector: string | null, contextInfo: void | null): void;
   saveDocumentToPDF(sender: any | null): IBAction;
   shareDocumentWithSharingService_completionHandler(sharingService: NSSharingService, completionHandler: Block): void;
@@ -86,7 +86,7 @@ interface NSDocument extends NSObject, INSEditorRegistration, INSFilePresenter, 
   writableTypesForSaveOperation(saveOperation: NSSaveOperationType): NSArray<any>;
   fileNameExtensionForType_saveOperation(typeName: NSString | string, saveOperation: NSSaveOperationType): NSString;
   validateUserInterfaceItem(item: any): boolean;
-  saveToURL_ofType_forSaveOperation_error(url: NSURL, typeName: NSString | string, saveOperation: NSSaveOperationType, outError: NSError): boolean;
+  saveToURL_ofType_forSaveOperation_error(url: NSURL, typeName: NSString | string, saveOperation: NSSaveOperationType, outError: MOPointer<NSError>): boolean;
   dataRepresentationOfType(type: NSString | string): NSData;
   fileAttributesToWriteToFile_ofType_saveOperation(fullDocumentPath: NSString | string, documentTypeName: NSString | string, saveOperationType: NSSaveOperationType): NSDictionary<any, any>;
   fileName(): NSString;
@@ -115,6 +115,27 @@ interface NSDocument extends NSObject, INSEditorRegistration, INSFilePresenter, 
   restoreStateWithCoder(coder: NSCoder): void;
   invalidateRestorableState(): void;
   menuNeedsUpdate(menu: NSMenu): void;
+  objectDidBeginEditing(editor: any): void;
+  objectDidEndEditing(editor: any): void;
+  relinquishPresentedItemToReader(reader: Block): void;
+  relinquishPresentedItemToWriter(writer: Block): void;
+  savePresentedItemChangesWithCompletionHandler(completionHandler: Block): void;
+  accommodatePresentedItemDeletionWithCompletionHandler(completionHandler: Block): void;
+  presentedItemDidMoveToURL(newURL: NSURL): void;
+  presentedItemDidChange(): void;
+  presentedItemDidChangeUbiquityAttributes(attributes: NSSet<any>): void;
+  presentedItemDidGainVersion(version: NSFileVersion): void;
+  presentedItemDidLoseVersion(version: NSFileVersion): void;
+  presentedItemDidResolveConflictVersion(version: NSFileVersion): void;
+  accommodatePresentedSubitemDeletionAtURL_completionHandler(url: NSURL, completionHandler: Block): void;
+  presentedSubitemDidAppearAtURL(url: NSURL): void;
+  presentedSubitemAtURL_didMoveToURL(oldURL: NSURL, newURL: NSURL): void;
+  presentedSubitemDidChangeAtURL(url: NSURL): void;
+  presentedSubitemAtURL_didGainVersion(url: NSURL, version: NSFileVersion): void;
+  presentedSubitemAtURL_didLoseVersion(url: NSURL, version: NSFileVersion): void;
+  presentedSubitemAtURL_didResolveConflictVersion(url: NSURL, version: NSFileVersion): void;
+  validateMenuItem(menuItem: NSMenuItem): boolean;
+  validateUserInterfaceItem(item: any): boolean;
 
   fileType(): NSString;
   setFileType(fileType: NSString | string): void;
@@ -157,12 +178,43 @@ interface NSDocument extends NSObject, INSEditorRegistration, INSFilePresenter, 
   objectSpecifier(): NSScriptObjectSpecifier;
   userActivity(): NSUserActivity;
   setUserActivity(userActivity: NSUserActivity): void;
+  presentedItemURL(): NSURL;
+  presentedItemOperationQueue(): NSOperationQueue;
+  primaryPresentedItemURL(): NSURL;
+  observedPresentedItemUbiquityAttributes(): NSSet<any>;
 }
+
 declare const NSDocument: {
   alloc(): NSDocumentUninitialized;
-  class(): NSDocument;  canConcurrentlyReadDocumentsOfType(typeName: NSString | string): boolean;
+  class(): NSDocument;
+  canConcurrentlyReadDocumentsOfType(typeName: NSString | string): boolean;
   isNativeType(type: NSString | string): boolean;
-
+  load(): void;
+  instancesRespondToSelector(aSelector: string): boolean;
+  conformsToProtocol(protocol: Protocol): boolean;
+  instanceMethodForSelector(aSelector: string): IMP;
+  isSubclassOfClass(aClass: any): boolean;
+  hash(): NSUInteger;
+  superclass(): any;
+  description(): NSString;
+  debugDescription(): NSString;
+  useStoredAccessor(): boolean;
+  keyPathsForValuesAffectingValueForKey(key: NSString | string): NSSet<any>;
+  automaticallyNotifiesObserversForKey(key: NSString | string): boolean;
+  setKeys_triggerChangeNotificationsForDependentKey(keys: NSArray<any> | any[], dependentKey: NSString | string): void;
+  classFallbacksForKeyedArchiver(): NSArray<any>;
+  classForKeyedUnarchiver(): any;
+  version(): NSInteger;
+  setVersion(aVersion: NSInteger): void;
+  cancelPreviousPerformRequestsWithTarget_selector_object(aTarget: any, aSelector: string, anArgument: any | null): void;
+  cancelPreviousPerformRequestsWithTarget(aTarget: any): void;
+  exposeBinding(binding: NSBindingName): void;
+  setDefaultPlaceholder_forMarker_withBinding(placeholder: any | null, marker: any | null, binding: NSBindingName): void;
+  defaultPlaceholderForMarker_withBinding(marker: any | null, binding: NSBindingName): any;
+  mo_swizzleAdditions(): void;
+  mo_mocha(): MOClassDescription;
+  isSelectorExcludedFromMochaScript(selector: string): boolean;
+  selectorForMochaPropertyName(propertyName: NSString | string): string;
   autosavesInPlace(): boolean;
   preservesVersions(): boolean;
   autosavesDrafts(): boolean;
@@ -170,6 +222,7 @@ declare const NSDocument: {
   writableTypes(): NSArray<any>;
   usesUbiquitousStorage(): boolean;
   restorableStateKeyPaths(): NSArray<any>;
+  accessInstanceVariablesDirectly(): boolean;
 
 }
 

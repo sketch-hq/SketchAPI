@@ -1,4 +1,5 @@
 interface MOBridgeSupportEnumUninitialized<InitializedType = MOBridgeSupportEnum> extends MOBridgeSupportSymbolUninitialized<MOBridgeSupportEnum> {}
+
 interface MOBridgeSupportEnum extends MOBridgeSupportSymbol {
 
   value(): NSNumber;
@@ -10,8 +11,11 @@ interface MOBridgeSupportEnum extends MOBridgeSupportSymbol {
   suggestion(): NSString;
   setSuggestion(suggestion: NSString | string): void;
 }
+
 declare const MOBridgeSupportEnum: {
   alloc(): MOBridgeSupportEnumUninitialized;
   class(): MOBridgeSupportEnum;
+  accessInstanceVariablesDirectly(): boolean;
+
 }
 

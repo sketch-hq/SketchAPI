@@ -1,4 +1,5 @@
 interface MSSymbolMasterUninitialized<InitializedType = MSSymbolMaster> extends _MSSymbolMasterUninitialized<MSSymbolMaster> {}
+
 interface MSSymbolMaster extends _MSSymbolMaster, IBCSortable {
   applyOverrides_scale_rect_inDocument(overrideValues: NSArray<any> | any[], scale: CGFloat, rect: NSRect, doc: MSImmutableDocumentData): void;
   newSymbolInstance(): MSSymbolInstance;
@@ -25,11 +26,13 @@ interface MSSymbolMaster extends _MSSymbolMaster, IBCSortable {
   allInfluencedInstances(): NSArray<any>;
   nestedSymbols(): NSSet<any>;
   overrideProperies(): NSDictionary<any, any>;
+  name(): NSString;
 }
+
 declare const MSSymbolMaster: {
   alloc(): MSSymbolMasterUninitialized;
-  class(): MSSymbolMaster;  convertArtboardToSymbol(artboard: MSArtboardGroup): MSSymbolMaster;
+  class(): MSSymbolMaster;
+  convertArtboardToSymbol(artboard: MSArtboardGroup): MSSymbolMaster;
   convertSymbolToArtboard(symbol: MSSymbolMaster): MSArtboardGroup;
-
 }
 

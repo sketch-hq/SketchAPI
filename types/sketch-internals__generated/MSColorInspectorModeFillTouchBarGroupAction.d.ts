@@ -1,6 +1,8 @@
 interface MSColorInspectorModeFillTouchBarGroupActionUninitialized<InitializedType = MSColorInspectorModeFillTouchBarGroupAction> extends MSColorInspectorModeBorderTouchBarGroupActionUninitialized<MSColorInspectorModeFillTouchBarGroupAction> {}
+
 interface MSColorInspectorModeFillTouchBarGroupAction extends MSColorInspectorModeBorderTouchBarGroupAction {
 }
+
 declare const MSColorInspectorModeFillTouchBarGroupAction: {
   alloc(): MSColorInspectorModeFillTouchBarGroupActionUninitialized;
   class(): MSColorInspectorModeFillTouchBarGroupAction;

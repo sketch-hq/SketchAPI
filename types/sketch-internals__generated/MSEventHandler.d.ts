@@ -1,6 +1,7 @@
 interface MSEventHandlerUninitialized<InitializedType = MSEventHandler> extends NSResponderUninitialized<MSEventHandler> {
   initWithManager(aManager: MSEventHandlerManager): InitializedType;
 }
+
 interface MSEventHandler extends NSResponder, INSDraggingDestination, INSTouchBarDelegate {
   currentGroup(): MSLayerGroup;
   layersToCopy(): MSLayerArray;
@@ -102,6 +103,16 @@ interface MSEventHandler extends NSResponder, INSDraggingDestination, INSTouchBa
   touchBarWithIdentifiers(identifiers: NSArray<any> | any[]): NSTouchBar;
   refreshTouchBarItemWithIdentifier(identifier: NSString | string): void;
   documentWindow(): MSDocumentWindow;
+  draggingEntered(sender: any): NSDragOperation;
+  draggingUpdated(sender: any): NSDragOperation;
+  draggingExited(sender: any | null): void;
+  prepareForDragOperation(sender: any): boolean;
+  performDragOperation(sender: any): boolean;
+  concludeDragOperation(sender: any | null): void;
+  draggingEnded(sender: any): void;
+  wantsPeriodicDraggingUpdates(): boolean;
+  updateDraggingItemsForDrag(sender: any | null): void;
+  touchBar_makeItemForIdentifier(touchBar: NSTouchBar, identifier: NSTouchBarItemIdentifier): NSTouchBarItem;
 
   manager(): MSEventHandlerManager;
   setManager(manager: MSEventHandlerManager): void;
@@ -124,9 +135,13 @@ interface MSEventHandler extends NSResponder, INSDraggingDestination, INSTouchBa
   wantsStandardSelectionControls(): boolean;
   wantsLayerHighlight(): boolean;
 }
+
 declare const MSEventHandler: {
   alloc(): MSEventHandlerUninitialized;
-  class(): MSEventHandler;  eventHandlerWithManager(aManager: MSEventHandlerManager): any;
+  class(): MSEventHandler;
+  eventHandlerWithManager(aManager: MSEventHandlerManager): any;
+  accessInstanceVariablesDirectly(): boolean;
+  restorableStateKeyPaths(): NSArray<any>;
 
 }
 

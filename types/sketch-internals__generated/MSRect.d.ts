@@ -2,6 +2,7 @@ interface MSRectUninitialized<InitializedType = MSRect> extends _MSRectUninitial
   initWithX_y_width_height(x: CGFloat, y: CGFloat, w: CGFloat, h: CGFloat): InitializedType;
   initWithRect(rect: NSRect): InitializedType;
 }
+
 interface MSRect extends _MSRect, IMSRect {
   calculateProportions(): void;
   performUpdatesWithUnconstrainedProportions(block: Block): void;
@@ -30,11 +31,12 @@ interface MSRect extends _MSRect, IMSRect {
   proportions(): CGFloat;
   setProportions(proportions: CGFloat): void;
 }
+
 declare const MSRect: {
   alloc(): MSRectUninitialized;
-  class(): MSRect;  rectWithX_y_width_height(x: CGFloat, y: CGFloat, w: CGFloat, h: CGFloat): any;
+  class(): MSRect;
+  rectWithX_y_width_height(x: CGFloat, y: CGFloat, w: CGFloat, h: CGFloat): any;
   rectWithRect(rect: NSRect): any;
   rectWithUnionOfRects(rects: NSArray<any> | any[]): any;
-
 }
 

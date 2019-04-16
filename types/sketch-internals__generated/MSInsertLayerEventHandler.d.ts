@@ -1,4 +1,5 @@
 interface MSInsertLayerEventHandlerUninitialized<InitializedType = MSInsertLayerEventHandler> extends MSDragRectEventHandlerUninitialized<MSInsertLayerEventHandler> {}
+
 interface MSInsertLayerEventHandler extends MSDragRectEventHandler {
   performActionWithRect_fromLayer_constrainProportions(rect: NSRect, fromLayer: MSLayer, constrainProportions: boolean): MSLayer;
 
@@ -7,6 +8,7 @@ interface MSInsertLayerEventHandler extends MSDragRectEventHandler {
   insertedLayer(): MSLayer;
   setInsertedLayer(insertedLayer: MSLayer): void;
 }
+
 declare const MSInsertLayerEventHandler: {
   alloc(): MSInsertLayerEventHandlerUninitialized;
   class(): MSInsertLayerEventHandler;

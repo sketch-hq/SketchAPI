@@ -4,6 +4,7 @@ interface NSWindowControllerUninitialized<InitializedType = NSWindowController> 
   initWithWindowNibName_owner(windowNibName: NSNibName, owner: any): InitializedType;
   initWithWindowNibPath_owner(windowNibPath: NSString | string, owner: any): InitializedType;
 }
+
 interface NSWindowController extends NSResponder, INSSeguePerforming {
   setDocumentEdited(dirtyFlag: boolean): void;
   synchronizeWindowTitleWithDocumentName(): void;
@@ -14,6 +15,9 @@ interface NSWindowController extends NSResponder, INSSeguePerforming {
   close(): void;
   showWindow(sender: any | null): IBAction;
   dismissController(sender: any | null): IBAction;
+  prepareForSegue_sender(segue: NSStoryboardSegue, sender: any | null): void;
+  performSegueWithIdentifier_sender(identifier: NSStoryboardSegueIdentifier, sender: any | null): void;
+  shouldPerformSegueWithIdentifier_sender(identifier: NSStoryboardSegueIdentifier, sender: any | null): boolean;
 
   windowNibName(): NSNibName;
   windowNibPath(): NSString;
@@ -33,8 +37,12 @@ interface NSWindowController extends NSResponder, INSSeguePerforming {
   windowLoaded(): boolean;
   storyboard(): NSStoryboard;
 }
+
 declare const NSWindowController: {
   alloc(): NSWindowControllerUninitialized;
   class(): NSWindowController;
+  restorableStateKeyPaths(): NSArray<any>;
+  accessInstanceVariablesDirectly(): boolean;
+
 }
 

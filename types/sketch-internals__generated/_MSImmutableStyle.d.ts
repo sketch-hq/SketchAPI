@@ -1,4 +1,5 @@
 interface _MSImmutableStyleUninitialized<InitializedType = _MSImmutableStyle> extends MSImmutableModelObjectUninitialized<_MSImmutableStyle> {}
+
 interface _MSImmutableStyle extends MSImmutableModelObject {
 
   endMarkerType(): MSMarkerType;
@@ -15,8 +16,11 @@ interface _MSImmutableStyle extends MSImmutableModelObject {
   shadows(): NSArray<any>;
   textStyle(): MSImmutableTextStyle;
 }
+
 declare const _MSImmutableStyle: {
   alloc(): _MSImmutableStyleUninitialized;
   class(): _MSImmutableStyle;
+  mutableClass(): any;
+  traitsForPropertyName(name: NSString | string): MSPropertyTraits;
 }
 

@@ -1,4 +1,5 @@
 interface _MSStyleBlurUninitialized<InitializedType = _MSStyleBlur> extends MSStylePartUninitialized<_MSStyleBlur> {}
+
 interface _MSStyleBlur extends MSStylePart {
 
   center(): NSPoint;
@@ -12,8 +13,11 @@ interface _MSStyleBlur extends MSStylePart {
   type(): MSStyleBlurType;
   setType(type: MSStyleBlurType): void;
 }
+
 declare const _MSStyleBlur: {
   alloc(): _MSStyleBlurUninitialized;
   class(): _MSStyleBlur;
+  stylesHaveEqualAppearance(styles: NSArray<any> | any[]): boolean;
+  defaultStylePartForStyle(style: MSStyle): MSStylePart;
 }
 

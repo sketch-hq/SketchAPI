@@ -1,4 +1,5 @@
 interface SCKShareUninitialized<InitializedType = SCKShare> extends SCKObjectUninitialized<SCKShare> {}
+
 interface SCKShare extends SCKObject {
   readOnlyCopy(): SCKShare;
 
@@ -9,8 +10,12 @@ interface SCKShare extends SCKObject {
   canUpdate(): boolean;
   owner(): SCKUser;
 }
+
 declare const SCKShare: {
   alloc(): SCKShareUninitialized;
   class(): SCKShare;
+  supportsSecureCoding(): boolean;
+  accessInstanceVariablesDirectly(): boolean;
+
 }
 

@@ -1,4 +1,5 @@
 interface MSGradientViewUninitialized<InitializedType = MSGradientView> extends NSViewUninitialized<MSGradientView> {}
+
 interface MSGradientView extends NSView {
 
   topColour(): NSColor;
@@ -20,8 +21,16 @@ interface MSGradientView extends NSView {
   bottomBorder(): boolean;
   setBottomBorder(bottomBorder: boolean): void;
 }
+
 declare const MSGradientView: {
   alloc(): MSGradientViewUninitialized;
   class(): MSGradientView;
+  requiresConstraintBasedLayout(): boolean;
+  focusView(): NSView;
+  defaultMenu(): NSMenu;
+  compatibleWithResponsiveScrolling(): boolean;
+  defaultFocusRingType(): NSFocusRingType;
+  restorableStateKeyPaths(): NSArray<any>;
+
 }
 

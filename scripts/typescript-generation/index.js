@@ -119,6 +119,15 @@ function generate() {
   parseHeaders(SKETCH_SOURCES_PATH)
 
   classes.NSObject.interfaces.push('NSObject')
+  classes.NSObject.methods.init = {
+    name: 'init',
+    bridgedName: 'init',
+    args: [],
+    returns: 'instancetype',
+    kind: 'class',
+    kindIndicator: '+',
+  }
+  console.log(classes.MSDocumentController)
 
   // add some classes manually
   additionalClasses.forEach(c => {

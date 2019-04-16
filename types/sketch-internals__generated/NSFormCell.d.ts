@@ -1,4 +1,5 @@
 interface NSFormCellUninitialized<InitializedType = NSFormCell> extends NSActionCellUninitialized<NSFormCell> {}
+
 interface NSFormCell extends NSActionCell {
   titleWidth(size: NSSize): CGFloat;
   setTitleWithMnemonic(stringWithAmpersand: NSString | string): void;
@@ -23,8 +24,13 @@ interface NSFormCell extends NSActionCell {
   attributedTitle(): NSAttributedString;
   setAttributedTitle(attributedTitle: NSAttributedString): void;
 }
+
 declare const NSFormCell: {
   alloc(): NSFormCellUninitialized;
   class(): NSFormCell;
+  prefersTrackingUntilMouseUp(): boolean;
+  defaultMenu(): NSMenu;
+  defaultFocusRingType(): NSFocusRingType;
+
 }
 

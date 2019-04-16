@@ -1,4 +1,5 @@
 interface MSPointsEventHandlerUninitialized<InitializedType = MSPointsEventHandler> extends MSEventHandlerUninitialized<MSPointsEventHandler> {}
+
 interface MSPointsEventHandler extends MSEventHandler {
   findSelectedLayer(): MSStyledLayer;
   points(): MSPointArray;
@@ -23,8 +24,13 @@ interface MSPointsEventHandler extends MSEventHandler {
   setIndexForSelectedPoint(indexForSelectedPoint: NSInteger): void;
   coordinateSpace(): MSLayer;
 }
+
 declare const MSPointsEventHandler: {
   alloc(): MSPointsEventHandlerUninitialized;
   class(): MSPointsEventHandler;
+  eventHandlerWithManager(aManager: MSEventHandlerManager): any;
+  accessInstanceVariablesDirectly(): boolean;
+  restorableStateKeyPaths(): NSArray<any>;
+
 }
 

@@ -1,4 +1,5 @@
 interface MSBitmapEditEventHandlerUninitialized<InitializedType = MSBitmapEditEventHandler> extends MSEventHandlerUninitialized<MSBitmapEditEventHandler> {}
+
 interface MSBitmapEditEventHandler extends MSEventHandler {
   invertAction(sender: any): IBAction;
   cropAction(sender: any): IBAction;
@@ -14,8 +15,10 @@ interface MSBitmapEditEventHandler extends MSEventHandler {
   accumulatedSelection(): NSBezierPath;
   setAccumulatedSelection(accumulatedSelection: NSBezierPath): void;
 }
+
 declare const MSBitmapEditEventHandler: {
   alloc(): MSBitmapEditEventHandlerUninitialized;
   class(): MSBitmapEditEventHandler;
+  eventHandlerWithManager(aManager: MSEventHandlerManager): any;
 }
 

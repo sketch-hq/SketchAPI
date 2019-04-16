@@ -1,4 +1,5 @@
 interface SCKArtboardUninitialized<InitializedType = SCKArtboard> extends SCKObjectUninitialized<SCKArtboard> {}
+
 interface SCKArtboard extends SCKObject {
   diffComparedTo(object: SCKArtboard): SCKArtboardDiff;
 
@@ -16,6 +17,7 @@ interface SCKArtboard extends SCKObject {
   isFlowHome(): boolean;
   setIsFlowHome(isFlowHome: boolean): void;
 }
+
 declare const SCKArtboard: {
   alloc(): SCKArtboardUninitialized;
   class(): SCKArtboard;

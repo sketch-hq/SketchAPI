@@ -1,4 +1,5 @@
 interface BCSTListCommandUninitialized<InitializedType = BCSTListCommand> extends BCSTCommandUninitialized<BCSTListCommand> {}
+
 interface BCSTListCommand extends BCSTCommand {
   itemsName(): NSString;
   itemsToListFromPages_engine(pages: NSArray<any> | any[], engine: ECCommandLineEngine): NSArray<any>;
@@ -9,8 +10,11 @@ interface BCSTListCommand extends BCSTCommand {
   rectDictionary(rect: NSRect): NSDictionary<any, any>;
   supportedFormats(): NSArray<any>;
 }
+
 declare const BCSTListCommand: {
   alloc(): BCSTListCommandUninitialized;
   class(): BCSTListCommand;
+  accessInstanceVariablesDirectly(): boolean;
+
 }
 
