@@ -21,11 +21,11 @@ Use the `sketchtool` command-line interface to export assets, inspect documents 
 
 [View documentation](/cli)
 
-## [Sketch file format](/guides/third-party-apps-integrations)
+## [Sketch file format](/file-format)
 
 Generate, modify and process Sketch files directly with the open JSON file format.
 
-[View documentation](/guides/third-party-apps-integrations)
+[View documentation](/file-format)
 
 ## [Sketch.app](/app)
 
