@@ -75,11 +75,11 @@ export class Fill extends WrappedObject {
       }
     }
 
-    const fillType = FillTypeMap[value.fill]
+    const fillType = FillTypeMap[value.fillType || value.fill]
     fill.fillType =
       typeof fillType !== 'undefined'
         ? fillType
-        : value.fill || FillTypeMap.Color
+        : value.fillType || value.fill || FillTypeMap.Color
 
     if (typeof value.enabled === 'undefined') {
       fill.isEnabled = true
@@ -102,7 +102,20 @@ Fill.define('sketchObject', {
   },
 })
 
+// deprecated in favor of `fillType` for consistency
 Fill.define('fill', {
+  exportable: false,
+  enumerable: false,
+  importable: false,
+  get() {
+    return this.fillType
+  },
+  set(fillType) {
+    this.fillType = fillType
+  },
+})
+
+Fill.define('fillType', {
   get() {
     return (
       Object.keys(FillTypeMap).find(
