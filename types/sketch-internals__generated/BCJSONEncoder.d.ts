@@ -1,7 +1,7 @@
 interface BCJSONEncoderUninitialized<InitializedType = BCJSONEncoder> extends NSObjectUninitialized<BCJSONEncoder> {}
 
 interface BCJSONEncoder extends NSObject {
-  encodeRootObject_error(root: NSObject | null, error: NSError): boolean;
+  encodeRootObject_error(root: NSObject | null, error: MOPointer<NSError>): boolean;
   encodeObject_forKey(object: NSObject | null, key: NSString | string): void;
   encodeDouble_forKey(value: number, key: NSString | string): void;
   encodeBool_forKey(value: boolean, key: NSString | string): void;
@@ -22,13 +22,13 @@ declare const BCJSONEncoder: {
   alloc(): BCJSONEncoderUninitialized;
   class(): BCJSONEncoder;
   encoderForWritingToMutableData(data: NSMutableData): BCJSONEncoder;
-  encodeObjectAsData_error(root: NSObject, error: NSError): NSData;
+  encodeObjectAsData_error(root: NSObject, error: MOPointer<NSError>): NSData;
   setAliasName_forClass(codedName: NSString | string | null, className: any): void;
   encoderForWritingToFile(file: NSFileHandle): BCJSONEncoder;
-  encodeObject_toFile_error(root: NSObject, file: NSFileHandle, error: NSError): boolean;
+  encodeObject_toFile_error(root: NSObject, file: NSFileHandle, error: MOPointer<NSError>): boolean;
   encoderForWritingToURL(url: NSURL): BCJSONEncoder;
-  encodeObject_toURL_error(root: NSObject, url: NSURL, error: NSError): boolean;
-  encodeObjectAsString_error(root: NSObject, error: NSError): NSString;
+  encodeObject_toURL_error(root: NSObject, url: NSURL, error: MOPointer<NSError>): boolean;
+  encodeObjectAsString_error(root: NSObject, error: MOPointer<NSError>): NSString;
   load(): void;
   instancesRespondToSelector(aSelector: string): boolean;
   conformsToProtocol(protocol: Protocol): boolean;

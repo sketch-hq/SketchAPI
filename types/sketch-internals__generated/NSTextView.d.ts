@@ -81,7 +81,7 @@ interface NSTextView extends NSText, INSColorChanging, INSMenuItemValidation, IN
   setSelectedRange(charRange: NSRange): void;
   smartDeleteRangeForProposedRange(proposedCharRange: NSRange): NSRange;
   toggleSmartInsertDelete(sender: any | null): void;
-  smartInsertForString_replacingRange_beforeString_afterString(pasteString: NSString | string, charRangeToReplace: NSRange, beforeString: NSString | string, afterString: NSString | string): void;
+  smartInsertForString_replacingRange_beforeString_afterString(pasteString: NSString | string, charRangeToReplace: NSRange, beforeString: MOPointer<NSString>, afterString: MOPointer<NSString>): void;
   smartInsertBeforeStringForString_replacingRange(pasteString: NSString | string, charRangeToReplace: NSRange): NSString;
   smartInsertAfterStringForString_replacingRange(pasteString: NSString | string, charRangeToReplace: NSRange): NSString;
   toggleAutomaticQuoteSubstitution(sender: any | null): void;

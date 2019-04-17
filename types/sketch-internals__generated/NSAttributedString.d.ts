@@ -2,17 +2,17 @@ interface NSAttributedStringUninitialized<InitializedType = NSAttributedString> 
   initWithString(str: NSString | string): InitializedType;
   initWithString_attributes(str: NSString | string, attrs: NSDictionary<any, any> | {[key: string]: any} | null): InitializedType;
   initWithAttributedString(attrStr: NSAttributedString): InitializedType;
-  initWithURL_options_documentAttributes_error(url: NSURL, options: NSDictionary<any, any> | {[key: string]: any}, dict: NSDictionary<any, any> | {[key: string]: any}, error: MOPointer<NSError>): InitializedType;
-  initWithData_options_documentAttributes_error(data: NSData, options: NSDictionary<any, any> | {[key: string]: any}, dict: NSDictionary<any, any> | {[key: string]: any}, error: MOPointer<NSError>): InitializedType;
-  initWithRTF_documentAttributes(data: NSData, dict: NSDictionary<any, any> | {[key: string]: any}): InitializedType;
-  initWithRTFD_documentAttributes(data: NSData, dict: NSDictionary<any, any> | {[key: string]: any}): InitializedType;
-  initWithHTML_documentAttributes(data: NSData, dict: NSDictionary<any, any> | {[key: string]: any}): InitializedType;
-  initWithHTML_baseURL_documentAttributes(data: NSData, base: NSURL, dict: NSDictionary<any, any> | {[key: string]: any}): InitializedType;
-  initWithDocFormat_documentAttributes(data: NSData, dict: NSDictionary<any, any> | {[key: string]: any}): InitializedType;
-  initWithHTML_options_documentAttributes(data: NSData, options: NSDictionary<any, any> | {[key: string]: any}, dict: NSDictionary<any, any> | {[key: string]: any}): InitializedType;
-  initWithRTFDFileWrapper_documentAttributes(wrapper: NSFileWrapper, dict: NSDictionary<any, any> | {[key: string]: any}): InitializedType;
-  initWithURL_documentAttributes(url: NSURL, dict: NSDictionary<any, any> | {[key: string]: any}): InitializedType;
-  initWithPath_documentAttributes(path: NSString | string, dict: NSDictionary<any, any> | {[key: string]: any}): InitializedType;
+  initWithURL_options_documentAttributes_error(url: NSURL, options: NSDictionary<any, any> | {[key: string]: any}, dict: MOPointer<NSDictionary<any, any>>, error: MOPointer<NSError>): InitializedType;
+  initWithData_options_documentAttributes_error(data: NSData, options: NSDictionary<any, any> | {[key: string]: any}, dict: MOPointer<NSDictionary<any, any>>, error: MOPointer<NSError>): InitializedType;
+  initWithRTF_documentAttributes(data: NSData, dict: MOPointer<NSDictionary<any, any>>): InitializedType;
+  initWithRTFD_documentAttributes(data: NSData, dict: MOPointer<NSDictionary<any, any>>): InitializedType;
+  initWithHTML_documentAttributes(data: NSData, dict: MOPointer<NSDictionary<any, any>>): InitializedType;
+  initWithHTML_baseURL_documentAttributes(data: NSData, base: NSURL, dict: MOPointer<NSDictionary<any, any>>): InitializedType;
+  initWithDocFormat_documentAttributes(data: NSData, dict: MOPointer<NSDictionary<any, any>>): InitializedType;
+  initWithHTML_options_documentAttributes(data: NSData, options: NSDictionary<any, any> | {[key: string]: any}, dict: MOPointer<NSDictionary<any, any>>): InitializedType;
+  initWithRTFDFileWrapper_documentAttributes(wrapper: NSFileWrapper, dict: MOPointer<NSDictionary<any, any>>): InitializedType;
+  initWithURL_documentAttributes(url: NSURL, dict: MOPointer<NSDictionary<any, any>>): InitializedType;
+  initWithPath_documentAttributes(path: NSString | string, dict: MOPointer<NSDictionary<any, any>>): InitializedType;
 }
 
 interface NSAttributedString extends NSObject, INSCopying, INSMutableCopying, INSSecureCoding {

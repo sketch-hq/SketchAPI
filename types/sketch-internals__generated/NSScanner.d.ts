@@ -14,10 +14,10 @@ interface NSScanner extends NSObject, INSCopying {
   scanHexLongLong(result: number | null): boolean;
   scanHexFloat(result: number | null): boolean;
   scanHexDouble(result: number | null): boolean;
-  scanString_intoString(string: NSString | string, result: NSString | string): boolean;
-  scanCharactersFromSet_intoString(set: NSCharacterSet, result: NSString | string): boolean;
-  scanUpToString_intoString(string: NSString | string, result: NSString | string): boolean;
-  scanUpToCharactersFromSet_intoString(set: NSCharacterSet, result: NSString | string): boolean;
+  scanString_intoString(string: NSString | string, result: MOPointer<NSString>): boolean;
+  scanCharactersFromSet_intoString(set: NSCharacterSet, result: MOPointer<NSString>): boolean;
+  scanUpToString_intoString(string: NSString | string, result: MOPointer<NSString>): boolean;
+  scanUpToCharactersFromSet_intoString(set: NSCharacterSet, result: MOPointer<NSString>): boolean;
   copyWithZone(zone: NSZone | null): any;
 
   string(): NSString;

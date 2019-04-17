@@ -19,7 +19,7 @@ declare const NSURLConnection: {
   class(): NSURLConnection;
   connectionWithRequest_delegate___WATCHOS_PROHIBITED(request: NSURLRequest, delegate: any | null): NSURLConnection;
   canHandleRequest(request: NSURLRequest): boolean;
-  sendSynchronousRequest_returningResponse_error___WATCHOS_PROHIBITED(request: NSURLRequest, response: NSURLResponse, error: MOPointer<NSError>): NSData;
+  sendSynchronousRequest_returningResponse_error___WATCHOS_PROHIBITED(request: NSURLRequest, response: MOPointer<NSURLResponse>, error: MOPointer<NSError>): NSData;
   sendAsynchronousRequest_queue_completionHandler___WATCHOS_PROHIBITED(request: NSURLRequest, queue: NSOperationQueue, handler: Block): void;
   load(): void;
   instancesRespondToSelector(aSelector: string): boolean;

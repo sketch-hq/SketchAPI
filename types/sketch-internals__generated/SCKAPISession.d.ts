@@ -5,7 +5,7 @@ interface SCKAPISessionUninitialized<InitializedType = SCKAPISession> extends NS
 }
 
 interface SCKAPISession extends NSObject, INSCopying {
-  setCurrentWithError(error: NSError): boolean;
+  setCurrentWithError(error: MOPointer<NSError>): boolean;
   sessionWithRefreshToken(refreshToken: NSString | string): SCKAPISession;
   copyWithZone(zone: NSZone | null): any;
 

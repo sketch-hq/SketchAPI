@@ -6,7 +6,7 @@ interface BCNetworkManager extends NSObject {
 declare const BCNetworkManager: {
   alloc(): BCNetworkManagerUninitialized;
   class(): BCNetworkManager;
-  sendSynchronousRequest_returningResponse_error(request: NSURLRequest, response: NSURLResponse, error: MOPointer<NSError>): NSData;
+  sendSynchronousRequest_returningResponse_error(request: NSURLRequest, response: MOPointer<NSURLResponse>, error: MOPointer<NSError>): NSData;
   load(): void;
   instancesRespondToSelector(aSelector: string): boolean;
   conformsToProtocol(protocol: Protocol): boolean;

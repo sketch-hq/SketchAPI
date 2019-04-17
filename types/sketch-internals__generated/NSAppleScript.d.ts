@@ -1,12 +1,12 @@
 interface NSAppleScriptUninitialized<InitializedType = NSAppleScript> extends NSObjectUninitialized<NSAppleScript> {
-  initWithContentsOfURL_error(url: NSURL, errorInfo: NSDictionary<any, any> | {[key: string]: any}): InitializedType;
+  initWithContentsOfURL_error(url: NSURL, errorInfo: MOPointer<NSDictionary<any, any>>): InitializedType;
   initWithSource(source: NSString | string): InitializedType;
 }
 
 interface NSAppleScript extends NSObject, INSCopying {
-  compileAndReturnError(errorInfo: NSDictionary<any, any> | {[key: string]: any}): boolean;
-  executeAndReturnError(errorInfo: NSDictionary<any, any> | {[key: string]: any}): NSAppleEventDescriptor;
-  executeAppleEvent_error(event: NSAppleEventDescriptor, errorInfo: NSDictionary<any, any> | {[key: string]: any}): NSAppleEventDescriptor;
+  compileAndReturnError(errorInfo: MOPointer<NSDictionary<any, any>>): boolean;
+  executeAndReturnError(errorInfo: MOPointer<NSDictionary<any, any>>): NSAppleEventDescriptor;
+  executeAppleEvent_error(event: NSAppleEventDescriptor, errorInfo: MOPointer<NSDictionary<any, any>>): NSAppleEventDescriptor;
   copyWithZone(zone: NSZone | null): any;
 
   source(): NSString;

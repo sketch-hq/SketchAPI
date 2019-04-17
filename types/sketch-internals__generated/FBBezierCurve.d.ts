@@ -6,11 +6,11 @@ interface FBBezierCurveUninitialized<InitializedType = FBBezierCurve> extends NS
 interface FBBezierCurve extends NSObject {
   checkForLine(): void;
   doesHaveIntersectionsWithBezierCurve(curve: FBBezierCurve): boolean;
-  intersectionsWithBezierCurve_overlapRange_withBlock(curve: FBBezierCurve, intersectRange: FBBezierIntersectRange, block: FBCurveIntersectionBlock): void;
+  intersectionsWithBezierCurve_overlapRange_withBlock(curve: FBBezierCurve, intersectRange: MOPointer<FBBezierIntersectRange>, block: FBCurveIntersectionBlock): void;
   pointAtParameter(parameter: FBFloat): FBPoint;
-  pointAtParameter_leftBezierCurve_rightBezierCurve(parameter: FBFloat, leftBezierCurve: FBBezierCurve, rightBezierCurve: FBBezierCurve): FBPoint;
+  pointAtParameter_leftBezierCurve_rightBezierCurve(parameter: FBFloat, leftBezierCurve: MOPointer<FBBezierCurve>, rightBezierCurve: MOPointer<FBBezierCurve>): FBPoint;
   subcurveWithRange(range: FBRange): FBBezierCurve;
-  splitSubcurvesWithRange_left_middle_right(range: FBRange, leftCurve: FBBezierCurve, middleCurve: FBBezierCurve, rightCurve: FBBezierCurve): void;
+  splitSubcurvesWithRange_left_middle_right(range: FBRange, leftCurve: MOPointer<FBBezierCurve>, middleCurve: MOPointer<FBBezierCurve>, rightCurve: MOPointer<FBBezierCurve>): void;
   lengthAtParameter(parameter: FBFloat): FBFloat;
   length(): FBFloat;
   pointFromRightOffset(offset: FBFloat): FBPoint;

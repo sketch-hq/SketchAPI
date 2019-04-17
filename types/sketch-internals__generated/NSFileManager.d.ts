@@ -26,7 +26,7 @@ interface NSFileManager extends NSObject {
   moveItemAtURL_toURL_error(srcURL: NSURL, dstURL: NSURL, error: MOPointer<NSError>): boolean;
   linkItemAtURL_toURL_error(srcURL: NSURL, dstURL: NSURL, error: MOPointer<NSError>): boolean;
   removeItemAtURL_error(URL: NSURL, error: MOPointer<NSError>): boolean;
-  trashItemAtURL_resultingItemURL_error(url: NSURL, outResultingURL: NSURL, error: MOPointer<NSError>): boolean;
+  trashItemAtURL_resultingItemURL_error(url: NSURL, outResultingURL: MOPointer<NSURL>, error: MOPointer<NSError>): boolean;
   fileAttributesAtPath_traverseLink(path: NSString | string, yorn: boolean): NSDictionary<any, any>;
   changeFileAttributes_atPath(attributes: NSDictionary<any, any> | {[key: string]: any}, path: NSString | string): boolean;
   directoryContentsAtPath(path: NSString | string): NSArray<any>;
@@ -55,13 +55,13 @@ interface NSFileManager extends NSObject {
   createFileAtPath_contents_attributes(path: NSString | string, data: NSData | null, attr: NSDictionary<any, any> | {[key: string]: any} | null): boolean;
   fileSystemRepresentationWithPath(path: NSString | string): string;
   stringWithFileSystemRepresentation_length(str: string, len: NSUInteger): NSString;
-  replaceItemAtURL_withItemAtURL_backupItemName_options_resultingItemURL_error(originalItemURL: NSURL, newItemURL: NSURL, backupItemName: NSString | string | null, options: NSFileManagerItemReplacementOptions, resultingURL: NSURL, error: MOPointer<NSError>): boolean;
+  replaceItemAtURL_withItemAtURL_backupItemName_options_resultingItemURL_error(originalItemURL: NSURL, newItemURL: NSURL, backupItemName: NSString | string | null, options: NSFileManagerItemReplacementOptions, resultingURL: MOPointer<NSURL>, error: MOPointer<NSError>): boolean;
   setUbiquitous_itemAtURL_destinationURL_error(flag: boolean, url: NSURL, destinationURL: NSURL, error: MOPointer<NSError>): boolean;
   isUbiquitousItemAtURL(url: NSURL): boolean;
   startDownloadingUbiquitousItemAtURL_error(url: NSURL, error: MOPointer<NSError>): boolean;
   evictUbiquitousItemAtURL_error(url: NSURL, error: MOPointer<NSError>): boolean;
   URLForUbiquityContainerIdentifier(containerIdentifier: NSString | string | null): NSURL;
-  URLForPublishingUbiquitousItemAtURL_expirationDate_error(url: NSURL, outDate: NSDate, error: MOPointer<NSError>): NSURL;
+  URLForPublishingUbiquitousItemAtURL_expirationDate_error(url: NSURL, outDate: MOPointer<NSDate>, error: MOPointer<NSError>): NSURL;
   getFileProviderServicesForItemAtURL_completionHandler(url: NSURL, completionHandler: Block): void;
   containerURLForSecurityApplicationGroupIdentifier(groupIdentifier: NSString | string): NSURL;
   homeDirectoryForUser(userName: NSString | string): NSURL;

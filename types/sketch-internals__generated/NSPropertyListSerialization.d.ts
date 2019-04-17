@@ -11,8 +11,8 @@ declare const NSPropertyListSerialization: {
   writePropertyList_toStream_format_options_error(plist: any, stream: NSOutputStream, format: NSPropertyListFormat, opt: NSPropertyListWriteOptions, error: MOPointer<NSError>): NSInteger;
   propertyListWithData_options_format_error(data: NSData, opt: NSPropertyListReadOptions, format: NSPropertyListFormat | null, error: MOPointer<NSError>): any;
   propertyListWithStream_options_format_error(stream: NSInputStream, opt: NSPropertyListReadOptions, format: NSPropertyListFormat | null, error: MOPointer<NSError>): any;
-  dataFromPropertyList_format_errorDescription(plist: any, format: NSPropertyListFormat, errorString: NSString | string): NSData;
-  propertyListFromData_mutabilityOption_format_errorDescription(data: NSData, opt: NSPropertyListMutabilityOptions, format: NSPropertyListFormat | null, errorString: NSString | string): any;
+  dataFromPropertyList_format_errorDescription(plist: any, format: NSPropertyListFormat, errorString: MOPointer<NSString>): NSData;
+  propertyListFromData_mutabilityOption_format_errorDescription(data: NSData, opt: NSPropertyListMutabilityOptions, format: NSPropertyListFormat | null, errorString: MOPointer<NSString>): any;
   load(): void;
   instancesRespondToSelector(aSelector: string): boolean;
   conformsToProtocol(protocol: Protocol): boolean;

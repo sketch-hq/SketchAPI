@@ -9,7 +9,7 @@ interface MSImmutableDocumentData extends _MSImmutableDocumentData, IMSDocumentD
   artboardWithID(objectID: NSString | string | null): MSImmutableArtboardGroup;
   textStyleWithID(sharedStyleID: NSString | string | null): MSImmutableSharedStyle;
   layerStyleWithID(sharedStyleID: NSString | string | null): MSImmutableSharedStyle;
-  artboardWithID_page(objectID: NSString | string, pageOut: MSImmutablePage): MSImmutableArtboardGroup;
+  artboardWithID_page(objectID: NSString | string, pageOut: MOPointer<MSImmutablePage>): MSImmutableArtboardGroup;
   wasSavedByOldVersion(): boolean;
   wasSavedByTestVersion(): boolean;
   allArtboards(): NSArray<any>;

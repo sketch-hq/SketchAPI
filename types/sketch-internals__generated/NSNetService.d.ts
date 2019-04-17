@@ -11,7 +11,7 @@ interface NSNetService extends NSObject {
   resolve(): void;
   stop(): void;
   resolveWithTimeout(timeout: NSTimeInterval): void;
-  getInputStream_outputStream(inputStream: NSInputStream, outputStream: NSOutputStream): boolean;
+  getInputStream_outputStream(inputStream: MOPointer<NSInputStream>, outputStream: MOPointer<NSOutputStream>): boolean;
   setTXTRecordData(recordData: NSData | null): boolean;
   TXTRecordData(): NSData;
   startMonitoring(): void;

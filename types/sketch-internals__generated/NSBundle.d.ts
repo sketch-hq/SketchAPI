@@ -30,7 +30,7 @@ interface NSBundle extends NSObject {
   imageForResource(name: NSImageName): NSImage;
   pathForImageResource(name: NSImageName): NSString;
   URLForImageResource(name: NSImageName): NSURL;
-  loadNibNamed_owner_topLevelObjects(nibName: NSNibName, owner: any | null, topLevelObjects: NSArray<any> | any[]): boolean;
+  loadNibNamed_owner_topLevelObjects(nibName: NSNibName, owner: any | null, topLevelObjects: MOPointer<NSArray<any>>): boolean;
   loadNibFile_externalNameTable_withZone(fileName: NSString | string, context: NSDictionary<any, any> | {[key: string]: any}, zone: NSZone): boolean;
   pathForSoundResource(name: NSSoundName): NSString;
   bundleName(): NSString;

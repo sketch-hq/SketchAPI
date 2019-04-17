@@ -4,7 +4,7 @@ interface BCCloudLicenseUninitialized<InitializedType = BCCloudLicense> extends 
 }
 
 interface BCCloudLicense extends NSObject, IBCLicense {
-  saveToURL_error(URL: NSURL, error: NSError): boolean;
+  saveToURL_error(URL: NSURL, error: MOPointer<NSError>): boolean;
   log(): void;
 
   userID(): NSString;

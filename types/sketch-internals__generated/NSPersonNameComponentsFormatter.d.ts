@@ -4,7 +4,7 @@ interface NSPersonNameComponentsFormatter extends NSFormatter {
   stringFromPersonNameComponents(components: NSPersonNameComponents): NSString;
   annotatedStringFromPersonNameComponents(components: NSPersonNameComponents): NSAttributedString;
   personNameComponentsFromString(string: NSString | string): NSPersonNameComponents;
-  getObjectValue_forString_errorDescription(obj: any, string: NSString | string, error: NSString | string): boolean;
+  getObjectValue_forString_errorDescription(obj: any, string: NSString | string, error: MOPointer<NSString>): boolean;
 
   style(): NSPersonNameComponentsFormatterStyle;
   setStyle(style: NSPersonNameComponentsFormatterStyle): void;

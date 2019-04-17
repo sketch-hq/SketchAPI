@@ -3,8 +3,8 @@ interface MSJSONZippedUnarchiverUninitialized<InitializedType = MSJSONZippedUnar
 }
 
 interface MSJSONZippedUnarchiver extends MSJSONUnarchiver {
-  unarchiveObjectAtSubpath_error(path: NSString | string, error: NSError): any;
-  unarchiveRawDataAtSubpath_error(path: NSString | string, error: NSError): NSData;
+  unarchiveObjectAtSubpath_error(path: NSString | string, error: MOPointer<NSError>): any;
+  unarchiveRawDataAtSubpath_error(path: NSString | string, error: MOPointer<NSError>): NSData;
   containsFileAtSubpath(path: NSString | string): boolean;
 }
 

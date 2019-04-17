@@ -25,12 +25,12 @@ interface NSStringUninitialized<InitializedType = NSString> extends NSObjectUnin
 
 interface NSString extends NSObject, INSCopying, INSMutableCopying, INSSecureCoding {
   variantFittingPresentationWidth(width: NSInteger): NSString;
-  linguisticTagsInRange_scheme_options_orthography_tokenRanges(range: NSRange, scheme: NSLinguisticTagScheme, options: NSLinguisticTaggerOptions, orthography: NSOrthography | null, tokenRanges: NSArray<any> | any[]): NSArray<any>;
+  linguisticTagsInRange_scheme_options_orthography_tokenRanges(range: NSRange, scheme: NSLinguisticTagScheme, options: NSLinguisticTaggerOptions, orthography: NSOrthography | null, tokenRanges: MOPointer<NSArray<any>>): NSArray<any>;
   enumerateLinguisticTagsInRange_scheme_options_orthography_usingBlock(range: NSRange, scheme: NSLinguisticTagScheme, options: NSLinguisticTaggerOptions, orthography: NSOrthography | null, block: Block): void;
   stringByAppendingPathComponent(str: NSString | string): NSString;
   stringByAppendingPathExtension(str: NSString | string): NSString;
   stringsByAppendingPaths(paths: NSArray<any> | any[]): NSArray<any>;
-  completePathIntoString_caseSensitive_matchesIntoArray_filterTypes(outputName: NSString | string, flag: boolean, outputArray: NSArray<any> | any[], filterTypes: NSArray<any> | any[] | null): NSUInteger;
+  completePathIntoString_caseSensitive_matchesIntoArray_filterTypes(outputName: MOPointer<NSString>, flag: boolean, outputArray: MOPointer<NSArray<any>>, filterTypes: NSArray<any> | any[] | null): NSUInteger;
   getFileSystemRepresentation_maxLength(cname: string, max: NSUInteger): boolean;
   characterAtIndex(index: NSUInteger): unichar;
   substringFromIndex(from: NSUInteger): NSString;
@@ -142,10 +142,10 @@ interface NSString extends NSObject, INSCopying, INSMutableCopying, INSSecureCod
   componentsSeparatedByMixedCaps(): NSArray<any>;
   lastLines(count: NSUInteger): NSString;
   firstLines(count: NSUInteger): NSString;
-  matchesString_divergingAfter_atIndex_divergentChar_expectedChar(string: NSString | string | null, prefix: NSString | string, index: NSUInteger, divergentChar: string, expectedChar: string): boolean;
-  matchesString_divergingAtLine_after_diverged_expected(string: NSString | string | null, divergingLine: NSUInteger, after: NSString | string, diverged: NSString | string, expected: NSString | string): boolean;
-  matchesString_divergingAtLine1_andLine2_diverged_expected(string: NSString | string | null, line1: NSUInteger, line2: NSUInteger, diverged: NSString | string, expected: NSString | string): boolean;
-  matchesString_divergingAtLine1_andLine2_diverged_expected_window(string: NSString | string | null, line1: NSUInteger, line2: NSUInteger, diverged: NSString | string, expected: NSString | string, window: NSInteger): boolean;
+  matchesString_divergingAfter_atIndex_divergentChar_expectedChar(string: NSString | string | null, prefix: MOPointer<NSString>, index: NSUInteger, divergentChar: string, expectedChar: string): boolean;
+  matchesString_divergingAtLine_after_diverged_expected(string: NSString | string | null, divergingLine: NSUInteger, after: MOPointer<NSString>, diverged: MOPointer<NSString>, expected: MOPointer<NSString>): boolean;
+  matchesString_divergingAtLine1_andLine2_diverged_expected(string: NSString | string | null, line1: NSUInteger, line2: NSUInteger, diverged: MOPointer<NSString>, expected: MOPointer<NSString>): boolean;
+  matchesString_divergingAtLine1_andLine2_diverged_expected_window(string: NSString | string | null, line1: NSUInteger, line2: NSUInteger, diverged: MOPointer<NSString>, expected: MOPointer<NSString>, window: NSInteger): boolean;
   drawAtPoint_withFont(aPoint: NSPoint, font: NSFont): void;
   drawCenteredAtPoint_withFont_color(aPoint: NSPoint, font: NSFont, color: NSColor): void;
   sizeWithFont(aFont: NSFont): NSSize;
@@ -226,7 +226,7 @@ declare const NSString: {
   stringWithContentsOfFile_encoding_error(path: NSString | string, enc: NSStringEncoding, error: MOPointer<NSError>): NSString;
   stringWithContentsOfURL_usedEncoding_error(url: NSURL, enc: NSStringEncoding | null, error: MOPointer<NSError>): NSString;
   stringWithContentsOfFile_usedEncoding_error(path: NSString | string, enc: NSStringEncoding | null, error: MOPointer<NSError>): NSString;
-  stringEncodingForData_encodingOptions_convertedString_usedLossyConversion(data: NSData, opts: NSDictionary<any, any> | {[key: string]: any} | null, string: NSString | string, usedLossyConversion: boolean | null): NSStringEncoding;
+  stringEncodingForData_encodingOptions_convertedString_usedLossyConversion(data: NSData, opts: NSDictionary<any, any> | {[key: string]: any} | null, string: MOPointer<NSString>, usedLossyConversion: boolean | null): NSStringEncoding;
   stringWithContentsOfFile(path: NSString | string): any;
   stringWithContentsOfURL(url: NSURL): any;
   stringWithCString_length(bytes: string, length: NSUInteger): any;

@@ -5,7 +5,7 @@ interface NSDateComponentsFormatter extends NSFormatter {
   stringFromDateComponents(components: NSDateComponents): NSString;
   stringFromDate_toDate(startDate: NSDate, endDate: NSDate): NSString;
   stringFromTimeInterval(ti: NSTimeInterval): NSString;
-  getObjectValue_forString_errorDescription(obj: any, string: NSString | string, error: NSString | string): boolean;
+  getObjectValue_forString_errorDescription(obj: any, string: NSString | string, error: MOPointer<NSString>): boolean;
 
   unitsStyle(): NSDateComponentsFormatterUnitsStyle;
   setUnitsStyle(unitsStyle: NSDateComponentsFormatterUnitsStyle): void;

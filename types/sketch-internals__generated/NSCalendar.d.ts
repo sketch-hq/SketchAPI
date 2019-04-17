@@ -7,7 +7,7 @@ interface NSCalendar extends NSObject, INSCopying, INSSecureCoding {
   maximumRangeOfUnit(unit: NSCalendarUnit): NSRange;
   rangeOfUnit_inUnit_forDate(smaller: NSCalendarUnit, larger: NSCalendarUnit, date: NSDate): NSRange;
   ordinalityOfUnit_inUnit_forDate(smaller: NSCalendarUnit, larger: NSCalendarUnit, date: NSDate): NSUInteger;
-  rangeOfUnit_startDate_interval_forDate(unit: NSCalendarUnit, datep: NSDate, tip: NSTimeInterval | null, date: NSDate): boolean;
+  rangeOfUnit_startDate_interval_forDate(unit: NSCalendarUnit, datep: MOPointer<NSDate>, tip: NSTimeInterval | null, date: NSDate): boolean;
   dateFromComponents(comps: NSDateComponents): NSDate;
   components_fromDate(unitFlags: NSCalendarUnit, date: NSDate): NSDateComponents;
   dateByAddingComponents_toDate_options(comps: NSDateComponents, date: NSDate, opts: NSCalendarOptions): NSDate;
@@ -27,8 +27,8 @@ interface NSCalendar extends NSObject, INSCopying, INSSecureCoding {
   isDateInYesterday(date: NSDate): boolean;
   isDateInTomorrow(date: NSDate): boolean;
   isDateInWeekend(date: NSDate): boolean;
-  rangeOfWeekendStartDate_interval_containingDate(datep: NSDate, tip: NSTimeInterval, date: NSDate): boolean;
-  nextWeekendStartDate_interval_options_afterDate(datep: NSDate, tip: NSTimeInterval, options: NSCalendarOptions, date: NSDate): boolean;
+  rangeOfWeekendStartDate_interval_containingDate(datep: MOPointer<NSDate>, tip: NSTimeInterval, date: NSDate): boolean;
+  nextWeekendStartDate_interval_options_afterDate(datep: MOPointer<NSDate>, tip: NSTimeInterval, options: NSCalendarOptions, date: NSDate): boolean;
   components_fromDateComponents_toDateComponents_options(unitFlags: NSCalendarUnit, startingDateComp: NSDateComponents, resultDateComp: NSDateComponents, options: NSCalendarOptions): NSDateComponents;
   dateByAddingUnit_value_toDate_options(unit: NSCalendarUnit, value: NSInteger, date: NSDate, options: NSCalendarOptions): NSDate;
   enumerateDatesStartingAfterDate_matchingComponents_options_usingBlock(start: NSDate, comps: NSDateComponents, opts: NSCalendarOptions, block: Block): void;

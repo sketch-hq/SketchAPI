@@ -313,7 +313,7 @@ function convertType(type, className) {
   const arrayMatch = arrayRegex.exec(tsType)
   tsType = tsType.replace(arrayRegex, '').trim()
 
-  const isPointer = tsType.match(/\*\*$/)
+  const isPointer = tsType.match(/\* *\*$/)
 
   while (tsType.endsWith('*')) {
     tsType = trimEnd(tsType, '*')

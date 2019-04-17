@@ -16,8 +16,8 @@ function getPluginIdentifier() {
  */
 export function registerDataSupplier(
   dataType: 'public.text' | 'public.image',
-  dataName: INSString | string,
-  dynamicDataKey: INSString | string
+  dataName: string,
+  dynamicDataKey: string
 ) {
   const dataManager = AppController.sharedInstance().dataSupplierManager()
   const identifier = getPluginIdentifier()
@@ -43,10 +43,7 @@ export function deregisterDataSuppliers() {
 /**
  * When the plugin providing the dynamic data has finished generating the data, it will call this function with the data key and the data.
  */
-export function supplyData(
-  key: string | INSString,
-  data: Array<string | INSString>
-) {
+export function supplyData(key: string, data: Array<string>) {
   const dataManager = AppController.sharedInstance().dataSupplierManager()
   dataManager.supplyData_forKey(data, key)
 }
@@ -54,11 +51,7 @@ export function supplyData(
 /**
  * When we want to only supply 1 bit of the requested data.
  */
-export function supplyDataAtIndex(
-  key: string | INSString,
-  datum: string | INSString,
-  index: number
-) {
+export function supplyDataAtIndex(key: string, datum: string, index: number) {
   const dataManager = AppController.sharedInstance().dataSupplierManager()
   dataManager.supplyData_atIndex_forKey(datum, index, key)
 }

@@ -18,9 +18,9 @@ declare const NSOutputStream: {
   outputStreamToBuffer_capacity(buffer: number, capacity: NSUInteger): NSOutputStream;
   outputStreamToFileAtPath_append(path: NSString | string, shouldAppend: boolean): NSOutputStream;
   outputStreamWithURL_append(url: NSURL, shouldAppend: boolean): NSOutputStream;
-  getStreamsToHostWithName_port_inputStream_outputStream(hostname: NSString | string, port: NSInteger, inputStream: NSInputStream, outputStream: NSOutputStream): void;
-  getStreamsToHost_port_inputStream_outputStream(host: NSHost, port: NSInteger, inputStream: NSInputStream, outputStream: NSOutputStream): void;
-  getBoundStreamsWithBufferSize_inputStream_outputStream(bufferSize: NSUInteger, inputStream: NSInputStream, outputStream: NSOutputStream): void;
+  getStreamsToHostWithName_port_inputStream_outputStream(hostname: NSString | string, port: NSInteger, inputStream: MOPointer<NSInputStream>, outputStream: MOPointer<NSOutputStream>): void;
+  getStreamsToHost_port_inputStream_outputStream(host: NSHost, port: NSInteger, inputStream: MOPointer<NSInputStream>, outputStream: MOPointer<NSOutputStream>): void;
+  getBoundStreamsWithBufferSize_inputStream_outputStream(bufferSize: NSUInteger, inputStream: MOPointer<NSInputStream>, outputStream: MOPointer<NSOutputStream>): void;
   accessInstanceVariablesDirectly(): boolean;
 
 }

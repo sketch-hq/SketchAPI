@@ -3,7 +3,7 @@ interface BCJSONZippedUnarchiverUninitialized<InitializedType = BCJSONZippedUnar
 }
 
 interface BCJSONZippedUnarchiver extends BCJSONUnarchiver {
-  unarchiveObjectAtSubpath_error(path: NSString | string, error: NSError): any;
+  unarchiveObjectAtSubpath_error(path: NSString | string, error: MOPointer<NSError>): any;
 }
 
 declare const BCJSONZippedUnarchiver: {

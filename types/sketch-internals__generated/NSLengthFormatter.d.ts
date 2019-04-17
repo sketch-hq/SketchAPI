@@ -5,7 +5,7 @@ interface NSLengthFormatter extends NSFormatter {
   stringFromMeters(numberInMeters: number): NSString;
   unitStringFromValue_unit(value: number, unit: NSLengthFormatterUnit): NSString;
   unitStringFromMeters_usedUnit(numberInMeters: number, unitp: NSLengthFormatterUnit | null): NSString;
-  getObjectValue_forString_errorDescription(obj: any, string: NSString | string, error: NSString | string): boolean;
+  getObjectValue_forString_errorDescription(obj: any, string: NSString | string, error: MOPointer<NSString>): boolean;
 
   numberFormatter(): NSNumberFormatter;
   setNumberFormatter(numberFormatter: NSNumberFormatter): void;

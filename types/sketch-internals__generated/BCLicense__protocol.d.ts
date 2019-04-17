@@ -1,5 +1,5 @@
 interface IBCLicense {
-  saveToURL_error(URL: NSURL, error: NSError): boolean;
+  saveToURL_error(URL: NSURL, error: MOPointer<NSError>): boolean;
   log(): void;
 
   licenseID(): NSString;

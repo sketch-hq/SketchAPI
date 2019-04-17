@@ -1,7 +1,7 @@
 interface MSBaseUnarchiverUninitialized<InitializedType = MSBaseUnarchiver> extends NSObjectUninitialized<MSBaseUnarchiver> {}
 
 interface MSBaseUnarchiver extends NSObject {
-  unarchiveObjectAsVersion_corruptionDetected_error(version: MSDocumentVersion, corruption: boolean | null, error: NSError): any;
+  unarchiveObjectAsVersion_corruptionDetected_error(version: MSDocumentVersion, corruption: boolean | null, error: MOPointer<NSError>): any;
   decodeObjectOfClass_forKey(className: any, key: NSString | string): any;
   decodeObjectOfClasses_forKey(classes: NSSet<any> | null, key: NSString | string): any;
   instanciateObject(object: NSObject): any;
@@ -29,8 +29,8 @@ declare const MSBaseUnarchiver: {
   alloc(): MSBaseUnarchiverUninitialized;
   class(): MSBaseUnarchiver;
   unarchiveObjectWithData(data: NSData): any;
-  unarchiveObjectWithData_actualVersion_error(data: NSData, actualVersion: MSDocumentVersion | null, error: NSError): any;
-  unarchiveObjectWithData_asVersion_corruptionDetected_error(data: NSData, version: MSDocumentVersion, corruption: boolean | null, error: NSError): any;
+  unarchiveObjectWithData_actualVersion_error(data: NSData, actualVersion: MSDocumentVersion | null, error: MOPointer<NSError>): any;
+  unarchiveObjectWithData_asVersion_corruptionDetected_error(data: NSData, version: MSDocumentVersion, corruption: boolean | null, error: MOPointer<NSError>): any;
   load(): void;
   instancesRespondToSelector(aSelector: string): boolean;
   conformsToProtocol(protocol: Protocol): boolean;

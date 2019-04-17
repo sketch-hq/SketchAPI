@@ -11,7 +11,7 @@ interface SUFileManager extends NSObject {
   updateModificationAndAccessTimeOfItemAtURL_error(targetURL: NSURL, error: MOPointer<NSError>): boolean;
   releaseItemFromQuarantineAtRootURL_error(rootURL: NSURL, error: MOPointer<NSError>): boolean;
   executePackageAtURL_progressBlock_error(packageURL: NSURL, progressBlock: Block | null, error: MOPointer<NSError>): boolean;
-  _acquireAuthorizationWithError(error: NSError): boolean;
+  _acquireAuthorizationWithError(error: MOPointer<NSError>): boolean;
   _itemExistsAtURL(fileURL: NSURL): boolean;
   _itemExistsAtURL_isDirectory(fileURL: NSURL, isDirectory: boolean | null): boolean;
 }

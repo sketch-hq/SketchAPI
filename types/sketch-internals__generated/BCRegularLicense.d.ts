@@ -3,7 +3,7 @@ interface BCRegularLicenseUninitialized<InitializedType = BCRegularLicense> exte
 }
 
 interface BCRegularLicense extends NSObject, IBCLicense {
-  saveToURL_error(URL: NSURL, error: NSError): boolean;
+  saveToURL_error(URL: NSURL, error: MOPointer<NSError>): boolean;
   log(): void;
 
   applicationID(): NSString;

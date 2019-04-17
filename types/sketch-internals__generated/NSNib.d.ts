@@ -6,9 +6,9 @@ interface NSNibUninitialized<InitializedType = NSNib> extends NSObjectUninitiali
 }
 
 interface NSNib extends NSObject, INSCoding {
-  instantiateWithOwner_topLevelObjects(owner: any | null, topLevelObjects: NSArray<any> | any[]): boolean;
+  instantiateWithOwner_topLevelObjects(owner: any | null, topLevelObjects: MOPointer<NSArray<any>>): boolean;
   instantiateNibWithExternalNameTable(externalNameTable: NSDictionary<any, any> | {[key: string]: any}): boolean;
-  instantiateNibWithOwner_topLevelObjects(owner: any, topLevelObjects: NSArray<any> | any[]): boolean;
+  instantiateNibWithOwner_topLevelObjects(owner: any, topLevelObjects: MOPointer<NSArray<any>>): boolean;
   encodeWithCoder(aCoder: NSCoder): void;
 }
 

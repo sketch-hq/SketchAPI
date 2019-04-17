@@ -5,7 +5,7 @@ interface NSMassFormatter extends NSFormatter {
   stringFromKilograms(numberInKilograms: number): NSString;
   unitStringFromValue_unit(value: number, unit: NSMassFormatterUnit): NSString;
   unitStringFromKilograms_usedUnit(numberInKilograms: number, unitp: NSMassFormatterUnit | null): NSString;
-  getObjectValue_forString_errorDescription(obj: any, string: NSString | string, error: NSString | string): boolean;
+  getObjectValue_forString_errorDescription(obj: any, string: NSString | string, error: MOPointer<NSString>): boolean;
 
   numberFormatter(): NSNumberFormatter;
   setNumberFormatter(numberFormatter: NSNumberFormatter): void;

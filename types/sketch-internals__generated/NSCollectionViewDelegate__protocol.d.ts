@@ -7,7 +7,7 @@ interface INSCollectionViewDelegate {
   collectionView_namesOfPromisedFilesDroppedAtDestination_forDraggedItemsAtIndexes(collectionView: NSCollectionView, dropURL: NSURL, indexes: NSIndexSet): NSArray<any>;
   collectionView_draggingImageForItemsAtIndexPaths_withEvent_offset(collectionView: NSCollectionView, indexPaths: NSSet<any>, event: NSEvent, dragImageOffset: NSPointPointer): NSImage;
   collectionView_draggingImageForItemsAtIndexes_withEvent_offset(collectionView: NSCollectionView, indexes: NSIndexSet, event: NSEvent, dragImageOffset: NSPointPointer): NSImage;
-  collectionView_validateDrop_proposedIndexPath_dropOperation(collectionView: NSCollectionView, draggingInfo: any, proposedDropIndexPath: NSIndexPath, proposedDropOperation: NSCollectionViewDropOperation): NSDragOperation;
+  collectionView_validateDrop_proposedIndexPath_dropOperation(collectionView: NSCollectionView, draggingInfo: any, proposedDropIndexPath: MOPointer<NSIndexPath>, proposedDropOperation: NSCollectionViewDropOperation): NSDragOperation;
   collectionView_validateDrop_proposedIndex_dropOperation(collectionView: NSCollectionView, draggingInfo: any, proposedDropIndex: NSInteger, proposedDropOperation: NSCollectionViewDropOperation): NSDragOperation;
   collectionView_acceptDrop_indexPath_dropOperation(collectionView: NSCollectionView, draggingInfo: any, indexPath: NSIndexPath, dropOperation: NSCollectionViewDropOperation): boolean;
   collectionView_acceptDrop_index_dropOperation(collectionView: NSCollectionView, draggingInfo: any, index: NSInteger, dropOperation: NSCollectionViewDropOperation): boolean;

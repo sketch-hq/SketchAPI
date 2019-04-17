@@ -1,7 +1,7 @@
-import { isWrappedObject } from './utils'
+import { Buffer } from 'buffer'
+import { isWrappedObject, isKindOfClass } from './utils'
 import { wrapNativeObject } from './wrapNativeObject'
-
-let Buffer
+import { WrappedObject } from './WrappedObject'
 
 export const DEFAULT_EXPORT_OPTIONS = {
   compact: false,
@@ -16,29 +16,30 @@ export const DEFAULT_EXPORT_OPTIONS = {
   output: '~/Documents/Sketch Exports',
 }
 
-function getJSONData(nativeObject) {
-  const archiver = MSJSONDataArchiver.new()
-  archiver.archiveObjectIDs = true
-  const aPtr = MOPointer.alloc().init()
+function getJSONData(nativeObject: MSPage | MSLayer) {
+  const archiver = MSJSONDataArchiver.alloc().init()
+  archiver.setArchiveObjectIDs(true)
+  const aPtr = MOPointer.alloc<NSError>().init()
   const obj = nativeObject.immutableModelObject
     ? nativeObject.immutableModelObject()
     : nativeObject
-  archiver.archivedDataWithRootObject_error(obj, aPtr)
+  const res = archiver.archivedDataWithRootObject_error(obj, aPtr)
   if (aPtr.value()) {
     throw Error(`Couldn’t create the JSON string: ${aPtr.value()}`)
   }
-  return archiver.archivedData()
+  return res
 }
 
-function getJSONString(nativeObject) {
+function getJSONString(nativeObject: MSPage | MSLayer) {
   const data = getJSONData(nativeObject)
   return String(
     NSString.alloc().initWithData_encoding(data, NSUTF8StringEncoding)
   )
 }
 
-function exportToJSONFile(nativeObjects, options) {
+function exportToJSONFile(nativeObjects: (MSPage | MSLayer)[], options) {
   const fm = NSFileManager.defaultManager()
+  const aPtr = MOPointer.alloc<NSError>().init()
   const directory = NSString.stringWithString(
     options.output
   ).stringByExpandingTildeInPath()
@@ -47,7 +48,7 @@ function exportToJSONFile(nativeObjects, options) {
     directory,
     true,
     null,
-    null
+    aPtr
   )
 
   nativeObjects.forEach(o => {
@@ -60,7 +61,7 @@ function exportToJSONFile(nativeObjects, options) {
     const writeOptions = options.overwriting
       ? 0
       : NSDataWritingWithoutOverwriting
-    const ptr = MOPointer.new()
+    const ptr = MOPointer.alloc<NSError>().init()
     data.writeToURL_options_error(url, writeOptions, ptr)
     if (ptr.value()) {
       throw new Error(`Error writing json file ${ptr.value()}`)
@@ -68,12 +69,12 @@ function exportToJSONFile(nativeObjects, options) {
   })
 }
 
-function exportToImageFile(nativeObjects, options) {
+function exportToImageFile(nativeObjects: (MSPage | MSLayer)[], options) {
   // we need to class the objects by types as we need to do different things depending on it
-  const pages = []
-  const layers = []
+  const pages: MSPage[] = []
+  const layers: MSLayer[] = []
   nativeObjects.forEach(o => {
-    if (o.isKindOfClass(MSPage)) {
+    if (isKindOfClass(o, MSPage.class())) {
       pages.push(o)
     } else {
       layers.push(o)
@@ -93,7 +94,7 @@ function exportToImageFile(nativeObjects, options) {
   }
 }
 
-function exportToBuffer(nativeObject, options) {
+function exportToBuffer(nativeObject: MSPage | MSLayer, options) {
   const isPage = nativeObject.isKindOfClass(MSPage)
 
   const exporter = MSSelfContainedHighLevelExporter.alloc().initWithOptions(
@@ -118,11 +119,6 @@ function exportToBuffer(nativeObject, options) {
   )
 
   const data = renderer.data()
-
-  if (!Buffer) {
-    // eslint-disable-next-line global-require, prefer-destructuring
-    Buffer = require('buffer').Buffer
-  }
 
   return Buffer.from(data)
 }
@@ -162,9 +158,19 @@ function exportToBuffer(nativeObject, options) {
  *
  * @returns If an output path is not set, the data is returned
  */
-export function exportObject(object, options) {
+export function exportObject(
+  object:
+    | (MSPage | MSLayer | WrappedObject)[]
+    | MSPage
+    | MSLayer
+    | WrappedObject,
+  options
+) {
   // Validate the provided objects
-  const objectsToExport = (Array.isArray(object) ? object : [object])
+  const objectsToExport: (MSPage | MSLayer)[] = (Array.isArray(object)
+    ? object
+    : [object]
+  )
     .map(o => (isWrappedObject(o) ? o.sketchObject : o))
     .filter(o => o)
 
@@ -173,7 +179,7 @@ export function exportObject(object, options) {
   }
 
   // Validate export formats
-  let formats = (options || {}).formats || []
+  let formats: string[] = (options || {}).formats || []
   if (typeof formats === 'string') {
     formats = formats.split(',')
   }
@@ -231,9 +237,9 @@ export function exportObject(object, options) {
  * @returns {WrappedObject} A javascript object (subclass of WrappedObject),
  * which represents the restored Sketch object.
  */
-export function objectFromJSON(sketchJSON, version) {
+export function objectFromJSON(sketchJSON: {}, version?: number) {
   const v = version || MSArchiveHeader.metadataForNewHeader().version
-  const ptr = MOPointer.new()
+  const ptr = MOPointer.alloc<NSError>().init()
   let object = MSJSONDictionaryUnarchiver.unarchiveObjectFromDictionary_asVersion_corruptionDetected_error(
     sketchJSON,
     v,

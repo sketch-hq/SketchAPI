@@ -168,10 +168,9 @@ export class Style extends WrappedObject<MSStyle> {
 
       style.sketchObject = MSDefaultStyle.defaultStyle()
       if (parentType === Types.Text) {
-        style.sketchObject.setTextStyle(MSTextStyle.alloc().init())
-        style.sketchObject
-          .textStyle()
-          .setAttributes(MSDefaultTextStyle.defaultTextStyle())
+        style.sketchObject.setTextStyle(
+          MSTextStyle.styleWithAttributes(MSDefaultTextStyle.defaultTextStyle())
+        )
       }
       /* eslint-enable no-param-reassign */
     }

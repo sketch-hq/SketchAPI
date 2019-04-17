@@ -37,7 +37,7 @@ interface NSView extends NSResponder, INSAnimatablePropertyContainer, INSUserInt
   rulerView_pointForLocation(ruler: NSRulerView, point: CGFloat): NSPoint;
   isDescendantOf(view: NSView): boolean;
   ancestorSharedWithView(view: NSView): NSView;
-  getRectsBeingDrawn_count(rects: NSRect, count: NSInteger | null): void;
+  getRectsBeingDrawn_count(rects: MOPointer<NSRect>, count: NSInteger | null): void;
   needsToDrawRect(rect: NSRect): boolean;
   viewDidHide(): void;
   viewDidUnhide(): void;

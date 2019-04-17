@@ -30,7 +30,7 @@ declare const NSMutableString: {
   stringWithContentsOfFile_encoding_error(path: NSString | string, enc: NSStringEncoding, error: MOPointer<NSError>): NSMutableString;
   stringWithContentsOfURL_usedEncoding_error(url: NSURL, enc: NSStringEncoding | null, error: MOPointer<NSError>): NSMutableString;
   stringWithContentsOfFile_usedEncoding_error(path: NSString | string, enc: NSStringEncoding | null, error: MOPointer<NSError>): NSMutableString;
-  stringEncodingForData_encodingOptions_convertedString_usedLossyConversion(data: NSData, opts: NSDictionary<any, any> | {[key: string]: any} | null, string: NSString | string, usedLossyConversion: boolean | null): NSStringEncoding;
+  stringEncodingForData_encodingOptions_convertedString_usedLossyConversion(data: NSData, opts: NSDictionary<any, any> | {[key: string]: any} | null, string: MOPointer<NSString>, usedLossyConversion: boolean | null): NSStringEncoding;
   stringWithContentsOfFile(path: NSString | string): any;
   stringWithContentsOfURL(url: NSURL): any;
   stringWithCString_length(bytes: string, length: NSUInteger): any;

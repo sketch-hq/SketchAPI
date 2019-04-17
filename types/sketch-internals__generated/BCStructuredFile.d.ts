@@ -1,12 +1,12 @@
 interface BCStructuredFileUninitialized<InitializedType = BCStructuredFile> extends NSObjectUninitialized<BCStructuredFile> {
-  initWithURL_error(url: NSURL, error: NSError): InitializedType;
+  initWithURL_error(url: NSURL, error: MOPointer<NSError>): InitializedType;
 }
 
 interface BCStructuredFile extends NSObject {
   metadata(): NSDictionary<any, any>;
   metaDataWithKey(key: NSString | string): any;
-  dataWithKey_error(key: NSString | string, error: NSError): NSData;
-  close(error: NSError): boolean;
+  dataWithKey_error(key: NSString | string, error: MOPointer<NSError>): NSData;
+  close(error: MOPointer<NSError>): boolean;
 }
 
 declare const BCStructuredFile: {

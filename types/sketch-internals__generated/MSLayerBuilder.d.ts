@@ -8,7 +8,7 @@ declare const MSLayerBuilder: {
   class(): MSLayerBuilder;
   layerTreeWithDictionary(dictionary: NSDictionary<any, any> | {[key: string]: any}): any;
   layerTreeWithJSON_relativeToURL_error(json: NSString | string, url: NSURL, error: MOPointer<NSError>): any;
-  layerTreeWithContentsOfURL_error(url: NSURL, error: NSError): any;
+  layerTreeWithContentsOfURL_error(url: NSURL, error: MOPointer<NSError>): any;
   load(): void;
   instancesRespondToSelector(aSelector: string): boolean;
   conformsToProtocol(protocol: Protocol): boolean;

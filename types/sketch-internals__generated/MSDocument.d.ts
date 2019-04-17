@@ -2,7 +2,7 @@ interface MSDocumentUninitialized<InitializedType = MSDocument> extends NSDocume
 
 interface MSDocument extends NSDocument, INSMenuDelegate, INSToolbarDelegate, INSWindowDelegate, IMSEventHandlerManagerDelegate, IMSDocumentDataDelegate, IMSMenuBuilderDelegate {
   actionClasses(): NSArray<any>;
-  addLayerFromImageAtURL_toGroup_fitPixels_error(fileURL: NSURL, group: MSLayerGroup, fitPixels: boolean, outError: NSError): MSLayer;
+  addLayerFromImageAtURL_toGroup_fitPixels_error(fileURL: NSURL, group: MSLayerGroup, fitPixels: boolean, outError: MOPointer<NSError>): MSLayer;
   askForUserInput_initialValue(label: NSString | string, defaultString: NSString | string): NSString;
   askForUserInput_ofType_initialValue(label: NSString | string, type: NSInteger, defaultString: NSString | string): NSString;
   saveArtboardOrSlice_toFile(artboardOrSlice: any, filename: NSString | string): void;

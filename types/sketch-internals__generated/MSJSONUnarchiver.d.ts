@@ -10,8 +10,8 @@ declare const MSJSONUnarchiver: {
   alloc(): MSJSONUnarchiverUninitialized;
   class(): MSJSONUnarchiver;
   unarchiveObjectWithData(data: NSData): any;
-  unarchiveObjectWithData_actualVersion_error(data: NSData, actualVersion: MSDocumentVersion | null, error: NSError): any;
-  unarchiveObjectWithData_asVersion_corruptionDetected_error(data: NSData, version: MSDocumentVersion, corruption: boolean | null, error: NSError): any;
+  unarchiveObjectWithData_actualVersion_error(data: NSData, actualVersion: MSDocumentVersion | null, error: MOPointer<NSError>): any;
+  unarchiveObjectWithData_asVersion_corruptionDetected_error(data: NSData, version: MSDocumentVersion, corruption: boolean | null, error: MOPointer<NSError>): any;
   accessInstanceVariablesDirectly(): boolean;
 
 }

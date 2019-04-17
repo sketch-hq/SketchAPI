@@ -9,10 +9,10 @@ interface MSKeyedUnarchiver extends MSBaseUnarchiver {
 declare const MSKeyedUnarchiver: {
   alloc(): MSKeyedUnarchiverUninitialized;
   class(): MSKeyedUnarchiver;
-  unarchiveObjectFromURL_error(url: NSURL, error: NSError): any;
+  unarchiveObjectFromURL_error(url: NSURL, error: MOPointer<NSError>): any;
   unarchiveObjectWithData(data: NSData): any;
-  unarchiveObjectWithData_actualVersion_error(data: NSData, actualVersion: MSDocumentVersion | null, error: NSError): any;
-  unarchiveObjectWithData_asVersion_corruptionDetected_error(data: NSData, version: MSDocumentVersion, corruption: boolean | null, error: NSError): any;
+  unarchiveObjectWithData_actualVersion_error(data: NSData, actualVersion: MSDocumentVersion | null, error: MOPointer<NSError>): any;
+  unarchiveObjectWithData_asVersion_corruptionDetected_error(data: NSData, version: MSDocumentVersion, corruption: boolean | null, error: MOPointer<NSError>): any;
   accessInstanceVariablesDirectly(): boolean;
 
 }

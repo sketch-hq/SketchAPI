@@ -15,7 +15,7 @@ interface NSWorkspace extends NSObject {
   activateFileViewerSelectingURLs(fileURLs: NSArray<any> | any[]): void;
   showSearchResultsForQueryString(queryString: NSString | string): boolean;
   noteFileSystemChanged(path: NSString | string): void;
-  getInfoForFile_application_type(fullPath: NSString | string, appName: NSString | string, type: NSString | string): boolean;
+  getInfoForFile_application_type(fullPath: NSString | string, appName: MOPointer<NSString>, type: MOPointer<NSString>): boolean;
   isFilePackageAtPath(fullPath: NSString | string): boolean;
   iconForFile(fullPath: NSString | string): NSImage;
   iconForFiles(fullPaths: NSArray<any> | any[]): NSImage;
@@ -23,7 +23,7 @@ interface NSWorkspace extends NSObject {
   setIcon_forFile_options(image: NSImage | null, fullPath: NSString | string, options: NSWorkspaceIconCreationOptions): boolean;
   recycleURLs_completionHandler(URLs: NSArray<any> | any[], handler: Block): void;
   duplicateURLs_completionHandler(URLs: NSArray<any> | any[], handler: Block): void;
-  getFileSystemInfoForPath_isRemovable_isWritable_isUnmountable_description_type(fullPath: NSString | string, removableFlag: boolean | null, writableFlag: boolean | null, unmountableFlag: boolean | null, description: NSString | string, fileSystemType: NSString | string): boolean;
+  getFileSystemInfoForPath_isRemovable_isWritable_isUnmountable_description_type(fullPath: NSString | string, removableFlag: boolean | null, writableFlag: boolean | null, unmountableFlag: boolean | null, description: MOPointer<NSString>, fileSystemType: MOPointer<NSString>): boolean;
   unmountAndEjectDeviceAtPath(path: NSString | string): boolean;
   unmountAndEjectDeviceAtURL_error(url: NSURL, error: MOPointer<NSError>): boolean;
   extendPowerOffBy(requested: NSInteger): NSInteger;
@@ -31,8 +31,8 @@ interface NSWorkspace extends NSObject {
   URLForApplicationWithBundleIdentifier(bundleIdentifier: NSString | string): NSURL;
   URLForApplicationToOpenURL(url: NSURL): NSURL;
   absolutePathForAppBundleWithIdentifier(bundleIdentifier: NSString | string): NSString;
-  launchAppWithBundleIdentifier_options_additionalEventParamDescriptor_launchIdentifier(bundleIdentifier: NSString | string, options: NSWorkspaceLaunchOptions, descriptor: NSAppleEventDescriptor | null, identifier: NSNumber | number): boolean;
-  openURLs_withAppBundleIdentifier_options_additionalEventParamDescriptor_launchIdentifiers(urls: NSArray<any> | any[], bundleIdentifier: NSString | string | null, options: NSWorkspaceLaunchOptions, descriptor: NSAppleEventDescriptor | null, identifiers: NSArray<any> | any[]): boolean;
+  launchAppWithBundleIdentifier_options_additionalEventParamDescriptor_launchIdentifier(bundleIdentifier: NSString | string, options: NSWorkspaceLaunchOptions, descriptor: NSAppleEventDescriptor | null, identifier: MOPointer<NSNumber>): boolean;
+  openURLs_withAppBundleIdentifier_options_additionalEventParamDescriptor_launchIdentifiers(urls: NSArray<any> | any[], bundleIdentifier: NSString | string | null, options: NSWorkspaceLaunchOptions, descriptor: NSAppleEventDescriptor | null, identifiers: MOPointer<NSArray<any>>): boolean;
   typeOfFile_error(absoluteFilePath: NSString | string, outError: MOPointer<NSError>): NSString;
   localizedDescriptionForType(typeName: NSString | string): NSString;
   preferredFilenameExtensionForType(typeName: NSString | string): NSString;

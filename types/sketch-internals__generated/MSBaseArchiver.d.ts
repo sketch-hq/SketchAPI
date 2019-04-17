@@ -4,7 +4,7 @@ interface MSBaseArchiver extends NSObject {
   archiveRootObject(root: NSObject): void;
   shouldEncodeAsReference(object: NSObject | null): boolean;
   referenceObjectForObject(object: NSObject): NSObject;
-  archivedDataWithRootObject_error(root: NSObject, error: NSError): NSData;
+  archivedDataWithRootObject_error(root: NSObject, error: MOPointer<NSError>): NSData;
   encodeObject_forKey(object: NSObject | null, key: NSString | string): void;
   encodeDouble_forKey(value: number, key: NSString | string): void;
   encodeBool_forKey(value: boolean, key: NSString | string): void;

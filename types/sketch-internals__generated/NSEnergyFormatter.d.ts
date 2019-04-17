@@ -5,7 +5,7 @@ interface NSEnergyFormatter extends NSFormatter {
   stringFromJoules(numberInJoules: number): NSString;
   unitStringFromValue_unit(value: number, unit: NSEnergyFormatterUnit): NSString;
   unitStringFromJoules_usedUnit(numberInJoules: number, unitp: NSEnergyFormatterUnit | null): NSString;
-  getObjectValue_forString_errorDescription(obj: any, string: NSString | string, error: NSString | string): boolean;
+  getObjectValue_forString_errorDescription(obj: any, string: NSString | string, error: MOPointer<NSString>): boolean;
 
   numberFormatter(): NSNumberFormatter;
   setNumberFormatter(numberFormatter: NSNumberFormatter): void;

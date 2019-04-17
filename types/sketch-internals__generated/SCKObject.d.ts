@@ -1,5 +1,5 @@
 interface SCKObjectUninitialized<InitializedType = SCKObject> extends NSObjectUninitialized<SCKObject> {
-  initWithData_error(data: NSData | null, error: NSError): InitializedType;
+  initWithData_error(data: NSData | null, error: MOPointer<NSError>): InitializedType;
   initWithDictionary(dictionary: NSDictionary<any, any> | {[key: string]: any}): InitializedType;
   initWithDictionary_parentObject(dictionary: NSDictionary<any, any> | {[key: string]: any}, parent: SCKObject | null): InitializedType;
   initWithObjectID(objectID: SCKObjectID): InitializedType;

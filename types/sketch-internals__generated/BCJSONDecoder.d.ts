@@ -1,8 +1,8 @@
 interface BCJSONDecoderUninitialized<InitializedType = BCJSONDecoder> extends NSObjectUninitialized<BCJSONDecoder> {}
 
 interface BCJSONDecoder extends NSObject {
-  decodeData_error(data: NSData, error: NSError): any;
-  decodeDictionary_error(dict: NSDictionary<any, any> | {[key: string]: any}, error: NSError): any;
+  decodeData_error(data: NSData, error: MOPointer<NSError>): any;
+  decodeDictionary_error(dict: NSDictionary<any, any> | {[key: string]: any}, error: MOPointer<NSError>): any;
   containsValueForKey(key: NSString | string): boolean;
   decodeObjectForKey(key: NSString | string): any;
   decodeDoubleForKey_withDefault(key: NSString | string, defaultValue: number): number;
@@ -26,7 +26,7 @@ declare const BCJSONDecoder: {
   alloc(): BCJSONDecoderUninitialized;
   class(): BCJSONDecoder;
   setClass_forClassName(className: any | null, codedName: NSString | string): void;
-  decodeFileAtURL_error(url: NSURL, error: NSError): any;
+  decodeFileAtURL_error(url: NSURL, error: MOPointer<NSError>): any;
   load(): void;
   instancesRespondToSelector(aSelector: string): boolean;
   conformsToProtocol(protocol: Protocol): boolean;

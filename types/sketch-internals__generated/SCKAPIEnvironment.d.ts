@@ -5,8 +5,8 @@ interface SCKAPIEnvironmentUninitialized<InitializedType = SCKAPIEnvironment> ex
 }
 
 interface SCKAPIEnvironment extends NSObject, INSCopying {
-  keychainAuthenticationWithError(error: NSError): SCKAPISession;
-  setKeychainAuthentication_error(session: SCKAPISession | null, error: NSError): boolean;
+  keychainAuthenticationWithError(error: MOPointer<NSError>): SCKAPISession;
+  setKeychainAuthentication_error(session: SCKAPISession | null, error: MOPointer<NSError>): boolean;
   setCurrent(): void;
   copyWithZone(zone: NSZone | null): any;
 
