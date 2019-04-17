@@ -7,14 +7,16 @@ import { getURLFromPath, isWrappedObject, isKindOfClass } from '../utils'
 import { wrapObject } from '../wrapNativeObject'
 import { Types } from '../enums'
 import { Factory } from '../Factory'
-import { StyleType, Style } from '../style/Style'
+import { StyleType, Style, TStyleType } from '../style/Style'
 import { ColorAsset, GradientAsset } from '../assets'
 import { SharedStyle } from './SharedStyle'
+import { SymbolMaster } from '../layers/SymbolMaster'
 
-export enum SaveModeType {
-  Save = NSSaveOperationType.NSSaveOperation,
-  SaveTo = NSSaveOperationType.NSSaveToOperation,
-  SaveAs = NSSaveOperationType.NSSaveAsOperation,
+type SaveModeType = 'Save' | 'SaveTo' | 'SaveAs'
+export const SaveModeType: { [key in SaveModeType]: NSSaveOperationType } = {
+  Save: NSSaveOperationType.NSSaveOperation,
+  SaveTo: NSSaveOperationType.NSSaveToOperation,
+  SaveAs: NSSaveOperationType.NSSaveAsOperation,
 }
 
 /* eslint-disable no-use-before-define, typescript/no-use-before-define */
@@ -93,11 +95,15 @@ function sharedStyleDescriptor(type: 'layer' | 'text') {
         return []
       }
       const documentData = this._getMSDocumentData()
-      const localStyles = toArray(documentData[config.localStyles]().objects())
-      const foreignStyles = toArray(documentData[config.foreignStyles]()).map(
-        foreign => foreign.localSharedStyle()
+      const localStyles = toArray<MSSharedStyle>(
+        documentData[config.localStyles]().objects()
       )
-      return foreignStyles.concat(localStyles).map(wrapObject)
+      const foreignStyles = toArray<MSForeignStyle>(
+        documentData[config.foreignStyles]()
+      ).map(foreign => foreign.localSharedStyle())
+      return foreignStyles
+        .concat(localStyles)
+        .map(x => wrapObject<SharedStyle>(x)!)
     },
     set(
       this: Document,
@@ -131,6 +137,10 @@ function sharedStyleDescriptor(type: 'layer' | 'text') {
               sharedStyle = item
             } else {
               const wrappedStyle = wrapObject(item.style, Types.Style)
+
+              if (!wrappedStyle) {
+                throw new Error('The style property is required')
+              }
 
               sharedStyle = MSSharedStyle.alloc().initWithName_style(
                 item.name,
@@ -166,6 +176,10 @@ function sharedStyleDescriptor(type: 'layer' | 'text') {
       } else {
         const wrappedStyle = wrapObject(item.style, Types.Style)
 
+        if (!wrappedStyle) {
+          throw new Error('The style property is required')
+        }
+
         sharedStyle = MSSharedStyle.alloc().initWithName_style(
           item.name,
           wrappedStyle.sketchObject
@@ -180,7 +194,7 @@ function sharedStyleDescriptor(type: 'layer' | 'text') {
     },
     removeItem(this: Document, index: number) {
       if (this.isImmutable()) {
-        return undefined
+        return null
       }
       const documentData = this._getMSDocumentData() as MSDocumentData
 
@@ -188,14 +202,14 @@ function sharedStyleDescriptor(type: 'layer' | 'text') {
 
       if (realIndex < 0) {
         console.log('Cannot remove a foreign shared style')
-        return undefined
+        return null
       }
 
       const container = documentData.sharedObjectContainerOfType(config.type)
 
       const removed = container.objects()[realIndex]
       container.removeSharedObjectAtIndex(realIndex)
-      return wrapObject(removed, Types.SharedStyle)
+      return wrapObject<SharedStyle>(removed, Types.SharedStyle)!
     },
   }
 }
@@ -239,9 +253,12 @@ export class Document extends WrappedObject<MSDocument | MSDocumentData> {
         acc
       )
 
-      toArray(pages)
+      toArray<any>(pages)
         .map(p => wrapObject(p, Types.Page))
         .forEach(page => {
+          if (!page || !(page instanceof Page)) {
+            return
+          }
           page.parent = this // eslint-disable-line
           delete pagesToRemove[page.id]
         })
@@ -255,16 +272,19 @@ export class Document extends WrappedObject<MSDocument | MSDocumentData> {
     },
     insertItem(item, index) {
       if (this.isImmutable()) {
-        return undefined
+        return null
       }
       const wrapped = wrapObject(item, Types.Page)
-      if (wrapped._object.documentData()) {
-        wrapped._object
+      if (!wrapped || !(wrapped instanceof Page)) {
+        return null
+      }
+      if (wrapped.sketchObject.documentData()) {
+        wrapped.sketchObject
           .documentData()
-          .removePages_detachInstances([wrapped._object], false)
+          .removePages_detachInstances([wrapped.sketchObject], false)
       }
       const documentData = this._getMSDocumentData() as MSDocumentData
-      documentData.insertPage_atIndex(wrapped._object, index)
+      documentData.insertPage_atIndex(wrapped.sketchObject, index)
       return wrapped
     },
     removeItem(index) {
@@ -293,7 +313,13 @@ export class Document extends WrappedObject<MSDocument | MSDocumentData> {
     },
     set(layers) {
       this.selectedPage.sketchObject.changeSelectionBySelectingLayers(
-        (layers.layers || layers || []).map(l => wrapObject(l).sketchObject)
+        (layers.layers || layers || []).map(l => {
+          const wrapped = wrapObject<Layer>(l)
+          if (!wrapped) {
+            return null
+          }
+          return wrapped.sketchObject
+        })
       )
     },
   })
@@ -313,13 +339,16 @@ export class Document extends WrappedObject<MSDocument | MSDocumentData> {
     },
     set(page) {
       const wrapped = wrapObject(page, Types.Page)
+      if (!wrapped || !(wrapped instanceof Page)) {
+        return
+      }
       if (
-        wrapped._object.documentData() &&
-        String(wrapped._object.documentData().objectID()) !== this.id
+        wrapped.sketchObject.documentData() &&
+        String(wrapped.sketchObject.documentData().objectID()) !== this.id
       ) {
-        wrapped._object
+        wrapped.sketchObject
           .documentData()
-          .removePages_detachInstances([wrapped._object], false)
+          .removePages_detachInstances([wrapped.sketchObject], false)
         wrapped.parent = this
       }
       wrapped.selected = true
@@ -548,7 +577,7 @@ export class Document extends WrappedObject<MSDocument | MSDocumentData> {
       )
       page = loopPages.nextObject()
     }
-    return toArray(filteredArray).map(wrapObject)
+    return toArray<MSLayer>(filteredArray).map(x => wrapObject<Layer>(x)!)
   }
 
   /**
@@ -565,12 +594,14 @@ export class Document extends WrappedObject<MSDocument | MSDocumentData> {
 
   getSymbols() {
     const documentData = this._getMSDocumentData()
-    return toArray(documentData.allSymbols()).map(wrapObject)
+    return toArray<MSSymbolMaster>(documentData.allSymbols()).map(
+      x => wrapObject<SymbolMaster>(x)!
+    )
   }
 
   _getSharedStyleWithIdAndType(
     sharedId: string,
-    type: StyleType
+    type: TStyleType
   ): SharedStyle | undefined {
     const documentData = this._getMSDocumentData()
     const sharedStyle = documentData[
@@ -614,6 +645,9 @@ export class Document extends WrappedObject<MSDocument | MSDocumentData> {
       return
     }
     const wrappedLayer = wrapObject(layer)
+    if (!wrappedLayer) {
+      return
+    }
     this._getMSDocument()
       .contentDrawView()
       .centerRect(wrappedLayer.sketchObject.rect())

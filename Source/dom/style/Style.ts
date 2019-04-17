@@ -15,7 +15,7 @@ import { SharedStyle } from '../models/SharedStyle'
 import { StyledLayer } from '../layers/StyledLayer'
 import { isKindOfClass } from '../utils'
 
-const BlendingModeMap = {
+const BlendingModeMap: { [key in BlendingMode]: number } = {
   Normal: 0,
   Darken: 1,
   Multiply: 2,
@@ -34,23 +34,40 @@ const BlendingModeMap = {
   Luminosity: 15,
 }
 
-enum BlendingMode {
-  Normal = 'Normal',
-  Darken = 'Darken',
-  Multiply = 'Multiply',
-  ColorBurn = 'ColorBurn',
-  Lighten = 'Lighten',
-  Screen = 'Screen',
-  ColorDodge = 'ColorDodge',
-  Overlay = 'Overlay',
-  SoftLight = 'SoftLight',
-  HardLight = 'HardLight',
-  Difference = 'Difference',
-  Exclusion = 'Exclusion',
-  Hue = 'Hue',
-  Saturation = 'Saturation',
-  Color = 'Color',
-  Luminosity = 'Luminosity',
+type BlendingMode =
+  | 'Normal'
+  | 'Darken'
+  | 'Multiply'
+  | 'ColorBurn'
+  | 'Lighten'
+  | 'Screen'
+  | 'ColorDodge'
+  | 'Overlay'
+  | 'SoftLight'
+  | 'HardLight'
+  | 'Difference'
+  | 'Exclusion'
+  | 'Hue'
+  | 'Saturation'
+  | 'Color'
+  | 'Luminosity'
+const BlendingMode: { [key in BlendingMode]: BlendingMode } = {
+  Normal: 'Normal',
+  Darken: 'Darken',
+  Multiply: 'Multiply',
+  ColorBurn: 'ColorBurn',
+  Lighten: 'Lighten',
+  Screen: 'Screen',
+  ColorDodge: 'ColorDodge',
+  Overlay: 'Overlay',
+  SoftLight: 'SoftLight',
+  HardLight: 'HardLight',
+  Difference: 'Difference',
+  Exclusion: 'Exclusion',
+  Hue: 'Hue',
+  Saturation: 'Saturation',
+  Color: 'Color',
+  Luminosity: 'Luminosity',
 }
 
 const DEFAULT_STYLE = {
@@ -62,10 +79,12 @@ export const StyleTypeMap = {
   2: 'Text',
   3: 'Unknown',
 }
-export enum StyleType {
-  Layer = 'Layer',
-  Text = 'Text',
-  Unknown = 'Unknown',
+
+export type TStyleType = 'Layer' | 'Text' | 'Unknown'
+export const StyleType: { [key in TStyleType]: TStyleType } = {
+  Layer: 'Layer',
+  Text: 'Text',
+  Unknown: 'Unknown',
 }
 
 /**
@@ -107,7 +126,7 @@ export class Style extends WrappedObject<MSStyle> {
       )
     },
     set(mode) {
-      const blendingMode = BlendingModeMap[mode]
+      const blendingMode = BlendingModeMap[mode] as MSBlendMode
       this.sketchObject
         .contextSettings()
         .setBlendMode(typeof blendingMode !== 'undefined' ? blendingMode : mode)
@@ -125,7 +144,7 @@ export class Style extends WrappedObject<MSStyle> {
   })
   borderOptions!: BorderOptions
 
-  @define<Style, StyleType>({
+  @define<Style, TStyleType>({
     get() {
       return this.sketchObject.textStyle() &&
         this.sketchObject.textStyle().attributes()[NSFontAttributeName]
@@ -133,7 +152,7 @@ export class Style extends WrappedObject<MSStyle> {
         : StyleType.Layer
     },
   })
-  styleType!: StyleType
+  styleType!: TStyleType
 
   /**
    * Make a new style object.

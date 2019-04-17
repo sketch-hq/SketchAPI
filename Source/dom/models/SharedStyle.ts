@@ -3,8 +3,9 @@ import { define, WrappedObject } from '../WrappedObject'
 import { Types } from '../enums'
 import { Factory } from '../Factory'
 import { wrapObject } from '../wrapNativeObject'
-import { StyleType } from '../style/Style'
-import { Style } from '../style/Style'
+import { StyleType, Style, TStyleType } from '../style/Style'
+import { Document } from './Document'
+import { StyledLayer } from '../layers/StyledLayer'
 
 /**
  * A Sketch shared style, either Text style or Layer Style.
@@ -13,12 +14,12 @@ export class SharedStyle extends WrappedObject<MSSharedStyle> {
   static type = Types.SharedStyle
   static StyleType = StyleType
 
-  @define<SharedStyle, StyleType>({
+  @define<SharedStyle, TStyleType>({
     get() {
       return this.style.styleType
     },
   })
-  readonly styleType!: StyleType
+  readonly styleType!: TStyleType
 
   @define<SharedStyle, string>({
     get() {
@@ -32,7 +33,7 @@ export class SharedStyle extends WrappedObject<MSSharedStyle> {
 
   @define<SharedStyle, Style>({
     get() {
-      return wrapObject(this.sketchObject.style())
+      return wrapObject<Style>(this.sketchObject.style())!
     },
     set(newStyle) {
       if (this.sketchObject.isForeign()) {
@@ -40,7 +41,11 @@ export class SharedStyle extends WrappedObject<MSSharedStyle> {
           'Can not set the style of a shared style coming from a library'
         )
       }
-      this.sketchObject.updateToMatch(wrapObject(newStyle).sketchObject)
+      const wrapped = wrapObject(newStyle)
+      if (!wrapped || !(wrapped instanceof Style)) {
+        throw new Error('need to pass a proper style')
+      }
+      this.sketchObject.updateToMatch(wrapped.sketchObject)
     },
   })
   style!: Style
@@ -66,8 +71,20 @@ export class SharedStyle extends WrappedObject<MSSharedStyle> {
     style: Style
     document: Document
   }) {
-    const documentData = wrapObject(document)._getMSDocumentData()
+    const wrappedDocument = wrapObject(document)
+    if (
+      !wrappedDocument ||
+      !(wrappedDocument instanceof Document) ||
+      wrappedDocument.isImmutable()
+    ) {
+      throw new Error('the `document` field is required')
+    }
+    const documentData = wrappedDocument._getMSDocumentData() as MSDocumentData
     const wrappedStyle = wrapObject(style, Types.Style)
+
+    if (!wrappedStyle || !(wrappedStyle instanceof Style)) {
+      throw new Error('the `style` field is required')
+    }
 
     const sharedStyle = SharedStyle.fromNative<MSSharedStyle, SharedStyle>(
       MSSharedStyle.alloc().initWithName_style(name, wrappedStyle.sketchObject)
@@ -83,11 +100,15 @@ export class SharedStyle extends WrappedObject<MSSharedStyle> {
   }
 
   getAllInstances() {
-    return toArray(this.sketchObject.allInstances()).map(wrapObject)
+    return toArray<MSStyle>(this.sketchObject.allInstances()).map(
+      x => wrapObject<Style>(x)!
+    )
   }
 
   getAllInstancesLayers() {
-    return toArray(this.sketchObject.allLayersInstances()).map(wrapObject)
+    return toArray<MSStyledLayer>(this.sketchObject.allLayersInstances()).map(
+      x => wrapObject<StyledLayer>(x)!
+    )
   }
 
   getLibrary() {

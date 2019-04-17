@@ -30,7 +30,7 @@ export class Color {
     this._object = nativeColor
   }
 
-  static from(object: MSColor | MSImmutableColor | NSColor | string) {
+  static from(object: unknown) {
     if (!object) {
       return undefined
     }
@@ -46,7 +46,7 @@ export class Color {
         nativeColor = MSImmutableColor.colorWithNSColor(object)
       } else {
         throw new Error(
-          `Cannot create a color from a ${String(object.class())}`
+          `Cannot create a color from a ${String(object.className())}`
         )
       }
     } else if (typeof object === 'string') {
