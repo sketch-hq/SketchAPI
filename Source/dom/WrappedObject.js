@@ -281,6 +281,31 @@ export class WrappedObject {
     this[DefinedPropertiesKey][propertyName] = descriptor
     /* eslint-enable */
   }
+
+  /**
+   * returns a property value from the object using a property path
+   * example of a property path: style.fills[0].color
+   *
+   * @param {string} propertyPath
+   */
+  getProperty(propertyPath) {
+    let object = this
+    const regex = /(\w+)\[(\d+)\]$/
+    propertyPath.split('.').some(property => {
+      const result = regex.exec(property)
+      if (result) {
+        // array property with index
+        object = object[result[1]][result[2]]
+      } else {
+        object = object[property]
+      }
+      if (object == null) {
+        return true
+      }
+      return undefined
+    })
+    return object
+  }
 }
 
 WrappedObject[DefinedPropertiesKey] = {}
