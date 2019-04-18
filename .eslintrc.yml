@@ -159,8 +159,6 @@ globals:
   MSPDFImporter: false
   NSApp: false
   CGPathGetBoundingBox: false
-  MSRect: false
-  MSImmutableRect: false
 
 rules:
   ###########
