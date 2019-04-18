@@ -29,5 +29,6 @@
   "prettier.singleQuote": true,
   "prettier.trailingComma": "es5",
   "prettier.proseWrap": "never",
-  "editor.formatOnSave": true
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode"
 }
