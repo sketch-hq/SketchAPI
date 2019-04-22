@@ -48,11 +48,14 @@ globalAssets.colors = ['#FFFFFF']
 globalAssets.colors = [{name: 'white', color: '#FFFFFF'}]
 ```
 
-Note that this doesn't work?
+Note that this doesn't work
 
 ```
 var globalColors = sketch.globalAssets.colors
 globalColors = ['#FFFFFF']
+
+// when you reassign globalColors, it doesn't reference the global colors anymore
+// But you can do globalColors.push(...) which mutates the array.
 ```
 
 Other useful actions
@@ -122,7 +125,7 @@ globalAssets.gradients = [{
 // - An dictionary of Gradient properties.
 ```
 
-Similarly, document colors and gradients can all be found on `Document`
+Similarly, document colors and document gradients can all be found on `Document`
 
 ```
 var sketch = require('sketch')
@@ -593,7 +596,9 @@ let rectangle2 = rectangle.duplicate()
 rectangle2.frame.offset(110,0)
 
 document.selectedLayers.layers = [rectangle]
-// Note: you can also do rectangle.selected = true
+// Note: you can also do
+// rectangle.selected = true
+// however it will just add the rectangle to the selection rather than replacing it
 
 
 // Setting selectedPage
