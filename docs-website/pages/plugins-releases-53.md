@@ -85,16 +85,23 @@ console.log(layer)
   }
 ```
 
-### No need to specify the type when there is no choice
+### Specify object types less often
 
 ##### More Details
-- Pretty much every object from the JS API is a wrapper around a native object (like _ExportFormats_ is a wrapper around _MSExportFormat_). The way the API works when creating a new wrapper is that it looks at the type field to create the underlying native object. But in some cases, there is no choices: the objects inside _exportFormats_ will always be _MSExportFormat_."
+- Pretty much every object from the JS API is a wrapper around a native object (like _ExportFormats_ is a wrapper around _MSExportFormat_). The way the API works when creating a new wrapper is that it looks at the type field to create the underlying native object. But in some cases, there are no choices: the objects inside _exportFormats_ will always be _MSExportFormat_."
 
 ##### Github PR
-(TODO)
+[TODO]
 
 ##### Usage
-- So instead of `layer.exportFormats = [{type: 'ExportFormat, size: '2x'}]`, you can just write `layer.exportFormats = [{size: '2x'}]`
+So instead of
+```
+layer.exportFormats = [{type: 'ExportFormat, size: '2x'}]
+```
+you can just write
+```
+layer.exportFormats = [{size: '2x'}]
+````
 
 ### Add `UI.getInputFromUser` method and deprecate the other input methods
 
