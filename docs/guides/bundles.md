@@ -219,6 +219,27 @@ export function onSelection(context) {
 }
 ```
 
+#### `handlers`
+
+An object used to specify the mapping between events (like Actions, calling the command, etc.) and function names.
+
+There are 4 different keys:
+
+- `run` which is the name of the function that should be called when the command is run (so it is the same as the `handler` key which is ignored when `handlers` is specified).
+- `setUp` which is the name of the function to call before the command is called (not to be confused with the `Startup` action).
+- `tearDown` which is the name of the function to call after the command has finished to run (not to be confused with the `Shutdown` action).
+- `actions` which is an object where each property name should be the name of an `Action` while the value should be the name of the function to call. (see [the Action guide](/guides/action-api/) for more information)
+
+Example:
+
+```json
+"handlers": {
+  "actions": {
+    "SelectionChanged.finish": "onSelectionChanged"
+  }
+}
+```
+
 ## Plugins Menu
 
 When it loads a Plugin, Sketch creates a menu for it, and populates that menu using information from the “menu” dictionary in the manifest file.
@@ -281,16 +302,16 @@ export function doMyCommand(context) {
 }
 ```
 
-In the manifest file, you specify a dictionary describing each command that the Plugin defines.
+In the manifest file, you specify an array of objects describing each command that the Plugin defines.
 
-In this dictionary, _script_ and _handler_ keys tell Sketch which script file to look in, and which handler to run.
+In each object, _script_ and _handlers_ keys tell Sketch which script file to look in, and which handler to run.
 
 You are free to put each command implementation into its own script file, or to put them all in a single file.
 
 You must specify the _script_ key for each command.
 
-If you put each command in its own script file, you can omit the _handler_ key. In this case, Sketch will default to calling the `export default function () {}` handler.
+If you put each command in its own script file, you can omit the _handlers_ key. In this case, Sketch will default to calling the `export default function () {}` handler.
 
-If you put multiple command handlers into the same script file, you need to use the _handler_ key for each one, since they can’t all use the `default` handler!.
+If you put multiple command handlers into the same script file, you need to use the _handlers_ key for each one, since they can’t all use the `default` handler!.
 
 [semantic versioning]: http://semver.org
