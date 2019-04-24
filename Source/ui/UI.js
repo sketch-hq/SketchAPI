@@ -49,7 +49,7 @@ export function alert(title, text) {
 
 export const INPUT_TYPE = {
   string: 'string',
-  textarea: 'string',
+  textarea: 'textarea',
   slider: 'slider',
   selection: 'selection',
   // coming soon
@@ -94,32 +94,33 @@ export function getInputFromUser(messageText, options, callback) {
       dialog.window().setInitialFirstResponder(accessory)
       break
     case INPUT_TYPE.textarea:
-      let numberOfLines = 3
+      let numberOfLines
       let FLT_MAX = 10000000 // c library replacement
       if (typeof options.numberOfLines !== 'undefined') {
         numberOfLines = options.numberOfLines
+      } else {
+        numberOfLines = 3
       }
-
-      let accessory = NSScrollView.alloc().initWithFrame(
-        NSMakeRect(20, 20, 295, 22 * numberOfLines)
+      accessory = NSScrollView.alloc().initWithFrame(
+        NSMakeRect(0, 0, 295, 20 * numberOfLines)
       )
       let contentSize = accessory.contentSize()
       accessory.setHasVerticalScroller(true)
       accessory.setHasHorizontalScroller(false)
       accessory.setAutoresizingMask(NSViewWidthSizable | NSViewHeightSizable)
 
-      textView = NSTextView.alloc().initWithFrame(
-        NSMakeRect(0, 0, contentSize.width(), contentSize.height())
+      let textView = NSTextView.alloc().initWithFrame(
+        NSMakeRect(0, 0, contentSize.width, contentSize.height)
       )
-      textView.setMinSize(NSMakeSize(0.0, contentSize.height()))
+      textView.setMinSize(NSMakeSize(0.0, contentSize.height))
       textView.setMaxSize(NSMakeSize(FLT_MAX, FLT_MAX))
       textView.setVerticallyResizable(true)
-      textVew.setHorizontallyResizable(false)
+      textView.setHorizontallyResizable(false)
       textView.setRichText(false)
       textView.setAutoresizingMask(NSViewWidthSizable)
       textView
         .textContainer()
-        .setContainerSize(NSMakeSize(contentSize.width(), FLT_MAX))
+        .setContainerSize(NSMakeSize(contentSize.width, FLT_MAX))
       textView.textContainer().setWidthTracksTextView(true)
 
       textView.setString(
@@ -129,8 +130,13 @@ export function getInputFromUser(messageText, options, callback) {
             : options.initialValue
         )
       )
+
+      accessory.documentView = textView
       dialog.window().setInitialFirstResponder(accessory)
       break
+
+    //   dialog.window().setInitialFirstResponder(accessory)
+    //   break
     // case INPUT_TYPE.number:
     //   accessory = NSStepper.alloc().initWithFrame(NSMakeRect(0, 0, 295, 25))
     //   accessory.setFloatValue(Number(options.initialValue || 0))
@@ -207,6 +213,17 @@ export function getInputFromUser(messageText, options, callback) {
   switch (type) {
     case INPUT_TYPE.string:
       callback(null, String(accessory.stringValue()))
+      return
+    case INPUT_TYPE.textarea:
+      callback(
+        null,
+        String(
+          accessory
+            .documentView()
+            .textStorage()
+            .string()
+        )
+      )
       return
     // case INPUT_TYPE.number:
     //   return Number(accessory.stringValue())
