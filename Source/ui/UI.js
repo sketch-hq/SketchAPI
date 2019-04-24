@@ -95,7 +95,7 @@ export function getInputFromUser(messageText, options, callback) {
       break
     case INPUT_TYPE.textarea:
       let numberOfLines
-      let FLT_MAX = 10000000 // c library replacement
+      const FLT_MAX = 10000000 // c library replacement
       if (typeof options.numberOfLines !== 'undefined') {
         numberOfLines = options.numberOfLines
       } else {
@@ -104,12 +104,12 @@ export function getInputFromUser(messageText, options, callback) {
       accessory = NSScrollView.alloc().initWithFrame(
         NSMakeRect(0, 0, 295, 20 * numberOfLines)
       )
-      let contentSize = accessory.contentSize()
+      const contentSize = accessory.contentSize()
       accessory.setHasVerticalScroller(true)
       accessory.setHasHorizontalScroller(false)
       accessory.setAutoresizingMask(NSViewWidthSizable | NSViewHeightSizable)
 
-      let textView = NSTextView.alloc().initWithFrame(
+      const textView = NSTextView.alloc().initWithFrame(
         NSMakeRect(0, 0, contentSize.width, contentSize.height)
       )
       textView.setMinSize(NSMakeSize(0.0, contentSize.height))
@@ -135,8 +135,6 @@ export function getInputFromUser(messageText, options, callback) {
       dialog.window().setInitialFirstResponder(accessory)
       break
 
-    //   dialog.window().setInitialFirstResponder(accessory)
-    //   break
     // case INPUT_TYPE.number:
     //   accessory = NSStepper.alloc().initWithFrame(NSMakeRect(0, 0, 295, 25))
     //   accessory.setFloatValue(Number(options.initialValue || 0))
