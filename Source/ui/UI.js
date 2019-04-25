@@ -49,7 +49,6 @@ export function alert(title, text) {
 
 export const INPUT_TYPE = {
   string: 'string',
-  textarea: 'textarea',
   slider: 'slider',
   selection: 'selection',
   // coming soon
@@ -83,58 +82,56 @@ export function getInputFromUser(messageText, options, callback) {
   let accessory
   switch (type) {
     case INPUT_TYPE.string:
-      accessory = NSTextField.alloc().initWithFrame(NSMakeRect(0, 0, 295, 25))
-      accessory.setStringValue(
-        String(
-          typeof options.initialValue === 'undefined'
-            ? ''
-            : options.initialValue
-        )
-      )
-      dialog.window().setInitialFirstResponder(accessory)
-      break
-    case INPUT_TYPE.textarea:
-      let numberOfLines
-      const FLT_MAX = 10000000 // c library replacement
       if (typeof options.numberOfLines !== 'undefined') {
-        numberOfLines = options.numberOfLines
-      } else {
-        numberOfLines = 3
-      }
-      accessory = NSScrollView.alloc().initWithFrame(
-        NSMakeRect(0, 0, 295, 20 * numberOfLines)
-      )
-      const contentSize = accessory.contentSize()
-      accessory.setHasVerticalScroller(true)
-      accessory.setHasHorizontalScroller(false)
-      accessory.setAutoresizingMask(NSViewWidthSizable | NSViewHeightSizable)
+        // create textArea
+        const FLT_MAX = 10000000 // c library variable
 
-      const textView = NSTextView.alloc().initWithFrame(
-        NSMakeRect(0, 0, contentSize.width, contentSize.height)
-      )
-      textView.setMinSize(NSMakeSize(0.0, contentSize.height))
-      textView.setMaxSize(NSMakeSize(FLT_MAX, FLT_MAX))
-      textView.setVerticallyResizable(true)
-      textView.setHorizontallyResizable(false)
-      textView.setRichText(false)
-      textView.setAutoresizingMask(NSViewWidthSizable)
-      textView
-        .textContainer()
-        .setContainerSize(NSMakeSize(contentSize.width, FLT_MAX))
-      textView.textContainer().setWidthTracksTextView(true)
-
-      textView.setString(
-        String(
-          typeof options.initialValue === 'undefined'
-            ? ''
-            : options.initialValue
+        accessory = NSScrollView.alloc().initWithFrame(
+          NSMakeRect(0, 0, 295, 5 + 14 * options.numberOfLines)
+          //14pt for each line plus a little more to have text cut off
+          //so that it is clear there is more content
         )
-      )
+        const contentSize = accessory.contentSize()
+        accessory.setHasVerticalScroller(true)
+        accessory.setHasHorizontalScroller(false)
+        accessory.setAutoresizingMask(NSViewWidthSizable | NSViewHeightSizable)
 
-      accessory.documentView = textView
+        const textView = NSTextView.alloc().initWithFrame(
+          NSMakeRect(0, 0, contentSize.width, contentSize.height)
+        )
+        textView.setMinSize(NSMakeSize(0.0, contentSize.height))
+        textView.setMaxSize(NSMakeSize(FLT_MAX, FLT_MAX))
+        textView.setVerticallyResizable(true)
+        textView.setHorizontallyResizable(false)
+        textView.setRichText(false)
+        textView.setAutoresizingMask(NSViewWidthSizable)
+        textView
+          .textContainer()
+          .setContainerSize(NSMakeSize(contentSize.width, FLT_MAX))
+        textView.textContainer().setWidthTracksTextView(true)
+
+        textView.setString(
+          String(
+            typeof options.initialValue === 'undefined'
+              ? ''
+              : options.initialValue
+          )
+        )
+        accessory.documentView = textView
+
+      } else {
+        // create textField
+        accessory = NSTextField.alloc().initWithFrame(NSMakeRect(0, 0, 295, 25))
+        accessory.setStringValue(
+          String(
+            typeof options.initialValue === 'undefined'
+              ? ''
+              : options.initialValue
+          )
+        )
+      }
       dialog.window().setInitialFirstResponder(accessory)
       break
-
     // case INPUT_TYPE.number:
     //   accessory = NSStepper.alloc().initWithFrame(NSMakeRect(0, 0, 295, 25))
     //   accessory.setFloatValue(Number(options.initialValue || 0))
@@ -210,18 +207,19 @@ export function getInputFromUser(messageText, options, callback) {
 
   switch (type) {
     case INPUT_TYPE.string:
-      callback(null, String(accessory.stringValue()))
-      return
-    case INPUT_TYPE.textarea:
-      callback(
-        null,
-        String(
-          accessory
-            .documentView()
-            .textStorage()
-            .string()
+      if (typeof options.numberOfLines !== 'undefined') {
+        callback(
+          null,
+          String(
+            accessory
+              .documentView()
+              .textStorage()
+              .string()
+          )
         )
-      )
+      } else {
+        callback(null, String(accessory.stringValue()))
+      }
       return
     // case INPUT_TYPE.number:
     //   return Number(accessory.stringValue())
