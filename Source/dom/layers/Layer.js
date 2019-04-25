@@ -162,7 +162,16 @@ Layer.define('parent', {
    * @return {Group} The containing layer of this layer.
    */
   get() {
-    return wrapNativeObject(this._object.parentGroup())
+    let parent
+    if (this._object.parentGroup) {
+      parent = this._object.parentGroup
+    } else if (this._documentData) {
+      parent = MSImmutableLayerAncestry.alloc()
+        .initWithLayer_document(this._object, this._documentData)
+        .parentGroup()
+    }
+    if (parent) return wrapNativeObject(parent)
+    return undefined
   },
   set(layer) {
     if (this.isImmutable()) {

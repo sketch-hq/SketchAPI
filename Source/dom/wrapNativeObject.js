@@ -10,9 +10,10 @@ import { Factory } from './Factory'
  * The fallback position is just to return an instance of WrappedObject.
  *
  * @param {object} sketchObject The underlying sketch object that we're wrapping.
+ * @param (object=) documentData The documentData that the Sketch object belongs to. It's used to get the parent of immutable Sketch objects.
  * @return {WrappedObject} A javascript object (subclass of WrappedObject), which represents the Sketch object we were given.
  */
-export function wrapNativeObject(nativeObject) {
+export function wrapNativeObject(nativeObject, documentData) {
   if (!nativeObject) {
     return undefined
   }
@@ -25,16 +26,24 @@ export function wrapNativeObject(nativeObject) {
     JsClass = WrappedObject
   }
 
-  return JsClass.fromNative(nativeObject)
+  return JsClass.fromNative(nativeObject, documentData)
 }
 
-export function wrapObject(object, defaultType) {
+export function wrapObject(object, defaultTypeOrDocumentData) {
   if (!object) {
     return undefined
   }
 
+  let documentData
+  let defaultType
+  if (typeof defaultTypeOrDocumentData === 'string') {
+    defaultType = defaultTypeOrDocumentData
+  } else {
+    documentData = defaultTypeOrDocumentData
+  }
+
   if (isNativeObject(object) && !isObject(object)) {
-    return wrapNativeObject(object)
+    return wrapNativeObject(object, documentData)
   }
   if (isWrappedObject(object)) {
     return object
