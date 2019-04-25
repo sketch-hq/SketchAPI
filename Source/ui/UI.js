@@ -88,7 +88,7 @@ export function getInputFromUser(messageText, options, callback) {
 
         accessory = NSScrollView.alloc().initWithFrame(
           NSMakeRect(0, 0, 295, 5 + 14 * options.numberOfLines)
-          // 14pt for each line plus a little more to have text cut off so that it is clear there is more content
+          // 14 for each line plus a little more to account for contentView inset
         )
         const contentSize = accessory.contentSize()
         accessory.setHasVerticalScroller(true)
