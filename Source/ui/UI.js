@@ -93,6 +93,7 @@ export function getInputFromUser(messageText, options, callback) {
         const contentSize = accessory.contentSize()
         accessory.setHasVerticalScroller(true)
         accessory.setHasHorizontalScroller(false)
+        // eslint-disable-next-line no-bitwise
         accessory.setAutoresizingMask(NSViewWidthSizable | NSViewHeightSizable)
 
         const textView = NSTextView.alloc().initWithFrame(
@@ -247,6 +248,7 @@ export function getInputFromUser(messageText, options, callback) {
  * @return The string that the user input.
  */
 export function getStringFromUser(msg, initial) {
+  // eslint-disable-next-line no-console
   console.warn(
     `\`UI.getStringFromUser(message, initialValue)\` is deprecated.
 Use \`UI.getInputFromUser(
@@ -281,6 +283,7 @@ Use \`UI.getInputFromUser(
  * @return An array with three items: [responseCode, selection, ok].
  */
 export function getSelectionFromUser(msg, items, selectedItemIndex = 0) {
+  // eslint-disable-next-line no-console
   console.warn(
     `\`UI.getSelectionFromUser(message, items, selectedItemIndex)\` is deprecated.
 Use \`UI.getInputFromUser(
