@@ -134,10 +134,13 @@ CurvePoint.define('pointType', {
   },
   set(_mode) {
     if (!_mode) {
-      this._object.setCurveMode(0)
+      this._object.changeCurveModeTo_usingPoint(0, 0)
     } else {
       const mode = PointTypeMap[_mode]
-      this._object.setCurveMode(typeof mode !== 'undefined' ? mode : _mode)
+      this._object.changeCurveModeTo_usingPoint(
+        typeof mode !== 'undefined' ? mode : _mode,
+        0
+      )
     }
 
     if (this._parent) {
