@@ -37,10 +37,8 @@ const ShapeTypeMapReverse = {
   Polygon: MSPolygonShape,
   Star: MSStarShape,
   Triangle: MSTriangleShape,
-  Custom: MSRectangleShape, // we are just going to default to Rectangle here
+  Custom: MSShapePathLayer,
 }
-
-// TODO: set and modify path
 
 /**
  * Represents a shape layer (a rectangle, oval, path, etc).
@@ -55,9 +53,13 @@ export class ShapePath extends StyledLayer {
    */
   constructor(shape = {}) {
     if (!shape.sketchObject) {
+      const defaultShapeType = shape.points
+        ? ShapeType.Custom
+        : ShapeType.Rectangle // we are defaulting to Rectangle otherwise the shape will be broken without points
+
       // eslint-disable-next-line no-param-reassign
       shape.sketchObject = ShapeTypeMapReverse[
-        shape.shapeType || ShapeType.Custom
+        shape.shapeType || defaultShapeType
       ]
         .alloc()
         .initWithFrame(new Rectangle(0, 0, 100, 100).asCGRect())
