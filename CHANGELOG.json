@@ -1,5 +1,5 @@
 {
-  "unreleased": [],
+  "unreleased": ["[Fixed] Changing the `pointType` of a CurvePoint wouldn't always restore the control points"],
   "releases": {
     "55": [
       "[New] Add `isSelected` method on a CurvePoint",
