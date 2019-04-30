@@ -1,5 +1,8 @@
 {
-  "unreleased": ["[Fixed] Changing the `pointType` of a CurvePoint wouldn't always restore the control points"],
+  "unreleased": [
+    "[Fixed] Changing the `pointType` of a CurvePoint wouldn't always restore the control points"],
+    "[Fixed] Do not default to `ShapeType.Rectangle` if some points are specified when create a new ShapePath"
+  ],
   "releases": {
     "55": [
       "[New] Add `isSelected` method on a CurvePoint",
