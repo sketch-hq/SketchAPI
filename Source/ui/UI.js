@@ -82,14 +82,53 @@ export function getInputFromUser(messageText, options, callback) {
   let accessory
   switch (type) {
     case INPUT_TYPE.string:
-      accessory = NSTextField.alloc().initWithFrame(NSMakeRect(0, 0, 295, 25))
-      accessory.setStringValue(
-        String(
-          typeof options.initialValue === 'undefined'
-            ? ''
-            : options.initialValue
+      if (typeof options.numberOfLines !== 'undefined') {
+        // create textArea
+        const FLT_MAX = 10000000 // c library variable
+
+        accessory = NSScrollView.alloc().initWithFrame(
+          NSMakeRect(0, 0, 295, 5 + 14 * options.numberOfLines)
+          // 14 for each line plus a little more to account for contentView inset
         )
-      )
+        const contentSize = accessory.contentSize()
+        accessory.setHasVerticalScroller(true)
+        accessory.setHasHorizontalScroller(false)
+        // eslint-disable-next-line no-bitwise
+        accessory.setAutoresizingMask(NSViewWidthSizable | NSViewHeightSizable)
+
+        const textView = NSTextView.alloc().initWithFrame(
+          NSMakeRect(0, 0, contentSize.width, contentSize.height)
+        )
+        textView.setMinSize(NSMakeSize(0.0, contentSize.height))
+        textView.setMaxSize(NSMakeSize(FLT_MAX, FLT_MAX))
+        textView.setVerticallyResizable(true)
+        textView.setHorizontallyResizable(false)
+        textView.setRichText(false)
+        textView.setAutoresizingMask(NSViewWidthSizable)
+        textView
+          .textContainer()
+          .setContainerSize(NSMakeSize(contentSize.width, FLT_MAX))
+        textView.textContainer().setWidthTracksTextView(true)
+
+        textView.setString(
+          String(
+            typeof options.initialValue === 'undefined'
+              ? ''
+              : options.initialValue
+          )
+        )
+        accessory.documentView = textView
+      } else {
+        // create textField
+        accessory = NSTextField.alloc().initWithFrame(NSMakeRect(0, 0, 295, 25))
+        accessory.setStringValue(
+          String(
+            typeof options.initialValue === 'undefined'
+              ? ''
+              : options.initialValue
+          )
+        )
+      }
       dialog.window().setInitialFirstResponder(accessory)
       break
     // case INPUT_TYPE.number:
@@ -166,7 +205,19 @@ export function getInputFromUser(messageText, options, callback) {
 
   switch (type) {
     case INPUT_TYPE.string:
-      callback(null, String(accessory.stringValue()))
+      if (typeof options.numberOfLines !== 'undefined') {
+        callback(
+          null,
+          String(
+            accessory
+              .documentView()
+              .textStorage()
+              .string()
+          )
+        )
+      } else {
+        callback(null, String(accessory.stringValue()))
+      }
       return
     // case INPUT_TYPE.number:
     //   return Number(accessory.stringValue())
@@ -196,6 +247,7 @@ export function getInputFromUser(messageText, options, callback) {
  * @return The string that the user input.
  */
 export function getStringFromUser(msg, initial) {
+  // eslint-disable-next-line no-console
   console.warn(
     `\`UI.getStringFromUser(message, initialValue)\` is deprecated.
 Use \`UI.getInputFromUser(
@@ -230,6 +282,7 @@ Use \`UI.getInputFromUser(
  * @return An array with three items: [responseCode, selection, ok].
  */
 export function getSelectionFromUser(msg, items, selectedItemIndex = 0) {
+  // eslint-disable-next-line no-console
   console.warn(
     `\`UI.getSelectionFromUser(message, items, selectedItemIndex)\` is deprecated.
 Use \`UI.getInputFromUser(

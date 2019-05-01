@@ -92,6 +92,7 @@ Shows a simple input sheet which displays a message, and asks for an input from 
 | option.type<span class="arg-type">[Input Type](#uiinput_type)</span>                    | The type of the input.                                                                                                                                                                   |
 | option.initialValue<span class="arg-type">string / number</span>                        | The initial value of the input.   |
 | option.possibleValues<span class="arg-type">string[] - required with a selection</span> | The possible choices that the user can make. Only used for a `selection` input.                                                                                                          |
+| option.numberOfLines<span class="arg-type">number</span> | Controls the height of the input field. Only used for a `string` input. If a value is provided it converts the textfield into a scrollable textarea.                                                                                                      |
 | callback<span class="arg-type">function</span>                                          | A function called after the user entered the input. It is called with an `Error` if the user canceled the input and a `string` or `number` depending on the input type (or `undefined`). |
 
 <!--

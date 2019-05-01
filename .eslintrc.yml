@@ -161,6 +161,11 @@ globals:
   CGPathGetBoundingBox: false
   MSShapeEventHandler: false
   NSIndexPath: false
+  NSScrollView: false
+  NSViewWidthSizable: false
+  NSViewHeightSizable: false
+  NSTextView: false
+  NSMakeSize: false
   NSPopUpButton: false
 
 rules:
