@@ -16,7 +16,8 @@
     "[New] Add `getFrame` method on an Override",
     "[New] add `sketch.globalAssets` property",
     "[Improved] `layer.index` can now be set",
-    "[New] Add `isSelected` method on a CurvePoint"
+    "[New] Add `isSelected` method on a CurvePoint",
+    "[Improved] Added multiline functionality to string inputs on `UI.getInputFromUser`"
   ],
   "releases": {
     "53.1": ["[Fixed] Setting mutable colors where it should"],
