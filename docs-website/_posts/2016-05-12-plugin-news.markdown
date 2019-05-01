@@ -33,7 +33,7 @@ We have posted [some documentation](/reference/action/) and [example Plugins](ht
 
 We want to make it clear at this point that this is version 1.0 of action support, and more will follow. We are aware that there are some inconsistencies with the way it works right now, and not all the things a user can do will be available to begin with. It's also worth saying that some things may never be available as actions, for performance reasons.
 
-Even having said that though, this feature should greatly expand the range of things that Plugins can usefully do, and we look forward to seeing what you do with it. Please [send us feedback](mailto:mail@sketchapp.com) on how it works for you, and what you’d like to see change.
+Even having said that though, this feature should greatly expand the range of things that Plugins can usefully do, and we look forward to seeing what you do with it. Please [send us feedback](mailto:mail@sketch.com) on how it works for you, and what you’d like to see change.
 
 ## Scripting API
 
@@ -43,4 +43,4 @@ The intention with this is to make a smaller, more stable set of functionality a
 
 Version 3.8 does contain a slightly updated version of this, but we don’t consider it ready for prime-time, and it isn’t documented properly. The design of the API also definitely isn’t stable at this point, and we don’t recommend using it yet as the names of classes and methods are likely to change.
 
-Consider this an early warning that it is coming, and again, please [send us feedback](mailto:mail@sketchapp.com) on how you’d like to see it work.
+Consider this an early warning that it is coming, and again, please [send us feedback](mailto:mail@sketch.com) on how you’d like to see it work.

@@ -3,7 +3,7 @@
 // Source code -
 // [GitHub](https://github.com/BohemianCoding/SketchAPI/tree/develop/examples/svgo-export)
 // If you have questions, comments or any feedback, file an issue on Github or
-// ping us at <developer@sketchapp.com>!
+// ping us at <developer@sketch.com>!
 
 // we will need to call an executable
 const { execSync } = require('@skpm/child_process')

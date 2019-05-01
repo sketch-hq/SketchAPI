@@ -28,7 +28,7 @@ StyledLayer.define('style', {
     if (isNativeObject(style)) {
       this._object.style = style.copy()
     } else if (!style || !style.sketchObject) {
-      this._object.style = new Style(style).sketchObject
+      this._object.style = new Style(style, this.type).sketchObject
     } else {
       this._object.style = style.sketchObject.copy()
     }

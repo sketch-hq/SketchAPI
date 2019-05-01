@@ -63,7 +63,7 @@ A method to get the Symbols Page of a Document.
 
 #### Returns
 
-Return a [Page](#page) or `null` if there is no Symbols Page yet.
+Return a [Page](#page) or `undefined` if there is no Symbols Page yet.
 
 ### Create the Symbols Page
 

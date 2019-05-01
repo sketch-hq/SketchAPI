@@ -1,7 +1,7 @@
 /* globals expect, test */
 import { isRunningOnJenkins } from '../../../test-utils'
 import { CurvePoint } from '../CurvePoint'
-import { Document, Shape } from '../..'
+import { Document, ShapePath } from '../..'
 
 test('should be able to log an CurvePoint', () => {
   const curvePoint = new CurvePoint()
@@ -50,10 +50,10 @@ test('should be able to modify a CurvePoint', () => {
   })
 })
 
-if (isRunningOnJenkins()) {
+if (!isRunningOnJenkins()) {
   test('should show if a point is selected', () => {
     const document = new Document()
-    const shape = new Shape({
+    const shape = new ShapePath({
       parent: document.selectedPage,
     })
     expect(shape.points[0].isSelected()).toBe(false)

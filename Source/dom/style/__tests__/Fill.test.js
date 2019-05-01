@@ -28,6 +28,17 @@ test('should set the fills', () => {
     ],
   })
   expect(style3.sketchObject.fills().count()).toBe(2)
+
+  // should still work with `Fill.type`
+  const style4 = new Style({
+    fills: [
+      {
+        color: '#1234',
+        fill: Style.FillType.Color,
+      },
+    ],
+  })
+  expect(style4.sketchObject.fills().count()).toBe(1)
 })
 
 test('should get the fills', () => {
@@ -36,7 +47,7 @@ test('should get the fills', () => {
   expect(style.fills.map(f => f.toJSON())).toEqual([
     {
       color: '#11223344',
-      fill: 'Color',
+      fillType: 'Color',
       enabled: true,
       gradient: {
         gradientType: 'Linear',
@@ -49,11 +60,10 @@ test('should get the fills', () => {
         ],
       },
       pattern: { patternType: 'Fill', image: null, tileScale: 1 },
-      noise: { noiseType: 'Original', intensity: 0 },
     },
     {
       color: '#11223344',
-      fill: 'Color',
+      fillType: 'Color',
       enabled: true,
       gradient: {
         gradientType: 'Linear',
@@ -66,7 +76,6 @@ test('should get the fills', () => {
         ],
       },
       pattern: { patternType: 'Fill', image: null, tileScale: 1 },
-      noise: { noiseType: 'Original', intensity: 0 },
     },
   ])
 })
@@ -75,7 +84,7 @@ test('should set the pattern', () => {
   const style = new Style()
   style.fills = [
     {
-      fill: 'Pattern',
+      fillType: 'Pattern',
       pattern: {
         patternType: 'Fit',
         image: {
@@ -89,20 +98,4 @@ test('should set the pattern', () => {
   expect(style.fills[0].pattern.patternType).toBe('Fit')
   expect(style.fills[0].pattern.tileScale).toBe(2)
   expect(style.fills[0].pattern.image.type).toBe('ImageData')
-})
-
-test('should set the noise', () => {
-  const style = new Style()
-  style.fills = [
-    {
-      fill: 'Noise',
-      noise: {
-        noiseType: 'Black',
-        intensity: 1,
-      },
-    },
-  ]
-  expect(style.fills[0].fill).toBe('Noise')
-  expect(style.fills[0].noise.noiseType).toBe('Black')
-  expect(style.fills[0].noise.intensity).toBe(1)
 })

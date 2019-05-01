@@ -32,7 +32,7 @@ export function getSelectedDocument() {
   }
 
   // skpm will define context as a global so let's use that if available
-  if (typeof context !== 'undefined') {
+  if (!nativeDocument && typeof context !== 'undefined') {
     /* eslint-disable no-undef */
     nativeDocument =
       context.actionContext && context.actionContext.document
@@ -43,7 +43,11 @@ export function getSelectedDocument() {
 
   // if there is no current document, let's just try to pick the first one
   if (!nativeDocument) {
-    ;[nativeDocument] = NSApplication.sharedApplication().orderedDocuments()
+    const documents = toArray(
+      NSApplication.sharedApplication().orderedDocuments()
+    ).filter(d => d.isKindOfClass(MSDocument.class()))
+    // eslint-disable-next-line prefer-destructuring
+    nativeDocument = documents[0]
   }
   if (!nativeDocument) {
     return undefined
@@ -622,162 +626,133 @@ Document.define('gradients', {
   },
 })
 
-Document.define('sharedLayerStyles', {
-  array: true,
-  get() {
-    if (!this._object) {
-      return []
-    }
-    const documentData = this._getMSDocumentData()
-    return toArray(documentData.allLayerStyles()).map(wrapObject)
-  },
-  set(sharedLayerStyles) {
-    if (this.isImmutable()) {
-      return
-    }
-    const documentData = this._getMSDocumentData()
-    const container = documentData.sharedObjectContainerOfType(1)
-
-    // remove the existing shared styles
-    container.removeAllSharedObjects()
-
-    container.addSharedObjects(
-      toArray(sharedLayerStyles).map(item => {
-        let sharedStyle
-
-        if (isWrappedObject(item)) {
-          sharedStyle = item.sketchObject
-        } else if (isNativeObject(item)) {
-          sharedStyle = item
-        } else {
-          const wrappedStyle = wrapObject(item.style, Types.Style)
-
-          sharedStyle = MSSharedStyle.alloc().initWithName_style(
-            item.name,
-            wrappedStyle.sketchObject
-          )
-        }
-        return sharedStyle
-      })
-    )
-  },
-  insertItem(item, index) {
-    if (this.isImmutable()) {
-      return undefined
-    }
-
-    const documentData = this._getMSDocumentData()
-
-    let sharedStyle
-
+function isLocalSharedStyle(libraryController) {
+  return item => {
     if (isWrappedObject(item)) {
-      sharedStyle = item.sketchObject
-    } else if (isNativeObject(item)) {
-      sharedStyle = item
-    } else {
-      const wrappedStyle = wrapObject(item.style, Types.Style)
-
-      sharedStyle = MSSharedStyle.alloc().initWithName_style(
-        item.name,
-        wrappedStyle.sketchObject
+      return (
+        !libraryController.libraryForShareableObject(item.sketchObject) &&
+        !item.sketchObject.foreignObject()
       )
     }
-
-    const container = documentData.sharedObjectContainerOfType(1)
-
-    container.insertSharedObject_atIndex(sharedStyle, index)
-
-    return new SharedStyle({ sketchObject: sharedStyle })
-  },
-  removeItem(index) {
-    if (this.isImmutable()) {
-      return undefined
-    }
-    const documentData = this._getMSDocumentData()
-    const container = documentData.sharedObjectContainerOfType(1)
-
-    const removed = documentData.allLayerStyles()[index]
-    container.removeSharedObjectAtIndex(index)
-    return wrapObject(removed, Types.SharedStyle)
-  },
-})
-
-Document.define('sharedTextStyles', {
-  array: true,
-  get() {
-    if (!this._object) {
-      return []
-    }
-    const documentData = this._getMSDocumentData()
-    return toArray(documentData.allTextStyles()).map(wrapObject)
-  },
-  set(sharedLayerStyles) {
-    if (this.isImmutable()) {
-      return
-    }
-    const documentData = this._getMSDocumentData()
-    const container = documentData.sharedObjectContainerOfType(2)
-
-    // remove the existing shared styles
-    container.removeAllSharedObjects()
-
-    container.addSharedObjects(
-      toArray(sharedLayerStyles).map(item => {
-        let sharedStyle
-
-        if (isWrappedObject(item)) {
-          sharedStyle = item.sketchObject
-        } else if (isNativeObject(item)) {
-          sharedStyle = item
-        } else {
-          const wrappedStyle = wrapObject(item.style, Types.Style)
-
-          sharedStyle = MSSharedStyle.alloc().initWithName_style(
-            item.name,
-            wrappedStyle.sketchObject
-          )
-        }
-        return sharedStyle
-      })
-    )
-  },
-  insertItem(item, index) {
-    if (this.isImmutable()) {
-      return undefined
-    }
-
-    const documentData = this._getMSDocumentData()
-
-    let sharedStyle
-
-    if (isWrappedObject(item)) {
-      sharedStyle = item.sketchObject
-    } else if (isNativeObject(item)) {
-      sharedStyle = item
-    } else {
-      const wrappedStyle = wrapObject(item.style, Types.Style)
-
-      sharedStyle = MSSharedStyle.alloc().initWithName_style(
-        item.name,
-        wrappedStyle.sketchObject
+    if (isNativeObject(item)) {
+      return (
+        !!libraryController.libraryForShareableObject(item) &&
+        !!item.foreignObject()
       )
     }
+    return true
+  }
+}
 
-    const container = documentData.sharedObjectContainerOfType(2)
+function sharedStyleDescriptor(type) {
+  const config = {
+    localStyles: type === 'layer' ? 'layerStyles' : 'layerTextStyles',
+    foreignStyles:
+      type === 'layer' ? 'foreignLayerStyles' : 'foreignTextStyles',
+    type: type === 'layer' ? 1 : 2,
+  }
 
-    container.insertSharedObject_atIndex(sharedStyle, index)
+  return {
+    array: true,
+    get() {
+      if (!this._object) {
+        return []
+      }
+      const documentData = this._getMSDocumentData()
+      const localStyles = toArray(documentData[config.localStyles]().objects())
+      const foreignStyles = toArray(documentData[config.foreignStyles]()).map(
+        foreign => foreign.localSharedStyle()
+      )
+      return foreignStyles.concat(localStyles).map(wrapObject)
+    },
+    set(sharedLayerStyles) {
+      if (this.isImmutable()) {
+        return
+      }
+      const documentData = this._getMSDocumentData()
+      const container = documentData.sharedObjectContainerOfType(config.type)
 
-    return new SharedStyle({ sketchObject: sharedStyle })
-  },
-  removeItem(index) {
-    if (this.isImmutable()) {
-      return undefined
-    }
-    const documentData = this._getMSDocumentData()
-    const container = documentData.sharedObjectContainerOfType(2)
+      // remove the existing shared styles
+      container.removeAllSharedObjects()
 
-    const removed = documentData.allTextStyles()[index]
-    container.removeSharedObjectAtIndex(index)
-    return wrapObject(removed, Types.SharedStyle)
-  },
-})
+      const libraryController = AppController.sharedInstance().librariesController()
+
+      container.addSharedObjects(
+        toArray(sharedLayerStyles)
+          .filter(isLocalSharedStyle(libraryController))
+          .map(item => {
+            let sharedStyle
+
+            if (isWrappedObject(item)) {
+              sharedStyle = item.sketchObject
+            } else if (isNativeObject(item)) {
+              sharedStyle = item
+            } else {
+              const wrappedStyle = wrapObject(item.style, Types.Style)
+
+              sharedStyle = MSSharedStyle.alloc().initWithName_style(
+                item.name,
+                wrappedStyle.sketchObject
+              )
+            }
+            return sharedStyle
+          })
+      )
+    },
+    insertItem(item, index) {
+      if (this.isImmutable()) {
+        return undefined
+      }
+
+      const documentData = this._getMSDocumentData()
+
+      const realIndex = Math.max(
+        index - documentData[config.foreignStyles]().length,
+        0
+      )
+
+      let sharedStyle
+
+      if (isWrappedObject(item)) {
+        sharedStyle = item.sketchObject
+      } else if (isNativeObject(item)) {
+        sharedStyle = item
+      } else {
+        const wrappedStyle = wrapObject(item.style, Types.Style)
+
+        sharedStyle = MSSharedStyle.alloc().initWithName_style(
+          item.name,
+          wrappedStyle.sketchObject
+        )
+      }
+
+      const container = documentData.sharedObjectContainerOfType(config.type)
+
+      container.insertSharedObject_atIndex(sharedStyle, realIndex)
+
+      return new SharedStyle({ sketchObject: sharedStyle })
+    },
+    removeItem(index) {
+      if (this.isImmutable()) {
+        return undefined
+      }
+      const documentData = this._getMSDocumentData()
+
+      const realIndex = index - documentData[config.foreignStyles]().length
+
+      if (realIndex < 0) {
+        console.log('Cannot remove a foreign shared style')
+        return undefined
+      }
+
+      const container = documentData.sharedObjectContainerOfType(config.type)
+
+      const removed = container.objects()[realIndex]
+      container.removeSharedObjectAtIndex(realIndex)
+      return wrapObject(removed, Types.SharedStyle)
+    },
+  }
+}
+
+Document.define('sharedLayerStyles', sharedStyleDescriptor('layer'))
+Document.define('sharedTextStyles', sharedStyleDescriptor('text'))

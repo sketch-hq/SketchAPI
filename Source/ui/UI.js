@@ -177,11 +177,10 @@ export function getInputFromUser(messageText, options, callback) {
           'When the input type is `selection`, you need to provide the array of possible choices.'
         )
       }
-      accessory = NSComboBox.alloc().initWithFrame(NSMakeRect(0, 0, 295, 25))
-      accessory.addItemsWithObjectValues(options.possibleValues)
+      accessory = NSPopUpButton.alloc().initWithFrame(NSMakeRect(0, 0, 295, 25))
+      accessory.addItemsWithTitles(options.possibleValues)
       const initialIndex = options.possibleValues.indexOf(options.initialValue)
       accessory.selectItemAtIndex(initialIndex !== -1 ? initialIndex : 0)
-      accessory.editable = false
       break
     }
     default:

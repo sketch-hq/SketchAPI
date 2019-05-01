@@ -5,7 +5,7 @@ section: layers
 ---
 
 ```javascript
-var Shape = require('sketch/dom').Shape
+var ShapePath = require('sketch/dom').ShapePath
 ```
 
 A shape path layer. It is an instance of [Layer](#layer) so all the methods defined there are available.
@@ -32,11 +32,11 @@ A shape path layer. It is an instance of [Layer](#layer) so all the methods defi
 ```javascript
 const shapePath = new ShapePath({
   name: 'my shape path',
-  shapePath: ShapePath.ShapeType.Oval,
+  shapeType: ShapePath.ShapeType.Oval,
 })
 ```
 
-You can only set the `shapePath` when creating a new one. Once it is created, the `shapePath` is read-only. If it is not specified, it will default to ShapePath.ShapeType.Rectangle
+You can only set the `shapeType` when creating a new one. Once it is created, the `shapeType` is read-only. If it is not specified and you do not specify any `points`, it will default to `ShapePath.ShapeType.Rectangle` (if you do specify some `points`, it will default to `ShapePath.ShapeType.Custom`).
 
 ```javascript
 const shapePath = ShapePath.fromSVGPath('M10 10 H 90 V 90 H 10 L 10 10')

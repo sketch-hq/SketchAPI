@@ -10,19 +10,16 @@ export const FillTypeMap = {
   Color: 0, // A solid fill/border.
   Gradient: 1, // A gradient fill/border.
   Pattern: 4, // A pattern fill/border.
-  Noise: 5, // A noise fill/border.
 }
 
 export const FillType = {
   Color: 'Color', // A solid fill/border.
   Gradient: 'Gradient', // A gradient fill/border.
   Pattern: 'Pattern', // A pattern fill/border.
-  Noise: 'Noise', // A noise fill/border.
   /* @deprecated */
   color: 'Color', // A solid fill/border.
   gradient: 'Gradient', // A gradient fill/border.
   pattern: 'Pattern', // A pattern fill/border.
-  noise: 'Noise', // A noise fill/border.
 }
 
 export const PatternFillTypeMap = {
@@ -37,20 +34,6 @@ export const PatternFillType = {
   Fill: 'Fill',
   Stretch: 'Stretch',
   Fit: 'Fit',
-}
-
-export const NoiseTypeMap = {
-  Original: 0,
-  Black: 1,
-  White: 2,
-  Color: 3,
-}
-
-export const NoiseType = {
-  Original: 'Original',
-  Black: 'Black',
-  White: 'White',
-  Color: 'Color',
 }
 
 export class Fill extends WrappedObject {
@@ -74,20 +57,6 @@ export class Fill extends WrappedObject {
       fill.gradient = gradient._object
     }
 
-    if (value.noise) {
-      if (typeof value.noise.noiseType !== 'undefined') {
-        const noiseTypeMapped = NoiseTypeMap[value.noise.noiseType]
-        fill.setNoiseIndex(
-          typeof noiseTypeMapped !== 'undefined'
-            ? noiseTypeMapped
-            : value.noise.noiseType || NoiseTypeMap.Original
-        )
-      }
-      if (typeof value.noise.intensity !== 'undefined') {
-        fill.setNoiseIntensity(value.noise.intensity)
-      }
-    }
-
     if (value.pattern) {
       if (typeof value.pattern.patternType !== 'undefined') {
         const patternTypeMapped = PatternFillTypeMap[value.pattern.patternType]
@@ -106,11 +75,11 @@ export class Fill extends WrappedObject {
       }
     }
 
-    const fillType = FillTypeMap[value.fill]
+    const fillType = FillTypeMap[value.fillType || value.fill]
     fill.fillType =
       typeof fillType !== 'undefined'
         ? fillType
-        : value.fill || FillTypeMap.Color
+        : value.fillType || value.fill || FillTypeMap.Color
 
     if (typeof value.enabled === 'undefined') {
       fill.isEnabled = true
@@ -133,7 +102,20 @@ Fill.define('sketchObject', {
   },
 })
 
+// deprecated in favor of `fillType` for consistency
 Fill.define('fill', {
+  exportable: false,
+  enumerable: false,
+  importable: false,
+  get() {
+    return this.fillType
+  },
+  set(fillType) {
+    this.fillType = fillType
+  },
+})
+
+Fill.define('fillType', {
   get() {
     return (
       Object.keys(FillTypeMap).find(
@@ -202,34 +184,6 @@ Fill.defineObject('pattern', {
     },
     set(scale) {
       this._object.setPatternTileScale(scale)
-    },
-  },
-})
-
-Fill.defineObject('noise', {
-  noiseType: {
-    get() {
-      return (
-        Object.keys(NoiseTypeMap).find(
-          key => NoiseTypeMap[key] === this._object.noiseIndex()
-        ) || this._object.noiseIndex()
-      )
-    },
-    set(noiseType) {
-      const noiseTypeMapped = NoiseTypeMap[noiseType]
-      this._object.setNoiseIndex(
-        typeof noiseTypeMapped !== 'undefined'
-          ? noiseTypeMapped
-          : noiseType || NoiseTypeMap.Original
-      )
-    },
-  },
-  intensity: {
-    get() {
-      return Number(this._object.noiseIntensity())
-    },
-    set(intensity) {
-      this._object.setNoiseIntensity(intensity)
     },
   },
 })

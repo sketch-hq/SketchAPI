@@ -1,5 +1,5 @@
 root: true
-parser: typescript-eslint-parser
+parser: '@typescript-eslint/parser'
 extends:
   - airbnb-base
   - prettier
@@ -166,6 +166,7 @@ globals:
   NSViewHeightSizable: false
   NSTextView: false
   NSMakeSize: false
+  NSPopUpButton: false
 
 rules:
   ###########

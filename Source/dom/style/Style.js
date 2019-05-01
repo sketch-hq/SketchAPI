@@ -8,7 +8,7 @@ import { colorFromString, colorToString } from './Color'
 import { Shadow } from './Shadow'
 import { BorderOptions, Arrowhead, LineEnd, LineJoin } from './BorderOptions'
 import { Blur, BlurType } from './Blur'
-import { Fill, FillType, PatternFillType, NoiseType } from './Fill'
+import { Fill, FillType, PatternFillType } from './Fill'
 import { Border, BorderPosition } from './Border'
 import { defineTextStyleProperties } from './Text'
 
@@ -77,12 +77,17 @@ export class Style extends WrappedObject {
    *                              If `sketchObject` is provided, will wrap it.
    *                              Otherwise, creates a new native object.
    */
-  constructor(style = {}) {
+  constructor(style = {}, parentType) {
     if (!style.sketchObject) {
-      // eslint-disable-next-line no-param-reassign
+      /* eslint-disable no-param-reassign */
       style = Object.assign({}, DEFAULT_STYLE, style)
-      // eslint-disable-next-line no-param-reassign
+
       style.sketchObject = MSDefaultStyle.defaultStyle()
+      if (parentType === Types.Text) {
+        style.sketchObject.textStyle = MSTextStyle.alloc().init()
+        style.sketchObject.textStyle().attributes = MSDefaultTextStyle.defaultTextStyle()
+      }
+      /* eslint-enable no-param-reassign */
     }
 
     super(style)
@@ -196,7 +201,6 @@ Style.define('blur', {
 
 Style.FillType = FillType
 Style.PatternFillType = PatternFillType
-Style.NoiseType = NoiseType
 Style.define('fills', {
   array: true,
   get() {
