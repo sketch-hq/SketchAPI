@@ -26,7 +26,7 @@ For network, I/O operations and other operations there are Node.js compatible po
 - [`timers`](https://github.com/skpm/timers)
 - [`util`](https://github.com/skpm/util)
 
-You can find all the official polyfills [on Github](https://github.com/search?q=topic%3Apolyfill+org%3Askpm&type=Repositories).
+You can find all the official polyfills [on GitHub](https://github.com/search?q=topic%3Apolyfill+org%3Askpm&type=Repositories).
 
 > To see which modules are installed for a specific Sketch version, head to [`core-modules/package.json`](https://github.com/BohemianCoding/SketchAPI/blob/develop/core-modules/package.json) within the Sketch API and select the release branch for the version e.g. `release/53.2`.
 

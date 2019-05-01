@@ -23,7 +23,7 @@ order: 400
         - name, type: String (can be null)
         - gradient, type: [Gradient](https://developer.sketchapp.com/reference/api/#gradient)
 
-#### Github PRs
+#### GitHub PRs
 - [https://github.com/BohemianCoding/SketchAPI/pull/345](https://github.com/BohemianCoding/SketchAPI/pull/345)
 - [https://github.com/BohemianCoding/SketchAPI/pull/398](https://github.com/BohemianCoding/SketchAPI/pull/398)
 
@@ -147,7 +147,7 @@ let documentGradients = selectedDocument.gradients
     - `sharedLayerStyles`
     - `sharedTextStyles`
 
-#### Github PR
+#### GitHub PR
 - [https://github.com/BohemianCoding/SketchAPI/pull/360/files](https://github.com/BohemianCoding/SketchAPI/pull/360/files)
 
 #### Usage
@@ -217,7 +217,7 @@ selectedDocument.sharedTextStyles.push({
 #### More Details
 You can set the index of the layer to move it in the hierarchy. Note that you also have `layer.moveToFront()`, `layer.moveForward()`, `layer.moveToBack()`, and `layer.moveBackward()`
 
-#### Github PR
+#### GitHub PR
 - [https://github.com/BohemianCoding/SketchAPI/pull/399](https://github.com/BohemianCoding/SketchAPI/pull/399)
 
 #### Usage
@@ -252,7 +252,7 @@ console.log(group1.index, group2.index, group3.index)
 #### More Details
 When the gradient is `Radial`, the `from` and `to` points makes one axis of the ellipse of the gradient while the aspect ratio determines the length of the orthogonal axis (`aspectRatio === 1` means that it’s a circle).
 
-#### Github PR
+#### GitHub PR
 - [https://github.com/BohemianCoding/SketchAPI/pull/396](https://github.com/BohemianCoding/SketchAPI/pull/396)
 
 #### Usage
@@ -298,7 +298,7 @@ let myShape = new ShapePath({
 #### More Details
 The frame of an override can be different than the frame of its affected Layer in case where the Symbol Instance has been scaled or, in the case of the example below, the text value is changed for the symbol instance resulting in a shorter frame.
 
-#### Github PR
+#### GitHub PR
 - [https://github.com/BohemianCoding/SketchAPI/pull/394](https://github.com/BohemianCoding/SketchAPI/pull/394)
 
 #### Usage
@@ -357,7 +357,7 @@ symbolInstance.overrides[0].getFrame().width
 #### More Details
 Previously you needed to have a parent in order to duplicate the layer. Now you are free to do so without working around this.
 
-#### Github PR
+#### GitHub PR
 - [https://github.com/BohemianCoding/SketchAPI/pull/379](https://github.com/BohemianCoding/SketchAPI/pull/379)
 
 #### Usage
@@ -395,7 +395,7 @@ rectangle2.parent = page
 #### More Details
 If you ever got an `MSImmutableSymbolInstance` object and attempted to wrap the native sketch object then you would have previously gotten an error. It has now been fixed.
 
-#### Github PR
+#### GitHub PR
 - [https://github.com/BohemianCoding/SketchAPI/pull/390](https://github.com/BohemianCoding/SketchAPI/pull/390)
 
 
@@ -405,7 +405,7 @@ If you ever got an `MSImmutableSymbolInstance` object and attempted to wrap the 
 #### More Details
 Previously you couldn't remove a flow target. Now you can!
 
-#### Github PR
+#### GitHub PR
 - [https://github.com/BohemianCoding/SketchAPI/pull/373](https://github.com/BohemianCoding/SketchAPI/pull/373)
 
 #### Usage
@@ -445,7 +445,7 @@ rect.flow = undefined
 #### More Details
 - Previously this also applied to the `noise` property as well but Sketch has depreciated the noise fill option in favor of having the noise patterns be image fills.
 
-#### Github PR
+#### GitHub PR
 - [https://github.com/BohemianCoding/SketchAPI/pull/363](https://github.com/BohemianCoding/SketchAPI/pull/363)
 
 #### Usage
@@ -490,7 +490,7 @@ let rectangle = new ShapePath({
 #### More Details
 This change helps with the next one (Export now returns a buffer if output is false)
 
-#### Github PR
+#### GitHub PR
 - [https://github.com/BohemianCoding/SketchAPI/pull/372](https://github.com/BohemianCoding/SketchAPI/pull/372)
 
 
@@ -513,7 +513,7 @@ The method returns
 - a `Buffer` if `objectToExport` is a single item and `options.formats` is an image format
 - an `Object` if `objectToExport` is a single item and `options.formats` is json
 
-#### Github PR
+#### GitHub PR
 - [https://github.com/BohemianCoding/SketchAPI/pull/361](https://github.com/BohemianCoding/SketchAPI/pull/361)
 
 #### Usage
@@ -549,7 +549,7 @@ const buffer = sketch.export(rectangle, options)
 #### More Details
 If you are using [SKPM](https://github.com/skpm/skpm), SKPM defines `context` as a global so it will prefer to use that first. If there is no current document (via `NSDocumentController.sharedDocumentController().currentDocument()` then Sketch will attempt to use `NSApplication.sharedApplication().orderedDocuments()`. Ultimately, you don't really need to know too much about these underlying changes but it is useful to know that `.getSelectedDocument()` should work reliabily. If its not, be sure to file an issue.
 
-#### Github PR
+#### GitHub PR
 - [https://github.com/BohemianCoding/SketchAPI/pull/363](https://github.com/BohemianCoding/SketchAPI/pull/363)
 
 
@@ -567,7 +567,7 @@ Use `console.clear()` to clean up your console.
 #### More Details
 Previously these were read-only properties. However, now you can pass in a layer or a page to these objects to set them.
 
-#### Github PR
+#### GitHub PR
 - [https://github.com/BohemianCoding/SketchAPI/pull/371](https://github.com/BohemianCoding/SketchAPI/pull/371)
 
 #### Usage
@@ -627,7 +627,7 @@ Adds a few methods on `Page`
 - `isSymbolsPage()`
     - Returns a `boolean`
 
-#### Github PR
+#### GitHub PR
 - [https://github.com/BohemianCoding/SketchAPI/pull/377](https://github.com/BohemianCoding/SketchAPI/pull/377)
 
 #### Usage

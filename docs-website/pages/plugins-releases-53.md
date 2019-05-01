@@ -16,7 +16,7 @@ order: 401
 #### More Details
 - Previously when you used `library.getDocument()` the path of the Document would be undefined. It's now set correctly.
 
-#### Github PR
+#### GitHub PR
 -  [https://github.com/BohemianCoding/SketchAPI/pull/265](https://github.com/BohemianCoding/SketchAPI/pull/265)
 
 
@@ -32,7 +32,7 @@ order: 401
     - `webp`
     - `svg`
 
-#### Github PR
+#### GitHub PR
 - [https://github.com/BohemianCoding/SketchAPI/pull/280/files](https://github.com/BohemianCoding/SketchAPI/pull/280/files)
 
 #### Usage
@@ -75,7 +75,7 @@ console.log(layer)
 #### More Details
 - Sketch has 2 themes: `light` and `dark`. If your plugin has some custom UI, it should support both as well.
 
-#### Github PR
+#### GitHub PR
 - [https://github.com/BohemianCoding/SketchAPI/pull/303](https://github.com/BohemianCoding/SketchAPI/pull/303)
 
 #### Usage
@@ -113,7 +113,7 @@ layer.exportFormats = [{size: '2x'}]
     - `UI.getSelectionFromUser(message, items, selectedItemIndex)`
 - Bonus: `Slider`, `Number`, `Color`, and `Path` inputs are coming soon
 
-#### Github PR
+#### GitHub PR
 [https://github.com/BohemianCoding/SketchAPI/pull/276/files](https://github.com/BohemianCoding/SketchAPI/pull/276/files)
 
 #### Usage
@@ -153,7 +153,7 @@ UI.getInputFromUser(
 - You can use `getParentPage()`, `getParentArtboard()`, `getParentSymbolMaster()`, and `getParentShape()` to quickly access higher level components
 - Note that you can also use the `parent` property on _Layer_ to go up the layer structure.
 
-#### Github PR
+#### GitHub PR
 - [https://github.com/BohemianCoding/SketchAPI/pull/284](https://github.com/BohemianCoding/SketchAPI/pull/284)
 
 #### Usage
@@ -185,10 +185,10 @@ document.parent // will be undefined
         - `top`, `center`, `bottom`
     - `kerning`
         - default to `null` if there is none set
-        - _(there was an a floating point issue with the returned values but its been fixed here_ [Github PR](https://github.com/BohemianCoding/SketchAPI/pull/322)_)_
+        - _(there was an a floating point issue with the returned values but its been fixed here_ [GitHub PR](https://github.com/BohemianCoding/SketchAPI/pull/322)_)_
     - `lineHeight`
         - defaults to `null` if nothing is set
-        - You can get the default line height from the method `getDefaultLineHeight()` ([Github PR](https://github.com/BohemianCoding/SketchAPI/pull/318))
+        - You can get the default line height from the method `getDefaultLineHeight()` ([GitHub PR](https://github.com/BohemianCoding/SketchAPI/pull/318))
     - `textColor`
         - note that it can set in various formats `#000`, `#000000`, and the opacity variant `#000000FF`
     - `fontSize`
@@ -217,7 +217,7 @@ document.parent // will be undefined
         - setting this property to `double dot` or `dot double` will both return `double dot` if you later read it
         - setting this property to `none` will return `undefined` if you later read it
 
-#### Github PR
+#### GitHub PR
 - [https://github.com/BohemianCoding/SketchAPI/pull/283](https://github.com/BohemianCoding/SketchAPI/pull/283)
 
 #### Usage
@@ -259,7 +259,7 @@ text.style
 - Session variables let you store a value which is persisted when the plugin finishes to run but is _not_ persisted when Sketch closes. It is useful when you want to keep a value between plugin's runs.
 - Note that you still have `setSettingForKey` which will let you store things after closing Sketch.
 
-#### Github PR
+#### GitHub PR
 - [https://github.com/BohemianCoding/SketchAPI/pull/302](https://github.com/BohemianCoding/SketchAPI/pull/302)
 
 #### Usage
@@ -288,7 +288,7 @@ Settings.sessionVariable('myVar')
 - You can make one by `const slice = new Slice({ name: 'Test' })`
 - You can also pass in _exportFormats_ and a parent to tie it to a layer or object
 
-#### Github PR
+#### GitHub PR
 - [https://github.com/BohemianCoding/SketchAPI/pull/280/files](https://github.com/BohemianCoding/SketchAPI/pull/280/files)
 
 #### Usage
@@ -306,14 +306,14 @@ const artboard = new Slice({
 
 ### setTimeout and all the other timeout, interval, immediate methods are now available directly, no need to polyfill them.
 
-#### Github PR
+#### GitHub PR
 - [https://github.com/BohemianCoding/SketchAPI/pull/279/files](https://github.com/BohemianCoding/SketchAPI/pull/279/files) _( This is the probably the PR however the diff seems to be about fixing an issue with fragments_ 🤔_)_
 
 ### A useful new method on the _path_ module to get resources in the plugin bundle
 #### More Details
 -  `require('path').resourcePath(string)`  returns the path to a resource in the plugin bundle or `undefined` if it doesn't exist.
 
-#### Github PR
+#### GitHub PR
 - [https://github.com/BohemianCoding/SketchAPI/pull/295](https://github.com/BohemianCoding/SketchAPI/pull/295)
 
 
@@ -323,7 +323,7 @@ const artboard = new Slice({
     -  `document`: The document where the action was triggered
     -  `layers`: An array of the layers being resized
 
-#### Github PR
+#### GitHub PR
 - [https://github.com/BohemianCoding/SketchAPI/pull/323](https://github.com/BohemianCoding/SketchAPI/pull/323)
 
 #### Usage
@@ -358,7 +358,7 @@ const artboard = new Slice({
 ```
 ### You can now control whether or not a property is `editable` for a Symbol Master override. Symbol instance overrides also have a property called `editabled`
 
-#### Github PR
+#### GitHub PR
 - [https://github.com/BohemianCoding/SketchAPI/pull/323](https://github.com/BohemianCoding/SketchAPI/pull/323)
 
 #### Usage
@@ -389,7 +389,7 @@ instance.overrides[0].editable
 
 ### Obj-C exceptions will be thrown as JS Errors which will reference the exception in their `nativeException` property
 
-#### Github PR
+#### GitHub PR
 - [https://github.com/BohemianCoding/SketchAPI/pull/324](https://github.com/BohemianCoding/SketchAPI/pull/324)
 
 ### You can now detach symbol instances recursively so that nested symbols also detach
@@ -397,7 +397,7 @@ instance.overrides[0].editable
 - `instance.detach()` will just detach the outer symbol
 - `instance.detach({recursively:true})` will detach nested symbols as well
 
-#### Github PR
+#### GitHub PR
 - [https://github.com/BohemianCoding/SketchAPI/pull/321](https://github.com/BohemianCoding/SketchAPI/pull/321)
 
 
@@ -407,7 +407,7 @@ instance.overrides[0].editable
 - These can be found under the `transform` property
 - You can set and get them as you would expect
 
-#### Github PR
+#### GitHub PR
 - [https://github.com/BohemianCoding/SketchAPI/pull/309](https://github.com/BohemianCoding/SketchAPI/pull/309)
 
 #### Usage
@@ -438,7 +438,7 @@ layer.transform.rotation
 - `background.color`
     - string, the rgba representation of the background color
 
-#### Github PR
+#### GitHub PR
 - [https://github.com/BohemianCoding/SketchAPI/pull/311](https://github.com/BohemianCoding/SketchAPI/pull/311)
 
 #### Usage
@@ -452,7 +452,7 @@ artboard
 // background: { enabled: false, includedInExport: true, color: '#ffffffff' } }
 ```
 ### `export` can now export to JSON
-#### Github PR
+#### GitHub PR
  - [https://github.com/BohemianCoding/SketchAPI/pull/306](https://github.com/BohemianCoding/SketchAPI/pull/306)
 
 #### Usage
