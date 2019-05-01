@@ -7,9 +7,13 @@ permalink: /plugins/release-54
 
 order: 400
 ---
+#### Released
+09 April, 2019 ([https://www.sketch.com/updates/#version-54](https://www.sketch.com/updates/#version-54))
+
+---
 
 ###  `colors` and `gradients` properties have been added on Document and `globalAssets`
-##### More details
+#### More details
 - `sketch.globalAssets` property was added
 - Two new asset types were added
     - `ColorAsset`
@@ -19,11 +23,11 @@ order: 400
         - name, type: String (can be null)
         - gradient, type: [Gradient](https://developer.sketchapp.com/reference/api/#gradient)
 
-##### Github PRs
+#### Github PRs
 - [https://github.com/BohemianCoding/SketchAPI/pull/345](https://github.com/BohemianCoding/SketchAPI/pull/345)
 - [https://github.com/BohemianCoding/SketchAPI/pull/398](https://github.com/BohemianCoding/SketchAPI/pull/398)
 
-##### Usage
+#### Usage
 
 ```
 var sketch = require('sketch')
@@ -75,7 +79,6 @@ globalAssets.colors.splice(1,1)
 
 // globalAssets.colors returns
 // [ { type: 'ColorAsset', name: 'white', color: '#ffffffff' } ]
-
 ```
 
 Similarily for Gradients
@@ -135,19 +138,19 @@ let documentColors = selectedDocument.colors
 let documentGradients = selectedDocument.gradients
 ```
 
----
+
 
 ### Shared styles are now `document` properties and can be mutated
 
-##### More Details
+#### More Details
 - Two new properties on `document` (try not to get them mixed up as the styles are subtly different!)
     - `sharedLayerStyles`
     - `sharedTextStyles`
 
-##### Github PR
+#### Github PR
 - [https://github.com/BohemianCoding/SketchAPI/pull/360/files](https://github.com/BohemianCoding/SketchAPI/pull/360/files)
 
-##### Usage
+#### Usage
 
 ```
 var sketch = require('sketch')
@@ -182,7 +185,6 @@ Setting a Shared Style
 var sketch = require('sketch')
 var selectedDocument = sketch.getSelectedDocument()
 
-
 // Setting a shared layer style
 selectedDocument.sharedLayerStyles = [] // remove all layer styles
 
@@ -208,17 +210,17 @@ selectedDocument.sharedTextStyles.push({
 })
 ```
 
----
+
 
 ### `layer.index` can now be set
 
-##### More Details
+#### More Details
 You can set the index of the layer to move it in the hierarchy. Note that you also have `layer.moveToFront()`, `layer.moveForward()`, `layer.moveToBack()`, and `layer.moveBackward()`
 
-##### Github PR
+#### Github PR
 - [https://github.com/BohemianCoding/SketchAPI/pull/399](https://github.com/BohemianCoding/SketchAPI/pull/399)
 
-##### Usage
+#### Usage
 
 ```
 var sketch = require('sketch')
@@ -241,20 +243,19 @@ console.log(group1.index, group2.index, group3.index)
 group1.index = 2
 console.log(group1.index, group2.index, group3.index)
 // 2 0 1
-
 ```
 
----
+
 
 ### `aspectRatio` property has been added to `Gradient`
 
-##### More Details
+#### More Details
 When the gradient is `Radial`, the `from` and `to` points makes one axis of the ellipse of the gradient while the aspect ratio determines the length of the orthogonal axis (`aspectRatio === 1` means that it’s a circle).
 
-##### Github PR
+#### Github PR
 - [https://github.com/BohemianCoding/SketchAPI/pull/396](https://github.com/BohemianCoding/SketchAPI/pull/396)
 
-##### Usage
+#### Usage
 ```
 var sketch = require('sketch')
 var ShapePath = sketch.ShapePath
@@ -290,17 +291,17 @@ let myShape = new ShapePath({
 })
 ```
 
----
+
 
 ### `selected` property and `getFrame` method have been added on an symbol override
 
-##### More Details
+#### More Details
 The frame of an override can be different than the frame of its affected Layer in case where the Symbol Instance has been scaled or, in the case of the example below, the text value is changed for the symbol instance resulting in a shorter frame.
 
-##### Github PR
+#### Github PR
 - [https://github.com/BohemianCoding/SketchAPI/pull/394](https://github.com/BohemianCoding/SketchAPI/pull/394)
 
-##### Usage
+#### Usage
 ```
 var sketch = require('sketch')
 var ShapePath = sketch.ShapePath
@@ -349,17 +350,17 @@ symbolInstance.overrides[0].value = "hi"
 symbolInstance.overrides[0].selected = true
 symbolInstance.overrides[0].getFrame().width
 ```
----
+
 
 ### `layer.duplicate` now works on a layer with no parent
 
-##### More Details
+#### More Details
 Previously you needed to have a parent in order to duplicate the layer. Now you are free to do so without working around this.
 
-##### Github PR
+#### Github PR
 - [https://github.com/BohemianCoding/SketchAPI/pull/379](https://github.com/BohemianCoding/SketchAPI/pull/379)
 
-##### Usage
+#### Usage
 ```
 var sketch = require('sketch')
 var ShapePath = sketch.ShapePath
@@ -387,27 +388,27 @@ rectangle2.frame.offset(110,0)
 rectangle.parent = page
 rectangle2.parent = page
 ```
----
+
 
 ### `symbolInstance.master` now works on an immutable instance
 
-##### More Details
+#### More Details
 If you ever got an `MSImmutableSymbolInstance` object and attempted to wrap the native sketch object then you would have previously gotten an error. It has now been fixed.
 
-##### Github PR
+#### Github PR
 - [https://github.com/BohemianCoding/SketchAPI/pull/390](https://github.com/BohemianCoding/SketchAPI/pull/390)
 
----
+
 
 ### You can now remove flow targets with setting `flow` as `undefined` on a Layer
 
-##### More Details
+#### More Details
 Previously you couldn't remove a flow target. Now you can!
 
-##### Github PR
+#### Github PR
 - [https://github.com/BohemianCoding/SketchAPI/pull/373](https://github.com/BohemianCoding/SketchAPI/pull/373)
 
-##### Usage
+#### Usage
 ```
 var sketch = require('sketch')
 var Artboard = require('sketch').Artboard
@@ -437,17 +438,17 @@ const rect = new Group({
 rect.flow = undefined
 ```
 
----
+
 
 ### `pattern` properties have been added to Fill
 
-##### More Details
+#### More Details
 - Previously this also applied to the `noise` property as well but Sketch has depreciated the noise fill option in favor of having the noise patterns be image fills.
 
-##### Github PR
+#### Github PR
 - [https://github.com/BohemianCoding/SketchAPI/pull/363](https://github.com/BohemianCoding/SketchAPI/pull/363)
 
-##### Usage
+#### Usage
 ```
 var sketch = require('sketch')
 var Style = sketch.Style
@@ -480,31 +481,30 @@ let rectangle = new ShapePath({
 
 // Image can also be of the form
 { type: 'ImageData', nsimage: NSImage, nsdata: NSImageData }
-
 ```
 
----
+
 
 ### An image buffer can now be used with `ImageData`
 
-##### More Details
+#### More Details
 This change helps with the next one (Export now returns a buffer if output is false)
 
-##### Github PR
+#### Github PR
 - [https://github.com/BohemianCoding/SketchAPI/pull/372](https://github.com/BohemianCoding/SketchAPI/pull/372)
 
----
+
 
 ### `export` now returns a Buffer if `options.output` is `false` and `options.formats` is an image format
 
-##### More Details
+#### More Details
 If you ever wanted to get at the thumbnail preview image data when something is marked for export you can do so with this new API functionality.
 
 ![Sketch's image export thumbnail highlighted](https://user-images.githubusercontent.com/1228472/39345492-46fb46f0-4a1b-11e8-8f5b-6e6aea73dffd.png)
 
 See [this issue](https://github.com/BohemianCoding/SketchAPI/issues/185) for more info why this was added.
 
-##### Quick Summary of Sketch's export options #####
+#### Quick Summary of Sketch's export options ####
 The method returns
 
 - `undefined` if `options.output` is `undefined` or a string
@@ -513,10 +513,10 @@ The method returns
 - a `Buffer` if `objectToExport` is a single item and `options.formats` is an image format
 - an `Object` if `objectToExport` is a single item and `options.formats` is json
 
-##### Github PR
+#### Github PR
 - [https://github.com/BohemianCoding/SketchAPI/pull/361](https://github.com/BohemianCoding/SketchAPI/pull/361)
 
-##### Usage
+#### Usage
 ```
 var sketch = require('sketch')
 var ShapePath = sketch.ShapePath
@@ -542,35 +542,35 @@ let rectangle = new ShapePath({
 const options = { formats: 'png', output: false }
 const buffer = sketch.export(rectangle, options)
 ```
----
+
 
 ### `getSelectedDocument` will try harder to find your document
 
-##### More Details
+#### More Details
 If you are using [SKPM](https://github.com/skpm/skpm), SKPM defines `context` as a global so it will prefer to use that first. If there is no current document (via `NSDocumentController.sharedDocumentController().currentDocument()` then Sketch will attempt to use `NSApplication.sharedApplication().orderedDocuments()`. Ultimately, you don't really need to know too much about these underlying changes but it is useful to know that `.getSelectedDocument()` should work reliabily. If its not, be sure to file an issue.
 
-##### Github PR
+#### Github PR
 - [https://github.com/BohemianCoding/SketchAPI/pull/363](https://github.com/BohemianCoding/SketchAPI/pull/363)
 
 
----
+
 
 ### `console.clear` will now clear the DevTools console
 
-##### More Details
+#### More Details
 Use `console.clear()` to clean up your console.
 
----
+
 
 ### `selectedPage` and `selectedLayers` can now be set on the Document
 
-##### More Details
+#### More Details
 Previously these were read-only properties. However, now you can pass in a layer or a page to these objects to set them.
 
-##### Github PR
+#### Github PR
 - [https://github.com/BohemianCoding/SketchAPI/pull/371](https://github.com/BohemianCoding/SketchAPI/pull/371)
 
-##### Usage
+#### Usage
 ```
 var sketch = require('sketch')
 var ShapePath = sketch.ShapePath
@@ -611,11 +611,11 @@ document.selectedPage = newPage
 // Note: selectedPage isn't an array like selectedLayers
 // Note2: You can also do newPage.selected = true
 ```
----
+
 
 ### Add some methods to deal with the Symbols Page
 
-##### More Details
+#### More Details
 The "Symbols" page is similar to other pages. The only way it is specific is when creating a Symbol, Sketch will ask the user if they want to move it to that page. You can put Symbols in any page but if you want to respect the convention Sketch put in place, here are a few methods to help you do so.
 
 Adds a few methods on `Page`
@@ -627,10 +627,10 @@ Adds a few methods on `Page`
 - `isSymbolsPage()`
     - Returns a `boolean`
 
-##### Github PR
+#### Github PR
 - [https://github.com/BohemianCoding/SketchAPI/pull/377](https://github.com/BohemianCoding/SketchAPI/pull/377)
 
-##### Usage
+#### Usage
 ```
 var sketch = require('sketch')
 var Page = sketch.Page
@@ -655,10 +655,5 @@ If you have multiple pages with "Symbols" I believe that `.isSymbolsPage()` will
 page.sketchObject.documentData().symbolsPage() == page.sketchObject
 ```
 
----
-
-### Upcoming Additions
-- jQuery-like selection method (ex: `find('[style.fills.color="#DEDEDE"]')`) ([Github PR](https://github.com/BohemianCoding/SketchAPI/pull/357))
-- Logging a selection object will now be a bit more helpful ([Github PR](https://github.com/BohemianCoding/SketchAPI/pull/432))
-- @christianklotz has been working hard on updating some of the developer documentation! I'm excited to see what changes will be made there.
-- A `CodeSnippetSupplier` to interact with Data Supplier plugins (I haven't messed with creating a Data Supplier plugin before. If you have I would love to read a post about what you made!) ([Github Branch](https://github.com/BohemianCoding/SketchAPI/compare/feature/23657))
+## Other Releases
+[< Sketch 53](/plugins/release-53)
