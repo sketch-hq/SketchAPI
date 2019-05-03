@@ -106,6 +106,11 @@ export class SymbolMaster extends Artboard {
     foreignObject.unlinkFromRemote()
     return true
   }
+
+  // eslint-disable-next-line class-methods-use-this
+  getParentSymbolMaster() {
+    return undefined
+  }
 }
 
 SymbolMaster.type = Types.SymbolMaster
