@@ -14,9 +14,9 @@ This API is a very core layer which interfaces with Sketch itself. It's intentio
 
 ## Non-Goals
 
-Everything that can be built using the existing API (eg. helper functions) is unlikely to be included in the API. In the same spirit, everything that can be built using only Cocoa APIs is unlikely to be included in the API. A good example are the Node.js polyfills. There are implemented in separate repositories and as such, don't bloat the core API. Another good example is the `sketch-module-web-view` which provides a UI which doesn't require any Sketch integration.
+Everything that can be built using the existing API (eg. helper functions) is unlikely to be included in the API. In the same spirit, everything that can be built using only Cocoa APIs is unlikely to be included in the API. A good example is the Node.js polyfills. They are implemented in separate repositories and as such, don't bloat the core API. Another good example is the `sketch-module-web-view` which provides a UI which doesn't require any Sketch integration.
 
-There are multiple justifications for this:
+There are various justifications for this:
 
 - performances: providing a modular approach and avoiding loading everything as soon as someone requires the core API
 - while the core API require internal knowledge about Sketch, all those other libraries don't. Hence the community will have a much easier time contributing to them
@@ -25,8 +25,8 @@ That does not mean other libraries won't be shipped with Sketch. For example, so
 
 ## Backward compatibility
 
-As stated above, we try not to change the API between releases. That means that backward compatibility is extremely important to us. We do not want plugins using the API to break when a new Sketch version is released.
+As stated above, we try not to change the API between releases. That means that backward compatibility is essential to us. We do not want plugins using the API to break when a new Sketch version is released.
 
-Of course, some breaking will be unavoidable when the underlying Sketch feature completely disappear/change. But we should try to think hard about how Sketch might change in the future and provide an API extensible enough that it could accommodate for the future.
+Of course, some breaking will be unavoidable when the underlying Sketch feature completely disappears/changes. But we should try to think hard about how Sketch might change in the future and provide an API extensible enough that it could accommodate for the future.
 
-That also mean that technical debt won't easily go away. If we make a mistake in the API, it will stay there. One way we try to mitigate that is to provide a new API method "fixing" the mistake while still providing the old API with a deprecation warning. We still need to maintain the old API (and the tests for it shouldn't be removed) but with the warning + the updated documentation, we can hope that the usage of the old API will slowly disappear.
+That also means that technical debt won't easily go away. If we make a mistake in the API, it will stay there. One way we try to mitigate that is to provide a new API method "fixing" the mistake while still providing the old API with a deprecation warning. We still need to maintain the old API (and the tests for it shouldn't be removed), but with the warning + the updated documentation, we can hope that the usage of the old API will slowly disappear.
