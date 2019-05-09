@@ -14,7 +14,7 @@ This API is a very core layer which interfaces with Sketch itself. It's intentio
 
 ## Non-Goals
 
-Everything that can be build using the existing API (eg. helper functions) is unlikely to be included in the API. In the same spirit, everything that can be build using only Cocoa APIs is unlikely to be included in the API. A good example are the Node.js polyfills. There are implemented in separate repositories and as such, don't bloat the core API. Another good example is the `sketch-module-web-view` which provides a UI which doesn't require any Sketch integration.
+Everything that can be built using the existing API (eg. helper functions) is unlikely to be included in the API. In the same spirit, everything that can be built using only Cocoa APIs is unlikely to be included in the API. A good example are the Node.js polyfills. There are implemented in separate repositories and as such, don't bloat the core API. Another good example is the `sketch-module-web-view` which provides a UI which doesn't require any Sketch integration.
 
 There are multiple justifications for this:
 
