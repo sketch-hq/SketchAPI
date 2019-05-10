@@ -312,7 +312,7 @@ const artboard = new Slice({
 })
 ```
 
-## setTimeout and all the other timeout, interval, immediate methods are now available directly, no need to polyfill them.
+## `setTimeout` and all the other timeout, interval, immediate methods are now available directly, no need to polyfill them
 [*GitHub pull request*](https://github.com/BohemianCoding/SketchAPI/pull/279/files) _(This is the probably the PR however the diff seems to be about fixing an issue with fragments_ 🤔_)_
 
 

@@ -1,9 +1,9 @@
 ---
-title: Sketch 54
+title: New in Sketch 54
 summary: API to let plugins react to events in the app.
 section: plugins
-chapter: JS API Releases
-permalink: /plugins/release-54
+chapter: JavaScript API Updates
+permalink: /plugins/updates/new-in-sketch-54
 
 order: 400
 ---
