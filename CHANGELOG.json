@@ -2,7 +2,8 @@
   "unreleased": [
     "[Fixed] Changing the `pointType` of a CurvePoint wouldn't always restore the control points",
     "[Fixed] Do not default to `ShapeType.Rectangle` if some points are specified when create a new ShapePath",
-    "[Improved] Added multiline functionality to string inputs on `UI.getInputFromUser`"
+    "[Improved] Added multiline functionality to string inputs on `UI.getInputFromUser`",
+    "[New] Add a `find` method to make it easy to look for specific layers"
   ],
   "releases": {
     "55": [
