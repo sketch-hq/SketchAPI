@@ -2,8 +2,7 @@ const path = require('path')
 const webpack = require('webpack')
 const babelLoader = require('@skpm/builder/lib/utils/babelLoader').default({})
 
-const PRODUCTION =
-  process.argv.indexOf('-p') !== -1 || process.env.NODE_ENV === 'production'
+const PRODUCTION = process.env.NODE_ENV !== 'development'
 
 // heuristic to know if we are inside the Sketch repo
 const IS_BC_BUILD = /\/Modules\/SketchAPI$/.test(__dirname)
@@ -33,6 +32,7 @@ babelLoader.test = /\.(ts|js)$/
 babelLoader.use.options.presets.push('@babel/preset-typescript')
 
 const config = {
+  mode: PRODUCTION ? 'production' : 'development',
   resolve: {
     // Add '.ts' as resolvable extensions.
     extensions: ['.ts', '.js', '.json'],

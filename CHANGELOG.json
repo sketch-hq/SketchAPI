@@ -1,6 +1,15 @@
 {
-  "unreleased": ["[New] Add `isSelected` method on a CurvePoint"],
+  "unreleased": [
+    "[Fixed] Changing the `pointType` of a CurvePoint wouldn't always restore the control points",
+    "[Fixed] Do not default to `ShapeType.Rectangle` if some points are specified when create a new ShapePath",
+    "[Improved] Added multiline functionality to string inputs on `UI.getInputFromUser`"
+  ],
   "releases": {
+    "55": [
+      "[New] Add `isSelected` method on a CurvePoint",
+      "[Improved] Improve consistency by deprecating `Fill.fill` in favor of `Fill.fileType` (to match `Border.fileType` and other types)",
+      "[Fixed] `getSelectedDocument()` could throw an error when no document was opened. Now it will return `undefined`"
+    ],
     "54": [
       "[New] Add `colors` and `gradients` properties on Document",
       "[New] `export` now returns a Buffer if `options.output` is `false` and `options.formats` is an image format",
