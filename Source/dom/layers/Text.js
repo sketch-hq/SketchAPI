@@ -167,6 +167,7 @@ export class Text extends StyledLayer {
         rect,
         baselineOffset,
         range,
+        text: String(lineText),
       })
 
       // move to the next line
