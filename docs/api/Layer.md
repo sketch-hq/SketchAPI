@@ -139,8 +139,9 @@ page.getParentPage() === undefined
 layer.getParentArtboard()
 artboard.getParentArtboard() === undefined
 
-// access the symbol naster the layer is in (if any)
+// access the symbol master the layer is in (if any)
 layer.getParentSymbolMaster()
+symbolMaster.getParentSymbolMaster() === undefined
 
 // access the shape the layer is in (if any)
 layer.getParentShape()
