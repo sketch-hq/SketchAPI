@@ -78,9 +78,17 @@ const operatorMap = {
 }
 
 // taken from https://github.com/jquery/sizzle/blob/master/src/sizzle.js
-const whitespace = '\\s'
+
+// http://www.w3.org/TR/css3-selectors/#whitespace
+const whitespace = '[\\x20\\t\\r\\n\\f]'
+
+// http://www.w3.org/TR/CSS21/syndata.html#value-def-identifier
+// with a small twist: we accept `.` for nested property path
 const identifier = '(?:\\\\.|[\\w-]|[^\0-\\xa0]|\\.)+'
-const attributes = `\\[${whitespace}*(${identifier})(?:${whitespace}*([*^$|!~]?=)${whitespace}*(?:'((?:\\\\.|[^\\\\'])*)'|"((?:\\\\.|[^\\\\"])*)"|(${identifier}))|)${whitespace}*\\]`
+
+const operator = `(?:[*^$!]?=|>=|>|<|<=)`
+
+const attributes = `\\[${whitespace}*(${identifier})(?:${whitespace}*(${operator})${whitespace}*(?:'((?:\\\\.|[^\\\\'])*)'|"((?:\\\\.|[^\\\\"])*)"|(${identifier}))|)${whitespace}*\\]`
 const booleans = 'locked|hidden|selected'
 
 const matchExpr = {
@@ -132,17 +140,15 @@ export function find(predicate, root) {
   }
 
   predicateParts.forEach(part => {
-    let matched = false
-    Object.keys(matchExpr).forEach(k => {
+    const matched = Object.keys(matchExpr).some(k => {
       const match = matchExpr[k].exec(part)
 
       if (!match) {
-        return
+        return false
       }
 
       if (k === 'ID') {
         attributesMap.id('=', match[1], mutations)
-        matched = true
       }
 
       if (k === 'TYPE') {
@@ -151,12 +157,11 @@ export function find(predicate, root) {
         } else {
           attributesMap.type('=', match[1], mutations)
         }
-        matched = true
       }
 
       if (k === 'ATTR') {
-        const operator = operatorMap[match[2]]
-        if (!operator) {
+        const matchedOperator = operatorMap[match[2]]
+        if (!matchedOperator) {
           throw new Error(`unknown operator ${match[2]}`)
         }
         const value = match[3] || match[4] || parseValue(match[5])
@@ -164,8 +169,7 @@ export function find(predicate, root) {
         if (!attribute) {
           throw new Error(`unknown attribute ${match[1]}`)
         }
-        attribute(operator, value, mutations)
-        matched = true
+        attribute(matchedOperator, value, mutations)
       }
 
       if (k === 'bool') {
@@ -174,9 +178,10 @@ export function find(predicate, root) {
           throw new Error(`unknown attribute ${match[2]}`)
         }
         attribute('=', !match[1], mutations)
-        matched = true
       }
+      return true
     })
+
     if (!matched) {
       throw new Error(`could not parse predicate ${part}`)
     }
