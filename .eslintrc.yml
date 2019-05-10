@@ -160,6 +160,8 @@ globals:
   NSApp: false
   CGPathGetBoundingBox: false
   MSImmutableLayerAncestry: false
+  MSImmutableColorAsset: false
+  MSImmutableGradientAsset: false
 
 rules:
   ###########

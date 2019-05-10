@@ -68,6 +68,7 @@ export class GradientAsset extends Asset {
 GradientAsset.type = Types.GradientAsset
 GradientAsset[DefinedPropertiesKey] = { ...Asset[DefinedPropertiesKey] }
 Factory.registerClass(GradientAsset, MSGradientAsset)
+Factory.registerClass(GradientAsset, MSImmutableGradientAsset)
 
 GradientAsset.define('gradient', {
   get() {

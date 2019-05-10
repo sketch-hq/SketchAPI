@@ -53,6 +53,7 @@ export class ColorAsset extends Asset {
 ColorAsset.type = Types.ColorAsset
 ColorAsset[DefinedPropertiesKey] = { ...Asset[DefinedPropertiesKey] }
 Factory.registerClass(ColorAsset, MSColorAsset)
+Factory.registerClass(ColorAsset, MSImmutableColorAsset)
 
 ColorAsset.define('color', {
   get() {
