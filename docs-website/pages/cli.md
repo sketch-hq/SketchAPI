@@ -11,9 +11,9 @@ order: 2
 
 Sketch includes `sketchtool`, a command-line interface to integrate into your save to publish workflow. With `sketchtool` you can:
 
-- Export artboards, layers, slices, pages and document previews
-- Inspect documents
-- Run plugins
+- [Export artboards, layers, slices, pages and document previews](/cli/export-assets)
+- [Inspect documents](/cli/inspect-document)
+- [Run plugins](/cli/run-plugin)
 
 > **Important:** The Sketch command-line interface is free to use but requires a valid license to run plugins. `sketchtool` is provided "as is" without warranty of any kind.
 
