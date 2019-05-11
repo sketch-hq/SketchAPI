@@ -1,7 +1,7 @@
 ---
 title: Run a plugin
 section: cli
-chapter: Commands
+chapter: Command-line interface
 permalink: /cli/run-plugin
 
 order: 200

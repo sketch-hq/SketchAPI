@@ -9,7 +9,11 @@ redirect_from:
 order: 2
 ---
 
-Sketch includes `sketchtool`, a command-line interface to export assets, inspect documents and run plugins.
+Sketch includes `sketchtool`, a command-line interface to integrate into your save to publish workflow. With `sketchtool` you can:
+
+- Export artboards, layers, slices, pages and document previews
+- Inspect documents
+- Run plugins
 
 > **Important:** The Sketch command-line interface is free to use but requires a valid license to run plugins. `sketchtool` is provided "as is" without warranty of any kind.
 
@@ -29,7 +33,7 @@ To run `sketchtool` from anywhere on the command-line, add the cli location to `
 SKETCH=$(mdfind kMDItemCFBundleIdentifier == 'com.bohemiancoding.sketch3' | head -n 1)
 
 # pass on all given arguments
-"$SKETCH/Contents/Resources/sketchtool/bin/sketchtool" $@
+"$SKETCH/Contents/Resources/sketchtool/bin/sketchtool" "$@"
 ```
 
 > **Note:** `sketchtool` requires macOS 10.11 or later.
