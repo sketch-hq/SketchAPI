@@ -1,70 +1,123 @@
 ---
 title: Export assets
 section: cli
-chapter: Commands
+chapter: Command-line interface
 permalink: /cli/export-assets
 
 order: 100
 ---
 
-### Export Assets
+Export assets using `sketchtool export`:
 
-You can use SketchTool to export the assets in your Sketch document. SketchTool can export predefined assets (i.e: layers and Artboards that have been made Exportable in the Sketch UI), or any layer you want.
+- Any layer
+- Pages
+- Document previews
 
-#### Exporting Artboards
+## Formats
 
-Running
+By default `sketchtool` exports assets as `1x` PNG. Layers, including artboards, that have been made _Exportable_ will be exported using their defined export presents.
 
-```
-sketchtool export artboards path/to/document.sketch
-```
+To generate assets in other formats use the command-line arguments `--formats=jpg,png,svg` and `--scales=1,2` providing a comma-separated list of values and override the presets.
 
-will export all the artboards in the document, regardless of their exportable status. If the artboards have been set to Exportable, SketchTool will export all the sizes and formats. Otherwise, they'll be exported at 1x in PNG format by default, You can specify a custom format or size using command-line options:
+To list all available format run the following command:
 
-```
-sketchtool export artboards path/to/document.sketch --formats=jpg
-```
-
-You can export multiple formats at once:
-
-```
-sketchtool export artboards path/to/document.sketch --formats=jpg,png,svg
+```sh
+sketchtool list formats
 ```
 
-To see which formats are supported by SketchTool, run `sketchtool list formats`.
+## Output
 
-To define the size, you can do:
+Provide the `--output=/path/to/assets` argument to specify a custom output folder.
 
-```
-sketchtool export artboards path/to/document.sketch --scales=1,2
-```
+## Layers
 
-and that will give you 1x and 2x versions of your artboards.
+Any layer can be exported with `sketchtool`. By default only slices and layers marked _Exportable_ are exported. Alternatively, provide one or more layer ids in `item` or `items` to only export specific layers.
 
-Files are exported to the current document by default, but you can define an output path like this:
-
-```
-sketchtool export artboards path/to/document.sketch --output=output/path
+```sh
+sketchtool export layers
 ```
 
-If you don't want to export all artboards, you can tell SketchTool which artboards to export by using the `item` or `items` option with a layer ID:
+## Artboards
 
+Artboards are a subset of layers and `sketchtool` provides a convenience command to export them. It automatically exports both artboards that have been made _Exportable_ and such that haven't.
+
+### All artboards
+
+Export all artboards of a document running the following command:
+
+```sh
+sketchtool export artboards /path/to/document.sketch
 ```
-sketchtool export artboards path/to/document.sketch --item=214B376A-C4A3-47A9-9B87-DFBC49A6EFE0
+
+Following is an example exporting all artboards overriding any presets, generating JPG, PNG and SVG assets in `1x` and `2x` variants.
+
+```sh
+sketchtool export artboards /path/to/document.sketch --formats=jpg,png,svg --scales=1,2
 ```
 
-(to get the ID for an artboard, use `sketchtool metadata` or `sketchtool list artboards`).
+For a list of all available options, see the command help:
 
-For more information about other things you can do while exporting an artboard, see `sketchtool help export artboard`.
-
-#### Exporting Layers, Slices or Pages
-
-Layers, Slices and Pages work just like artboards, so you can read the previous section replacing 'artboard' with 'layer', 'slice' or 'page'
-
-#### Getting a document preview
-
+```sh
+sketchtool help export artboards
 ```
+
+### Specific artboards
+
+Specify an artboard's layer id in `item` or `items` for multiple to limit the export to certain artboards.
+
+```sh
+sketchtool export artboards /path/to/document.sketch --item=1B7FCC8E-5030-43A5-94BE-28A9C7ABFF72
+```
+
+Get the layer id of an artboard by inspecting the document and list the JSON data.
+
+```sh
+sketchtool list artboards
+```
+
+```json
+{
+  "pages": [
+    {
+      "id": "540D2F01-CE28-4E3B-A7A3-EAE9DA2A4EC8",
+      "name": "Page 1",
+      "bounds": "0,0,375.000000,812.000000",
+      "artboards": [
+        {
+          "id": "1B7FCC8E-5030-43A5-94BE-28A9C7ABFF72",
+          "name": "Artboard",
+          "rect": {
+            "y": 0,
+            "x": 0,
+            "width": 375,
+            "height": 812
+          },
+          "trimmed": {
+            "y": 0,
+            "x": 0,
+            "width": 375,
+            "height": 812
+          }
+        }
+      ]
+    }
+  ]
+}
+```
+
+> **Note:** You can also use `sketchtool metadata` for artboards but `sketchtool list` works the same for artboards as well as any other document elements. See [Inspect a document](/cli/inspect-document) for details.
+
+## Document preview
+
+Export a PNG preview of the last edited page of the document. By default it is saved as `preview.png` and at a maximum resolution of 2048x2048 pixel. Larger documents are scaled down to fit.
+
+```sh
 sketchtool export preview path/to/document.sketch
 ```
 
-will give you a PNG preview of the last edited page in the document, and save it as `preview.png`. SketchTool will try to render a 100% preview, but if the document is too big it will scale down the preview so that it fits inside a 2048 x 2048 pixels rectangle.
+For all available options see the usage instructions.
+
+```sh
+sketchtool help export preview
+
+```
