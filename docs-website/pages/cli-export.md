@@ -31,19 +31,27 @@ Provide the `--output=/path/to/assets` argument to specify a custom output folde
 
 ## Layers
 
-Any layer can be exported with `sketchtool`. By default only slices and layers marked _Exportable_ are exported. Alternatively, provide one or more layer ids in `item` or `items` to only export specific layers.
+Any layer can be exported with `sketchtool`. By default only slices and layers marked _Exportable_ are exported.
 
 ```sh
 sketchtool export layers /path/to/document.sketch
 ```
 
-For specific layers, get the layer id by [inspecting the document](/inspect-document).
+To export only specific layers provide one or more layer ids with the `item` or `items` command-line argument. Get the layer id by [inspecting the document](/cli/inspect-document).
+
+```sh
+sketchtool export layers /path/to/document.sketch --item=3E0A01F1-482E-4A32-AD5B-EDF0B98575EA
+```
+
+View all export options in the usage instructions.
+
+```sh
+sketchtool help export layers
+```
 
 ## Artboards
 
 Artboards are a subset of layers and `sketchtool` provides a convenience command to export them. It automatically exports both artboards that have been made _Exportable_ and such that haven't.
-
-### All artboards
 
 Export all artboards of a document running the following command:
 
@@ -57,24 +65,10 @@ Following is an example exporting all artboards overriding any presets, generati
 sketchtool export artboards /path/to/document.sketch --formats=jpg,png,svg --scales=1,2
 ```
 
-For a list of all available options, see the command help:
+Provide specific artboard layer ids in `item` or `items` limit the export to certain artboards. For a list of all available options, see the command help:
 
 ```sh
 sketchtool help export artboards
-```
-
-### Specific artboards
-
-Specify an artboard's layer id in `item` or `items` for multiple to limit the export to certain artboards.
-
-```sh
-sketchtool export artboards /path/to/document.sketch --item=1B7FCC8E-5030-43A5-94BE-28A9C7ABFF72
-```
-
-Get the layer id of an artboard by [inspecting the document](/inspect-document) and list the JSON data.
-
-```sh
-sketchtool list artboards /path/to/document.sketch
 ```
 
 > **Note:** You can also use `sketchtool metadata` for artboards but `sketchtool list` works the same for artboards as well as any other document elements. See [Inspect a document](/cli/inspect-document) for details.
