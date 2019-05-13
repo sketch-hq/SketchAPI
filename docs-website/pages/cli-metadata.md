@@ -7,7 +7,7 @@ permalink: /cli/metadata
 order: 104
 ---
 
-Retrieve document metadata of a Sketch file with `sketchtool`. This includes information about the Sketch version used to save to save the file, document format version as well as the pages and artboards of the Sketch document.
+Retrieve the Sketch document metadata with `sketchtool`. This includes information about the Sketch version used to save to save the file, document format version as well as the pages and artboards of the Sketch document.
 
 ```sh
 sketchtool metadata /path/to/document.sketch
