@@ -24,6 +24,24 @@ layout: base
 
           <ol>
 
+          {% comment %}
+            The Actions API lists all actions in the sidebar. All other pages
+            list their sections and chapters.
+          {% endcomment %}
+
+          {% if page.url contains '/reference/action/' %}
+            <li>
+              <h2><a href="/reference/action/">Actions Index</a></h2>
+              <ol>
+                {% assign actions = site.actions | sort:"title"%}
+                {% for action in actions %}
+                <li><a href="{{action.url}}" {% if page.url == action.url %} class="active"{% endif %}>{{ action.title }}</a></li>
+                {% endfor %}
+              </ol>
+            </li>
+
+          {% else %}
+
           {% for chapter in all_chapters %}
             {% if chapter == nil %}{% continue %}{% endif %}
             <li>
@@ -43,20 +61,6 @@ layout: base
             </li>
           {% endfor %}
 
-          {% comment %}
-            The Actions API lists all actions in the sidebar.
-          {% endcomment %}
-
-          {% if page.url contains '/action/' %}
-            <li>
-              <h2><a href="/reference/action/">Actions Index</a></h2>
-              <ol>
-                {% assign actions = site.actions | sort:"title"%}
-                {% for action in actions %}
-                <li><a href="{{action.url}}" {% if page.url == action.url %} class="active"{% endif %}>{{ action.title }}</a></li>
-                {% endfor %}
-              </ol>
-            </li>
           {% endif %}
 
           </ol>
