@@ -159,7 +159,6 @@ globals:
   MSPDFImporter: false
   NSApp: false
   CGPathGetBoundingBox: false
-  MSImmutableLayerAncestry: false
   MSImmutableColorAsset: false
   MSImmutableGradientAsset: false
 

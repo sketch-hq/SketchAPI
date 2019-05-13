@@ -14,11 +14,6 @@ export class WrappedObject {
       value: options.sketchObject,
     })
 
-    Object.defineProperty(this, '_documentData', {
-      enumerable: false,
-      value: options._documentData,
-    })
-
     Object.defineProperty(this, 'type', {
       enumerable: true,
       value: this.constructor.type,
@@ -67,18 +62,15 @@ export class WrappedObject {
   /**
    * Return a new wrapped object for a given Sketch model object.
    *
-   * @param {Object} sketchObject - The Sketch model object to wrap.
-   * @param {Object=} documentData - The documentData that the Sketch model object belongs to. It's used to get the parent of immutable Sketch model objects.
+   * @param {Object} object - The Sketch model object to wrap.
    */
-  static fromNative(sketchObject, documentData) {
+  static fromNative(sketchObject) {
     if (!sketchObject) {
       return sketchObject
     }
-    const options = { sketchObject }
-    if (documentData) {
-      options._documentData = documentData
-    }
-    return new this(options)
+    return new this({
+      sketchObject,
+    })
   }
 
   toJSON() {
