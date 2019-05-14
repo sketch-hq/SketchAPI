@@ -1,3 +1,4 @@
+/* eslint-disable no-new */
 // Text Utilities, by Johnnie Walker — Source code available at [GitHub](https://github.com/BohemianCoding/SketchAPI/tree/develop/examples/text-utilities)
 //
 // This plugin provides some debugging tools which annotate text layers to show where their baselines and bounding boxes are.
@@ -49,7 +50,7 @@ function addBaselines(layer, fragments) {
     rect.height = 0.5
 
     // We make a new shape layer with this rectangle.
-    const shape = new sketch.Shape({
+    new sketch.Shape({
       parent: group,
       frame: rect,
       style: {
@@ -79,7 +80,7 @@ function addLineFragments(layer, fragments) {
 
     // We make a new shape layer with the rectangle of each line in turn
     const localRect = layer.localRectToParentRect(fragment.rect)
-    const line = new sketch.Shape({
+    new sketch.Shape({
       parent: group,
       frame: localRect,
       style: {
@@ -136,6 +137,7 @@ export function onUseLegacyBaselines(context) {
   // Iterate over each text layer in the selection, turning off constant baselines.
   document.selectedLayers.forEach(layer => {
     if (layer.type === String(sketch.Types.Text)) {
+      // eslint-disable-next-line no-param-reassign
       layer.lineSpacing = sketch.Text.LineSpacing.variable
     }
   })
@@ -147,6 +149,7 @@ export function onUseConstantBaselines(context) {
   // Iterate over each text layer in the selection, turning on constant baselines.
   document.selectedLayers.forEach(layer => {
     if (layer.type === String(sketch.Types.Text)) {
+      // eslint-disable-next-line no-param-reassign
       layer.lineSpacing = sketch.Text.LineSpacing.constantBaseline
     }
   })
@@ -157,4 +160,4 @@ export function onUseConstantBaselines(context) {
 //
 // Obviously this is only the tip of the iceberg. Check out some of the other examples to see what else can be done.
 //
-// If you have questions, comments or any feedback, ping us at <developer@sketchapp.com>!
+// If you have questions, comments or any feedback, ping us at <developer@sketch.com>!

@@ -1,5 +1,7 @@
 /* globals expect, test */
+import { isRunningOnJenkins } from '../../../test-utils'
 import { CurvePoint } from '../CurvePoint'
+import { Document, ShapePath } from '../..'
 
 test('should be able to log an CurvePoint', () => {
   const curvePoint = new CurvePoint()
@@ -47,3 +49,27 @@ test('should be able to modify a CurvePoint', () => {
     y: 4,
   })
 })
+
+if (!isRunningOnJenkins()) {
+  test('should show if a point is selected', () => {
+    const document = new Document()
+    const shape = new ShapePath({
+      parent: document.selectedPage,
+    })
+    expect(shape.points[0].isSelected()).toBe(false)
+
+    // switch to path editing mode
+    const eventHandler = document.sketchObject
+      .eventHandlerManager()
+      .switchToEventHandlerClass(MSShapeEventHandler.class())
+
+    eventHandler.pathController().setContent([shape.sketchObject])
+    eventHandler
+      .pathController()
+      .setSelectionIndexPath(NSIndexPath.indexPathForPoint_ofShape(0, 0))
+
+    expect(shape.points[0].isSelected()).toBe(true)
+
+    document.close()
+  })
+}

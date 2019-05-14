@@ -2,7 +2,7 @@
   "name": "svgo_export",
   "description": "Uses SVGO to compress exported SVG assets",
   "license": "MIT",
-  "author": "Ale Muñoz <ale@sketchapp.com>",
+  "author": "Ale Muñoz <ale@sketch.com>",
   "version": "0.1.0",
   "engines": {
     "sketch": ">=3.0"

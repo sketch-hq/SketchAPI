@@ -43,7 +43,11 @@ export function getSelectedDocument() {
 
   // if there is no current document, let's just try to pick the first one
   if (!nativeDocument) {
-    ;[nativeDocument] = NSApplication.sharedApplication().orderedDocuments()
+    const documents = toArray(
+      NSApplication.sharedApplication().orderedDocuments()
+    ).filter(d => d.isKindOfClass(MSDocument.class()))
+    // eslint-disable-next-line prefer-destructuring
+    nativeDocument = documents[0]
   }
   if (!nativeDocument) {
     return undefined

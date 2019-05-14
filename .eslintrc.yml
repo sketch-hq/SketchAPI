@@ -1,5 +1,5 @@
 root: true
-parser: typescript-eslint-parser
+parser: '@typescript-eslint/parser'
 extends:
   - airbnb-base
   - prettier
@@ -151,6 +151,7 @@ globals:
   MSPersistentAssetCollection: false
   MSOverrideProperty: false
   MSOverridePoint: false
+  NSMutableArray: false
   CGRectNull: false
   NSColorSpace: false
   NSColor: false
@@ -159,6 +160,14 @@ globals:
   MSPDFImporter: false
   NSApp: false
   CGPathGetBoundingBox: false
+  MSShapeEventHandler: false
+  NSIndexPath: false
+  NSScrollView: false
+  NSViewWidthSizable: false
+  NSViewHeightSizable: false
+  NSTextView: false
+  NSMakeSize: false
+  NSPopUpButton: false
   MSImmutableColorAsset: false
   MSImmutableGradientAsset: false
 

@@ -19,6 +19,11 @@ export class WrappedObject {
       value: this.constructor.type,
     })
 
+    Object.defineProperty(this, '_isWrappedObject', {
+      enumerable: false,
+      value: true,
+    })
+
     this.update(options)
   }
 
@@ -340,13 +345,5 @@ WrappedObject.define('sketchObject', {
    */
   get() {
     return this._object
-  },
-})
-
-WrappedObject.define('_isWrappedObject', {
-  enumerable: false,
-  exportable: false,
-  get() {
-    return true
   },
 })

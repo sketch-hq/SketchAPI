@@ -1,3 +1,4 @@
+import { toArray } from 'util'
 import { DefinedPropertiesKey, WrappedObject } from '../WrappedObject'
 import { Types } from '../enums'
 import { Factory } from '../Factory'
@@ -33,6 +34,26 @@ export class CurvePoint extends WrappedObject {
       enumerable: false,
       writable: true,
     })
+  }
+
+  isSelected() {
+    const documentData = this._object.documentData()
+    if (!documentData) {
+      return false
+    }
+    const document = documentData.delegate()
+    if (!document) {
+      return false
+    }
+    const eventHandler = document.eventHandlerManager().currentHandler()
+    if (!eventHandler || !eventHandler.isKindOfClass(MSShapeEventHandler)) {
+      return false
+    }
+    const selectedPoints = toArray(
+      eventHandler.pathController().selectedObjects()
+    )
+
+    return selectedPoints.some(selectedPoint => selectedPoint == this._object)
   }
 }
 
@@ -113,10 +134,13 @@ CurvePoint.define('pointType', {
   },
   set(_mode) {
     if (!_mode) {
-      this._object.setCurveMode(0)
+      this._object.changeCurveModeTo_usingPoint(0, 0)
     } else {
       const mode = PointTypeMap[_mode]
-      this._object.setCurveMode(typeof mode !== 'undefined' ? mode : _mode)
+      this._object.changeCurveModeTo_usingPoint(
+        typeof mode !== 'undefined' ? mode : _mode,
+        0
+      )
     }
 
     if (this._parent) {
