@@ -12,17 +12,24 @@ order: 1
 
 Write a Sketch plugin in JavaScript. Take advantage of ES6, access macOS frameworks and use the Sketch APIs without learning Objective-C or Swift.
 
+## APIs
+
+Plugins can make use of the following APIs:
+
+- [Public JavaScript API](/plugins/javascript-api), officially maintained and supported by Sketch
+- [Internal API](/plugins/internal-api) for full access to the Sketch Objective-C runtime
+
 ## Plugin location
 
-When Sketch is launched, it scans the disc within the user's home folder for installed plugins.
+Plugins are stored as folders within the user's home folder. Sketch scans this plugin location on launch for installed plugins.
 
-```
+```sh
 ~/Library/Application Support/com.bohemiancoding.sketch3/Plugins
 ```
 
-If an update was updated, the previously installed version is kept in a separate folder.
+When a plugin was updated, previously installed versions are kept in a separate folder.
 
-```
+```sh
 ~/Library/Application Support/com.bohemiancoding.sketch3/PluginsWarehouse
 ```
 
@@ -46,19 +53,13 @@ _Note: Sketch also supports using aliases and links to individual Plugins, or to
 
 To remove a Plugin, just select the **Plugins › Manage Plugins…** menu option, select the Plugin you want to remove from the list, and either right click the plugin or click the gear icon and select _Uninstall "Plugin Name"_:
 
-![](/images/developer/plugin-uninstall.png)
+<img src="/images/developer/plugin-uninstall.png"
+     alt="Uninstall a plugin in Sketch Preferences using the context menu"
+     width="626" />
 
 Any commands that the Plugin provided will be removed from the **Plugins** menu immediately.
 
 Alternatively, you can just uncheck any Plugin on the list to disable it without uninstalling it.
-
-## JavaScript API
-
-## Internal API
-
-> **Note:** New versions of Sketch can introduce breaking changes to the internal API. Sketch does not provide an API reference for the internal API, however [header files are available](https://github.com/abynim/Sketch-Headers) thanks to [@abynim](https://github.com/abynim) 🙏.
->
-> We recommend using the JavaScript API where possible. Something is missing? Please [submit feedback and feature requests](https://github.com/BohemianCoding/SketchAPI/issues).
 
 ## Examples
 

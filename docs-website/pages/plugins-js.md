@@ -2,7 +2,10 @@
 title: Overview
 section: plugins
 chapter: JavaScript API
-permalink: /plugins/javascript
+permalink: /plugins/javascript-api
+
+redirect_from:
+  - /plugins/javascript
 
 order: 300
 ---
