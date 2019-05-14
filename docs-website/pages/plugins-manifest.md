@@ -120,9 +120,9 @@ Provides a general description of what the plugin does.
 
 #### `disableCocoaScriptPreprocessor`
 
-Defines if the CocoaScript preprocessor should be used for the plugin's scripts. Set this to `true` to use ES6 syntax and build systems like [skpm](https://skpm.io).
+CocoaScript by default supports `@import` and bracket syntax, i.e. `[obj hello: world]`. If disabled by setting `disableCocoaScriptPreprocessor` to `true` this is no longer supported.
 
-When disabled, `@import` and bracket syntax, i.e. `[obj hello: world]` are no longer supported.
+**Note:** To use ES6 syntax and build systems like [skpm](https://skpm.io) this must be set to `true`.
 
 This value is optional, default `false`, set to `true` when using `skpm`.
 
