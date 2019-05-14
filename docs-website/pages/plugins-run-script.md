@@ -56,4 +56,4 @@ The newly created plugin is now available from the _Plugins_ menu.
 Check out these resources to learn more about plugins.
 
 - [Plugin bundles](/plugins/plugin-bundle)
-- [JavaScript API](/plugins/javascript)
+- [JavaScript API](/plugins/javascript-api)
