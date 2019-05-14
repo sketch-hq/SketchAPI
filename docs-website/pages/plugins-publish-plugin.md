@@ -34,7 +34,7 @@ skpm publish
 For all options such as not including a plugin in the official listing view the usage instructions.
 
 ```sh
-skpm publish help
+skpm publish --help
 ```
 
 > **Note:** If you haven't used `skpm` with your GitHub repository before you'll need to login from the command-line first using a [_Personal Access Token_](https://help.github.com/en/articles/creating-a-personal-access-token-for-the-command-line) granting access to the **repo** scope.
