@@ -10,75 +10,41 @@ redirect_from:
 order: 300
 ---
 
-## Resources
+Plugin scripts can make full use of ES6 and the Sketch APIs. The official JavaScript API is maintained by the Sketch team and allows to access and modify the Sketch document, provide data to Sketch users and offers some basic user interface integration.
 
-[A re-introduction to JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript/A_re-introduction_to_JavaScript) [ECMAScript 2015 (ES6) support in Mozilla](https://developer.mozilla.org/en-US/docs/Web/JavaScript/New_in_JavaScript/ECMAScript_2015_support_in_Mozilla)
+> **Feedback welcome:** Let us know what you think, [file an issue](https://github.com/BohemianCoding/SketchAPI/issues) for comments, suggestions and bug reports or send an email to [developer@sketch.com](mailto:developer@sketch.com).
 
-## Terminology
+## Capabilities
 
-Before we get any further, let’s define a bit of terminology.
+The JavaScript API covers different areas and comprises different packages.
 
-- _Plugin_: a collection of _Scripts_, _Commands_ and other resources grouped together as a discrete unit
-- _Plugin Bundle_: the folder on disk containing the files that make up the _Plugin_
-- _Action_: something the user does (selecting a menu, or changing the document) which triggers a _Command_
-- _Command_: a Plugin can define more than one command; typically each one is associated with a different menu or keyboard shortcut, and causes a different _Handler_ to be executed.
-- _Handler_: a function which executes some code to implement a _Command_.
-- _Script_: a JavaScript file containing one or more _Handlers_ which implement one or more _Commands_.
+### Document Object Model [`sketch/dom`](/reference/api/#sketch-components)
 
-## How do I make a plugin?
+Access, modify and create documents – everything from colours to layers and symbols.
 
-By now, probably you’re wondering how to get started writing your own.
+### Settings and state preservation [`sketch/settings`](/reference/api/#settings)
 
-The easiest way to get started with Plugins is to open Sketch, open a document and hit `control + shift + k` to open the `Run Script` panel. You don’t need to install anything; you can just open it and experiment there.
+Save custom data for a layer or document and store user settings for your plugin.
 
-The smallest handler implementation looks like this:
+### UI [`sketch/ui`](/reference/api/#ui)
 
-```js
-const sketch = require('sketch')
+Display notifications and get user input without building.
 
-sketch.UI.message('Hello, world!')
-```
+### Data Supplier [`sketch/data-supplier`](/reference/api/#data-supplier)
 
-It renders a toast saying “Hello, world!” at the bottom of the Sketch document. You can run a handler implementation directly in the `Run Script` panel, try it!
+Provide image or text data right within Sketch. Data Suppliers integrate directly with the Sketch user interface to make content readily available throughout the design process.
 
-## A note on JavaScript
+### Fibers in [`sketch/async`](/reference/api/#async)
 
-We also use some of the ES6 syntax in the examples. We try to use it sparingly because it’s still relatively new, but we encourage you to get familiar with [arrow functions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions), [let](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/let), and [const](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/const) statements.
+By default a plugin command's JavaScript context is destroyed after successful execution. For asynchronous operations the JavaScript API provides fibers as a method to prolong the lifetime of the JavaScript context.
 
-The script doesn't run in a browser or Nodejs environment but in a [special environment](/guides/cocoascript/) in which every native MacOS and Sketch API are exposed. It is an advanced topic but necessary to truly understand how to build more advanced stuff.
+### Import from and export layers to disk
 
-A Plugin is a collection of one or more **scripts**. Each script defines one or more **commands** which extend Sketch in some way.
+[Import a file](/reference/api/#import) as a layer and [export objects](/reference/api/#export) to supported file formats.
 
-On disk, a Plugin is a folder with the `.sketchplugin` file extension, containing files and sub-folders.
+## Related resources
 
-Strictly speaking, a Plugin is actually an [OS X package](https://developer.apple.com/library/mac/documentation/CoreFoundation/Conceptual/CFBundles/DocumentPackages/DocumentPackages.html#//apple_ref/doc/uid/10000123i-CH106-SW1), arranged as an [OS X bundle](https://developer.apple.com/library/mac/documentation/CoreFoundation/Conceptual/CFBundles/AboutBundles/AboutBundles.html#//apple_ref/doc/uid/10000123i-CH100-SW1).
-
-A package is any directory that the Finder presents to the user as if it were a single file (you can use the **Reveal Package Contents** command in the Finder to look inside).
-
-A bundle is a directory with a standardized hierarchical structure that holds executable code and the resources used by that code.
-
-Sketch Plugins don’t allow native compiled code, but we do use the standard bundle layout (resources, for example, live in the Resources/ folder in the bundle), with the plugin-specific files located in a Sketch/ directory.
-
-## Handlers
-
-Plugin commands are implemented by handlers.
-
-These are simply JavaScript functions which live in a `.js` file in the Plugin bundle, and which take a single parameter containing some context.
-
-Here’s a simple example:
-
-```js
-export function doMyCommand(context) {
-  context.document.currentPage().deselectAllLayers()
-}
-```
-
-In the manifest file, you specify a dictionary describing each command that the Plugin defines.
-
-In this dictionary, _script_ and _handler_ keys tell Sketch which script file to look in, and which handler to run.
-
-You are free to put each command implementation into its own script file, or to put them all in a single file.
-
-You must specify the _script_ key for each command.
-
-If you put each command in its own script file, you can omit the _handler_ key. In this case, Sketch will default to calling the `export default function () {}` handler.
+- [Plugin bundle](/plugins/plugin-bundle)
+- [Plugin manifest](/plugins/plugin-manifest)
+- [JavaScript environment](/plugins/javascript-environment)
+- [Internal API](/plugins/internal-api)

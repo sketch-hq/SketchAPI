@@ -40,4 +40,4 @@ select-shapes.sketchplugin
 
 ## Plugin Manifest file
 
-For Sketch to initialize the plugin correctly, the `manifest.json` must be included in the plugin bundle. It defines how the scripts can be called from either the menu or a keyboard shortcut, or triggered by user activity within Sketch. For more information, see the [manifest documentation](/plugins/manifest).
+For Sketch to initialize the plugin correctly, the `manifest.json` must be included in the plugin bundle. It defines how the scripts can be called from either the menu or a keyboard shortcut, or triggered by user activity within Sketch. For more information, see the [manifest documentation](/plugins/plugin-manifest).

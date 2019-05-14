@@ -9,7 +9,7 @@ order: 102
 
 Run plugins from the command-line with `sketchtool` for automated testing of a pluging or as part, a continuous integration workflow and other automated tasks.
 
-Specify the path to the plugin and the command identifier as defined in the [plugin manifest](/plugins/manifest).
+Specify the path to the plugin and the command identifier as defined in the [plugin manifest](/plugins/plugin-manifest).
 
 ```sh
 sketchtool run ~/Library/Application\ Support/com.bohemiancoding.sketch3/Plugins/select-shapes.sketchplugin rectangles
