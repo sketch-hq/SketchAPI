@@ -195,7 +195,7 @@ if (!isRunningOnJenkins()) {
   test('should save a file', () =>
     new Promise((resolve, reject) => {
       _document.save(
-        '~/Desktop/sketch-api-unit-tests.sketch',
+        '~/Desktop/SketchAPI-tests-assets/sketch-api-unit-tests.sketch',
         (err, result) => {
           if (err) {
             return reject(err)
@@ -208,7 +208,7 @@ if (!isRunningOnJenkins()) {
       expect(_document.path).toBe(
         String(
           NSString.stringWithString(
-            '~/Desktop/sketch-api-unit-tests.sketch'
+            '~/Desktop/SketchAPI-tests-assets/sketch-api-unit-tests.sketch'
           ).stringByExpandingTildeInPath()
         )
       )
@@ -227,14 +227,15 @@ if (!isRunningOnJenkins()) {
       expect(_document.path).toBe(
         String(
           NSString.stringWithString(
-            '~/Desktop/sketch-api-unit-tests.sketch'
+            '~/Desktop/SketchAPI-tests-assets/sketch-api-unit-tests.sketch'
           ).stringByExpandingTildeInPath()
         )
       )
     }))
 
   test('should save a file to a specific path when setting the path', () => {
-    _document.path = '~/Desktop/sketch-api-unit-tests-2.sketch'
+    _document.path =
+      '~/Desktop/SketchAPI-tests-assets/sketch-api-unit-tests-2.sketch'
     return new Promise((resolve, reject) => {
       _document.save((err, result) => {
         if (err) {
@@ -247,7 +248,7 @@ if (!isRunningOnJenkins()) {
       expect(_document.path).toBe(
         String(
           NSString.stringWithString(
-            '~/Desktop/sketch-api-unit-tests-2.sketch'
+            '~/Desktop/SketchAPI-tests-assets/sketch-api-unit-tests-2.sketch'
           ).stringByExpandingTildeInPath()
         )
       )
@@ -261,7 +262,9 @@ if (!isRunningOnJenkins()) {
   })
 
   test('should open a file', () => {
-    const document = Document.open('~/Desktop/sketch-api-unit-tests.sketch')
+    const document = Document.open(
+      '~/Desktop/SketchAPI-tests-assets/sketch-api-unit-tests.sketch'
+    )
     const documents = Document.getDocuments()
     expect(documents.find(d => d.id === document.id)).toEqual(document)
     // close it again because when watching the tests, it will open dozens of documents
@@ -270,7 +273,9 @@ if (!isRunningOnJenkins()) {
 
   test('should fail to open a non-existing file', () => {
     try {
-      Document.open('~/Desktop/non-existing-sketch-api-unit-tests.sketch')
+      Document.open(
+        '~/Desktop/SketchAPI-tests-assets/non-existing-sketch-api-unit-tests.sketch'
+      )
       expect(true).toBe(false)
     } catch (err) {
       expect(err.message).toMatch(

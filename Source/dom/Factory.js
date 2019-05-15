@@ -5,7 +5,9 @@ export const Factory = {
   registerClass(boxedClass, nativeClass) {
     if (!this._typeToBox[boxedClass.type]) {
       this._typeToBox[boxedClass.type] = boxedClass
-      this._typeToNative[boxedClass.type] = nativeClass
+      this._typeToNative[boxedClass.type] = [nativeClass]
+    } else {
+      this._typeToNative[boxedClass.type].push(nativeClass)
     }
     this._nativeToBox[String(nativeClass.class())] = boxedClass
   },
@@ -19,10 +21,10 @@ export const Factory = {
   },
   createNative(type) {
     const _type = type && type.type ? type.type : type
-    const nativeClass = this._typeToNative[_type]
-    if (!nativeClass) {
+    const nativeClasses = this._typeToNative[_type]
+    if (!nativeClasses || !nativeClasses.length) {
       throw new Error(`don't know how to create a native ${_type}`)
     }
-    return nativeClass
+    return nativeClasses[0]
   },
 }

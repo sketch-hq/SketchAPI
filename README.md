@@ -2,16 +2,16 @@
 
 This is a JavaScript API for Sketch. The intention is to make something which is:
 
+- idiomatic JavaScript
 - an easily understandable subset of the full internals of Sketch
 - fully supported by Bohemian between releases (ie. we try not to change it, unlike our internal API which we can and do change whenever we need to)
-- idiomatic JavaScript
 - still allows you to drop down to our internal API when absolutely necessary
 
 This API is a very core layer which interfaces with Sketch itself. It's intentionally simple, and we want to keep it that way. If you feel like adding some high-level code to it, it’s probably better to add it to a community-maintained library that can be used on top of the API, and keep it separate from the core API effort.
 
 ![API layers](https://cloud.githubusercontent.com/assets/206306/19645098/f7d3615c-99ea-11e6-962a-439fb553bf2d.png)
 
-_Comments and suggestions for this API are welcome - [file an issue](https://github.com/BohemianCoding/SketchAPI/issues) to discuss it or send them to developers@sketch.com._
+_Comments and suggestions for this API are welcome - [file an issue](https://github.com/BohemianCoding/SketchAPI/issues) to discuss it or send them to developer@sketch.com._
 
 ## Installation
 
@@ -102,7 +102,7 @@ sketch.UI.getInputFromUser(
 )
 ```
 
-For more examples, we recommend checking out the [examples](./examples).
+For more examples, we recommend checking out the [examples section of the developer website](https://developer.sketch.com/examples/).
 
 Happy coding!
 

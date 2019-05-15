@@ -5,7 +5,7 @@ categories: scripting update
 
 We've been hard at work over the last few weeks here on some updates to the Plugin system.
 
-Some of these will be rolling out along with the upcoming 3.8 release, [which is now in beta](http://www.sketchapp.com/beta/). Others will come later, but in both cases, we wanted to give everyone in the developer community some early warning.
+Some of these will be rolling out along with the upcoming 3.8 release, [which is now in beta](http://sketch.com/beta/). Others will come later, but in both cases, we wanted to give everyone in the developer community some early warning.
 
 ## Deprecated APIs
 

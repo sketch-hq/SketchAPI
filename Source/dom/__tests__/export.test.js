@@ -1,5 +1,6 @@
 /* globals expect, test */
 import { Buffer } from 'buffer'
+import fs from '@skpm/fs'
 import { isRunningOnJenkins } from '../../test-utils'
 import { exportObject, objectFromJSON } from '../export'
 import { Shape } from '../layers/Shape'
@@ -45,19 +46,6 @@ test('Should fail with no object provided', () => {
   }
 })
 
-if (!isRunningOnJenkins()) {
-  test('Should return a buffer', (context, document) => {
-    const object = new Shape({
-      parent: document.selectedPage,
-    })
-    const buffer = exportObject(object, {
-      formats: 'png',
-      output: false,
-    })
-    expect(Buffer.isBuffer(buffer)).toBe(true)
-  })
-}
-
 test('should fail with to return with multiple formats', () => {
   try {
     const object = new Shape()
@@ -70,3 +58,74 @@ test('should fail with to return with multiple formats', () => {
     expect(err.message).toMatch('Can only return 1 format with no output type')
   }
 })
+
+if (!isRunningOnJenkins()) {
+  test('Should return a buffer', (context, document) => {
+    const object = new Shape({
+      parent: document.selectedPage,
+    })
+    const buffer = exportObject(object, {
+      formats: 'png',
+      output: false,
+    })
+    expect(Buffer.isBuffer(buffer)).toBe(true)
+  })
+
+  test('Should export a page to png file', (context, document) => {
+    const filePath = NSString.stringWithString(
+      '~/Desktop/SketchAPI-tests-assets/Page 1.png'
+    ).stringByExpandingTildeInPath()
+    try {
+      fs.unlinkSync(filePath)
+    } catch (err) {
+      // just ignore
+    }
+    // eslint-disable-next-line no-unused-vars
+    const object = new Shape({
+      parent: document.selectedPage,
+    })
+    exportObject(document.selectedPage, {
+      formats: 'png',
+      output: '~/Desktop/SketchAPI-tests-assets',
+    })
+    expect(fs.existsSync(filePath)).toBe(true)
+  })
+
+  test('Should export a shape to png file', (context, document) => {
+    const filePath = NSString.stringWithString(
+      '~/Desktop/SketchAPI-tests-assets/Shape.png'
+    ).stringByExpandingTildeInPath()
+    try {
+      fs.unlinkSync(filePath)
+    } catch (err) {
+      // just ignore
+    }
+    const object = new Shape({
+      parent: document.selectedPage,
+    })
+    exportObject(object, {
+      formats: 'png',
+      output: '~/Desktop/SketchAPI-tests-assets',
+    })
+    expect(fs.existsSync(filePath)).toBe(true)
+  })
+
+  test('Should export a shape to json file', (context, document) => {
+    const filePath = NSString.stringWithString(
+      '~/Desktop/SketchAPI-tests-assets/Shape.json'
+    ).stringByExpandingTildeInPath()
+    try {
+      fs.unlinkSync(filePath)
+    } catch (err) {
+      // just ignore
+    }
+    const object = new Shape({
+      parent: document.selectedPage,
+    })
+    exportObject(object, {
+      formats: 'json',
+      output: '~/Desktop/SketchAPI-tests-assets',
+    })
+    expect(fs.existsSync(filePath)).toBe(true)
+  })
+}

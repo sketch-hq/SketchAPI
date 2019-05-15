@@ -1,6 +1,6 @@
-# developer.sketchapp.com
+# developer.sketch.com
 
-This repository powers the development site for [Sketch](http://sketch.com), that lives at [developer.sketch.com](http://developer.sketch.com).
+This repository powers the development site for [Sketch](http://sketch.com), that lives at [developer.sketch.com](https://developer.sketch.com).
 
 ## Contribute!
 
@@ -10,7 +10,7 @@ We use [Jekyll](http://jekyllrb.com) as our content backend, so make sure to rea
 
 ## Setup
 
-If you want to get the site working locally, you'll need to have [node](https://nodejs.org/en/) and [bundler](http://bundler.io) installed. On OS X you'll also need to have Xcode's command line tools installed (`xcode-select --install`).
+If you want to get the site working locally, you'll need to have [node](https://nodejs.org/en/) and [bundler](http://bundler.io) installed. On OS X you'll also need to have Xcode's command-line tools installed (`xcode-select --install`).
 
 Once you have them, run this:
 

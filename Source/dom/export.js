@@ -85,7 +85,7 @@ function exportToImageFile(nativeObjects, options) {
   )
 
   // export the pages
-  pages.forEach(exporter.exportPage)
+  pages.forEach(page => exporter.exportPage(page))
 
   // export the layers
   if (layers.length) {

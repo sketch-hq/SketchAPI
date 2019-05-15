@@ -37,6 +37,8 @@ const {
   globalAssets,
 } = require('./globalAssets')
 
+const { find } = require('./find')
+
 const Flow = {
   AnimationType,
   BackTarget,
@@ -72,6 +74,7 @@ const DOM = {
   getGlobalGradients,
   globalAssets,
   Flow,
+  find,
 }
 
 module.exports = DOM
