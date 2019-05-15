@@ -16,7 +16,7 @@ Wouldn’t it be even nicer if these scripts could run unattended, maybe in resp
 
 In some cases, there may be existing chains of tools and scripts in place as part of your (or your company’s) workflow. Wouldn’t it be nice if you could integrate Sketch with these?
 
-This is why we made [sketchtool](http://www.sketchapp.com/tool/).
+This is why we made [sketchtool](http://sketch.com/tool/).
 
 ## What It Isn’t
 
@@ -48,7 +48,7 @@ Similarly
 
 ```
 sketchtool list artboards Test.sketch
-sketchtool list slices Test.sketch 
+sketchtool list slices Test.sketch
 ```
 
 does the same for the artboards and slices (and exported layers) in a document.
@@ -105,6 +105,6 @@ In the future, we may expand sketchtool to do more.
 
 If you have a feature request, a bug report, or just a story to tell about the cool things that you’re doing with it, please do get in touch.
 
-You can download the latest version of sketchtool [here](http://www.sketchapp.com/tool/).
+You can download the latest version of sketchtool [here](http://sketch.com/tool/).
 
 (For comments, I’m [@samdeane](https://twitter.com/samdeane) on Twitter)

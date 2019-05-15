@@ -44,9 +44,6 @@ collections:
   actions:
     output: true
     permalink: /reference/action/:path/
-  guides:
-    output: true
-    permalink: /guides/:path/
   posts:
     output: true
     permalink: /blog/:path/
@@ -68,7 +65,7 @@ defaults:
       script: "/js/search.js"
   -
     scope:
-      type: "guides"
+      type: "pages"
     values:
       layout: "sidebar-page"
       script: "/js/search.js"

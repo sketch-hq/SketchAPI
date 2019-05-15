@@ -8,7 +8,7 @@ section: models
 var overrides = symbolInstance.overrides
 ```
 
-A [Symbol](https://www.sketchapp.com/docs/symbols/) override. This component is not exposed, it is only returned when accessing the `overrides` of a [Symbol Instance](#symbol-instance) or [Symbol Master](#symbol-master). The overrides are not available until after the instance is injected into the document.
+A [Symbol](https://sketch.com/docs/symbols/) override. This component is not exposed, it is only returned when accessing the `overrides` of a [Symbol Instance](#symbol-instance) or [Symbol Master](#symbol-master). The overrides are not available until after the instance is injected into the document.
 
 | Properties                                                                                                      |                                                                                                                                                                                                                                                                                                                    |
 | --------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |

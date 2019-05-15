@@ -3,7 +3,10 @@
     "[Fixed] Changing the `pointType` of a CurvePoint wouldn't always restore the control points",
     "[Fixed] Do not default to `ShapeType.Rectangle` if some points are specified when create a new ShapePath",
     "[Improved] Added multiline functionality to string inputs on `UI.getInputFromUser`",
-    "[New] Expose substring in `Text.fragment`"
+    "[New] Expose substring in `Text.fragment`",
+    "[New] Add a `find` method to make it easy to look for specific layers",
+    "[Fixed] Fix setting layers of a group when the layers already had a parent",
+    "[Fixed] `symbolMaster.getParentSymbolMaster` used to throw an error. It will now return `undefined`"
   ],
   "releases": {
     "55": [

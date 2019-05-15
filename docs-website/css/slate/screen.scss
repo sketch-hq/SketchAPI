@@ -1,8 +1,9 @@
 ---
 # Slate screen CSS
 ---
+
 @charset "utf-8";
-@import "base/variables";
+@import 'base/variables';
 @import 'slate/reset-main-styles';
 @import 'slate/normalize';
 @import 'slate/variables';
@@ -29,7 +30,8 @@ under the License.
 // GENERAL STUFF
 ////////////////////////////////////////////////////////////////////////////////
 
-html, body {
+html,
+body {
   color: $main-text;
   padding: 0;
   margin: 0;
@@ -46,7 +48,7 @@ html, body {
 
 #toc > ul > li > a > span {
   float: right;
-  background-color: #2484FF;
+  background-color: #2484ff;
   border-radius: 40px;
   width: 20px;
 }
@@ -65,6 +67,7 @@ html, body {
   background-color: $nav-bg;
   font-size: 16px;
   font-weight: bold;
+  padding-top: 3.125rem + 0.4375rem + 0.4375rem;
 
   // language selector for mobile devices
   .lang-selector {
@@ -76,14 +79,14 @@ html, body {
   }
 
   // This is the logo at the top of the ToC
-  &>.sketch-logo {
+  & > .sketch-logo {
     background: $background-dark;
     padding: 6px 50px;
     height: 65px;
     display: inline-block;
   }
 
-  &>.search {
+  & > .search {
     position: relative;
 
     input {
@@ -157,11 +160,11 @@ html, body {
     }
   }
 
-
   // The Table of Contents is composed of multiple nested
   // unordered lists.  These styles remove the default
   // styling of an unordered list because it is ugly.
-  ul, li {
+  ul,
+  li {
     list-style: none;
     margin: 0;
     padding: 0;
@@ -210,7 +213,8 @@ html, body {
     margin-top: 1em;
     border-top: 1px dashed $nav-footer-border-color;
 
-    li,a {
+    li,
+    a {
       color: $nav-text;
       text-decoration: none;
     }
@@ -227,7 +231,8 @@ html, body {
   }
 }
 
-.toc-link, .toc-footer li {
+.toc-link,
+.toc-footer li {
   display: block;
   margin: 0;
   padding: 6px 20px;
@@ -275,22 +280,26 @@ html, body {
 
   transition: left 0.3s ease-in-out;
 
-  &:hover { opacity: 1; }
-  &.open {left: $nav-width}
+  &:hover {
+    opacity: 1;
+  }
+  &.open {
+    left: $nav-width;
+  }
 }
-
 
 ////////////////////////////////////////////////////////////////////////////////
 // PAGE LAYOUT AND CODE SAMPLE BACKGROUND
 ////////////////////////////////////////////////////////////////////////////////
 
-.page-wrapper {
+.content-wrapper {
   margin-left: $nav-width;
   position: relative;
-  z-index: 10;
+  z-index: 1;
   background-color: $main-bg;
   min-height: 100%;
 
+  padding-top: 3.125rem + 0.4375rem + 0.4375rem;
   padding-bottom: 1px; // prevent margin overflow
 
   // The dark box is what gives the code samples their dark background.
@@ -320,14 +329,15 @@ html, body {
   font-weight: bold;
   a {
     display: block;
-    float:left;
+    float: left;
     color: $lang-select-text;
     text-decoration: none;
     padding: 0 10px;
     line-height: 30px;
     outline: 0;
 
-    &:active, &:focus {
+    &:active,
+    &:focus {
       background-color: $lang-select-pressed-bg;
       color: $lang-select-pressed-text;
     }
@@ -363,7 +373,18 @@ html, body {
     clear: both;
   }
 
-  &>h1, &>h2, &>h3, &>h4, &>h5, &>h6, &>p, &>table, &>ul, &>ol, &>aside, &>dl {
+  & > h1,
+  & > h2,
+  & > h3,
+  & > h4,
+  & > h5,
+  & > h6,
+  & > p,
+  & > table,
+  & > ul,
+  & > ol,
+  & > aside,
+  & > dl {
     margin-right: $examples-width !important;
     padding: 0 $main-padding;
     box-sizing: border-box;
@@ -372,16 +393,20 @@ html, body {
     @extend %left-col;
   }
 
-  &>ul, &>ol {
+  & > ul,
+  & > ol {
     padding-left: $main-padding + 15px;
   }
 
   // the div is the tocify hidden div for placeholding stuff
-  &>h1, &>h2, &>div {
-    clear:both;
+  & > h1,
+  & > h2,
+  & > div {
+    clear: both;
   }
 
-  h1, h2 {
+  h1,
+  h2 {
     font-weight: 300;
     line-height: 32px;
     color: #292e31;
@@ -400,29 +425,38 @@ html, body {
     margin-top: auto;
   }
 
-  h1:first-child, div:first-child + h1 {
+  h1:first-child,
+  div:first-child + h1 {
     border-top-width: 0;
   }
 
   // h2s right after h1s should bump right up
   // against the h1s.
-  h1 + h2, h1 + div + h2 {
+  h1 + h2,
+  h1 + div + h2 {
     margin-top: $h1-margin-bottom * -1;
     border-top: none;
   }
 
-  h3, h4, h5, h6 {
+  h3,
+  h4,
+  h5,
+  h6 {
     @extend %header-font;
     font-size: 15px;
     margin-top: 2.5em;
     margin-bottom: 0.8em;
   }
 
-  h4, h5, h6 {
+  h4,
+  h5,
+  h6 {
     font-size: 10px;
   }
 
-  h2 > code, h3 > code, h4 > code {
+  h2 > code,
+  h3 > code,
+  h4 > code {
     font-size: inherit;
     line-height: inherit;
     font-family: inherit;
@@ -441,7 +475,8 @@ html, body {
     margin-right: 0% !important;
     width: 50%;
 
-    th, td {
+    th,
+    td {
       text-align: left;
       vertical-align: top;
       code {
@@ -499,7 +534,10 @@ html, body {
     margin-left: 15px;
   }
 
-  p, li, dt, dd {
+  p,
+  li,
+  dt,
+  dd {
     line-height: 1.6;
     margin-top: 0;
   }
@@ -509,14 +547,14 @@ html, body {
   }
 
   code {
-    background-color: rgba(0,0,0,0.05);
+    background-color: rgba(0, 0, 0, 0.05);
     padding: 3px;
     border-radius: 3px;
     @extend %break-words;
     @extend %code-font;
   }
 
-  pre>code {
+  pre > code {
     background-color: transparent;
     padding: 0;
   }
@@ -560,8 +598,8 @@ html, body {
     padding: 2px;
     margin: -3px;
     border-radius: 4px;
-    border: 1px solid #F7E633;
-    background: linear-gradient(to top left, #F7E633 0%, #F1D32F 100%);
+    border: 1px solid #f7e633;
+    background: linear-gradient(to top left, #f7e633 0%, #f1d32f 100%);
   }
 }
 
@@ -571,21 +609,24 @@ html, body {
 // This is all the stuff that appears in the right half of the page
 
 .content {
-  pre, blockquote {
+  pre,
+  blockquote {
     background-color: $code-bg;
     color: #fff;
 
     margin: 0;
     width: $examples-width;
 
-    float:right;
-    clear:right;
+    float: right;
+    clear: right;
 
     box-sizing: border-box;
 
     @extend %right-col;
 
-    &>p { margin: 0; }
+    & > p {
+      margin: 0;
+    }
 
     a {
       color: #fff;
@@ -603,12 +644,19 @@ html, body {
 
   blockquote {
     background-color: $code-annotation-bg;
-    &>p {
+    & > p {
       font-size: 1rem;
       padding: $code-annotation-padding 2em;
       color: #eee;
     }
   }
+}
+
+// account for the header eating some space
+:target:before {
+  content: '';
+  display: block;
+  height: 1em;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -620,14 +668,16 @@ html, body {
 @media (max-width: $tablet-width) {
   .toc-wrapper {
     left: -$nav-width;
+    padding-top: 3.125rem + 0.1875rem + 0.1875rem;
 
     &.open {
       left: 0;
     }
   }
 
-  .page-wrapper {
+  .content-wrapper {
     margin-left: 0;
+    padding-top: 3.125rem + 0.1875rem + 0.1875rem;
   }
 
   #nav-button {
@@ -653,7 +703,7 @@ html, body {
     display: block;
   }
 
-  .page-wrapper .lang-selector {
+  .content-wrapper .lang-selector {
     display: none;
   }
 
@@ -667,10 +717,14 @@ html, body {
   }
 }
 
-.highlight .c, .highlight .cm, .highlight .c1, .highlight .cs {
+.highlight .c,
+.highlight .cm,
+.highlight .c1,
+.highlight .cs {
   color: #909090;
 }
 
-.highlight, .highlight .w {
+.highlight,
+.highlight .w {
   background-color: $code-bg;
 }
