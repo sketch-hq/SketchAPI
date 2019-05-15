@@ -10,24 +10,24 @@ Note that the Sketch API is a work in progress, so everything is likely to chang
 
 [What should I know before I get started?](#what-should-i-know-before-i-get-started)
 
-* [Code of Conduct](#code-of-conduct)
-* [The Roadmap](#the-roadmap)
+- [Code of Conduct](#code-of-conduct)
+- [The Roadmap](#the-roadmap)
 
 [How Can I Contribute?](#how-can-i-contribute)
 
-* [Reporting Bugs](#reporting-bugs)
-* [Suggesting Enhancements](#suggesting-enhancements)
-* [Help Wanted](#help-wanted)
+- [Reporting Bugs](#reporting-bugs)
+- [Suggesting Enhancements](#suggesting-enhancements)
+- [Help Wanted](#help-wanted)
 
 [Additional Notes](#additional-notes)
 
-* [Issue and Pull Request Labels](#issue-and-pull-request-labels)
+- [Issue and Pull Request Labels](#issue-and-pull-request-labels)
 
 ## What should I know before I get started?
 
 ### Code of Conduct
 
-This project adheres to the Contributor Covenant [code of conduct](/CODE_OF_CONDUCT.md). By participating, you are expected to uphold this code. Please report unacceptable behavior to [developers@sketch.com](mailto:developers@sketch.com).
+This project adheres to the Contributor Covenant [code of conduct](/CODE_OF_CONDUCT.md). By participating, you are expected to uphold this code. Please report unacceptable behavior to [developer@sketch.com](mailto:developer@sketch.com).
 
 ### The Roadmap
 
@@ -59,9 +59,9 @@ Simply create an issue on the [Sketch API issue tracker](https://github.com/Bohe
 
 The information we are interested in includes:
 
-* details about your environment - which Sketch version, which operating system
-* details about reproducing the issue - what steps to take, what happens, how often it happens
-* other relevant information - log files, screenshots, etc.
+- details about your environment - which Sketch version, which operating system
+- details about reproducing the issue - what steps to take, what happens, how often it happens
+- other relevant information - log files, screenshots, etc.
 
 ### Suggesting Enhancements
 
@@ -79,20 +79,20 @@ Enhancement suggestions are tracked as [GitHub issues](https://guides.github.com
 
 Simply create an issue on the [Sketch issue tracker](https://github.com/BohemianCoding/SketchAPI/issues) and provide the following information:
 
-* **Use a clear and descriptive title** for the issue to identify the suggestion.
-* **Provide a step-by-step description of the suggested enhancement** in as much detail as possible. This additional context helps the maintainers to understand the enhancement from your perspective
-* **Explain why this enhancement would be useful** to Sketch plugin developers.
-* **Include screenshots and animated GIFs** if relevant to help you demonstrate the steps or point out the part of Sketch which the suggestion is related to. You can use [this tool](https://getkap.co) to record GIFs.
-* **List some plugins where this enhancement would be useful, if applicable.**
+- **Use a clear and descriptive title** for the issue to identify the suggestion.
+- **Provide a step-by-step description of the suggested enhancement** in as much detail as possible. This additional context helps the maintainers to understand the enhancement from your perspective
+- **Explain why this enhancement would be useful** to Sketch plugin developers.
+- **Include screenshots and animated GIFs** if relevant to help you demonstrate the steps or point out the part of Sketch which the suggestion is related to. You can use [this tool](https://getkap.co) to record GIFs.
+- **List some plugins where this enhancement would be useful, if applicable.**
 
 ### Help Wanted
 
 As part of building the Sketch API, we'll identify tasks that are good for external contributors to pick up. These tasks:
 
-* have low impact, or have a known workaround
-* should be addressed
-* have a narrow scope and/or easy reproduction steps
-* can be worked on independent of other tasks
+- have low impact, or have a known workaround
+- should be addressed
+- have a narrow scope and/or easy reproduction steps
+- can be worked on independent of other tasks
 
 These issues will be labelled as [`help wanted`](https://github.com/BohemianCoding/SketchAPI/labels/help%20wanted) in the repository. If you are interested in contributing to the project, please comment on the issue to let the core team (and the community) know you are interested in the issue.
 

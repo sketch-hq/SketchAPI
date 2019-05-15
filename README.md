@@ -2,16 +2,16 @@
 
 This is a prototype JavaScript API for Sketch. It's still a work in progress, but the intention is to make something which is:
 
-* native JavaScript
-* an easily understandable subset of the full internals of Sketch
-* fully supported by Bohemian between releases (ie we try not to change it, unlike our internal API which we can and do change whenever we need to)
-* still allows you to drop down to our internal API when absolutely necessary.
+- native JavaScript
+- an easily understandable subset of the full internals of Sketch
+- fully supported by Bohemian between releases (ie we try not to change it, unlike our internal API which we can and do change whenever we need to)
+- still allows you to drop down to our internal API when absolutely necessary.
 
 This API is a very core layer which interfaces with Sketch itself. It's intentionally simple, and we want to keep it that way. If you feel like adding some high-level code to it, it’s probably better to add it to a community-maintained library that can be used on top of the API, and keep it separate from the core API effort.
 
 ![API layers](https://cloud.githubusercontent.com/assets/206306/19645098/f7d3615c-99ea-11e6-962a-439fb553bf2d.png)
 
-Comments and suggestions for this API are welcome - send them to developers@sketch.com, or [file an issue](https://github.com/BohemianCoding/SketchAPI/issues) to discuss it.
+Comments and suggestions for this API are welcome - send them to developer@sketch.com, or [file an issue](https://github.com/BohemianCoding/SketchAPI/issues) to discuss it.
 
 ## Installation
 
@@ -25,11 +25,11 @@ var api = require('sketch')
 
 The API exposed is deliberately thin at the moment and primarily covers the following areas:
 
-* obtaining the selected document, page, and layers
-* iterating over the selection
-* iterating over any page, artboard or group
-* finding layers by name or id
-* creating new layers
+- obtaining the selected document, page, and layers
+- iterating over the selection
+- iterating over any page, artboard or group
+- finding layers by name or id
+- creating new layers
 
 The approach taken is to wrap the native Sketch model objects inside JavaScript objects. These are thin wrappers, and contain no state - they just exist as a way to provide a cleaner and more stable coding interface to the underlying model.
 
@@ -120,7 +120,7 @@ sketch.Settings.setSettingForKey('setting-to-remember', outputString)
 log(sketch.Settings.settingForKey('setting-to-remember'))
 ```
 
-For more examples, we recommend checking out the [examples section of the developer website](http://developer.sketchapp.com/examples/).
+For more examples, we recommend checking out the [examples section of the developer website](https://developer.sketch.com/examples/).
 
 Happy coding!
 
@@ -171,7 +171,6 @@ npm run test
 npm run test:watch
 ```
 
-
 If you want to run the tests with a specific version of Sketch, you can use
 
 ```
@@ -197,7 +196,7 @@ For more details on what happens when you run that command, check `scripts/deplo
 
 We would like to thank:
 
-* [Logan Collins](https://github.com/logancollins) for [Mocha](https://github.com/logancollins/Mocha), which powers Cocoascript.
-* [Gus Mueller](https://github.com/ccgus) for [Cocoascript](https://github.com/ccgus/CocoaScript), which powers our plugin engine.
-* [Andrey Shakhmin](https://github.com/turbobabr), for his inspiration during the [Hamburg Hackathon](http://designtoolshackday.com), where he showed us a clean way to use node modules inside Sketch.
-* The Sketch plugin community everywhere, for such awesome work.
+- [Logan Collins](https://github.com/logancollins) for [Mocha](https://github.com/logancollins/Mocha), which powers Cocoascript.
+- [Gus Mueller](https://github.com/ccgus) for [Cocoascript](https://github.com/ccgus/CocoaScript), which powers our plugin engine.
+- [Andrey Shakhmin](https://github.com/turbobabr), for his inspiration during the [Hamburg Hackathon](http://designtoolshackday.com), where he showed us a clean way to use node modules inside Sketch.
+- The Sketch plugin community everywhere, for such awesome work.

@@ -14,11 +14,7 @@ test('should create shape paths of different shape type', () => {
       shapeType,
     })
     expect(shapePath.type).toBe('ShapePath')
-    expect(shapePath.shapeType).toBe(
-      shapeType === ShapePath.ShapeType.Custom
-        ? ShapePath.ShapeType.Rectangle
-        : shapeType
-    )
+    expect(shapePath.shapeType).toBe(shapeType)
   })
 })
 
