@@ -5,6 +5,7 @@ chapter: Command-line interface
 permalink: /cli/metadata
 
 order: 104
+excerpt: Retrieve Sketch document metadata including version information and the list of contained pages and artboards
 ---
 
 Retrieve the Sketch document metadata with `sketchtool`. This includes information about the Sketch version used to save to save the file, document format version as well as the pages and artboards of the Sketch document.

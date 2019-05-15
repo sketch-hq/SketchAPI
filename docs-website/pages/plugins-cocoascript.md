@@ -12,6 +12,7 @@ redirect_from:
 summary: Further details on using CocoaScript
 
 order: 203
+excerpt: CocoaScript is a bridge providing access to the internal Sketch APIs and macOS frameworks in JavaScript
 ---
 
 [CocoaScript](https://github.com/ccgus/CocoaScript) is a bridge providing access to the internal Sketch APIs and macOS frameworks in JavaScript.

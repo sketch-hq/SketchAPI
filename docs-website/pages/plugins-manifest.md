@@ -5,6 +5,7 @@ chapter: Concepts
 permalink: /plugins/plugin-manifest
 
 order: 201
+excerpt: The manifest is a JSON file that provides information about a plugin such as author, description, icon and where to get the latest update from
 ---
 
 The manifest is a JSON file that provides information about a plugin such as author, description, icon and where to get the latest update from. It also tells Sketch how to run the plugin and how it integrates into the _Plugins_ menu.

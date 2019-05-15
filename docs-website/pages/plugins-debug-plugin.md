@@ -11,6 +11,7 @@ redirect_from:
   - /introduction/preferences/
 
 order: 103
+excerpt: Debug and inspect your plugin with the help of logs, Safari Web Inspector and the Sketch DevTools plugin
 ---
 
 Debug and inspect your plugin with the help of logs, Safari Web Inspector and the Sketch DevTools plugin.

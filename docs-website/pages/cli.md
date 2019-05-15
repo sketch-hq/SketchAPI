@@ -7,6 +7,7 @@ redirect_from:
   - /guides/sketchtool/
 
 order: 2
+excerpt: The Sketch command-line interface allows you to export assets, inspect documents and run plugins
 ---
 
 Sketch includes `sketchtool`, a command-line interface to integrate into your save to publish workflow. With `sketchtool` you can:

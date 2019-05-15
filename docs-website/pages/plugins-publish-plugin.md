@@ -10,6 +10,7 @@ redirect_from:
   - /guides/publishing-plugins/
 
 order: 105
+excerpt: Publish a plugin to make it available to the public or just your team and take advantage of Sketch's automatic update mechanism for plugins
 ---
 
 Publish a plugin to make it available to the public or just your team and take advantage of Sketch's automatic update mechanism for plugins. To let others know about your plugin submit to the official listing on the [Sketch website](https://sketch.com/extensions/).

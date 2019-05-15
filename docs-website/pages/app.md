@@ -3,6 +3,7 @@ title: Sketch.app
 permalink: /app
 
 layout: single-page
+excerpt: Use the sketch:// URL schema to open documents in Sketch already focused on specific layers or with a specified zoom level.
 ---
 
 You can integrate Sketch into your app or worflow using the `sketch://` URL scheme. You can even open documents in Sketch already focused on specific layers or with a specified zoom level.

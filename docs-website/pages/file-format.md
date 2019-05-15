@@ -5,6 +5,7 @@ chapter: Concepts
 permalink: /file-format/
 
 order: 3
+excerpt: Sketch documents are stored as ZIP archives containing JSON encoded data
 ---
 
 Sketch documents are stored as ZIP archives containing JSON encoded data. The file format was originally [introduced in Sketch 43](https://sketchplugins.com/d/87-new-file-format-in-sketch-43) and allows for better third-party integration. Generate Sketch documents dynamically, read or modify them without opening them in Sketch.

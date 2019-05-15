@@ -5,6 +5,7 @@ chapter: Command-line interface
 permalink: /cli/run-plugin
 
 order: 102
+excerpt: Run plugins in Sketch from the command-line
 ---
 
 Run plugins from the command-line with `sketchtool` for automated testing of a pluging or as part, a continuous integration workflow and other automated tasks.
