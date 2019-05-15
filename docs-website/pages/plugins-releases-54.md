@@ -6,30 +6,29 @@ chapter: JavaScript API Updates
 permalink: /plugins/updates/new-in-sketch-54
 
 order: 400
----
-#### Released
-09 April, 2019 ([https://www.sketch.com/updates/#version-54](https://www.sketch.com/updates/#version-54))
-
+excerpt: Summary of the changes introduced with Sketch 54
 ---
 
-###  `colors` and `gradients` properties have been added on Document and `globalAssets`
-#### More details
+Released 09 April, 2019 – [_read release notes_](https://www.sketch.com/updates/#version-54))
+
+## Changes
+
+### `colors` and `gradients` properties have been added on Document and `globalAssets`
+
+_GitHub pull request [#345](https://github.com/BohemianCoding/SketchAPI/pull/345) and [#398](https://github.com/BohemianCoding/SketchAPI/pull/398)_
+
 - `sketch.globalAssets` property was added
 - Two new asset types were added
-    - `ColorAsset`
-        - name, type: String (can be null)
-        - color, type: String
-    - `GradientAsset`
-        - name, type: String (can be null)
-        - gradient, type: [Gradient](https://developer.sketchapp.com/reference/api/#gradient)
-
-#### GitHub PRs
-- [https://github.com/BohemianCoding/SketchAPI/pull/345](https://github.com/BohemianCoding/SketchAPI/pull/345)
-- [https://github.com/BohemianCoding/SketchAPI/pull/398](https://github.com/BohemianCoding/SketchAPI/pull/398)
+  - `ColorAsset`
+    - name, type: String (can be null)
+    - color, type: String
+  - `GradientAsset`
+    - name, type: String (can be null)
+    - gradient, type: [Gradient](https://developer.sketchapp.com/reference/api/#gradient)
 
 #### Usage
 
-```
+```js
 var sketch = require('sketch')
 var colors = sketch.globalAssets.colors
 // [ { type: 'ColorAsset', name: null, color: "#febe10ff", ... }]
@@ -37,7 +36,7 @@ var colors = sketch.globalAssets.colors
 
 Setting Global Colors (Be sure to save a copy of your global assets before playing with this!)
 
-```
+```js
 var globalAssets = sketch.globalAssets
 globalAssets.colors = ['#FFFFFF']
 
@@ -49,12 +48,12 @@ globalAssets.colors = ['#FFFFFF']
 // - A hex color string
 
 // To include a name with one of the color objects use a dictionary with `color` and `name`.
-globalAssets.colors = [{name: 'white', color: '#FFFFFF'}]
+globalAssets.colors = [{ name: 'white', color: '#FFFFFF' }]
 ```
 
 Note that this doesn't work
 
-```
+```js
 var globalColors = sketch.globalAssets.colors
 globalColors = ['#FFFFFF']
 
@@ -62,9 +61,9 @@ globalColors = ['#FFFFFF']
 // But you can do globalColors.push(...) which mutates the array.
 ```
 
-Other useful actions
+##### Other useful actions
 
-```
+```js
 // Appending/Pushing a Global Color
 gloablAssets.colors = []
 globalAssets.colors.push('#000000')
@@ -72,18 +71,17 @@ globalAssets.colors.push('#000000')
 // globalAssets.colors returns
 // [ { type: 'ColorAsset', name: null, color: '#000000ff' } ]
 
-
 // Removing a Color
-globalAssets.colors = [{name: 'white', color: '#FFFFFF'}, '#000000']
-globalAssets.colors.splice(1,1)
+globalAssets.colors = [{ name: 'white', color: '#FFFFFF' }, '#000000']
+globalAssets.colors.splice(1, 1)
 
 // globalAssets.colors returns
 // [ { type: 'ColorAsset', name: 'white', color: '#ffffffff' } ]
 ```
 
-Similarily for Gradients
+##### Similarily for Gradients
 
-```
+```js
 var sketch = require('sketch')
 var globalGradients = sketch.globalAssets.gradients
 
@@ -99,28 +97,30 @@ var globalGradients = sketch.globalAssets.gradients
 // ]
 ```
 
-Setting Global Gradients
+##### Setting Global Gradients
 
-```
+```js
 var sketch = require('sketch')
 var Style = require('sketch/dom').Style
 var globalAssets = sketch.globalAssets
 
 const myGradient = {
   gradientType: Style.GradientType.Linear,
-  from: { x: 0.5, y: 0},
-  to: { x: 0.5, y: 1},
+  from: { x: 0.5, y: 0 },
+  to: { x: 0.5, y: 1 },
   stops: [
-    { position: 0, color: '#c0ffee'},
-    { position: 0.5, color: '#0ff1ce'},
-    { position: 1, color: '#bada55', },
-  ]
+    { position: 0, color: '#c0ffee' },
+    { position: 0.5, color: '#0ff1ce' },
+    { position: 1, color: '#bada55' },
+  ],
 }
 
-globalAssets.gradients = [{
-  name: 'My Gradient',
-  gradient: myGradient,
-}]
+globalAssets.gradients = [
+  {
+    name: 'My Gradient',
+    gradient: myGradient,
+  },
+]
 
 // You can set a global gradient with a variety of objects
 // - A native MSGradientAsset
@@ -130,7 +130,7 @@ globalAssets.gradients = [{
 
 Similarly, document colors and document gradients can all be found on `Document`
 
-```
+```js
 var sketch = require('sketch')
 var selectedDocument = sketch.getSelectedDocument()
 
@@ -138,21 +138,18 @@ let documentColors = selectedDocument.colors
 let documentGradients = selectedDocument.gradients
 ```
 
-
-
 ### Shared styles are now `document` properties and can be mutated
 
-#### More Details
-- Two new properties on `document` (try not to get them mixed up as the styles are subtly different!)
-    - `sharedLayerStyles`
-    - `sharedTextStyles`
+[_GitHub pull request_](https://github.com/BohemianCoding/SketchAPI/pull/360/files)
 
-#### GitHub PR
-- [https://github.com/BohemianCoding/SketchAPI/pull/360/files](https://github.com/BohemianCoding/SketchAPI/pull/360/files)
+Two new properties on `document` (try not to get them mixed up as the styles are subtly different!)
+
+- `sharedLayerStyles`
+- `sharedTextStyles`
 
 #### Usage
 
-```
+```js
 var sketch = require('sketch')
 var selectedDocument = sketch.getSelectedDocument()
 
@@ -179,9 +176,9 @@ selectedDocument.sharedTextStyles
 //  ...
 ```
 
-Setting a Shared Style
+##### Setting a Shared Style
 
-```
+```js
 var sketch = require('sketch')
 var selectedDocument = sketch.getSelectedDocument()
 
@@ -190,51 +187,46 @@ selectedDocument.sharedLayerStyles = [] // remove all layer styles
 
 selectedDocument.sharedLayerStyles.push({
   name: 'Layer Style 1',
-  style: { fills: ['#000'] }
+  style: { fills: ['#000'] },
 })
-
 
 // Setting a shared text style
 var Text = require('sketch/dom').Text
 
 var text = new Text({
   text: 'my text',
-  style: { alignment: Text.Alignment.center }
+  style: { alignment: Text.Alignment.center },
 })
 
 selectedDocument.sharedTextStyles = [] // remove all text styles
 
 selectedDocument.sharedTextStyles.push({
   name: 'Style 1',
-  style: text.style
+  style: text.style,
 })
 ```
 
-
-
 ### `layer.index` can now be set
 
-#### More Details
-You can set the index of the layer to move it in the hierarchy. Note that you also have `layer.moveToFront()`, `layer.moveForward()`, `layer.moveToBack()`, and `layer.moveBackward()`
+[_GitHub pull request_](https://github.com/BohemianCoding/SketchAPI/pull/399)
 
-#### GitHub PR
-- [https://github.com/BohemianCoding/SketchAPI/pull/399](https://github.com/BohemianCoding/SketchAPI/pull/399)
+You can set the index of the layer to move it in the hierarchy. Note that you also have `layer.moveToFront()`, `layer.moveForward()`, `layer.moveToBack()`, and `layer.moveBackward()`
 
 #### Usage
 
-```
+```js
 var sketch = require('sketch')
 var Group = sketch.Group
 var page = sketch.getSelectedDocument().selectedPage
 
 const group1 = new Group({
-  parent: page
+  parent: page,
 })
 const group2 = new Group({
-  parent: page
+  parent: page,
 })
 const group3 = new Group({
-  parent: page
+  parent: page,
 })
 
 console.log(group1.index, group2.index, group3.index)
@@ -245,18 +237,15 @@ console.log(group1.index, group2.index, group3.index)
 // 2 0 1
 ```
 
-
-
 ### `aspectRatio` property has been added to `Gradient`
 
-#### More Details
+[_GitHub pull request_](https://github.com/BohemianCoding/SketchAPI/pull/396)
+
 When the gradient is `Radial`, the `from` and `to` points makes one axis of the ellipse of the gradient while the aspect ratio determines the length of the orthogonal axis (`aspectRatio === 1` means that it’s a circle).
 
-#### GitHub PR
-- [https://github.com/BohemianCoding/SketchAPI/pull/396](https://github.com/BohemianCoding/SketchAPI/pull/396)
-
 #### Usage
-```
+
+```js
 var sketch = require('sketch')
 var ShapePath = sketch.ShapePath
 var Rectangle = sketch.Rectangle
@@ -268,41 +257,40 @@ page.layers = []
 
 const myGradient = {
   gradientType: Style.GradientType.Radial,
-  from: { x: 0.5, y: 0},
-  to: { x: 0.5, y: 1},
+  from: { x: 0.5, y: 0 },
+  to: { x: 0.5, y: 1 },
   aspectRatio: 0.2,
   stops: [
-    { position: 0, color: '#c0ffee'},
-    { position: 0.5, color: '#0ff1ce'},
-    { position: 1, color: '#bada55', },
-  ]
+    { position: 0, color: '#c0ffee' },
+    { position: 0.5, color: '#0ff1ce' },
+    { position: 1, color: '#bada55' },
+  ],
 }
 
 let myShape = new ShapePath({
-  name: "my shape",
-  frame: new Rectangle(0,0,100,100),
+  name: 'my shape',
+  frame: new Rectangle(0, 0, 100, 100),
   parent: page,
   style: {
-    fills: [{
-      fill: Style.FillType.Gradient,
-      gradient: myGradient
-    }]
-  }
+    fills: [
+      {
+        fill: Style.FillType.Gradient,
+        gradient: myGradient,
+      },
+    ],
+  },
 })
 ```
 
-
-
 ### `selected` property and `getFrame` method have been added on an symbol override
 
-#### More Details
+[_GitHub pull request_](https://github.com/BohemianCoding/SketchAPI/pull/394)
+
 The frame of an override can be different than the frame of its affected Layer in case where the Symbol Instance has been scaled or, in the case of the example below, the text value is changed for the symbol instance resulting in a shorter frame.
 
-#### GitHub PR
-- [https://github.com/BohemianCoding/SketchAPI/pull/394](https://github.com/BohemianCoding/SketchAPI/pull/394)
-
 #### Usage
-```
+
+```js
 var sketch = require('sketch')
 var ShapePath = sketch.ShapePath
 var Rectangle = sketch.Rectangle
@@ -315,53 +303,53 @@ var page = document.selectedPage
 page.layers = []
 
 let rectangle = new ShapePath({
-  name: "my shape",
-  frame: new Rectangle(0,0,100,100),
+  name: 'my shape',
+  frame: new Rectangle(0, 0, 100, 100),
   style: {
-    fills: [{
-      fill: Style.FillType.Color,
-      color: '#000'
-    }]
-  }
+    fills: [
+      {
+        fill: Style.FillType.Color,
+        color: '#000',
+      },
+    ],
+  },
 })
 
 let text = new Text({
-  text: "my text",
+  text: 'my text',
   style: {
-    textColor: "#FFFFFF",
-    alignment: 'left'
+    textColor: '#FFFFFF',
+    alignment: 'left',
   },
-  frame: new Rectangle(0,0,0,0)
+  frame: new Rectangle(0, 0, 0, 0),
 })
 
 text.adjustToFit()
 
 var symbol = new SymbolMaster({
-  name: "my symbol",
+  name: 'my symbol',
   layers: [rectangle, text],
-  parent: page
+  parent: page,
 })
 
 let symbolInstance = symbol.createNewInstance()
 symbolInstance.parent = page
-symbolInstance.frame.offset(110,0)
-symbolInstance.overrides[0].value = "hi"
+symbolInstance.frame.offset(110, 0)
+symbolInstance.overrides[0].value = 'hi'
 
 symbolInstance.overrides[0].selected = true
 symbolInstance.overrides[0].getFrame().width
 ```
 
-
 ### `layer.duplicate` now works on a layer with no parent
 
-#### More Details
+[_GitHub pull request_](https://github.com/BohemianCoding/SketchAPI/pull/379)
+
 Previously you needed to have a parent in order to duplicate the layer. Now you are free to do so without working around this.
 
-#### GitHub PR
-- [https://github.com/BohemianCoding/SketchAPI/pull/379](https://github.com/BohemianCoding/SketchAPI/pull/379)
-
 #### Usage
-```
+
+```js
 var sketch = require('sketch')
 var ShapePath = sketch.ShapePath
 var Rectangle = sketch.Rectangle
@@ -372,44 +360,40 @@ var page = document.selectedPage
 page.layers = []
 
 let rectangle = new ShapePath({
-  name: "my shape",
-  frame: new Rectangle(0,0,100,100),
+  name: 'my shape',
+  frame: new Rectangle(0, 0, 100, 100),
   style: {
-    fills: [{
-      fill: Style.FillType.Color,
-      color: '#000'
-    }]
+    fills: [
+      {
+        fill: Style.FillType.Color,
+        color: '#000',
+      },
+    ],
   },
 })
 
 let rectangle2 = rectangle.duplicate()
-rectangle2.frame.offset(110,0)
+rectangle2.frame.offset(110, 0)
 
 rectangle.parent = page
 rectangle2.parent = page
 ```
 
-
 ### `symbolInstance.master` now works on an immutable instance
 
-#### More Details
+[_GitHub pull request_](https://github.com/BohemianCoding/SketchAPI/pull/390)
+
 If you ever got an `MSImmutableSymbolInstance` object and attempted to wrap the native sketch object then you would have previously gotten an error. It has now been fixed.
-
-#### GitHub PR
-- [https://github.com/BohemianCoding/SketchAPI/pull/390](https://github.com/BohemianCoding/SketchAPI/pull/390)
-
-
 
 ### You can now remove flow targets with setting `flow` as `undefined` on a Layer
 
-#### More Details
+[_GitHub pull request_](https://github.com/BohemianCoding/SketchAPI/pull/373)
+
 Previously you couldn't remove a flow target. Now you can!
 
-#### GitHub PR
-- [https://github.com/BohemianCoding/SketchAPI/pull/373](https://github.com/BohemianCoding/SketchAPI/pull/373)
-
 #### Usage
-```
+
+```js
 var sketch = require('sketch')
 var Artboard = require('sketch').Artboard
 var Group = require('sketch').Group
@@ -418,38 +402,35 @@ var selectedDocument = sketch.getSelectedDocument()
 
 const artboard = new Artboard({
   name: 'Test1',
-  frame: new Rectangle(0,0,100,100),
-  parent: selectedDocument.selectedPage
+  frame: new Rectangle(0, 0, 100, 100),
+  parent: selectedDocument.selectedPage,
 })
 const artboard2 = new Artboard({
   name: 'Test2',
-  frame: new Rectangle(200,0,100,100),
-  parent: selectedDocument.selectedPage
+  frame: new Rectangle(200, 0, 100, 100),
+  parent: selectedDocument.selectedPage,
 })
 
 const rect = new Group({
   parent: artboard,
-  frame: new Rectangle(0,0,50,50),
+  frame: new Rectangle(0, 0, 50, 50),
   flow: {
     targetId: artboard2.id,
-  }
+  },
 })
 
 rect.flow = undefined
 ```
 
-
-
 ### `pattern` properties have been added to Fill
 
-#### More Details
-- Previously this also applied to the `noise` property as well but Sketch has depreciated the noise fill option in favor of having the noise patterns be image fills.
+[_GitHub pull request_](https://github.com/BohemianCoding/SketchAPI/pull/363)
 
-#### GitHub PR
-- [https://github.com/BohemianCoding/SketchAPI/pull/363](https://github.com/BohemianCoding/SketchAPI/pull/363)
+Previously this also applied to the `noise` property as well but Sketch has depreciated the noise fill option in favor of having the noise patterns be image fills.
 
 #### Usage
-```
+
+```js
 var sketch = require('sketch')
 var Style = sketch.Style
 var ShapePath = sketch.ShapePath
@@ -483,28 +464,24 @@ let rectangle = new ShapePath({
 { type: 'ImageData', nsimage: NSImage, nsdata: NSImageData }
 ```
 
-
-
 ### An image buffer can now be used with `ImageData`
 
-#### More Details
+[_GitHub pull request_](https://github.com/BohemianCoding/SketchAPI/pull/372)
+
 This change helps with the next one (Export now returns a buffer if output is false)
-
-#### GitHub PR
-- [https://github.com/BohemianCoding/SketchAPI/pull/372](https://github.com/BohemianCoding/SketchAPI/pull/372)
-
-
 
 ### `export` now returns a Buffer if `options.output` is `false` and `options.formats` is an image format
 
-#### More Details
+[_GitHub pull request_](https://github.com/BohemianCoding/SketchAPI/pull/361)
+
 If you ever wanted to get at the thumbnail preview image data when something is marked for export you can do so with this new API functionality.
 
 ![Sketch's image export thumbnail highlighted](https://user-images.githubusercontent.com/1228472/39345492-46fb46f0-4a1b-11e8-8f5b-6e6aea73dffd.png)
 
 See [this issue](https://github.com/BohemianCoding/SketchAPI/issues/185) for more info why this was added.
 
-#### Quick Summary of Sketch's export options ####
+#### Quick Summary of Sketch's export options
+
 The method returns
 
 - `undefined` if `options.output` is `undefined` or a string
@@ -513,11 +490,9 @@ The method returns
 - a `Buffer` if `objectToExport` is a single item and `options.formats` is an image format
 - an `Object` if `objectToExport` is a single item and `options.formats` is json
 
-#### GitHub PR
-- [https://github.com/BohemianCoding/SketchAPI/pull/361](https://github.com/BohemianCoding/SketchAPI/pull/361)
-
 #### Usage
-```
+
+```js
 var sketch = require('sketch')
 var ShapePath = sketch.ShapePath
 var Rectangle = sketch.Rectangle
@@ -528,50 +503,42 @@ var page = document.selectedPage
 page.layers = []
 
 let rectangle = new ShapePath({
-  name: "my shape",
-  frame: new Rectangle(0,0,100,100),
+  name: 'my shape',
+  frame: new Rectangle(0, 0, 100, 100),
   style: {
-    fills: [{
-      fill: Style.FillType.Color,
-      color: '#000'
-    }]
+    fills: [
+      {
+        fill: Style.FillType.Color,
+        color: '#000',
+      },
+    ],
   },
-  parent: page
+  parent: page,
 })
 
 const options = { formats: 'png', output: false }
 const buffer = sketch.export(rectangle, options)
 ```
 
-
 ### `getSelectedDocument` will try harder to find your document
 
-#### More Details
+[_GitHub pull request_](https://github.com/BohemianCoding/SketchAPI/pull/363)
+
 If you are using [SKPM](https://github.com/skpm/skpm), SKPM defines `context` as a global so it will prefer to use that first. If there is no current document (via `NSDocumentController.sharedDocumentController().currentDocument()` then Sketch will attempt to use `NSApplication.sharedApplication().orderedDocuments()`. Ultimately, you don't really need to know too much about these underlying changes but it is useful to know that `.getSelectedDocument()` should work reliabily. If its not, be sure to file an issue.
-
-#### GitHub PR
-- [https://github.com/BohemianCoding/SketchAPI/pull/363](https://github.com/BohemianCoding/SketchAPI/pull/363)
-
-
-
 
 ### `console.clear` will now clear the DevTools console
 
-#### More Details
 Use `console.clear()` to clean up your console.
-
-
 
 ### `selectedPage` and `selectedLayers` can now be set on the Document
 
-#### More Details
+[_GitHub pull request_](https://github.com/BohemianCoding/SketchAPI/pull/371)
+
 Previously these were read-only properties. However, now you can pass in a layer or a page to these objects to set them.
 
-#### GitHub PR
-- [https://github.com/BohemianCoding/SketchAPI/pull/371](https://github.com/BohemianCoding/SketchAPI/pull/371)
-
 #### Usage
-```
+
+```js
 var sketch = require('sketch')
 var ShapePath = sketch.ShapePath
 var Rectangle = sketch.Rectangle
@@ -581,30 +548,31 @@ var page = document.selectedPage
 
 // Setting selectedLayers
 let rectangle = new ShapePath({
-  name: "my shape",
-  frame: new Rectangle(0,0,100,100),
+  name: 'my shape',
+  frame: new Rectangle(0, 0, 100, 100),
   style: {
-    fills: [{
-      fill: Style.FillType.Color,
-      color: '#000'
-    }]
+    fills: [
+      {
+        fill: Style.FillType.Color,
+        color: '#000',
+      },
+    ],
   },
-  parent: page
+  parent: page,
 })
 
 let rectangle2 = rectangle.duplicate()
-rectangle2.frame.offset(110,0)
+rectangle2.frame.offset(110, 0)
 
 document.selectedLayers.layers = [rectangle]
 // Note: you can also do
 // rectangle.selected = true
 // however it will just add the rectangle to the selection rather than replacing it
 
-
 // Setting selectedPage
 let newPage = new Page({
-  name: "Second Page",
-  parent: document
+  name: 'Second Page',
+  parent: document,
 })
 
 document.selectedPage = newPage
@@ -612,26 +580,24 @@ document.selectedPage = newPage
 // Note2: You can also do newPage.selected = true
 ```
 
-
 ### Add some methods to deal with the Symbols Page
 
-#### More Details
+[_GitHub pull request_](https://github.com/BohemianCoding/SketchAPI/pull/377)
+
 The "Symbols" page is similar to other pages. The only way it is specific is when creating a Symbol, Sketch will ask the user if they want to move it to that page. You can put Symbols in any page but if you want to respect the convention Sketch put in place, here are a few methods to help you do so.
 
 Adds a few methods on `Page`
 
 - `getSymbolsPage(document)`
-    - Returns a [Page](https://developer.sketchapp.com/reference/api/#page) or `undefined` if there is no Symbols page yet
+  - Returns a [Page](https://developer.sketchapp.com/reference/api/#page) or `undefined` if there is no Symbols page yet
 - `createSymbolsPage()`
-    - Returns a [Page](https://developer.sketchapp.com/reference/api/#page)
+  - Returns a [Page](https://developer.sketchapp.com/reference/api/#page)
 - `isSymbolsPage()`
-    - Returns a `boolean`
-
-#### GitHub PR
-- [https://github.com/BohemianCoding/SketchAPI/pull/377](https://github.com/BohemianCoding/SketchAPI/pull/377)
+  - Returns a `boolean`
 
 #### Usage
-```
+
+```js
 var sketch = require('sketch')
 var Page = sketch.Page
 var document = sketch.getSelectedDocument()
@@ -651,9 +617,11 @@ Note that `.createSymbolsPage()` won't prevent you from creating multiple pages 
 
 If you have multiple pages with "Symbols" I believe that `.isSymbolsPage()` will only be true for the earliest created page with the title "Symbols". Under the hood the API is using:
 
-```
+```js
 page.sketchObject.documentData().symbolsPage() == page.sketchObject
 ```
 
-## Other Releases
-[< Sketch 53](/plugins/release-53)
+## Related resources
+
+- [API reference](/reference/api)
+- [New in Sketch 53](/plugins/updates/new-in-sketch-53)
