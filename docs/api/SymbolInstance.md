@@ -8,7 +8,7 @@ section: layers
 var SymbolInstance = require('sketch/dom').SymbolInstance
 ```
 
-A [Symbol](https://www.sketchapp.com/docs/symbols/) instance. It is an instance of [Layer](#layer) so all the methods defined there are available.
+A [Symbol](https://sketch.com/docs/symbols/) instance. It is an instance of [Layer](#layer) so all the methods defined there are available.
 
 | Properties                                                                  |                                                                                                           |
 | --------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- |

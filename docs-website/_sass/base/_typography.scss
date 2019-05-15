@@ -302,6 +302,11 @@ strong {
     background: $sk-orange6;
   }
 
+hr {
+  border: 1px solid $border-dark;
+  margin: 1.5rem 0;
+}
+
 pre code,
 article blockquote,
 .note {

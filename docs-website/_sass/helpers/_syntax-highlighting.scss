@@ -1,68 +1,216 @@
-.highlighter-rouge { margin-bottom: 1rem; }
-.highlight pre, pre, .highlight .hll, .highlight code { background-color: $background-white; }
-.highlight .c { color: $text-dark-ultra-low; font-style: italic; }
-.highlight .err { color: $sk-orange; background-color: $sk-orange-8; }
-.highlight .k { font-weight: $font-semibold; }
-.highlight .o { font-weight: $font-semibold; }
-.highlight .cm { color: $text-dark-ultra-low; font-style: italic; }
-.highlight .cp { color: $text-dark-ultra-low; font-weight: $font-semibold; }
-.highlight .c1 { color: $text-dark-ultra-low; font-style: italic; }
-.highlight .cs { color: $text-dark-ultra-low; font-weight: $font-semibold; font-style: italic; }
-.highlight .gd { color: $text-dark-high; background-color: $sk-orange-8; }
-.highlight .gd .x { color: $text-dark-high; background-color: $background-light; }
-.highlight .ge { font-style: italic; }
-.highlight .gr { color: $sk-orange2; }
-.highlight .gh { color: $text-dark-ultra-low; }
-.highlight .gi { color: $text-dark-high; background-color: #ddffdd; }
-.highlight .gi .x { color: $text-dark-high; background-color: $sk-teal-2; }
-.highlight .go { color: $text-dark-low; }
-.highlight .gp { color: $text-dark; }
-.highlight .gs { font-weight: $font-semibold; }
-.highlight .gu { color: $sk-purple6; font-weight: $font-semibold; }
-.highlight .gt { color: $sk-orange; }
-.highlight .kc { font-weight: $font-semibold; }
-.highlight .kd { font-weight: $font-semibold; }
-.highlight .kn { font-weight: $font-semibold; }
-.highlight .kp { font-weight: $font-semibold; }
-.highlight .kr { font-weight: $font-semibold; }
-.highlight .kt { color: $sk-purple8; font-weight: $font-semibold; }
-.highlight .m { color: $sk-green2; }
-.highlight .s { color: $sk-orange; }
-.highlight .n { color: $text-dark; }
-.highlight .na { color: $sk-green4; }
-.highlight .nb { color: $sk-blue2; }
-.highlight .nc { color: $sk-purple8; font-weight: $font-semibold; }
-.highlight .no { color: $sk-green4; }
-.highlight .ni { color: $sk-purple4; }
-.highlight .ne { color: $sk-orange; font-weight: $font-semibold; }
-.highlight .nf { color: $sk-orange; font-weight: $font-semibold; }
-.highlight .nn { color: $text-dark; }
-.highlight .nt { color: $sk-orange2; }
-.highlight .nv { color: $sk-green4; }
+.highlighter-rouge {
+  margin-bottom: 1rem;
+}
+.highlight pre,
+pre,
+.highlight .hll,
+.highlight code {
+  background-color: $background-white;
+}
+.highlight .c {
+  color: $text-dark-ultra-low;
+  font-style: italic;
+}
+.highlight .err {
+  color: $sk-orange;
+  background-color: $sk-orange-8;
+}
+.highlight .k {
+  font-weight: $font-semibold;
+}
+.highlight .o {
+  font-weight: $font-semibold;
+}
+.highlight .cm {
+  color: $text-dark-ultra-low;
+  font-style: italic;
+}
+.highlight .cp {
+  color: $text-dark-ultra-low;
+  font-weight: $font-semibold;
+}
+.highlight .c1 {
+  color: $text-dark-ultra-low;
+  font-style: italic;
+}
+.highlight .cs {
+  color: $text-dark-ultra-low;
+  font-weight: $font-semibold;
+  font-style: italic;
+}
+.highlight .gd {
+  color: $text-dark-high;
+  background-color: $sk-orange-8;
+}
+.highlight .gd .x {
+  color: $text-dark-high;
+  background-color: $background-light;
+}
+.highlight .ge {
+  font-style: italic;
+}
+.highlight .gr {
+  color: $sk-orange2;
+}
+.highlight .gh {
+  color: $text-dark-ultra-low;
+}
+.highlight .gi {
+  color: $text-dark-high;
+  background-color: #ddffdd;
+}
+.highlight .gi .x {
+  color: $text-dark-high;
+  background-color: $sk-teal-2;
+}
+.highlight .go {
+  color: $text-dark-low;
+}
+.highlight .gp {
+  color: $text-dark;
+}
+.highlight .gs {
+  font-weight: $font-semibold;
+}
+.highlight .gu {
+  color: $sk-purple6;
+  font-weight: $font-semibold;
+}
+.highlight .gt {
+  color: $sk-orange;
+}
+.highlight .kc {
+  font-weight: $font-semibold;
+}
+.highlight .kd {
+  font-weight: $font-semibold;
+}
+.highlight .kn {
+  font-weight: $font-semibold;
+}
+.highlight .kp {
+  font-weight: $font-semibold;
+}
+.highlight .kr {
+  font-weight: $font-semibold;
+}
+.highlight .kt {
+  color: $sk-purple8;
+  font-weight: $font-semibold;
+}
+.highlight .m {
+  color: $sk-green2;
+}
+.highlight .s {
+  color: $sk-orange;
+}
+.highlight .n {
+  color: $text-dark;
+}
+.highlight .na {
+  color: $sk-green4;
+}
+.highlight .nb {
+  color: $sk-blue2;
+}
+.highlight .nc {
+  color: $sk-purple8;
+  font-weight: $font-semibold;
+}
+.highlight .no {
+  color: $sk-green4;
+}
+.highlight .ni {
+  color: $sk-purple4;
+}
+.highlight .ne {
+  color: $sk-orange;
+  font-weight: $font-semibold;
+}
+.highlight .nf {
+  color: $sk-orange;
+  font-weight: $font-semibold;
+}
+.highlight .nn {
+  color: $text-dark;
+}
+.highlight .nt {
+  color: $sk-orange2;
+}
+.highlight .nv {
+  color: $sk-green4;
+}
 //.highlight .nx { color: $text-dark; }
-.highlight .ow { font-weight: $font-semibold; }
-.highlight .w { color: #bbbbbb; }
-.highlight .mf { color: $sk-green2; }
-.highlight .mh { color: $sk-green2; }
-.highlight .mi { color: $sk-green2; }
-.highlight .mo { color: $sk-green2; }
-.highlight .sb { color: $sk-orange; }
-.highlight .sc { color: $sk-orange; }
-.highlight .sd { color: $sk-orange; }
-.highlight .s2 { color: $sk-orange; }
-.highlight .se { color: $sk-orange; }
-.highlight .sh { color: $sk-orange; }
-.highlight .si { color: $sk-orange; }
-.highlight .sx { color: $sk-orange; }
-.highlight .sr { color: $sk-green2; }
-.highlight .s1 { color: $sk-orange; }
-.highlight .ss { color: $sk-purple4; }
-.highlight .bp { color: $text-dark-ultra-low; }
-.highlight .vc { color: $sk-green4; }
-.highlight .vg { color: $sk-green4; }
-.highlight .vi { color: $sk-green4; }
-.highlight .il { color: $sk-teal4; }
-.highlight .gc { color: $text-dark-ultra-low; background-color: $background-light; }
+.highlight .ow {
+  font-weight: $font-semibold;
+}
+.highlight .w {
+  color: #bbbbbb;
+}
+.highlight .mf {
+  color: $sk-green2;
+}
+.highlight .mh {
+  color: $sk-green2;
+}
+.highlight .mi {
+  color: $sk-green2;
+}
+.highlight .mo {
+  color: $sk-green2;
+}
+.highlight .sb {
+  color: $sk-orange;
+}
+.highlight .sc {
+  color: $sk-orange;
+}
+.highlight .sd {
+  color: $sk-orange;
+}
+.highlight .s2 {
+  color: $sk-orange;
+}
+.highlight .se {
+  color: $sk-orange;
+}
+.highlight .sh {
+  color: $sk-orange;
+}
+.highlight .si {
+  color: $sk-orange;
+}
+.highlight .sx {
+  color: $sk-orange;
+}
+.highlight .sr {
+  color: $sk-green2;
+}
+.highlight .s1 {
+  color: $sk-orange;
+}
+.highlight .ss {
+  color: $sk-purple4;
+}
+.highlight .bp {
+  color: $text-dark-ultra-low;
+}
+.highlight .vc {
+  color: $sk-green4;
+}
+.highlight .vg {
+  color: $sk-green4;
+}
+.highlight .vi {
+  color: $sk-green4;
+}
+.highlight .il {
+  color: $sk-teal4;
+}
+.highlight .gc {
+  color: $text-dark-ultra-low;
+  background-color: $background-light;
+}
 
 //Table styles (for blocks of code with line numbers)
 .highlight table {
@@ -102,13 +250,17 @@
 }
 
 .highlight td.code::after {
-  content: "";
+  content: '';
   width: 1rem;
   position: absolute;
   top: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(90deg, rgba( $background-white , 0 ),$background-white);
+  background: linear-gradient(
+    90deg,
+    rgba($background-white, 0),
+    $background-white
+  );
 }
 
 .highlight td.code pre {
@@ -116,4 +268,9 @@
   white-space: pre;
   overflow-wrap: inherit;
   overflow-x: auto;
+}
+
+li .highlight {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
 }

@@ -1,194 +1,196 @@
 // Variables
 
 /* --- Font weights --- */
-$font-light:              300;
-$font-regular:            400;
-$font-medium:             500;
-$font-semibold:           600;
+$font-light: 300;
+$font-regular: 400;
+$font-medium: 500;
+$font-semibold: 600;
 
 /* --- Border Radii --- */
-$radius-big:              10rem; /*In order to make circular elements*/
-$radius-normal:           .125rem; /*2px*/
-$radius-small:            .0625rem; /*1px*/
+$radius-big: 10rem; /*In order to make circular elements*/
+$radius-normal: 0.125rem; /*2px*/
+$radius-small: 0.0625rem; /*1px*/
 
 /* --- Colors --- */
 //Text (dark on light backgrounds)
-$text-dark-high:          #000000;
-$text-dark:               #262626; //85
-$text-dark-low:           #666666; //60
-$text-dark-ultra-low:     #A6A6A6; // 35
+$text-dark-high: #000000;
+$text-dark: #262626; //85
+$text-dark-low: #666666; //60
+$text-dark-ultra-low: #a6a6a6; // 35
 
 //Text (light on dark backgrounds)
-$text-light-high:         hsl(0,100%,100%);
-$text-light:              hsla(0,100%,100%,.85);
-$text-light-low:          hsla(0,100%,100%,.60);
-$text-light-ultra-low:    hsla(0,100%,100%,.35);
+$text-light-high: hsl(0, 100%, 100%);
+$text-light: hsla(0, 100%, 100%, 0.85);
+$text-light-low: hsla(0, 100%, 100%, 0.6);
+$text-light-ultra-low: hsla(0, 100%, 100%, 0.35);
 
 //Sketch Palette
-$sk-red8:                 #2c0606;
-$sk-red6:                 #590c0c;
-$sk-red4:                 #861313;
-$sk-red2:                 #b31919;
-$sk-red:                  #e02020;
-$sk-red-2:                #e64c4c;
-$sk-red-4:                #ec7979;
-$sk-red-6:                #f2a5a5;
-$sk-red-8:                #f8d2d2;
+$sk-red8: #2c0606;
+$sk-red6: #590c0c;
+$sk-red4: #861313;
+$sk-red2: #b31919;
+$sk-red: #e02020;
+$sk-red-2: #e64c4c;
+$sk-red-4: #ec7979;
+$sk-red-6: #f2a5a5;
+$sk-red-8: #f8d2d2;
 
-$sk-orange8:              #321400;
-$sk-orange6:              #642800;
-$sk-orange4:              #963c00;
-$sk-orange2:              #c85000;
-$sk-orange:               #fa6400;
-$sk-orange-2:             #fb8332;
-$sk-orange-4:             #fca266;
-$sk-orange-6:             #fdc199;
-$sk-orange-8:             #fee0cc;
+$sk-orange8: #321400;
+$sk-orange6: #642800;
+$sk-orange4: #963c00;
+$sk-orange2: #c85000;
+$sk-orange: #fa6400;
+$sk-orange-2: #fb8332;
+$sk-orange-4: #fca266;
+$sk-orange-6: #fdc199;
+$sk-orange-8: #fee0cc;
 
-$sk-yellow8:              #312400;
-$sk-yellow6:              #624800;
-$sk-yellow4:              #946c00;
-$sk-yellow2:              #c59000;
-$sk-yellow:               #f7b500;
-$sk-yellow-2:             #f8c332;
-$sk-yellow-4:             #fad266;
-$sk-yellow-6:             #fbe199;
-$sk-yellow-8:             #fdf0cc;
+$sk-yellow8: #312400;
+$sk-yellow6: #624800;
+$sk-yellow4: #946c00;
+$sk-yellow2: #c59000;
+$sk-yellow: #f7b500;
+$sk-yellow-2: #f8c332;
+$sk-yellow-4: #fad266;
+$sk-yellow-6: #fbe199;
+$sk-yellow-8: #fdf0cc;
 
-$sk-green8:               #152a00;
-$sk-green6:               #2b5400;
-$sk-green4:               #417f00;
-$sk-green2:               #57a900;
-$sk-green:                #6dd400;
-$sk-green-2:              #8adc32;
-$sk-green-4:              #a7e566;
-$sk-green-6:              #c4ed99;
-$sk-green-8:              #e1f6cc;
+$sk-green8: #152a00;
+$sk-green6: #2b5400;
+$sk-green4: #417f00;
+$sk-green2: #57a900;
+$sk-green: #6dd400;
+$sk-green-2: #8adc32;
+$sk-green-4: #a7e566;
+$sk-green-6: #c4ed99;
+$sk-green-8: #e1f6cc;
 
-$sk-teal8:                #0d2b24;
-$sk-teal6:                #1b5648;
-$sk-teal4:                #28816d;
-$sk-teal2:                #36ac91;
-$sk-teal:                 #44d7b6;
-$sk-teal-2:               #69dfc4;
-$sk-teal-4:               #8ee7d3;
-$sk-teal-6:               #b4efe1;
-$sk-teal-8:               #d9f7f0;
+$sk-teal8: #0d2b24;
+$sk-teal6: #1b5648;
+$sk-teal4: #28816d;
+$sk-teal2: #36ac91;
+$sk-teal: #44d7b6;
+$sk-teal-2: #69dfc4;
+$sk-teal-4: #8ee7d3;
+$sk-teal-6: #b4efe1;
+$sk-teal-8: #d9f7f0;
 
-$sk-baby-blue8:           #0a2733;
-$sk-baby-blue6:           #144e66;
-$sk-baby-blue4:           #1e7699;
-$sk-baby-blue2:           #289dcc;
-$sk-baby-blue:            #32c5ff;
-$sk-baby-blue-2:          #5ad0ff;
-$sk-baby-blue-4:          #84dcff;
-$sk-baby-blue-6:          #ade7ff;
-$sk-baby-blue-8:          #d6f3ff;
+$sk-baby-blue8: #0a2733;
+$sk-baby-blue6: #144e66;
+$sk-baby-blue4: #1e7699;
+$sk-baby-blue2: #289dcc;
+$sk-baby-blue: #32c5ff;
+$sk-baby-blue-2: #5ad0ff;
+$sk-baby-blue-4: #84dcff;
+$sk-baby-blue-6: #ade7ff;
+$sk-baby-blue-8: #d6f3ff;
 
-$sk-blue8:                #001d33;
-$sk-blue6:                #003a66;
-$sk-blue4:                #005799;
-$sk-blue2:                #0074cc;
-$sk-blue:                 #0091ff;
-$sk-blue-2:               #32a7ff;
-$sk-blue-4:               #66bdff;
-$sk-blue-6:               #99d3ff;
-$sk-blue-8:               #cce9ff;
+$sk-blue8: #001d33;
+$sk-blue6: #003a66;
+$sk-blue4: #005799;
+$sk-blue2: #0074cc;
+$sk-blue: #0091ff;
+$sk-blue-2: #32a7ff;
+$sk-blue-4: #66bdff;
+$sk-blue-6: #99d3ff;
+$sk-blue-8: #cce9ff;
 
-$sk-indigo8:              #130a33;
-$sk-indigo6:              #271566;
-$sk-indigo4:              #3a2099;
-$sk-indigo2:              #4e2bcc;
-$sk-indigo:               #6236ff;
-$sk-indigo-2:             #815eff;
-$sk-indigo-4:             #a086ff;
-$sk-indigo-6:             #c0aeff;
-$sk-indigo-8:             #dfd6ff;
+$sk-indigo8: #130a33;
+$sk-indigo6: #271566;
+$sk-indigo4: #3a2099;
+$sk-indigo2: #4e2bcc;
+$sk-indigo: #6236ff;
+$sk-indigo-2: #815eff;
+$sk-indigo-4: #a086ff;
+$sk-indigo-6: #c0aeff;
+$sk-indigo-8: #dfd6ff;
 
-$sk-purple8:              #24062c;
-$sk-purple6:              #480c59;
-$sk-purple4:              #6d1386;
-$sk-purple2:              #9119b3;
-$sk-purple:               #b620e0;
-$sk-purple-2:             #c44ce6;
-$sk-purple-4:             #d379ec;
-$sk-purple-6:             #e1a5f2;
-$sk-purple-8:             #f0d2f8;
+$sk-purple8: #24062c;
+$sk-purple6: #480c59;
+$sk-purple4: #6d1386;
+$sk-purple2: #9119b3;
+$sk-purple: #b620e0;
+$sk-purple-2: #c44ce6;
+$sk-purple-4: #d379ec;
+$sk-purple-6: #e1a5f2;
+$sk-purple-8: #f0d2f8;
 
-$sk-tungsten8:            #151618;
-$sk-tungsten6:            #2b2d30;
-$sk-tungsten4:            #414448;
-$sk-tungsten2:            #575b60;
-$sk-tungsten:             #6d7278;
-$sk-tungsten-2:           #8a8e93;
-$sk-tungsten-4:           #a7aaae;
-$sk-tungsten-6:           #c4c6c9;
-$sk-tungsten-8:           #e1e2e4;
+$sk-tungsten8: #151618;
+$sk-tungsten6: #2b2d30;
+$sk-tungsten4: #414448;
+$sk-tungsten2: #575b60;
+$sk-tungsten: #6d7278;
+$sk-tungsten-2: #8a8e93;
+$sk-tungsten-4: #a7aaae;
+$sk-tungsten-6: #c4c6c9;
+$sk-tungsten-8: #e1e2e4;
 
-$sk-graphite8:            #0a0b0d;
-$sk-graphite6:            #14161a;
-$sk-graphite4:            #1e2127;
-$sk-graphite2:            #282c34;
-$sk-graphite:             #333842;
-$sk-graphite-2:           #5b5f67;
-$sk-graphite-4:           #84878d;
-$sk-graphite-6:           #adafb3;
-$sk-graphite-8:           #d6d7d9;
+$sk-graphite8: #0a0b0d;
+$sk-graphite6: #14161a;
+$sk-graphite4: #1e2127;
+$sk-graphite2: #282c34;
+$sk-graphite: #333842;
+$sk-graphite-2: #5b5f67;
+$sk-graphite-4: #84878d;
+$sk-graphite-6: #adafb3;
+$sk-graphite-8: #d6d7d9;
 
 //Actions (Links and buttons)
-$action-high:             $sk-orange-2;
-$action:                  $sk-orange;
-$action-border:           rgba( $sk-orange, .5 );
-$action-ultra-low:        $sk-orange-8;
+$action-high: $sk-orange-2;
+$action: $sk-orange;
+$action-border: rgba($sk-orange, 0.5);
+$action-ultra-low: $sk-orange-8;
 
 //Actions (over dark background)
-$action-light-high:       $sk-yellow-2;
-$action-light:            $sk-yellow;
-$action-light-low:        $sk-yellow2;
-$action-light-border:     rgba( $sk-yellow, .5 );
-$action-light-ultra-low:  $sk-yellow-8;
+$action-light-high: $sk-yellow-2;
+$action-light: $sk-yellow;
+$action-light-low: $sk-yellow2;
+$action-light-border: rgba($sk-yellow, 0.5);
+$action-light-ultra-low: $sk-yellow-8;
 
 //Negative
-$negative-high:           $sk-red;
-$negative:                $sk-red2;
-$negative-low:            rgba( $sk-red, .5 );
-$negative-ultra-low:      $sk-red-8;
+$negative-high: $sk-red;
+$negative: $sk-red2;
+$negative-low: rgba($sk-red, 0.5);
+$negative-ultra-low: $sk-red-8;
 
 // Backgrounds
-$background-dark:         $sk-graphite;
-$background-white:        #ffffff;
-$background-light:        #FDFDFF;
-$background-light-dark:   hsla(220, 13%, 97%, 1);
+$background-dark-base: #151617;
+
+$background-dark: $sk-graphite;
+$background-white: #ffffff;
+$background-light: #fdfdff;
+$background-light-dark: hsla(220, 13%, 97%, 1);
 
 //Borders and Dividers (dark on light backgrounds)
-$border-dark-ultra-high:  hsla(0, 0%, 0%, .20);
-$border-dark-high:        hsla(0, 0%, 0%, .10);
-$border-dark:             hsla(0, 0%, 0%, .06);
-$divider-dark:            hsla(0, 0%, 0%, .03);
+$border-dark-ultra-high: hsla(0, 0%, 0%, 0.2);
+$border-dark-high: hsla(0, 0%, 0%, 0.1);
+$border-dark: hsla(0, 0%, 0%, 0.06);
+$divider-dark: hsla(0, 0%, 0%, 0.03);
 
 //Borders and Dividers (dark on light backgrounds)
-$border-light-high:       hsla(0, 100%, 100%, .3);
-$border-light:            hsla(0, 100%, 100%, .2);
-$divider-light:           hsla(0, 100%, 100%, .1);
+$border-light-high: hsla(0, 100%, 100%, 0.3);
+$border-light: hsla(0, 100%, 100%, 0.2);
+$divider-light: hsla(0, 100%, 100%, 0.1);
 
 //Easing
-$ease-in-quad: cubic-bezier(.55, .085, .68, .53);
-$ease-in-cubic: cubic-bezier(.550, .055, .675, .19);
-$ease-in-quart: cubic-bezier(.895, .03, .685, .22);
-$ease-in-quint: cubic-bezier(.755, .05, .855, .06);
-$ease-in-expo: cubic-bezier(.95, .05, .795, .035);
-$ease-in-circ: cubic-bezier(.6, .04, .98, .335);
+$ease-in-quad: cubic-bezier(0.55, 0.085, 0.68, 0.53);
+$ease-in-cubic: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+$ease-in-quart: cubic-bezier(0.895, 0.03, 0.685, 0.22);
+$ease-in-quint: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+$ease-in-expo: cubic-bezier(0.95, 0.05, 0.795, 0.035);
+$ease-in-circ: cubic-bezier(0.6, 0.04, 0.98, 0.335);
 
-$ease-out-quad: cubic-bezier(.25, .46, .45, .94);
-$ease-out-cubic: cubic-bezier(.215, .61, .355, 1);
-$ease-out-quart: cubic-bezier(.165, .84, .44, 1);
-$ease-out-quint: cubic-bezier(.23, 1, .32, 1);
-$ease-out-expo: cubic-bezier(.19, 1, .22, 1);
-$ease-out-circ: cubic-bezier(.075, .82, .165, 1);
+$ease-out-quad: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+$ease-out-cubic: cubic-bezier(0.215, 0.61, 0.355, 1);
+$ease-out-quart: cubic-bezier(0.165, 0.84, 0.44, 1);
+$ease-out-quint: cubic-bezier(0.23, 1, 0.32, 1);
+$ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
+$ease-out-circ: cubic-bezier(0.075, 0.82, 0.165, 1);
 
-$ease-in-out-quad: cubic-bezier(.455, .03, .515, .955);
-$ease-in-out-cubic: cubic-bezier(.645, .045, .355, 1);
-$ease-in-out-quart: cubic-bezier(.77, 0, .175, 1);
-$ease-in-out-quint: cubic-bezier(.86, 0, .07, 1);
+$ease-in-out-quad: cubic-bezier(0.455, 0.03, 0.515, 0.955);
+$ease-in-out-cubic: cubic-bezier(0.645, 0.045, 0.355, 1);
+$ease-in-out-quart: cubic-bezier(0.77, 0, 0.175, 1);
+$ease-in-out-quint: cubic-bezier(0.86, 0, 0.07, 1);
 $ease-in-out-expo: cubic-bezier(1, 0, 0, 1);
-$ease-in-out-circ: cubic-bezier(.785, .135, .15, .86);
+$ease-in-out-circ: cubic-bezier(0.785, 0.135, 0.15, 0.86);

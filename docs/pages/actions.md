@@ -3,15 +3,11 @@ layout: sidebar-page
 title: Actions Reference
 permalink: /reference/action/
 script: /js/search.js
+
+excerpt: List of all actions Sketch plugins can respond to
 ---
 
-_Work In Progress_
-
-This is a list of the actions that plugins can respond to.
-
-It's a long list, and most haven't been documented yet, but we're providing it now to allow people to experiment whilst the documentation catches up.
-
-If you want to learn how to listen to an action, see [the Action API guide](/guides/action-api/).
+Plugins can respond to the following actions. If you want to learn how to listen to an action, see [the Action API guide](/plugins/actions).
 
 ## List of Actions
 
