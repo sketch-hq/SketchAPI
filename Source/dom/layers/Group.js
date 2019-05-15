@@ -60,18 +60,25 @@ Group.define('layers', {
   get() {
     return toArray(this._object.layers()).map(wrapNativeObject)
   },
-  set(layers) {
+  set(_layers) {
     if (this.isImmutable()) {
       return
     }
     // remove the existing layers
     this._object.removeAllLayers()
 
-    this._object.addLayers(
-      toArray(layers)
-        .map(wrapObject)
-        .map(l => l._object)
-    )
+    const layers = toArray(_layers)
+      .map(wrapObject)
+      .map(l => l._object)
+
+    // remove the layers from their parent
+    layers.forEach(l => {
+      if (l.parentGroup()) {
+        l.removeFromParent()
+      }
+    })
+
+    this._object.addLayers(layers)
   },
   insertItem(item, index) {
     if (this.isImmutable()) {

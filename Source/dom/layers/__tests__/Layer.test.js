@@ -1,5 +1,5 @@
 /* globals expect, test */
-import { Group, Rectangle, Artboard } from '../..'
+import { Group, Rectangle, Artboard, SymbolMaster } from '../..'
 
 test('should set the name of the layer', (context, document) => {
   // setting an existing name
@@ -272,6 +272,13 @@ test('should get the different parents', (context, document) => {
   expect(group.getParentArtboard()).toEqual(artboard)
   expect(group.getParentSymbolMaster()).toBe(undefined)
   expect(group.getParentShape()).toBe(undefined)
+
+  const symbolMaster = SymbolMaster.fromArtboard(artboard)
+  expect(symbolMaster.parent).toEqual(page)
+  expect(symbolMaster.getParentPage()).toEqual(page)
+  expect(symbolMaster.getParentArtboard()).toEqual(undefined)
+  expect(symbolMaster.getParentSymbolMaster()).toBe(undefined)
+  expect(symbolMaster.getParentShape()).toBe(undefined)
 })
 
 test('should transform the layer', () => {
