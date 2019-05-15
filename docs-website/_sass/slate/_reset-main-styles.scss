@@ -1,6 +1,9 @@
 @import 'variables';
 
-body > * {
+.toc-wrapper,
+.toc-wrapper > *,
+.content-wrapper,
+.content-wrapper > * {
   padding: 0;
 }
 
@@ -16,21 +19,11 @@ body > * {
   clear: none;
 }
 
-.main-nav h1 {
-  opacity: 0;
-  transition: opacity 0.3s ease-in-out;
-}
-
-.toc-wrapper.open + .main-nav h1 {
-  opacity: 1;
+.main-nav {
+  position: fixed;
+  top: 0;
 }
 
 pre code {
   color: inherit;
-}
-
-@media (max-width: $tablet-width) {
-  .main-nav h1 {
-    opacity: 1;
-  }
 }

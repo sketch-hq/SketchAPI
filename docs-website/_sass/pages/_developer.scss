@@ -1,6 +1,6 @@
 @include tablet-and-above {
   .main-nav li > a {
-    padding: .2625rem 0; //to compensate there's no buy button here
+    padding: 0.2625rem 0; //to compensate there's no buy button here
   }
 }
 
@@ -34,23 +34,23 @@ body > section:nth-child(even):last-of-type ~ footer {
   background: $background-light-dark;
   border: 1px solid $border-dark;
   border-radius: $radius-small;
-  font-size: .8125rem;
+  font-size: 0.8125rem;
   color: $text-dark-ultra-low;
 }
 
-  @include tablet-and-above {
-    .page-contribute em {
-      float: right;
-      margin-left: 1rem;
-    }
+@include tablet-and-above {
+  .page-contribute em {
+    float: right;
+    margin-left: 1rem;
   }
+}
 
-  @include tablet-and-below {
-    .page-contribute em {
-      display: block;
-      margin-bottom: .5rem;
-    }
+@include tablet-and-below {
+  .page-contribute em {
+    display: block;
+    margin-bottom: 0.5rem;
   }
+}
 
 //Tables
 .content > table,
@@ -60,13 +60,16 @@ body > section:nth-child(even):last-of-type ~ footer {
   border-spacing: 0;
   border-radius: $radius-small;
   border: 1px solid $border-dark-high;
-  background-color: rgba( $action , .05 );
+  background-color: rgba($action, 0.05);
   box-shadow: 0 1px 2px $border-dark;
   color: $text-dark;
+  margin-bottom: 1em;
 }
 
+.content > table th,
+.content div:not(.highlight) > table th,
 .content > table td,
-.content div:not(.highlight) > table td  {
+.content div:not(.highlight) > table td {
   padding: 1rem;
 }
 
@@ -83,10 +86,10 @@ body > section:nth-child(even):last-of-type ~ footer {
   }
 }
 
-  // FIXME It's inserting more trs than it should
-  tr:nth-last-child(2) td {
-    border-bottom: 0;
-  }
+// FIXME It's inserting more trs than it should
+tr:nth-last-child(2) td {
+  border-bottom: 0;
+}
 
 @include tablet-and-below {
   td {
@@ -115,7 +118,8 @@ body > section:nth-child(even):last-of-type ~ footer {
 
 article.post header {
   margin-bottom: 2em;
-  h1, h2 {
+  h1,
+  h2 {
     margin-bottom: 0.2em;
   }
   p.meta {

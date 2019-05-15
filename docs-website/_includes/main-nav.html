@@ -1,27 +1,25 @@
 <header class="main-nav background-dark">
-  <div class="wrapper">
-    <nav role="navigation">
-      <h1>
-        {% include logo.html %}
-      </h1>
-      <span class="nav-toggle">Menu</span>
-      <ul>
-        <li>
-          <a href="/guides/" {% if page.url contains '/guides/' %} class="active" {% endif %}>Guides</a>
-        </li>
-        <li>
-          <a href="https://github.com/BohemianCoding/SketchAPI/tree/develop/examples">Examples</a>
-        </li>
-        <li>
-          <a href="/reference/" {% if page.url contains '/reference/' %} class="active" {% endif %}>Reference</a>
-        </li>
-        <li>
-          <a href="/resources/" {% if page.url contains '/resources/' %} class="active" {% endif %}>Resources</a>
-        </li>
-        <li>
-          <a href="/blog/" {% if page.url contains '/blog/' %} class="active" {% endif %}>Blog</a>
-        </li>
-      </ul>
-    </nav>
-  </div>
+  <nav role="navigation">
+    <h1>
+      {% include logo.html %}
+    </h1>
+    <span class="nav-toggle">Menu</span>
+    <ul>
+      <li>
+        <a href="/plugins/" {% if page.section == "plugins" %} class="active" {% endif %}>Plugins</a>
+      </li>
+      <li>
+        <a href="/cli/" {% if page.section == "cli" %} class="active" {% endif %}>CLI</a>
+      </li>
+      <li>
+        <a href="/file-format/" {% if page.section == "fileformat" %} class="active" {% endif %}>File Format</a>
+      </li>
+      <li>
+        <a href="/app" {% if page.section == "app" %} class="active" {% endif %}>Sketch.app</a>
+      </li>
+      <li>
+        <a href="/reference/api" {% if page.url contains '/reference/api/' %} class="active" {% endif %}>API Reference</a>
+      </li>
+    </ul>
+  </nav>
 </header>
