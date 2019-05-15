@@ -26,7 +26,9 @@ From CocoaScript’s `README`:
 
 The square bracket syntax of Objective-C is converted to dot-syntax in JavaScript. Internally, CocoaScript creates opaque JavaScript proxy objects which have the following attributes:
 
-- Objective-C properties are also JavaScript properties.
+- Objective-C properties are exported to JavaScript:
+  - Getter: `object.name()`
+  - Setter: `object.name = 'Sketch'`
 - Objective-C selectors are exposed as methods of the JavaScript proxy.
 - `:` are converted to `_`, the last underscore is optional.
 - Each component of the selector is concatenated into a single string with no separation.
