@@ -29,6 +29,7 @@
   },
   "devDependencies": {
     "@babel/preset-typescript": "^7.3.3",
+    "@skpm/fs": "^0.2.4",
     "@skpm/test-runner": "^0.4.0",
     "@types/node": "^11.13.2",
     "@typescript-eslint/parser": "^1.6.0",
