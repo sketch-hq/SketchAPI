@@ -20,7 +20,7 @@ if (!isRunningOnJenkins()) {
     const master = SymbolMaster.fromArtboard(artboard)
     return new Promise((resolve, reject) => {
       document.save(
-        '~/Desktop/sketch-api-unit-tests-importable-objects.sketch',
+        '~/Desktop/SketchAPI-tests-assets/sketch-api-unit-tests-importable-objects.sketch',
         err => {
           document.close()
           if (err) {
@@ -31,7 +31,7 @@ if (!isRunningOnJenkins()) {
       )
     }).then(() => {
       const lib = Library.getLibraryForDocumentAtPath(
-        '~/Desktop/sketch-api-unit-tests-importable-objects.sketch'
+        '~/Desktop/SketchAPI-tests-assets/sketch-api-unit-tests-importable-objects.sketch'
       )
 
       const document2 = new Document()

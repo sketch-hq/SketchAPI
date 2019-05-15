@@ -48,17 +48,20 @@ if (!isRunningOnJenkins()) {
     const master = SymbolMaster.fromArtboard(artboard)
 
     return new Promise((resolve, reject) => {
-      document.save('~/Desktop/sketch-api-unit-tests-library.sketch', err => {
-        if (err) {
-          return reject(err)
+      document.save(
+        '~/Desktop/SketchAPI-tests-assets/sketch-api-unit-tests-library.sketch',
+        err => {
+          if (err) {
+            return reject(err)
+          }
+          return resolve()
         }
-        return resolve()
-      })
+      )
     }).then(() => {
       document.close()
 
       lib = Library.getLibraryForDocumentAtPath(
-        '~/Desktop/sketch-api-unit-tests-library.sketch'
+        '~/Desktop/SketchAPI-tests-assets/sketch-api-unit-tests-library.sketch'
       )
       libId = lib.id
       expect(lib.type).toBe('Library')
@@ -86,7 +89,7 @@ if (!isRunningOnJenkins()) {
     expect(document.path).toBe(
       String(
         NSString.stringWithString(
-          '~/Desktop/sketch-api-unit-tests-library.sketch'
+          '~/Desktop/SketchAPI-tests-assets/sketch-api-unit-tests-library.sketch'
         ).stringByExpandingTildeInPath()
       )
     )
