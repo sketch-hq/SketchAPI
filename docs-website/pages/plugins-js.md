@@ -8,6 +8,7 @@ redirect_from:
   - /plugins/javascript
 
 order: 300
+excerpt: The official JavaScript API is maintained by the Sketch team and allows to access and modify the Sketch document, provide data to Sketch users and offers some basic user interface integration
 ---
 
 Plugin scripts can make full use of ES6 and the Sketch APIs. The official JavaScript API is maintained by the Sketch team and allows to access and modify the Sketch document, provide data to Sketch users and offers some basic user interface integration.

@@ -5,6 +5,7 @@ chapter: Command-line interface
 permalink: /cli/dump
 
 order: 105
+excerpt: Export a Sketch document to JSON
 ---
 
 Before the open file format got introduced `sketchtool dump` allowed to export a Sketch document to JSON.

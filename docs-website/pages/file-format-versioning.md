@@ -5,6 +5,7 @@ chapter: Concepts
 permalink: /file-format/versioning
 
 order: 101
+excerpt: How Sketch stores version information in meta.json
 ---
 
 The document's metadata includes information about the Sketch version used to create the document and which versions of Sketch can open the file.

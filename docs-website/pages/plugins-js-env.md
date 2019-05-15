@@ -5,6 +5,7 @@ chapter: Concepts
 permalink: /plugins/javascript-environment
 
 order: 202
+excerpt: Sketch runs JavaScript code in JavaScriptCore, the JavaScript engine that powers Safari, with full ES6 support
 ---
 
 Sketch runs JavaScript code in [JavaScriptCore](https://trac.webkit.org/wiki/JavaScriptCore), the JavaScript engine that powers Safari, with full [ES6 support](https://webkit.org/blog/6756/es6-feature-complete/).

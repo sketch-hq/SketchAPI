@@ -5,13 +5,14 @@ chapter: Command-line interface
 permalink: /cli/export-assets
 
 order: 100
+excerpt: Use the command-line interface to export any layer or page and document previews from a Sketch file
 ---
 
 Export assets using `sketchtool export`:
 
-- Any layer
-- Pages
-- Document previews
+-   Any layer
+-   Pages
+-   Document previews
 
 ## Formats
 

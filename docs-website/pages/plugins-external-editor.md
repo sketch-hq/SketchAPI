@@ -5,6 +5,7 @@ chapter: Guides
 permalink: /plugins/external-text-editor
 
 order: 110
+excerpt: Use your favourite text editor, such as Atom or Visual Studio Code, to write Sketch plugins
 ---
 
 Use your favourite text editor, such as [Atom](https://atom.io) or [Visual Studio Code](https://code.visualstudio.com), to write Sketch plugins by setting a user default on the command-line.

@@ -11,6 +11,7 @@ redirect_from:
   - /guides/plugin-bundles/
 
 order: 200
+excerpt: A plugin bundle is a folder containing a manifest, scripts and additional resources, such as images, in a specific file layout
 ---
 
 A `.sketchplugin` is a folder containing a manifest, scripts and additional resources, such as images, in a specific file layout. It’s a [macOS package](https://developer.apple.com/library/mac/documentation/CoreFoundation/Conceptual/CFBundles/DocumentPackages/DocumentPackages.html#//apple_ref/doc/uid/10000123i-CH106-SW1), arranged as a [macOS bundle](https://developer.apple.com/library/mac/documentation/CoreFoundation/Conceptual/CFBundles/AboutBundles/AboutBundles.html#//apple_ref/doc/uid/10000123i-CH100-SW1).

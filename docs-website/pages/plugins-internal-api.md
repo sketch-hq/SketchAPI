@@ -5,6 +5,7 @@ chapter: Internal API
 permalink: /plugins/internal-api
 
 order: 500
+excerpt: For a deeper integration with Sketch, the internal APIs provides access to almost every aspect of the app
 ---
 
 For a deeper integration with Sketch, the internal APIs provides access to almost every aspect of the app. Use [CocoaScript](/plugins/cocoascript) or Objective-C if you're building plugins loading native frameworks.

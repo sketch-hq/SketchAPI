@@ -5,6 +5,7 @@ chapter: Command-line interface
 permalink: /cli/inspect-document
 
 order: 101
+excerpt: Get information about the structure of Sketch document and basic layer details as JSON data
 ---
 
 Get information about the document structure using `sketchtool list`. The JSON encoded output provides the layer hierarchy and details including name, dimensions and position for each layer.
