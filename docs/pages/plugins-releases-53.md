@@ -9,7 +9,7 @@ order: 401
 excerpt: Summary of the changes introduced with Sketch 53
 ---
 
-Released 05 February, 2019 – [_read release notes_](https://www.sketch.com/updates/#version-53)
+Released 05 February, 2019 – [_read release notes_](https://www.sketch.com/updates/#version-53
 
 ## Changes
 
