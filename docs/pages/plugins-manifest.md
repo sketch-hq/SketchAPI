@@ -79,7 +79,7 @@ Defines the minimum version of Sketch required to run the plugin. This string mu
 
 #### `commands`
 
-An array of dictionaries defining all commands provided by the plugin.
+An array of objects defining all commands provided by the plugin.
 
 ```json
 "commands": [
@@ -93,20 +93,6 @@ An array of dictionaries defining all commands provided by the plugin.
 ]
 ```
 
-##### Example handler definitions
-
-```js
-// default handler
-export default function(context) {
-  console.log(context.selection)
-}
-
-// explicitly defined handler
-export function selectAll(context) {
-  console.log(context.document)
-}
-```
-
 | Member       | Description                                                                                                                                                                                                                                           |
 | ------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `identifier` | Defines a unique identifier of the command within the plugin bundle.                                                                                                                                                                                  |
@@ -114,6 +100,35 @@ export function selectAll(context) {
 | `shortcut`   | Provides a default keyboard shortcut for the command, e.g. `ctrl shift t`.                                                                                                                                                                            |
 | `script`     | Specifies the relative path within the plugin bundle's `Sketch` folder to the script implementing the command.                                                                                                                                        |
 | `handler`    | Specifies the name of function to be called with the command. The function must accept a single `context` parameter, containing information such as the current document and selection. If unspecified the command is expected to be `export default` |
+| `handlers`   | An object used to specify the mapping between events (like Actions, calling the command, etc.) and function names.                                                                                                                                    |
+
+##### `handlers`
+
+An object used to specify the mapping between events (like Actions, calling the command, etc.) and function names.
+
+There are 4 different keys:
+
+- `run` which is the name of the function that should be called when the command is run (so it is the same as the `handler` key which is ignored when `handlers` is specified).
+- `setUp` which is the name of the function to call before the command is called (not to be confused with the `Startup` action).
+- `tearDown` which is the name of the function to call after the command has finished to run (not to be confused with the `Shutdown` action).
+- `actions` which is an object where each property name should be the name of an `Action` while the value should be the name of the function to call. (see [the Action guide](/guides/action-api/) for more information)
+
+```json
+"handlers": {
+  "actions": {
+    "SelectionChanged.finish": "onSelectionChanged"
+  }
+}
+```
+
+```js
+// onSelection handler
+export function onSelection(context) {
+  var doc = context.document;
+  var selection = context.selection;
+  …
+}
+```
 
 #### `description`
 
@@ -201,7 +216,7 @@ Provides information about the menu layout of the plugin. Sketch initializes the
 | Member   | Description                                                                                                                                                                       |
 | -------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `isRoot` | Specifies that menu items are created directly within the _Plugins_ menu in Sketch. By default Sketch creates a submenu for the plugin. This value is not supported for submenus. |
-| `items`  | An array of menu items, supported values are command identifier, `"-"` separator and a dictionary defining a submenu                                                              |
+| `items`  | An array of menu items, supported values are command identifier, `"-"` separator and an object defining a submenu                                                                 |
 | `title`  | Provides the human readable title used for the menu item. The value is ignored if the menu item also has `isRoot` set to `true`.                                                  |
 
 [semantic versioning]: http://semver.org

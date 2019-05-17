@@ -1,0 +1,195 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema#",
+  "title": "Sketch Plugin Manifest",
+  "description": "The manifest is a JSON file containing metadata about the Plugin, its commands and resources.\n\nIt describes such things as the full name, a description, and the name of the author. It lists the names of any commands defined by the Plugin, and tells Sketch what to call the corresponding menu items and which menus to put them in.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string",
+      "description": "The name for this Plugin. This is used by default as the name of the sub-menu in which the Plugin’s menu commands will appear."
+    },
+    "identifier": {
+      "type": "string",
+      "description": "A string specifying a unique identifier for the Plugin.\n\nReverse-domain syntax is strongly encouraged, for example `com.example.sketch.shape-plugins`.\n\nSketch uses this string internally to track the Plugin, store settings for it, etc.",
+      "examples": ["com.example.sketch.shape-plugins"]
+    },
+    "description": {
+      "type": "string",
+      "description": "A string describing what this Plugin does."
+    },
+    "author": {
+      "type": "string",
+      "description": "A string specifying the author of the Plugin."
+    },
+    "authorEmail": {
+      "type": "string",
+      "format": "email",
+      "description": "An optional string specifying how to contact the Plugin author by email."
+    },
+    "icon": {
+      "type": "string",
+      "description": "The resource path to the icon for this Plugin. This is used in the Plugin list and when showing an alert from your plugin. Must be a 128x128 PNG."
+    },
+    "darkIcon": {
+      "type": "string",
+      "description": "The resource path to the icon for this Plugin shown in the dark mode of Runner."
+    },
+    "homepage": {
+      "type": "string",
+      "description": "An optional string specifying an online resource for the user to find out more information or provide feedback for the Plugin."
+    },
+    "version": {
+      "type": "string",
+      "description": "A string specifying the semantic version for the Plugin, for example 1.0, 1.1.1."
+    },
+    "appcast": {
+      "type": "string",
+      "description": "A string specifying a URL to the appcast file. The appcast file contains information about updates to the plugin, like the versions of available updates and where the updates can be downloaded from. Sketch downloads this file to determine if there are plugin updates available."
+    },
+    "compatibleVersion": {
+      "type": "string",
+      "description": "A string specifying the version of Sketch in which the author has tested the Plugin, for example 3, 3.1, 3.2.2.\n\nAt the moment (Sketch 3.4) this is an optional key, but we could use it as a filtering option in the Plugins page at some point."
+    },
+    "maxCompatibleVersion": {
+      "type": "string",
+      "description": "A string specifying the version of Sketch in which the author has tested the Plugin, for example 3, 3.1, 3.2.2.\n\nAt the moment (Sketch 3.4) this is an optional key, but we could use it as a filtering option in the Plugins page at some point."
+    },
+    "bundleVersion": {
+      "const": 1,
+      "description": "The version for the layout of the bundle an metadata. If excluded it is assumed the value is 1."
+    },
+    "suppliesData": {
+      "type": "boolean",
+      "description": "Indicates if the plugin supplies some data. If `true`, it results in the data icon showing in the plugin preferences for the plugin."
+    },
+    "disableCocoaScriptPreprocessor": {
+      "type": "boolean",
+      "description": "This is an advanced setting, and it defaults to `false`. When set to `true`, it will disable CocoaScript’s own preprocessor. This way, you’ll be able to use build systems like skpm or ES6 module syntax to develop your plugins.\n\nSetting this option to `true` does the following:\n - disables `@import` support, you’ll have to take care of your imports manually\n - disables bracket syntax (i.e: `[obj msg:]`), you’ll have to use dot-syntax only\n\nNote that if you use skpm, it will default to `true` instead."
+    },
+    "commands": {
+      "type": "array",
+      "description": "A Plugin defines one or more commands for the user to execute.",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The display name for the command. This value is used in the Plugins menu."
+          },
+          "identifier": {
+            "type": "string",
+            "description": "A string specifying a unique identifier for the command within the Plugin bundle. This is used to consistently map commands to actions, irrespective of command name changes."
+          },
+          "shortcut": {
+            "type": "string",
+            "description": "An optional string specifying a default keyboard shortcut for this command, for example: `ctrl t`, `cmd t`, `ctrl shift t`.\n\nNote that if Sketch is already using the shortcut, it won't have any effect.",
+            "examples": ["ctrl t", "cmd t", "ctrl shift t"]
+          },
+          "script": {
+            "type": "string",
+            "description": "The relative path for the script that implements this command."
+          },
+          "description": {
+            "type": "string",
+            "description": "The relative path for the script that implements this command."
+          },
+          "icon": {
+            "type": "string",
+            "description": "The relative path for the script that implements this command."
+          },
+          "darkIcon": {
+            "type": "string",
+            "description": "The relative path for the script that implements this command."
+          },
+          "handler": {
+            "type": "string",
+            "description": "The name of the function with the script to call this command. If unspecified the command is expected to be `export default`."
+          },
+          "handlers": {
+            "type": "object",
+            "description": "Specify the mapping between actions and function names.",
+            "properties": {
+              "actions": {
+                "type": "object",
+                "description": "The actions that will trigger the command. Each property name should be the name of an Action while the value should be the name of the function to call.",
+                "propertyNames": {
+                  "$comment": "TODO: we could create an enum with the list of actions here",
+                  "pattern": "^(\\*|[A-Za-z]+(\\.?begin|\\.?finish)?)$"
+                }
+              },
+              "run": {
+                "type": "string",
+                "description": "The name of the function to when command is called. If unspecified the command is expected to be `export default`."
+              },
+              "setUp": {
+                "type": "string",
+                "description": "The name of the function to call before the command is called (not to be confused with the `Startup` action)."
+              },
+              "tearDown": {
+                "type": "string",
+                "description": "The name of the function to call after the command has finished to run (not to be confused with the `Shutdown` action)."
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "required": ["identifier", "script"]
+      }
+    },
+    "menu": {
+      "type": "object",
+      "description": "When it loads a Plugin, Sketch creates a menu for it, and populates that menu using information from the “menu” object in the manifest file.",
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "A string specifying the title to use for the menu. Default to the plugin's name"
+        },
+        "isRoot": {
+          "type": "boolean",
+          "description": "By default, the menu items listed will appear in a menu with the name specified by the `title` key.\n\nIf the `isRoot` key is specified, with a value of `true`, the items will instead be inserted at the root level of the Plugins menu, rather than in a subfolder. In this case, the `title` key will be ignored."
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/submenu-schema"
+          },
+          "minItems": 1,
+          "description": "This is an array which lists the items to include in the menu.\n\nIt can contain items of three types:\n\n- a string giving the identifier of a command\n\n- a string \"-\" to add a separator line\n\n- an object describing a sub-menu (containing “title” and “items”)"
+        }
+      },
+      "required": ["items"],
+      "additionalProperties": false
+    },
+    "scope": {
+      "enum": ["application", "document"],
+      "description": "If present, and set to `application`, enables the plugin to be run when there are no documents open in Sketch."
+    }
+  },
+  "required": ["commands", "icon"],
+  "definitions": {
+    "submenu-schema": {
+      "type": ["string", "object"],
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "A string specifying the title to use for the submenu."
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/submenu-schema"
+          },
+          "minItems": 1,
+          "description": "This is an array which lists the items to include in the menu.\n\nIt can contain items of three types:\n\n- a string giving the identifier of a command\n\n- a string \"-\" to add a separator line\n\n- an object describing a sub-menu (containing “title” and “items”)"
+        }
+      },
+      "additionalProperties": false,
+      "required": ["title", "items"]
+    }
+  }
+}
