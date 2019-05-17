@@ -10,49 +10,69 @@ layout: base
           <span class="search-toggle ir">Search</span>
         </header>
         <nav role="navigation">
+          {% comment %}
+            The table of contents is only generated for the same section as the
+            current page.
+
+            Chapters are sorted the same way as the pages. For standard chapters
+            such as "Guides" and "Concepts" it's recommended to use an order tag
+            of 1xx for "Guides", 2xx for "Concepts" and 3xx, 4xx, ... for further
+            chapters.
+          {% endcomment %}
+
+          {% assign all_chapters = site.pages | where: "section", page.section | sort: "order" | map: "chapter" | uniq %}
+
           <ol>
-            {% if page.url contains '/guides/' %}
-              {% assign guides = site.guides | sort:"order" %}
-              <li>
-                <h2>Getting Started</h2>
-                <ol>
-                  {% for guide in guides %}
-                    {% if guide.order < 200 %}
-                      <li><a href="{{guide.url}}" {% if page.url == guide.url %} class="active"{% endif %}>{{guide.title}}</a></li>
-                    {% endif %}
+
+          {% comment %}
+            The Actions API lists all actions in the sidebar. All other pages
+            list their sections and chapters.
+          {% endcomment %}
+
+          {% if page.url contains '/reference/action/' %}
+            <li>
+              <h2><a href="/reference/action/">Actions Index</a></h2>
+              <ol>
+                {% assign actions = site.actions | sort:"title"%}
+                {% for action in actions %}
+                <li><a href="{{action.url}}" {% if page.url == action.url %} class="active"{% endif %}>{{ action.title }}</a></li>
+                {% endfor %}
+              </ol>
+            </li>
+
+          {% else %}
+
+          {% for chapter in all_chapters %}
+            {% if chapter == nil %}{% continue %}{% endif %}
+            <li>
+              <h2>{{ chapter }}</h2>
+              <ol>
+                  {% assign all_subpages = site.pages | where: "section", page.section | where: "chapter", chapter | sort: "order" %}
+                  {% for subpage in all_subpages %}
+                  <li>
+                    <a href="{{subpage.url}}" title="{{subpage.title}}"
+                    {% if page.url == subpage.url %} class="active"{% endif %}
+                    >
+                      {{subpage.title}}
+                    </a>
+                  </li>
                   {% endfor %}
-                </ol>
-              </li>
-              <li>
-                <h2>Advanced</h2>
-                <ol>
-                  {% for guide in guides %}
-                    {% if guide.order >= 200 %}
-                      <li><a href="{{guide.url}}" {% if page.url == guide.url %} class="active"{% endif %}>{{guide.title}}</a></li>
-                    {% endif %}
-                  {% endfor %}
-                </ol>
-              </li>
-            {% endif %}
-            {% if page.url contains '/action/' %}
-              <li>
-                <h2><a href="/reference/action/">Actions Index</a></h2>
-                <ol>
-                  {% assign actions = site.actions | sort:"title"%}
-                  {% for action in actions %}
-                  <li><a href="{{action.url}}" {% if page.url == action.url %} class="active"{% endif %}>{{ action.title }}</a></li>
-                  {% endfor %}
-                </ol>
-              </li>
-            {% endif %}
+              </ol>
+            </li>
+          {% endfor %}
+
+          {% endif %}
+
           </ol>
         </nav>
       </aside>
+
       <article class="content col span-9" role="main">
         <h1>{{ page.title }}</h1>
+
         {{ content }}
+
         {% include contribute.html %}
-      </div>
       </article>
     </div>
   </div>

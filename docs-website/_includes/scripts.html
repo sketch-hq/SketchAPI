@@ -10,18 +10,18 @@
 <script src="/js/slate_app_lang.js"></script>
 <script>
   $(function() {
-    generateToc($('#content'));
-    loadToc($('#toc'), '.toc-link', '.toc-list-h2', 10);
-    setupLanguages($('#content').data('languages'));
-    $('.content').imagesLoaded( function() {
-      window.recacheHeights();
-      window.refreshToc();
-    });
-  });
+    generateToc($('#content'))
+    loadToc($('#toc'), '.toc-link', '.toc-list-h2', 65)
+    setupLanguages($('#content').data('languages'))
+    $('.content').imagesLoaded(function() {
+      window.recacheHeights()
+      window.refreshToc()
+    })
+  })
 
   window.onpopstate = function() {
-    activateLanguage(getLanguageFromQueryString());
-  };
+    activateLanguage(getLanguageFromQueryString())
+  }
 </script>
 <script src="/js/lunr.min.js"></script>
 <script src="/js/slate_lib_jquery.highlight.js"></script>

@@ -89,7 +89,7 @@
         $("#nav-button").toggleClass('open');
         return false;
       });
-      $(".page-wrapper").click(closeToc);
+      $(".content-wrapper").click(closeToc);
       $(".toc-link").click(closeToc);
 
       // reload immediately after scrolling on toc click

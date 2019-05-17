@@ -4,8 +4,6 @@ import { Types } from '../enums'
 import { Factory } from '../Factory'
 import { Rectangle } from '../models/Rectangle'
 
-// TODO: set and modify path
-
 /**
  * Represents a shape group (which contains some layers with boolean ops).
  */

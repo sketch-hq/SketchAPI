@@ -8,13 +8,6 @@ layout: base
 <link href="/css/slate/print.css" media="print" rel="stylesheet" type="text/css">
 
 <div class="toc-wrapper">
-  <a href="#" id="nav-button">
-    <span>
-      NAV
-      <img src="/images/slate/navbar.png">
-    </span>
-  </a>
-  {% include logo.html %}
   <div class="search">
     <input type="text" class="search" id="input-search" placeholder="Search">
   </div>
@@ -36,7 +29,7 @@ layout: base
   {% endif %}
 </div>
 
-<div class="page-wrapper">
+<div class="content-wrapper">
   <div class="dark-box"></div>
   <div class="content" id="content" data-languages='{{ language_tabs | jsonify }}' data-sections='&#123;{% for ref in references %}"{{ref.title | slugify}}": "{{ref.section}}"{% if forloop.last %}{% else %},{% endif %}{% endfor %}&#125;'>
     {{ content }}

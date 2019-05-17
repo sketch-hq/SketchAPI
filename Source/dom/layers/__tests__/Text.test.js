@@ -104,6 +104,7 @@ if (!isRunningOnJenkins()) {
       width: 22.6875,
       height: 14,
     })
+    expect(fragments[0].text).toBe('blah')
 
     // https://github.com/BohemianCoding/SketchAPI/issues/144
     text = new Text({
@@ -122,6 +123,7 @@ if (!isRunningOnJenkins()) {
       width: 22.0078125,
       height: 14,
     })
+    expect(fragments[0].text).toBe('Test')
     expect(fragments[1].baselineOffset).toBe(3)
     expect(Number(fragments[1].range.location)).toBe(5)
     expect(Number(fragments[1].range.length)).toBe(6)
@@ -131,6 +133,7 @@ if (!isRunningOnJenkins()) {
       width: 27.345703125,
       height: 14,
     })
+    expect(fragments[1].text).toBe('Hello')
     expect(fragments[2].baselineOffset).toBe(3)
     expect(Number(fragments[2].range.location)).toBe(11)
     expect(Number(fragments[2].range.length)).toBe(4)
@@ -140,5 +143,6 @@ if (!isRunningOnJenkins()) {
       width: 20.021484375,
       height: 14,
     })
+    expect(fragments[2].text).toBe('o')
   })
 }
