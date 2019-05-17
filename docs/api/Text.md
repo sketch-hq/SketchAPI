@@ -58,7 +58,7 @@ The current Text (useful if you want to chain the calls).
 var fragments = text.fragments
 ```
 
-Returns a array of the text fragments for the text. Each one is a object containing a rectangle, and a baseline offset and the range of the fragment `{rect, baselineOffset, range}`.
+Returns a array of the text fragments for the text. Each one is a object containing a rectangle, a baseline offset, the range of the fragment, and the substring `{rect, baselineOffset, range, text}`.
 
 ## `Text.Alignment`
 
