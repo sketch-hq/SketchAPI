@@ -624,3 +624,4 @@ page.sketchObject.documentData().symbolsPage() == page.sketchObject
 
 - [API reference](/reference/api)
 - [New in Sketch 53](/plugins/updates/new-in-sketch-53)
+- [New in Sketch 55](/plugins/updates/new-in-sketch-55)

@@ -192,8 +192,7 @@ const style = new Style({
 
 There was a bug in the `util.inspect` algorithm (which console uses) that makes it think the prototype of a wrapped object is a wrapped object and uses the code path for wrapped object. This has been fixed for better logging output.
 
-### Upcoming Additions
+## Related resources
 
-- _Fixed:_ Changing the pointType of a CurvePoint wouldn't always restore the control points (GitHub PR)
-- _Fixed:_ Do not default to ShapeType.Rectangle if some points are specified when create a new ShapePath (GitHub PR)
-- _Improved:_ Added multiline functionality to string inputs on UI.getInputFromUser (I added this in! 😃, GitHub PR)
+- [API reference](/reference/api)
+- [New in Sketch 54](/plugins/updates/new-in-sketch-54)

@@ -55,6 +55,7 @@ The command must implement the `HandleURL` action and have it defined in the plu
 ```js
 const sketch = require('sketch')
 
+// If you're using skpm: export function handleURL(context)
 function handleURL(context) {
   let query = context.actionContext.query
   sketch.UI.message(query.msg || '👋')
