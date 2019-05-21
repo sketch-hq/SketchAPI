@@ -1,12 +1,11 @@
 ---
 title: New in Sketch 53
-summary: API to let plugins react to events in the app.
 section: plugins
 chapter: JavaScript API Updates
 permalink: /plugins/updates/new-in-sketch-53
 
-order: 401
-excerpt: Summary of the changes introduced with Sketch 53
+order: 499
+excerpt: Summary of public API changes introduced with Sketch 53
 ---
 
 Released 05 February, 2019 – [_read release notes_](https://www.sketch.com/updates/#version-53
