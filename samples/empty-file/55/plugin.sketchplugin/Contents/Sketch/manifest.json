@@ -1,0 +1,12 @@
+{
+  "identifier": "com.samples.empty-file",
+  "commands": [
+    {
+      "script": "command.js",
+      "handlers": {
+        "run": "onRun"
+      },
+      "identifier": "execute"
+    }
+  ]
+}
