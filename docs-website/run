@@ -26,7 +26,7 @@ end
 def build
   puts "Building the site"
   system("bundle exec jekyll clean")
-  system("bundle exec jekyll liveserve --watch --open-url --config _config.yml,_config_dev.yml")
+  system("bundle exec jekyll serve --livereload --watch --open-url --config _config.yml,_config_dev.yml")
 end
 
 check_dependencies
