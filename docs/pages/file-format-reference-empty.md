@@ -1,21 +1,18 @@
 ---
-title: Empty file
+title: Empty document
 section: file-format
-chapter: Sample files
-permalink: /file-format/samples/empty
+chapter: Reference files
+permalink: /file-format/reference/empty
 
-order: 101
-excerpt: A sample empty file
+order: 201
+excerpt: A reference empty Sketch document
 ---
 
-This page shows example Sketch document contents for an empty document, created programmatically with a plugin linked below.
+This is just a bare-bones, empty Sketch document. The equivalent of creating a new document and saving it immediately.
 
-This documentation page will be enhanced to show document structure changes over time when new versions of Sketch are released in future.
-
-- Version: Sketch 55
-- [Plugin source](https://github.com/BohemianCoding/SketchAPI/tree/develop/samples/empty-file/55/plugin.sketchplugin)
-- [Output document](https://github.com/BohemianCoding/SketchAPI/tree/develop/samples/empty-file/55/output.sketch)
-- [Unzipped output](https://github.com/BohemianCoding/SketchAPI/tree/develop/samples/empty-file/55/output)
+| Sketch version | Sketch doc                                                                                              | Unzipped doc                                                                                     | Generator plugin                                                                                              |
+| -------------- | ------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------- |
+| 55             | [Link](https://github.com/BohemianCoding/SketchAPI/tree/develop/reference-files/empty/55/output.sketch) | [Link](https://github.com/BohemianCoding/SketchAPI/tree/develop/reference-files/empty/55/output) | [Link](https://github.com/BohemianCoding/SketchAPI/tree/develop/reference-files/empty/55/plugin.sketchplugin) |
 
 ### `document.json`
 
