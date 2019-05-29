@@ -1,5 +1,5 @@
 ---
-title: Coordinate Systems
+title: Coordinate systems
 section: file-format
 chapter: Concepts
 permalink: /file-format/coordinate-systems
@@ -8,119 +8,107 @@ order: 102
 excerpt: How Sketch stores coordinate information in page.json
 ---
 
-Coordinates
-
-The `page.json` contain coordinates represented by mixed units.
+Sketch uses coordinates to layout the design of your file. Sketch uses absolute and normalized coordinates in the file format. This article shows where each type is used.
 
 ### Frame
 
-The `frame` is a `rectangle` into which the shape fits.
-The `frame` property uses absolute numbers relative to it's parent.
+The frame is a rectangle, which describes the object’s location and size in its parents’s coordinate system. The frame stores coordinates as absolute values.
 
 ### Point
 
-An array of `point` objects used in a `ShapePath` use normalized values. Storing absolute numbers would require
-a re-calculation when the shape moved.
+Points store coordinates as normalized values relative to the frame of the object.
 
-*Note*: Normalized values are in the range 0 to 1.
+If one draws a path, then moves that path, it’s unnecessary to re-calculate the path points as they can be infered from the frame.
 
-# Sample
+_Note_: Normalized values are in the range 0 to 1.
 
-In the following sections we'll create a triangle shape with the following dimensions:
+## Sample
 
-```
-x: 0
-y: 0
-base: 40
-height: 40
-```
+The example below uses a triangle (base 40, height: 40).
 
+### Sketch
 
-## Sketch
+Given the Triangle specified, the Inspector will look like this:
 
-If you create the triangle in Sketch, the Inspector will look like this:
+<img src="/images/developer/file-format-triangle-coordinates.png"
+     alt="Triangle coordinates in the Inspector"
+     width="311" height="66" />
 
-![Triangle coordinates in the Inspector](/images/developer/file-format-triangle-coordinates.png)
+### File format
 
+Within the page JSON, see [File format](/file-format) for more information on structure, we find the triangle's respresentation:
 
-## SketchAPI
+_Note_: The JSON in this sample has been snipped for brevity.
 
-Let's now re-create the same triangle with the SketchAPI.
-
-
-```JavaScript
-// access the Sketch API
-var sketch = require('sketch');
-
-// get the current Document and Page
-var document = sketch.getSelectedDocument();
-var page = document.selectedPage;
-
-var Style = sketch.Style;
-var ShapePath = sketch.ShapePath;
-
-// Create a triangle
-const shapePath = ShapePath.fromSVGPath('L 40 0 L 20 40 L 0 0')
-shapePath.transform.flippedVertically = true;
-shapePath.parent = page;
-
-shapePath.style.fills = [
-  {
-    color: '#ff0000',
-    fillType: Style.FillType.Color,
-  },
-]
-
-document.save('~/Desktop/document.sketch')
-```
-
-
-In the example above, the computed `frame` of the triangle is `x:0 y:0 width:40 height:40`.
-
-
-More information on the SketchAPI can be found here: [https://developer.sketch.com/reference/api/](https://developer.sketch.com/reference/api/)
-
-After the document has saved to your desktop, open up the folder contents and look in the `pages` subfolder.
-
-Open the `*.json` file that contains your shape (If you ran the sample directly, it will be the only file there).
-
-
-## Sample output showing normalized values.
-
-The `points` array contain the normalized points that make up the triangle..
-
-### Example
-
-The points of the triangle are: `0 0`, `40 0`, `20 40` and `0 0`
-
-To get the normalized values, we divide the each component by the frame, e.g
-
-| Point | Calculation | Normalized |
-| x: 0, y: 0 | 0 / frame.width, 0 / frame.height | 0, 0 |
-|--------------|---------------------------------|-----|
-| x: 40, y: 0  | 40 / frame.width, 0 / frame.height | 1, 0 |
-|--------------|---------------------------------|-----|
-| x: 20, y: 40 | 20 / frame.width, 40 / frame.height | 0.5, 1 |
-|--------------|---------------------------------|-----|
-| x: 0, y: 0  | 0 / frame.width, 0 / frame.height | 0, 0 |
-|--------------|---------------------------------|-----|
-
-Note: JSON has been snipped for brevity.
+#### Triangle
 
 ```json
-{	
-	"frame": {
-		"height": 40,
-		"width": 40,
-		"x": 0,
-		"y": 0
-		},
-	"points": [
-		{ "point": "{0, 0}" }, 
-		{ "point": "{1, 0}" },
-		{ "point": "{0.5, 1}" },
-		{ "point": "{0, 0}" }
-	]
+{
+  "_class": "page",
+  ...
+  "layers": [{
+    ...
+    "frame": {
+      "height": 40,
+      "width": 40,
+      "x": 0,
+      "y": 0
+      },
+    ...
+    "points": [
+      { "point": "{0, 0}" },
+      { "point": "{1, 0}" },
+      { "point": "{0.5, 1}" },
+      { "point": "{0, 0}" }
+    ]
+  }]
 }
 ```
 
+The document has a `layers` list, which contains, the Triangle is defined by it's `frame` and `points`.
+
+##### Triangle point calculation
+
+The points of the triangle are: `0 0`, `40 0`, `20 40` and `0 0`
+
+To get the normalized values, we divide the each component by the frame.
+
+| Point        | Calculation                         | Normalized |
+| ------------ | ----------------------------------- | ---------- |
+| x: 0, y: 0   | 0 / frame.width, 0 / frame.height   | 0, 0       |
+| x: 40, y: 0  | 40 / frame.width, 0 / frame.height  | 1, 0       |
+| x: 20, y: 40 | 20 / frame.width, 40 / frame.height | 0.5, 1     |
+| x: 0, y: 0   | 0 / frame.width, 0 / frame.height   | 0, 0       |
+
+#### Triangle with an Artboard parent
+
+```json
+"_class": "page",
+"layers": [{
+  "_class": "artboard",
+  ...
+  "frame": {
+    "height": 667,
+    "width": 375,
+    "x": 237,
+    "y": -20
+  },
+  "layers": [{
+    "frame": {
+      "height": 40,
+      "width": 40,
+      "x": 0,
+      "y": 0
+    },
+    ....
+    "points": [
+      { "point": "{0, 0}" },
+      { "point": "{1, 0}" },
+      { "point": "{0.5, 1}" },
+      { "point": "{0, 0}" }
+    ]
+  }]
+}]
+```
+
+In this example, the Triangles parent is an Artboard. The Artboard is located at `x: 237, y: -20`. The Artboard itself has a `layers` list. You can see the Triangle is at `x: 0, y: 0` as it's position is relative to it's parent.
