@@ -188,11 +188,9 @@ module.exports = {
 
 #### Running the plugin
 
-You can use [`sketchtool`](/cli) to run the plugin within Sketch from the command line.
+Place your plugin in the [plugins location](/plugins), and once located there you can run the plugin manually from the plugins menu within Sketch.
 
-```
-sketchtool run ./plugin.sketchbundle messages.greeting
-```
+> Alternatively, if you're comfortable on the command line you can use [`sketchtool`](/cli) to run the plugin instead.
 
 ## Next steps
 
