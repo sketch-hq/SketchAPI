@@ -32,6 +32,9 @@
 @import "components/video-overlay";
 @import "components/search";
 
+// Components - CookieConsent
+@import "components/banner-cookieconsent";
+
 // CSS only used on the Sidebar Layout Pages
 @import "layout/layout-sidebar";
 @import "helpers/syntax-highlighting"; // !We might decide to use this elsewhere

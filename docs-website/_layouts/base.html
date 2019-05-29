@@ -35,6 +35,16 @@
     </div>
   </form>
 </div>
+<script>
+  window.ga = function() {
+    ga.q.push(arguments)
+  }
+  ga.q = []
+  ga.l = +new Date()
+  ga('create', 'UA-52736259-4','auto')
+  ga('send', 'pageview')
+</script>
+<script src="https://www.google-analytics.com/analytics.js" async defer></script>
 <script src="/js/lunr.min.js"></script>
 <script src="{{ page.script }}"></script>
 {% endif %}
