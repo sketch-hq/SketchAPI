@@ -1,0 +1,10 @@
+{
+  "identifier": "com.reference-files.empty",
+  "commands": [
+    {
+      "script": "command.js",
+      "identifier": "main",
+      "handler": "main"
+    }
+  ]
+}
