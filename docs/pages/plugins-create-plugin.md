@@ -116,7 +116,7 @@ To verify the plugin has been updated, create or open a Sketch document and sele
 
 ## 2. Manual
 
-If you prefer using your own method to bundle the plugin, you must make sure to define the manifest correctly and include all scripts the required for the plugin to run.
+If you prefer using your own method to bundle the plugin, you must make sure to define the manifest correctly and include all scripts required for the plugin to run.
 
 ### Example
 
@@ -184,6 +184,14 @@ const randomEmoji = () => {
 module.exports = {
   randomEmoji,
 }
+```
+
+#### Running the plugin
+
+You can use [`sketchtool`](/cli) to run the plugin within Sketch from the command line.
+
+```
+sketchtool run ./plugin.sketchbundle messages.greeting
 ```
 
 ## Next steps

@@ -14,7 +14,7 @@ The manifest is a JSON file that provides information about a plugin such as aut
 
 ## Example manifest
 
-The example `manifest.json` file below is for a plugin called _Select Shapes_, and defines three commands - _All_, _Circles_ and _Rectangles_. These commands would be accessible from the _Plugins_ › _Select Shape_ menu in Sketch.
+The example `manifest.json` file below is for a plugin called _Select Shapes_, and defines three commands – _All_, _Circles_ and _Rectangles_. These commands would be accessible from the _Plugins_ › _Select Shapes_ menu in Sketch.
 
 ```json
 {
@@ -81,7 +81,7 @@ Defines the minimum version of Sketch required to run the plugin. This string mu
 
 An array of objects defining all commands provided by the plugin.
 
-For example, the example command definition below says that the `selectAll` JS function in `script.js` should be called when the `All` command is invoked from Sketch.
+For example, the example command definition below says that the `selectAll` JS function in `script.js` should be called when the `Select all` command is invoked from Sketch.
 
 ```json
 "commands": [
@@ -102,18 +102,18 @@ function selectAll() {
 }
 ```
 
-| Command field | Description                                                                                                                                                                                                                                                                                                                                                                                                      |
-| ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `identifier`  | Defines a unique identifier of the command within the plugin bundle.                                                                                                                                                                                                                                                                                                                                             |
-| `name`        | Provides the name of the command which is used within the _Plugins_ menu.                                                                                                                                                                                                                                                                                                                                        |
-| `shortcut`    | Provides a default keyboard shortcut for the command, e.g. `ctrl shift t`.                                                                                                                                                                                                                                                                                                                                       |
-| `script`      | Specifies the relative path within the plugin bundle's `Sketch` folder to the script implementing the command.                                                                                                                                                                                                                                                                                                   |
-| `handler`     | Specifies the name of function to be called with the command. The function should be declared at the top level of the script, and accepts a single `context` parameter which contains information such as the current document and selection.<br/><br/>If using the `skpm` tool you may `export` the function instead of declaring it, or omit this field entirely and declare the handler with `export default` |
-| `handlers`    | If more fine-grain control is required use the `handlers` field instead of `handler`, see below for in-depth documentation                                                                                                                                                                                                                                                                                       |
+| Command field | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+| ------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `identifier`  | Defines a unique identifier of the command within the plugin bundle.                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| `name`        | Provides the name of the command which is used within the _Plugins_ menu.                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| `shortcut`    | Provides a default keyboard shortcut for the command, e.g. `ctrl shift t`.                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| `script`      | Specifies the relative path within the plugin bundle's `Sketch` folder to the script implementing the command.                                                                                                                                                                                                                                                                                                                                                                                                    |
+| `handler`     | Specifies the name of function to be called with the command. The function should be declared at the top level of the script, and accepts a single `context` parameter which contains information such as the current document and selection. If this field is omitted the plugin will default to using a handler named `onRun`. <br/><br/>Alternatively, if you're using the `skpm` tool you may `export` the function instead of declaring it, or omit this field and declare the handler with `export default` |
+| `handlers`    | If more fine-grain control is required use the `handlers` field instead of `handler`, see below for in-depth documentation                                                                                                                                                                                                                                                                                                                                                                                        |
 
 ##### `handlers`
 
-An object used to fully specify a command's _setup > run > tearDown_ lifecycle, as well as work with [Actions](/guides/action-api/). When specified the `handler` field is ignored.
+An object used to fully specify a command's _setup_ › _run_ › _tearDown_ lifecycle, as well as work with [Actions](/guides/action-api/). When specified the `handler` field is ignored.
 
 The `handlers` object has four fields:
 
@@ -128,7 +128,7 @@ For example, the following `commands` definition maps the `SelectionChanged.fini
 {
   "commands": [
     {
-      "name": "Selection Changed",
+      "name": "Selection changed",
       "identifier": "selection-changed",
       "script": "./selection-changed.js",
       "handlers": {
@@ -144,14 +144,14 @@ For example, the following `commands` definition maps the `SelectionChanged.fini
 The function in `selection-changed.js` would be written as,
 
 ```js
-// onSelection handler
+// selection-changed.js
 function onSelection(context) {
   var doc = context.document
   var selection = context.selection
 }
 ```
 
-> Functions referenced in the `handlers` object are defined in the same was as the `handler` function, i.e. declared at the top level of the script in a vanilla plugin, or using ES6 module `export` syntax with `skpm`.
+> Functions referenced in the `handlers` object are defined in the same way as the `handler` function, i.e. declared at the top level of the script in a vanilla plugin, or using ES6 module `export` syntax with `skpm`.
 
 #### `description`
 
