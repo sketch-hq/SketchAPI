@@ -10,11 +10,11 @@ excerpt: The manifest is a JSON file that provides information about a plugin su
 
 The manifest is a JSON file that provides information about a plugin such as author, description, icon and where to get the latest update from. It also tells Sketch how to run the plugin and how it integrates into the _Plugins_ menu.
 
+> **Tip:** Validate your `manifest.json` using the [JSON Schema](https://github.com/BohemianCoding/SketchAPI/blob/develop/docs/sketch-plugin-manifest-schema.json).
+
 ## Example manifest
 
-The example plugin below called _Select Shapes_ defines three commands _All_, _Circles_ and _Rectangles_ which can be accessed from _Plugins_ › _Select Shape_.
-
-It also includes an `appcast` URL for Sketch to automatically check if a new version of the plugin is available.
+The example `manifest.json` file below is for a plugin called _Select Shapes_, and defines three commands – _All_, _Circles_ and _Rectangles_. These commands would be accessible from the _Plugins_ › _Select Shapes_ menu in Sketch.
 
 ```json
 {
@@ -67,11 +67,11 @@ Specifies how to contact the plugin author by email. This is optional.
 
 #### `bundleVersion`
 
-Specifies the version of the plugin bundle's metadata structure and file layout. This is optional, default `1`. No other versions are currently supported.
+Specifies the version of the plugin bundle's metadata structure and file layout. This is optional, and defaults to `1`. No other versions are currently supported.
 
 #### `compatibleVersion`
 
-Defines the minimum version of Sketch required to run the plugin. This string must be provided using [semantic versioning](semantic versioning).
+Defines the minimum version of Sketch required to run the plugin. This string must be provided using [semantic versioning](http://semver.org).
 
 ```json
 "compatibleVersion": "52.1"
@@ -81,54 +81,77 @@ Defines the minimum version of Sketch required to run the plugin. This string mu
 
 An array of objects defining all commands provided by the plugin.
 
+For example, the example command definition below says that the `selectAll` JS function in `script.js` should be called when the `Select all` command is invoked from Sketch.
+
 ```json
 "commands": [
   {
-    "name": "All",
-    "identifier": "all",
+    "name": "Select all",
+    "identifier": "select-all",
     "shortcut": "ctrl shift a",
-    "script": "shared.js",
+    "script": "select-all.js",
     "handler": "selectAll"
   }
 ]
 ```
 
-| Member       | Description                                                                                                                                                                                                                                           |
-| ------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `identifier` | Defines a unique identifier of the command within the plugin bundle.                                                                                                                                                                                  |
-| `name`       | Provides the name of the command which is used within the _Plugins_ menu.                                                                                                                                                                             |
-| `shortcut`   | Provides a default keyboard shortcut for the command, e.g. `ctrl shift t`.                                                                                                                                                                            |
-| `script`     | Specifies the relative path within the plugin bundle's `Sketch` folder to the script implementing the command.                                                                                                                                        |
-| `handler`    | Specifies the name of function to be called with the command. The function must accept a single `context` parameter, containing information such as the current document and selection. If unspecified the command is expected to be `export default` |
-| `handlers`   | An object used to specify the mapping between events (like Actions, calling the command, etc.) and function names.                                                                                                                                    |
+```js
+// select-all.js
+function selectAll() {
+  // ... plugin code to select all
+}
+```
+
+| Command field | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+| ------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `identifier`  | Defines a unique identifier of the command within the plugin bundle.                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| `name`        | Provides the name of the command which is used within the _Plugins_ menu.                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| `shortcut`    | Provides a default keyboard shortcut for the command, e.g. `ctrl shift t`.                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| `script`      | Specifies the relative path within the plugin bundle's `Sketch` folder to the script implementing the command.                                                                                                                                                                                                                                                                                                                                                                                                    |
+| `handler`     | Specifies the name of function to be called with the command. The function should be declared at the top level of the script, and accepts a single `context` parameter which contains information such as the current document and selection. If this field is omitted the plugin will default to using a handler named `onRun`. <br/><br/>Alternatively, if you're using the `skpm` tool you may `export` the function instead of declaring it, or omit this field and declare the handler with `export default` |
+| `handlers`    | If more fine-grain control is required use the `handlers` field instead of `handler`, see below for in-depth documentation                                                                                                                                                                                                                                                                                                                                                                                        |
 
 ##### `handlers`
 
-An object used to specify the mapping between events (like Actions, calling the command, etc.) and function names.
+An object used to fully specify a command's _setup_ › _run_ › _tearDown_ lifecycle, as well as work with [Actions](/guides/action-api/). When specified the `handler` field is ignored.
 
-There are 4 different keys:
+The `handlers` object has four fields:
 
-- `run` which is the name of the function that should be called when the command is run (so it is the same as the `handler` key which is ignored when `handlers` is specified).
-- `setUp` which is the name of the function to call before the command is called (not to be confused with the `Startup` action).
-- `tearDown` which is the name of the function to call after the command has finished to run (not to be confused with the `Shutdown` action).
-- `actions` which is an object where each property name should be the name of an `Action` while the value should be the name of the function to call. (see [the Action guide](/guides/action-api/) for more information)
+- `run` The function that should be called when the command is run (this is conceptually the same as defining `handler`)
+- `setUp` The function to call before the command is called (not to be confused with the `Startup` action)
+- `tearDown` The function to call after the command has finished to run (not to be confused with the `Shutdown` action)
+- `actions` See the [Actions](/guides/action-api/) page for an in-depth guide
+
+For example, the following `commands` definition maps the `SelectionChanged.finish` action to the `onSelectionChanged` JS function,
 
 ```json
-"handlers": {
-  "actions": {
-    "SelectionChanged.finish": "onSelectionChanged"
-  }
+{
+  "commands": [
+    {
+      "name": "Selection changed",
+      "identifier": "selection-changed",
+      "script": "./selection-changed.js",
+      "handlers": {
+        "actions": {
+          "SelectionChanged.finish": "onSelectionChanged"
+        }
+      }
+    }
+  ]
 }
 ```
 
+The function in `selection-changed.js` would be written as,
+
 ```js
-// onSelection handler
-export function onSelection(context) {
-  var doc = context.document;
-  var selection = context.selection;
-  …
+// selection-changed.js
+function onSelection(context) {
+  var doc = context.document
+  var selection = context.selection
 }
 ```
+
+> Functions referenced in the `handlers` object are defined in the same way as the `handler` function, i.e. declared at the top level of the script in a vanilla plugin, or using ES6 module `export` syntax with `skpm`.
 
 #### `description`
 
@@ -160,7 +183,7 @@ Defines a unique identifier for the plugin. This value is a string using reverse
 
 #### `maxCompatibleVersion`
 
-Defines the maximum version of Sketch supported by the plugin. This string is optional and must be using [semantic versioning](semantic versioning) if provided.
+Defines the maximum version of Sketch supported by the plugin. This string is optional and must be using [semantic versioning](http://semver.org) if provided.
 
 ```json
 "compatibleVersion": "54"
@@ -187,7 +210,7 @@ Specifies if the plugin is a data supplier. If set to `true` a visual indicator 
 
 #### `version`
 
-The version of the plugin using [semantic versioning][semantic versioning].
+The version of the plugin using [semantic versioning](http://semver.org).
 
 ```json
 "version": "1.0.1"
@@ -218,5 +241,3 @@ Provides information about the menu layout of the plugin. Sketch initializes the
 | `isRoot` | Specifies that menu items are created directly within the _Plugins_ menu in Sketch. By default Sketch creates a submenu for the plugin. This value is not supported for submenus. |
 | `items`  | An array of menu items, supported values are command identifier, `"-"` separator and an object defining a submenu                                                                 |
 | `title`  | Provides the human readable title used for the menu item. The value is ignored if the menu item also has `isRoot` set to `true`.                                                  |
-
-[semantic versioning]: http://semver.org
