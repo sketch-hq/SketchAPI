@@ -10,9 +10,9 @@ excerpt: A reference empty Sketch document
 
 This is just a bare-bones, empty Sketch document. The equivalent of creating a new document and saving it immediately.
 
-| Sketch version |                                                                                                            |                                                                                                  |                                                                                                                           |
-| -------------- | ---------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------- |
-| 55             | [.sketch](https://github.com/BohemianCoding/SketchAPI/tree/develop/reference-files/empty/55/output.sketch) | [JSON](https://github.com/BohemianCoding/SketchAPI/tree/develop/reference-files/empty/55/output) | [Generator plugin](https://github.com/BohemianCoding/SketchAPI/tree/develop/reference-files/empty/55/plugin.sketchplugin) |
+| Sketch version |                                                                                                                  |                                                                                                        |                                                                                                                                 |
+| -------------- | ---------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------- |
+| 55             | [.sketch](https://github.com/BohemianCoding/SketchAPI/tree/develop/reference-files/sketch55/empty/output.sketch) | [JSON](https://github.com/BohemianCoding/SketchAPI/tree/develop/reference-files/sketch55/empty/output) | [Generator plugin](https://github.com/BohemianCoding/SketchAPI/tree/develop/reference-files/sketch55/empty/plugin.sketchplugin) |
 
 ### `document.json`
 
