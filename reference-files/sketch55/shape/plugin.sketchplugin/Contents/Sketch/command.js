@@ -2,10 +2,12 @@
 
 const { Document, Shape, Rectangle, Style } = require('sketch/dom')
 
-function main() {
+function main(ctx) {
+  // Create a new document, and get a reference to its selected page
   const doc = new Document()
   const page = doc.selectedPage
 
+  // Create a simple styled Shape and place it on the page
   const shape = new Shape({
     name: 'shape',
     parent: page,
@@ -23,5 +25,9 @@ function main() {
     },
   })
 
-  doc.save()
+  // Save and close
+  doc.save(ctx.pwd + '/output.sketch', {
+    saveMode: Document.SaveMode.SaveAs,
+  })
+  doc.close()
 }

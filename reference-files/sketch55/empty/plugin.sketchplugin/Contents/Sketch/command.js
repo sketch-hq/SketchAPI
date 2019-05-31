@@ -1,7 +1,14 @@
+/* eslint-disable */
+
 const { Document } = require('sketch/dom')
 
-// eslint-disable-next-line no-unused-vars
-function main() {
+function main(ctx) {
+  // Create a new document
   const doc = new Document()
-  doc.save()
+
+  // Save and close
+  doc.save(ctx.pwd + '/output.sketch', {
+    saveMode: Document.SaveMode.SaveAs,
+  })
+  doc.close()
 }

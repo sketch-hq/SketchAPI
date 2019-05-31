@@ -1,0 +1,10 @@
+{
+  "identifier": "com.reference-files.symbol",
+  "commands": [
+    {
+      "script": "command.js",
+      "identifier": "main",
+      "handler": "main"
+    }
+  ]
+}
