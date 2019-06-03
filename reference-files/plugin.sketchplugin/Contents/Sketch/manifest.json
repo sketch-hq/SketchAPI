@@ -1,0 +1,23 @@
+{
+  "identifier": "com.reference-files.empty",
+  "commands": [
+    {
+      "script": "empty.js",
+      "identifier": "empty",
+      "handler": "empty",
+      "description": "This is just a bare-bones, empty Sketch document. The equivalent of creating a new document and saving it immediately."
+    },
+    {
+      "script": "shapes.js",
+      "identifier": "shapes",
+      "handler": "shapes",
+      "description": "This document contains a single styled shape."
+    },
+    {
+      "script": "symbols.js",
+      "identifier": "symbols",
+      "handler": "symbols",
+      "description": "This document contains a symbol master and one of its instances, side-by-side on the same page."
+    }
+  ]
+}
