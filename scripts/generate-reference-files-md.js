@@ -17,8 +17,9 @@ const dir = resolve(__dirname, '../reference-files')
 const pages = resolve(__dirname, '../docs/pages')
 const pluginPath = resolve(dir, './plugin.sketchplugin')
 const manifest = require(resolve(pluginPath, 'Contents/Sketch/manifest.json'))
-const repoPath =
-  'https://github.com/BohemianCoding/SketchAPI/tree/develop/reference-files'
+const githubUrl = require('../package').homepage
+
+const refFilesUrl = `${githubUrl}/tree/develop/reference-files`
 
 const versions = readdirSync(dir).filter(name => !isNaN(name))
 
@@ -35,16 +36,16 @@ excerpt: ${cmd.description}
 
 ${cmd.description}
 
-Use the table below to access pretty printed JSON illustrating the feature, as well as the Sketch file itself and the plugin source used to generate the file from scratch.
+> Use the table below to access pretty printed JSON illustrating the feature, as well as the Sketch file itself and the plugin source used to generate the file from scratch.
 
 ${table([
   ['Sketch version', '', '', ''],
   ...versions.map(version => {
     return [
       `Sketch ${version}`,
-      `[JSON](${repoPath}/${version}/${cmd.identifier}/output)`,
-      `[.sketch](${repoPath}/${version}/${cmd.identifier}/output.sketch)`,
-      `[Generator plugin](${repoPath}/plugin.sketchplugin/Contents/Sketch/${
+      `[JSON](${refFilesUrl}/${version}/${cmd.identifier}/output)`,
+      `[.sketch](${refFilesUrl}/${version}/${cmd.identifier}/output.sketch)`,
+      `[Generator plugin](${refFilesUrl}/plugin.sketchplugin/Contents/Sketch/${
         cmd.identifier
       }.js)`,
     ]
@@ -54,5 +55,5 @@ ${table([
   const mdPath = resolve(pages, `file-format-reference-${cmd.identifier}.md`)
 
   writeFileSync(mdPath, md, 'utf8')
-  execSync(`npm run prettier -- --write "${mdPath}"`, { encoding: 'utf8' })
+  execSync(`npm run prettier:base -- "${mdPath}"`, { encoding: 'utf8' })
 })

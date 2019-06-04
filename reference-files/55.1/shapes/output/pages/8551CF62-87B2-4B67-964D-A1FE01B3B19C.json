@@ -1,6 +1,6 @@
 {
   "_class": "page",
-  "do_objectID": "58146516-F999-4054-98D9-8D545A600896",
+  "do_objectID": "8551CF62-87B2-4B67-964D-A1FE01B3B19C",
   "booleanOperation": -1,
   "exportOptions": {
     "_class": "exportOptions",
@@ -43,7 +43,7 @@
   "layers": [
     {
       "_class": "shapeGroup",
-      "do_objectID": "A9E83358-0025-486B-A1AA-C360B573E20B",
+      "do_objectID": "17749C87-C8E5-4350-ABA5-434306BB477E",
       "booleanOperation": -1,
       "exportOptions": {
         "_class": "exportOptions",
@@ -147,7 +147,7 @@
       "layers": [
         {
           "_class": "rectangle",
-          "do_objectID": "2BE65D3A-265B-45B6-A7CB-EFFDB17DE4DE",
+          "do_objectID": "41822FA1-DB2C-4574-B498-617C4BD48815",
           "booleanOperation": -1,
           "exportOptions": {
             "_class": "exportOptions",

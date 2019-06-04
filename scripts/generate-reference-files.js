@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-globals */
 /* eslint-disable import/no-dynamic-require, no-console */
 
 /**
@@ -9,11 +10,11 @@
  *
  * Usage
  *
- *   To generate just the 'empty' reference file for Sketch 55:
- *     npm run docs:generate-reference-files -- 55 empty
+ *   To generate just the 'empty' reference file:
+ *     npm run docs:generate-reference-files -- empty
  *
  *   To generate all reference files:
- *     npm run docs:generate-reference-files -- 55 '*'
+ *     npm run docs:generate-reference-files -- '*'
  *
  * Note
  *
@@ -26,8 +27,20 @@ const { execSync } = require('child_process')
 const del = require('del')
 const { resolve } = require('path')
 
-const sketchVersion = process.argv[2] || '55'
-const identifier = process.argv[3] || '*'
+let sketchVersion
+
+try {
+  const [, , ver] = execSync(`sketchtool --version`, {
+    encoding: 'utf8',
+  }).split(' ')
+  if (isNaN(ver)) throw Error("Couldn't parse valid Sketch version")
+  sketchVersion = ver
+} catch (err) {
+  console.error(err)
+  process.exit(1)
+}
+
+const identifier = process.argv[2] || '*'
 const outputDir = resolve(__dirname, `../reference-files/${sketchVersion}`)
 const pluginPath = resolve(__dirname, `../reference-files/plugin.sketchplugin`)
 
@@ -36,6 +49,10 @@ const commands = manifest.commands.filter(
   cmd => identifier === '*' || cmd.identifier === identifier
 )
 
+console.log('Generating reference files...')
+console.log(`  Sketch version: ${sketchVersion}`)
+console.log(`  Commands: ${commands.map(cmd => cmd.identifier).join(',')}`)
+
 const exec = cmd => {
   try {
     console.log(execSync(cmd, { encoding: 'utf8' }))
@@ -43,10 +60,6 @@ const exec = cmd => {
     console.error(err)
   }
 }
-
-console.log('Generating reference files...')
-console.log(`  Sketch version: ${sketchVersion}`)
-console.log(`  Commands: ${commands.map(cmd => cmd.identifier).join(',')}`)
 
 commands.forEach(cmd => {
   const currDir = resolve(outputDir, cmd.identifier)
@@ -59,5 +72,5 @@ commands.forEach(cmd => {
     } --context='{"savePath": "${savePath}.sketch"}'`
   )
   exec(`unzip ${savePath}.sketch -d ${savePath}`)
-  exec(`npm run prettier -- --write "${savePath}/**/*.json"`)
+  exec(`npm run prettier:base -- "${savePath}/**/*.json"`)
 })

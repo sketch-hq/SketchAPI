@@ -1,9 +1,11 @@
 {
   "commit": "1b735aa8f66d3e13f8900ae7c369f355f0eb2d3a",
   "pagesAndArtboards": {
-    "5396982B-D14F-4B04-BE61-615C83FDB632": {
+    "D47D0E38-6BB8-4941-A1C6-FD20518413AA": {
       "name": "Page 1",
-      "artboards": {}
+      "artboards": {
+        "DECDFEC8-139B-4968-A718-E3F1B4B71580": { "name": "artboard" }
+      }
     }
   },
   "version": 118,

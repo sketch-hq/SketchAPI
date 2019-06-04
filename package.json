@@ -5,6 +5,7 @@
   "author": "Sam Deane",
   "license": "MIT",
   "description": "Javascript API for Sketch",
+  "homepage": "https://github.com/BohemianCoding/SketchAPI",
   "scripts": {
     "build": "npm run build:test && npm run build:api && node ./scripts/copy-tests.js",
     "build:test": "skpm-test --build-only",
@@ -24,7 +25,6 @@
     "run-tests:private": "skpm-test --app=\"/Applications/Sketch Private.app\"",
     "test:no-variant:watch": "npm run run-tests:no-variant -- --watch",
     "lint": "find . -name \"*.ts\" -o -name \"*.js\" | grep -v -f .gitignore | grep -v .d.ts | grep -v examples | grep -v docs-website | xargs eslint",
-    "prettier": "prettier",
     "prettier:base": "prettier --write",
     "prettify": "find . -name \"*.ts\" -o -name \"*.js\" | grep -v -f .gitignore | grep -v docs-website | xargs npm run prettier:base",
     "lint-staged": "lint-staged",

@@ -26,8 +26,13 @@ function shapes(ctx) {
   })
 
   // Save and close
-  doc.save(String(ctx.savePath), {
-    saveMode: Document.SaveMode.SaveAs,
-  })
-  doc.close()
+  doc.save(
+    String(ctx.savePath),
+    {
+      saveMode: Document.SaveMode.SaveAs,
+    },
+    function() {
+      doc.close()
+    }
+  )
 }
