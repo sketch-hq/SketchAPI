@@ -2,13 +2,13 @@
 
 const { Document } = require('sketch/dom')
 
-function empty(ctx) {
+function main(ctx) {
   // Create a new document
   const doc = new Document()
 
   // Save and close
   doc.save(
-    String(ctx.savePath),
+    `${ctx.savePath}/output.sketch`,
     {
       saveMode: Document.SaveMode.SaveAs,
     },

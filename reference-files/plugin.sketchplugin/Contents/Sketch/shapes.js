@@ -2,7 +2,7 @@
 
 const { Document, Shape, Rectangle, Style } = require('sketch/dom')
 
-function shapes(ctx) {
+function main(ctx) {
   // Create a new document, and get a reference to its selected page
   const doc = new Document()
   const page = doc.selectedPage
@@ -27,7 +27,7 @@ function shapes(ctx) {
 
   // Save and close
   doc.save(
-    String(ctx.savePath),
+    `${ctx.savePath}/output.sketch`,
     {
       saveMode: Document.SaveMode.SaveAs,
     },

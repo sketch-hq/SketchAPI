@@ -62,15 +62,14 @@ const exec = cmd => {
 }
 
 commands.forEach(cmd => {
-  const currDir = resolve(outputDir, cmd.identifier)
-  const savePath = resolve(currDir, 'output')
-  del.sync(`${currDir}/**`)
-  exec(`mkdir -p ${currDir}`)
+  const dir = resolve(outputDir, cmd.identifier)
+  del.sync(`${dir}/**`)
+  exec(`mkdir -p ${dir}`)
   exec(
     `sketchtool run ${pluginPath} ${
       cmd.identifier
-    } --context='{"savePath": "${savePath}.sketch"}'`
+    } --context='{"savePath": "${dir}"}'`
   )
-  exec(`unzip ${savePath}.sketch -d ${savePath}`)
-  exec(`npm run prettier:base -- "${savePath}/**/*.json"`)
+  exec(`unzip ${dir}/output.sketch -d ${dir}/output`)
+  exec(`npm run prettier:base -- "${dir}/output/**/*.json"`)
 })
