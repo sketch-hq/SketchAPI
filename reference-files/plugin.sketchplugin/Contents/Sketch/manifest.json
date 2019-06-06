@@ -4,20 +4,32 @@
     {
       "script": "empty.js",
       "identifier": "empty",
-      "handler": "empty",
+      "handler": "main",
       "description": "This is just a bare-bones, empty Sketch document. The equivalent of creating a new document and saving it immediately."
     },
     {
       "script": "shapes.js",
       "identifier": "shapes",
-      "handler": "shapes",
+      "handler": "main",
       "description": "This document contains a single styled shape."
     },
     {
       "script": "symbols.js",
       "identifier": "symbols",
-      "handler": "symbols",
+      "handler": "main",
       "description": "This document contains a symbol master and one of its instances, side-by-side on the same page."
+    },
+    {
+      "script": "library-symbols.js",
+      "identifier": "library-symbols",
+      "handler": "main",
+      "description": "This document contains a symbol imported from a library and placed on the page."
+    },
+    {
+      "script": "library-styles.js",
+      "identifier": "library-styles",
+      "handler": "main",
+      "description": "This document contains a shared style imported from a library and applied to a shape on the document."
     }
   ]
 }
