@@ -425,8 +425,7 @@ Document.define('colorSpace', {
     if (this.isImmutable()) {
       return
     }
-    const converter = MSColorSpaceConverter.alloc().init()
-    converter.convertColor(colorSpace)
+    this._getMSDocumentData().assignColorSpace(colorSpace)
   },
 })
 
