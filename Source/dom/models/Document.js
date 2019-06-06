@@ -16,6 +16,12 @@ export const SaveModeType = {
   SaveAs: NSSaveAsOperation,
 }
 
+export const ColorSpaceType = {
+  Unmanaged: 0,
+  sRGB: 1,
+  P3: 2,
+}
+
 /* eslint-disable no-use-before-define, typescript/no-use-before-define */
 export function getDocuments() {
   return toArray(NSApp.orderedDocuments())
@@ -389,6 +395,7 @@ if (typeof MSDocument !== 'undefined') {
 }
 
 Document.SaveMode = SaveModeType
+Document.ColorSpace = ColorSpaceType
 
 // override getting the id to make sure it's fine if we have an MSDocument
 Document.define('id', {
@@ -402,6 +409,24 @@ Document.define('id', {
       return String(this._object.documentData().objectID())
     }
     return String(this._object.objectID())
+  },
+})
+
+Document.define('colorSpace', {
+  importable: true,
+  exportable: true,
+  get() {
+    if (!this._object) {
+      return undefined
+    }
+    return this._getMSDocumentData().colorSpace()
+  },
+  set(colorSpace) {
+    if (this.isImmutable()) {
+      return
+    }
+    const converter = MSColorSpaceConverter.alloc().init()
+    converter.convertColor(colorSpace)
   },
 })
 
