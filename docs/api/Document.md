@@ -10,17 +10,18 @@ var Document = require('sketch/dom').Document
 
 A Sketch document.
 
-| Properties                                                                    |                                                                                                                    |
-| ----------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
-| id<span class="arg-type">string</span>                                        | The unique ID of the document.                                                                                     |
-| pages<span class="arg-type">[Page](#page)[]</span>                            | The pages of the document.                                                                                         |
-| selectedPage<span class="arg-type">[Page](#page)</span>                       | The selected page of the Document.                                                                                 |
-| selectedLayers<span class="arg-type">[Selection](#selection)</span>           | The Selection of the layers that the user has selected in the currently selected page.                             |
-| path<span class="arg-type">string</span>                                      | The path to the document (or the appcast URL in case of a Document from a remote Library).                         |
-| sharedLayerStyles<span class="arg-type">[SharedStyle](#shared-style)[]</span> | The list of all shared layer styles defined in the document.                                                       |
-| sharedTextStyles<span class="arg-type">[SharedStyle](#shared-style)[]</span>  | The list of all shared text styles defined in the document.                                                        |
-| colors<span class="arg-type">[ColorAsset](#color-asset)[]</span>              | A list of color assets defined in the document. Mutating the returned array will update the document colors.       |
-| gradients<span class="arg-type">[GradientAsset](#gradient-asset)[]</span>     | A list of gradient assets defined in the document. Mutating the returned array will update the document gradients. |
+| Properties                                                                           |                                                                                                                    |
+| ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------ |
+| id<span class="arg-type">string</span>                                               | The unique ID of the document.                                                                                     |
+| pages<span class="arg-type">[Page](#page)[]</span>                                   | The pages of the document.                                                                                         |
+| selectedPage<span class="arg-type">[Page](#page)</span>                              | The selected page of the Document.                                                                                 |
+| selectedLayers<span class="arg-type">[Selection](#selection)</span>                  | The Selection of the layers that the user has selected in the currently selected page.                             |
+| path<span class="arg-type">string</span>                                             | The path to the document (or the appcast URL in case of a Document from a remote Library).                         |
+| sharedLayerStyles<span class="arg-type">[SharedStyle](#shared-style)[]</span>        | The list of all shared layer styles defined in the document.                                                       |
+| sharedTextStyles<span class="arg-type">[SharedStyle](#shared-style)[]</span>         | The list of all shared text styles defined in the document.                                                        |
+| colors<span class="arg-type">[ColorAsset](#color-asset)[]</span>                     | A list of color assets defined in the document. Mutating the returned array will update the document colors.       |
+| gradients<span class="arg-type">[GradientAsset](#gradient-asset)[]</span>            | A list of gradient assets defined in the document. Mutating the returned array will update the document gradients. |
+| colorSpace<span class="arg-type">[ColorSpace](#documentcolorspace) - readonly</span> | The document's current color space.                                                                                |
 
 ## Access the selected Document
 
@@ -221,6 +222,21 @@ document.close()
 
 A method to close a document.
 
+## Change the color space
+
+```javascript
+// By default the method assigns a new color space
+document.changeColorSpace(ColorSpace.sRGB)
+log(document.colorSpace === ColorSpace.sRGB) // true
+
+// Pass true as an optional second argument
+// to convert instead of assign
+document.changeColorSpace(ColorSpace.P3, true)
+log(document.colorSpace === ColorSpace.P3) // true
+```
+
+A method to change a document's color space. For an in-depth discussion of this topic and the difference between assigning and converting the color space check the [color management](https://www.sketch.com/docs/other/color-management/) documentation.
+
 ## `Document.SaveMode`
 
 ```javascript
@@ -238,3 +254,19 @@ Enumeration of the save mode.
 | `Save`   | Overwrites a document’s file with the document’s contents                                                                     |
 | `SaveAs` | Writes a document’s contents to a new file and then changes the document’s current location to point to the just-written file |
 | `SaveTo` | Writes a document’s contents to a new file without changing the document’s current location to point to the new file.         |
+
+## `Document.ColorSpace`
+
+```javascript
+Document.ColorSpace.Unmanaged
+Document.ColorSpace.sRGB
+Document.ColorSpace.P3
+```
+
+Enumeration of the available color space settings.
+
+| Value       |                          |
+| ----------- | ------------------------ |
+| `Unmanaged` | The default setting      |
+| `sRGB`      | sRGB color profile       |
+| `P3`        | Display P3 color profile |

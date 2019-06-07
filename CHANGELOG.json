@@ -6,7 +6,8 @@
     "[New] Expose substring in `Text.fragment`",
     "[New] Add a `find` method to make it easy to look for specific layers",
     "[Fixed] Fix setting layers of a group when the layers already had a parent",
-    "[Fixed] `symbolMaster.getParentSymbolMaster` used to throw an error. It will now return `undefined`"
+    "[Fixed] `symbolMaster.getParentSymbolMaster` used to throw an error. It will now return `undefined`",
+    "[New] Added a `colorSpace` property and a `changeColorSpace` method to `Document`"
   ],
   "releases": {
     "55": [
