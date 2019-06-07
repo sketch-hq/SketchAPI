@@ -227,17 +227,17 @@ A method to close a document.
 ```javascript
 // By default the method assigns a new color space
 document.changeColorSpace(ColorSpace.sRGB)
-log(document.colorSpace === ColorSpace.sRGB) // true
+console.log(document.colorSpace === ColorSpace.sRGB) // true
 
 // Pass true as an optional second argument
 // to convert instead of assign
 document.changeColorSpace(ColorSpace.P3, true)
-log(document.colorSpace === ColorSpace.P3) // true
+console.log(document.colorSpace === ColorSpace.P3) // true
 
 // Alternatively, use the property setter (the behaviour
 // here is to always assign the color space)
 document.colorSpace = ColorSpace.P3
-log(document.colorSpace === ColorSpace.P3) // true
+console.log(document.colorSpace === ColorSpace.P3) // true
 
 // Create a document with a pre-defined color space
 const p3Doc = new Document({ colorSpace: ColorSpace.P3 })
