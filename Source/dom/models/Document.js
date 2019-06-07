@@ -422,7 +422,6 @@ if (typeof MSDocument !== 'undefined') {
 
 Document.SaveMode = SaveModeType
 Document.ColorSpace = ColorSpace
-Document.ColorSpaceMap = ColorSpaceMap
 
 // override getting the id to make sure it's fine if we have an MSDocument
 Document.define('id', {
@@ -440,7 +439,7 @@ Document.define('id', {
 })
 
 Document.define('colorSpace', {
-  importable: false,
+  importable: true,
   exportable: true,
   get() {
     if (!this._object) {
@@ -453,10 +452,15 @@ Document.define('colorSpace', {
       ) || colorSpace
     )
   },
-  set() {
-    throw new Error(
-      'The colorSpace property is read only, use the changeColorSpace method instead'
-    )
+  set(colorSpace) {
+    if (this.isImmutable()) {
+      return
+    }
+    const targetColorSpace = ColorSpaceMap[colorSpace]
+    if (typeof targetColorSpace === 'undefined') {
+      throw new Error(`Invalid colorSpace ${colorSpace}`)
+    }
+    this._getMSDocumentData().assignColorSpace(targetColorSpace)
   },
 })
 

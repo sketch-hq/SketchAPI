@@ -6,6 +6,7 @@ import {
   canBeLogged,
 } from '../../../test-utils'
 import { Document, Group, Shape, Text } from '../..'
+import { ColorSpaceMap } from '../Document'
 
 test('should be able to log a document', (context, document) => {
   expect(true).toBe(true)
@@ -175,23 +176,32 @@ test('should remove document gradients', (context, document) => {
   expect(document.gradients[0].name).toEqual('Gradient 2')
 })
 
-test('should have defined colourSpace enums', () => {
+test('should have defined colorSpace enums', () => {
   expect(Document.ColorSpace.Unmanaged).toBe('Unmanaged')
   expect(Document.ColorSpace.sRGB).toBe('sRGB')
   expect(Document.ColorSpace.P3).toBe('P3')
-  expect(Document.ColorSpaceMap.Unmanaged).toBe(0)
-  expect(Document.ColorSpaceMap.sRGB).toBe(1)
-  expect(Document.ColorSpaceMap.P3).toBe(2)
+  expect(ColorSpaceMap.Unmanaged).toBe(0)
+  expect(ColorSpaceMap.sRGB).toBe(1)
+  expect(ColorSpaceMap.P3).toBe(2)
 })
 
 test('should have a colorSpace getter', (context, document) => {
   expect(document.colorSpace).toBe(Document.ColorSpace.Unmanaged)
 })
 
-test('colorSpace setter should throw', (context, document) => {
+test('colorSpace setter should assign color profiles', (context, document) => {
+  // eslint-disable-next-line no-param-reassign
+  document.colorSpace = Document.ColorSpace.sRGB
+  expect(document.colorSpace).toBe(Document.ColorSpace.sRGB)
+  // eslint-disable-next-line no-param-reassign
+  document.colorSpace = Document.ColorSpace.P3
+  expect(document.colorSpace).toBe(Document.ColorSpace.P3)
+})
+
+test('throws when setting an invalid colorSpace', (context, document) => {
   try {
     // eslint-disable-next-line no-param-reassign
-    document.colorSpace = Document.ColorSpace.sRGB
+    document.colorSpace = 'foo'
     expect(true).toBe(false)
   } catch (err) {
     expect(err instanceof Error).toBe(true)
