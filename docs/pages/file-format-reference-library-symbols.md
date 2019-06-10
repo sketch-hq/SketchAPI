@@ -1,5 +1,5 @@
 ---
-title: Library-symbols file
+title: Library symbols
 section: file-format
 chapter: Reference files
 permalink: /file-format/reference/library-symbols

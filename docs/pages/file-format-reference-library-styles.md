@@ -1,5 +1,5 @@
 ---
-title: Library-styles file
+title: Library shared styles
 section: file-format
 chapter: Reference files
 permalink: /file-format/reference/library-styles
