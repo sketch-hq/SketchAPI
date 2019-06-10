@@ -30,6 +30,18 @@
       "identifier": "library-styles",
       "handler": "main",
       "description": "This document contains a shared style imported from a library and applied to a shape on the document."
+    },
+    {
+      "script": "text.js",
+      "identifier": "text",
+      "handler": "main",
+      "description": "This document contains styled text layers."
+    },
+    {
+      "script": "symbol-overrides.js",
+      "identifier": "symbol-overrides",
+      "handler": "main",
+      "description": "This document demonstrates overriding text values in symbols."
     }
   ]
 }
