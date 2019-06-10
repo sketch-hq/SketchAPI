@@ -35,7 +35,7 @@ You can find all the official polyfills [on GitHub](https://github.com/search?q=
 
 All macOS frameworks and the internal Sketch APIs are made available to JavaScript by CocoaScript. For a more detailed overview see the [CocoaScript documentation](/plugins/cocoascript).
 
-## Asyncronous operations
+## Asynchronous operations
 
 The JavaScript context of a Sketch plugin is short-lived. Whenever a plugin is run, a new JavaScript environment is initialized and destroyed as soon as the script finished. To run and wait for asynchronous operations to complete, use fibers to keep the JavaScript environment alive.
 
