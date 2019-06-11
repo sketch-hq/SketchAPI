@@ -1,5 +1,5 @@
 ---
-title: Symbol-overrides file
+title: Symbol overrides
 section: file-format
 chapter: Reference files
 permalink: /file-format/reference/symbol-overrides

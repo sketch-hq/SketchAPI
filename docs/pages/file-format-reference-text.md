@@ -1,5 +1,5 @@
 ---
-title: Text file
+title: Text
 section: file-format
 chapter: Reference files
 permalink: /file-format/reference/text
