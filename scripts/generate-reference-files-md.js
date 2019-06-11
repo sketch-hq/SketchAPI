@@ -25,7 +25,7 @@ const versions = readdirSync(dir).filter(name => !isNaN(name))
 
 manifest.commands.forEach(cmd => {
   const md = `---
-title: ${cmd.identifier.charAt(0).toUpperCase() + cmd.identifier.slice(1)} file
+title: ${cmd.name}
 section: file-format
 chapter: Reference files
 permalink: /file-format/reference/${cmd.identifier}

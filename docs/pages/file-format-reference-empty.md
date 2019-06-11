@@ -1,5 +1,5 @@
 ---
-title: Empty file
+title: Empty
 section: file-format
 chapter: Reference files
 permalink: /file-format/reference/empty

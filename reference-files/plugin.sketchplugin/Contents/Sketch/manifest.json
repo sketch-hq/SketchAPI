@@ -5,31 +5,57 @@
       "script": "empty.js",
       "identifier": "empty",
       "handler": "main",
+      "name": "Empty",
       "description": "This is just a bare-bones, empty Sketch document. The equivalent of creating a new document and saving it immediately."
     },
     {
       "script": "shapes.js",
       "identifier": "shapes",
       "handler": "main",
+      "name": "Shapes",
       "description": "This document contains a single styled shape."
     },
     {
       "script": "symbols.js",
       "identifier": "symbols",
       "handler": "main",
+      "name": "Symbols",
       "description": "This document contains a symbol master and one of its instances, side-by-side on the same page."
     },
     {
       "script": "library-symbols.js",
       "identifier": "library-symbols",
       "handler": "main",
+      "name": "Library symbols",
       "description": "This document contains a symbol imported from a library and placed on the page."
     },
     {
       "script": "library-styles.js",
       "identifier": "library-styles",
       "handler": "main",
+      "name": "Library shared styles",
       "description": "This document contains a shared style imported from a library and applied to a shape on the document."
+    },
+    {
+      "script": "text.js",
+      "identifier": "text",
+      "handler": "main",
+      "name": "Text",
+      "description": "This document contains styled text layers."
+    },
+    {
+      "script": "symbol-overrides.js",
+      "identifier": "symbol-overrides",
+      "handler": "main",
+      "name": "Symbol overrides",
+      "description": "This document demonstrates overriding text values in symbols."
+    },
+    {
+      "script": "groups.js",
+      "identifier": "groups",
+      "handler": "main",
+      "name": "Groups",
+      "description": "This document demonstrates nested group and layer hierarchy."
     }
   ]
 }
