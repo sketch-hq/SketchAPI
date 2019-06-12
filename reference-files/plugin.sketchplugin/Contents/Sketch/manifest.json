@@ -56,6 +56,20 @@
       "handler": "main",
       "name": "Groups",
       "description": "This document demonstrates nested group and layer hierarchy."
+    },
+    {
+      "script": "images.js",
+      "identifier": "images",
+      "handler": "main",
+      "name": "Images",
+      "description": "This document contains a bitmap image layer."
+    },
+    {
+      "script": "shape-paths.js",
+      "identifier": "shape-paths",
+      "handler": "main",
+      "name": "Shape paths",
+      "description": "This document contains a vector shape path layer."
     }
   ]
 }
