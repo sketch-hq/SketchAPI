@@ -4,7 +4,7 @@ section: file-format
 chapter: Reference files
 permalink: /file-format/reference/symbols
 
-order: 201
+order: 801
 excerpt: This document contains a symbol master and one of its instances, side-by-side on the same page.
 ---
 

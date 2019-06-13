@@ -4,7 +4,7 @@ section: file-format
 chapter: Reference files
 permalink: /file-format/reference/library-symbols
 
-order: 201
+order: 1101
 excerpt: This document contains a symbol imported from a library and placed on the page.
 ---
 

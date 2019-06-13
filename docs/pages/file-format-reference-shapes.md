@@ -4,7 +4,7 @@ section: file-format
 chapter: Reference files
 permalink: /file-format/reference/shapes
 
-order: 201
+order: 301
 excerpt: This document contains a single styled shape.
 ---
 

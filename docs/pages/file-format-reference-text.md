@@ -4,7 +4,7 @@ section: file-format
 chapter: Reference files
 permalink: /file-format/reference/text
 
-order: 201
+order: 501
 excerpt: This document contains styled text layers.
 ---
 

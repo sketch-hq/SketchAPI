@@ -23,14 +23,14 @@ const refFilesUrl = `${githubUrl}/tree/develop/reference-files`
 
 const versions = readdirSync(dir).filter(name => !isNaN(name))
 
-manifest.commands.forEach(cmd => {
+manifest.commands.forEach((cmd, index) => {
   const md = `---
 title: ${cmd.name}
 section: file-format
 chapter: Reference files
 permalink: /file-format/reference/${cmd.identifier}
 
-order: 201
+order: ${index + 2}01
 excerpt: ${cmd.description}
 ---
 
