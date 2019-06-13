@@ -5,7 +5,7 @@ chapter: Concepts
 permalink: /file-format/coordinate-systems
 
 order: 102
-excerpt: How Sketch stores coordinate information in page.json
+excerpt: Sketch stores the dimensions and position of layers within the canvas, the _frame_, separately from the _point coordinates_ describing shapes.
 ---
 
 Layers are the building blocks of Sketch. Their dimensions and position within the canvas, the _frame_, are stored separately from the _point coordinates_ describing shapes.
