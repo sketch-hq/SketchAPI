@@ -14,11 +14,15 @@ Layers are the building blocks of Sketch. Their dimensions and position within t
 
 The _frame_ is a rectangle describing a layer's position and size relative to it's parent layer, such as a group or an artboard, or the canvas if there is no parent. The _frame_ is stored using absolute values.
 
+#### Layer directly on canvas
+
+In the example below, the triangle is stored in the `.sketch` file with the following frame matching the values in the inspector. See [File format](/file-format) for more details on the document structure.
+
 <img src="/images/developer/file-format-coordinates-frame.png"
      alt="Coordinates of a triangle placed directly on the canvas"
      width="616" />
 
-In the example above, the triangle is stored in the `.sketch` file with the following frame matching the values in the inspector. See [File format](/file-format) for more details on the document structure.
+##### JSON output
 
 ```json
 {
@@ -37,11 +41,15 @@ In the example above, the triangle is stored in the `.sketch` file with the foll
 }
 ```
 
+#### Layer with a parent
+
+When placed inside an artboard, the triangle's position is relative to it, identical to the inspector values.
+
 <img src="/images/developer/file-format-coordinates-frame-parent.png"
      alt="Coordinates of a triangle placed in the same place of the canvas but as part of an artboard."
      width="616" />
 
-When placed inside an artboard, the triangle's position is relative to it, identical to the inspector values.
+##### JSON output
 
 ```json
 {
@@ -88,6 +96,8 @@ The point coordinates are calculated based on the _frame_, producing the JSON ou
 | `0, 40`      | `0, 1`            | `0 / frame.width, 40 / frame.height`  |
 
 > **Note:** Normalized values are in the range `0..1`.
+
+##### JSON output
 
 ```json
 {
