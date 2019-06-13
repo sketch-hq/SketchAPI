@@ -70,6 +70,13 @@
       "handler": "main",
       "name": "Library symbols",
       "description": "This document contains a symbol imported from a library and placed on the page."
+    },
+    {
+      "script": "prototyping.js",
+      "identifier": "prototyping",
+      "handler": "main",
+      "name": "Prototyping",
+      "description": "This document demonstrates setting up a prototyping flow between two artboards."
     }
   ]
 }
