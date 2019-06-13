@@ -32,6 +32,7 @@ The square bracket syntax of Objective-C is converted to dot-syntax in JavaScrip
   - Setter: `object.name = 'Sketch'`
 - Objective-C selectors are exposed as methods of the JavaScript proxy.
 - `:` are converted to `_`, the last underscore is optional.
+- Calling a method with an underscore requires you to double up: `sketch_method` becomes `sketch__method`
 - Each component of the selector is concatenated into a single string with no separation.
 
 ### Objective-C

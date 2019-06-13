@@ -16,6 +16,18 @@ export const SaveModeType = {
   SaveAs: NSSaveAsOperation,
 }
 
+export const ColorSpaceMap = {
+  Unmanaged: 0,
+  sRGB: 1,
+  P3: 2,
+}
+
+export const ColorSpace = {
+  Unmanaged: 'Unmanaged',
+  sRGB: 'sRGB',
+  P3: 'P3',
+}
+
 /* eslint-disable no-use-before-define, typescript/no-use-before-define */
 export function getDocuments() {
   return toArray(NSApp.orderedDocuments())
@@ -374,6 +386,26 @@ export class Document extends WrappedObject {
 
     msdocument.close()
   }
+
+  changeColorSpace(colorSpace, convert = false) {
+    if (this.isImmutable()) {
+      return
+    }
+
+    const targetColorSpace = ColorSpaceMap[colorSpace]
+    const currColorSpace = this._getMSDocumentData().colorSpace()
+
+    if (typeof targetColorSpace === 'undefined') {
+      throw new Error(`Invalid colorSpace ${colorSpace}`)
+    }
+
+    // If the current colorSpace is unmanaged then we always assign
+    if (!convert || currColorSpace === ColorSpaceMap.Unmanaged) {
+      this._getMSDocumentData().assignColorSpace(targetColorSpace)
+    } else {
+      this._getMSDocumentData().convertToColorSpace(targetColorSpace)
+    }
+  }
 }
 
 Document.type = Types.Document
@@ -389,6 +421,7 @@ if (typeof MSDocument !== 'undefined') {
 }
 
 Document.SaveMode = SaveModeType
+Document.ColorSpace = ColorSpace
 
 // override getting the id to make sure it's fine if we have an MSDocument
 Document.define('id', {
@@ -402,6 +435,32 @@ Document.define('id', {
       return String(this._object.documentData().objectID())
     }
     return String(this._object.objectID())
+  },
+})
+
+Document.define('colorSpace', {
+  importable: true,
+  exportable: true,
+  get() {
+    if (!this._object) {
+      return undefined
+    }
+    const colorSpace = this._getMSDocumentData().colorSpace()
+    return (
+      Object.keys(ColorSpaceMap).find(
+        key => ColorSpaceMap[key] === colorSpace
+      ) || colorSpace
+    )
+  },
+  set(colorSpace) {
+    if (this.isImmutable()) {
+      return
+    }
+    const targetColorSpace = ColorSpaceMap[colorSpace]
+    if (typeof targetColorSpace === 'undefined') {
+      throw new Error(`Invalid colorSpace ${colorSpace}`)
+    }
+    this._getMSDocumentData().assignColorSpace(targetColorSpace)
   },
 })
 
