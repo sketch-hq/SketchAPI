@@ -4,7 +4,7 @@ section: file-format
 chapter: Reference files
 permalink: /file-format/reference/images
 
-order: 601
+order: 106
 excerpt: This document contains a bitmap image layer.
 ---
 

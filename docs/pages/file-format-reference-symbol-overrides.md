@@ -4,7 +4,7 @@ section: file-format
 chapter: Reference files
 permalink: /file-format/reference/symbol-overrides
 
-order: 901
+order: 109
 excerpt: This document demonstrates overriding text values in symbols.
 ---
 

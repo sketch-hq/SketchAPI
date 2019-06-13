@@ -5,7 +5,7 @@
       "script": "empty.js",
       "identifier": "empty",
       "handler": "main",
-      "name": "Empty",
+      "name": "Empty document",
       "description": "This is just a bare-bones, empty Sketch document. The equivalent of creating a new document and saving it immediately."
     },
     {

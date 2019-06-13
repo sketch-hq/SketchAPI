@@ -4,7 +4,7 @@ section: file-format
 chapter: Reference files
 permalink: /file-format/reference/shape-paths
 
-order: 401
+order: 104
 excerpt: This document contains a vector shape path layer.
 ---
 

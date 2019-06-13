@@ -30,7 +30,7 @@ section: file-format
 chapter: Reference files
 permalink: /file-format/reference/${cmd.identifier}
 
-order: ${index + 2}01
+order: 1${String(index + 2).padStart(2, 0)}
 excerpt: ${cmd.description}
 ---
 
