@@ -5,7 +5,7 @@
       "script": "empty.js",
       "identifier": "empty",
       "handler": "main",
-      "name": "Empty",
+      "name": "Empty document",
       "description": "This is just a bare-bones, empty Sketch document. The equivalent of creating a new document and saving it immediately."
     },
     {
@@ -16,25 +16,11 @@
       "description": "This document contains a single styled shape."
     },
     {
-      "script": "symbols.js",
-      "identifier": "symbols",
+      "script": "shape-paths.js",
+      "identifier": "shape-paths",
       "handler": "main",
-      "name": "Symbols",
-      "description": "This document contains a symbol master and one of its instances, side-by-side on the same page."
-    },
-    {
-      "script": "library-symbols.js",
-      "identifier": "library-symbols",
-      "handler": "main",
-      "name": "Library symbols",
-      "description": "This document contains a symbol imported from a library and placed on the page."
-    },
-    {
-      "script": "library-styles.js",
-      "identifier": "library-styles",
-      "handler": "main",
-      "name": "Library shared styles",
-      "description": "This document contains a shared style imported from a library and applied to a shape on the document."
+      "name": "Shape paths",
+      "description": "This document contains a vector shape path layer."
     },
     {
       "script": "text.js",
@@ -44,11 +30,11 @@
       "description": "This document contains styled text layers."
     },
     {
-      "script": "symbol-overrides.js",
-      "identifier": "symbol-overrides",
+      "script": "images.js",
+      "identifier": "images",
       "handler": "main",
-      "name": "Symbol overrides",
-      "description": "This document demonstrates overriding text values in symbols."
+      "name": "Images",
+      "description": "This document contains a bitmap image layer."
     },
     {
       "script": "groups.js",
@@ -58,18 +44,32 @@
       "description": "This document demonstrates nested group and layer hierarchy."
     },
     {
-      "script": "images.js",
-      "identifier": "images",
+      "script": "symbols.js",
+      "identifier": "symbols",
       "handler": "main",
-      "name": "Images",
-      "description": "This document contains a bitmap image layer."
+      "name": "Symbols",
+      "description": "This document contains a symbol master and one of its instances, side-by-side on the same page."
     },
     {
-      "script": "shape-paths.js",
-      "identifier": "shape-paths",
+      "script": "symbol-overrides.js",
+      "identifier": "symbol-overrides",
       "handler": "main",
-      "name": "Shape paths",
-      "description": "This document contains a vector shape path layer."
+      "name": "Symbol overrides",
+      "description": "This document demonstrates overriding text values in symbols."
+    },
+    {
+      "script": "library-styles.js",
+      "identifier": "library-styles",
+      "handler": "main",
+      "name": "Library shared styles",
+      "description": "This document contains a shared style imported from a library and applied to a shape on the document."
+    },
+    {
+      "script": "library-symbols.js",
+      "identifier": "library-symbols",
+      "handler": "main",
+      "name": "Library symbols",
+      "description": "This document contains a symbol imported from a library and placed on the page."
     }
   ]
 }

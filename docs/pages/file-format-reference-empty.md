@@ -1,10 +1,10 @@
 ---
-title: Empty
+title: Empty document
 section: file-format
 chapter: Reference files
 permalink: /file-format/reference/empty
 
-order: 201
+order: 102
 excerpt: This is just a bare-bones, empty Sketch document. The equivalent of creating a new document and saving it immediately.
 ---
 

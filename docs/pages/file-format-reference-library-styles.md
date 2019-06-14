@@ -4,7 +4,7 @@ section: file-format
 chapter: Reference files
 permalink: /file-format/reference/library-styles
 
-order: 201
+order: 110
 excerpt: This document contains a shared style imported from a library and applied to a shape on the document.
 ---
 

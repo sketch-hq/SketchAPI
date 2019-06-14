@@ -4,7 +4,7 @@ section: file-format
 chapter: Reference files
 permalink: /file-format/reference/groups
 
-order: 201
+order: 107
 excerpt: This document demonstrates nested group and layer hierarchy.
 ---
 
