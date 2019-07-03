@@ -1,0 +1,142 @@
+{
+  "_class": "page",
+  "do_objectID": "A4D1B754-E08A-490E-9822-FACBE0F0D4A9",
+  "booleanOperation": -1,
+  "exportOptions": {
+    "_class": "exportOptions",
+    "exportFormats": [],
+    "includedLayerIds": [],
+    "layerOptions": 0,
+    "shouldTrim": false
+  },
+  "frame": {
+    "_class": "rect",
+    "constrainProportions": false,
+    "height": 0,
+    "width": 0,
+    "x": 0,
+    "y": 0
+  },
+  "isFixedToViewport": false,
+  "isFlippedHorizontal": false,
+  "isFlippedVertical": false,
+  "isLocked": false,
+  "isVisible": true,
+  "layerListExpandedType": 0,
+  "name": "Page 1",
+  "nameIsFixed": false,
+  "resizingConstraint": 63,
+  "resizingType": 0,
+  "rotation": 0,
+  "shouldBreakMaskChain": false,
+  "clippingMaskMode": 0,
+  "hasClippingMask": false,
+  "style": {
+    "_class": "style",
+    "endMarkerType": 0,
+    "miterLimit": 10,
+    "startMarkerType": 0,
+    "windingRule": 1
+  },
+  "groupLayout": { "_class": "MSImmutableFreeformGroupLayout" },
+  "hasClickThrough": true,
+  "layers": [
+    {
+      "_class": "shapePath",
+      "do_objectID": "A22266DA-65D9-4EDE-972A-FD80106DEE31",
+      "booleanOperation": -1,
+      "exportOptions": {
+        "_class": "exportOptions",
+        "exportFormats": [],
+        "includedLayerIds": [],
+        "layerOptions": 0,
+        "shouldTrim": false
+      },
+      "frame": {
+        "_class": "rect",
+        "constrainProportions": false,
+        "height": 250,
+        "width": 200,
+        "x": 0,
+        "y": 0
+      },
+      "isFixedToViewport": false,
+      "isFlippedHorizontal": false,
+      "isFlippedVertical": false,
+      "isLocked": false,
+      "isVisible": true,
+      "layerListExpandedType": 0,
+      "name": "Path",
+      "nameIsFixed": false,
+      "resizingConstraint": 63,
+      "resizingType": 0,
+      "rotation": 0,
+      "shouldBreakMaskChain": false,
+      "clippingMaskMode": 0,
+      "hasClippingMask": false,
+      "style": {
+        "_class": "style",
+        "endMarkerType": 0,
+        "fills": [
+          {
+            "_class": "fill",
+            "isEnabled": true,
+            "color": {
+              "_class": "color",
+              "alpha": 1,
+              "blue": 0,
+              "green": 1,
+              "red": 0
+            },
+            "fillType": 0,
+            "noiseIndex": 0,
+            "noiseIntensity": 0,
+            "patternFillType": 1,
+            "patternTileScale": 1
+          }
+        ],
+        "miterLimit": 10,
+        "startMarkerType": 0,
+        "windingRule": 1
+      },
+      "edited": true,
+      "isClosed": false,
+      "pointRadiusBehaviour": 1,
+      "points": [
+        {
+          "_class": "curvePoint",
+          "cornerRadius": 0,
+          "curveFrom": "{0.16666666666666657, -0.16666666666666663}",
+          "curveMode": 4,
+          "curveTo": "{0, 0.5}",
+          "hasCurveFrom": true,
+          "hasCurveTo": false,
+          "point": "{0, 0.5}"
+        },
+        {
+          "_class": "curvePoint",
+          "cornerRadius": 0,
+          "curveFrom": "{0.66666666666666652, 1.1666666666666665}",
+          "curveMode": 2,
+          "curveTo": "{0.33333333333333343, -0.16666666666666663}",
+          "hasCurveFrom": true,
+          "hasCurveTo": true,
+          "point": "{0.5, 0.5}"
+        },
+        {
+          "_class": "curvePoint",
+          "cornerRadius": 0,
+          "curveFrom": "{1, 0.5}",
+          "curveMode": 4,
+          "curveTo": "{0.83333333333333348, 1.1666666666666665}",
+          "hasCurveFrom": false,
+          "hasCurveTo": true,
+          "point": "{1, 0.5}"
+        }
+      ]
+    }
+  ],
+  "horizontalRulerData": { "_class": "rulerData", "base": 0, "guides": [] },
+  "includeInCloudUpload": true,
+  "verticalRulerData": { "_class": "rulerData", "base": 0, "guides": [] }
+}

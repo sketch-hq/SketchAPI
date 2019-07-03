@@ -1,10 +1,10 @@
 ---
-title: Symbols file
+title: Symbols
 section: file-format
 chapter: Reference files
 permalink: /file-format/reference/symbols
 
-order: 201
+order: 108
 excerpt: This document contains a symbol master and one of its instances, side-by-side on the same page.
 ---
 
@@ -14,4 +14,5 @@ This document contains a symbol master and one of its instances, side-by-side on
 
 | Sketch version |                                                                                                      |                                                                                                                |                                                                                                                                             |
 | -------------- | ---------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
-| Sketch 55.1    | [JSON](https://github.com/BohemianCoding/SketchAPI/tree/develop/reference-files/55.1/symbols/output) | [.sketch](https://github.com/BohemianCoding/SketchAPI/tree/develop/reference-files/55.1/symbols/output.sketch) | [Generator plugin](https://github.com/BohemianCoding/SketchAPI/tree/develop/reference-files/plugin.sketchplugin/Contents/Sketch/symbols.js) |
+| 55.2           | [JSON](https://github.com/BohemianCoding/SketchAPI/tree/develop/reference-files/55.2/symbols/output) | [.sketch](https://github.com/BohemianCoding/SketchAPI/tree/develop/reference-files/55.2/symbols/output.sketch) | [Generator plugin](https://github.com/BohemianCoding/SketchAPI/tree/develop/reference-files/plugin.sketchplugin/Contents/Sketch/symbols.js) |
+| 55.1           | [JSON](https://github.com/BohemianCoding/SketchAPI/tree/develop/reference-files/55.1/symbols/output) | [.sketch](https://github.com/BohemianCoding/SketchAPI/tree/develop/reference-files/55.1/symbols/output.sketch) | [Generator plugin](https://github.com/BohemianCoding/SketchAPI/tree/develop/reference-files/plugin.sketchplugin/Contents/Sketch/symbols.js) |

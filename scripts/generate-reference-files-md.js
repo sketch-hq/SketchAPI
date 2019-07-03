@@ -12,6 +12,7 @@ const { readdirSync } = require('fs')
 const table = require('markdown-table')
 const { writeFileSync } = require('fs')
 const { execSync } = require('child_process')
+const semver = require('semver')
 
 const dir = resolve(__dirname, '../reference-files')
 const pages = resolve(__dirname, '../docs/pages')
@@ -21,16 +22,32 @@ const githubUrl = require('../package').homepage
 
 const refFilesUrl = `${githubUrl}/tree/develop/reference-files`
 
-const versions = readdirSync(dir).filter(name => !isNaN(name))
+// Sort versions in descending order. They need to be coerced into valid semver
+// to do this. Also generate a truncated version for display (trim rightmost
+// parts that are zero).
+const versions = readdirSync(dir)
+  .map(v => ({ original: v, coerced: semver.coerce(v) }))
+  .filter(v => !!v.coerced)
+  .sort((a, b) => semver.lt(a.coerced.version, b.coerced.version))
+  .map(v => {
+    const truncated = v.original.split('.')
+    while (truncated.slice(-1)[0] === '0') {
+      truncated.pop()
+    }
+    return {
+      ...v,
+      truncated: truncated.join('.'),
+    }
+  })
 
-manifest.commands.forEach(cmd => {
+manifest.commands.forEach((cmd, index) => {
   const md = `---
-title: ${cmd.identifier.charAt(0).toUpperCase() + cmd.identifier.slice(1)} file
+title: ${cmd.name}
 section: file-format
 chapter: Reference files
 permalink: /file-format/reference/${cmd.identifier}
 
-order: 201
+order: 1${String(index + 2).padStart(2, 0)}
 excerpt: ${cmd.description}
 ---
 
@@ -40,11 +57,11 @@ ${cmd.description}
 
 ${table([
   ['Sketch version', '', '', ''],
-  ...versions.map(version => {
+  ...versions.map(v => {
     return [
-      `Sketch ${version}`,
-      `[JSON](${refFilesUrl}/${version}/${cmd.identifier}/output)`,
-      `[.sketch](${refFilesUrl}/${version}/${cmd.identifier}/output.sketch)`,
+      `${v.truncated}`,
+      `[JSON](${refFilesUrl}/${v.original}/${cmd.identifier}/output)`,
+      `[.sketch](${refFilesUrl}/${v.original}/${cmd.identifier}/output.sketch)`,
       `[Generator plugin](${refFilesUrl}/plugin.sketchplugin/Contents/Sketch/${
         cmd.identifier
       }.js)`,
