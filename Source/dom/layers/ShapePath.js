@@ -118,6 +118,7 @@ Factory.registerClass(ShapePath, MSImmutableStarShape)
 Factory.registerClass(ShapePath, MSImmutableTriangleShape)
 
 ShapePath.ShapeType = ShapeType
+ShapePath.PointType = CurvePoint.PointType
 ShapePath.define('shapeType', {
   get() {
     return ShapeTypeMap[String(this._object.class())]

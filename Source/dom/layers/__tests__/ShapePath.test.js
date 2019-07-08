@@ -1,11 +1,16 @@
 /* globals expect, test */
 import { isRunningOnJenkins, canBeLogged } from '../../../test-utils'
 import { ShapePath } from '../..'
+import { CurvePoint } from '../../models/CurvePoint'
 
 test('should create a new shape path', () => {
   const shapePath = new ShapePath()
   expect(shapePath.type).toBe('ShapePath')
   canBeLogged(shapePath, ShapePath)
+})
+
+test('should expose PointType', () => {
+  expect(ShapePath.PointType).toBe(CurvePoint.PointType)
 })
 
 test('should create shape paths of different shape type', () => {
