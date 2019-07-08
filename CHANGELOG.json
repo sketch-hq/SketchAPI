@@ -8,7 +8,8 @@
     "[Fixed] Fix setting layers of a group when the layers already had a parent",
     "[Fixed] `symbolMaster.getParentSymbolMaster` used to throw an error. It will now return `undefined`",
     "[New] Added a `colorSpace` property and a `changeColorSpace` method to `Document`",
-    "[New] Expose the `PointType` enum on `ShapePath`"
+    "[New] Expose the `PointType` enum on `ShapePath`",
+    "[Fixed] `document.centerOnLayer` not centering on nested layers"
   ],
   "releases": {
     "55": [
