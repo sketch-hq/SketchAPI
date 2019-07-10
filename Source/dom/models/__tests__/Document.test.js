@@ -176,67 +176,6 @@ test('should remove document gradients', (context, document) => {
   expect(document.gradients[0].name).toEqual('Gradient 2')
 })
 
-test('should have defined colorSpace enums', () => {
-  expect(Document.ColorSpace.Unmanaged).toBe('Unmanaged')
-  expect(Document.ColorSpace.sRGB).toBe('sRGB')
-  expect(Document.ColorSpace.P3).toBe('P3')
-  expect(ColorSpaceMap.Unmanaged).toBe(0)
-  expect(ColorSpaceMap.sRGB).toBe(1)
-  expect(ColorSpaceMap.P3).toBe(2)
-})
-
-test('should have a colorSpace getter', (context, document) => {
-  expect(document.colorSpace).toBe(Document.ColorSpace.Unmanaged)
-})
-
-test('colorSpace setter should assign color profiles', (context, document) => {
-  // eslint-disable-next-line no-param-reassign
-  document.colorSpace = Document.ColorSpace.sRGB
-  expect(document.colorSpace).toBe(Document.ColorSpace.sRGB)
-  // eslint-disable-next-line no-param-reassign
-  document.colorSpace = Document.ColorSpace.P3
-  expect(document.colorSpace).toBe(Document.ColorSpace.P3)
-})
-
-test('throws when setting an invalid colorSpace', (context, document) => {
-  try {
-    // eslint-disable-next-line no-param-reassign
-    document.colorSpace = 'foo'
-    expect(true).toBe(false)
-  } catch (err) {
-    expect(err instanceof Error).toBe(true)
-  }
-})
-
-test('throws when changing to an invalid color space', (context, document) => {
-  try {
-    document.changeColorSpace('foo')
-    expect(true).toBe(false)
-  } catch (err) {
-    expect(err instanceof Error).toBe(true)
-  }
-})
-
-test('can assign the sRGB color space', (context, document) => {
-  document.changeColorSpace(Document.ColorSpace.sRGB)
-  expect(document.colorSpace).toBe(Document.ColorSpace.sRGB)
-})
-
-test('can convert to the sRGB color space', (context, document) => {
-  document.changeColorSpace(Document.ColorSpace.sRGB, true)
-  expect(document.colorSpace).toBe(Document.ColorSpace.sRGB)
-})
-
-test('can assign the P3 color space', (context, document) => {
-  document.changeColorSpace(Document.ColorSpace.P3)
-  expect(document.colorSpace).toBe(Document.ColorSpace.P3)
-})
-
-test('can convert to the P3 color space', (context, document) => {
-  document.changeColorSpace(Document.ColorSpace.P3, true)
-  expect(document.colorSpace).toBe(Document.ColorSpace.P3)
-})
-
 // some tests cannot really run on jenkins because it doesn't have access to MSDocument
 if (!isRunningOnJenkins()) {
   let _document
@@ -344,5 +283,66 @@ if (!isRunningOnJenkins()) {
         'couldn’t be opened because there is no such file'
       )
     }
+  })
+
+  test('should have defined colorSpace enums', () => {
+    expect(Document.ColorSpace.Unmanaged).toBe('Unmanaged')
+    expect(Document.ColorSpace.sRGB).toBe('sRGB')
+    expect(Document.ColorSpace.P3).toBe('P3')
+    expect(ColorSpaceMap.Unmanaged).toBe(0)
+    expect(ColorSpaceMap.sRGB).toBe(1)
+    expect(ColorSpaceMap.P3).toBe(2)
+  })
+
+  test('should have a colorSpace getter', (context, document) => {
+    expect(document.colorSpace).toBe(Document.ColorSpace.Unmanaged)
+  })
+
+  test('colorSpace setter should assign color profiles', (context, document) => {
+    // eslint-disable-next-line no-param-reassign
+    document.colorSpace = Document.ColorSpace.sRGB
+    expect(document.colorSpace).toBe(Document.ColorSpace.sRGB)
+    // eslint-disable-next-line no-param-reassign
+    document.colorSpace = Document.ColorSpace.P3
+    expect(document.colorSpace).toBe(Document.ColorSpace.P3)
+  })
+
+  test('throws when setting an invalid colorSpace', (context, document) => {
+    try {
+      // eslint-disable-next-line no-param-reassign
+      document.colorSpace = 'foo'
+      expect(true).toBe(false)
+    } catch (err) {
+      expect(err instanceof Error).toBe(true)
+    }
+  })
+
+  test('throws when changing to an invalid color space', (context, document) => {
+    try {
+      document.changeColorSpace('foo')
+      expect(true).toBe(false)
+    } catch (err) {
+      expect(err instanceof Error).toBe(true)
+    }
+  })
+
+  test('can assign the sRGB color space', (context, document) => {
+    document.changeColorSpace(Document.ColorSpace.sRGB)
+    expect(document.colorSpace).toBe(Document.ColorSpace.sRGB)
+  })
+
+  test('can convert to the sRGB color space', (context, document) => {
+    document.changeColorSpace(Document.ColorSpace.sRGB, true)
+    expect(document.colorSpace).toBe(Document.ColorSpace.sRGB)
+  })
+
+  test('can assign the P3 color space', (context, document) => {
+    document.changeColorSpace(Document.ColorSpace.P3)
+    expect(document.colorSpace).toBe(Document.ColorSpace.P3)
+  })
+
+  test('can convert to the P3 color space', (context, document) => {
+    document.changeColorSpace(Document.ColorSpace.P3, true)
+    expect(document.colorSpace).toBe(Document.ColorSpace.P3)
   })
 }
