@@ -68,3 +68,19 @@ Enumeration of the type of Shared Style.
 | `Polygon`   |
 | `Star`      |
 | `Custom`    |
+
+## `ShapePath.PointType`
+
+```javascript
+ShapePath.PointType.Undefined
+```
+
+Enumeration of the point types.
+
+| Value          |
+| -------------- |
+| `Undefined`    |
+| `Straight`     |
+| `Mirrored`     |
+| `Asymmetric`   |
+| `Disconnected` |

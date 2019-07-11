@@ -1,5 +1,8 @@
 {
-  "unreleased": [],
+  "unreleased": [
+    "[New] Expose the `PointType` enum on `ShapePath`",
+    "[Fixed] `document.centerOnLayer` not centering on nested layers"
+  ],
   "releases": {
     "56": [
       "[Fixed] Changing the `pointType` of a CurvePoint wouldn't always restore the control points",

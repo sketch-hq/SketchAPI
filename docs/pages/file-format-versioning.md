@@ -67,6 +67,9 @@ A sequential version number indicating which may change with a new version of Sk
 
 | Sketch version | Document version |
 | -------------- | ---------------- |
-| 53             | 116              |
-| 54             | 117              |
+| 55.2           | 119              |
+| 55.1           | 118              |
+| 55             | 118              |
 | 54.1           | 118              |
+| 54             | 117              |
+| 53             | 116              |

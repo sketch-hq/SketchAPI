@@ -1,10 +1,10 @@
 ---
-title: Symbol-overrides file
+title: Symbol overrides
 section: file-format
 chapter: Reference files
 permalink: /file-format/reference/symbol-overrides
 
-order: 201
+order: 109
 excerpt: This document demonstrates overriding text values in symbols.
 ---
 
@@ -14,4 +14,5 @@ This document demonstrates overriding text values in symbols.
 
 | Sketch version |                                                                                                               |                                                                                                                         |                                                                                                                                                      |
 | -------------- | ------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Sketch 55.1    | [JSON](https://github.com/BohemianCoding/SketchAPI/tree/develop/reference-files/55.1/symbol-overrides/output) | [.sketch](https://github.com/BohemianCoding/SketchAPI/tree/develop/reference-files/55.1/symbol-overrides/output.sketch) | [Generator plugin](https://github.com/BohemianCoding/SketchAPI/tree/develop/reference-files/plugin.sketchplugin/Contents/Sketch/symbol-overrides.js) |
+| 55.2           | [JSON](https://github.com/BohemianCoding/SketchAPI/tree/develop/reference-files/55.2/symbol-overrides/output) | [.sketch](https://github.com/BohemianCoding/SketchAPI/tree/develop/reference-files/55.2/symbol-overrides/output.sketch) | [Generator plugin](https://github.com/BohemianCoding/SketchAPI/tree/develop/reference-files/plugin.sketchplugin/Contents/Sketch/symbol-overrides.js) |
+| 55.1           | [JSON](https://github.com/BohemianCoding/SketchAPI/tree/develop/reference-files/55.1/symbol-overrides/output) | [.sketch](https://github.com/BohemianCoding/SketchAPI/tree/develop/reference-files/55.1/symbol-overrides/output.sketch) | [Generator plugin](https://github.com/BohemianCoding/SketchAPI/tree/develop/reference-files/plugin.sketchplugin/Contents/Sketch/symbol-overrides.js) |

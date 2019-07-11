@@ -1,10 +1,10 @@
 ---
-title: Empty file
+title: Empty document
 section: file-format
 chapter: Reference files
 permalink: /file-format/reference/empty
 
-order: 201
+order: 102
 excerpt: This is just a bare-bones, empty Sketch document. The equivalent of creating a new document and saving it immediately.
 ---
 
@@ -14,4 +14,5 @@ This is just a bare-bones, empty Sketch document. The equivalent of creating a n
 
 | Sketch version |                                                                                                    |                                                                                                              |                                                                                                                                           |
 | -------------- | -------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------- |
-| Sketch 55.1    | [JSON](https://github.com/BohemianCoding/SketchAPI/tree/develop/reference-files/55.1/empty/output) | [.sketch](https://github.com/BohemianCoding/SketchAPI/tree/develop/reference-files/55.1/empty/output.sketch) | [Generator plugin](https://github.com/BohemianCoding/SketchAPI/tree/develop/reference-files/plugin.sketchplugin/Contents/Sketch/empty.js) |
+| 55.2           | [JSON](https://github.com/BohemianCoding/SketchAPI/tree/develop/reference-files/55.2/empty/output) | [.sketch](https://github.com/BohemianCoding/SketchAPI/tree/develop/reference-files/55.2/empty/output.sketch) | [Generator plugin](https://github.com/BohemianCoding/SketchAPI/tree/develop/reference-files/plugin.sketchplugin/Contents/Sketch/empty.js) |
+| 55.1           | [JSON](https://github.com/BohemianCoding/SketchAPI/tree/develop/reference-files/55.1/empty/output) | [.sketch](https://github.com/BohemianCoding/SketchAPI/tree/develop/reference-files/55.1/empty/output.sketch) | [Generator plugin](https://github.com/BohemianCoding/SketchAPI/tree/develop/reference-files/plugin.sketchplugin/Contents/Sketch/empty.js) |

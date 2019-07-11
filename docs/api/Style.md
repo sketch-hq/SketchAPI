@@ -265,13 +265,13 @@ An object that represent the options that the Borders of the Layer share.
 | lineEnd<span class="arg-type">[LineEnd](#stylelineend)</span>            | The type of the border ends (if visible).                                                                                                                                                                                                                                                          |
 | lineJoin<span class="arg-type">[LineJoin](#stylelinejoin)</span>         | The type of the border joins (if any).                                                                                                                                                                                                                                                             |
 
-## `Style.Arrowheads`
+## `Style.Arrowhead`
 
 ```javascript
-Style.Arrowheads.OpenArrow
+Style.Arrowhead.OpenArrow
 ```
 
-Enumeration of the type of the Arrowheads for line layers.
+Enumeration of the type of the Arrowhead for line layers.
 
 | Value          |
 | -------------- |

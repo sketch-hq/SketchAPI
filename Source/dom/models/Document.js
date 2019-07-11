@@ -233,7 +233,9 @@ export class Document extends WrappedObject {
       return
     }
     const wrappedLayer = wrapObject(layer)
-    this._object.contentDrawView().centerRect_(wrappedLayer.sketchObject.rect())
+    this._object
+      .contentDrawView()
+      .centerRect_(wrappedLayer.sketchObject.absoluteRect().rect())
   }
 
   static open(path, callback) {
