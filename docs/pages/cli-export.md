@@ -10,9 +10,10 @@ excerpt: Use the command-line interface to export any layer or page and document
 
 Export assets using `sketchtool export`:
 
--   Any layer
--   Pages
--   Document previews
+- Any layer
+- Artboards
+- Pages
+- Document preview
 
 ## Formats
 
@@ -73,6 +74,20 @@ sketchtool help export artboards
 ```
 
 > **Note:** You can also use `sketchtool metadata` for artboards but `sketchtool list` works the same for artboards as well as any other document elements. See [Inspect a document](/cli/inspect-document) for details.
+
+## Pages
+
+Similar to artboards, pages can also be exported directly.
+
+```sh
+sketchtool export pages /path/to/document.sketch
+```
+
+For all available options see the usage instructions.
+
+```sh
+sketchtool help export pages
+```
 
 ## Document preview
 
