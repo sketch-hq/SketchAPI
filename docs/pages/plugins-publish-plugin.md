@@ -62,7 +62,6 @@ If you can't use `skpm` or want to host your plugin somewhere else than GitHub, 
    <description>Quickly select all or just specific shape types</description>
    <language>en</language>
    <item>
-     <title>Version 1.0</title>
      <enclosure url="https://example.com/select-shapes.sketchplugin-1.0.zip" sparkle:version="1.0"/>
    </item>
    </channel>
