@@ -63,17 +63,12 @@ If you can't use `skpm` or want to host your plugin somewhere else than GitHub, 
    <language>en</language>
    <item>
      <title>Version 1.0</title>
-     <description>
-       🚀 Select all shapes or just circles and rectangles.
-     </description>
      <enclosure url="https://example.com/select-shapes.sketchplugin-1.0.zip" sparkle:version="1.0"/>
    </item>
    </channel>
    </rss>
    ```
 1. To include the plugin in the official listing, open a pull request on [`plugin-directory`](https://github.com/sketchplugins/plugin-directory) providing information about your plugin including the URL to the appcast.
-
-> **Note:** To use rich text in the release notes, include HTML formatted `description`, e.g. `<![CDATA[<h1>New 🎉</h1>]]>`.
 
 ## Next steps
 
