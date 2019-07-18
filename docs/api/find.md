@@ -26,7 +26,7 @@ sketch.find('[name="Layer-Name"]')
 
 ```javascript
 // find all the Shape named "Layer-Name"
-sketch.find('Shape, [name="Layer-Name"]')
+sketch.find('Shape', '[name="Layer-Name"]')
 ```
 
 ⚠️ This API is in preview. It might change in the future depending on the feedback from the community.
