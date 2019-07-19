@@ -1,4 +1,6 @@
 WHEEEEEE
+This is so much fun.
+
 # Sketch API
 
 This is a JavaScript API for Sketch. The intention is to make something which is:
