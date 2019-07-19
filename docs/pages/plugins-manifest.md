@@ -113,7 +113,14 @@ function selectAll() {
 
 ##### Shortcut Values
 
-When setting the shortcut for a command, you can use any combination of the following keys, plus any regular character. Keep in mind that some characters may require users to press modifier keys on some international keyboard layouts. For example, to get `/` on a US keyboard you just need to press one key, but on a Spanish keyboard you need to press `shift 7` to get the same character. So a command with a `ctrl shift /` shortcut can't be triggered on a Spanish keyboard, because it gets interpreted as `ctrl /`.
+Command shortcuts can be set using any combination of the following keys, plus any regular character.
+
+Shortcuts need to use at least one modifier key (Command, Option, Control or Shift), you cannot define single key shortcuts in `manifest.json`.
+
+If your command tries to use any of the predefined Sketch shortcuts (say, `cmd s`), the shortcut will be ignored and pressing those keys will perform the default action in Sketch.
+
+Make sure to test your shortcuts with different international keyboard layouts. Certain characters can require users to press modifier keys. For example a shortcut like `shift /` would not work with a Spanish keyboard layout. Whereas a forward slash `/` has a dedicated key on a US keyboard, it requires pressing `shift 7` on a Spanish keyboard.
+
 
 | Key           | Value                               |
 |---------------|-------------------------------------|
