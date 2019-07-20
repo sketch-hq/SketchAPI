@@ -1,6 +1,6 @@
 WHEEEEEE
 This is so much fun.
-Bunnies waz 'ere. And there!
+Bunnies waz 'ere. And there! Everywhere!
 
 # Sketch API
 
