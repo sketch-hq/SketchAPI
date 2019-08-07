@@ -1,9 +1,10 @@
 {
-  "unreleased": [
-    "[New] Expose the `PointType` enum on `ShapePath`",
-    "[Fixed] `document.centerOnLayer` not centering on nested layers"
-  ],
+  "unreleased": [],
   "releases": {
+    "57": [
+      "[New] Expose the `PointType` enum on `ShapePath`",
+      "[Fixed] `document.centerOnLayer` not centering on nested layers"
+    ],
     "56": [
       "[Fixed] Changing the `pointType` of a CurvePoint wouldn't always restore the control points",
       "[Fixed] Do not default to `ShapeType.Rectangle` if some points are specified when create a new ShapePath",
