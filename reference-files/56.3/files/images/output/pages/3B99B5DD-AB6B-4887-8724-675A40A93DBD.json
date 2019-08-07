@@ -1,0 +1,97 @@
+{
+  "_class": "page",
+  "do_objectID": "3B99B5DD-AB6B-4887-8724-675A40A93DBD",
+  "booleanOperation": -1,
+  "exportOptions": {
+    "_class": "exportOptions",
+    "exportFormats": [],
+    "includedLayerIds": [],
+    "layerOptions": 0,
+    "shouldTrim": false
+  },
+  "frame": {
+    "_class": "rect",
+    "constrainProportions": false,
+    "height": 0,
+    "width": 0,
+    "x": 0,
+    "y": 0
+  },
+  "isFixedToViewport": false,
+  "isFlippedHorizontal": false,
+  "isFlippedVertical": false,
+  "isLocked": false,
+  "isVisible": true,
+  "layerListExpandedType": 0,
+  "name": "Page 1",
+  "nameIsFixed": false,
+  "resizingConstraint": 63,
+  "resizingType": 0,
+  "rotation": 0,
+  "shouldBreakMaskChain": false,
+  "clippingMaskMode": 0,
+  "hasClippingMask": false,
+  "style": {
+    "_class": "style",
+    "endMarkerType": 0,
+    "miterLimit": 10,
+    "startMarkerType": 0,
+    "windingRule": 1
+  },
+  "groupLayout": { "_class": "MSImmutableFreeformGroupLayout" },
+  "hasClickThrough": true,
+  "layers": [
+    {
+      "_class": "bitmap",
+      "do_objectID": "A0E93A96-8F5C-4174-B450-7E9013F093E7",
+      "booleanOperation": -1,
+      "exportOptions": {
+        "_class": "exportOptions",
+        "exportFormats": [],
+        "includedLayerIds": [],
+        "layerOptions": 0,
+        "shouldTrim": false
+      },
+      "frame": {
+        "_class": "rect",
+        "constrainProportions": false,
+        "height": 181,
+        "width": 200,
+        "x": 0,
+        "y": 0
+      },
+      "isFixedToViewport": false,
+      "isFlippedHorizontal": false,
+      "isFlippedVertical": false,
+      "isLocked": false,
+      "isVisible": true,
+      "layerListExpandedType": 0,
+      "name": "MyImage",
+      "nameIsFixed": false,
+      "resizingConstraint": 63,
+      "resizingType": 0,
+      "rotation": 0,
+      "shouldBreakMaskChain": false,
+      "clippingMaskMode": 0,
+      "hasClippingMask": false,
+      "style": {
+        "_class": "style",
+        "endMarkerType": 0,
+        "miterLimit": 10,
+        "startMarkerType": 0,
+        "windingRule": 1
+      },
+      "clippingMask": "{{0, 0}, {1, 1}}",
+      "fillReplacesImage": false,
+      "image": {
+        "_class": "MSJSONFileReference",
+        "_ref_class": "MSImageData",
+        "_ref": "images/5e66bb5eef61a7941be4a04626356fcd1a3a1742.png"
+      },
+      "intendedDPI": 0
+    }
+  ],
+  "horizontalRulerData": { "_class": "rulerData", "base": 0, "guides": [] },
+  "includeInCloudUpload": true,
+  "verticalRulerData": { "_class": "rulerData", "base": 0, "guides": [] }
+}

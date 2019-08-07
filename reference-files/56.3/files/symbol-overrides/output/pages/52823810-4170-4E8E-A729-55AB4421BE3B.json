@@ -1,0 +1,254 @@
+{
+  "_class": "page",
+  "do_objectID": "52823810-4170-4E8E-A729-55AB4421BE3B",
+  "booleanOperation": -1,
+  "exportOptions": {
+    "_class": "exportOptions",
+    "exportFormats": [],
+    "includedLayerIds": [],
+    "layerOptions": 0,
+    "shouldTrim": false
+  },
+  "frame": {
+    "_class": "rect",
+    "constrainProportions": false,
+    "height": 0,
+    "width": 0,
+    "x": 0,
+    "y": 0
+  },
+  "isFixedToViewport": false,
+  "isFlippedHorizontal": false,
+  "isFlippedVertical": false,
+  "isLocked": false,
+  "isVisible": true,
+  "layerListExpandedType": 0,
+  "name": "Page 1",
+  "nameIsFixed": false,
+  "resizingConstraint": 63,
+  "resizingType": 0,
+  "rotation": 0,
+  "shouldBreakMaskChain": false,
+  "clippingMaskMode": 0,
+  "hasClippingMask": false,
+  "style": {
+    "_class": "style",
+    "endMarkerType": 0,
+    "miterLimit": 10,
+    "startMarkerType": 0,
+    "windingRule": 1
+  },
+  "groupLayout": { "_class": "MSImmutableFreeformGroupLayout" },
+  "hasClickThrough": true,
+  "layers": [
+    {
+      "_class": "symbolMaster",
+      "do_objectID": "66AD7263-4E2C-4136-AC12-6708E1BC7007",
+      "booleanOperation": -1,
+      "exportOptions": {
+        "_class": "exportOptions",
+        "exportFormats": [],
+        "includedLayerIds": [],
+        "layerOptions": 0,
+        "shouldTrim": false
+      },
+      "frame": {
+        "_class": "rect",
+        "constrainProportions": false,
+        "height": 200,
+        "width": 200,
+        "x": 0,
+        "y": 0
+      },
+      "isFixedToViewport": false,
+      "isFlippedHorizontal": false,
+      "isFlippedVertical": false,
+      "isLocked": false,
+      "isVisible": true,
+      "layerListExpandedType": 0,
+      "name": "MySymbol",
+      "nameIsFixed": false,
+      "resizingConstraint": 63,
+      "resizingType": 0,
+      "rotation": 0,
+      "shouldBreakMaskChain": true,
+      "clippingMaskMode": 0,
+      "hasClippingMask": false,
+      "style": {
+        "_class": "style",
+        "endMarkerType": 0,
+        "miterLimit": 10,
+        "startMarkerType": 0,
+        "windingRule": 1
+      },
+      "groupLayout": { "_class": "MSImmutableFreeformGroupLayout" },
+      "hasClickThrough": true,
+      "layers": [
+        {
+          "_class": "text",
+          "do_objectID": "14F1ACAC-AD6C-455E-AE20-ECAF0B84C007",
+          "booleanOperation": -1,
+          "exportOptions": {
+            "_class": "exportOptions",
+            "exportFormats": [],
+            "includedLayerIds": [],
+            "layerOptions": 0,
+            "shouldTrim": false
+          },
+          "frame": {
+            "_class": "rect",
+            "constrainProportions": false,
+            "height": 31,
+            "width": 74,
+            "x": 0,
+            "y": 0
+          },
+          "isFixedToViewport": false,
+          "isFlippedHorizontal": false,
+          "isFlippedVertical": false,
+          "isLocked": false,
+          "isVisible": true,
+          "layerListExpandedType": 0,
+          "name": "Label",
+          "nameIsFixed": false,
+          "resizingConstraint": 47,
+          "resizingType": 0,
+          "rotation": 0,
+          "shouldBreakMaskChain": false,
+          "clippingMaskMode": 0,
+          "hasClippingMask": false,
+          "style": {
+            "_class": "style",
+            "endMarkerType": 0,
+            "miterLimit": 10,
+            "startMarkerType": 0,
+            "textStyle": {
+              "_class": "textStyle",
+              "encodedAttributes": {
+                "textStyleVerticalAlignmentKey": 0,
+                "MSAttributedStringColorAttribute": {
+                  "_class": "color",
+                  "alpha": 1,
+                  "blue": 0,
+                  "green": 0,
+                  "red": 1
+                },
+                "MSAttributedStringFontAttribute": {
+                  "_class": "fontDescriptor",
+                  "attributes": { "name": "Arial-BoldMT", "size": 28 }
+                }
+              },
+              "verticalAlignment": 0
+            },
+            "windingRule": 1
+          },
+          "attributedString": {
+            "_class": "attributedString",
+            "string": "Label",
+            "attributes": [
+              {
+                "_class": "stringAttribute",
+                "location": 0,
+                "length": 5,
+                "attributes": {
+                  "textStyleVerticalAlignmentKey": 0,
+                  "MSAttributedStringFontAttribute": {
+                    "_class": "fontDescriptor",
+                    "attributes": { "name": "Arial-BoldMT", "size": 28 }
+                  },
+                  "MSAttributedStringColorAttribute": {
+                    "_class": "color",
+                    "alpha": 1,
+                    "blue": 0,
+                    "green": 0,
+                    "red": 1
+                  }
+                }
+              }
+            ]
+          },
+          "automaticallyDrawOnUnderlyingPath": false,
+          "dontSynchroniseWithSymbol": false,
+          "glyphBounds": "{{2, 4}, {70, 22}}",
+          "lineSpacingBehaviour": 2,
+          "textBehaviour": 0
+        }
+      ],
+      "backgroundColor": {
+        "_class": "color",
+        "alpha": 1,
+        "blue": 1,
+        "green": 1,
+        "red": 1
+      },
+      "hasBackgroundColor": false,
+      "horizontalRulerData": { "_class": "rulerData", "base": 0, "guides": [] },
+      "includeBackgroundColorInExport": true,
+      "includeInCloudUpload": true,
+      "isFlowHome": false,
+      "resizesContent": false,
+      "verticalRulerData": { "_class": "rulerData", "base": 0, "guides": [] },
+      "includeBackgroundColorInInstance": true,
+      "symbolID": "97338749-6460-4792-B05D-D2B3D8D41414",
+      "changeIdentifier": 6,
+      "overrideProperties": [],
+      "allowsOverrides": true
+    },
+    {
+      "_class": "symbolInstance",
+      "do_objectID": "22CF14B6-3F64-443C-A958-3AC0968C4657",
+      "booleanOperation": -1,
+      "exportOptions": {
+        "_class": "exportOptions",
+        "exportFormats": [],
+        "includedLayerIds": [],
+        "layerOptions": 0,
+        "shouldTrim": false
+      },
+      "frame": {
+        "_class": "rect",
+        "constrainProportions": false,
+        "height": 200,
+        "width": 200,
+        "x": 200,
+        "y": 0
+      },
+      "isFixedToViewport": false,
+      "isFlippedHorizontal": false,
+      "isFlippedVertical": false,
+      "isLocked": false,
+      "isVisible": true,
+      "layerListExpandedType": 0,
+      "name": "MySymbol",
+      "nameIsFixed": false,
+      "resizingConstraint": 63,
+      "resizingType": 0,
+      "rotation": 0,
+      "shouldBreakMaskChain": false,
+      "clippingMaskMode": 0,
+      "hasClippingMask": false,
+      "style": {
+        "_class": "style",
+        "endMarkerType": 0,
+        "miterLimit": 10,
+        "startMarkerType": 0,
+        "windingRule": 1
+      },
+      "horizontalSpacing": 0,
+      "overrideValues": [
+        {
+          "_class": "overrideValue",
+          "do_objectID": "9DA294F4-D41F-4CBC-800C-CE4F8EFB4119",
+          "overrideName": "14F1ACAC-AD6C-455E-AE20-ECAF0B84C007_stringValue",
+          "value": "Custom label"
+        }
+      ],
+      "scale": 1,
+      "symbolID": "97338749-6460-4792-B05D-D2B3D8D41414",
+      "verticalSpacing": 0
+    }
+  ],
+  "horizontalRulerData": { "_class": "rulerData", "base": 0, "guides": [] },
+  "includeInCloudUpload": true,
+  "verticalRulerData": { "_class": "rulerData", "base": 0, "guides": [] }
+}

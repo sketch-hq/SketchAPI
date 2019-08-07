@@ -60,11 +60,13 @@ ${table([
   ...versions.map(v => {
     return [
       `${v.truncated}`,
-      `[JSON](${refFilesUrl}/${v.original}/${cmd.identifier}/output)`,
-      `[.sketch](${refFilesUrl}/${v.original}/${cmd.identifier}/output.sketch)`,
-      `[Generator plugin](${refFilesUrl}/plugin.sketchplugin/Contents/Sketch/${
+      `[JSON](${refFilesUrl}/${v.original}/files/${cmd.identifier}/output)`,
+      `[.sketch](${refFilesUrl}/${v.original}/files/${
         cmd.identifier
-      }.js)`,
+      }/output.sketch)`,
+      `[Generator plugin](${refFilesUrl}/plugin-${
+        v.original
+      }.sketchplugin/Contents/Sketch/${cmd.identifier}.js)`,
     ]
   }),
 ])}`
