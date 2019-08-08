@@ -7,7 +7,7 @@
   "description": "Javascript API for Sketch",
   "homepage": "https://github.com/BohemianCoding/SketchAPI",
   "scripts": {
-    "build": "npm run build:test && npm run build:api && node ./scripts/copy-tests.js",
+    "build": "npm run build:test && npm run build:api",
     "build:test": "skpm-test --build-only",
     "build:api": "webpack",
     "start": "npm run build",
@@ -28,7 +28,8 @@
     "prettier:base": "prettier --write",
     "prettify": "find . -name \"*.ts\" -o -name \"*.js\" | grep -v -f .gitignore | grep -v docs-website | xargs npm run prettier:base",
     "lint-staged": "lint-staged",
-    "postinstall": "node ./scripts/install-pre-commit.js && node ./scripts/inject-new-api-in-tester.js && rm -rf .awcache || true && cd core-modules && npm install"
+    "postinstall": "node ./scripts/install-pre-commit.js && node ./scripts/inject-new-api-in-tester.js && rm -rf .awcache || true && cd core-modules && npm install",
+    "update-sketch-with-latest-commit": "node ./scripts/update-sketch-with-latest-commit.js"
   },
   "devDependencies": {
     "@babel/preset-typescript": "^7.3.3",
