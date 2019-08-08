@@ -5,9 +5,8 @@
  * Generate reference Sketch files and pretty printed JSON contents.
  * Output is generated into:
  *
- *   reference-files/{sketchVersion}/plugin.sketchplugin        // Plugin used for generation
- *   reference-files/{sketchVersion}/files/{type}/output        // Sketch document as JSON
- *   reference-files/{sketchVersion}/files/{type}/output.sketch // Generated Sketch document
+ *   reference-files/{sketchVersion}/output
+ *   reference-files/{sketchVersion}/output.sketch
  *
  * Usage
  *
@@ -41,24 +40,9 @@ try {
   process.exit(1)
 }
 
-const exec = cmd => {
-  try {
-    console.log(execSync(cmd, { encoding: 'utf8' }))
-  } catch (err) {
-    console.error(err)
-  }
-}
-
 const identifier = process.argv[2] || '*'
 const outputDir = resolve(__dirname, `../reference-files/${sketchVersion}`)
-const masterPluginPath = resolve(
-  __dirname,
-  `../reference-files/plugin.sketchplugin`
-)
-const pluginPath = `${outputDir}/plugin-${sketchVersion}.sketchplugin`
-
-exec(`mkdir -p ${outputDir}`)
-exec(`cp -R ${masterPluginPath}/. ${pluginPath}`)
+const pluginPath = resolve(__dirname, `../reference-files/plugin.sketchplugin`)
 
 const manifest = require(resolve(pluginPath, 'Contents/Sketch/manifest.json'))
 const commands = manifest.commands.filter(
@@ -69,8 +53,16 @@ console.log('Generating reference files...')
 console.log(`  Sketch version: ${sketchVersion}`)
 console.log(`  Commands: ${commands.map(cmd => cmd.identifier).join(',')}`)
 
+const exec = cmd => {
+  try {
+    console.log(execSync(cmd, { encoding: 'utf8' }))
+  } catch (err) {
+    console.error(err)
+  }
+}
+
 commands.forEach(cmd => {
-  const dir = resolve(outputDir, 'files', cmd.identifier)
+  const dir = resolve(outputDir, cmd.identifier)
   del.sync(`${dir}/**`)
   exec(`mkdir -p ${dir}`)
   exec(
