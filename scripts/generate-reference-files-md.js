@@ -28,15 +28,7 @@ const refFilesUrl = `${githubUrl}/tree/develop/reference-files`
 const versions = readdirSync(dir)
   .map(v => ({ original: v, coerced: semver.coerce(v) }))
   .filter(v => !!v.coerced)
-  .sort((a, b) => {
-    if (semver.lt(a.coerced.version, b.coerced.version)) {
-      return 1
-    }
-    if (semver.gt(a.coerced.version, b.coerced.version)) {
-      return -1
-    }
-    return 0
-  })
+  .sort((a, b) => semver.compare(b.coerced.version, a.coerced.version))
   .map(v => {
     const truncated = v.original.split('.')
     while (truncated.slice(-1)[0] === '0') {
