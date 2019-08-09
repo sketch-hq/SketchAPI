@@ -1,5 +1,5 @@
 {
-  "identifier": "com.reference-files.empty",
+  "identifier": "com.reference-files.plugin",
   "commands": [
     {
       "script": "empty.js",
