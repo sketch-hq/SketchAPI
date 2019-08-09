@@ -139,10 +139,10 @@ To test your changes, you need to get Sketch to use the version of `SketchAPI.js
 To do this you can run:
 
 ```bash
-defaults write com.bohemiancoding.sketch3 SketchAPILocation "/path/to/your/SketchAPI.js"
+defaults write com.bohemiancoding.sketch3 SketchAPILocation "/path/to/your/SketchAPI_repo/build"
 ```
 
-Sketch will then load the external `.js` file instead of the bundled version.
+Sketch will then load the external `.js` files instead of the bundled version.
 
 ### Testing
 
