@@ -8,7 +8,7 @@ order: 496
 excerpt: Summary of the public API changes introduced with Sketch 56
 ---
 
-Released 23 July, 2019 – [_read release notes_](https://www.sketch.com/updates/#version-55)
+Released 23 July, 2019 – [_read release notes_](https://www.sketch.com/updates/#version-56)
 
 ## Changes
 
