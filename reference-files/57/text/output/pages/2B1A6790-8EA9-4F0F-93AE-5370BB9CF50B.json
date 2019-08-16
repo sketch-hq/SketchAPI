@@ -1,0 +1,226 @@
+{
+  "_class": "page",
+  "do_objectID": "2B1A6790-8EA9-4F0F-93AE-5370BB9CF50B",
+  "booleanOperation": -1,
+  "exportOptions": {
+    "_class": "exportOptions",
+    "exportFormats": [],
+    "includedLayerIds": [],
+    "layerOptions": 0,
+    "shouldTrim": false
+  },
+  "frame": {
+    "_class": "rect",
+    "constrainProportions": false,
+    "height": 0,
+    "width": 0,
+    "x": 0,
+    "y": 0
+  },
+  "isFixedToViewport": false,
+  "isFlippedHorizontal": false,
+  "isFlippedVertical": false,
+  "isLocked": false,
+  "isVisible": true,
+  "layerListExpandedType": 0,
+  "name": "Page 1",
+  "nameIsFixed": false,
+  "resizingConstraint": 63,
+  "resizingType": 0,
+  "rotation": 0,
+  "shouldBreakMaskChain": false,
+  "clippingMaskMode": 0,
+  "hasClippingMask": false,
+  "style": {
+    "_class": "style",
+    "endMarkerType": 0,
+    "miterLimit": 10,
+    "startMarkerType": 0,
+    "windingRule": 1
+  },
+  "groupLayout": { "_class": "MSImmutableFreeformGroupLayout" },
+  "hasClickThrough": true,
+  "layers": [
+    {
+      "_class": "text",
+      "do_objectID": "158E343E-54A5-4DCF-9EAB-3C618E4D7250",
+      "booleanOperation": -1,
+      "exportOptions": {
+        "_class": "exportOptions",
+        "exportFormats": [],
+        "includedLayerIds": [],
+        "layerOptions": 0,
+        "shouldTrim": false
+      },
+      "frame": {
+        "_class": "rect",
+        "constrainProportions": false,
+        "height": 31,
+        "width": 117,
+        "x": 0,
+        "y": 0
+      },
+      "isFixedToViewport": false,
+      "isFlippedHorizontal": false,
+      "isFlippedVertical": false,
+      "isLocked": false,
+      "isVisible": true,
+      "layerListExpandedType": 0,
+      "name": "Headline",
+      "nameIsFixed": false,
+      "resizingConstraint": 47,
+      "resizingType": 0,
+      "rotation": 0,
+      "shouldBreakMaskChain": false,
+      "clippingMaskMode": 0,
+      "hasClippingMask": false,
+      "style": {
+        "_class": "style",
+        "endMarkerType": 0,
+        "miterLimit": 10,
+        "startMarkerType": 0,
+        "textStyle": {
+          "_class": "textStyle",
+          "encodedAttributes": {
+            "textStyleVerticalAlignmentKey": 0,
+            "MSAttributedStringColorAttribute": {
+              "_class": "color",
+              "alpha": 1,
+              "blue": 1,
+              "green": 1,
+              "red": 1
+            },
+            "MSAttributedStringFontAttribute": {
+              "_class": "fontDescriptor",
+              "attributes": { "name": "Arial-BoldMT", "size": 28 }
+            }
+          },
+          "verticalAlignment": 0
+        },
+        "windingRule": 1
+      },
+      "attributedString": {
+        "_class": "attributedString",
+        "string": "Headline",
+        "attributes": [
+          {
+            "_class": "stringAttribute",
+            "location": 0,
+            "length": 8,
+            "attributes": {
+              "textStyleVerticalAlignmentKey": 0,
+              "MSAttributedStringFontAttribute": {
+                "_class": "fontDescriptor",
+                "attributes": { "name": "Arial-BoldMT", "size": 28 }
+              },
+              "MSAttributedStringColorAttribute": {
+                "_class": "color",
+                "alpha": 1,
+                "blue": 1,
+                "green": 1,
+                "red": 1
+              }
+            }
+          }
+        ]
+      },
+      "automaticallyDrawOnUnderlyingPath": false,
+      "dontSynchroniseWithSymbol": false,
+      "glyphBounds": "{{2, 4}, {114, 22}}",
+      "lineSpacingBehaviour": 2,
+      "textBehaviour": 0
+    },
+    {
+      "_class": "text",
+      "do_objectID": "08AA534A-D336-40A2-8FD1-546C577C427B",
+      "booleanOperation": -1,
+      "exportOptions": {
+        "_class": "exportOptions",
+        "exportFormats": [],
+        "includedLayerIds": [],
+        "layerOptions": 0,
+        "shouldTrim": false
+      },
+      "frame": {
+        "_class": "rect",
+        "constrainProportions": false,
+        "height": 17,
+        "width": 1504,
+        "x": 0,
+        "y": 47
+      },
+      "isFixedToViewport": false,
+      "isFlippedHorizontal": false,
+      "isFlippedVertical": false,
+      "isLocked": false,
+      "isVisible": true,
+      "layerListExpandedType": 0,
+      "name": "Lorem ipsum dolor si",
+      "nameIsFixed": false,
+      "resizingConstraint": 63,
+      "resizingType": 0,
+      "rotation": 0,
+      "shouldBreakMaskChain": false,
+      "clippingMaskMode": 0,
+      "hasClippingMask": false,
+      "style": {
+        "_class": "style",
+        "endMarkerType": 0,
+        "miterLimit": 10,
+        "startMarkerType": 0,
+        "textStyle": {
+          "_class": "textStyle",
+          "encodedAttributes": {
+            "textStyleVerticalAlignmentKey": 0,
+            "MSAttributedStringColorAttribute": {
+              "_class": "color",
+              "alpha": 1,
+              "blue": 1,
+              "green": 1,
+              "red": 1
+            },
+            "MSAttributedStringFontAttribute": {
+              "_class": "fontDescriptor",
+              "attributes": { "name": "TimesNewRomanPSMT", "size": 16 }
+            }
+          },
+          "verticalAlignment": 0
+        },
+        "windingRule": 1
+      },
+      "attributedString": {
+        "_class": "attributedString",
+        "string": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+        "attributes": [
+          {
+            "_class": "stringAttribute",
+            "location": 0,
+            "length": 231,
+            "attributes": {
+              "textStyleVerticalAlignmentKey": 0,
+              "MSAttributedStringFontAttribute": {
+                "_class": "fontDescriptor",
+                "attributes": { "name": "TimesNewRomanPSMT", "size": 16 }
+              },
+              "MSAttributedStringColorAttribute": {
+                "_class": "color",
+                "alpha": 1,
+                "blue": 1,
+                "green": 1,
+                "red": 1
+              }
+            }
+          }
+        ]
+      },
+      "automaticallyDrawOnUnderlyingPath": false,
+      "dontSynchroniseWithSymbol": false,
+      "glyphBounds": "{{0, 2}, {1503, 16}}",
+      "lineSpacingBehaviour": 2,
+      "textBehaviour": 1
+    }
+  ],
+  "horizontalRulerData": { "_class": "rulerData", "base": 0, "guides": [] },
+  "includeInCloudUpload": true,
+  "verticalRulerData": { "_class": "rulerData", "base": 0, "guides": [] }
+}

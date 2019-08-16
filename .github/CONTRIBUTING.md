@@ -33,10 +33,6 @@ This project adheres to the Contributor Covenant [code of conduct](/CODE_OF_COND
 
 Our mission is to provide the best possible developer experience for people that want to create Sketch plugins.
 
-We are using [Trello](https://trello.com/b/K1usljNW/sketch-plugins-roadmap) to give you a high level view of our plan.
-
-We want to get your feedback on our plans to achieve this mission. The roadmap aims to share some of the things we're working on or thinking of working on. You can vote on these and we may use these votes as a guideline to help us prioritize.
-
 If you have ideas or suggestions please read the [Suggesting Enhancements](#suggesting-enhancements) section below to understand how to contribute your feedback.
 
 ## How Can I Contribute?
