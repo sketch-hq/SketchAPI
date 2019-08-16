@@ -1,50 +1,53 @@
 ---
 # Main CSS
 ---
+
 /* SCSS */
 // Base
-@import "base/web-fonts";
-@import "base/normalize";
-@import "base/variables";
-@import "base/mediaqueries";
-@import "base/typography";
+@import 'base/web-fonts';
+@import 'base/normalize';
+@import 'base/functions';
+@import 'base/variables';
+@import 'base/mediaqueries';
+@import 'base/typography';
 
 // Layout
-@import "layout/grid";
-@import "layout/layout";
+@import 'layout/grid';
+@import 'layout/layout';
 
 // Helpers
-@import "helpers/helpers";
+@import 'helpers/helpers';
 
 // Components - Links, Buttons and Forms
-@import "components/actions-links";
-@import "components/actions-buttons";
-@import "components/forms";
+@import 'components/actions-links';
+@import 'components/actions-buttons';
+@import 'components/forms';
 
 // Components - Navigation
-@import "components/navigation-general";
-@import "components/navigation-primary";
-@import "components/navigation-secondary";
-@import "components/navigation-footer";
+@import 'components/navigation-general';
+@import 'components/navigation-primary';
+@import 'components/navigation-secondary';
+@import 'components/navigation-footer';
 
 // Components - General
-@import "components/overlay";
-@import "components/video-overlay";
-@import "components/search";
+@import 'components/overlay';
+@import 'components/video-overlay';
+@import 'components/search';
 
 // Components - CookieConsent
-@import "components/banner-cookieconsent";
+@import 'components/banner-cookieconsent';
 
 // CSS only used on the Sidebar Layout Pages
-@import "layout/layout-sidebar";
-@import "helpers/syntax-highlighting"; // !We might decide to use this elsewhere
-@import "components/navigation-toc";
-@import "components/sticky-sidebar-nav";
-@import "components/pagination";
+@import 'layout/layout-sidebar';
+@import 'helpers/syntax-highlighting'; // !We might decide to use this elsewhere
+@import 'components/navigation-toc';
+@import 'components/sticky-sidebar-nav';
+@import 'components/pagination';
 
 // Main pages
-@import "pages/developer";
-@import "pages/blog";
+@import 'pages/home';
+@import 'pages/developer';
+@import 'pages/blog';
 
 // API help
-@import "pages/api"
+@import 'pages/api';

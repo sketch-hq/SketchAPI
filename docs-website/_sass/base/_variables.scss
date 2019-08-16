@@ -7,22 +7,23 @@ $font-medium: 500;
 $font-semibold: 600;
 
 /* --- Border Radii --- */
+$radius-default: rem(4px);
 $radius-big: 10rem; /*In order to make circular elements*/
 $radius-normal: 0.125rem; /*2px*/
 $radius-small: 0.0625rem; /*1px*/
 
 /* --- Colors --- */
 //Text (dark on light backgrounds)
-$text-dark-high: #000000;
-$text-dark: #262626; //85
-$text-dark-low: #666666; //60
-$text-dark-ultra-low: #a6a6a6; // 35
+$text-dark-high: hsl(0, 0%, 0%);
+$text-dark: rgba($text-dark-high, 0.85);
+$text-dark-low: rgba($text-dark-high, 0.65);
+$text-dark-ultra-low: rgba($text-dark-high, 0.4);
 
 //Text (light on dark backgrounds)
 $text-light-high: hsl(0, 100%, 100%);
-$text-light: hsla(0, 100%, 100%, 0.85);
-$text-light-low: hsla(0, 100%, 100%, 0.6);
-$text-light-ultra-low: hsla(0, 100%, 100%, 0.35);
+$text-light: rgba($text-light-high, 0.85);
+$text-light-low: rgba($text-light-high, 0.65);
+$text-light-ultra-low: rgba($text-light-high, 0.4);
 
 //Sketch Palette
 $sk-red8: #2c0606;
@@ -156,8 +157,8 @@ $negative-ultra-low: $sk-red-8;
 
 // Backgrounds
 $background-dark-base: #151617;
-
-$background-dark: $sk-graphite;
+$background-dark: #151617;
+$background-light-base: #ffffff;
 $background-white: #ffffff;
 $background-light: #fdfdff;
 $background-light-dark: hsla(220, 13%, 97%, 1);
@@ -166,6 +167,7 @@ $background-light-dark: hsla(220, 13%, 97%, 1);
 $border-dark-ultra-high: hsla(0, 0%, 0%, 0.2);
 $border-dark-high: hsla(0, 0%, 0%, 0.1);
 $border-dark: hsla(0, 0%, 0%, 0.06);
+$border-dark-low: hsla(0, 0%, 0%, 0.03);
 $divider-dark: hsla(0, 0%, 0%, 0.03);
 
 //Borders and Dividers (dark on light backgrounds)

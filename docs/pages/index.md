@@ -6,7 +6,7 @@ redirect_from:
   - /guides/
   - /guides/third-party-apps-integrations/
 
-layout: single-page
+layout: home
 excerpt: Extend Sketch with a plugin or build integrations using the command-line interface or by reading and writing Sketch files directly in JSON
 ---
 
