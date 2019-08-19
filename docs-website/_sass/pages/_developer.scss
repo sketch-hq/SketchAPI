@@ -3,24 +3,6 @@
   height: auto;
 }
 
-//Inverting site's logic
-body > section {
-  background-color: $background-light;
-  box-shadow: inset 0 -1px 0 $border-dark;
-}
-
-body > section:nth-child(odd) {
-  background-color: $background-light-dark;
-}
-
-body > section ~ footer {
-  background: $background-light;
-}
-
-body > section:nth-child(even):last-of-type ~ footer {
-  background: $background-light-dark;
-}
-
 //Contribute pill
 .page-contribute {
   margin-top: 3rem;

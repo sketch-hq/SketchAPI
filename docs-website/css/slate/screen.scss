@@ -5,10 +5,9 @@
 @charset "utf-8";
 @import 'base/variables';
 @import 'slate/reset-main-styles';
-@import 'slate/normalize';
+@import 'base/normalize';
 @import 'slate/variables';
-@import 'slate/icon-font';
-@import 'slate/syntax';
+@import 'helpers/syntax-highlighting';
 
 /*
 Copyright 2008-2013 Concur Technologies, Inc.
@@ -108,7 +107,8 @@ body {
       top: 17px;
       left: $nav-padding;
       color: $nav-text;
-      @extend %icon-search;
+
+      //add search icon
     }
   }
 
@@ -583,15 +583,15 @@ body {
   }
 
   aside.notice:before {
-    @extend %icon-info-sign;
+    // @extend %icon-info-sign;
   }
 
   aside.warning:before {
-    @extend %icon-exclamation-sign;
+    // @extend %icon-exclamation-sign;
   }
 
   aside.success:before {
-    @extend %icon-ok-sign;
+    // @extend %icon-ok-sign;
   }
 
   .search-highlight {
@@ -715,16 +715,4 @@ body {
   %right-col + %left-col {
     margin-top: $main-padding;
   }
-}
-
-.highlight .c,
-.highlight .cm,
-.highlight .c1,
-.highlight .cs {
-  color: #909090;
-}
-
-.highlight,
-.highlight .w {
-  background-color: $code-bg;
 }

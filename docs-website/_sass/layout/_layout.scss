@@ -2,10 +2,11 @@
   html,
   body {
     height: 100%;
+    background-color: $background-light-base;
   }
 
   body > * {
-    padding: 0 2rem; /*32px*/
+    padding: 0 1.5rem;
   }
 
   .release-notes {
@@ -15,7 +16,7 @@
 
 @include tablet-and-below {
   body > * {
-    padding: 0 1rem; /*16px*/
+    padding: 0 1.5rem;
   }
 
   [class*='span-'] + [class*='span-'] {
@@ -34,7 +35,7 @@ body > section {
 }
 
 .wrapper {
-  max-width: 62.5rem; /*1000px*/
+  max-width: 71.25rem;
   margin: 0 auto;
 }
 
@@ -44,22 +45,6 @@ section .wrapper {
 
 section .wrapper.extra {
   padding: 6rem 0; /*96px*/
-}
-
-body > section {
-  background-color: $background-light-dark;
-}
-
-body > section:nth-of-type(even) {
-  background-color: $background-light;
-}
-
-.sections-inverted > section {
-  background: $background-light;
-}
-
-.sections-inverted > section:nth-of-type(even) {
-  background-color: $background-light-dark;
 }
 
 /*Product blocks*/
@@ -98,10 +83,6 @@ section .section-header {
   margin-bottom: -2.8125rem !important; /*Compensating 45px*/
 }
 
-body > section:nth-child(odd) .footer-title > span {
-  background-color: $background-light-dark;
-}
-
 /*Masthead styles for product sections*/
 body .masthead {
   .hero.hero {
@@ -111,24 +92,10 @@ body .masthead {
 }
 
 .masthead.background-dark {
-  background-image: url(images/background-main.svg);
-  background-repeat: no-repeat;
-  background-size: cover;
-  position: relative;
-}
-
-.masthead.background-dark::before {
-  content: '';
-  height: 3.5rem;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  background: linear-gradient(
-    180deg,
-    $background-dark,
-    rgba($background-dark, 0)
+  background-image: radial-gradient(
+    80vw circle at 50% 10%,
+    #3a2099 17%,
+    #480c59 100%
   );
-  pointer-events: none;
-  z-index: 10;
+  position: relative;
 }

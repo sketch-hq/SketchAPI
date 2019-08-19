@@ -5,10 +5,8 @@
   }
   var EinaSemiBold = new w.FontFaceObserver('Eina01-SemiBold')
   var EinaBold = new w.FontFaceObserver('Eina01-Bold')
-  EinaSemiBold.load().then(function() {
-    EinaBold.load().then(function() {
-      w.document.documentElement.className += ' fonts-loaded'
-    })
+  Promise.all([EinaSemiBold.load(), EinaBold.load()]).then(function() {
+    w.document.documentElement.className += ' fonts-loaded'
   })
 })(this)
 

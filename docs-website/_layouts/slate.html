@@ -23,7 +23,7 @@ layout: base
   {% if page.toc_footers %}
   <ul class="toc-footer">
     {% for footer in page.toc_footers %}
-      <li>{{ footer }}</li>
+    <li>{{ footer }}</li>
     {% endfor %}
   </ul>
   {% endif %}
@@ -31,7 +31,8 @@ layout: base
 
 <div class="content-wrapper">
   <div class="dark-box"></div>
-  <div class="content" id="content" data-languages='{{ language_tabs | jsonify }}' data-sections='&#123;{% for ref in references %}"{{ref.title | slugify}}": "{{ref.section}}"{% if forloop.last %}{% else %},{% endif %}{% endfor %}&#125;'>
+  <div class="content" id="content" data-languages='{{ language_tabs | jsonify }}'
+    data-sections='&#123;{% for ref in references %}"{{ref.title | slugify}}": "{{ref.section}}"{% if forloop.last %}{% else %},{% endif %}{% endfor %}&#125;'>
     {{ content }}
   </div>
 </div>

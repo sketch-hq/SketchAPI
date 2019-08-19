@@ -47,20 +47,20 @@ img.max,
 figcaption {
   margin-top: 1rem;
   //text-align: center;
-  font-size: .8125rem; //13px
-  line-height: .98125rem; //15.7px
+  font-size: 0.8125rem; //13px
+  line-height: 0.98125rem; //15.7px
   color: $text-dark-ultra-low;
 }
 
 .new {
   display: inline-block;
-  padding: .3125rem .375rem .25rem; /*5px 6px 4px*/
+  padding: 0.3125rem 0.375rem 0.25rem; /*5px 6px 4px*/
   vertical-align: middle;
   position: relative;
-  top: -.2em;
+  top: -0.2em;
   border-radius: $radius-small; /*2px*/
   text-transform: uppercase;
-  font-size: .75rem; /*12px*/
+  font-size: 0.75rem; /*12px*/
   background: #4d994e;
   color: $text-light-high;
   line-height: 1;
@@ -69,9 +69,16 @@ figcaption {
 /*Clearfix*/
 .group:before,
 .group:before,
-.group:after { content: ""; display: table; }
-.group:after { clear: both; }
-.group { zoom: 1; }
+.group:after {
+  content: '';
+  display: table;
+}
+.group:after {
+  clear: both;
+}
+.group {
+  zoom: 1;
+}
 
 .visuallyhidden {
   border: 0;
@@ -97,8 +104,12 @@ figcaption {
 }
 
 /*Right to left. Used for images that need to overflow backwards*/
-.rtl { direction: rtl; }
-.rtl .online-link { direction: ltr; }
+.rtl {
+  direction: rtl;
+}
+.rtl .online-link {
+  direction: ltr;
+}
 
 /*Selection color for pages*/
 *::selection {
@@ -106,19 +117,21 @@ figcaption {
   background: $sk-orange2;
 }
 
-  *::selection:window-inactive {
-      background: $sk-orange4;
-  }
+*::selection:window-inactive {
+  background: $sk-orange4;
+}
 
 /* Avoid the ugly focus ring in form elements in Safari */
-*:focus { outline: none; }
+*:focus {
+  outline: none;
+}
 
 .view-all::after {
-  content: ""; //\203a
+  content: ''; //\203a
   display: inline-block;
-  width: .375rem; //6px
-  height: .625rem; //10px
-  margin-left: .375rem; //6px
+  width: 0.375rem; //6px
+  height: 0.625rem; //10px
+  margin-left: 0.375rem; //6px
   vertical-align: baseline;
   background-image: url('data:image/svg+xml;utf8,%3Csvg%20width%3D%228%22%20height%3D%2213%22%20viewBox%3D%220%200%208%2013%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Ctitle%3EDisclosure%20Indicator%3C%2Ftitle%3E%3Cpath%20d%3D%22M0%2C1.5%20L1.5%2C0%20L7.29201249%2C5.79201249%20C7.68302319%2C6.18302319%207.68649149%2C6.81350851%207.29201249%2C7.20798751%20L1.5%2C13%20L0%2C11.5%20L4.29422684%2C7.20577316%20C4.68401459%2C6.81598541%204.68722761%2C6.18722761%204.29422684%2C5.79422684%20L0%2C1.5%20Z%22%20fill%3D%22%236236ff%22%20fill-rule%3D%22evenodd%22%2F%3E%3C%2Fsvg%3E');
   background-size: cover;
@@ -133,8 +146,8 @@ figcaption {
 }
 
 .marked-text {
-  padding: 0 .125em; //0 2px
-  margin: 0 -.125em; //Compensating
+  padding: 0 0.125em; //0 2px
+  margin: 0 -0.125em; //Compensating
   color: $text-dark-high;
   font-weight: inherit;
   font-style: inherit;
@@ -153,15 +166,15 @@ figcaption {
   text-align: center;
 }
 
-  .actions li:nth-child(2n) {
-    padding-right: 0;
-  }
+.actions li:nth-child(2n) {
+  padding-right: 0;
+}
 
 @include tablet-and-below {
   .actions li {
     display: block;
     padding-right: 0;
-    margin-bottom: .5rem;
+    margin-bottom: 0.5rem;
   }
 
   .actions li a {
@@ -220,3 +233,43 @@ picture + .actions {
   }
 }
 /* @end */
+
+.link-heading-arrow {
+  color: $text-dark-high;
+}
+
+.background-dark .link-heading-arrow {
+  color: $text-light-high;
+}
+
+a.link-heading-arrow:hover,
+a.link-heading-arrow:focus {
+  color: $action;
+}
+
+.link-heading-arrow::after {
+  content: '';
+  display: inline-block;
+  margin-left: 0.5rem;
+  vertical-align: baseline;
+  width: rem(18px);
+  height: rem(15px);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-image: url(https://cdn.sketchapp.com/assets/components/icons/icon-goright-primary.svg);
+  will-change: transform;
+  transition: transform 0.4s $cubic-bounce;
+}
+.link-heading-arrow.arrow-light::after {
+  background-image: url(https://cdn.sketchapp.com/assets/components/icons/icon-goright-light.svg);
+}
+.link-heading-arrow.arrow-dark::after {
+  background-image: url(https://cdn.sketchapp.com/assets/components/icons/icon-goright-dark.svg);
+}
+
+a.link-heading-arrow:hover::after,
+a.link-heading-arrow:focus::after,
+a:hover > .link-heading-arrow::after,
+a:focus > .link-heading-arrow::after {
+  transform: translate(3px, 0);
+}

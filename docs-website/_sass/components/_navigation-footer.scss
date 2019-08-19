@@ -3,27 +3,67 @@ body > section + footer {
   background-color: $background-light;
 }
 
-  .sections-inverted > section + footer {
-    background-color: $background-light-dark;
-  }
+.sections-inverted > section + footer {
+  background-color: $background-light-dark;
+}
 
 body > section:nth-of-type(even):last-of-type + footer {
   background-color: $background-light-dark;
 }
 
-  .sections-inverted > section:nth-of-type(even):last-of-type + footer {
-    background-color: $background-light;
-  }
-
-.main-footer small {
-  font-size: 1rem;
-  line-height: 1.5;
-  vertical-align: middle;
-	color: $text-dark-low;
+.sections-inverted > section:nth-of-type(even):last-of-type + footer {
+  background-color: $background-light;
 }
 
-.main-footer a {
-  color: $text-dark-low;
+.submit-ideas {
+  h2 {
+    color: $text-light-high;
+  }
+}
+
+.main-footer {
+  a {
+    color: $text-dark;
+  }
+
+  .p {
+    color: $text-dark-low;
+  }
+
+  small {
+    line-height: 1.25rem;
+    vertical-align: middle;
+    color: $text-dark-low;
+  }
+
+  img + .h3 {
+    margin-top: 1rem;
+  }
+
+  .row-links {
+    margin-top: 4rem;
+
+    a {
+      img {
+        transition: transform 0.25s cubic-bezier(0.77, 0, 0.2, 2.25);
+      }
+    }
+    a:hover {
+      img {
+        transform: scale(1.05);
+      }
+    }
+  }
+
+  .wrapper + .wrapper {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+    }
+  }
 }
 
 @include tablet-and-above {
@@ -31,19 +71,9 @@ body > section:nth-of-type(even):last-of-type + footer {
     text-align: right;
   }
 
-	.main-footer > .wrapper {
-	  padding: 3rem 0; /*48px*/
-    overflow: hidden; //easy auto clearing
-	}
-
-  .main-footer small {
-    float: left;
-  }
-
   .main-footer ul {
     display: inline-block;
     vertical-align: middle;
-    float: right;
   }
 
   .main-footer li {
@@ -52,11 +82,43 @@ body > section:nth-of-type(even):last-of-type + footer {
 }
 
 @include tablet-and-below {
-  .main-footer small,
-  .main-footer a {
-    display: block;
-    margin: 0 -1rem 0 0;
-    padding: 1rem 0;
-    border-bottom: 1px solid $divider-dark;
+  .main-footer {
+    .wrapper {
+      padding-bottom: 2rem !important;
+    }
+
+    .row-links {
+      margin-top: 2.5rem;
+
+      a + a {
+        margin-top: 3rem !important;
+        padding-top: 2.5rem !important;
+        background-image: linear-gradient(
+          90deg,
+          rgba(0, 0, 0, 0),
+          rgba(0, 0, 0, 0.1) 50%,
+          rgba(0, 0, 0, 0) 100%
+        );
+        background-size: 100% 1px;
+        background-repeat: no-repeat;
+      }
+    }
+
+    nav {
+      flex-direction: column;
+
+      li {
+        margin: 0;
+        border-top: 1px solid $divider-dark;
+      }
+    }
+
+    small,
+    a {
+      display: block;
+      margin: 0 -1rem 0 0;
+      padding: 1rem 0;
+      font-size: rem(15px);
+    }
   }
 }

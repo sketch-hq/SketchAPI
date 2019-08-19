@@ -28,6 +28,7 @@ th,
   letter-spacing: -0.02em;
   word-wrap: break-word;
   font-weight: $font-semibold;
+  display: block;
 }
 
 nav li a {
@@ -85,10 +86,10 @@ h6:first-child,
   position: relative;
   z-index: 9;
   color: $text-dark-ultra-low;
-}
 
-.background-dark .heading-caption {
-  color: $text-light-ultra-low;
+  .background-dark & {
+    color: $text-light-ultra-low;
+  }
 }
 
 display-1 a,
@@ -108,16 +109,30 @@ th a,
   font-style: inherit;
 }
 
+h1,
+.h1 {
+  color: $text-dark-high;
+  .background-dark & {
+    color: $text-light-high;
+  }
+}
+
+p,
+.p {
+  color: $text-dark;
+  .background-dark & {
+    color: $text-light;
+  }
+}
+
 h1:not([class]) + p,
 .lead,
 .lead-text {
-  color: $text-dark;
-}
+  color: $text-dark-low;
 
-.background-dark h1:not([class]) + p,
-.background-dark .lead,
-.background-dark .lead-text {
-  color: $text-light-low;
+  .background-dark & {
+    color: $text-light-low;
+  }
 }
 
 p,
@@ -298,8 +313,8 @@ kbd {
 }
 
 .background-dark code {
-  background-color: $sk-indigo6;
-  color: $sk-indigo-8;
+  background-color: $border-light-high;
+  color: $text-light-high;
 }
 
 .background-dark kbd {
@@ -309,6 +324,10 @@ kbd {
 
 .uppercase {
   text-transform: uppercase;
+}
+
+.text-center {
+  text-align: center;
 }
 
 small,
@@ -350,28 +369,28 @@ small strong,
     font-size: rem(95px);
     line-height: rem(96px);
     letter-spacing: rem(-1px);
-    margin: 3rem 0 2rem;
+    margin: 6rem 0 2rem;
   }
 
   h1,
   .h1 {
     font-size: rem(68px);
     line-height: rem(72px);
-    margin: 3rem 0 2rem;
+    margin: 6rem 0 2rem;
   }
 
   h2,
   .h2 {
     font-size: rem(42px);
     line-height: rem(48px);
-    margin: 3rem 0 1.5rem;
+    margin: 6rem 0 1.5rem;
   }
 
   h3,
   .h3 {
     font-size: rem(26px);
     line-height: rem(32px);
-    margin: 2rem 0 1rem;
+    margin: 3rem 0 1rem;
   }
 
   h4,
@@ -383,8 +402,7 @@ small strong,
 
   h1:not([class]) + p,
   .lead,
-  .lead-text,
-  blockquote {
+  .lead-text {
     font-size: rem(26px);
     line-height: rem(36px);
     margin: 1.5rem 0;
@@ -404,18 +422,28 @@ small strong,
   .heading-caption {
     display: block;
     font-size: rem(13px);
-    line-height: rem(20px); /*20px*/
-    margin: 1.5rem 0 0.5rem; /*32px*/
+    line-height: rem(20px);
+    margin: 1.5rem 0 0.5rem;
     text-transform: uppercase;
     letter-spacing: 0.02em;
   }
 
-  nav li {
+  .main-nav nav li {
     display: block;
     font-size: rem(13px);
     font-weight: 600;
     line-height: rem(20px);
     text-transform: uppercase;
+  }
+
+  .main-footer nav li {
+    font-size: rem(13px);
+    font-weight: 600;
+    line-height: rem(20px);
+  }
+
+  .text-center-tablet-and-above {
+    text-align: center;
   }
 }
 
@@ -424,21 +452,21 @@ small strong,
   .h1.giga {
     font-size: rem(68px);
     line-height: rem(72px);
-    margin: 3rem 0 2rem;
+    margin: 4rem 0 2rem;
   }
 
   h1,
   .h1 {
     font-size: rem(42px);
     line-height: rem(48px);
-    margin: 3rem 0 1.5rem;
+    margin: 4rem 0 1.5rem;
   }
 
   h2,
   .h2 {
     font-size: rem(26px);
     line-height: rem(32px);
-    margin: 2rem 0 1rem;
+    margin: 4rem 0 1rem;
   }
 
   h3,
@@ -461,7 +489,8 @@ small strong,
 
   h5,
   .h5,
-  .radio-tab {
+  .radio-tab,
+  .main-footer nav li {
     font-size: rem(14px);
     line-height: rem(20px);
     margin: 1.5rem 0 0.5rem;
@@ -478,12 +507,22 @@ small strong,
     letter-spacing: 0.02em;
   }
 
-  nav li {
+  .main-nav nav li {
     display: block;
     font-size: rem(15px);
     font-weight: 600;
     line-height: rem(20px);
     text-transform: none;
+  }
+
+  .main-footer nav li {
+    font-size: rem(13px);
+    font-weight: 600;
+    line-height: rem(20px);
+  }
+
+  .text-center-tablet-and-below {
+    text-align: center;
   }
 }
 
@@ -492,6 +531,10 @@ small strong,
   .h1.giga {
     font-size: rem(52px);
     line-height: rem(56px);
-    margin: 3rem 0 1.5rem;
+    margin: 4rem 0 1.5rem;
+  }
+
+  .text-center-phone {
+    text-align: center;
   }
 }

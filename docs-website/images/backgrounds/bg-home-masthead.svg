@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="424" viewBox="0 0 1440 424">
+  <defs>
+    <linearGradient id="bg-home-masthead-a" x1="62.169%" x2="42.43%" y1="114.328%" y2="0%">
+      <stop offset="0%" stop-color="#E10067"/>
+      <stop offset="100%" stop-color="#FA6400"/>
+    </linearGradient>
+    <linearGradient id="bg-home-masthead-b" x1="58.291%" x2="37.182%" y1="100%" y2="4.498%">
+      <stop offset="0%" stop-color="#289DCC"/>
+      <stop offset="100%" stop-color="#815EFF"/>
+    </linearGradient>
+    <linearGradient id="bg-home-masthead-c" x1="62.5%" x2="42.224%" y1="114.328%" y2="0%">
+      <stop offset="0%" stop-color="#E10067"/>
+      <stop offset="100%" stop-color="#FA6400"/>
+    </linearGradient>
+    <linearGradient id="bg-home-masthead-d" x1="57.71%" x2="41.704%" y1="90.454%" y2="0%">
+      <stop offset="0%" stop-color="#44D7B6"/>
+      <stop offset="100%" stop-color="#0091FF"/>
+    </linearGradient>
+    <linearGradient id="bg-home-masthead-e" x1="80.842%" x2="16.816%" y1="90.454%" y2="0%">
+      <stop offset="0%" stop-color="#44D7B6"/>
+      <stop offset="100%" stop-color="#0091FF"/>
+    </linearGradient>
+    <linearGradient id="bg-home-masthead-f" x1="16.816%" x2="80.842%" y1="0%" y2="90.454%">
+      <stop offset="0%" stop-color="#4E2BCC"/>
+      <stop offset="100%" stop-color="#0091FF"/>
+    </linearGradient>
+    <linearGradient id="bg-home-masthead-g" x1="50%" x2="71.118%" y1="0%" y2="100%">
+      <stop offset="0%" stop-color="#FA6400"/>
+      <stop offset="100%" stop-color="#F8C332"/>
+    </linearGradient>
+    <linearGradient id="bg-home-masthead-h" x1="0%" x2="50%" y1="0%" y2="100%">
+      <stop offset="0%" stop-color="#E64C4C"/>
+      <stop offset="100%" stop-color="#FB8332"/>
+    </linearGradient>
+    <linearGradient id="bg-home-masthead-i" x1="49.438%" x2="50.522%" y1="0%" y2="90.454%">
+      <stop offset="0%" stop-color="#F7B500"/>
+      <stop offset="100%" stop-color="#FA6400"/>
+    </linearGradient>
+    <linearGradient id="bg-home-masthead-j" x1="51.137%" x2="48.242%" y1="100%" y2="4.498%">
+      <stop offset="0%" stop-color="#289DCC"/>
+      <stop offset="100%" stop-color="#815EFF"/>
+    </linearGradient>
+    <linearGradient id="bg-home-masthead-k" x1="0%" x2="50%" y1="48.796%" y2="51.204%">
+      <stop offset="0%" stop-color="#8ADC32"/>
+      <stop offset="100%" stop-color="#69DFC4"/>
+    </linearGradient>
+    <linearGradient id="bg-home-masthead-l" x1="50%" x2="51.428%" y1="0%" y2="100%">
+      <stop offset="0%" stop-color="#FA6400"/>
+      <stop offset="100%" stop-color="#F8C332"/>
+    </linearGradient>
+    <linearGradient id="bg-home-masthead-m" x1="0%" x2="48.733%" y1="0%" y2="97.467%">
+      <stop offset="0%" stop-color="#C44CE6"/>
+      <stop offset="100%" stop-color="#815EFF"/>
+    </linearGradient>
+    <linearGradient id="bg-home-masthead-n" x1="16.816%" x2="80.842%" y1="36.15%" y2="61.206%">
+      <stop offset="0%" stop-color="#E10067"/>
+      <stop offset="100%" stop-color="#B620E0"/>
+    </linearGradient>
+  </defs>
+  <g fill="none" fill-rule="evenodd" transform="translate(-61 -22)">
+    <g transform="translate(197 206)">
+      <path fill="url(#bg-home-masthead-a)" d="M50.3881373,86.9949761 C30.2358115,86.6638214 14,70.0035713 14,49.5 C14,28.7893219 30.5654643,12 51,12 L51,12 L51,87 Z" transform="rotate(-24 32.5 49.5)"/>
+      <path fill="url(#bg-home-masthead-b)" d="M91.3385269,83.9947081 C69.5522287,83.6458919 52,66.0970951 52,44.5 C52,22.6847524 69.90861,5 92,5 L92,5 L92,84 Z" transform="scale(-1 1) rotate(24 0 -294.233)"/>
+    </g>
+    <path fill="url(#bg-home-masthead-c)" d="M1243,196 C1243,168.385763 1265.38576,146 1293,146 L1293,162 L1293,162 C1274.22232,162 1259,177.222319 1259,196 C1259,214.777681 1274.22232,230 1293,230 L1293,246 C1265.38576,246 1243,223.614237 1243,196 Z" transform="rotate(54 1268 196)"/>
+    <path fill="url(#bg-home-masthead-d)" d="M93,35 L93,51 L93,51 C74.2223185,51 59,66.2223185 59,85 C59,103.777681 74.2223185,119 93,119 L93,135 C65.3857625,135 43,112.614237 43,85 C43,57.6619049 64.9402858,35.4482381 92.1731586,35.0066986 L93,35 Z M143,85 L142.999,85.118 L142.999863,84.8818284 C142.999954,84.9212082 143,84.9605988 143,85 Z" transform="rotate(123 68 85)"/>
+    <polygon fill="url(#bg-home-masthead-e)" points="1424 15 1518 109 1424 109" transform="rotate(-77 1471 62)"/>
+    <polygon fill="url(#bg-home-masthead-f)" points="567 49 611 93 567 93" transform="rotate(-150 589 71)"/>
+    <polygon fill="url(#bg-home-masthead-g)" points="18 226 112 320 18 320" transform="rotate(-32 65 273)"/>
+    <polygon fill="url(#bg-home-masthead-h)" points="235 10 329 104 235 104" transform="rotate(-76 282 57)"/>
+    <path fill="url(#bg-home-masthead-i)" d="M1318,266 C1322.41828,266 1326,269.581722 1326,274 L1326,381 C1326,385.418278 1322.41828,389 1318,389 C1313.58172,389 1310,385.418278 1310,381 L1310,274 C1310,269.581722 1313.58172,266 1318,266 Z" transform="rotate(27 1318 327.5)"/>
+    <path fill="url(#bg-home-masthead-j)" d="M279.5,367 C283.642136,367 287,370.357864 287,374.5 L287,439.5 C287,443.642136 283.642136,447 279.5,447 C275.357864,447 272,443.642136 272,439.5 L272,374.5 C272,370.357864 275.357864,367 279.5,367 Z" transform="rotate(-39 279.5 407)"/>
+    <path fill="url(#bg-home-masthead-k)" d="M140.5,413 L189.5,413 C191.985281,413 194,415.014719 194,417.5 C194,419.985281 191.985281,422 189.5,422 L140.5,422 C138.014719,422 136,419.985281 136,417.5 C136,415.014719 138.014719,413 140.5,413 Z" transform="rotate(-105 165 417.5)"/>
+    <path fill="url(#bg-home-masthead-l)" d="M905.5,72 C909.089851,72 912,74.9101491 912,78.5 L912,115.5 C912,119.089851 909.089851,122 905.5,122 C901.910149,122 899,119.089851 899,115.5 L899,78.5 C899,74.9101491 901.910149,72 905.5,72 Z" transform="rotate(-134 905.5 97)"/>
+    <path fill="url(#bg-home-masthead-f)" d="M1490.5,281 C1509.55382,281 1525,296.446176 1525,315.5 C1525,334.553824 1509.55382,350 1490.5,350 C1471.44618,350 1456,334.553824 1456,315.5 C1456,296.446176 1471.44618,281 1490.5,281 Z M1490.5,298 C1480.83502,298 1473,305.835017 1473,315.5 C1473,325.164983 1480.83502,333 1490.5,333 C1500.16498,333 1508,325.164983 1508,315.5 C1508,305.835017 1500.16498,298 1490.5,298 Z"/>
+    <path fill="url(#bg-home-masthead-m)" d="M1184.5,44 C1201.89697,44 1216,58.1030304 1216,75.5 C1216,92.8969696 1201.89697,107 1184.5,107 C1167.10303,107 1153,92.8969696 1153,75.5 C1153,58.1030304 1167.10303,44 1184.5,44 Z M1184.5,53 C1172.07359,53 1162,63.0735931 1162,75.5 C1162,87.9264069 1172.07359,98 1184.5,98 C1196.92641,98 1207,87.9264069 1207,75.5 C1207,63.0735931 1196.92641,53 1184.5,53 Z"/>
+    <polyline stroke="url(#bg-home-masthead-n)" stroke-linecap="square" stroke-width="12" points="308 89 327.253 109 346 89" transform="rotate(-132 327 99)"/>
+  </g>
+</svg>

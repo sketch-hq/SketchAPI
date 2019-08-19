@@ -93,11 +93,16 @@
     width: 100%;
     z-index: 99;
     margin-top: -3.5rem;
-    padding: 0.1875rem 2rem;
+    padding-top: 0.1875rem;
+    padding-bottom: 0.1875rem;
 
     background-color: rgba($background-dark, 0.85) !important;
     -webkit-backdrop-filter: blur(10px) !important;
     backdrop-filter: blur(10px) !important;
+  }
+
+  .main-nav + .masthead {
+    margin-top: -3.5rem;
   }
 
   .main-nav nav {
