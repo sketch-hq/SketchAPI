@@ -19,21 +19,17 @@
   opacity: 0;
   pointer-events: none;
   visibility: hidden;
-  transition: opacity 0.08s ease-out;
+  transition: opacity 0.35s $ease-out-expo, visibility 0 0.35s;
   will-change: transform, opacity;
-}
-
-@include tablet-and-below {
-  .overlay {
-    -webkit-backdrop-filter: blur(10px);
-  }
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
 }
 
 .overlay.active {
   opacity: 1;
+  transition: opacity 0.35s, visibility 0s;
   visibility: visible;
   pointer-events: all;
-  transition-timing-function: ease-in;
 }
 
 .overlay.cover-all {

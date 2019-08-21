@@ -1,222 +1,282 @@
 .highlighter-rouge {
   margin-bottom: 1rem;
 }
+
 .highlight pre,
 pre,
 .highlight .hll,
 .highlight code {
   background-color: $background-light;
 }
+
 .highlight .c {
-  color: $text-dark-ultra-low;
+  color: #a6a6a6;
   font-style: italic;
 }
+
 .highlight .err {
-  color: $sk-orange;
-  background-color: $sk-orange-8;
+  color: #fa6400;
+  background-color: #fee0cc;
 }
+
 .highlight .k {
-  font-weight: $font-semibold;
+  font-weight: 600;
 }
+
 .highlight .o {
-  font-weight: $font-semibold;
+  font-weight: 600;
 }
+
 .highlight .cm {
-  color: $text-dark-ultra-low;
+  color: #a6a6a6;
   font-style: italic;
 }
+
 .highlight .cp {
-  color: $text-dark-ultra-low;
-  font-weight: $font-semibold;
+  color: #a6a6a6;
+  font-weight: 600;
 }
+
 .highlight .c1 {
-  color: $text-dark-ultra-low;
+  color: #a6a6a6;
   font-style: italic;
 }
+
 .highlight .cs {
-  color: $text-dark-ultra-low;
-  font-weight: $font-semibold;
+  color: #a6a6a6;
+  font-weight: 600;
   font-style: italic;
 }
+
 .highlight .gd {
-  color: $text-dark-high;
-  background-color: $sk-orange-8;
+  color: #000;
+  background-color: #fee0cc;
 }
+
 .highlight .gd .x {
-  color: $text-dark-high;
-  background-color: $background-light;
+  color: #000;
+  background-color: #fdfdff;
 }
+
 .highlight .ge {
   font-style: italic;
 }
+
 .highlight .gr {
-  color: $sk-orange2;
+  color: #c85000;
 }
+
 .highlight .gh {
-  color: $text-dark-ultra-low;
+  color: #a6a6a6;
 }
+
 .highlight .gi {
-  color: $text-dark-high;
+  color: #000;
   background-color: #ddffdd;
 }
+
 .highlight .gi .x {
-  color: $text-dark-high;
-  background-color: $sk-teal-2;
+  color: #000;
+  background-color: #69dfc4;
 }
+
 .highlight .go {
-  color: $text-dark-low;
+  color: #666;
 }
+
 .highlight .gp {
-  color: $text-dark;
+  color: #262626;
 }
+
 .highlight .gs {
-  font-weight: $font-semibold;
+  font-weight: 600;
 }
+
 .highlight .gu {
-  color: $sk-purple6;
-  font-weight: $font-semibold;
+  color: #480c59;
+  font-weight: 600;
 }
+
 .highlight .gt {
-  color: $sk-orange;
+  color: #fa6400;
 }
+
 .highlight .kc {
-  font-weight: $font-semibold;
+  font-weight: 600;
 }
+
 .highlight .kd {
-  font-weight: $font-semibold;
+  font-weight: 600;
 }
+
 .highlight .kn {
-  font-weight: $font-semibold;
+  font-weight: 600;
 }
+
 .highlight .kp {
-  font-weight: $font-semibold;
+  font-weight: 600;
 }
+
 .highlight .kr {
-  font-weight: $font-semibold;
+  font-weight: 600;
 }
+
 .highlight .kt {
-  color: $sk-purple8;
-  font-weight: $font-semibold;
+  color: #24062c;
+  font-weight: 600;
 }
+
 .highlight .m {
-  color: $sk-green2;
+  color: #57a900;
 }
+
 .highlight .s {
-  color: $sk-orange;
+  color: #fa6400;
 }
+
 .highlight .n {
-  color: $text-dark;
+  color: #262626;
 }
+
 .highlight .na {
-  color: $sk-green4;
+  color: #417f00;
 }
+
 .highlight .nb {
-  color: $sk-blue2;
+  color: #0074cc;
 }
+
 .highlight .nc {
-  color: $sk-purple8;
-  font-weight: $font-semibold;
+  color: #24062c;
+  font-weight: 600;
 }
+
 .highlight .no {
-  color: $sk-green4;
+  color: #417f00;
 }
+
 .highlight .ni {
-  color: $sk-purple4;
+  color: #6d1386;
 }
+
 .highlight .ne {
-  color: $sk-orange;
-  font-weight: $font-semibold;
+  color: #fa6400;
+  font-weight: 600;
 }
+
 .highlight .nf {
-  color: $sk-orange;
-  font-weight: $font-semibold;
+  color: #fa6400;
+  font-weight: 600;
 }
+
 .highlight .nn {
-  color: $text-dark;
+  color: #262626;
 }
+
 .highlight .nt {
-  color: $sk-orange2;
+  color: #c85000;
 }
+
 .highlight .nv {
-  color: $sk-green4;
+  color: #417f00;
 }
-//.highlight .nx { color: $text-dark; }
+
 .highlight .ow {
-  font-weight: $font-semibold;
+  font-weight: 600;
 }
+
 .highlight .w {
   color: #bbbbbb;
 }
+
 .highlight .mf {
-  color: $sk-green2;
-}
-.highlight .mh {
-  color: $sk-green2;
-}
-.highlight .mi {
-  color: $sk-green2;
-}
-.highlight .mo {
-  color: $sk-green2;
-}
-.highlight .sb {
-  color: $sk-orange;
-}
-.highlight .sc {
-  color: $sk-orange;
-}
-.highlight .sd {
-  color: $sk-orange;
-}
-.highlight .s2 {
-  color: $sk-orange;
-}
-.highlight .se {
-  color: $sk-orange;
-}
-.highlight .sh {
-  color: $sk-orange;
-}
-.highlight .si {
-  color: $sk-orange;
-}
-.highlight .sx {
-  color: $sk-orange;
-}
-.highlight .sr {
-  color: $sk-green2;
-}
-.highlight .s1 {
-  color: $sk-orange;
-}
-.highlight .ss {
-  color: $sk-purple4;
-}
-.highlight .bp {
-  color: $text-dark-ultra-low;
-}
-.highlight .vc {
-  color: $sk-green4;
-}
-.highlight .vg {
-  color: $sk-green4;
-}
-.highlight .vi {
-  color: $sk-green4;
-}
-.highlight .il {
-  color: $sk-teal4;
-}
-.highlight .gc {
-  color: $text-dark-ultra-low;
-  background-color: $background-light;
+  color: #57a900;
 }
 
-//Table styles (for blocks of code with line numbers)
+.highlight .mh {
+  color: #57a900;
+}
+
+.highlight .mi {
+  color: #57a900;
+}
+
+.highlight .mo {
+  color: #57a900;
+}
+
+.highlight .sb {
+  color: #fa6400;
+}
+
+.highlight .sc {
+  color: #fa6400;
+}
+
+.highlight .sd {
+  color: #fa6400;
+}
+
+.highlight .s2 {
+  color: #fa6400;
+}
+
+.highlight .se {
+  color: #fa6400;
+}
+
+.highlight .sh {
+  color: #fa6400;
+}
+
+.highlight .si {
+  color: #fa6400;
+}
+
+.highlight .sx {
+  color: #fa6400;
+}
+
+.highlight .sr {
+  color: #57a900;
+}
+
+.highlight .s1 {
+  color: #fa6400;
+}
+
+.highlight .ss {
+  color: #6d1386;
+}
+
+.highlight .bp {
+  color: #a6a6a6;
+}
+
+.highlight .vc {
+  color: #417f00;
+}
+
+.highlight .vg {
+  color: #417f00;
+}
+
+.highlight .vi {
+  color: #417f00;
+}
+
+.highlight .il {
+  color: #28816d;
+}
+
+.highlight .gc {
+  color: #a6a6a6;
+  background-color: #fdfdff;
+}
+
 .highlight table {
-  //border-collapse: separate;
-  border-radius: $radius-normal;
-  border: 1px solid $border-dark-high;
+  border-radius: 0.125rem;
+  border: 1px solid rgba(0, 0, 0, 0.1);
   width: 100%;
 }
 
@@ -233,13 +293,13 @@ pre,
 .highlight .gutter.gl {
   padding: 1rem;
   background: #fbfbfb;
-  border-right: 1px solid $divider-dark;
+  border-right: 1px solid rgba(0, 0, 0, 0.03);
   -webkit-user-select: none;
   user-select: none;
 }
 
 .highlight .gutter.gl pre {
-  color: $text-dark-ultra-low;
+  color: #a6a6a6;
   background: transparent;
 }
 
@@ -256,11 +316,7 @@ pre,
   top: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(
-    90deg,
-    rgba($background-white, 0),
-    $background-white
-  );
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0), #fff);
 }
 
 .highlight td.code pre {
