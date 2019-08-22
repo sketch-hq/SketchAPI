@@ -1,15 +1,3 @@
-;(function(w) {
-  // if the class is already set, we're good.
-  if (w.document.documentElement.className.indexOf('fonts-loaded') > -1) {
-    return
-  }
-  var EinaSemiBold = new w.FontFaceObserver('Eina01-SemiBold')
-  var EinaBold = new w.FontFaceObserver('Eina01-Bold')
-  Promise.all([EinaSemiBold.load(), EinaBold.load()]).then(function() {
-    w.document.documentElement.className += ' fonts-loaded'
-  })
-})(this)
-
 var tempScrollTop
 
 // Main navigation logic

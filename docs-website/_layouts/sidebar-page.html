@@ -31,7 +31,7 @@ layout: base
 
             {% if page.url contains '/reference/action/' %}
             <li>
-              <h2><a href="/reference/action/">Actions Index</a></h2>
+              <h5><a href="/reference/action/">Actions Index</a></h5>
               <ol>
                 {% assign actions = site.actions | sort:"title"%}
                 {% for action in actions %}
@@ -46,7 +46,7 @@ layout: base
             {% for chapter in all_chapters %}
             {% if chapter == nil %}{% continue %}{% endif %}
             <li>
-              <h2>{{ chapter }}</h2>
+              <h5>{{ chapter }}</h5>
               <ol>
                 {% assign all_subpages = site.pages | where: "section", page.section | where: "chapter", chapter | sort: "order" %}
                 {% for subpage in all_subpages %}

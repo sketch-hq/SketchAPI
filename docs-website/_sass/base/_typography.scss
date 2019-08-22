@@ -1,14 +1,29 @@
 html {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Helvetica Neue',
+    Helvetica, Arial, sans-serif;
+  font-size: 1rem;
+  line-height: 1.5;
+  text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font: $font-regular 16px/1.5 system-ui, -apple-system, BlinkMacSystemFont,
-    'Helvetica Neue', Helvetica, Arial, sans-serif;
-
-  // Enabling kerning and optional ligatures
-  text-rendering: optimizeLegibility;
 }
 
-/*Basic heading styles*/
+display-1,
+h1,
+.h1,
+h2,
+.h2,
+h3,
+.h3 {
+  font-family: 'Eina01-Bold', system-ui, -apple-system, BlinkMacSystemFont,
+    'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-weight: normal;
+  font-style: normal;
+  letter-spacing: -0.02em;
+  visibility: visible;
+  transition: visibility 0s linear 0.5s;
+}
+
 display-1,
 h1,
 .h1,
@@ -20,93 +35,44 @@ h4,
 .h4,
 h5,
 .h5,
-th,
-.card-title,
-.button,
-.main-nav .nav-toggle,
-.update-download {
+h6,
+.h6 {
   word-wrap: break-word;
-  font-weight: 700;
   display: block;
-}
 
-nav li a {
-  font-weight: inherit;
-}
+  &:first-child {
+    margin-top: 0;
+  }
 
-html.fonts-loaded display-1,
-html.fonts-loaded h1,
-html.fonts-loaded .h1,
-html.fonts-loaded h2,
-html.fonts-loaded .h2,
-html.fonts-loaded h3,
-html.fonts-loaded .h3,
-html.fonts-loaded h4,
-html.fonts-loaded .h4,
-html.fonts-loaded h5,
-html.fonts-loaded .h5,
-html.fonts-loaded h6,
-html.fonts-loaded .h6,
-html.fonts-loaded th,
-html.fonts-loaded .heading-caption,
-html.fonts-loaded .card-title,
-html.fonts-loaded .button,
-html.fonts-loaded .main-nav .nav-toggle,
-html.fonts-loaded .update-download,
-html.fonts-loaded .chip,
-html.fonts-loaded strong.heading-block-title {
-  font-family: 'Eina01-Bold', system-ui, -apple-system, BlinkMacSystemFont,
-    'Helvetica Neue', Helvetica, Arial, sans-serif;
-  font-weight: normal;
-  font-style: normal;
-  letter-spacing: -0.02em;
-}
+  a,
+  strong {
+    font-weight: inherit;
+    font-style: inherit;
+  }
 
-html.fonts-loaded .heading-caption > * {
-  font-weight: normal;
-}
+  em {
+    font-style: normal;
+    display: inline-block;
+    padding: 0.09em;
+    margin: -0.09em;
+    background: $sk-orange-8;
 
-display-1:first-child,
-h1:first-child,
-.h1:first-child,
-h2:first-child,
-.h2:first-child,
-h3:first-child,
-.h3:first-child,
-h4:first-child,
-.h4:first-child,
-h5:first-child,
-.h5:first-child,
-h6:first-child,
-.h6:first-child {
-  margin-top: 0;
+    .background-dark & {
+      background: $sk-indigo6;
+    }
+  }
 }
 
 .heading-caption {
-  position: relative;
-  z-index: 9;
   color: $text-dark-ultra-low;
 
   .background-dark & {
     color: $text-light-ultra-low;
   }
-}
 
-display-1 a,
-h1 a,
-.h1 a,
-h2 a,
-.h2 a,
-h3 a,
-.h3 a,
-h4 a,
-.h4 a,
-h5 a,
-.h5 a,
-th a,
-.card-title a {
-  font-weight: inherit;
-  font-style: inherit;
+  html.fonts-loaded & > * {
+    font-weight: normal;
+  }
 }
 
 h1,
@@ -119,6 +85,7 @@ h1,
 
 p,
 .p {
+  word-wrap: break-word;
   color: $text-dark;
   .background-dark & {
     color: $text-light;
@@ -144,10 +111,6 @@ blockquote,
   margin: 0 0 1rem; //32px
 }
 
-p {
-  word-wrap: break-word;
-}
-
 ul,
 ol {
   list-style-position: outside;
@@ -164,62 +127,12 @@ ul {
 }
 
 strong {
-  font-weight: $font-semibold;
+  font-weight: 600;
   color: $text-dark-high;
-}
 
-.background-dark strong {
-  color: $text-light-high;
-}
-
-.display-1 strong,
-h1 strong,
-.h1 strong,
-h2 strong,
-.h2 strong,
-h3 strong,
-.h3 strong,
-h4 strong,
-.h4 strong,
-h5 strong,
-.h5 strong,
-th strong,
-.card-title strong {
-  font-weight: inherit;
-}
-
-.display-1 em,
-h1 em,
-.h1 em,
-h2 em,
-.h2 em,
-h3 em,
-.h3 em,
-h4 em,
-.h4 em,
-h5 em,
-.h5 em,
-th em {
-  font-style: normal;
-  display: inline-block;
-  padding: 0.09em;
-  margin: -0.09em;
-  background: $sk-orange-8;
-}
-
-.background-dark .display-1 em,
-.background-dark h1 em,
-.background-dark .h1 em,
-.background-dark h2 em,
-.background-dark .h2 em,
-.background-dark h3 em,
-.background-dark .h3 em,
-.background-dark h4 em,
-.background-dark .h4 em,
-.background-dark h5 em,
-.background-dark .h5 em,
-.background-dark th em {
-  background: $sk-indigo6;
+  .background-dark & {
+    color: $text-light-high;
+  }
 }
 
 pre code,
@@ -233,10 +146,14 @@ article blockquote,
 blockquote {
   color: $text-dark-low;
   position: relative;
-}
 
-.background-dark blockquote {
-  color: $text-light-low;
+  .background-dark & {
+    color: $text-light-low;
+  }
+
+  article & > * {
+    margin-left: -0.125rem; //Compensating
+  }
 }
 
 article blockquote,
@@ -246,15 +163,6 @@ article blockquote,
   &::before {
     display: none;
   }
-}
-
-.note {
-  background-color: rgba($action, 0.05);
-  border-color: $action-border;
-}
-
-article blockquote > * {
-  margin-left: -0.125rem; //Compensating
 }
 
 th {
@@ -293,6 +201,11 @@ code {
 code {
   padding: 0.2em 0.4em; //1px 4px
   background-color: $border-dark;
+
+  .background-dark & {
+    background-color: $border-light-high;
+    color: $text-light-high;
+  }
 }
 
 pre code {
@@ -309,16 +222,11 @@ kbd {
   color: $text-dark-low;
   box-shadow: inset 0 0 0 1px $border-dark-ultra-high,
     inset 0 -2px 0 $border-dark;
-}
 
-.background-dark code {
-  background-color: $border-light-high;
-  color: $text-light-high;
-}
-
-.background-dark kbd {
-  background-color: $sk-tungsten6;
-  color: $sk-tungsten-8;
+  .background-dark & {
+    background-color: $sk-tungsten6;
+    color: $sk-tungsten-8;
+  }
 }
 
 .uppercase {
@@ -336,30 +244,22 @@ small,
   line-height: 1.25rem; //20px
   color: $text-dark-low;
   font-weight: $font-regular;
-}
 
-.background-dark small,
-.background-dark .small {
-  color: $text-light-ultra-low;
-}
+  .background-dark & {
+    color: $text-light-ultra-low;
+  }
 
-small strong,
-.small strong {
-  color: $text-dark-low;
-}
+  strong {
+    color: $text-dark-low;
 
-.background-dark small strong,
-.background-dark .small strong {
-  color: $text-light-low;
+    .background-dark & {
+      color: $text-light-low;
+    }
+  }
 }
 
 .note .h5 {
   margin-bottom: 1rem;
-}
-
-.date-modified {
-  margin-top: 3rem;
-  color: $text-dark-ultra-low;
 }
 
 @include tablet-and-above {
