@@ -42,6 +42,7 @@
 @include tablet-and-above {
   .sidebar .row {
     display: flex;
+    flex-wrap: nowrap;
   }
 
   .sidebar aside {
@@ -49,12 +50,10 @@
   }
 
   .sidebar .content {
-    width: 100%;
-    flex: 1;
-
     .content-wrapper {
       margin: 0 auto;
       max-width: 46rem;
+      width: 100%;
     }
   }
 
