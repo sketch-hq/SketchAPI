@@ -9,8 +9,6 @@
   src: url('/fonts/3237E4_0_0.woff2') format('woff2'),
     url('/fonts/3237E4_0_0.woff') format('woff'),
     url('/fonts/3237E4_0_0.ttf') format('truetype');
-  unicode-range: U+000-5FF; /* Latin glyphs */
-  font-display: fallabck;
 }
 
 @font-face {
@@ -20,5 +18,4 @@
   src: url('/fonts/37A739_0_0.woff2') format('woff2'),
     url('/fonts/37A739_0_0.woff') format('woff'),
     url('/fonts/37A739_0_0.ttf') format('truetype');
-  font-display: fallback;
 }

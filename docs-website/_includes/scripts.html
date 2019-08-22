@@ -14,7 +14,11 @@
   window.WebFontConfig = {
     custom: {
       families: ['Eina01-Bold', 'Eina01-SemiBold'],
-    }
+    },
+    active: function () {
+      sessionStorage.fonts = true;
+    },
+    timeout: 2000
   }
 </script>
 <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>

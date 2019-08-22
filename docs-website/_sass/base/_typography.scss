@@ -6,6 +6,14 @@ html {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  &.wf-loading {
+    visibility: hidden;
+  }
+  &.wf-active,
+  &.wf-inactive {
+    visibility: visible;
+  }
 }
 
 display-1,
@@ -20,8 +28,6 @@ h3,
   font-weight: normal;
   font-style: normal;
   letter-spacing: -0.02em;
-  visibility: visible;
-  transition: visibility 0s linear 0.5s;
 }
 
 display-1,
