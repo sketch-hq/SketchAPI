@@ -22,7 +22,7 @@ $(document).ready(function() {
     $('.toc-wrapper').toggleClass('open')
   })
 
-  $(window).on('hashchange resize', function(e) {
+  $(window).on('hashchange', function(e) {
     if (window.location.hash) {
       $('html, body')
         .stop()
