@@ -4,7 +4,6 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
-  <link rel="stylesheet" href="/css/style.css">
   <link rel="shortcut icon" href="/images/favicons/favicon@2x.png">
   <link rel="mask-icon" href="/images/favicons/favicon.svg" color="rgb(252, 177, 0)">
   <link rel="apple-touch-icon-precomposed" href="/images/favicons/apple-touch-icon-precomposed.png">
@@ -15,12 +14,19 @@
   <link rel="alternate" type="application/rss+xml" title="{{ site.title }}"
     href="{{ "/feed.xml" | prepend: site.baseurl | prepend: site.url }}">
   {% seo title=false %}
+  <link rel="stylesheet" href="/css/style.css">
+  {% if page.slate %}
+  <link href="/css/slate/screen.css" media="screen" rel="stylesheet" type="text/css">
+  <link href="/css/slate/print.css" media="print" rel="stylesheet" type="text/css">
+  {% endif %}
 </head>
 
 <body class="developer {{ page.body_class }}">
   {% include main-nav.html %}
   {{content}}
+  {% unless page.slate %}
   {% include footer.html %}
+  {% endunless %}
   <div class="overlay"></div>
   {% include scripts.html %}
   {% if page.search %}

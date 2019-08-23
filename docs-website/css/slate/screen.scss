@@ -5,7 +5,6 @@
 @charset "utf-8";
 @import 'base/variables';
 @import 'slate/reset-main-styles';
-@import 'base/normalize';
 @import 'slate/variables';
 @import 'helpers/syntax-highlighting';
 
@@ -26,22 +25,6 @@ under the License.
 */
 
 ////////////////////////////////////////////////////////////////////////////////
-// GENERAL STUFF
-////////////////////////////////////////////////////////////////////////////////
-
-html,
-body {
-  color: $main-text;
-  padding: 0;
-  margin: 0;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background-color: $main-bg;
-  height: 100%;
-  -webkit-text-size-adjust: none; /* Never autoresize text */
-}
-
-////////////////////////////////////////////////////////////////////////////////
 // TABLE OF CONTENTS
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -53,20 +36,55 @@ body {
 }
 
 .toc-wrapper {
-  transition: left 0.3s ease-in-out;
-
-  overflow-y: auto;
-  overflow-x: hidden;
+  overflow: hidden;
   position: fixed;
   z-index: 30;
-  top: 0;
+  top: 74px;
   left: 0;
   bottom: 0;
   width: $nav-width;
-  background-color: $nav-bg;
-  font-size: 16px;
-  font-weight: bold;
-  padding-top: 3.125rem + 0.4375rem + 0.4375rem;
+  box-shadow: inset -1px 0 0 $divider-dark;
+
+  &::before,
+  &::after {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 4rem;
+    position: absolute;
+    z-index: 2;
+    left: 0;
+  }
+
+  &::before {
+    top: 0;
+    background: linear-gradient(
+      180deg,
+      $background-light-base,
+      rgba($background-light-base, 0)
+    );
+  }
+
+  &::after {
+    bottom: 0;
+    background: linear-gradient(
+      180deg,
+      rgba($background-light-base, 0),
+      $background-light-base
+    );
+  }
+
+  .toc-content {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    padding: 4rem 1.5rem;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    z-index: 1;
+  }
 
   // language selector for mobile devices
   .lang-selector {
@@ -74,89 +92,6 @@ body {
     a {
       padding-top: 0.5em;
       padding-bottom: 0.5em;
-    }
-  }
-
-  // This is the logo at the top of the ToC
-  & > .sketch-logo {
-    background: $background-dark;
-    padding: 6px 50px;
-    height: 65px;
-    display: inline-block;
-  }
-
-  & > .search {
-    position: relative;
-
-    input {
-      background: $nav-bg;
-      border-width: 0 0 1px 0;
-      border-color: $search-box-border-color;
-      padding: 6px 0 6px 20px;
-      box-sizing: border-box;
-      margin: $nav-v-padding $nav-padding;
-      width: $nav-width - 30;
-      outline: none;
-      color: $nav-text;
-      border-radius: 0; /* ios has a default border radius */
-      box-shadow: none;
-    }
-
-    &:before {
-      position: absolute;
-      top: 17px;
-      left: $nav-padding;
-      color: $nav-text;
-
-      //add search icon
-    }
-  }
-
-  .logo {
-    margin-bottom: $logo-margin;
-  }
-
-  .search-results {
-    margin-top: 0;
-    box-sizing: border-box;
-    height: 0;
-    overflow-y: auto;
-    overflow-x: hidden;
-    transition-property: height, margin;
-    transition-duration: 180ms;
-    transition-timing-function: ease-in-out;
-    background: $nav-subitem-bg;
-    &.visible {
-      height: 30%;
-      margin-bottom: 1em;
-    }
-
-    li {
-      margin: 1em $nav-padding;
-      line-height: 1;
-    }
-
-    a {
-      color: $nav-text;
-      text-decoration: none;
-
-      &:hover {
-        text-decoration: underline;
-      }
-    }
-  }
-
-  h1 {
-    color: $text-dark-ultra-low;
-    font-size: 12px;
-    font-weight: 500;
-    line-height: 18px;
-    text-transform: uppercase;
-    padding: 0 20px 4px;
-    margin: 0;
-
-    &:first-child {
-      padding-top: 20px;
     }
   }
 
@@ -172,28 +107,26 @@ body {
   }
 
   li {
-    color: $nav-text;
-    transition-property: color;
-    transition-timing-function: linear;
-    transition-duration: 200ms;
+    color: $text-dark;
+    transition: color 0.2s ease-out;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    font-weight: 500;
   }
 
   // This is the currently selected ToC entry
   .toc-link.active {
-    background-color: $nav-active-bg;
-    color: $nav-active-text;
+    color: $action;
   }
 
   // this is parent links of the currently selected ToC entry
   .toc-link.active-parent {
-    background-color: $nav-active-parent-bg;
-    color: $nav-active-parent-text;
+    color: $action;
   }
 
   .toc-list-h1 {
     margin: 0;
-    padding: 0 0 26px;
-    line-height: 20px;
+    padding: 0 0 1.25rem;
     list-style: none;
   }
 
@@ -201,11 +134,13 @@ body {
     display: none;
     background-color: $nav-subitem-bg;
     font-weight: 500;
+    padding-bottom: 0.5rem;
   }
 
   .toc-h2 {
-    padding-left: 36px;
-    font-size: 13px;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    padding: 0.25rem 0.5rem;
   }
 
   .toc-footer {
@@ -224,8 +159,6 @@ body {
     }
 
     li {
-      font-size: 0.8em;
-      line-height: 1.7;
       text-decoration: none;
     }
   }
@@ -235,19 +168,21 @@ body {
 .toc-footer li {
   display: block;
   margin: 0;
-  padding: 6px 20px;
+  padding: 0.5rem 0;
   color: $text-dark;
   cursor: pointer;
-  font-size: 14px;
+  font-size: 1rem;
+  font-weight: 600;
   list-style-type: none;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   text-decoration: none;
+  transition: color 0.25s ease-out;
 
   &:hover {
-    color: $nav-text;
-    text-decoration: underline;
+    color: rgba(0, 0, 0, 0.4);
+    text-decoration: none;
   }
 }
 
@@ -296,11 +231,8 @@ body {
   margin-left: $nav-width;
   position: relative;
   z-index: 1;
-  background-color: $main-bg;
   min-height: 100%;
-
-  padding-top: 3.125rem + 0.4375rem + 0.4375rem;
-  padding-bottom: 1px; // prevent margin overflow
+  padding: 4rem 0;
 
   // The dark box is what gives the code samples their dark background.
   // It sits essentially under the actual content block, which has a
@@ -347,18 +279,7 @@ body {
       color: $lang-select-active-text;
     }
   }
-
-  &:after {
-    content: '';
-    clear: both;
-    display: block;
-  }
 }
-
-////////////////////////////////////////////////////////////////////////////////
-// CONTENT STYLES
-////////////////////////////////////////////////////////////////////////////////
-// This is all the stuff with the light background in the left half of the page
 
 .content {
   // fixes webkit rendering bug for some: see #538
@@ -373,290 +294,241 @@ body {
     clear: both;
   }
 
-  & > h1,
-  & > h2,
-  & > h3,
-  & > h4,
-  & > h5,
-  & > h6,
-  & > p,
-  & > table,
-  & > ul,
-  & > ol,
-  & > aside,
-  & > dl {
-    margin-right: $examples-width !important;
-    padding: 0 $main-padding;
-    box-sizing: border-box;
-    display: block;
-
-    @extend %left-col;
+  .h1 {
+    margin-left: 3rem;
+    margin-top: 4.5rem;
+    width: calc(50% - 3rem);
   }
 
-  & > ul,
-  & > ol {
-    padding-left: $main-padding + 15px;
-  }
+  ////////////////////////////////////////////////////////////////////////////////
+  // CONTENT STYLES
+  ////////////////////////////////////////////////////////////////////////////////
+  // This is all the stuff with the light background in the left half of the page
+  > section {
+    margin: 0 3rem;
 
-  // the div is the tocify hidden div for placeholding stuff
-  & > h1,
-  & > h2,
-  & > div {
-    clear: both;
-  }
+    + section {
+      margin-top: 6rem;
+    }
 
-  h1,
-  h2 {
-    font-weight: 300;
-    line-height: 32px;
-    color: #292e31;
-    font-size: 25px;
-    padding-top: 50px;
-    padding-bottom: 20px;
-    margin: 0;
-  }
+    &:after {
+      content: '';
+      clear: both;
+      display: block;
+    }
 
-  h1 {
-    margin-top: 90px;
-    border-top: 1px solid #f0f4f7;
-  }
+    & > h1,
+    & > h2,
+    & > .h2,
+    & > h3,
+    & > h4,
+    & > h5,
+    & > h6,
+    & > p,
+    & > table,
+    & > ul,
+    & > ol,
+    & > aside,
+    & > dl,
+    & > blockquote {
+      margin-right: 50% !important;
+      padding: 0;
+      padding-right: 4rem;
+      box-sizing: border-box;
+      display: block;
 
-  h1:first-child {
-    margin-top: auto;
-  }
+      @extend %left-col;
+    }
 
-  h1:first-child,
-  div:first-child + h1 {
-    border-top-width: 0;
-  }
+    .h3 {
+      border-top: 1px solid rgba(0, 0, 0, 0.1);
+      position: relative;
+      margin-top: 4rem;
+      padding-top: 4rem;
 
-  // h2s right after h1s should bump right up
-  // against the h1s.
-  h1 + h2,
-  h1 + div + h2 {
-    margin-top: $h1-margin-bottom * -1;
-    border-top: none;
-  }
-
-  h3,
-  h4,
-  h5,
-  h6 {
-    @extend %header-font;
-    font-size: 15px;
-    margin-top: 2.5em;
-    margin-bottom: 0.8em;
-  }
-
-  h4,
-  h5,
-  h6 {
-    font-size: 10px;
-  }
-
-  h2 > code,
-  h3 > code,
-  h4 > code {
-    font-size: inherit;
-    line-height: inherit;
-    font-family: inherit;
-  }
-
-  hr {
-    margin: 2em 0;
-    border-top: 2px solid $examples-bg;
-    border-bottom: 2px solid $main-bg;
-  }
-
-  table {
-    margin-bottom: 1em;
-    overflow: auto;
-    display: table;
-    margin-right: 0% !important;
-    width: 50%;
-
-    th,
-    td {
-      text-align: left;
-      vertical-align: top;
-      code {
-        white-space: nowrap;
+      &:before {
+        content: '';
+        position: absolute;
+        right: -100%;
+        top: -1px;
+        width: 100%;
+        border-top: 1px solid rgba(0, 0, 0, 0.1);
       }
     }
 
-    th {
-      padding: 5px 0 8px;
-      vertical-align: bottom;
-      color: #939da3;
-      font-size: 12px;
-      font-weight: 500;
-      line-height: 18px;
-      text-transform: uppercase;
-      border-bottom: 1px solid #e1e8ed;
+    & > ul,
+    & > ol {
+      padding-left: 1.25rem;
     }
 
-    td {
-      padding: 17px 0;
-      border-bottom: 1px solid #f0f4f7;
-      line-height: 24px;
+    // the div is the tocify hidden div for placeholding stuff
+    & > h1,
+    & > h2,
+    & > div {
+      clear: both;
     }
 
-    td:first-child {
-      text-align: right;
-      padding-right: 15px;
+    h1:first-child {
+      margin-top: auto;
     }
 
-    td:last-child {
-      color: #4c555a;
-      line-height: 21px;
-      font-size: 14px;
+    h1:first-child,
+    div:first-child + h1 {
+      border-top-width: 0;
     }
 
-    tr:last-child td {
-      border-bottom: 1px solid #e1e8ed;
+    // h2s right after h1s should bump right up
+    // against the h1s.
+    h1 + h2,
+    h1 + div + h2 {
+      margin-top: $h1-margin-bottom * -1;
+      border-top: none;
     }
 
-    .arg-type {
+    h2 > code,
+    h3 > code,
+    h4 > code {
+      font-size: 80%;
+      line-height: inherit;
+      line-height: 1.5;
+    }
+
+    table {
+      margin-bottom: 2rem;
+      margin-top: 2rem;
+      overflow: auto;
+      display: table;
+      margin-right: 0% !important;
+      width: calc(50% - 3rem);
+
+      th,
+      td {
+        text-align: left;
+        vertical-align: top;
+        code {
+          white-space: nowrap;
+        }
+      }
+
+      th {
+        padding: 5px 0 8px;
+        vertical-align: bottom;
+        color: $text-dark-ultra-low;
+        font-size: 13px;
+        font-weight: 600;
+        line-height: 24px;
+        text-transform: uppercase;
+        border-bottom: 1px solid $border-dark-low;
+      }
+
+      td {
+        padding: 17px 0;
+        border-bottom: 1px solid $border-dark-low;
+        line-height: 24px;
+      }
+
+      td:first-child {
+        text-align: right;
+        padding-right: 15px;
+      }
+
+      td:last-child {
+        color: $text-dark-low;
+        line-height: 20px;
+        font-size: 14px;
+      }
+
+      tr:last-child td {
+        border: 0;
+      }
+
+      .arg-type {
+        display: block;
+        color: $text-dark-ultra-low;
+        font-size: 12px;
+        font-weight: 500;
+        text-transform: none;
+        word-break: normal;
+      }
+    }
+
+    dt {
+      font-weight: bold;
+    }
+
+    dd {
+      margin-left: 15px;
+    }
+
+    p,
+    li,
+    dt,
+    dd {
+      line-height: 1.6;
+      margin-top: 0;
+    }
+
+    img {
+      max-width: 100%;
       display: block;
-      color: #939da3;
-      font-size: 12px;
-      font-weight: 500;
-      text-transform: none;
-      word-break: normal;
+    }
+
+    code {
+      background-color: rgba(0, 0, 0, 0.05);
+      padding: 3px;
+      border-radius: 3px;
+    }
+
+    blockquote {
+      margin: 0;
+      padding: 1.5625rem 1.875rem;
+      background-color: #fff2c3;
+      border-radius: 0.25rem;
+      width: calc(50% - 3rem);
+      font-size: 14px;
+      line-height: 20px;
+    }
+
+    .search-highlight {
+      padding: 2px;
+      margin: -3px;
+      border-radius: 4px;
+      border: 1px solid #f7e633;
+      background: linear-gradient(to top left, #f7e633 0%, #f1d32f 100%);
     }
   }
 
-  dt {
-    font-weight: bold;
-  }
-
-  dd {
-    margin-left: 15px;
-  }
-
-  p,
-  li,
-  dt,
-  dd {
-    line-height: 1.6;
-    margin-top: 0;
-  }
-
-  img {
-    max-width: 100%;
-  }
-
-  code {
-    background-color: rgba(0, 0, 0, 0.05);
-    padding: 3px;
-    border-radius: 3px;
-    @extend %break-words;
-    @extend %code-font;
-  }
-
-  pre > code {
-    background-color: transparent;
-    padding: 0;
-  }
-
-  aside {
-    padding-top: 1em;
-    padding-bottom: 1em;
-    margin-top: 1.5em;
-    margin-bottom: 1.5em;
-    background: $aside-notice-bg;
-    line-height: 1.6;
-
-    &.warning {
-      background-color: $aside-warning-bg;
-    }
-
-    &.success {
-      background-color: $aside-success-bg;
-    }
-  }
-
-  aside:before {
-    vertical-align: middle;
-    padding-right: 0.5em;
-    font-size: 14px;
-  }
-
-  aside.notice:before {
-    // @extend %icon-info-sign;
-  }
-
-  aside.warning:before {
-    // @extend %icon-exclamation-sign;
-  }
-
-  aside.success:before {
-    // @extend %icon-ok-sign;
-  }
-
-  .search-highlight {
-    padding: 2px;
-    margin: -3px;
-    border-radius: 4px;
-    border: 1px solid #f7e633;
-    background: linear-gradient(to top left, #f7e633 0%, #f1d32f 100%);
-  }
-}
-
-////////////////////////////////////////////////////////////////////////////////
-// CODE SAMPLE STYLES
-////////////////////////////////////////////////////////////////////////////////
-// This is all the stuff that appears in the right half of the page
-
-.content {
-  pre,
-  blockquote {
-    background-color: $code-bg;
-    color: #fff;
-
+  ////////////////////////////////////////////////////////////////////////////////
+  // CODE SAMPLE STYLES
+  ////////////////////////////////////////////////////////////////////////////////
+  // This is all the stuff that appears in the right half of the page
+  pre {
     margin: 0;
     width: $examples-width;
-
     float: right;
     clear: right;
-
     box-sizing: border-box;
+    background-color: transparent;
+    padding: 0 2rem;
+    margin-bottom: 3rem !important;
 
     @extend %right-col;
+
+    code {
+      box-shadow: none;
+      background-color: transparent;
+      padding: 0;
+    }
 
     & > p {
       margin: 0;
     }
 
     a {
-      color: #fff;
       text-decoration: none;
       border-bottom: dashed 1px #ccc;
     }
   }
-
-  pre {
-    @extend %code-font;
-    padding-top: 2em;
-    padding-bottom: 2em;
-    padding: 2em $main-padding;
-  }
-
-  blockquote {
-    background-color: $code-annotation-bg;
-    & > p {
-      font-size: 1rem;
-      padding: $code-annotation-padding 2em;
-      color: #eee;
-    }
-  }
-}
-
-// account for the header eating some space
-:target:before {
-  content: '';
-  display: block;
-  height: 1em;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -668,7 +540,7 @@ body {
 @media (max-width: $tablet-width) {
   .toc-wrapper {
     left: -$nav-width;
-    padding-top: 3.125rem + 0.1875rem + 0.1875rem;
+    padding-top: 4rem;
 
     &.open {
       left: 0;
@@ -677,7 +549,7 @@ body {
 
   .content-wrapper {
     margin-left: 0;
-    padding-top: 3.125rem + 0.1875rem + 0.1875rem;
+    padding-top: 4rem;
   }
 
   #nav-button {

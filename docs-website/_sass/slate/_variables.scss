@@ -21,9 +21,9 @@ under the License.
 
 // BACKGROUND COLORS
 ////////////////////
-$nav-bg: $background-light-dark;
+$nav-bg: $background-light-base;
 $examples-bg: $background-light-dark;
-$code-bg: #272b2d !default;
+$code-bg: #f3f5f7 !default;
 $code-annotation-bg: transparent;
 $nav-subitem-bg: transparent;
 $nav-active-bg: transparent;
@@ -76,9 +76,7 @@ $phone-width: $tablet-width - $nav-width !default; // min width before reverting
 }
 
 %code-font {
-  font-family: Consolas, Menlo, Monaco, 'Lucida Console', 'Liberation Mono',
-    'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Courier New', monospace,
-    serif;
+  font-family: 'SF Mono', 'Source Code Pro', Consolas, Menlo, monospace;
   font-size: 12px;
   line-height: 1.5;
 }

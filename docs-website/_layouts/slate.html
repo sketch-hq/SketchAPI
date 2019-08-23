@@ -4,35 +4,35 @@ layout: base
 {% assign language_tabs = page.language_tabs %}
 {% assign references = site.api-references | where_exp:"item", "item.hidden != true" | sort: 'order' %}
 {% assign sections = references | group_by:'section' %}
-<link href="/css/slate/screen.css" media="screen" rel="stylesheet" type="text/css">
-<link href="/css/slate/print.css" media="print" rel="stylesheet" type="text/css">
 
 <div class="toc-wrapper">
-  <div class="search">
-    <input type="text" class="search" id="input-search" placeholder="Search">
-  </div>
-  <ul class="search-results"></ul>
+  <div class="toc-content">
+    <h3 class="nav-toggle">Contents</h3>
+    <span class="search-toggle ir">Search</span>
+    </header>
 
-  <div id="toc">
-    {% for section in sections %}
-    <h1 class="toc-section">{{section.name}}</h1>
-    <ul id="section-{{section.name}}" class="toc-list-h1"></ul>
-    {% endfor %}
-  </div>
+    <div id="toc">
+      {% for section in sections %}
+      <div class="heading-caption toc-section">{{section.name}}</div>
+      <ul id="section-{{section.name}}" class="toc-list-h1"></ul>
+      {% endfor %}
+    </div>
 
-  {% if page.toc_footers %}
-  <ul class="toc-footer">
-    {% for footer in page.toc_footers %}
-    <li>{{ footer }}</li>
-    {% endfor %}
-  </ul>
-  {% endif %}
+    {% if page.toc_footers %}
+    <ul class="toc-footer">
+      {% for footer in page.toc_footers %}
+      <li>{{ footer }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+  </div>
 </div>
 
 <div class="content-wrapper">
   <div class="dark-box"></div>
   <div class="content" id="content" data-languages='{{ language_tabs | jsonify }}'
     data-sections='&#123;{% for ref in references %}"{{ref.title | slugify}}": "{{ref.section}}"{% if forloop.last %}{% else %},{% endif %}{% endfor %}&#125;'>
+    <div class="h1">API Reference</div>
     {{ content }}
   </div>
 </div>
