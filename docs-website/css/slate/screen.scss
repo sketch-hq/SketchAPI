@@ -4,8 +4,7 @@
 
 @charset "utf-8";
 @import 'base/variables';
-@import 'slate/reset-main-styles';
-@import 'slate/variables';
+@import 'base/mediaqueries';
 @import 'helpers/syntax-highlighting';
 
 /*
@@ -24,16 +23,16 @@ License for the specific language governing permissions and limitations
 under the License.
 */
 
+.main-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 // TABLE OF CONTENTS
 ////////////////////////////////////////////////////////////////////////////////
-
-#toc > ul > li > a > span {
-  float: right;
-  background-color: #2484ff;
-  border-radius: 40px;
-  width: 20px;
-}
 
 .toc-wrapper {
   overflow: hidden;
@@ -42,8 +41,9 @@ under the License.
   top: 74px;
   left: 0;
   bottom: 0;
-  width: $nav-width;
+  width: 240px;
   box-shadow: inset -1px 0 0 $divider-dark;
+  background-color: $background-light-base;
 
   &::before,
   &::after {
@@ -132,7 +132,6 @@ under the License.
 
   .toc-list-h2 {
     display: none;
-    background-color: $nav-subitem-bg;
     font-weight: 500;
     padding-bottom: 0.5rem;
   }
@@ -146,11 +145,11 @@ under the License.
   .toc-footer {
     padding: 1em 0;
     margin-top: 1em;
-    border-top: 1px dashed $nav-footer-border-color;
+    border-top: 1px solid $border-dark-low;
 
     li,
     a {
-      color: $nav-text;
+      color: $text-dark;
       text-decoration: none;
     }
 
@@ -186,49 +185,12 @@ under the License.
   }
 }
 
-// button to show navigation on mobile devices
-#nav-button {
-  span {
-    display: block;
-    $side-pad: $main-padding / 2 - 8px;
-    padding: $side-pad $side-pad $side-pad;
-    background-color: rgba($main-bg, 0.7);
-    transform-origin: 0 0;
-    transform: rotate(-90deg) translate(-100%, 0);
-    border-radius: 0 0 0 5px;
-  }
-  padding: 0 1.5em 5em 0; // increase touch size area
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 100;
-  color: #000;
-  text-decoration: none;
-  font-weight: bold;
-  opacity: 0.7;
-  line-height: 16px;
-  img {
-    height: 16px;
-    vertical-align: bottom;
-  }
-
-  transition: left 0.3s ease-in-out;
-
-  &:hover {
-    opacity: 1;
-  }
-  &.open {
-    left: $nav-width;
-  }
-}
-
 ////////////////////////////////////////////////////////////////////////////////
 // PAGE LAYOUT AND CODE SAMPLE BACKGROUND
 ////////////////////////////////////////////////////////////////////////////////
 
 .content-wrapper {
-  margin-left: $nav-width;
+  margin-left: 240px;
   position: relative;
   z-index: 1;
   min-height: 100%;
@@ -240,51 +202,16 @@ under the License.
   // I know, it's hackish, but it's the simplist way to make the left
   // half of the content always this background color.
   .dark-box {
-    width: $examples-width;
-    background-color: $examples-bg;
+    width: 50%;
+    background-color: $background-light-dark;
     position: absolute;
     right: 0;
     top: 0;
     bottom: 0;
   }
-
-  .lang-selector {
-    position: fixed;
-    z-index: 50;
-    border-bottom: 5px solid $lang-select-active-bg;
-  }
-}
-
-.lang-selector {
-  background-color: $lang-select-bg;
-  width: 100%;
-  font-weight: bold;
-  a {
-    display: block;
-    float: left;
-    color: $lang-select-text;
-    text-decoration: none;
-    padding: 0 10px;
-    line-height: 30px;
-    outline: 0;
-
-    &:active,
-    &:focus {
-      background-color: $lang-select-pressed-bg;
-      color: $lang-select-pressed-text;
-    }
-
-    &.active {
-      background-color: $lang-select-active-bg;
-      color: $lang-select-active-text;
-    }
-  }
 }
 
 .content {
-  // fixes webkit rendering bug for some: see #538
-  -webkit-transform: translateZ(0);
-  // to place content above the dark box
   position: relative;
   z-index: 30;
 
@@ -297,7 +224,7 @@ under the License.
   .h1 {
     margin-left: 3rem;
     margin-top: 4.5rem;
-    width: calc(50% - 3rem);
+    width: calc(50% - 6rem);
   }
 
   ////////////////////////////////////////////////////////////////////////////////
@@ -331,13 +258,9 @@ under the License.
     & > aside,
     & > dl,
     & > blockquote {
-      margin-right: 50% !important;
+      margin-right: calc(50% + 3rem);
       padding: 0;
-      padding-right: 4rem;
-      box-sizing: border-box;
       display: block;
-
-      @extend %left-col;
     }
 
     .h3 {
@@ -349,16 +272,16 @@ under the License.
       &:before {
         content: '';
         position: absolute;
-        right: -100%;
+        right: calc(-100% - 6rem);
         top: -1px;
-        width: 100%;
+        width: calc(100% + 6rem);
         border-top: 1px solid rgba(0, 0, 0, 0.1);
       }
     }
 
     & > ul,
     & > ol {
-      padding-left: 1.25rem;
+      padding-left: 1.25rem !important;
     }
 
     // the div is the tocify hidden div for placeholding stuff
@@ -366,23 +289,6 @@ under the License.
     & > h2,
     & > div {
       clear: both;
-    }
-
-    h1:first-child {
-      margin-top: auto;
-    }
-
-    h1:first-child,
-    div:first-child + h1 {
-      border-top-width: 0;
-    }
-
-    // h2s right after h1s should bump right up
-    // against the h1s.
-    h1 + h2,
-    h1 + div + h2 {
-      margin-top: $h1-margin-bottom * -1;
-      border-top: none;
     }
 
     h2 > code,
@@ -398,7 +304,6 @@ under the License.
       margin-top: 2rem;
       overflow: auto;
       display: table;
-      margin-right: 0% !important;
       width: calc(50% - 3rem);
 
       th,
@@ -411,31 +316,31 @@ under the License.
       }
 
       th {
-        padding: 5px 0 8px;
+        padding: 0.25rem 0 0.5rem;
         vertical-align: bottom;
         color: $text-dark-ultra-low;
-        font-size: 13px;
+        font-size: 0.8125rem;
         font-weight: 600;
-        line-height: 24px;
+        line-height: 1.5rem;
         text-transform: uppercase;
         border-bottom: 1px solid $border-dark-low;
       }
 
       td {
-        padding: 17px 0;
+        padding: 1rem 0;
         border-bottom: 1px solid $border-dark-low;
-        line-height: 24px;
+        line-height: 1.5rem;
       }
 
       td:first-child {
         text-align: right;
-        padding-right: 15px;
+        padding-right: 1rem;
       }
 
       td:last-child {
         color: $text-dark-low;
-        line-height: 20px;
-        font-size: 14px;
+        line-height: 1.25rem;
+        font-size: 0.875rem;
       }
 
       tr:last-child td {
@@ -445,7 +350,8 @@ under the License.
       .arg-type {
         display: block;
         color: $text-dark-ultra-low;
-        font-size: 12px;
+        font-size: 0.75rem;
+        line-height: 1rem;
         font-weight: 500;
         text-transform: none;
         word-break: normal;
@@ -457,7 +363,7 @@ under the License.
     }
 
     dd {
-      margin-left: 15px;
+      margin-left: 1rem;
     }
 
     p,
@@ -474,25 +380,26 @@ under the License.
     }
 
     code {
-      background-color: rgba(0, 0, 0, 0.05);
-      padding: 3px;
-      border-radius: 3px;
+      background-color: $border-dark-low;
+      padding: 0.25rem;
+      border-radius: 0.25rem;
     }
 
     blockquote {
       margin: 0;
-      padding: 1.5625rem 1.875rem;
+      padding: 1.5rem;
       background-color: #fff2c3;
       border-radius: 0.25rem;
       width: calc(50% - 3rem);
-      font-size: 14px;
-      line-height: 20px;
+      font-size: 0.875rem;
+      line-height: 1.25rem;
+      margin-bottom: 2rem;
     }
 
     .search-highlight {
       padding: 2px;
       margin: -3px;
-      border-radius: 4px;
+      border-radius: 0.25rem;
       border: 1px solid #f7e633;
       background: linear-gradient(to top left, #f7e633 0%, #f1d32f 100%);
     }
@@ -504,15 +411,12 @@ under the License.
   // This is all the stuff that appears in the right half of the page
   pre {
     margin: 0;
-    width: $examples-width;
+    width: 50%;
     float: right;
-    clear: right;
     box-sizing: border-box;
     background-color: transparent;
     padding: 0 2rem;
     margin-bottom: 3rem !important;
-
-    @extend %right-col;
 
     code {
       box-shadow: none;
@@ -537,54 +441,133 @@ under the License.
 // These are the styles for phones and tablets
 // There are also a couple styles disperesed
 
-@media (max-width: $tablet-width) {
-  .toc-wrapper {
-    left: -$nav-width;
-    padding-top: 4rem;
-
-    &.open {
-      left: 0;
-    }
-  }
-
-  .content-wrapper {
-    margin-left: 0;
-    padding-top: 4rem;
-  }
-
-  #nav-button {
-    display: block;
-  }
-
-  .toc-link {
-    padding-top: 0.3em;
-    padding-bottom: 0.3em;
-  }
-}
-
-@media (max-width: $phone-width) {
+@media (max-width: 1080px) {
   .dark-box {
     display: none;
   }
 
-  %left-col {
-    margin-right: 0 !important;
+  .content {
+    .h1 {
+      margin-right: 0 !important;
+      width: auto;
+    }
+
+    section {
+      & > h1,
+      & > h2,
+      & > .h2,
+      & > h3,
+      & > h4,
+      & > h5,
+      & > h6,
+      & > p,
+      & > table,
+      & > ul,
+      & > ol,
+      & > aside,
+      & > dl,
+      & > blockquote {
+        margin-right: 0 !important;
+        display: block;
+        width: 100%;
+      }
+
+      .h3 {
+        &:before {
+          display: none;
+        }
+      }
+
+      table {
+        width: 100%;
+        display: table;
+      }
+
+      pre {
+        margin: 0;
+        width: 100%;
+        float: none;
+        padding: 2rem;
+        margin-bottom: 3rem !important;
+        background-color: $background-light-dark;
+        border-radius: 0.25rem;
+        border: 1px solid $border-dark-low;
+      }
+    }
+  }
+}
+
+@include tablet-and-below {
+  .content-wrapper {
+    margin-left: 0;
   }
 
-  .toc-wrapper .lang-selector {
-    display: block;
+  .toc-wrapper {
+    top: 3.5rem;
+    width: 100%;
+    height: 3.5rem;
+    overflow: hidden;
+    box-shadow: 0px 1px 3px $border-dark;
+    transition: height 0.6s $ease-out-expo;
+
+    &.open {
+      height: calc(100vh - 3.5rem);
+
+      .toc-content {
+        overflow: auto;
+      }
+
+      .nav-toggle::after {
+        transform: rotate(180deg);
+      }
+    }
+
+    &::before,
+    &::after {
+      display: none;
+    }
+
+    .toc-content {
+      padding-top: 0;
+      overflow: hidden;
+
+      .nav-toggle {
+        cursor: pointer;
+        display: inline-block;
+        margin-top: 0.8125rem;
+        position: relative;
+
+        &::after {
+          content: '';
+          display: block;
+          width: 1rem;
+          height: 1rem;
+          position: absolute;
+          top: 50%;
+          margin-top: -0.5rem;
+          right: -1.25rem;
+          background-image: url('data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cg%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22none%22%2F%3E%3Cpath%20fill%3D%22%23000%22%20fill-opacity%3D%220.85%22%20fill-rule%3D%22nonzero%22%20d%3D%22M4.707%205.293c-.39-.39-1.024-.39-1.414%200-.39.39-.39%201.024%200%201.414l4%204c.39.39%201.024.39%201.414%200l4-4c.39-.39.39-1.024%200-1.414-.39-.39-1.024-.39-1.414%200L8%208.586%204.707%205.293z%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E');
+          background-repeat: no-repeat;
+          background-size: cover;
+          transition: transform 0.35s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+      }
+
+      .search-toggle {
+        right: 1rem;
+        top: 0.3125rem;
+      }
+    }
   }
 
-  .content-wrapper .lang-selector {
-    display: none;
-  }
+  .content {
+    .h1 {
+      margin-left: 1.5rem;
+    }
 
-  %right-col {
-    width: auto;
-    float: none;
-  }
-
-  %right-col + %left-col {
-    margin-top: $main-padding;
+    section {
+      margin-left: 1.5rem;
+      margin-right: 1.5rem;
+    }
   }
 }

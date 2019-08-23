@@ -71,13 +71,10 @@ h6,
 
 .heading-caption {
   color: $text-dark-ultra-low;
+  font-weight: 600;
 
   .background-dark & {
     color: $text-light-ultra-low;
-  }
-
-  html.fonts-loaded & > * {
-    font-weight: normal;
   }
 }
 

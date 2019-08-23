@@ -156,18 +156,7 @@
     overflow: auto;
     -webkit-backdrop-filter: blur(8px);
     backdrop-filter: blur(8px);
-  }
-
-  .search-results ul {
-    max-height: calc(
-      100vh - 5rem
-    ); //So it covers the screen (minus the nav bar) at max
-  }
-
-  .ios .search-results ul {
-    max-height: calc(
-      100vh - 12rem
-    ); //So it covers the screen (minus the nav bar and the toolbar) at max
+    max-height: calc(100vh - 98px);
   }
 
   .ios .search-results ul a {

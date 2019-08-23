@@ -122,3 +122,10 @@ body > section:nth-of-type(even):last-of-type + footer {
     }
   }
 }
+
+@media print {
+  .main-footer,
+  .submit-ideas {
+    display: none;
+  }
+}

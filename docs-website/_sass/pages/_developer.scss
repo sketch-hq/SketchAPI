@@ -103,3 +103,9 @@ article.post header {
     margin-top: 0.3em;
   }
 }
+
+@media print {
+  .page-contribute {
+    display: none;
+  }
+}
