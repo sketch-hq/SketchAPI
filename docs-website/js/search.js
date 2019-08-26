@@ -93,7 +93,7 @@ $(document).ready(function() {
     }
     $('body').removeClass('stop-scrolling')
     $('.overlay').removeClass('active cover-all')
-    $('.search-form').hide()
+    $('.search-form').removeClass('show')
   }
 
   $('.search-close').click(function() {
@@ -117,19 +117,25 @@ $(document).ready(function() {
         location.href = href
       })
     }
+
     $('body').toggleClass('stop-scrolling')
     $('.overlay').addClass('active cover-all')
+
     //Resetting form value to 0 on each reload
     $('.search-field').val('')
+
     //Preventing submit on hitting enter
-    $('#search-form').submit(function(e) {
+    $('.search-form').submit(function(e) {
       return false
     })
     //Removing the search results contents
     $('.search-results').html('')
-    $('.search-form')
-      .show()
-      .removeClass('hide')
-    $('.search-field').focus()
+
+    //show and focus
+    $('.search-form').addClass('show')
+    console.log($('.search-field'))
+    $('.search-field')[0]
+      .delay(500)
+      .focus()
   })
 })

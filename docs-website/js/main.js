@@ -39,7 +39,7 @@ $('.overlay').click(function() {
   $('.overlay').removeClass('active cover-all')
   $('.main-nav .nav-toggle').removeClass('active')
   $('.main-nav ul').removeClass('active')
-  $('.search-form').hide()
+  $('.search-form').removeClass('show')
 })
 
 // Window resize changes needed
