@@ -133,9 +133,8 @@ $(document).ready(function() {
 
     //show and focus
     $('.search-form').addClass('show')
-    console.log($('.search-field'))
-    $('.search-field')[0]
-      .delay(500)
-      .focus()
+    setTimeout(function() {
+      $('.search-field')[0].focus()
+    }, 250)
   })
 })

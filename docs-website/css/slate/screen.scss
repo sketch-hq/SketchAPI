@@ -535,6 +535,7 @@ under the License.
         cursor: pointer;
         display: inline-block;
         margin-top: 0.8125rem;
+        line-height: 2rem;
         position: relative;
 
         &::after {
@@ -554,8 +555,8 @@ under the License.
       }
 
       .search-toggle {
-        right: 1rem;
-        top: 0.3125rem;
+        right: 0.75rem;
+        top: 1.75rem;
       }
     }
   }
