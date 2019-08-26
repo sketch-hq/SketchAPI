@@ -26,9 +26,12 @@
 
   .search-field {
     width: 100%;
-    padding: 0.6875rem 2.75rem 0.9375rem 1rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    padding-right: 3rem;
     border: 0 !important;
     font-size: 1.625rem;
+    line-height: 2rem;
     font-weight: 500;
     border-radius: 4px !important;
     box-shadow: 0 1px 1px $border-dark-high;
@@ -37,10 +40,11 @@
   .search-close {
     display: block;
     position: absolute;
-    top: 0;
-    right: 0;
-    width: 2.75rem;
-    height: 3.3125rem;
+    top: 2rem;
+    right: 0.5rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    margin-top: -1.25rem;
     background-image: url('data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2212%22%20height%3D%2212%22%20viewBox%3D%220%200%2012%2012%22%3E%3Cpath%20fill%3D%22%23000%22%20fill-rule%3D%22evenodd%22%20d%3D%22M6%204.926L1.3.226C1-.074.52-.074.223.223c-.3.3-.295.78.005%201.08L4.928%206l-4.7%204.7c-.3.3-.303.78-.006%201.078.3.3.78.295%201.08-.005L6%207.073l4.7%204.7c.3.3.78.302%201.078.005.3-.3.295-.78-.005-1.08L7.073%206l4.7-4.7c.3-.3.302-.78.005-1.078-.3-.3-.78-.295-1.08.005L6%204.927z%22%2F%3E%3C%2Fsvg%3E');
     background-position: center center;
     background-repeat: no-repeat;
@@ -63,6 +67,7 @@
     box-shadow: 0 1px 1px $border-dark-high;
     overflow: auto;
     max-height: 14.2rem;
+    -webkit-overflow-scrolling: touch;
 
     ul {
       position: relative;
@@ -125,6 +130,9 @@
       font-size: 1rem;
       line-height: 1.5rem;
       color: $background-light-base;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
   }
 }

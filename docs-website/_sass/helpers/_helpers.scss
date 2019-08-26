@@ -273,3 +273,7 @@ a:hover > .link-heading-arrow::after,
 a:focus > .link-heading-arrow::after {
   transform: translate(3px, 0);
 }
+
+.highlighter-rouge {
+  margin-bottom: 2rem;
+}

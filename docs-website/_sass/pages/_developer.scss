@@ -7,11 +7,12 @@
 .page-contribute {
   margin-top: 3rem;
   padding: 1rem;
-  background: $background-light-dark;
+  background: $background-light-base;
   border: 1px solid $border-dark;
+  box-shadow: 0px 1px 3px $border-dark-low;
   border-radius: $radius-small;
   font-size: 0.8125rem;
-  color: $text-dark-ultra-low;
+  color: $text-dark-low;
 }
 
 @include tablet-and-above {
