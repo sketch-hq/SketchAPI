@@ -33,7 +33,7 @@ masthead_links:
     link: /app
   - icon: /images/icons/48/icon-api-reference.svg
     title: Plugin API Reference
-    description: Needs description
+    description: View the index of all classes and methods in the Sketch JavaScript API.
     link: /reference/api
 ---
 
