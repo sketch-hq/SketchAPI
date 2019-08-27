@@ -409,6 +409,17 @@ under the License.
   // CODE SAMPLE STYLES
   ////////////////////////////////////////////////////////////////////////////////
   // This is all the stuff that appears in the right half of the page
+  figure {
+    margin: 0;
+    width: 50%;
+    float: right;
+    box-sizing: border-box;
+    padding: 0 2rem;
+    margin-bottom: 3rem !important;
+    border: 0;
+    display: block;
+  }
+
   pre {
     margin: 0;
     width: 50%;
@@ -492,6 +503,14 @@ under the License.
         background-color: $background-light-dark;
         border-radius: 0.25rem;
         border: 1px solid $border-dark-low;
+      }
+
+      figure {
+        margin: 0;
+        width: 100%;
+        float: none;
+        margin-bottom: 3rem !important;
+        padding: 0;
       }
     }
   }
