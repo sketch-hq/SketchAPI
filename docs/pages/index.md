@@ -1,5 +1,5 @@
 ---
-title: Start extending Sketch
+title: Build something beautiful
 permalink: /
 
 redirect_from:
@@ -8,12 +8,12 @@ redirect_from:
 
 layout: home
 body_class: home
-excerpt: Extend Sketch with a plugin or build integrations using the command-line interface or by reading and writing Sketch files directly in JSON
+excerpt: We’ve laid the foundations so you can build on the platform that empowers one million designers every day. Create plugins and integrations using the command-line interface or read and write Sketch files directly in JSON.
 
 masthead_cards:
   - icon: /images/icons/48/icon-plugins-light.svg
     title: Plugins
-    description: Add to and customize the functionality of Sketch using JavaScript or Objective-C. Modify the document using Sketch's APIs, add your own user interface or integrate Sketch with your product or other applications.
+    description: Extend and customize the functionality of Sketch using JavaScript or Objective-C. Modify the document using Sketch’s APIs, add your own user interface, and integrate Sketch with your product or other applications.
     link_label: View documentation
     link: /plugins
   - icon: /images/icons/48/icon-cli-light.svg
