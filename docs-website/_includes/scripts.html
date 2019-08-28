@@ -1,7 +1,31 @@
+<script>
+  window.ga = function () {
+    ga.q.push(arguments)
+  }
+  ga.q = []
+  ga.l = +new Date()
+  ga('create', 'UA-52736259-4', 'auto')
+  ga('send', 'pageview')
+</script>
+<script src="https://www.google-analytics.com/analytics.js" async defer></script>
+
 <script src="//ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<script src="/js/fontfaceobserver.standalone.js"></script>
+<script>
+  window.WebFontConfig = {
+    custom: {
+      families: ['Eina01-Bold', 'Eina01-SemiBold'],
+    },
+    active: function () {
+      sessionStorage.fonts = true;
+    },
+    timeout: 2000
+  }
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>
+
 <script src="/js/main.js"></script>
 <script src="/js/cookie-consent.js"></script>
+
 {% if page.slate %}
 <!-- TODO: find a way to compile and minify those -->
 <script src="/js/slate_lib_energize.js"></script>
@@ -9,22 +33,5 @@
 <script src="/js/slate_app_generate-toc.js"></script>
 <script src="/js/slate_app_toc.js"></script>
 <script src="/js/slate_app_lang.js"></script>
-<script>
-  $(function() {
-    generateToc($('#content'))
-    loadToc($('#toc'), '.toc-link', '.toc-list-h2', 65)
-    setupLanguages($('#content').data('languages'))
-    $('.content').imagesLoaded(function() {
-      window.recacheHeights()
-      window.refreshToc()
-    })
-  })
-
-  window.onpopstate = function() {
-    activateLanguage(getLanguageFromQueryString())
-  }
-</script>
-<script src="/js/lunr.min.js"></script>
-<script src="/js/slate_lib_jquery.highlight.js"></script>
-<script src="/js/slate_app_search.js"></script>
+<script src="/js/slate_init.js"></script>
 {% endif %}

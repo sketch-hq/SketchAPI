@@ -2,7 +2,7 @@
 layout: sidebar-page
 title: Actions Reference
 permalink: /reference/action/
-script: /js/search.js
+search: true
 
 excerpt: List of all actions Sketch plugins can respond to
 ---
