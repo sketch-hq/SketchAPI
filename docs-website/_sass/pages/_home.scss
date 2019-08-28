@@ -1,0 +1,118 @@
+body.home {
+  .masthead {
+    position: relative;
+
+    .wrapper {
+      padding-top: rem(120px);
+    }
+
+    &:before {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      background-image: url(/images/backgrounds/bg-home-masthead.svg);
+      background-repeat: no-repeat;
+      background-position: top center;
+      background-size: contain;
+      z-index: 1;
+    }
+
+    .row {
+      position: relative;
+      z-index: 2;
+    }
+
+    .row + .row {
+      margin-top: 4rem;
+
+      .col {
+        display: flex;
+      }
+    }
+
+    a {
+      display: block;
+      color: $text-light-high;
+      width: 100%;
+    }
+
+    img + .h3 {
+      margin-top: 1rem;
+    }
+
+    .card {
+      position: relative;
+
+      box-shadow: 0 0 1px 0 $border-dark-high, 0 5px 20px 0 $border-dark-high;
+      border-radius: 10px;
+      padding: 2rem 2rem 5.75rem 6rem;
+      box-sizing: border-box;
+      transition: transform 0.2s ease-out, box-shadow 0.3s ease-out,
+        filter 0.3s ease-out;
+
+      &:hover {
+        box-shadow: 0 0 1px 0 $border-dark-ultra-high,
+          0 8px 32px 0 $border-dark-ultra-high;
+        transform: translateY(-1px);
+        filter: contrast(120%);
+      }
+
+      .h2 {
+        margin-top: 0.25rem;
+      }
+
+      .icon {
+        position: absolute;
+        top: 2rem;
+        left: 2rem;
+      }
+
+      .heading-caption {
+        position: absolute;
+        bottom: 2.5rem;
+        white-space: nowrap;
+        color: $text-light-high;
+      }
+
+      &.grad-1 {
+        background-image: linear-gradient(153deg, #e64c4c 0%, #fb8332 95%);
+      }
+
+      &.grad-2 {
+        background-image: linear-gradient(153deg, #da6bf8 0%, #815eff 95%);
+      }
+    }
+
+    .row-links {
+      a {
+        img {
+          transition: transform 0.25s cubic-bezier(0.77, 0, 0.2, 2.25);
+        }
+      }
+      a:hover {
+        img {
+          transform: scale(1.05);
+        }
+      }
+    }
+
+    @include tablet-and-below {
+      .row-links {
+        .col + .col {
+          padding-top: 2.5rem;
+          background-image: linear-gradient(
+            90deg,
+            rgba(255, 255, 255, 0),
+            rgba(255, 255, 255, 0.1) 50%,
+            rgba(255, 255, 255, 0) 100%
+          );
+          background-size: 100% 1px;
+          background-repeat: no-repeat;
+        }
+      }
+    }
+  }
+}

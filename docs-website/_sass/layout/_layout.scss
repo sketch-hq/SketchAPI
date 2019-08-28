@@ -2,10 +2,11 @@
   html,
   body {
     height: 100%;
+    background-color: $background-light-base;
   }
 
   body > * {
-    padding: 0 2rem; /*32px*/
+    padding: 0 1.5rem;
   }
 
   .release-notes {
@@ -15,13 +16,18 @@
 
 @include tablet-and-below {
   body > * {
-    padding: 0 1rem; /*16px*/
+    padding: 0 1.5rem;
   }
 
-  [class*="span-"] + [class*="span-"] {
+  [class*='span-'] + [class*='span-'] {
     margin-top: 3rem; /*48px*/
     margin-left: 0 !important;
   }
+}
+
+:root .background-dark {
+  background-color: $background-dark;
+  color: $text-light-low;
 }
 
 body > section {
@@ -29,34 +35,17 @@ body > section {
 }
 
 .wrapper {
-  max-width: 62.5rem; /*1000px*/
+  max-width: 71.25rem;
   margin: 0 auto;
 }
 
-  section .wrapper {
-    padding: 3.5rem 0; /*48px*/
-  }
-
-  section .wrapper.extra {
-    padding: 6rem 0; /*96px*/
-  }
-
-body > section {
-  background-color: $background-light-dark;
+section .wrapper {
+  padding: 3.5rem 0; /*48px*/
 }
 
-  body > section:nth-of-type(even) {
-    background-color: $background-light;
-  }
-
-.sections-inverted > section {
-    background: $background-light;
-  }
-
-    .sections-inverted > section:nth-of-type(even) {
-      background-color: $background-light-dark;
-    }
-
+section .wrapper.extra {
+  padding: 6rem 0; /*96px*/
+}
 
 /*Product blocks*/
 section .section-header {
@@ -70,27 +59,29 @@ section .section-header {
   position: relative;
   border-width: 1px 0 0;
   border-style: solid;
-  border-image: linear-gradient(90deg,
-    hsla(0, 0%, 90%, 0),
-    hsla(0, 0%, 90%, 1) 50%,
-    hsla(0, 0%, 90%, 0) 100%) 2%;
+  border-image: linear-gradient(
+      90deg,
+      hsla(0, 0%, 90%, 0),
+      hsla(0, 0%, 90%, 1) 50%,
+      hsla(0, 0%, 90%, 0) 100%
+    )
+    2%;
 }
 
-  .masthead .section-footer {
-    border-style: solid;
-    border-image: linear-gradient(90deg,
+.masthead .section-footer {
+  border-style: solid;
+  border-image: linear-gradient(
+      90deg,
       hsla(0, 100%, 100%, 0),
-      hsla(0, 100%, 100%, .15) 50%,
-      hsla(0, 100%, 100%, 0) 100%) 2%;
-  }
+      hsla(0, 100%, 100%, 0.15) 50%,
+      hsla(0, 100%, 100%, 0) 100%
+    )
+    2%;
+}
 
-  .wrapper.extra .section-footer {
-    margin-bottom: -2.8125rem !important; /*Compensating 45px*/
-  }
-
-  body > section:nth-child(odd) .footer-title > span {
-    background-color: $background-light-dark;
-  }
+.wrapper.extra .section-footer {
+  margin-bottom: -2.8125rem !important; /*Compensating 45px*/
+}
 
 /*Masthead styles for product sections*/
 body .masthead {
@@ -101,20 +92,10 @@ body .masthead {
 }
 
 .masthead.background-dark {
-  background-image: url(images/background-main.svg);
-  background-repeat: no-repeat;
-  background-size: cover;
+  background-image: radial-gradient(
+    80vw circle at 50% 10%,
+    #3a2099 17%,
+    #480c59 100%
+  );
   position: relative;
-}
-
-.masthead.background-dark::before {
-  content: "";
-  height: 3.5rem;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  background: linear-gradient(180deg, $background-dark, rgba( $background-dark , 0));
-  pointer-events: none;
-  z-index: 10;
 }

@@ -1,15 +1,5 @@
 /*Main Navigation*/
 .main-nav {
-  border: 0;
-  border-bottom-width: 1px;
-  border-style: solid;
-  border-image: linear-gradient(
-      90deg,
-      hsla(0, 100%, 100%, 0),
-      hsla(0, 100%, 100%, 0.1) 50%,
-      hsla(0, 100%, 100%, 0) 100%
-    )
-    5%;
   z-index: 100;
 }
 
@@ -20,7 +10,7 @@
 }
 
 /*Logo*/
-.main-nav h1 {
+.main-nav .sketch-logo {
   margin: 0;
   height: 3.125rem; /*50px*/
   display: inline-block;
@@ -46,15 +36,15 @@
 @include tablet-and-above {
   .main-nav {
     width: 100%;
-    padding-top: 0.4375rem; /*7px*/
-    padding-bottom: 0.4375rem; /*7px*/
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
   }
 
   .main-nav nav {
     flex-wrap: nowrap; //to prevent nav elements to fall into a new line
   }
 
-  .main-nav h1 {
+  .main-nav .sketch-logo {
     flex: 1;
   }
 
@@ -102,9 +92,17 @@
     will-change: transform; //Perf!
     width: 100%;
     z-index: 99;
-    margin-top: -3.5rem; //56px
-    padding-top: 0.1875rem; //3px
-    padding-bottom: 0.1875rem; //3px
+    top: 0;
+    padding-top: 0.1875rem;
+    padding-bottom: 0.1875rem;
+
+    background-color: rgba($background-dark, 0.85) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+    backdrop-filter: blur(10px) !important;
+  }
+
+  .main-nav + .masthead {
+    margin-top: -3.5rem;
   }
 
   .main-nav nav {
@@ -171,9 +169,11 @@
     display: inline-block;
     cursor: pointer;
     color: $action-high;
+    font-weight: 600;
+    position: relative;
 
     padding: 0.8125rem; //Fitts
-    margin: -0.8125rem; //Compensating
+    padding-right: 1.25rem;
   }
 
   .main-nav .nav-toggle {
@@ -188,17 +188,18 @@
   }
 
   .nav-toggle::after {
-    display: inline-block;
     content: '';
-    width: 0;
-    height: 0;
-    position: relative;
-    top: -2px;
-    margin-left: 0.375rem; /*4px*/
-    border-left: 0.25rem solid transparent;
-    border-right: 0.25rem solid transparent;
-    border-top: 0.25rem solid $action-high;
-    transition: transform 0.12s ease-out;
+    display: block;
+    width: 1rem;
+    height: 1rem;
+    position: absolute;
+    top: 50%;
+    margin-top: -0.5rem;
+    right: 0;
+    background-image: url('data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cg%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22none%22%2F%3E%3Cpath%20fill%3D%22%23fff%22%20fill-opacity%3D%221%22%20fill-rule%3D%22nonzero%22%20d%3D%22M4.707%205.293c-.39-.39-1.024-.39-1.414%200-.39.39-.39%201.024%200%201.414l4%204c.39.39%201.024.39%201.414%200l4-4c.39-.39.39-1.024%200-1.414-.39-.39-1.024-.39-1.414%200L8%208.586%204.707%205.293z%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E');
+    background-repeat: no-repeat;
+    background-size: cover;
+    transition: transform 0.35s cubic-bezier(0.165, 0.84, 0.44, 1);
   }
 
   .nav-toggle::after {
