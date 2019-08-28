@@ -1,24 +1,30 @@
 // Search logic
+var lunrSearch
+
 $(document).ready(function() {
-  var documentCollection,
-    lunrIndex = lunr(function() {
-      this.field('title', { boost: 10 })
-      this.field('body')
-      this.field('url')
-      this.ref('id')
-    }),
-    url = '/js/lunr.json'
+  var documentCollection
+  var url = '/js/lunr.json'
 
   if (window.location.pathname.indexOf('reference/api/') != -1) {
-    $('h1, h2').each(function() {
-      var title = $(this)
-      var body = title.nextUntil('h1, h2')
-      lunrIndex.add({
-        id: title.prop('id'),
-        title: title.text(),
-        body: body.text(),
+    lunrSearch = lunr(function() {
+      idx = this
+      idx.field('title', { boost: 10 })
+      idx.field('body')
+      idx.field('url')
+      idx.ref('id')
+
+      //add to index
+
+      $('h1, h2').each(function() {
+        var title = $(this)
+        var body = title.nextUntil('h1, h2')
+        idx.add({
+          id: title.prop('id'),
+          title: title.text(),
+          body: body.text(),
+        })
+        search_enable()
       })
-      search_enable()
     })
   } else {
     $.ajax({
@@ -26,10 +32,20 @@ $(document).ready(function() {
       crossDomain: true,
       success: function(data, status, xhr) {
         documentCollection = data
-        $.each(data, function(index, value) {
-          lunrIndex.add(value)
+        lunrSearch = lunr(function() {
+          idx = this
+          idx.field('title', { boost: 10 })
+          idx.field('body')
+          idx.field('url')
+          idx.ref('id')
+
+          //add to index
+          $.each(data, function(index, value) {
+            idx.add(value)
+          })
+
+          search_enable()
         })
-        search_enable()
       },
       error: function(xhr, type) {
         console.log('Error type: ' + type)
@@ -42,7 +58,7 @@ $(document).ready(function() {
     $('.search-form .search-field').on('keyup', function(e) {
       var searchTerm = $(this).val()
       if (searchTerm.length > 2) {
-        search(searchTerm)
+        search(searchTerm + '*')
       } else {
         //If we hit Esc, we close the search
         if (e.keyCode == 27) {
@@ -54,8 +70,9 @@ $(document).ready(function() {
   }
 
   function search(text) {
-    var results = lunrIndex.search(text),
-      htmlOutput = '<ul>'
+    var results = lunrSearch.search(text)
+    console.log(results)
+    var htmlOutput = '<ul>'
     $.each(results, function(index, result) {
       if (documentCollection) {
         var searchResult = documentCollection[result.ref]
@@ -81,7 +98,9 @@ $(document).ready(function() {
         })
     } else {
       $('.search-results').html('<li><span class="no-results"></span></li>')
-      $('.search-results li span').text('No Results Found for "' + text + '"')
+      $('.search-results li span').text(
+        'No Results Found for "' + text.substring(0, text.length - 1) + '"'
+      )
     }
   }
 
