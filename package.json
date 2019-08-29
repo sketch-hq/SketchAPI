@@ -16,7 +16,6 @@
     "docs:generate-actions": "node ./scripts/generate-actions",
     "docs:generate-reference-files": "node ./scripts/generate-reference-files",
     "docs:generate-reference-files-md": "node ./scripts/generate-reference-files-md",
-    "deploy:docs": "./scripts/deploy.sh",
     "run-tests:no-variant": "skpm-test --app=latest",
     "run-tests": "skpm-test --app=xcode",
     "test": "npm run lint -- --quiet && npm run run-tests",
