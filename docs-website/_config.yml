@@ -62,13 +62,13 @@ defaults:
       type: "actions"
     values:
       layout: "action"
-      script: "/js/search.js"
+      search: true
   -
     scope:
       type: "pages"
     values:
       layout: "sidebar-page"
-      script: "/js/search.js"
+      search: true
   -
     scope:
       type: "posts"

@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="48" height="48" viewBox="0 0 48 48">
+  <defs>
+    <path id="icon-sketch-a" d="M7.83110795,1.65014648 L17.25,0.65625 L26.668892,1.65014648 C26.668892,1.65014648 33.9609375,11.4206543 33.9609375,11.2777778 C33.9609375,11.4206543 17.25,30.84375 17.25,30.84375 L0.5390625,11.2777778 L7.83110795,1.65014648 Z"/>
+  </defs>
+  <g fill="none" fill-rule="evenodd">
+    <path fill="#FFF" d="M24,48 C47.814834,48 48,37.254834 48,24 C48,10.745166 47.814834,0 24,0 C0.185166005,0 0,10.745166 0,24 C0,37.254834 0.185166005,48 24,48 Z"/>
+    <g transform="translate(6.682 8.727)">
+      <mask id="icon-sketch-b" fill="#fff">
+        <use xlink:href="#icon-sketch-a"/>
+      </mask>
+      <use fill="#FDB300" xlink:href="#icon-sketch-a"/>
+      <g mask="url(#icon-sketch-b)">
+        <g transform="translate(.54 10.143)">
+          <polygon fill="#EA6C00" points="6.769 1.135 16.711 20.701 0 1.135"/>
+          <polygon fill="#EA6C00" points="23.48 1.135 33.422 20.701 16.711 1.135" transform="matrix(-1 0 0 1 50.133 0)"/>
+          <polygon fill="#FDAD00" points="6.769 1.135 26.653 1.135 16.711 20.701"/>
+        </g>
+      </g>
+      <g mask="url(#icon-sketch-b)">
+        <g transform="translate(.54 .656)">
+          <polygon fill="#FDD231" points="16.711 0 7.292 .994 6.769 10.622"/>
+          <polygon fill="#FDD231" points="26.653 0 17.234 .994 16.711 10.622" transform="matrix(-1 0 0 1 43.364 0)"/>
+          <polygon fill="#FDAD00" points="26.13 10.622 33.422 .994 32.9 10.622" transform="matrix(-1 0 0 1 59.552 0)"/>
+          <polygon fill="#FDAD00" points="0 10.622 7.292 .994 6.769 10.622"/>
+          <polygon fill="#FEEEB7" points="16.711 0 6.769 10.622 26.651 10.622"/>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>
