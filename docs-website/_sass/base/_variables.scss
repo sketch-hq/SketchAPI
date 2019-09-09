@@ -7,22 +7,23 @@ $font-medium: 500;
 $font-semibold: 600;
 
 /* --- Border Radii --- */
+$radius-default: rem(4px);
 $radius-big: 10rem; /*In order to make circular elements*/
 $radius-normal: 0.125rem; /*2px*/
 $radius-small: 0.0625rem; /*1px*/
 
 /* --- Colors --- */
 //Text (dark on light backgrounds)
-$text-dark-high: #000000;
-$text-dark: #262626; //85
-$text-dark-low: #666666; //60
-$text-dark-ultra-low: #a6a6a6; // 35
+$text-dark-high: hsl(0, 0%, 0%);
+$text-dark: rgba($text-dark-high, 0.85);
+$text-dark-low: rgba($text-dark-high, 0.65);
+$text-dark-ultra-low: rgba($text-dark-high, 0.4);
 
 //Text (light on dark backgrounds)
 $text-light-high: hsl(0, 100%, 100%);
-$text-light: hsla(0, 100%, 100%, 0.85);
-$text-light-low: hsla(0, 100%, 100%, 0.6);
-$text-light-ultra-low: hsla(0, 100%, 100%, 0.35);
+$text-light: rgba($text-light-high, 0.85);
+$text-light-low: rgba($text-light-high, 0.65);
+$text-light-ultra-low: rgba($text-light-high, 0.4);
 
 //Sketch Palette
 $sk-red8: #2c0606;
@@ -142,11 +143,11 @@ $action-border: rgba($sk-orange, 0.5);
 $action-ultra-low: $sk-orange-8;
 
 //Actions (over dark background)
-$action-light-high: $sk-yellow-2;
-$action-light: $sk-yellow;
-$action-light-low: $sk-yellow2;
-$action-light-border: rgba($sk-yellow, 0.5);
-$action-light-ultra-low: $sk-yellow-8;
+$action-light-high: $sk-orange-2;
+$action-light: $sk-orange;
+$action-light-low: $sk-orange2;
+$action-light-border: rgba($sk-orange, 0.5);
+$action-light-ultra-low: $sk-orange-8;
 
 //Negative
 $negative-high: $sk-red;
@@ -156,8 +157,9 @@ $negative-ultra-low: $sk-red-8;
 
 // Backgrounds
 $background-dark-base: #151617;
+$background-dark: #151617;
 
-$background-dark: $sk-graphite;
+$background-light-base: #ffffff;
 $background-white: #ffffff;
 $background-light: #fdfdff;
 $background-light-dark: hsla(220, 13%, 97%, 1);
@@ -166,11 +168,13 @@ $background-light-dark: hsla(220, 13%, 97%, 1);
 $border-dark-ultra-high: hsla(0, 0%, 0%, 0.2);
 $border-dark-high: hsla(0, 0%, 0%, 0.1);
 $border-dark: hsla(0, 0%, 0%, 0.06);
+$border-dark-low: hsla(0, 0%, 0%, 0.03);
 $divider-dark: hsla(0, 0%, 0%, 0.03);
 
 //Borders and Dividers (dark on light backgrounds)
 $border-light-high: hsla(0, 100%, 100%, 0.3);
-$border-light: hsla(0, 100%, 100%, 0.2);
+$border-light: hsla(0, 100%, 100%, 0.15);
+$border-light-low: hsla(0, 100%, 100%, 0.08);
 $divider-light: hsla(0, 100%, 100%, 0.1);
 
 //Easing
@@ -194,3 +198,8 @@ $ease-in-out-quart: cubic-bezier(0.77, 0, 0.175, 1);
 $ease-in-out-quint: cubic-bezier(0.86, 0, 0.07, 1);
 $ease-in-out-expo: cubic-bezier(1, 0, 0, 1);
 $ease-in-out-circ: cubic-bezier(0.785, 0.135, 0.15, 0.86);
+
+$cubic-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+$cubic-out-quart: cubic-bezier(0.165, 0.84, 0.44, 1);
+$cubic-inout-quart: cubic-bezier(0.77, 0, 0.175, 1);
+$cubic-out: cubic-bezier(0.215, 0.61, 0.355, 1);

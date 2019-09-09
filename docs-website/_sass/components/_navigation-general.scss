@@ -13,10 +13,6 @@ nav ol {
   font-size: 0; /*Removing spacing*/
 }
 
-nav li {
-  font-size: 1rem; /*Setting the font back to normal*/
-}
-
 @include tablet-and-above {
   nav li {
     display: inline-block;

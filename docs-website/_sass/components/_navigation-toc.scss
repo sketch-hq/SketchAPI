@@ -31,8 +31,8 @@
     height: 1.5rem;
     cursor: pointer;
     float: right;
-    margin-top: 0.45rem;
-    margin-right: 1rem;
+    margin-top: 0.25rem;
+    margin-right: 0;
   }
 }
 
@@ -42,10 +42,10 @@
 
 .toc-nav h2,
 .toc-nav nav > ol > li {
-  font-size: 1rem;
-  line-height: 1.75rem; //28px
+  font-size: 1.125rem;
+  line-height: 1.5rem; //28px
   margin: 0;
-  padding: 0;
+  padding: 0.25rem 0;
 }
 
 .toc-nav h2 a {
@@ -59,21 +59,12 @@
 }
 
 @include tablet-and-above {
-  .toc-nav li:not(:first-child) h2,
-  .toc-nav nav > ol > li:not(:first-child) {
-    margin: 0.375rem 0; //6px
+  .toc-nav nav > ol > li + li {
+    margin: 1rem 0; //6px
   }
 }
 
 /*Active triangle indicator*/
-.toc-nav ol ol a.active::before {
-  content: '\2023';
-  display: inline-block;
-  vertical-align: middle;
-  position: absolute;
-  margin-left: -0.55rem;
-  margin-right: 0.25rem;
-}
 
 .toc-nav li {
   max-width: 100%;
@@ -83,13 +74,13 @@
   display: list-item;
   font-size: 0.875rem; //14px
   line-height: 1.25rem; //20px
+  font-weight: 600;
 }
 
 @include tablet-and-above {
   .toc-nav {
     padding-top: 2.5rem;
     padding-bottom: 2.5rem;
-    background: linear-gradient(90deg, $background-light, #fbfbfb);
     box-shadow: inset -1px 0 0 $divider-dark;
     margin-top: -1.5rem;
     margin-bottom: 2rem !important;
@@ -130,10 +121,18 @@
   }
 
   .toc-nav li {
-    margin: 0.375rem 0 0.375rem 0.5rem; //4px
+    padding: 0.25rem 0 0.25rem 0.5rem; //4px
     // font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
     // font-weight: $font-medium;
     // letter-spacing: normal;
+
+    a:hover {
+      color: rgba(0, 0, 0, 0.4);
+    }
+
+    a.active {
+      color: $action;
+    }
   }
 }
 
@@ -166,22 +165,27 @@
   }
 
   .toc-nav .nav-toggle {
-    display: block;
-    width: calc(100% + 2rem); //calc(100% - .5rem); Until we have the search
-    cursor: pointer;
+    display: inline-block;
     position: relative;
+    cursor: pointer;
     font-size: 1rem;
-    margin: -0.625rem -1rem -0.5625rem;
-    padding: 0.5rem 1rem 0.5625rem;
-  }
+    margin: -0.625rem 0rem -0.5625rem -1rem;
+    padding: 1rem 0rem 0.75rem 1rem;
 
-  .toc-nav .nav-toggle::after {
-    border-top-color: $text-dark-high;
-    //Until we have the search
-    position: absolute;
-    right: 1rem;
-    top: 50%;
-    margin-top: -2px;
+    &::after {
+      content: '';
+      display: block;
+      width: 1rem;
+      height: 1rem;
+      position: absolute;
+      top: 50%;
+      margin-top: -0.5rem;
+      right: -1.25rem;
+      background-image: url('data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cg%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22none%22%2F%3E%3Cpath%20fill%3D%22%23000%22%20fill-opacity%3D%220.85%22%20fill-rule%3D%22nonzero%22%20d%3D%22M4.707%205.293c-.39-.39-1.024-.39-1.414%200-.39.39-.39%201.024%200%201.414l4%204c.39.39%201.024.39%201.414%200l4-4c.39-.39.39-1.024%200-1.414-.39-.39-1.024-.39-1.414%200L8%208.586%204.707%205.293z%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E');
+      background-repeat: no-repeat;
+      background-size: cover;
+      transition: transform 0.35s cubic-bezier(0.165, 0.84, 0.44, 1);
+    }
   }
 
   .toc-nav .nav-toggle.active::after {
@@ -193,8 +197,9 @@
     height: 2.75rem;
     cursor: pointer;
     position: absolute;
-    right: 0;
-    top: 0;
+    right: 0.25rem;
+    top: 1.75rem;
+    transform: translateY(-50%);
     background-position: center center;
   }
 

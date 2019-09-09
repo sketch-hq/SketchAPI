@@ -1,8 +1,6 @@
 <header class="main-nav background-dark">
   <nav role="navigation">
-    <h1>
-      {% include logo.html %}
-    </h1>
+    {% include logo.html %}
     <span class="nav-toggle">Menu</span>
     <ul>
       <li>
@@ -18,7 +16,8 @@
         <a href="/app" {% if page.section == "app" %} class="active" {% endif %}>Sketch.app</a>
       </li>
       <li>
-        <a href="/reference/api" {% if page.url contains '/reference/api/' %} class="active" {% endif %}>API Reference</a>
+        <a href="/reference/api" {% if page.url contains '/reference/api/' %} class="active" {% endif %}>API
+          Reference</a>
       </li>
     </ul>
   </nav>
