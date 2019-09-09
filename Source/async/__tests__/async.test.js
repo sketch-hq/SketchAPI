@@ -1,4 +1,4 @@
-/* globals expect, test, coscript */
+/* globals expect, test */
 
 import { createFiber } from '..'
 
