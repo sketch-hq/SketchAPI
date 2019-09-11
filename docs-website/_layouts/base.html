@@ -1,52 +1,37 @@
 <!doctype html>
-<!--#if expr="$HTTP_COOKIE=/fonts\-loaded\=true/" -->
-<html lang="en" class="fonts-loaded">
-<!--#else -->
 <html lang="en">
-<!--#endif -->
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
-  <link rel="preload" href="/css/webfonts/3237E4_0_0.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/css/style.css">
   <link rel="shortcut icon" href="/images/favicons/favicon@2x.png">
   <link rel="mask-icon" href="/images/favicons/favicon.svg" color="rgb(252, 177, 0)">
   <link rel="apple-touch-icon-precomposed" href="/images/favicons/apple-touch-icon-precomposed.png">
   <link rel="icon" href="/images/favicons/apple-touch-icon-precomposed.png">
-  <meta name="description" content="{% if page.excerpt %}{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}{% else %}{{ site.description }}{% endif %}">
+  <meta name="description"
+    content="{% if page.excerpt %}{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}{% else %}{{ site.description }}{% endif %}">
   <title>{% if page.title %}Sketch Developer — {{ page.title }}{% else %}{{ site.title }}{% endif %}</title>
-  <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ "/feed.xml" | prepend: site.baseurl | prepend: site.url }}">
+  <link rel="alternate" type="application/rss+xml" title="{{ site.title }}"
+    href="{{ "/feed.xml" | prepend: site.baseurl | prepend: site.url }}">
   {% seo title=false %}
+  <link rel="stylesheet" href="/css/style.css">
+  {% if page.slate %}
+  <link href="/css/slate/screen.css" media="screen" rel="stylesheet" type="text/css">
+  <link href="/css/slate/print.css" media="print" rel="stylesheet" type="text/css">
+  {% endif %}
 </head>
 
-<body class="developer">
-{% include main-nav.html %}
-{{content}}
-{% include footer.html %}
-<div class="overlay"></div>
-{% include scripts.html %}
-{% if page.script %}
-<div class="search-form hide">
-  <form action="" id="search-form" method="get" accept-charset="utf-8" autocomplete="off" autocorrect="off" autocapitalize="off" class="wrapper">
-    <div class="search-contents span-6">
-      <input type="search" name="yo" placeholder="Search" value="" class="search-field"/>
-      <span class="search-close" title="Close search"></span>
-      <nav class="search-results"></nav>
-    </div>
-  </form>
-</div>
-<script>
-  window.ga = function() {
-    ga.q.push(arguments)
-  }
-  ga.q = []
-  ga.l = +new Date()
-  ga('create', 'UA-52736259-4','auto')
-  ga('send', 'pageview')
-</script>
-<script src="https://www.google-analytics.com/analytics.js" async defer></script>
-<script src="/js/lunr.min.js"></script>
-<script src="{{ page.script }}"></script>
-{% endif %}
+<body class="developer {{ page.body_class }}">
+  {% include main-nav.html %}
+  {{content}}
+  {% unless page.slate %}
+  {% include footer.html %}
+  {% endunless %}
+  <div class="overlay"></div>
+  {% include scripts.html %}
+  {% if page.search %}
+  {% include search.html %}
+  {% endif %}
 </body>
+
 </html>

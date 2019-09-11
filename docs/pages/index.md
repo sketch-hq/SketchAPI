@@ -1,52 +1,43 @@
 ---
-title: Start extending Sketch…
+title: Build something beautiful
 permalink: /
 
 redirect_from:
   - /guides/
   - /guides/third-party-apps-integrations/
 
-layout: single-page
-excerpt: Extend Sketch with a plugin or build integrations using the command-line interface or by reading and writing Sketch files directly in JSON
+layout: home
+body_class: home
+excerpt: We’ve laid the foundations so you can build on the platform that empowers one million designers every day. Create plugins and integrations using the command-line interface or read and write Sketch files directly in JSON.
+
+masthead_cards:
+  - icon: /images/icons/48/icon-plugins-light.svg
+    title: Plugins
+    description: Extend and customize the functionality of Sketch using JavaScript or Objective-C. Modify the document using Sketch’s APIs, add your own user interface, and integrate Sketch with your product or other applications.
+    link_label: View documentation
+    link: /plugins
+  - icon: /images/icons/48/icon-cli-light.svg
+    title: CLI
+    description: Use the `sketchtool` command-line interface to export assets, inspect documents and run plugins.
+    link_label: View documentation
+    link: /cli
+
+masthead_links:
+  - icon: /images/icons/48/icon-file-format.svg
+    title: Sketch file format
+    description: Generate, modify and process Sketch files directly with the open JSON file format.
+    link: /file-format
+  - icon: /images/icons/48/icon-sketch.svg
+    title: Sketch.app
+    description: Integrate Sketch into your workflows with the `sketch://` URL scheme.
+    link: /app
+  - icon: /images/icons/48/icon-api-reference.svg
+    title: Plugin API Reference
+    description: View the index of all classes and methods in the Sketch JavaScript API.
+    link: /reference/api
 ---
 
-## [Plugins](/plugins)
-
-Add to and customize the functionality of Sketch using JavaScript or Objective-C. Modify the document using Sketch's APIs, add your own user interface or integrate Sketch with your product or other applications.
-
-[View documentation](/plugins)
-
-## [CLI](/cli)
-
-Use the `sketchtool` command-line interface to export assets, inspect documents and run plugins.
-
-[View documentation](/cli)
-
-## [Sketch file format](/file-format)
-
-Generate, modify and process Sketch files directly with the open JSON file format.
-
-[View documentation](/file-format)
-
-## [Sketch.app](/app)
-
-Integrate Sketch into your workflows with the `sketch://` URL scheme.
-
-[View documentation](/app)
-
-<hr style="height: 1px;
-           border: 0;
-           background: white;
-           background-image: linear-gradient(
-             to right,
-             rgba(0,0,0,0),
-             rgba(0,0,0,0.1) 10%,
-             rgba(0,0,0,0.1) 90%,
-             rgba(0,0,0,0)
-           );
-           margin-top: 4rem;" />
-
-## Getting started
+<h2 class="text-center-tablet-and-above">Getting started</h2>
 
 ### Run a script
 
@@ -86,27 +77,3 @@ This will generate an image file called _Page 1.png_ in the same folder you ran 
 SKETCH=$(mdfind kMDItemCFBundleIdentifier == 'com.bohemiancoding.sketch3' | head -n 1) && \
 "$SKETCH/Contents/Resources/sketchtool/bin/sketchtool" export pages ~/Desktop/App.sketch
 ```
-
-### Not a developer? Submit an idea
-
-Although you'll need some programming experience to extend Sketch yourself, you can also [submit an idea](https://github.com/sketchplugins/plugin-requests/issues) to let us and the community know how you'd like to see Sketch extended.
-
-Take a look at the [list of plugins](https://sketch.com/extensions/plugins) the community has already built.
-
-### We're here to help
-
-#### Developer Forum
-
-Join our [developer forum](https://sketchplugins.com) to discuss your questions and code.
-
-#### Examples
-
-Explore some [sample plugins](https://github.com/BohemianCoding/SketchAPI/tree/develop/examples/) built by Sketch.
-
-#### Support
-
-[Get in touch](mailto:developer@sketch.com) with us.
-
-### API Reference
-
-View the Plugin [JavaScript API reference](/reference/api/).

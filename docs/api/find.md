@@ -29,11 +29,11 @@ sketch.find('[name="Layer-Name"]')
 sketch.find('Shape, [name="Layer-Name"]')
 ```
 
-⚠️ This API is in preview. It might change in the future depending on the feedback from the community.
+> ⚠️ This API is in preview. It might change in the future depending on the feedback from the community.
 
 Find Layers fitting some criteria.
 
-| Parameters                                                                 |                                                                 |
-| -------------------------------------------------------------------------- | --------------------------------------------------------------- |
-| selector<span class="arg-type">string - required</span>                    | The object to export.                                           |
+| Parameters |  |
+| --- | --- |
+| selector<span class="arg-type">string - required</span> | The object to export. |
 | scope<span class="arg-type">[Group](#group) / [Document](#document)</span> | The scope of the search. By default it is the current Document. |
