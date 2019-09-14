@@ -177,11 +177,44 @@ export function getInputFromUser(messageText, options, callback) {
           'When the input type is `selection`, you need to provide the array of possible choices.'
         )
       }
-      accessory = NSPopUpButton.alloc().initWithFrame(NSMakeRect(0, 0, 295, 25))
-      accessory.addItemsWithTitles(options.possibleValues)
-      const initialIndex = options.possibleValues.indexOf(options.initialValue)
-      accessory.selectItemAtIndex(initialIndex !== -1 ? initialIndex : 0)
-      break
+
+      // think I need this to bind the options together?
+      const radioOptionTargetFunction = sender => {
+        console.log('radio button was clicked', sender.title())
+      }
+
+      if (options.radioStyle == true) {
+        const radioOptionsArray = options.possibleValues.map((value, index) => {
+          const radioOption = NSButton.alloc().init()
+          radioOption.setButtonType(NSRadioButton)
+          radioOption.setTitle(value)
+          // is initialValue an integer or string?
+          if (options.initialValue == value || options.initialValue == index) {
+            radioOption.setState(NSOnState)
+          }
+          radioOption.setCOSJSTargetFunction(sender =>
+            radioOptionTargetFunction(sender)
+          )
+          return radioOption
+        })
+
+        accessory = NSStackView.stackViewWithViews(radioOptionsArray)
+        accessory.setOrientation(NSUserInterfaceLayoutOrientationVertical)
+        accessory.setAlignment(NSLayoutAttributeLeading)
+        accessory.setSpacing(4)
+        accessory.setTranslatesAutoresizingMaskIntoConstraints(false)
+        break
+      } else {
+        accessory = NSPopUpButton.alloc().initWithFrame(
+          NSMakeRect(0, 0, 295, 25)
+        )
+        accessory.addItemsWithTitles(options.possibleValues)
+        const initialIndex = options.possibleValues.indexOf(
+          options.initialValue
+        )
+        accessory.selectItemAtIndex(initialIndex !== -1 ? initialIndex : 0)
+        break
+      }
     }
     default:
       break
