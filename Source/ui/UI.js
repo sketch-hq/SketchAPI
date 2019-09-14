@@ -172,7 +172,6 @@ export function getInputFromUser(messageText, options, callback) {
       break
     }
     case INPUT_TYPE.selection: {
-
       console.log('triggered')
 
       if (!util.isArray(options.possibleValues)) {
