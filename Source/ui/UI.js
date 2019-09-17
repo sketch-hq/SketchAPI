@@ -172,38 +172,46 @@ export function getInputFromUser(messageText, options, callback) {
       break
     }
     case INPUT_TYPE.selection: {
-      console.log('triggered')
-
       if (!util.isArray(options.possibleValues)) {
         throw new Error(
           'When the input type is `selection`, you need to provide the array of possible choices.'
         )
       }
 
-      // think I need this to bind the options together?
-      const radioOptionTargetFunction = sender => {
-        console.log('radio button was clicked', sender.title())
-      }
-
       if (options.radioStyle == true) {
+        const radioOptionHeight = 16
+        const radioOptionMarginBottom = 4
+
+        const radioOptionTargetFunction = () => {}
+
         const radioOptionsArray = options.possibleValues.map((value, index) => {
-          const radioOption = NSButton.alloc().init()
+          const radioOption = NSButton.alloc().initWithFrame(
+            NSMakeRect(0, 0, 295, radioOptionHeight)
+          )
           radioOption.setButtonType(NSRadioButton)
           radioOption.setTitle(value)
           // is initialValue an integer or string?
           if (options.initialValue == value || options.initialValue == index) {
             radioOption.setState(NSOnState)
           }
-          radioOption.setCOSJSTargetFunction(sender =>
-            radioOptionTargetFunction(sender)
-          )
+          radioOption.setCOSJSTargetFunction(() => radioOptionTargetFunction())
           return radioOption
         })
 
-        accessory = NSStackView.stackViewWithViews(radioOptionsArray)
+        const frameHeight =
+          (radioOptionHeight + radioOptionMarginBottom) *
+            radioOptionsArray.length -
+          radioOptionMarginBottom
+        accessory = NSStackView.alloc().initWithFrame(
+          NSMakeRect(0, 0, 295, frameHeight)
+        )
         accessory.setOrientation(NSUserInterfaceLayoutOrientationVertical)
         accessory.setAlignment(NSLayoutAttributeLeading)
-        accessory.setSpacing(4)
+        accessory.setSpacing(radioOptionMarginBottom)
+        accessory.setViews_inGravity(
+          radioOptionsArray,
+          NSStackViewGravityLeading
+        )
         accessory.setTranslatesAutoresizingMaskIntoConstraints(false)
         break
       } else {
@@ -265,6 +273,21 @@ export function getInputFromUser(messageText, options, callback) {
       return
     }
     case INPUT_TYPE.selection: {
+      if (options.radioStyle == true) {
+        // eslint-disable-next-line no-plusplus
+        for (let i = 0; i < accessory.subviews().length; i++) {
+          if (accessory.subviews()[i].state()) {
+            callback(null, options.possibleValues[i])
+            break
+          }
+
+          // if no items selected then return undefined
+          if (i == accessory.subviews().length - 1) {
+            callback(null, undefined)
+          }
+        }
+        return
+      }
       const selectedIndex = accessory.indexOfSelectedItem()
       callback(null, options.possibleValues[selectedIndex])
       return
