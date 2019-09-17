@@ -1,6 +1,7 @@
 {
   "unreleased": [],
   "releases": {
+    "58.1": ["[Fixed] `ShapePath.fromSVGPath` no longer throws an error"],
     "57": [
       "[New] Expose the `PointType` enum on `ShapePath`",
       "[Fixed] `document.centerOnLayer` not centering on nested layers"
