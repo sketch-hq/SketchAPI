@@ -166,13 +166,13 @@ npm run test:no-variant
 npm run test:no-variant:watch
 ```
 
-## Website (https://developer.sketch.com)
+## Website
 
-The website’s contents live in the [`docs`](./docs) folder while the code lives in the [`docs-website`](./docs-website) folder.
+The website is hosted on Netlify at https://developer.sketch.com.
 
-If you want to edit the website content sections, switch to the branch your changes belong to (usually it'll be either `develop` or `release/XXX`) and do your changes there, in the `docs`. Once your changes are ready, you run the website locally with `npm run docs:start` from the branch you made your changes in.
+The website’s contents live in the [`docs`](./docs) folder, while code related to the website’s build process lives in the [`docs-website`](./docs-website) folder.
 
-_More information are available in the README of the respective folders._
+For further details read the docs-website [README](./docs-website/README.md).
 
 ## Acknowledgements
 
