@@ -78,14 +78,10 @@ export class ShapePath extends StyledLayer {
   }
 
   static fromSVGPath(svgPath) {
-    const closed = MOPointer.alloc().init()
     return new this({
       sketchObject: MSShapePathLayer.layerWithPath(
         MSPath.pathWithBezierPath(
-          SVGPathInterpreter.bezierPathFromCommands_isPathClosed(
-            svgPath,
-            closed
-          )
+          SVGPathInterpreter.bezierPathFromCommands(svgPath)
         )
       ),
     })
