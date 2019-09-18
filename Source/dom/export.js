@@ -12,7 +12,6 @@ export const DEFAULT_EXPORT_OPTIONS = {
   progressive: false,
   'save-for-web': false,
   'use-id-for-name': false,
-  trimmed: false,
   output: '~/Documents/Sketch Exports',
 }
 
