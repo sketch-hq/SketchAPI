@@ -1,5 +1,3 @@
-/* globals coscript */
-
 /**
  * A fiber is a way to keep track of a asynchronous task. The script will stay
  * alive as long as at least one fiber is running.

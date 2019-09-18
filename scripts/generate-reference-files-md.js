@@ -62,9 +62,7 @@ ${table([
       `${v.truncated}`,
       `[JSON](${refFilesUrl}/${v.original}/${cmd.identifier}/output)`,
       `[.sketch](${refFilesUrl}/${v.original}/${cmd.identifier}/output.sketch)`,
-      `[Generator plugin](${refFilesUrl}/plugin.sketchplugin/Contents/Sketch/${
-        cmd.identifier
-      }.js)`,
+      `[Generator plugin](${refFilesUrl}/plugin.sketchplugin/Contents/Sketch/${cmd.identifier}.js)`,
     ]
   }),
 ])}`
