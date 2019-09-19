@@ -1,6 +1,6 @@
 /* eslint-disable */
 
-const { Document, Rectangle, Text, Style } = require('sketch/dom')
+const { Document, Rectangle, Text, Style } = require('sketch')
 
 function main(ctx) {
   // Create a new document, and get a reference to its selected page

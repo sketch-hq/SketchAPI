@@ -8,7 +8,7 @@ const {
   Style,
   Text,
   Flow,
-} = require('sketch/dom')
+} = require('sketch')
 
 function main(ctx) {
   // Create a new document, and get a reference to its selected page
