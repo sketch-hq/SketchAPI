@@ -8,7 +8,7 @@ const {
   Style,
   SymbolMaster,
   Library,
-} = require('sketch/dom')
+} = require('sketch')
 
 function main(ctx) {
   // Create a new document to serve as the library,
