@@ -208,11 +208,14 @@ rules:
   ###########
   # BUILTIN #
   ###########
-  no-underscore-dangle: off
+  no-underscore-dangle: 0
   class-methods-use-this: warn
   no-useless-constructor: warn
-  eqeqeq: off
-  strict: off
+  eqeqeq: 0
+  strict: 0
+  no-console: 0
+  prefer-object-spread: 0
+  max-classes-per-file: 0
 
   ###########
   # SPECIAL #

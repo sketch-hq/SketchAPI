@@ -20,26 +20,11 @@ Debug and inspect your plugin with the help of logs, Safari Web Inspector and th
 
 Use [`console`](https://developer.mozilla.org/en-US/docs/Web/API/console) to log anything in JavaScript. The resulting logs can be viewed in:
 
-- Safari Web Inspector Console
 - macOS _Console.app_ located in _Applications_ › _Utilities_
 - Sketch log file `~/Library/Logs/com.bohemiancoding.sketch3/Plugin Log.log`
+- [Sketch DevTools](https://github.com/skpm/sketch-dev-tools)
 
 > **Quick tip:** If you're using `skpm` run `skpm log -f` to stream logs on the command-line.
-
-## Safari Web Inspector
-
-When a plugin is run, Sketch initializes a new [JavaScript runtime environment](/plugins/javascript-environment) for it. By default this `JSContext` is short-lived and destroyed once the plugin command is completed. However, it is still possible to attach the debugger provided by the _Safari Web Inspector_. From the submenu matching you computer name in the _Develop_ menu, select:
-
-1. _Automatically Show Web Inspector for JSContexts_
-2. _Automatically Pause Connecting to JSContexts_ to set breakpoints in your source code.
-
-<img src="/images/developer/safari-develop-menu-inspector.png"
-     alt="Enable Safari Web Inspector and Debugger"
-     width="726" />
-
-Once done with debugging you may want to deselect these options again or Safari will open the Web Inspector for any plugin run within Sketch or other applications using `JSContext`.
-
-> **Note:** The _Develop_ menu in Safari is not shown by default. To enable it, make sure to check the _Show Develop menu in menu bar_ option within _Preferences_ › _Advanced_.
 
 ## Introspect the Objective-C runtime
 

@@ -66,9 +66,7 @@ commands.forEach(cmd => {
   del.sync(`${dir}/**`)
   exec(`mkdir -p ${dir}`)
   exec(
-    `sketchtool run ${pluginPath} ${
-      cmd.identifier
-    } --context='{"savePath": "${dir}"}'`
+    `sketchtool run ${pluginPath} ${cmd.identifier} --context='{"savePath": "${dir}"}'`
   )
   exec(`unzip ${dir}/output.sketch -d ${dir}/output`)
   exec(`npm run prettier:base -- "${dir}/output/**/*.json"`)

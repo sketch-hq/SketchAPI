@@ -1,41 +1,18 @@
-@include tablet-and-above {
-  .main-nav li > a {
-    padding: 0.2625rem 0; //to compensate there's no buy button here
-  }
-}
-
 .developer .content img {
   max-width: 100%;
   height: auto;
-}
-
-//Inverting site's logic
-body > section {
-  background-color: $background-light;
-  box-shadow: inset 0 -1px 0 $border-dark;
-}
-
-body > section:nth-child(odd) {
-  background-color: $background-light-dark;
-}
-
-body > section ~ footer {
-  background: $background-light;
-}
-
-body > section:nth-child(even):last-of-type ~ footer {
-  background: $background-light-dark;
 }
 
 //Contribute pill
 .page-contribute {
   margin-top: 3rem;
   padding: 1rem;
-  background: $background-light-dark;
+  background: $background-light-base;
   border: 1px solid $border-dark;
+  box-shadow: 0px 1px 3px $border-dark-low;
   border-radius: $radius-small;
   font-size: 0.8125rem;
-  color: $text-dark-ultra-low;
+  color: $text-dark-low;
 }
 
 @include tablet-and-above {
@@ -60,10 +37,10 @@ body > section:nth-child(even):last-of-type ~ footer {
   border-spacing: 0;
   border-radius: $radius-small;
   border: 1px solid $border-dark-high;
-  background-color: rgba($action, 0.05);
-  box-shadow: 0 1px 2px $border-dark;
+  box-shadow: 0 1px 3px $border-dark;
   color: $text-dark;
   margin-bottom: 1em;
+  margin-top: 2rem;
 }
 
 .content > table th,
@@ -125,5 +102,11 @@ article.post header {
   p.meta {
     color: $text-dark-ultra-low;
     margin-top: 0.3em;
+  }
+}
+
+@media print {
+  .page-contribute {
+    display: none;
   }
 }
