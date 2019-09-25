@@ -1,6 +1,6 @@
 /* eslint-disable */
 
-const { Document } = require('sketch/dom')
+const { Document } = require('sketch')
 
 function main(ctx) {
   // Create a new document
