@@ -67,6 +67,11 @@ Skpm will execute `./custom-script.sh ./path/to/plugin.zip` and expect the same 
 
 (Credits to Aby Nimbalkar for the information)
 
+Requirements for notarizing plugins using Xcode and the command line:
+
+- [Two-factor authentication](https://support.apple.com/en-us/HT204915) needs to be enabled for your account.
+- An [app-specific password](https://support.apple.com/en-us/HT204397)to use in Terminal for the notarization. It will have a format like this: `wzac-jvbe-nhqu-wjao`
+
 1. Make sure your plugin framework is signed as a Developer ID Application in Xcode:
 
     ![](/images/developer/dev-id.png)
@@ -80,7 +85,7 @@ Skpm will execute `./custom-script.sh ./path/to/plugin.zip` and expect the same 
 
 4. Send the zip for notarization:
     ```bash
-    xcrun altool --notarize-app -f /Users/johndoe/Desktop/PluginName.zip --primary-bundle-id "com.organization.PluginName" -u "yourAppleIDEmail@gmail.com" -p "YourAppleIDPassword"
+    xcrun altool --notarize-app -f /Users/johndoe/Desktop/PluginName.zip --primary-bundle-id "com.organization.PluginName" -u "yourAppleIDEmail@gmail.com" -p "wzac-jvbe-nhqu-wjao"
     ```
 
 5. Apple will then send you an email in about 3-4 minutes that your bundle is notarized. You can now release the plugin.
