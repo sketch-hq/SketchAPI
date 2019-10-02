@@ -28,6 +28,8 @@ Use [`console`](https://developer.mozilla.org/en-US/docs/Web/API/console) to log
 
 ## Safari Web Inspector
 
+> Please note that recent changes in macOS 10.15 security requirements affect this functionality. We're still working with Apple to re-establish the JavaScript debugging as there _may_ be a way to do it.
+
 When a plugin is run, Sketch initializes a new [JavaScript runtime environment](/plugins/javascript-environment) for it. By default this `JSContext` is short-lived and destroyed once the plugin command is completed. However, it is still possible to attach the debugger provided by the _Safari Web Inspector_. From the submenu matching you computer name in the _Develop_ menu, select:
 
 1. _Automatically Show Web Inspector for JSContexts_
