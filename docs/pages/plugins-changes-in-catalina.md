@@ -63,7 +63,7 @@ notarization:
 Skpm will execute `./custom-script.sh ./path/to/plugin.zip` and expect the same zip to be notarized at the end.
 
 
-## Notarizing plugins using Xcode
+## 2. Use Xcode
 
 (Credits to Aby Nimbalkar for the information)
 
