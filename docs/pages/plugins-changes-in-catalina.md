@@ -88,7 +88,7 @@ Requirements for notarizing plugins using Xcode and the command line:
     xcrun altool --notarize-app -f /Users/johndoe/Desktop/PluginName.zip --primary-bundle-id "com.organization.PluginName" -u "yourAppleIDEmail@gmail.com" -p "wzac-jvbe-nhqu-wjao"
     ```
 
-5. Apple will then send you an email in about 3-4 minutes that your bundle is notarized. You can now release the plugin.
+1. Wait for a notarization email confirmation from Apple before releasing the plugin.
 > **Note:** If you make any changes to your plugin framework you’ll need to notarize again.
 
 ## Further reading
