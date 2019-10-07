@@ -2,7 +2,8 @@
   "unreleased": [],
   "releases": {
     "59": [
-      "[Improved] When setting the `trimmed` option to `false` during an export, it will not trim the image even if there is no background color."
+      "[Improved] When setting the `trimmed` option to `false` during an export, it will not trim the image even if there is no background color.",
+      "[New] Add an initial version of an `onDocumentChanged` handler"
     ],
     "58.1": ["[Fixed] `ShapePath.fromSVGPath` no longer throws an error"],
     "57": [
