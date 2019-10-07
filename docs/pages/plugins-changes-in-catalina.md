@@ -18,7 +18,7 @@ The way the system works means some third party Sketch plugins might be affected
 
 If you develop a plugin that uses native frameworks, here are some steps you can take to avoid any issues with Sketch in macOS 10.15.
 
-## Notarizing plugins using `skpm`
+## 1. Use `skpm`
 
 (From <https://github.com/skpm/skpm/blob/master/docs/notarization.md>)
 
