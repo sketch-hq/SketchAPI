@@ -89,7 +89,7 @@ Requirements for notarizing plugins using Xcode and the command line:
     ```
 
 5. Apple will then send you an email in about 3-4 minutes that your bundle is notarized. You can now release the plugin.
-6. If you make any changes to your plugin framework you’ll need to notarize again, so do all this as the last step before release.
+> **Note:** If you make any changes to your plugin framework you’ll need to notarize again.
 
 ## Further reading
 
