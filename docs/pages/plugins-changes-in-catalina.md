@@ -22,7 +22,8 @@ If you develop a plugin that uses native frameworks, here are some steps you can
 
 (From <https://github.com/skpm/skpm/blob/master/docs/notarization.md>)
 
-`skpm` makes it easy to notarize your plugin when you publish it.
+> `skpm` makes it easy to notarize your plugin when you publish it.
+>  ̶ [`skpm` documentation](https://github.com/skpm/skpm/blob/master/docs/notarization.md)
 
 ### How to
 
