@@ -92,6 +92,6 @@ Requirements for notarizing plugins using Xcode and the command line:
 1. Wait for a notarization email confirmation from Apple before releasing the plugin.
 > **Note:** If you make any changes to your plugin framework you’ll need to notarize again.
 
-## Further reading
+## Related resources
 
 - [Notarizing your app before distribution](https://developer.apple.com/documentation/xcode/notarizing_your_app_before_distribution), at Apple's Developer Site.
