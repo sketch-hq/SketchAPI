@@ -1,16 +1,16 @@
 ---
-title: Notarize native frameworks
+title: Notarize Plugins
 section: plugins
 chapter: Guides
-permalink: /plugins/notarize-native-frameworks
+permalink: /plugins/notarize-plugins
 
 order: 111
-excerpt: Sketch JavaScript plugins can load native framework written in Objective-C. For these plugins to work, they must be notarised by Apple to meet stricter security guidelines introduced with macOS 10.15 Catalina.
+excerpt: Sketch JavaScript plugins can load native frameworks written in Objective-C, or use bundled binaries. For these plugins to work, they must be notarised by Apple to meet stricter security guidelines introduced with macOS 10.15 Catalina.
 ---
 
 With the introduction of macOS 10.15 Catalina, native apps and frameworks are automatically verified by the operating system to minimise the risk of running malicious code.
 
-If your plugin contains native frameworks, notarization is mandatory if you want it to run on macOS 10.15. **Plugins written purely in JavaScript are not affected.**
+If your plugin contains native frameworks or bundled binaries, notarization is mandatory if you want it to run on macOS 10.15. **Plugins written purely in JavaScript are not affected.**
 
 Keep in mind that notarization is not App Review: Apple will not review your code, nor reject your plugin under any circumstance. For more information, see [Notarizing Your App Before Distribution](https://developer.apple.com/documentation/xcode/notarizing_your_app_before_distribution), at Apple's Developer Site.
 
