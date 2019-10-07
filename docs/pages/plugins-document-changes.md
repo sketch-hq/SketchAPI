@@ -62,7 +62,7 @@ function onDocumentChanged(context) {
 }
 ```
 
-The following boilerplate illustrates one way to handle each of change types, including a move.
+The following boilerplate illustrates one way to handle each of the change types, including a move.
 
 ```javascript
 function onDocumentChanged(context) {
