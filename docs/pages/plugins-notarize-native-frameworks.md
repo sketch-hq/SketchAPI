@@ -8,13 +8,13 @@ order: 111
 excerpt: Sketch JavaScript plugins can load native framework written in Objective-C. For these plugins to work, they must be notarised by Apple to meet stricter security guidelines introduced with macOS 10.15 Catalina.
 ---
 
-Notarization gives users more confidence that the plugin you distribute has been checked by Apple for malicious components. Notarization is not App Review. The Apple notary service is an automated system that scans your software for malicious content, checks for code-signing issues, and returns the results to you quickly.
+With the introduction of macOS 10.15 Catalina, native apps and frameworks are automatically verified by the operating system to minimise the risk of running malicious code.
 
-Notarization is becoming mandatory on macOS 10.15 if your plugin contains native frameworks and might become mandatory for every plugin in an upcoming version of macOS (Apple is tightening up the security).
+If your plugin contains native frameworks, notarization is mandatory if you want it to run on macOS 10.15. **Plugins written purely in JavaScript are not affected.**
 
-The way the system works means some third party Sketch plugins might be affected, with the effects ranging from plugins not loading all the way to plugins crashing Sketch on launch.
+Keep in mind that notarization is not App Review: Apple will not review your code, nor reject your plugin under any circumstance. For more information, see [Notarizing Your App Before Distribution](https://developer.apple.com/documentation/xcode/notarizing_your_app_before_distribution), at Apple's Developer Site.
 
-If you develop a plugin that uses native frameworks, here are some steps you can take to avoid any issues with Sketch in macOS 10.15.
+Notarizing can be done using one of two options:
 
 ## 1. Use `skpm`
 
@@ -32,17 +32,36 @@ _If you do not have a native framework, skip to 2._
    notarization:
      authority: 'Developer ID Application: TEAM'
      username: 'AC_USERNAME'
-     password: '@keychain:AC_PASSWORD'
+     password: 'AC_PASSWORD'
    ```
 
 3. Replace `TEAM` with the name of your team on App Store Connect.
 4. Replace `AC_USERNAME` with your App Store Connect username, usually an email address. Note, App Store Connect requires two-factor authentication (2FA) on all accounts, so you must create an [app-specific password](https://support.apple.com/en-us/HT204397).
 
-    To avoid including your password as cleartext in the file, you can provide a reference to a keychain item. This assumes the keychain holds a keychain item named `AC_PASSWORD` with an account value matching the username `AC_USERNAME`. Note that skpm can’t access your iCloud keychain for security reasons, so the item must be in your login keychain. You can add a new keychain item using the Keychain Access app, or from the command line using the security utility:
-
-    ```bash
-security add-generic-password -a "AC_USERNAME" -w <secret_password> -s "AC_PASSWORD"
-    ```
+5. Set the password in `.skpmrc` using one of the following methods:
+   1. **Cleartext password in .skpmrc:** If you don't mind having a cleartext password on your `.skpmrc` file (something we definitely **do not recommend**), just add your password to the file:
+      ```yaml
+      notarization:
+        authority: 'Developer ID Application: Your Team Name'
+        username: 'username@org'
+        password: 'super-secret-password'
+      ```
+   2. **Password stored in local Keychain:** You can provide a reference to a **local** keychain item in `.skpmrc` (`skpm` cannot access iCloud keychain items for security reasons). This assumes the keychain holds a keychain item named `AC_PASSWORD` with an account value matching the username `AC_USERNAME`:
+      ```yaml
+      notarization:
+        authority: 'Developer ID Application: Your Team Name'
+        username: 'username@org'
+        password: '@keychain:AC_PASSWORD'
+      ```
+      You can create the `AC_PASSWORD` keychain item using any of these two methods:
+         1. Using the command-line:
+            ```bash
+            security add-generic-password -a "AC_USERNAME" -w <super-secret-password> -s "AC_PASSWORD"
+            ```
+         2. Using the _Keychain Access_ application:
+            1. Open Keychain Access.
+            2. Add new password item named `AC_PASSWORD`.
+            3. Set the password using your app specific password.  
 
 > **Quick tip:** To use your own notarization mechanism and integrate with `skpm`,
 provide the command in the `.skpmrc` notarization settings:
@@ -58,19 +77,20 @@ provide the command in the `.skpmrc` notarization settings:
 
 1. Make sure your plugin framework is signed as a Developer ID Application in Xcode:
 
-    <img src="/images/developer/dev-id.png" width="536" height="auto" alt="Developer ID in Xcode" />
+   <img src="/images/developer/dev-id.png" width="536" height="auto" alt="Developer ID in Xcode" />
 
 2. Drop your framework into your .sketchplugin bundle and zip the entire bundle.
 3. Code-sign the zip using this command in the terminal. The identifier must match the bundle identifier of your plugin framework (not necessarily your plugin identifier in the manifest).
 
-    ```bash
-    codesign -f -s "Developer ID Application: John Doe" --timestamp --identifier "com.organization.PluginName" /Users/johndoe/Desktop/PluginName.zip
-    ```
+   ```bash
+   codesign -f -s "Developer ID Application: John Doe" --timestamp --identifier "com.organization.PluginName" /Users/johndoe/Desktop/PluginName.zip
+   ```
 
 4. Send the zip for notarization:
-    ```bash
-    xcrun altool --notarize-app -f /Users/johndoe/Desktop/PluginName.zip --primary-bundle-id "com.organization.PluginName" -u "yourAppleIDEmail@gmail.com" -p "app-specific-password"
-    ```
+
+   ```bash
+   xcrun altool --notarize-app -f /Users/johndoe/Desktop/PluginName.zip --primary-bundle-id "com.organization.PluginName" -u "yourAppleIDEmail@gmail.com" -p "app-specific-password"
+   ```
 
 5. Wait for a notarization email confirmation from Apple before releasing the plugin.
 
