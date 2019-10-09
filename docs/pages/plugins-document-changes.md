@@ -8,9 +8,9 @@ order: 301
 excerpt: Allow plugins to respond to arbitrary changes in the document
 ---
 
-Starting with Sketch 59 we're introducing a way for plugin authors to listen to arbitrary changes in the document.
+Listen to arbitrary changes in a Sketch document using the `onDocumentChange` handler. It provides a mechanism to listen to three types of fundamental change events in documents – changes, removals and additions.
 
-This new API should provide a more scalable and flexible alternative to plugin [Actions](./actions). It provides a mechanism to listen to three types of fundamental change events in documents - changes, removals and additions.
+This API is available starting with Sketch 59 and is designed as a scalable and more flexible replacement for [_Actions_](./actions) that handle specific document changes.
 
 > 🚧 We're releasing this feature early to gather feedback from the community, so the API may change in future. Let us know what you think, [file an issue](https://github.com/BohemianCoding/SketchAPI/issues) for comments, suggestions and bug reports or send an email to [developer@sketch.com](mailto:developer@sketch.com).
 
@@ -20,11 +20,11 @@ This new API should provide a more scalable and flexible alternative to plugin [
 
 The fundamental document change types are:
 
-- **Property changes** e.g. a layer's x/y position changing
+- **Property changes**, e.g. a layer's x/y position changing
 - **Object addition**, e.g. adding a new layer to the canvas
 - **Object removal**, e.g. deleting a layer
 
-A fourth type of change - an object moving around within the document - can also be trivially derived using the `isMove` flag. See the code examples below for more information.
+Note that an object moving around within the layer hierarchy is removed from the previous path and re-added at a new path - such changes have their `isMove` flag set to `true`. See the code examples below for more information.
 
 ### Manifest handler
 
@@ -32,6 +32,9 @@ Subscribe to changes via the new `onDocumentChanged` handler defined in the [plu
 
 ```json
 {
+  "compatibleVersion": 3,
+  "bundleVersion": 1,
+  "identifier": "com.sketch.plugins.document-change-example",
   "commands": [
     {
       "script": "command.js",
@@ -39,7 +42,12 @@ Subscribe to changes via the new `onDocumentChanged` handler defined in the [plu
         "onDocumentChanged": "onDocumentChanged"
       }
     }
-  ]
+  ],
+  "version": "1.0.0",
+  "name": "Document Change",
+  "description": "Sample plugin showcasing how to handle document changes such as object addition, deletions and modifications.",
+  "author": "Sketch",
+  "disableCocoaScriptPreprocessor": true
 }
 ```
 
