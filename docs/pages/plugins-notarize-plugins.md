@@ -72,7 +72,7 @@ provide the command in the `.skpmrc` notarization settings:
 > notarization:
 >   command: './notarize-plugin.sh'
 > ```
-> `skpm` will bundle and zip your plugin, run your command automatically, and set the path to the *zipped* plugin bundle as a parameter, e.g. `./notarize-plugin.sh path/to/plugin.zip`.
+> `skpm` will bundle your plugin, create a ZIP archive of it, and run your command automatically, passing the path to the archive as a parameter, e.g. `./notarize-plugin.sh path/to/select-shapes.sketchplugin-1.0.zip`.
 
 
 ## 2. Use Xcode
