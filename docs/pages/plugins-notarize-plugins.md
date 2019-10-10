@@ -70,7 +70,7 @@ provide the command in the `.skpmrc` notarization settings:
 >
 > ```yaml
 > notarization:
->   command: './custom-script.sh'
+>   command: './notarize-plugin.sh'
 > ```
 > `skpm` will bundle and zip your plugin, run your command automatically, and set the path to the *zipped* plugin bundle as a parameter, e.g. `./notarize-plugin.sh path/to/plugin.zip`.
 
