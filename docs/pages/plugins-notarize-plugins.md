@@ -1,5 +1,5 @@
 ---
-title: Notarize Plugins
+title: Notarize a plugin
 section: plugins
 chapter: Guides
 permalink: /plugins/notarize-plugins
