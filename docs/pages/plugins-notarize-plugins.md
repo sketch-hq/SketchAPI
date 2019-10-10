@@ -20,7 +20,6 @@ Notarizing can be done using one of two options:
 
 ## 1. Use `skpm`
 
-(From <https://github.com/skpm/skpm/blob/master/docs/notarization.md>)
 
 > `skpm` makes it easy to notarize your plugin when you publish it.
 >  ̶ [`skpm` documentation](https://github.com/skpm/skpm/blob/master/docs/notarization.md)
