@@ -40,7 +40,7 @@ You can use two methods to notarize your plugin: automatically using [`skpm`](ht
 
 3. Replace `TEAM` with the name of your team on App Store Connect.
 4. Replace `AC_USERNAME` with your App Store Connect username (usually an email address).
-5. Replace `AC_PASSWORD` with your app-specific-password (or, if you don't want to store cleartext passwords in the file, use the method described on the [Keychain password storage](#keychain-password-storage) section.
+5. Replace `AC_PASSWORD` with your app-specific-password (or, if you don't want to store cleartext passwords in the file, use the method described on the [Keychain password storage](#keychain-password-storage) section).
 
 Once all the information is there, `skpm` will automatically notarize your plugin whenever you publish it.
 
