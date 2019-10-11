@@ -40,7 +40,7 @@ You can use two methods to notarize your plugin: automatically using [`skpm`](ht
 
 3. Replace `TEAM` with the name of your team on App Store Connect.
 4. Replace `AC_USERNAME` with your App Store Connect username (usually an email address).
-5. Replace `AC_PASSWORD` with your password, using one of the methods described on the [Password Storage appendix](#appendix-password-storage).
+5. Replace `AC_PASSWORD` with your app-specific-password (or, if you don't want to store cleartext passwords in the file, use the method described on the [Keychain password storage](#keychain-password-storage) section.
 
 Once all the information is there, `skpm` will automatically notarize your plugin whenever you publish it.
 
@@ -74,11 +74,7 @@ provide the command in the `.skpmrc` notarization settings:
 > **Note:** If you make any changes to your plugin framework you’ll need to notarize again.
 
 
-## Appendix: Password Storage
-
-You have two options for storing your password in `.skpmrc`:
-
-### Option 1: Encrypted password in local Keychain (recommended)
+## Keychain password storage
 
 You can provide a reference to a **local** keychain item in `.skpmrc` (`skpm` cannot access iCloud keychain items for security reasons). This assumes the keychain holds a keychain item named `AC_PASSWORD` with an account value matching the username (`user@example.com`, in our example):
 
@@ -105,17 +101,6 @@ You can create the `AC_PASSWORD` keychain item using the command line, or the `K
       - Account Name: `user@example.com` (your App Store Connect username).
       - Password: `app specific password`.
   3. Click _Add_.
-
-### Option 2: Cleartext password
-
-If you don't mind having a cleartext password on your `.skpmrc` file, use your [app-specific-password](https://support.apple.com/en-us/HT204397) in the `password` section:
-
-```yaml
-notarization:
-  authority: 'Developer ID Application: Your Team Name'
-  username: 'user@example.com'
-  password: 'app-specific-password'
-```
 
 
 ## Related resources
