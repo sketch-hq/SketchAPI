@@ -16,7 +16,7 @@ _Notarization is not App Review._ Apple will not review your code, and the proce
 
 ## Prerequisites for notarization
 
-Before you can notarize your plugin, make sure you meet the following requirements:
+To notarize your plugin, you will need the following:
 
 - An [Apple Developer Account](https://developer.apple.com) with two-factor authentication (2FA) enabled.
 - An [app-specific password](https://support.apple.com/en-us/HT204397) for your plugin.
@@ -40,8 +40,10 @@ You can use two methods to notarize your plugin: automatically using [`skpm`](ht
    ```
 
 3. Replace `TEAM` with the name of your team on App Store Connect.
-4. Replace `AC_USERNAME` with your App Store Connect username or email address.
-5. Replace `AC_PASSWORD` with your password, using one of the methods described on the [Password Storage appendix](#appendix-password-storage)
+4. Replace `AC_USERNAME` with your App Store Connect username (usually an email address).
+5. Replace `AC_PASSWORD` with your password, using one of the methods described on the [Password Storage appendix](#appendix-password-storage).
+
+Once all the information is there, `skpm` will automatically notarize your plugin whenever you publish it.
 
 > **Quick tip:** To use your own notarization mechanism and integrate with `skpm`,
 provide the command in the `.skpmrc` notarization settings:
@@ -55,14 +57,14 @@ provide the command in the `.skpmrc` notarization settings:
 
 ### Notarization using the command line
 
-1. Drop your framework into your .sketchplugin bundle and zip the entire bundle.
-2. Code-sign the zip using this command in the terminal. The identifier must match the bundle identifier of your plugin framework (not necessarily your plugin identifier in the manifest).
+1. Create a ZIP archive of your `.sketchplugin` bundle (including your native frameworks or binaries).
+2. Code-sign the ZIP archive using this command in the terminal. The identifier must match the bundle identifier of your plugin framework in Xcode (not necessarily your plugin identifier in the manifest).
 
    ```bash
    codesign -f -s "Developer ID Application: Bob Ross" --timestamp --identifier "com.organization.PluginName" path/to/select-shapes.sketchplugin-1.0.zip
    ```
 
-3. Send the zip for notarization:
+3. Send the ZIP to Apple for notarization:
 
    ```bash
    xcrun altool --notarize-app -f path/to/select-shapes.sketchplugin-1.0.zip --primary-bundle-id "com.example.sketch.plugin.select-shapes" -u "user@example.com" -p "app-specific-password"
