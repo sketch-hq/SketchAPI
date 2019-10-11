@@ -90,7 +90,7 @@ You can create the `AC_PASSWORD` keychain item using the command line, or the `K
   security add-generic-password -a "user@example.com" -w "app-specific-password" -s "AC_PASSWORD"
   ```
 
-### Use _Keychain Access_
+### Use Keychain Access
 
   1. Open _Applications_ › _Utilities_ › _Keychain Access_.
   1. Select _File_ › _New Password Item…_ and set these values on the dialog:
