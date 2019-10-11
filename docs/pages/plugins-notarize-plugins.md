@@ -16,7 +16,9 @@ _Notarization is not App Review._ Apple will not review your code, and the proce
 
 ## Prerequisites for notarization
 
-- [Apple Developer Account](https://developer.apple.com) with two-factor authentication (2FA) enabled.
+Before you can notarize your plugin, make sure you meet the following requirements:
+
+- An [Apple Developer Account](https://developer.apple.com) with two-factor authentication (2FA) enabled.
 - An [app-specific password](https://support.apple.com/en-us/HT204397) for your plugin.
 - If your plugin includes a native framework, make sure you're using the right signing settings in Xcode ([see below](#appendix-xcode-signing-settings)).
 
