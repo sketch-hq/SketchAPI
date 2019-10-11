@@ -20,7 +20,6 @@ To notarize your plugin, you will need the following:
 
 - An [Apple Developer Account](https://developer.apple.com) with two-factor authentication (2FA) enabled.
 - An [app-specific password](https://support.apple.com/en-us/HT204397) for your plugin.
-- If your plugin includes a native framework, make sure you're using the right signing settings in Xcode ([see below](#appendix-xcode-signing-settings)).
 
 
 ## Notarization Methods
@@ -73,14 +72,6 @@ provide the command in the `.skpmrc` notarization settings:
 4. Wait for a notarization email confirmation from Apple before releasing the plugin.
 
 > **Note:** If you make any changes to your plugin framework you’ll need to notarize again.
-
-
-## Appendix: Xcode Signing Settings
-
-1. In your Xcode project, select the _Signing and Capabilities_ tab and select _Developer ID Application_ for the _Signing Certificate_ setting.
-2. Make sure you're signing your plugin framework with a Developer ID Application in Xcode:
-
-   <img src="/images/developer/dev-id.png" width="536" height="auto" alt="Developer ID in Xcode" />
 
 
 ## Appendix: Password Storage
