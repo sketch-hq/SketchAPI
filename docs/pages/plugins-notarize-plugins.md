@@ -22,7 +22,7 @@ To notarize your plugin, you will need the following:
 - An [app-specific password](https://support.apple.com/en-us/HT204397) for your plugin.
 
 
-## Notarization Methods
+## Notarization methods
 
 You can use two methods to notarize your plugin: automatically using [`skpm`](https://github.com/skpm/skpm), or  manually using the command line.
 
