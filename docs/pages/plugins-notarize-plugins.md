@@ -14,20 +14,15 @@ With the introduction of macOS 10.15 Catalina, native apps and frameworks are au
 
 _Notarization is not App Review._ Apple will not review your code, and the process shouldn't delay your publishing workflow. For more information, see [Notarizing Your App Before Distribution](https://developer.apple.com/documentation/xcode/notarizing_your_app_before_distribution), at Apple's Developer Site.
 
-# Prerequisites
-
-To notarize your plugin, you will need the following:
+**To notarize your plugin, you will need the following:**
 
 - An [Apple Developer Account](https://developer.apple.com) with two-factor authentication (2FA) enabled.
 - An [app-specific password](https://support.apple.com/en-us/HT204397) for your plugin.
 
-
-# Notarization methods
-
 You can use two methods to notarize your plugin: automatically using [`skpm`](https://github.com/skpm/skpm), or  manually using the command line.
 
 
-## Notarization using `skpm`
+## 1. Use `skpm`
 
 1. Open or create a new `.skpmrc` file next to your plugin's `package.json` and add the notarization setting:
 
@@ -54,7 +49,7 @@ provide the command in the `.skpmrc` notarization settings:
 > `skpm` will bundle your plugin, create a ZIP archive of it, and run your command automatically, passing the path to the archive as a parameter, e.g. `./notarize-plugin.sh path/to/select-shapes.sketchplugin-1.0.zip`.
 
 
-## Notarization using the command line
+## 2. Use the command line
 
 1. Create a ZIP archive of your `.sketchplugin` bundle (including your native frameworks or binaries).
 2. Code-sign the ZIP archive using this command in the terminal. The identifier must match the bundle identifier of your plugin framework in Xcode (not necessarily your plugin identifier in the manifest).
@@ -74,7 +69,7 @@ provide the command in the `.skpmrc` notarization settings:
 > **Note:** If you make any changes to your plugin framework you’ll need to notarize again.
 
 
-# Keychain password storage
+## Keychain password storage
 
 You can provide a reference to a **local** keychain item in `.skpmrc` (`skpm` cannot access iCloud keychain items for security reasons). This assumes the keychain holds a keychain item named `AC_PASSWORD` with an account value matching the username (`user@example.com`, in our example):
 
