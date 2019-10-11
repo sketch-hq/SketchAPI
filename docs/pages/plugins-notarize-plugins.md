@@ -10,7 +10,7 @@ excerpt: Sketch JavaScript plugins can load native frameworks written in Objecti
 
 With the introduction of macOS 10.15 Catalina, native apps and frameworks are automatically verified by the operating system to minimise the risk of running malicious code. If your plugin includes native frameworks or bundled binaries, notarization is mandatory.
 
-> **Note:** Plugins written purely in JavaScript and not containing additional binaries do not require notarization.
+> **Note:** Plugins written purely in JavaScript and not containing bundled binaries do not require notarization.
 
 _Notarization is not App Review._ Apple will not review your code, and the process shouldn't delay your publishing workflow. For more information, see [Notarizing Your App Before Distribution](https://developer.apple.com/documentation/xcode/notarizing_your_app_before_distribution), at Apple's Developer Site.
 
@@ -18,12 +18,12 @@ _Notarization is not App Review._ Apple will not review your code, and the proce
 
 - [Apple Developer Account](https://developer.apple.com) with two-factor authentication (2FA) enabled.
 - An [app-specific password](https://support.apple.com/en-us/HT204397) for your plugin.
-- If your plugin includes a native framework, make sure your signing settings are set up correctly in Xcode ([see below](#appendix-xcode-signing-settings)).
+- If your plugin includes a native framework, make sure you're using the right signing settings in Xcode ([see below](#appendix-xcode-signing-settings)).
 
 
 ## Notarization Methods
 
-There are two methods available for notarizing your plugin: you can use [`skpm`](https://github.com/skpm/skpm) to automatically manage notarization, or you can do it manually using the command line.
+You can use two methods to notarize your plugin: automatically using [`skpm`](https://github.com/skpm/skpm), or  manually using the command line.
 
 
 ### Notarization using `skpm`
@@ -38,7 +38,7 @@ There are two methods available for notarizing your plugin: you can use [`skpm`]
    ```
 
 3. Replace `TEAM` with the name of your team on App Store Connect.
-4. Replace `AC_USERNAME` with your App Store Connect username, usually an email address.
+4. Replace `AC_USERNAME` with your App Store Connect username or email address.
 5. Replace `AC_PASSWORD` with your password, using one of the methods described on the [Password Storage appendix](#appendix-password-storage)
 
 > **Quick tip:** To use your own notarization mechanism and integrate with `skpm`,
@@ -74,7 +74,7 @@ provide the command in the `.skpmrc` notarization settings:
 ## Appendix: Xcode Signing Settings
 
 1. In your Xcode project, select the _Signing and Capabilities_ tab and select _Developer ID Application_ for the _Signing Certificate_ setting.
-2. Make sure your plugin framework is signed as a Developer ID Application in Xcode:
+2. Make sure you're signing your plugin framework with a Developer ID Application in Xcode:
 
    <img src="/images/developer/dev-id.png" width="536" height="auto" alt="Developer ID in Xcode" />
 
