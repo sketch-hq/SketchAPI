@@ -16,7 +16,11 @@ Released 14 August, 2019 – [_read release notes_](https://www.sketch.com/updat
 
 #### More details
 - Quick refresher, `PointType` is referring to how the Bezier handles behave at a point.
-![Point types in sketch](https://github.com/KevinGutowski/Sketch-Updates/blob/master/Sketch%2057/imgs/pointtype.png?raw=true)
+
+  <img src="/images/developer/plugin-releases-57-point-type.png"
+     alt="Point Types in Sketch's UI"
+     width="626" />
+
 -  This enum makes it easier to figure out what the different options for `PointType` are.
 
 [_GitHub pull request_](https://github.com/BohemianCoding/SketchAPI/pull/561)
