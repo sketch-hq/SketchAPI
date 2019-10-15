@@ -395,3 +395,4 @@ find(`#${document.pages[0].layers[1].id}`, document)
 
 - [API reference](/reference/api)
 - [New in Sketch 55](/plugins/updates/new-in-sketch-55)
+- [New in Sketch 57](/plugins/updates/new-in-sketch-57)
