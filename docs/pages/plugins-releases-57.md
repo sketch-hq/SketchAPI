@@ -63,4 +63,4 @@ console.log(myLine.points[0].pointType)
 ## Related resources
 
 - [API reference](/reference/api)
-- [New in Sketch 55](/plugins/updates/new-in-sketch-55)
+- [New in Sketch 56](/plugins/updates/new-in-sketch-56)
