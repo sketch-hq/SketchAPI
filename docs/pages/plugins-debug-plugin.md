@@ -26,6 +26,23 @@ Use [`console`](https://developer.mozilla.org/en-US/docs/Web/API/console) to log
 
 > **Quick tip:** If you're using `skpm` run `skpm log -f` to stream logs on the command-line.
 
+## Safari Web Inspector
+
+> **Note:** Safari Web Inspector cannot be used with Sketch 56 or later. This is to meet stricter security guidelines in macOS. We're actively working with Apple to re-establish the JavaScript debugging as there _may_ be a possible option.
+
+When a plugin is run, Sketch initializes a new [JavaScript runtime environment](/plugins/javascript-environment) for it. By default this `JSContext` is short-lived and destroyed once the plugin command is completed. However, it is still possible to attach the debugger provided by the _Safari Web Inspector_ (up to Sketch 55.2). From the submenu matching you computer name in the _Develop_ menu, select:
+
+1. _Automatically Show Web Inspector for JSContexts_
+2. _Automatically Pause Connecting to JSContexts_ to set breakpoints in your source code.
+
+<img src="/images/developer/safari-develop-menu-inspector.png"
+     alt="Enable Safari Web Inspector and Debugger"
+     width="726" />
+
+Once done with debugging you may want to deselect these options again or Safari will open the Web Inspector for any plugin run within Sketch or other applications using `JSContext`.
+
+> **Note:** The _Develop_ menu in Safari is not shown by default. To enable it, make sure to check the _Show Develop menu in menu bar_ option within _Preferences_ › _Advanced_.
+
 ## Introspect the Objective-C runtime
 
 Native Sketch objects are bridged from Objective-C to JavaScript. Query information about properties, class and instance methods as well as protocols using Mocha.
