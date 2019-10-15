@@ -6,6 +6,7 @@
     "lib": ["es6", "scripthost"],
     "sourceMap": true,
     "strict": true,
-    "types": ["node"]
+    "types": ["node"],
+    "noEmit": true
   }
 }

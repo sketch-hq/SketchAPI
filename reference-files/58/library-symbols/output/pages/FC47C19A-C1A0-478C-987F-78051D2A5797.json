@@ -1,0 +1,162 @@
+{
+  "_class": "page",
+  "do_objectID": "FC47C19A-C1A0-478C-987F-78051D2A5797",
+  "booleanOperation": -1,
+  "isFixedToViewport": false,
+  "isFlippedHorizontal": false,
+  "isFlippedVertical": false,
+  "isLocked": false,
+  "isVisible": true,
+  "layerListExpandedType": 0,
+  "maintainScrollPosition": false,
+  "name": "Page 1",
+  "nameIsFixed": false,
+  "resizingConstraint": 63,
+  "resizingType": 0,
+  "rotation": 0,
+  "shouldBreakMaskChain": false,
+  "exportOptions": {
+    "_class": "exportOptions",
+    "includedLayerIds": [],
+    "layerOptions": 0,
+    "shouldTrim": false,
+    "exportFormats": []
+  },
+  "frame": {
+    "_class": "rect",
+    "constrainProportions": false,
+    "height": 0,
+    "width": 0,
+    "x": 0,
+    "y": 0
+  },
+  "clippingMaskMode": 0,
+  "hasClippingMask": false,
+  "style": {
+    "_class": "style",
+    "endMarkerType": 0,
+    "miterLimit": 10,
+    "startMarkerType": 0,
+    "windingRule": 1,
+    "blur": {
+      "_class": "blur",
+      "isEnabled": false,
+      "center": "{0.5, 0.5}",
+      "motionAngle": 0,
+      "radius": 10,
+      "saturation": 1,
+      "type": 0
+    },
+    "borderOptions": {
+      "_class": "borderOptions",
+      "isEnabled": true,
+      "dashPattern": [],
+      "lineCapStyle": 0,
+      "lineJoinStyle": 0
+    },
+    "borders": [],
+    "colorControls": {
+      "_class": "colorControls",
+      "isEnabled": true,
+      "brightness": 0,
+      "contrast": 1,
+      "hue": 0,
+      "saturation": 1
+    },
+    "contextSettings": {
+      "_class": "graphicsContextSettings",
+      "blendMode": 0,
+      "opacity": 1
+    },
+    "fills": [],
+    "innerShadows": [],
+    "shadows": []
+  },
+  "hasClickThrough": true,
+  "groupLayout": { "_class": "MSImmutableFreeformGroupLayout" },
+  "layers": [
+    {
+      "_class": "symbolInstance",
+      "do_objectID": "A5052714-5523-4DDA-BE4A-1DD39A755D32",
+      "booleanOperation": -1,
+      "isFixedToViewport": false,
+      "isFlippedHorizontal": false,
+      "isFlippedVertical": false,
+      "isLocked": false,
+      "isVisible": true,
+      "layerListExpandedType": 0,
+      "maintainScrollPosition": false,
+      "name": "my symbol",
+      "nameIsFixed": false,
+      "resizingConstraint": 63,
+      "resizingType": 0,
+      "rotation": 0,
+      "shouldBreakMaskChain": false,
+      "exportOptions": {
+        "_class": "exportOptions",
+        "includedLayerIds": [],
+        "layerOptions": 0,
+        "shouldTrim": false,
+        "exportFormats": []
+      },
+      "frame": {
+        "_class": "rect",
+        "constrainProportions": false,
+        "height": 200,
+        "width": 200,
+        "x": 200,
+        "y": 0
+      },
+      "clippingMaskMode": 0,
+      "hasClippingMask": false,
+      "style": {
+        "_class": "style",
+        "endMarkerType": 0,
+        "miterLimit": 10,
+        "startMarkerType": 0,
+        "windingRule": 1,
+        "blur": {
+          "_class": "blur",
+          "isEnabled": false,
+          "center": "{0.5, 0.5}",
+          "motionAngle": 0,
+          "radius": 10,
+          "saturation": 1,
+          "type": 0
+        },
+        "borderOptions": {
+          "_class": "borderOptions",
+          "isEnabled": true,
+          "dashPattern": [],
+          "lineCapStyle": 0,
+          "lineJoinStyle": 0
+        },
+        "borders": [],
+        "colorControls": {
+          "_class": "colorControls",
+          "isEnabled": true,
+          "brightness": 0,
+          "contrast": 1,
+          "hue": 0,
+          "saturation": 1
+        },
+        "contextSettings": {
+          "_class": "graphicsContextSettings",
+          "blendMode": 0,
+          "opacity": 1
+        },
+        "fills": [],
+        "innerShadows": [],
+        "shadows": []
+      },
+      "horizontalSpacing": 0,
+      "scale": 1,
+      "symbolID": "1935C877-08AA-4C47-98E4-56208DB93910",
+      "verticalSpacing": 0,
+      "overrideValues": []
+    }
+  ],
+  "includeInCloudUpload": true,
+  "horizontalRulerData": { "_class": "rulerData", "base": 0, "guides": [] },
+  "verticalRulerData": { "_class": "rulerData", "base": 0, "guides": [] }
+}

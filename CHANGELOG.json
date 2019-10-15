@@ -1,6 +1,11 @@
 {
   "unreleased": [],
   "releases": {
+    "59": [
+      "[Improved] When setting the `trimmed` option to `false` during an export, it will not trim the image even if there is no background color.",
+      "[New] `onDocumentChanged` handler"
+    ],
+    "58.1": ["[Fixed] `ShapePath.fromSVGPath` no longer throws an error"],
     "57": [
       "[New] Expose the `PointType` enum on `ShapePath`",
       "[Fixed] `document.centerOnLayer` not centering on nested layers"

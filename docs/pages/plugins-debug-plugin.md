@@ -20,9 +20,9 @@ Debug and inspect your plugin with the help of logs, Safari Web Inspector and th
 
 Use [`console`](https://developer.mozilla.org/en-US/docs/Web/API/console) to log anything in JavaScript. The resulting logs can be viewed in:
 
-- Safari Web Inspector Console
 - macOS _Console.app_ located in _Applications_ › _Utilities_
 - Sketch log file `~/Library/Logs/com.bohemiancoding.sketch3/Plugin Log.log`
+- [Sketch DevTools](https://github.com/skpm/sketch-dev-tools)
 
 > **Quick tip:** If you're using `skpm` run `skpm log -f` to stream logs on the command-line.
 

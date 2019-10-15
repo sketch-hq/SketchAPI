@@ -102,55 +102,54 @@ function selectAll() {
 }
 ```
 
-| Command field | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
-| ------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `identifier`  | Defines a unique identifier of the command within the plugin bundle.                                                                                                                                                                                                                                                                                                                                                                                                                                              |
-| `name`        | Provides the name of the command which is used within the _Plugins_ menu.                                                                                                                                                                                                                                                                                                                                                                                                                                         |
-| `shortcut`    | Provides a default keyboard shortcut for the command, e.g. `ctrl shift t`. See table below for a reference of possible values.                                                                                                                                                                                                                                                                                                                                                                                    |
-| `script`      | Specifies the relative path within the plugin bundle's `Sketch` folder to the script implementing the command.                                                                                                                                                                                                                                                                                                                                                                                                    |
-| `handler`     | Specifies the name of function to be called with the command. The function should be declared at the top level of the script, and accepts a single `context` parameter which contains information such as the current document and selection. If this field is omitted the plugin will default to using a handler named `onRun`. <br/><br/>Alternatively, if you're using the `skpm` tool you may `export` the function instead of declaring it, or omit this field and declare the handler with `export default` |
-| `handlers`    | If more fine-grain control is required use the `handlers` field instead of `handler`, see below for in-depth documentation                                                                                                                                                                                                                                                                                                                                                                                        |
+| Command field | Description |
+| --- | --- |
+| `identifier` | Defines a unique identifier of the command within the plugin bundle. |
+| `name` | Provides the name of the command which is used within the _Plugins_ menu. |
+| `shortcut` | Provides a default keyboard shortcut for the command, e.g. `ctrl shift t`. See table below for a reference of possible values. |
+| `script` | Specifies the relative path within the plugin bundle's `Sketch` folder to the script implementing the command. |
+| `handler` | Specifies the name of function to be called with the command. The function should be declared at the top level of the script, and accepts a single `context` parameter which contains information such as the current document and selection. If this field is omitted the plugin will default to using a handler named `onRun`. <br/><br/>Alternatively, if you're using the `skpm` tool you may `export` the function instead of declaring it, or omit this field and declare the handler with `export default` |
+| `handlers` | If more fine-grain control is required use the `handlers` field instead of `handler`, see below for in-depth documentation |
 
 ##### Shortcut Values
 
 Command shortcuts can be set using any combination of the following keys, plus any regular character.
 
-Please note shortcuts must contain at least one modifier key, *Command*, *Option*, *Control* or *Shift*. Values matching predefined Sketch shortcuts, e.g. `cmd s` will be ignored.
+Please note shortcuts must contain at least one modifier key, _Command_, _Option_, _Control_ or _Shift_. Values matching predefined Sketch shortcuts, e.g. `cmd s` will be ignored.
 
 Make sure to test your shortcuts with different international keyboard layouts. Certain characters can require users to press modifier keys. For example a shortcut like `shift /` would not work with a Spanish keyboard layout. Whereas a forward slash `/` has a dedicated key on a US keyboard, it requires pressing `shift 7` on a Spanish keyboard.
 
-
-| Key           | Value                               |
-|---------------|-------------------------------------|
-| Command (⌘)   | `cmd`                               |
-| Option  (⌥)   | `alt`                               |
-| Control (⌃)   | `ctrl`                              |
-| Shift   (⇧)   | `shift`                             |
-| Backspace (⌫) | `⌫` or `\u0008`                     |
-| Tab (⇥)       | `⇥` or `\u0009`                     |
-| Return (↩)    | `↩` or `\u000d` or `\u000a`         |
-| Escape (⎋)    | `⎋` or `\u001b`                     |
-| Left (←)      | `←` or `\u001c`                     |
-| Right (→)     | `→` or `\u001d`                     |
-| Up (↑)        | `↑` or `\u001e`                     |
-| Down (↓)      | `↓` or `\u001f`                     |
-| Space         | `\u0020`                            |
-| Delete (⌦)    | `⌦` or `\u007f`                     |
-| Home (↖)      | `↖` or `\u2196`                     |
-| End (↘)       | `↘` or `\u2198`                     |
-| Page Up (⇞)   | `⇞` or `\u21de`                     |
-| Page Down (⇟) | `⇟` or `\u21df`                     |
-
+| Key           | Value                       |
+| ------------- | --------------------------- |
+| Command (⌘)   | `cmd`                       |
+| Option (⌥)    | `alt`                       |
+| Control (⌃)   | `ctrl`                      |
+| Shift (⇧)     | `shift`                     |
+| Backspace (⌫) | `⌫` or `\u0008`             |
+| Tab (⇥)       | `⇥` or `\u0009`             |
+| Return (↩)    | `↩` or `\u000d` or `\u000a` |
+| Escape (⎋)    | `⎋` or `\u001b`             |
+| Left (←)      | `←` or `\u001c`             |
+| Right (→)     | `→` or `\u001d`             |
+| Up (↑)        | `↑` or `\u001e`             |
+| Down (↓)      | `↓` or `\u001f`             |
+| Space         | `\u0020`                    |
+| Delete (⌦)    | `⌦` or `\u007f`             |
+| Home (↖)      | `↖` or `\u2196`             |
+| End (↘)       | `↘` or `\u2198`             |
+| Page Up (⇞)   | `⇞` or `\u21de`             |
+| Page Down (⇟) | `⇟` or `\u21df`             |
 
 ##### `handlers`
 
 An object used to fully specify a command's _setup_ › _run_ › _tearDown_ lifecycle, as well as work with [Actions](/guides/action-api/). When specified the `handler` field is ignored.
 
-The `handlers` object has four fields:
+The `handlers` object has five fields:
 
 - `run` The function that should be called when the command is run (this is conceptually the same as defining `handler`)
 - `setUp` The function to call before the command is called (not to be confused with the `Startup` action)
 - `tearDown` The function to call after the command has finished to run (not to be confused with the `Shutdown` action)
+- `onDocumentChanged` See the [Document changes](/plugins/document-changes) page
 - `actions` See the [Actions](/guides/action-api/) page for an in-depth guide
 
 For example, the following `commands` definition maps the `SelectionChanged.finish` action to the `onSelectionChanged` JS function,
@@ -267,8 +266,8 @@ Provides information about the menu layout of the plugin. Sketch initializes the
 }
 ```
 
-| Member   | Description                                                                                                                                                                       |
-| -------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Member | Description |
+| --- | --- |
 | `isRoot` | Specifies that menu items are created directly within the _Plugins_ menu in Sketch. By default Sketch creates a submenu for the plugin. This value is not supported for submenus. |
-| `items`  | An array of menu items, supported values are command identifier, `"-"` separator and an object defining a submenu                                                                 |
-| `title`  | Provides the human readable title used for the menu item. The value is ignored if the menu item also has `isRoot` set to `true`.                                                  |
+| `items` | An array of menu items, supported values are command identifier, `"-"` separator and an object defining a submenu |
+| `title` | Provides the human readable title used for the menu item. The value is ignored if the menu item also has `isRoot` set to `true`. |
