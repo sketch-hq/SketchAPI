@@ -4,7 +4,7 @@ section: plugins
 chapter: Guides
 permalink: /plugins/update-a-plugin
 
-order: 106
+order: 107
 ---
 
 To publish a new version of a plugin, use either the [Sketch Plugin Manager `skpm`](https://github.com/skpm/skpm) or create a new release and add it to the _appcast_ manually.
