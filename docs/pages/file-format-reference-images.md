@@ -14,6 +14,7 @@ This document contains a bitmap image layer.
 
 | Sketch version |  |  |  |
 | --- | --- | --- | --- |
+| 59 | [JSON](https://github.com/BohemianCoding/SketchAPI/tree/develop/reference-files/59/images/output) | [.sketch](https://github.com/BohemianCoding/SketchAPI/tree/develop/reference-files/59/images/output.sketch) | [Generator plugin](https://github.com/BohemianCoding/SketchAPI/tree/develop/reference-files/plugin.sketchplugin/Contents/Sketch/images.js) |
 | 58 | [JSON](https://github.com/BohemianCoding/SketchAPI/tree/develop/reference-files/58/images/output) | [.sketch](https://github.com/BohemianCoding/SketchAPI/tree/develop/reference-files/58/images/output.sketch) | [Generator plugin](https://github.com/BohemianCoding/SketchAPI/tree/develop/reference-files/plugin.sketchplugin/Contents/Sketch/images.js) |
 | 57 | [JSON](https://github.com/BohemianCoding/SketchAPI/tree/develop/reference-files/57/images/output) | [.sketch](https://github.com/BohemianCoding/SketchAPI/tree/develop/reference-files/57/images/output.sketch) | [Generator plugin](https://github.com/BohemianCoding/SketchAPI/tree/develop/reference-files/plugin.sketchplugin/Contents/Sketch/images.js) |
 | 56.3 | [JSON](https://github.com/BohemianCoding/SketchAPI/tree/develop/reference-files/56.3/images/output) | [.sketch](https://github.com/BohemianCoding/SketchAPI/tree/develop/reference-files/56.3/images/output.sketch) | [Generator plugin](https://github.com/BohemianCoding/SketchAPI/tree/develop/reference-files/plugin.sketchplugin/Contents/Sketch/images.js) |

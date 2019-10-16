@@ -14,6 +14,7 @@ This document contains styled text layers.
 
 | Sketch version |  |  |  |
 | --- | --- | --- | --- |
+| 59 | [JSON](https://github.com/BohemianCoding/SketchAPI/tree/develop/reference-files/59/text/output) | [.sketch](https://github.com/BohemianCoding/SketchAPI/tree/develop/reference-files/59/text/output.sketch) | [Generator plugin](https://github.com/BohemianCoding/SketchAPI/tree/develop/reference-files/plugin.sketchplugin/Contents/Sketch/text.js) |
 | 58 | [JSON](https://github.com/BohemianCoding/SketchAPI/tree/develop/reference-files/58/text/output) | [.sketch](https://github.com/BohemianCoding/SketchAPI/tree/develop/reference-files/58/text/output.sketch) | [Generator plugin](https://github.com/BohemianCoding/SketchAPI/tree/develop/reference-files/plugin.sketchplugin/Contents/Sketch/text.js) |
 | 57 | [JSON](https://github.com/BohemianCoding/SketchAPI/tree/develop/reference-files/57/text/output) | [.sketch](https://github.com/BohemianCoding/SketchAPI/tree/develop/reference-files/57/text/output.sketch) | [Generator plugin](https://github.com/BohemianCoding/SketchAPI/tree/develop/reference-files/plugin.sketchplugin/Contents/Sketch/text.js) |
 | 56.3 | [JSON](https://github.com/BohemianCoding/SketchAPI/tree/develop/reference-files/56.3/text/output) | [.sketch](https://github.com/BohemianCoding/SketchAPI/tree/develop/reference-files/56.3/text/output.sketch) | [Generator plugin](https://github.com/BohemianCoding/SketchAPI/tree/develop/reference-files/plugin.sketchplugin/Contents/Sketch/text.js) |
