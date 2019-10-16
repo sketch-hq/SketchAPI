@@ -14,6 +14,7 @@ This is just a bare-bones, empty Sketch document. The equivalent of creating a n
 
 | Sketch version |  |  |  |
 | --- | --- | --- | --- |
+| 59 | [JSON](https://github.com/BohemianCoding/SketchAPI/tree/develop/reference-files/59/empty/output) | [.sketch](https://github.com/BohemianCoding/SketchAPI/tree/develop/reference-files/59/empty/output.sketch) | [Generator plugin](https://github.com/BohemianCoding/SketchAPI/tree/develop/reference-files/plugin.sketchplugin/Contents/Sketch/empty.js) |
 | 58 | [JSON](https://github.com/BohemianCoding/SketchAPI/tree/develop/reference-files/58/empty/output) | [.sketch](https://github.com/BohemianCoding/SketchAPI/tree/develop/reference-files/58/empty/output.sketch) | [Generator plugin](https://github.com/BohemianCoding/SketchAPI/tree/develop/reference-files/plugin.sketchplugin/Contents/Sketch/empty.js) |
 | 57 | [JSON](https://github.com/BohemianCoding/SketchAPI/tree/develop/reference-files/57/empty/output) | [.sketch](https://github.com/BohemianCoding/SketchAPI/tree/develop/reference-files/57/empty/output.sketch) | [Generator plugin](https://github.com/BohemianCoding/SketchAPI/tree/develop/reference-files/plugin.sketchplugin/Contents/Sketch/empty.js) |
 | 56.3 | [JSON](https://github.com/BohemianCoding/SketchAPI/tree/develop/reference-files/56.3/empty/output) | [.sketch](https://github.com/BohemianCoding/SketchAPI/tree/develop/reference-files/56.3/empty/output.sketch) | [Generator plugin](https://github.com/BohemianCoding/SketchAPI/tree/develop/reference-files/plugin.sketchplugin/Contents/Sketch/empty.js) |
