@@ -55,21 +55,27 @@ The following `meta.json` sample data represents a Sketch document containing tw
 
 ### `appVersion`
 
-The semver of the Sketch installation used to save the document.
-
-### `compatibilityVersion`
-
-A sequential version number indicating the minimum version a Sketch installation must support to open the document, see `version`.
+The version of the Sketch used to save the document.
 
 ### `version`
 
-A sequential version number indicating which may change with a new version of Sketch.
+A sequential version number indicating the document version. This is only incremented when the document format changes, not necessarily with every new version of Sketch.
 
-| Sketch version | Document version |
-| -------------- | ---------------- |
-| 55.2           | 119              |
-| 55.1           | 118              |
-| 55             | 118              |
-| 54.1           | 118              |
-| 54             | 117              |
-| 53             | 116              |
+### `compatibilityVersion`
+
+The earliest document `version` that a given version of Sketch can open.
+
+## Version history
+
+| Sketch version | Document version | Compatibility document version |
+| -------------- | ---------------- | ------------------------------ |
+| 59             | 121              | 99                             |
+| 58             | 120              | 99                             |
+| 57             | 119              | 99                             |
+| 56             | 119              | 99                             |
+| 55.2           | 119              | 99                             |
+| 55.1           | 118              | 99                             |
+| 55             | 118              | 99                             |
+| 54.1           | 118              | 99                             |
+| 54             | 117              | 99                             |
+| 53             | 116              | 99                             |
