@@ -14,6 +14,7 @@ This document contains a single styled shape.
 
 | Sketch version |  |  |  |
 | --- | --- | --- | --- |
+| 59 | [JSON](https://github.com/BohemianCoding/SketchAPI/tree/develop/reference-files/59/shapes/output) | [.sketch](https://github.com/BohemianCoding/SketchAPI/tree/develop/reference-files/59/shapes/output.sketch) | [Generator plugin](https://github.com/BohemianCoding/SketchAPI/tree/develop/reference-files/plugin.sketchplugin/Contents/Sketch/shapes.js) |
 | 58 | [JSON](https://github.com/BohemianCoding/SketchAPI/tree/develop/reference-files/58/shapes/output) | [.sketch](https://github.com/BohemianCoding/SketchAPI/tree/develop/reference-files/58/shapes/output.sketch) | [Generator plugin](https://github.com/BohemianCoding/SketchAPI/tree/develop/reference-files/plugin.sketchplugin/Contents/Sketch/shapes.js) |
 | 57 | [JSON](https://github.com/BohemianCoding/SketchAPI/tree/develop/reference-files/57/shapes/output) | [.sketch](https://github.com/BohemianCoding/SketchAPI/tree/develop/reference-files/57/shapes/output.sketch) | [Generator plugin](https://github.com/BohemianCoding/SketchAPI/tree/develop/reference-files/plugin.sketchplugin/Contents/Sketch/shapes.js) |
 | 56.3 | [JSON](https://github.com/BohemianCoding/SketchAPI/tree/develop/reference-files/56.3/shapes/output) | [.sketch](https://github.com/BohemianCoding/SketchAPI/tree/develop/reference-files/56.3/shapes/output.sketch) | [Generator plugin](https://github.com/BohemianCoding/SketchAPI/tree/develop/reference-files/plugin.sketchplugin/Contents/Sketch/shapes.js) |
