@@ -5,7 +5,7 @@
   "author": "Sam Deane",
   "license": "MIT",
   "description": "Javascript API for Sketch",
-  "homepage": "https://github.com/BohemianCoding/SketchAPI",
+  "homepage": "https://github.com/sketch-hq/SketchAPI",
   "scripts": {
     "build": "mkdir -p ./build && npm run build:test && npm run build:api && (rm -rf ./build/core-modules || true) && cp -R ./core-modules/node_modules/. ./build/core-modules",
     "build:test": "skpm-test --build-only && cp ./node_modules/@skpm/test-runner/test-runner.sketchplugin/Contents/Sketch/compiled-tests.js ./build/SketchAPI.tests.js",
@@ -37,7 +37,7 @@
     "@types/node": "12.7.4",
     "@typescript-eslint/parser": "1.13.0",
     "babel-loader": "8.0.6",
-    "danger": "9.2.0",
+    "danger": "9.2.2",
     "del": "5.1.0",
     "eslint": "6.3.0",
     "eslint-config-airbnb-base": "14.0.0",

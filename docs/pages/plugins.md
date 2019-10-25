@@ -63,7 +63,7 @@ Alternatively, you can just uncheck any Plugin on the list to disable it without
 
 ## Examples
 
-Explore some [sample plugins](https://github.com/BohemianCoding/SketchAPI/tree/develop/examples/) built by Sketch.
+Explore some [sample plugins]({{ site.github_repo }}/tree/develop/examples/) built by Sketch.
 
 ## Find plugins
 

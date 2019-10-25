@@ -1,4 +1,4 @@
-// Selection Changed, by Sam Deane — Source code available at [GitHub](https://github.com/BohemianCoding/SketchAPI/tree/develop/examples/selection-changed)
+// Selection Changed, by Sam Deane — Source code available at [GitHub](https://github.com/sketch-hq/SketchAPI/tree/develop/examples/selection-changed)
 //
 // This example plugin illustrates how to listen for the SelectionChanged action, and to
 // do something whenever the user changes the selection.

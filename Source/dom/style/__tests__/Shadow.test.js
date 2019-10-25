@@ -68,7 +68,7 @@ test('should get the shadows', () => {
   })
 })
 
-// https://github.com/BohemianCoding/SketchAPI/issues/230
+// https://github.com/sketch-hq/SketchAPI/issues/230
 test('should set the shadows with 0 values', () => {
   const style = new Style()
   style.shadows = [

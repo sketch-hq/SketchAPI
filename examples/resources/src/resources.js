@@ -1,4 +1,4 @@
-// Resources, by Sam Deane — Source code available at [GitHub](https://github.com/BohemianCoding/SketchAPI/tree/develop/examples/resources)
+// Resources, by Sam Deane — Source code available at [GitHub](https://github.com/sketch-hq/SketchAPI/tree/develop/examples/resources)
 //
 // This is a simple example, which illustrates how to bundle resource files
 // along with your Plugin, and access them from your code.

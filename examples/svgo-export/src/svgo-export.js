@@ -1,7 +1,7 @@
 // SVGO Export, by Ale Muñoz
 // This plugin compresses SVG assets using SVGO right after they're exported from Sketch.
 // Source code -
-// [GitHub](https://github.com/BohemianCoding/SketchAPI/tree/develop/examples/svgo-export)
+// [GitHub](https://github.com/sketch-hq/SketchAPI/tree/develop/examples/svgo-export)
 // If you have questions, comments or any feedback, file an issue on Github or
 // ping us at <developer@sketch.com>!
 
