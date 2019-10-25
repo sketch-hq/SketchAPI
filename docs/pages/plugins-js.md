@@ -13,7 +13,7 @@ excerpt: The official JavaScript API is maintained by the Sketch team and allows
 
 Plugin scripts can make full use of ES6 and the Sketch APIs. The official JavaScript API is maintained by the Sketch team and allows to access and modify the Sketch document, provide data to Sketch users and offers some basic user interface integration.
 
-> **Feedback welcome:** Let us know what you think, [file an issue](https://github.com/sketch-hq/SketchAPI/issues) for comments, suggestions and bug reports or send an email to [developer@sketch.com](mailto:developer@sketch.com).
+> **Feedback welcome:** Let us know what you think, [file an issue]({{ site.github_repo }}/issues) for comments, suggestions and bug reports or send an email to [developer@sketch.com](mailto:developer@sketch.com).
 
 ## Capabilities
 

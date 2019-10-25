@@ -24,7 +24,7 @@ Released 14 August, 2019 – [_read release notes_](https://www.sketch.com/updat
 
 - This enum makes it easier to figure out what the different options for `PointType` are.
 
-[_GitHub pull request_](https://github.com/sketch-hq/SketchAPI/pull/561)
+[_GitHub pull request_]({{ site.github_repo }}/pull/561)
 
 #### Usage
 
@@ -63,7 +63,7 @@ console.log(myLine.points[0].pointType)
 
 - `centerOnLayer` now properly repositions the viewport over a nested layer.
 
-[_GitHub pull request_](https://github.com/sketch-hq/SketchAPI/pull/562)
+[_GitHub pull request_]({{ site.github_repo }}/pull/562)
 
 ## Related resources
 

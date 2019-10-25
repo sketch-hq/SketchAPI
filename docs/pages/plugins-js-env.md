@@ -29,7 +29,7 @@ For network, I/O operations and other operations there are Node.js compatible po
 
 You can find all the official polyfills [on GitHub](https://github.com/search?q=topic%3Apolyfill+org%3Askpm&type=Repositories).
 
-> To see which modules are installed for a specific Sketch version, 50 and later, head to [`core-modules/package.json`](https://github.com/sketch-hq/SketchAPI/blob/develop/core-modules/package.json) within the Sketch API and select the release branch for the version e.g. `release/53.2`.
+> To see which modules are installed for a specific Sketch version, 50 and later, head to [`core-modules/package.json`]({{ site.github_repo }}/blob/develop/core-modules/package.json) within the Sketch API and select the release branch for the version e.g. `release/53.2`.
 
 ## Use macOS frameworks and dynamic Sketch runtime
 

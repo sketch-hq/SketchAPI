@@ -14,13 +14,13 @@ Released 05 February, 2019 – [_read release notes_](https://www.sketch.com/upd
 
 ### The document from a library will now have a proper path (either local path or the appcast URL)
 
-[_GitHub pull request_](https://github.com/sketch-hq/SketchAPI/pull/265)
+[_GitHub pull request_]({{ site.github_repo }}/pull/265)
 
 Previously when you used `library.getDocument()` the path of the Document would be undefined. It's now set correctly.
 
 ### Added `exportFormats` property on `Layer`
 
-[_GitHub pull request_](https://github.com/sketch-hq/SketchAPI/pull/280/files)
+[_GitHub pull request_]({{ site.github_repo }}/pull/280/files)
 
 You can specify `size`, `suffix`, `prefix`, and `fileFormat`, valid file formats are:
 
@@ -70,7 +70,7 @@ console.log(layer)
 
 ### Added method to get the theme of Sketch
 
-[_GitHub pull request_](https://github.com/sketch-hq/SketchAPI/pull/303)
+[_GitHub pull request_]({{ site.github_repo }}/pull/303)
 
 Sketch has 2 themes: `light` and `dark`. If your plugin has some custom UI, it should support both as well.
 
@@ -106,7 +106,7 @@ layer.exportFormats = [{ size: '2x' }]
 
 ### Add `UI.getInputFromUser` method and deprecate the other input methods
 
-[_GitHub pull request_](https://github.com/sketch-hq/SketchAPI/pull/276/files)
+[_GitHub pull request_]({{ site.github_repo }}/pull/276/files)
 
 The same UI inputs are there (`String` and `Select`) but its moved over to the method `UI.getInputFromUser`
 
@@ -154,7 +154,7 @@ UI.getInputFromUser(
 
 ### Added some `getParent*` methods on Layer
 
-[_GitHub pull request_](https://github.com/sketch-hq/SketchAPI/pull/284)
+[_GitHub pull request_]({{ site.github_repo }}/pull/284)
 
 You can use `getParentPage()`, `getParentArtboard()`, `getParentSymbolMaster()`, and `getParentShape()` to quickly access higher level components.
 
@@ -178,7 +178,7 @@ document.parent // will be undefined
 
 ### Added support for text styles
 
-[_GitHub pull request_](https://github.com/sketch-hq/SketchAPI/pull/283)
+[_GitHub pull request_]({{ site.github_repo }}/pull/283)
 
 LOTS of added functionality here.
 
@@ -195,10 +195,10 @@ LOTS of added functionality here.
   - `top`, `center`, `bottom`
 - `kerning`
   - default to `null` if there is none set
-  - _(there was an a floating point issue with the returned values but its been fixed here_ [GitHub PR](https://github.com/sketch-hq/SketchAPI/pull/322)_)_
+  - _(there was an a floating point issue with the returned values but its been fixed here_ [GitHub PR]({{ site.github_repo }}/pull/322)_)_
 - `lineHeight`
   - defaults to `null` if nothing is set
-  - You can get the default line height from the method `getDefaultLineHeight()` ([GitHub PR](https://github.com/sketch-hq/SketchAPI/pull/318))
+  - You can get the default line height from the method `getDefaultLineHeight()` ([GitHub PR]({{ site.github_repo }}/pull/318))
 - `textColor`
   - note that it can set in various formats `#000`, `#000000`, and the opacity variant `#000000FF`
 - `fontSize`
@@ -264,7 +264,7 @@ text.style
 
 ### Added some methods to store a session variable
 
-[_GitHub pull request_](https://github.com/sketch-hq/SketchAPI/pull/302)
+[_GitHub pull request_]({{ site.github_repo }}/pull/302)
 
 Session variables let you store a value which is persisted when the plugin finishes to run but is _not_ persisted when Sketch closes. It is useful when you want to keep a value between plugin's runs.
 
@@ -285,13 +285,13 @@ Settings.sessionVariable('myVar')
 
 ### Allow using setting methods even from the Run Script panel
 
-[_GitHub pull request_](https://github.com/sketch-hq/SketchAPI/pull/302)
+[_GitHub pull request_]({{ site.github_repo }}/pull/302)
 
 Previously you couldn't test anything from `'sketch/settings'` in the script panel and now you can!
 
 ### Ability to make Slices
 
-[_GitHub pull request_](https://github.com/sketch-hq/SketchAPI/pull/280/files)
+[_GitHub pull request_]({{ site.github_repo }}/pull/280/files)
 
 You can make one by:
 
@@ -317,17 +317,17 @@ const artboard = new Slice({
 
 ### `setTimeout` and all the other timeout, interval, immediate methods are now available directly, no need to polyfill them
 
-[_GitHub pull request_](https://github.com/sketch-hq/SketchAPI/pull/279/files) _(This is the probably the PR however the diff seems to be about fixing an issue with fragments_ 🤔*)*
+[_GitHub pull request_]({{ site.github_repo }}/pull/279/files) _(This is the probably the PR however the diff seems to be about fixing an issue with fragments_ 🤔*)*
 
 ### A useful new method on the `path` module to get resources in the plugin bundle
 
-[_GitHub pull request_](https://github.com/sketch-hq/SketchAPI/pull/295)
+[_GitHub pull request_]({{ site.github_repo }}/pull/295)
 
 `require('path').resourcePath(string)` returns the path to a resource in the plugin bundle or `undefined` if it doesn't exist.
 
 ### A new action was added called `LayersResized`
 
-[_GitHub pull request_](https://github.com/sketch-hq/SketchAPI/pull/323)
+[_GitHub pull request_]({{ site.github_repo }}/pull/323)
 
 The action context for this action contains two keys:
 
@@ -367,7 +367,7 @@ export function layerResizedMethod(context) {
 
 ### You can now control whether or not a property is `editable` for a Symbol Master override. Symbol instance overrides also have a property called `editabled`
 
-[_GitHub pull request_](https://github.com/sketch-hq/SketchAPI/pull/323)
+[_GitHub pull request_]({{ site.github_repo }}/pull/323)
 
 #### Usage
 
@@ -398,18 +398,18 @@ instance.overrides[0].editable
 
 ### Obj-C exceptions will be thrown as JS Errors which will reference the exception in their `nativeException` property
 
-[_GitHub pull request_](https://github.com/sketch-hq/SketchAPI/pull/324)
+[_GitHub pull request_]({{ site.github_repo }}/pull/324)
 
 ### You can now detach symbol instances recursively so that nested symbols also detach
 
-[_GitHub pull request_](https://github.com/sketch-hq/SketchAPI/pull/321)
+[_GitHub pull request_]({{ site.github_repo }}/pull/321)
 
 - `instance.detach()` will just detach the outer symbol
 - `instance.detach({recursively:true})` will detach nested symbols as well
 
 ### You can now rotate layers. In addition, you can flip them vertically or horizontally
 
-[_GitHub pull request_](https://github.com/sketch-hq/SketchAPI/pull/309)
+[_GitHub pull request_]({{ site.github_repo }}/pull/309)
 
 These can be found under the `transform` property, you can set and get them as you would expect.
 
@@ -436,7 +436,7 @@ layer.transform.rotation
 
 ### You can now get access to an Artboard's background properties
 
-[_GitHub pull request_](https://github.com/sketch-hq/SketchAPI/pull/311)
+[_GitHub pull request_]({{ site.github_repo }}/pull/311)
 
 - `background.enabled`: boolean, if the background is shown or not
 - `background.includedInExport`: boolean, if the background should be exported or if it should be transparent during the export
@@ -456,7 +456,7 @@ artboard
 
 ### `export` can now export to JSON
 
-[_GitHub pull request_](https://github.com/sketch-hq/SketchAPI/pull/306)
+[_GitHub pull request_]({{ site.github_repo }}/pull/306)
 
 #### Usage
 

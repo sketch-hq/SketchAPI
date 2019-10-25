@@ -198,4 +198,4 @@ Read more about about debugging plugins and how to make them available to others
 
 - [Debugging](/plugins/debugging)
 - [Publish a plugin](/plugins/publish-a-plugin)
-- [Example plugins](https://github.com/sketch-hq/SketchAPI/tree/develop/examples)
+- [Example plugins]({{ site.github_repo }}/tree/develop/examples)

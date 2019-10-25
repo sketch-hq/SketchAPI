@@ -14,7 +14,7 @@ Released 21 May, 2019 – [_read release notes_](https://www.sketch.com/updates/
 
 ### URL Scheme to launch a plugin to a specific command
 
-[_GitHub pull request_](https://github.com/sketch-hq/SketchAPI/pull/460)
+[_GitHub pull request_]({{ site.github_repo }}/pull/460)
 
 You can use the new URL scheme to target a particular command of your plugin:
 
@@ -103,7 +103,7 @@ The full plugin example can be found [here](https://github.com/KevinGutowski/Han
 
 ### Add `isSelected` method on a `CurvePoint`
 
-[_GitHub pull request_](https://github.com/sketch-hq/SketchAPI/pull/445)
+[_GitHub pull request_]({{ site.github_repo }}/pull/445)
 
 In case the user is currently editing a path, you can check if a curve point is selected using the `curvePoint.isSelected()` method.
 
@@ -143,7 +143,7 @@ console.log(pointSelectionArray)
 
 ### `getSelectedDocument()` previously threw an error without an open document, now returns `undefined` instead
 
-[_GitHub pull request_](https://github.com/sketch-hq/SketchAPI/pull/459)
+[_GitHub pull request_]({{ site.github_repo }}/pull/459)
 
 Babel would tranform `[nativeDocument] = NSApplication.sharedApplication().orderedDocuments()` assuming that it's a proper array but it's not, it's an `NSArray` so it would throw an error.
 
@@ -162,7 +162,7 @@ if (document) {
 
 #### Improve consistency by deprecating `Fill.fill` in favor of `Fill.fillType`
 
-[_GitHub pull request_](https://github.com/sketch-hq/SketchAPI/pull/463)
+[_GitHub pull request_]({{ site.github_repo }}/pull/463)
 
 This was done to match `Border.fileType` and other types.
 
@@ -188,7 +188,7 @@ const style = new Style({
 
 ### Some better logging of the prototype of wrapped objects
 
-[_GitHub pull request_](https://github.com/sketch-hq/SketchAPI/pull/451)
+[_GitHub pull request_]({{ site.github_repo }}/pull/451)
 
 There was a bug in the `util.inspect` algorithm (which console uses) that makes it think the prototype of a wrapped object is a wrapped object and uses the code path for wrapped object. This has been fixed for better logging output.
 

@@ -22,4 +22,4 @@ Each entry in the `exports` property of the action context is a dictionary conta
 
 ## Example
 
-For an example of this action, see [the SVGO Export Plugin](https://github.com/sketch-hq/SketchAPI/tree/develop/examples/svgo-export/)
+For an example of this action, see [the SVGO Export Plugin]({{ site.github_repo }}/tree/develop/examples/svgo-export/)

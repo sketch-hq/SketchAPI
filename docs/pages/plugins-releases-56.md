@@ -14,7 +14,7 @@ Released 23 July, 2019 – [_read release notes_](https://www.sketch.com/updates
 
 ### Added a `colorSpace` property and a `changeColorSpace` method to `Document`
 
-[_GitHub pull request_](https://github.com/sketch-hq/SketchAPI/pull/533/)
+[_GitHub pull request_]({{ site.github_repo }}/pull/533/)
 
 Sketch has 3 different color profiles: `Unmanaged`, `sRGB`, and `P3`. You can read the current color profile and set a new one. Be careful with assigning a new color profile as there are two subtle, yet impactful, ways of modifying the document: _Assign_ and _Convert_.
 
@@ -59,7 +59,7 @@ Previously, logging things like `NSRange` would return an unhelpful message and 
 
 ### Expose substring in `Text.fragment`
 
-[_GitHub pull request_](https://github.com/sketch-hq/SketchAPI/pull/492/)
+[_GitHub pull request_]({{ site.github_repo }}/pull/492/)
 
 Now there is more information about how a piece of text breaks across multiple lines.
 
@@ -110,7 +110,7 @@ console.log(myText.fragments)
 
 ### `symbolMaster.getParentSymbolMaster` used to throw an error. It will now return `undefined`
 
-[_GitHub pull request_](https://github.com/sketch-hq/SketchAPI/pull/487)
+[_GitHub pull request_]({{ site.github_repo }}/pull/487)
 
 #### Usage
 
@@ -125,7 +125,7 @@ layer.getParentSymbolMaster()
 
 ### Fix setting layers of a group when the layers already had a parent
 
-[_GitHub pull request_](https://github.com/sketch-hq/SketchAPI/pull/486)
+[_GitHub pull request_]({{ site.github_repo }}/pull/486)
 
 There was a bug with reassigning layers to a group that already had parents. You would need to first remove the parent before assigning the layers to a group.
 
@@ -162,7 +162,7 @@ let myGroup = new Group({
 
 ### Changing the `pointType` of a CurvePoint wouldn't always restore the control points
 
-[_GitHub pull request_](https://github.com/sketch-hq/SketchAPI/pull/481)
+[_GitHub pull request_]({{ site.github_repo }}/pull/481)
 
 There was a bug with setting the `pointType` of a line. This made it so that you could only create straight lines rather than curved ones.
 
@@ -212,7 +212,7 @@ let path = new ShapePath({
 
 ### Added multiline functionality to string inputs on `UI.getInputFromUser`
 
-[_GitHub pull request_](https://github.com/sketch-hq/SketchAPI/pull/475)
+[_GitHub pull request_]({{ site.github_repo }}/pull/475)
 
 Previously you could only ask for a single line of input from a user via the JS API. Now you can specify a number of lines so that users can input larger amounts of text.
 
@@ -241,7 +241,7 @@ UI.getInputFromUser(
 
 ### `ShapeType.Rectangle` used to be defaulted even if some points are specified when create a new ShapePath
 
-[_GitHub pull request_](https://github.com/sketch-hq/SketchAPI/pull/475)
+[_GitHub pull request_]({{ site.github_repo }}/pull/475)
 
 Previously, you couldn't draw a proper line with the API (you could get close but it didn't quite behave the same as a line that you could draw in Sketch). This has been now fixed.
 
@@ -282,7 +282,7 @@ console.log(myLine.shapeType)
 
 ### Improve consistency by deprecating `Fill.fill` in favor of `Fill.fileType`
 
-[_GitHub pull request_](https://github.com/sketch-hq/SketchAPI/pull/463)
+[_GitHub pull request_]({{ site.github_repo }}/pull/463)
 
 This change was made to match `Border.fileType` and other types
 
@@ -311,7 +311,7 @@ console.log(style.fills[0])
 
 ### Added a Find Method to easily query a scope of a document
 
-[_GitHub pull request_](https://github.com/sketch-hq/SketchAPI/pull/357)
+[_GitHub pull request_]({{ site.github_repo }}/pull/357)
 
 Last but not least is a new way to find objects that meet various criteria. It's somewhat similar to jquery selectors. The find method can take two arguments:
 
