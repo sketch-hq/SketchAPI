@@ -1,4 +1,4 @@
 [build]
 	base    = "docs-website"
-	publish = "docs-website/_site"
+	publish = "_site"
 	command = "bundle install && jekyll build"
