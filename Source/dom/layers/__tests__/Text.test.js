@@ -106,7 +106,7 @@ if (!isRunningOnJenkins()) {
     })
     expect(fragments[0].text).toBe('blah')
 
-    // https://github.com/BohemianCoding/SketchAPI/issues/144
+    // https://github.com/sketch-hq/SketchAPI/issues/144
     text = new Text({
       text: 'Test\nHello\n123\no',
     })

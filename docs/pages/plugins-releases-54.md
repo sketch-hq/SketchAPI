@@ -14,7 +14,7 @@ Released 09 April, 2019 – [_read release notes_](https://www.sketch.com/update
 
 ### `colors` and `gradients` properties have been added on Document and `globalAssets`
 
-_GitHub pull request [#345](https://github.com/BohemianCoding/SketchAPI/pull/345) and [#398](https://github.com/BohemianCoding/SketchAPI/pull/398)_
+_GitHub pull request [#345](https://github.com/sketch-hq/SketchAPI/pull/345) and [#398](https://github.com/sketch-hq/SketchAPI/pull/398)_
 
 - `sketch.globalAssets` property was added
 - Two new asset types were added
@@ -139,7 +139,7 @@ let documentGradients = selectedDocument.gradients
 
 ### Shared styles are now `document` properties and can be mutated
 
-[_GitHub pull request_](https://github.com/BohemianCoding/SketchAPI/pull/360/files)
+[_GitHub pull request_](https://github.com/sketch-hq/SketchAPI/pull/360/files)
 
 Two new properties on `document` (try not to get them mixed up as the styles are subtly different!)
 
@@ -207,7 +207,7 @@ selectedDocument.sharedTextStyles.push({
 
 ### `layer.index` can now be set
 
-[_GitHub pull request_](https://github.com/BohemianCoding/SketchAPI/pull/399)
+[_GitHub pull request_](https://github.com/sketch-hq/SketchAPI/pull/399)
 
 You can set the index of the layer to move it in the hierarchy. Note that you also have `layer.moveToFront()`, `layer.moveForward()`, `layer.moveToBack()`, and `layer.moveBackward()`
 
@@ -238,7 +238,7 @@ console.log(group1.index, group2.index, group3.index)
 
 ### `aspectRatio` property has been added to `Gradient`
 
-[_GitHub pull request_](https://github.com/BohemianCoding/SketchAPI/pull/396)
+[_GitHub pull request_](https://github.com/sketch-hq/SketchAPI/pull/396)
 
 When the gradient is `Radial`, the `from` and `to` points makes one axis of the ellipse of the gradient while the aspect ratio determines the length of the orthogonal axis (`aspectRatio === 1` means that it’s a circle).
 
@@ -283,7 +283,7 @@ let myShape = new ShapePath({
 
 ### `selected` property and `getFrame` method have been added on an symbol override
 
-[_GitHub pull request_](https://github.com/BohemianCoding/SketchAPI/pull/394)
+[_GitHub pull request_](https://github.com/sketch-hq/SketchAPI/pull/394)
 
 The frame of an override can be different than the frame of its affected Layer in case where the Symbol Instance has been scaled or, in the case of the example below, the text value is changed for the symbol instance resulting in a shorter frame.
 
@@ -342,7 +342,7 @@ symbolInstance.overrides[0].getFrame().width
 
 ### `layer.duplicate` now works on a layer with no parent
 
-[_GitHub pull request_](https://github.com/BohemianCoding/SketchAPI/pull/379)
+[_GitHub pull request_](https://github.com/sketch-hq/SketchAPI/pull/379)
 
 Previously you needed to have a parent in order to duplicate the layer. Now you are free to do so without working around this.
 
@@ -380,13 +380,13 @@ rectangle2.parent = page
 
 ### `symbolInstance.master` now works on an immutable instance
 
-[_GitHub pull request_](https://github.com/BohemianCoding/SketchAPI/pull/390)
+[_GitHub pull request_](https://github.com/sketch-hq/SketchAPI/pull/390)
 
 If you ever got an `MSImmutableSymbolInstance` object and attempted to wrap the native sketch object then you would have previously gotten an error. It has now been fixed.
 
 ### You can now remove flow targets with setting `flow` as `undefined` on a Layer
 
-[_GitHub pull request_](https://github.com/BohemianCoding/SketchAPI/pull/373)
+[_GitHub pull request_](https://github.com/sketch-hq/SketchAPI/pull/373)
 
 Previously you couldn't remove a flow target. Now you can!
 
@@ -423,7 +423,7 @@ rect.flow = undefined
 
 ### `pattern` properties have been added to Fill
 
-[_GitHub pull request_](https://github.com/BohemianCoding/SketchAPI/pull/363)
+[_GitHub pull request_](https://github.com/sketch-hq/SketchAPI/pull/363)
 
 Previously this also applied to the `noise` property as well but Sketch has depreciated the noise fill option in favor of having the noise patterns be image fills.
 
@@ -465,19 +465,19 @@ let rectangle = new ShapePath({
 
 ### An image buffer can now be used with `ImageData`
 
-[_GitHub pull request_](https://github.com/BohemianCoding/SketchAPI/pull/372)
+[_GitHub pull request_](https://github.com/sketch-hq/SketchAPI/pull/372)
 
 This change helps with the next one (Export now returns a buffer if output is false)
 
 ### `export` now returns a Buffer if `options.output` is `false` and `options.formats` is an image format
 
-[_GitHub pull request_](https://github.com/BohemianCoding/SketchAPI/pull/361)
+[_GitHub pull request_](https://github.com/sketch-hq/SketchAPI/pull/361)
 
 If you ever wanted to get at the thumbnail preview image data when something is marked for export you can do so with this new API functionality.
 
 ![Sketch's image export thumbnail highlighted](https://user-images.githubusercontent.com/1228472/39345492-46fb46f0-4a1b-11e8-8f5b-6e6aea73dffd.png)
 
-See [this issue](https://github.com/BohemianCoding/SketchAPI/issues/185) for more info why this was added.
+See [this issue](https://github.com/sketch-hq/SketchAPI/issues/185) for more info why this was added.
 
 #### Quick Summary of Sketch's export options
 
@@ -521,7 +521,7 @@ const buffer = sketch.export(rectangle, options)
 
 ### `getSelectedDocument` will try harder to find your document
 
-[_GitHub pull request_](https://github.com/BohemianCoding/SketchAPI/pull/363)
+[_GitHub pull request_](https://github.com/sketch-hq/SketchAPI/pull/363)
 
 If you are using [SKPM](https://github.com/skpm/skpm), SKPM defines `context` as a global so it will prefer to use that first. If there is no current document (via `NSDocumentController.sharedDocumentController().currentDocument()` then Sketch will attempt to use `NSApplication.sharedApplication().orderedDocuments()`. Ultimately, you don't really need to know too much about these underlying changes but it is useful to know that `.getSelectedDocument()` should work reliabily. If its not, be sure to file an issue.
 
@@ -531,7 +531,7 @@ Use `console.clear()` to clean up your console.
 
 ### `selectedPage` and `selectedLayers` can now be set on the Document
 
-[_GitHub pull request_](https://github.com/BohemianCoding/SketchAPI/pull/371)
+[_GitHub pull request_](https://github.com/sketch-hq/SketchAPI/pull/371)
 
 Previously these were read-only properties. However, now you can pass in a layer or a page to these objects to set them.
 
@@ -581,7 +581,7 @@ document.selectedPage = newPage
 
 ### Add some methods to deal with the Symbols Page
 
-[_GitHub pull request_](https://github.com/BohemianCoding/SketchAPI/pull/377)
+[_GitHub pull request_](https://github.com/sketch-hq/SketchAPI/pull/377)
 
 The "Symbols" page is similar to other pages. The only way it is specific is when creating a Symbol, Sketch will ask the user if they want to move it to that page. You can put Symbols in any page but if you want to respect the convention Sketch put in place, here are a few methods to help you do so.
 

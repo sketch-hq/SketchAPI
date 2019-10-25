@@ -10,7 +10,7 @@ excerpt: The manifest is a JSON file that provides information about a plugin su
 
 The manifest is a JSON file that provides information about a plugin such as author, description, icon and where to get the latest update from. It also tells Sketch how to run the plugin and how it integrates into the _Plugins_ menu.
 
-> **Tip:** Validate your `manifest.json` using the [JSON Schema](https://github.com/BohemianCoding/SketchAPI/blob/develop/docs/sketch-plugin-manifest-schema.json).
+> **Tip:** Validate your `manifest.json` using the [JSON Schema](https://github.com/sketch-hq/SketchAPI/blob/develop/docs/sketch-plugin-manifest-schema.json).
 
 ## Example manifest
 

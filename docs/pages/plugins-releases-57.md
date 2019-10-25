@@ -15,17 +15,19 @@ Released 14 August, 2019 – [_read release notes_](https://www.sketch.com/updat
 ### Exposed `PointType` enum on `ShapePath`
 
 #### More details
+
 - Quick refresher, `PointType` is referring to how the Bezier handles behave at a point.
 
   <img src="/images/developer/plugin-releases-57-point-type.png"
      alt="Point Types in Sketch's UI"
      width="626" />
 
--  This enum makes it easier to figure out what the different options for `PointType` are.
+- This enum makes it easier to figure out what the different options for `PointType` are.
 
-[_GitHub pull request_](https://github.com/BohemianCoding/SketchAPI/pull/561)
+[_GitHub pull request_](https://github.com/sketch-hq/SketchAPI/pull/561)
 
 #### Usage
+
 ```javascript
 let sketch = require('sketch')
 let ShapePath = sketch.ShapePath
@@ -42,10 +44,13 @@ let straight = PointType.Straight
 
 let myLine = new sketch.ShapePath({
   name: 'myLine',
-  frame: {x: 10, y: 0, width: 40, height: 100},
+  frame: { x: 10, y: 0, width: 40, height: 100 },
   style: { borders: ['#FF0000'] },
-  points: [{ point: { x: 0, y: 0 }, pointType: straight}, { point: { x: 1, y: 1 }, pointType: straight}],
-  closed: false
+  points: [
+    { point: { x: 0, y: 0 }, pointType: straight },
+    { point: { x: 1, y: 1 }, pointType: straight },
+  ],
+  closed: false,
 })
 
 console.log(myLine.points[0].pointType)
@@ -55,10 +60,10 @@ console.log(myLine.points[0].pointType)
 ### Fixed `centerOnLayer` for nested layers
 
 #### More details
+
 - `centerOnLayer` now properly repositions the viewport over a nested layer.
 
-
-[_GitHub pull request_](https://github.com/BohemianCoding/SketchAPI/pull/562)
+[_GitHub pull request_](https://github.com/sketch-hq/SketchAPI/pull/562)
 
 ## Related resources
 

@@ -13,7 +13,7 @@ The API itself is still under development, and should not be regarded as complet
 
 It's getting there however, and if you're starting to work on new plugins, you may want to consider trying it out.
 
-Over the next few releases we'll be developing the API further, updating all of our existing [plugin examples](https://github.com/BohemianCoding/SketchAPI/tree/develop/examples/) to use the API, and also adding some new examples.
+Over the next few releases we'll be developing the API further, updating all of our existing [plugin examples](https://github.com/sketch-hq/SketchAPI/tree/develop/examples/) to use the API, and also adding some new examples.
 
 ## NSAppTransportSecurity
 

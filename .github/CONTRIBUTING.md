@@ -45,13 +45,13 @@ Before creating bug reports, please check [this list](#before-submitting-a-bug-r
 
 #### Before Submitting A Bug Report
 
-**Perform a [cursory search](https://github.com/BohemianCoding/SketchAPI/labels/bug)** to see if the problem has already been reported. If it does exist, add a :thumbsup: to the issue to indicate this is also an issue for you, and add a comment to the existing issue if there is extra information you can contribute.
+**Perform a [cursory search](https://github.com/sketch-hq/SketchAPI/labels/bug)** to see if the problem has already been reported. If it does exist, add a :thumbsup: to the issue to indicate this is also an issue for you, and add a comment to the existing issue if there is extra information you can contribute.
 
 #### How Do I Submit A (Good) Bug Report?
 
 Bugs are tracked as [GitHub issues](https://guides.github.com/features/issues/).
 
-Simply create an issue on the [Sketch API issue tracker](https://github.com/BohemianCoding/SketchAPI/issues).
+Simply create an issue on the [Sketch API issue tracker](https://github.com/sketch-hq/SketchAPI/issues).
 
 The information we are interested in includes:
 
@@ -67,13 +67,13 @@ Before creating enhancement suggestions, please check [this list](#before-submit
 
 #### Before Submitting An Enhancement Suggestion
 
-**Perform a [cursory search](https://github.com/BohemianCoding/SketchAPI/labels/enhancement)** to see if the enhancement has already been suggested. If it has, add a :thumbsup: to indicate your interest in it, or comment if there is additional information you would like to add.
+**Perform a [cursory search](https://github.com/sketch-hq/SketchAPI/labels/enhancement)** to see if the enhancement has already been suggested. If it has, add a :thumbsup: to indicate your interest in it, or comment if there is additional information you would like to add.
 
 #### How Do I Submit A (Good) Enhancement Suggestion?
 
 Enhancement suggestions are tracked as [GitHub issues](https://guides.github.com/features/issues/).
 
-Simply create an issue on the [Sketch issue tracker](https://github.com/BohemianCoding/SketchAPI/issues) and provide the following information:
+Simply create an issue on the [Sketch issue tracker](https://github.com/sketch-hq/SketchAPI/issues) and provide the following information:
 
 - **Use a clear and descriptive title** for the issue to identify the suggestion.
 - **Provide a step-by-step description of the suggested enhancement** in as much detail as possible. This additional context helps the maintainers to understand the enhancement from your perspective
@@ -90,7 +90,7 @@ As part of building the Sketch API, we'll identify tasks that are good for exter
 - have a narrow scope and/or easy reproduction steps
 - can be worked on independent of other tasks
 
-These issues will be labelled as [`help wanted`](https://github.com/BohemianCoding/SketchAPI/labels/help%20wanted) in the repository. If you are interested in contributing to the project, please comment on the issue to let the core team (and the community) know you are interested in the issue.
+These issues will be labelled as [`help wanted`](https://github.com/sketch-hq/SketchAPI/labels/help%20wanted) in the repository. If you are interested in contributing to the project, please comment on the issue to let the core team (and the community) know you are interested in the issue.
 
 ## Additional Notes
 
@@ -100,26 +100,26 @@ This section lists the labels we use to help us track and manage issues and pull
 
 #### Type of Issue and Issue State
 
-| Label name                | :mag_right:                                                                          | Description                                                                                                |
-| ------------------------- | ------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------- |
-| `enhancement`             | [search](https://github.com/BohemianCoding/SketchAPI/labels/enhancement)             | Feature requests.                                                                                          |
-| `bug`                     | [search](https://github.com/BohemianCoding/SketchAPI/labels/bug)                     | Confirmed bugs or reports that are very likely to be bugs.                                                 |
-| `more-information-needed` | [search](https://github.com/BohemianCoding/SketchAPI/labels/more-information-needed) | More information needs to be collected about these problems or feature requests (e.g. steps to reproduce). |
-| `needs-reproduction`      | [search](https://github.com/BohemianCoding/SketchAPI/labels/needs-reproduction)      | Likely bugs, but haven't been reliably reproduced.                                                         |
-| `discussion`              | [search](https://github.com/BohemianCoding/SketchAPI/labels/discussion)              | Request for comments or questions, you are more than welcome to chip in!                                   |
+| Label name | :mag_right: | Description |
+| --- | --- | --- |
+| `enhancement` | [search](https://github.com/sketch-hq/SketchAPI/labels/enhancement) | Feature requests. |
+| `bug` | [search](https://github.com/sketch-hq/SketchAPI/labels/bug) | Confirmed bugs or reports that are very likely to be bugs. |
+| `more-information-needed` | [search](https://github.com/sketch-hq/SketchAPI/labels/more-information-needed) | More information needs to be collected about these problems or feature requests (e.g. steps to reproduce). |
+| `needs-reproduction` | [search](https://github.com/sketch-hq/SketchAPI/labels/needs-reproduction) | Likely bugs, but haven't been reliably reproduced. |
+| `discussion` | [search](https://github.com/sketch-hq/SketchAPI/labels/discussion) | Request for comments or questions, you are more than welcome to chip in! |
 
 #### Topics
 
-| Label name           | :mag_right:                                                                     | Description                                                                         |
-| -------------------- | ------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
-| `help wanted`        | [search](https://github.com/BohemianCoding/SketchAPI/labels/help%20wanted)      | Issues marked as ideal for external contributors.                                   |
-| `tech-debt`          | [search](https://github.com/BohemianCoding/SketchAPI/labels/tech-debt)          | Issues related to code or architecture decisions.                                   |
-| `needs-design-input` | [search](https://github.com/BohemianCoding/SketchAPI/labels/needs-design-input) | Issues that require design input from the core team before the work can be started. |
+| Label name | :mag_right: | Description |
+| --- | --- | --- |
+| `help wanted` | [search](https://github.com/sketch-hq/SketchAPI/labels/help%20wanted) | Issues marked as ideal for external contributors. |
+| `tech-debt` | [search](https://github.com/sketch-hq/SketchAPI/labels/tech-debt) | Issues related to code or architecture decisions. |
+| `needs-design-input` | [search](https://github.com/sketch-hq/SketchAPI/labels/needs-design-input) | Issues that require design input from the core team before the work can be started. |
 
 #### Scope
 
-| Label name | :mag_right:                                                         | Description                                         |
-| ---------- | ------------------------------------------------------------------- | --------------------------------------------------- |
-| `api`      | [search](https://github.com/BohemianCoding/SketchAPI/labels/api)    | Issues that are impacting the API itself.           |
-| `docs`     | [search](https://github.com/BohemianCoding/SketchAPI/labels/docs)   | Issues that are impacting the documentation.        |
-| `guides`   | [search](https://github.com/BohemianCoding/SketchAPI/labels/guides) | Issues that are impacting the guides and tutorials. |
+| Label name | :mag_right: | Description |
+| --- | --- | --- |
+| `api` | [search](https://github.com/sketch-hq/SketchAPI/labels/api) | Issues that are impacting the API itself. |
+| `docs` | [search](https://github.com/sketch-hq/SketchAPI/labels/docs) | Issues that are impacting the documentation. |
+| `guides` | [search](https://github.com/sketch-hq/SketchAPI/labels/guides) | Issues that are impacting the guides and tutorials. |

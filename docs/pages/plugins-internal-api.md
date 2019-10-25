@@ -14,7 +14,7 @@ For a deeper integration with Sketch, the internal APIs provides access to almos
 >
 > Sketch does not provide an API reference nor support for the internal API. If you're using the internal APIs make sure to test your plugin with the [pre-release versions](https://sketch.com/beta) of Sketch.
 >
-> We recommend using the [JavaScript API](/plugins/javascript-api) where possible. Something is missing? Please [submit feedback and feature requests](https://github.com/BohemianCoding/SketchAPI/issues).
+> We recommend using the [JavaScript API](/plugins/javascript-api) where possible. Something is missing? Please [submit feedback and feature requests](https://github.com/sketch-hq/SketchAPI/issues).
 
 ---
 

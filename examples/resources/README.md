@@ -1,15 +1,15 @@
 # Resources
 
-This is a simple example, which illustrates how to bundle resource files along with your Plugin, and access them from your code. Note the `skpm.assets` field in the [package.json](https://github.com/BohemianCoding/SketchAPI/tree/develop/examples/resources/package.json) which is telling `skpm` to bundle all the files in the ["assets" folder](https://github.com/BohemianCoding/SketchAPI/tree/develop/examples/resources/assets) into the plugin.
+This is a simple example, which illustrates how to bundle resource files along with your Plugin, and access them from your code. Note the `skpm.assets` field in the [package.json](https://github.com/sketch-hq/SketchAPI/tree/develop/examples/resources/package.json) which is telling `skpm` to bundle all the files in the ["assets" folder](https://github.com/sketch-hq/SketchAPI/tree/develop/examples/resources/assets) into the plugin.
 
 _This plugin was created using `skpm`. For a detailed explanation on how things work, checkout the [skpm Readme](https://github.com/skpm/skpm/blob/master/README.md)._
 
 ## Usage
 
-Download the example or [clone the repo](https://github.com/BohemianCoding/SketchAPI):
+Download the example or [clone the repo](https://github.com/sketch-hq/SketchAPI):
 
 ```bash
-curl https://codeload.github.com/BohemianCoding/SketchAPI/tar.gz/develop | tar -xz --strip=2 SketchAPI-develop/examples/resources
+curl https://codeload.github.com/sketch-hq/SketchAPI/tar.gz/develop | tar -xz --strip=2 SketchAPI-develop/examples/resources
 cd resources
 ```
 
@@ -41,9 +41,9 @@ npm run start
 
 To view the output of your `console.log`, you have a few different options:
 
-* Use the [`sketch-dev-tools`](https://github.com/skpm/sketch-dev-tools)
-* Open `Console.app` and look for the sketch logs
-* Look at the `~/Library/Logs/com.bohemiancoding.sketch3/Plugin Output.log` file
+- Use the [`sketch-dev-tools`](https://github.com/skpm/sketch-dev-tools)
+- Open `Console.app` and look for the sketch logs
+- Look at the `~/Library/Logs/com.bohemiancoding.sketch3/Plugin Output.log` file
 
 Skpm provides a convenient way to do the latter:
 
