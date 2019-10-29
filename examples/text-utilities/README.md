@@ -6,19 +6,19 @@ This plugin provides some debugging tools which annotate text layers to show whe
 
 The plugin illustrates a few techniques:
 
-* iterating over the selected layers
-* iterating over the position of each line in a text layer
-* creating new layers
-* defining multiple commands in a single plugin
+- iterating over the selected layers
+- iterating over the position of each line in a text layer
+- creating new layers
+- defining multiple commands in a single plugin
 
 _This plugin was created using `skpm`. For a detailed explanation on how things work, checkout the [skpm Readme](https://github.com/skpm/skpm/blob/master/README.md)._
 
 ## Usage
 
-Download the example or [clone the repo](https://github.com/BohemianCoding/SketchAPI):
+Download the example or [clone the repo](https://github.com/sketch-hq/SketchAPI):
 
 ```bash
-curl https://codeload.github.com/BohemianCoding/SketchAPI/tar.gz/develop | tar -xz --strip=2 SketchAPI-develop/examples/text-utilities
+curl https://codeload.github.com/sketch-hq/SketchAPI/tar.gz/develop | tar -xz --strip=2 SketchAPI-develop/examples/text-utilities
 cd text-utilities
 ```
 
@@ -50,9 +50,9 @@ npm run start
 
 To view the output of your `console.log`, you have a few different options:
 
-* Use the [`sketch-dev-tools`](https://github.com/skpm/sketch-dev-tools)
-* Open `Console.app` and look for the sketch logs
-* Look at the `~/Library/Logs/com.bohemiancoding.sketch3/Plugin Output.log` file
+- Use the [`sketch-dev-tools`](https://github.com/skpm/sketch-dev-tools)
+- Open `Console.app` and look for the sketch logs
+- Look at the `~/Library/Logs/com.bohemiancoding.sketch3/Plugin Output.log` file
 
 Skpm provides a convenient way to do the latter:
 

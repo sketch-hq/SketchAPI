@@ -109,7 +109,7 @@ test('should get the borders', () => {
   })
 })
 
-// https://github.com/BohemianCoding/SketchAPI/issues/230
+// https://github.com/sketch-hq/SketchAPI/issues/230
 test('should set the borders with 0s', () => {
   const style = new Style({
     borders: [

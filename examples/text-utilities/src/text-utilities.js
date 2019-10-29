@@ -1,5 +1,5 @@
 /* eslint-disable no-new */
-// Text Utilities, by Johnnie Walker — Source code available at [GitHub](https://github.com/BohemianCoding/SketchAPI/tree/develop/examples/text-utilities)
+// Text Utilities, by Johnnie Walker — Source code available at [GitHub](https://github.com/sketch-hq/SketchAPI/tree/develop/examples/text-utilities)
 //
 // This plugin provides some debugging tools which annotate text layers to show where their baselines and bounding boxes are.
 

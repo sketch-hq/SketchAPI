@@ -1,4 +1,4 @@
-// Hello World, by Sam Deane — Source code available at [GitHub](https://github.com/BohemianCoding/SketchAPI/tree/develop/examples/hello-world)
+// Hello World, by Sam Deane — Source code available at [GitHub](https://github.com/sketch-hq/SketchAPI/tree/develop/examples/hello-world)
 //
 // This is an extremely simple plugin example, which illustrates how to add a menu command to the Plugins menu
 // and execute some code when it is selected.
