@@ -11,6 +11,8 @@ excerpt: Detach symbols from a Sketch document
 Detach symbols from their symbol masters in a Sketch document with `sketchtool`. Recursively detaches symbols,
 adds original symbol master ID's and symbol instance details to the layers userInfo.
 
+[Read more about working with symbols here](https://www.sketch.com/docs/symbols/)
+
 ```sh
 sketchtool detach /path/to/document.sketch
 ```
