@@ -63,6 +63,10 @@ provide the command in the `.skpmrc` notarization settings:
 
 1. Create a ZIP archive of your `.sketchplugin` bundle including native frameworks or binaries.
 
+   ```
+   /usr/bin/ditto -c -k --keepParent path/to/select-shapes.sketchplugin path/to/select-shapes.sketchplugin-1.0.zip
+   ```
+
 1. Submit the ZIP archive to Apple for notarization. The identifier can be _anything you want_, as long as it is unique and makes sense to you (Apple only uses the identifier in their status reports).
 
    ```bash
