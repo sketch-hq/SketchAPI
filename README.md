@@ -182,3 +182,4 @@ We would like to thank:
 - [Gus Mueller](https://github.com/ccgus) for [Cocoascript](https://github.com/ccgus/CocoaScript), which powers our plugin engine.
 - [Andrey Shakhmin](https://github.com/turbobabr), for his inspiration during the [Hamburg Hackathon](http://designtoolshackday.com), where he showed us a clean way to use node modules inside Sketch.
 - The Sketch plugin community everywhere, for such awesome work.
+- Jelle :troll:
