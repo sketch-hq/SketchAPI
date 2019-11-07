@@ -2,3 +2,4 @@
 	base    = "docs-website"
 	publish = "_site"
 	command = "bundle install && jekyll build"
+	ignore = "exit 1"
