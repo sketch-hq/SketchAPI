@@ -60,6 +60,8 @@ sketch.UI.message('Hello Sketch 👋')
 
 ### Publish a plugin
 
+Bump
+
 Use the Sketch Plugin Manager `skpm` to publish a new plugin or an update of an existing one. This adds your plugin automatically to the [Sketch Plugin Directory](https://github.com/sketchplugins/plugin-directory) for review before being listed on the [Sketch website](https://sketch.com/extensions/plugins).
 
 ### Export assets automatically
