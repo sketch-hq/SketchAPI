@@ -117,4 +117,4 @@ You can create the `AC_PASSWORD` keychain item using the command line, or the `K
 
 ## Related resources
 
-- [Notarizing Your App Before Distribution](https://developer.apple.com/documentation/xcode/notarizing_your_app_before_distribution) at Apple Developer Documentation
+- [Notarizing Your App Before Distribution](https://developer.apple.com/documentation/xcode/notarizing_your_app_before_distribution) at Apple Developer Documentation.
