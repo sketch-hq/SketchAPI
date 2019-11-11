@@ -22,6 +22,24 @@ Archive the contents of a document folder with `zip`.
 zip -r -X document.sketch *
 ```
 
+## JSON Schema
+
+The [JSON Schema](https://github.com/sketch-hq/sketch-file-format) based specification describes how Sketch documents are stored on disk, and how this changes from version to version.
+
+We hope this helps everyone building low level integrations of Sketch, such as server and command line applications that create and maniupulate Sketch files outside the Mac app.
+
+## Typescript types
+
+The TypeScript [types](https://github.com/sketch-hq/sketch-file-format-ts) model Sketch file JSON, and are automatically generated from the file format [json schema](/file-format/reference/json-schema) specification.
+
+The types will allow you to strongly type representations and fragments of Sketch documents in TypeScript projects.
+
+## Reference files
+
+The [Reference Files](https://github.com/sketch-hq/sketch-reference-files) are a store of automatically generated Sketch file JSON organised by document version and Sketch feature.
+
+The reference file JSON can be accessed from the repo, installed from npm or downloaded over HTTP and should provide a valuable resource when there's a requirement to automate tests or analysis of real Sketch file fixtures.
+
 ## Folder structure
 
 ### **`meta.json`**

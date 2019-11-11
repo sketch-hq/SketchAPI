@@ -16,17 +16,17 @@ masthead_cards:
     description: Extend and customize the functionality of Sketch using JavaScript or Objective-C. Modify the document using Sketch’s APIs, add your own user interface, and integrate Sketch with your product or other applications.
     link_label: View documentation
     link: /plugins
-  - icon: /images/icons/48/icon-cli-light.svg
-    title: CLI
-    description: Use the `sketchtool` command-line interface to export assets, inspect documents and run plugins.
-    link_label: View documentation
-    link: /cli
-
-masthead_links:
   - icon: /images/icons/48/icon-file-format.svg
     title: Sketch file format
     description: Generate, modify and process Sketch files directly with the open JSON file format.
     link: /file-format
+    link_label: View documentation
+
+masthead_links:
+  - icon: /images/icons/48/icon-cli-light.svg
+    title: CLI
+    description: Use the `sketchtool` command-line interface to export assets, inspect documents and run plugins.
+    link: /cli
   - icon: /images/icons/48/icon-sketch.svg
     title: Sketch.app
     description: Integrate Sketch into your workflows with the `sketch://` URL scheme.
