@@ -16,7 +16,7 @@ Specify the path to the plugin and the command identifier as defined in the [plu
 sketchtool run ~/Library/Application\ Support/com.bohemiancoding.sketch3/Plugins/select-shapes.sketchplugin rectangles
 ```
 
-If you don't specify a command identfier the first command in the bundle will be used. If you don't want Sketch to become the front-most window use the `--without-activating` command-line argeument.
+If you don't specify a command identfier the first command in the bundle will be used. If you don't want Sketch to become the front-most window use the `--without-activating` command-line argument.
 
 > **Note:** This command requires Sketch to be installed with a valid licence as the plugin is run within the Sketch environment.
 
