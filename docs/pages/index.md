@@ -18,7 +18,7 @@ masthead_cards:
     link: /plugins
   - icon: /images/icons/48/icon-file-format.svg
     title: Sketch file format
-    description: Generate, modify and process Sketch files directly with the open JSON file format.
+    description: Integrate Sketch into your existing workflows, server applications, on any platform. Generate, modify and process Sketch files directly with the open JSON file format.
     link: /file-format
     link_label: View documentation
 
