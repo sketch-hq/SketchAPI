@@ -25,7 +25,7 @@ masthead_cards:
 masthead_links:
   - icon: /images/icons/48/icon-cli-light.svg
     title: CLI
-    description: Use the `sketchtool` command-line interface to export assets, inspect documents and run plugins.
+    description: Export assets, inspect documents and run plugins using `sketchtool`.
     link: /cli
   - icon: /images/icons/48/icon-sketch.svg
     title: Sketch.app
