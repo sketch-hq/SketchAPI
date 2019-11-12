@@ -26,13 +26,13 @@ zip -r -X document.sketch *
 
 The [JSON Schema](https://github.com/sketch-hq/sketch-file-format) based specification describes how Sketch documents are stored on disk, and how this changes from version to version.
 
-Build low level integrations of Sketch such as server and command-line applications. Read and generate…
+Build low level integrations of Sketch such as server and command-line applications using the specification as reference material. Go further and use the JSON Schema themselves to generate types and model code, or validate Sketch documents you programmatically create or manipulate.
 
 ## Typescript types
 
 The TypeScript [types](https://github.com/sketch-hq/sketch-file-format-ts) model Sketch file JSON, and are automatically generated from the file format [json schema](/file-format/reference/json-schema) specification.
 
-The types will allow you to strongly type representations and fragments of Sketch documents in TypeScript projects.
+Strongly type data representing Sketch document objects, such as layers and artboards in TypeScript projects.
 
 ## Reference files
 
