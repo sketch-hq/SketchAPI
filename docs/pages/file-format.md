@@ -26,7 +26,7 @@ zip -r -X document.sketch *
 
 The [JSON Schema](https://github.com/sketch-hq/sketch-file-format) based specification describes how Sketch documents are stored on disk, and how this changes from version to version.
 
-We hope this helps everyone building low level integrations of Sketch, such as server and command line applications that create and maniupulate Sketch files outside the Mac app.
+Build low level integrations of Sketch such as server and command-line applications. Read and generate…
 
 ## Typescript types
 
