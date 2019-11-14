@@ -5,47 +5,32 @@ chapter: Command-line interface
 permalink: /cli/detach
 
 order: 104
-excerpt: Detach symbols from a Sketch document
+excerpt: Detach all symbol and style instances within a Sketch document.
 ---
 
-Detach symbols from their symbol masters in a Sketch document with `sketchtool`. Recursively detaches symbols,
-adds original symbol master ID's and symbol instance details to the layers userInfo.
+Turn all symbol and style instances within a Sketch document into self-contained layers and layer groups using `sketchtool detach`.
 
-[Read more about working with symbols here](https://www.sketch.com/docs/symbols/)
+This creates a self-contained Sketch document, applying and detaching:
+
+- [Layer Styles](https://www.sketch.com/docs/styling/shared-styles/)
+- [Text Styles](https://www.sketch.com/docs/text/text-styles/)
+- [Symbols](https://www.sketch.com/docs/symbols/)
+- [Library Styles](https://www.sketch.com/docs/libraries/library-styles)
+- [Library Symbols](https://www.sketch.com/docs/libraries/library-symbols)
 
 ```sh
-sketchtool detach /path/to/document.sketch
+sketchtool detach [--output=/path/to/detached.sketch] /path/to/document.sketch
 ```
 
-### Original
+#### `--output=/path/to/detached.sketch`
 
-Snippet showing a symbol instance
-
-```json
-{
-  "layers": [
-    {
-      "_class": "symbolInstance",
-      "do_objectID": "0A01E27B-27DF-433A-BE21-76C08564AF4E",
-      "frame": {
-        "_class": "rect",
-        "constrainProportions": false,
-        "height": 100,
-        "width": 300,
-        "x": 0,
-        "y": 0
-      },
-      ...
-      "symbolID": "BD7700E0-DDFA-4352-824F-8364A5F4BA4D",
-    },
-    ...
-  ]
-}
-```
+- **Optional**
+- **Format:** Path to file
+- **Default:** If not present, overwrite source file
 
 ### Output
 
-The original symbol details are added to the layers' userInfo
+Copy of the source Sketch document at the provided output location. Detached Symbol Layers include custom data in `userInfo` for the `com.bohemiancoding.sketchtool.detach` key, describing what symbol the layer has previously been an instance of.
 
 ```json
 {
@@ -78,3 +63,12 @@ The original symbol details are added to the layers' userInfo
   ]
 }
 ```
+
+> **Note:** Layers Groups created from a detached Symbol Instance may have different a position or dimensions. The custom data `frame` attribute contains the orginal value of the instance before it got detached.
+
+### Related resources
+
+For more information on custom data and how to access within the raw JSON document data or via the plugin API, see also:
+
+- [Sketch file format](/file-format/)
+- [Layer settings](/reference/api/#get-a-layer-setting)
