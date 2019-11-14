@@ -8,7 +8,7 @@ order: 104
 excerpt: Detach all symbol and style instances within a Sketch document.
 ---
 
-Turn all symbol and style instances within a Sketch document into self-contained layers and layer groups using `sketchtool detach`.
+Turn every symbol and style instance in a Sketch document into their own self-contained layers and layer groups using `sketchtool detach`.
 
 ```sh
 sketchtool detach [--output=/path/to/detached.sketch] /path/to/document.sketch
