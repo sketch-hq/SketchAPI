@@ -3,8 +3,7 @@ title: File format
 section: file-format
 chapter: Concepts
 permalink: /file-format/
-
-order: 3
+order: 1
 excerpt: Sketch documents are stored as ZIP archives containing JSON encoded data
 ---
 
@@ -21,24 +20,6 @@ Archive the contents of a document folder with `zip`.
 ```sh
 zip -r -X document.sketch *
 ```
-
-## JSON Schema
-
-The [JSON Schema](https://github.com/sketch-hq/sketch-file-format) based specification describes how Sketch documents are stored on disk, and how this changes from version to version.
-
-Build low level integrations of Sketch such as server and command-line applications using the specification as reference material. Go further and use the JSON Schema themselves to generate types and model code, or validate Sketch documents you programmatically create or manipulate.
-
-## Typescript types
-
-The TypeScript [types](https://github.com/sketch-hq/sketch-file-format-ts) model Sketch file JSON, and are automatically generated from the file format [json schema](/file-format/reference/json-schema) specification.
-
-Strongly type data representing Sketch document objects, such as layers and artboards in TypeScript projects.
-
-## Reference files
-
-The [Reference Files](https://github.com/sketch-hq/sketch-reference-files) are a store of automatically generated Sketch file JSON organised by document version and Sketch feature.
-
-The reference file JSON can be accessed from the repo, installed from npm or downloaded over HTTP and should provide a valuable resource when there's a requirement to automate tests or analysis of real Sketch file fixtures.
 
 ## Folder structure
 
@@ -94,5 +75,8 @@ settings.setLayerSettingForKey(layer, 'comment', 'Looking great 👏')
 
 ## Related resources
 
+- [JSON Schema specification](https://github.com/sketch-hq/sketch-file-format)
+- [TypeScript types](https://github.com/sketch-hq/sketch-file-format-ts)
+- [Reference files](https://github.com/sketch-hq/sketch-reference-files)
 - [sketch-file JavaScript package](https://github.com/mathieudutour/sketch-file)
 - Render [React components to Sketch](https://github.com/airbnb/react-sketchapp)

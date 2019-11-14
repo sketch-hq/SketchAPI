@@ -8,7 +8,7 @@ redirect_from:
 
 layout: home
 body_class: home
-excerpt: We’ve laid the foundations so you can build on the platform that empowers one million designers every day. Create plugins and integrations using the command-line interface or read and write Sketch files directly in JSON.
+excerpt: We’ve laid the foundations so you can build on the platform that empowers one million designers every day. Create plugins and integrations, read and write Sketch files directly in JSON or render Sketch documents using the command-line interface.
 
 masthead_cards:
   - icon: /images/icons/48/icon-plugins-light.svg
