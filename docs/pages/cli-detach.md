@@ -1,5 +1,5 @@
 ---
-title: Detach symbols
+title: Detach styles and symbols
 section: cli
 chapter: Command-line interface
 permalink: /cli/detach
@@ -64,7 +64,7 @@ Copy of the source Sketch document at the provided output location. Detached Sym
 }
 ```
 
-> **Note:** Layers Groups created from a detached Symbol Instance may have different a position or dimensions. The custom data `frame` attribute contains the orginal value of the instance before it got detached.
+> **Note:** Layer Groups created from a detached Symbol Instance may have different a position or dimensions. The custom data `frame` attribute contains the orginal value of the instance before it got detached.
 
 ### Related resources
 
