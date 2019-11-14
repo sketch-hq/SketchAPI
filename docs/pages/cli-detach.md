@@ -10,19 +10,11 @@ excerpt: Detach all symbol and style instances within a Sketch document.
 
 Turn all symbol and style instances within a Sketch document into self-contained layers and layer groups using `sketchtool detach`.
 
-This creates a self-contained Sketch document, applying and detaching:
-
-- [Layer Styles](https://www.sketch.com/docs/styling/shared-styles/)
-- [Text Styles](https://www.sketch.com/docs/text/text-styles/)
-- [Symbols](https://www.sketch.com/docs/symbols/)
-- [Library Styles](https://www.sketch.com/docs/libraries/library-styles)
-- [Library Symbols](https://www.sketch.com/docs/libraries/library-symbols)
-
 ```sh
 sketchtool detach [--output=/path/to/detached.sketch] /path/to/document.sketch
 ```
 
-#### `--output=/path/to/detached.sketch`
+`--output`
 
 - **Optional**
 - **Format:** Path to file
@@ -30,7 +22,15 @@ sketchtool detach [--output=/path/to/detached.sketch] /path/to/document.sketch
 
 ### Output
 
-Copy of the source Sketch document at the provided output location. Detached Symbol Layers include custom data in `userInfo` for the `com.bohemiancoding.sketchtool.detach` key, describing what symbol the layer has previously been an instance of.
+Creates a self-contained Sketch document, applying and detaching:
+
+- [Layer Styles](https://www.sketch.com/docs/styling/shared-styles/)
+- [Text Styles](https://www.sketch.com/docs/text/text-styles/)
+- [Symbols](https://www.sketch.com/docs/symbols/)
+- [Library Styles](https://www.sketch.com/docs/libraries/library-styles)
+- [Library Symbols](https://www.sketch.com/docs/libraries/library-symbols)
+
+Detached Symbol Layers include custom data in `userInfo` for the `com.bohemiancoding.sketchtool.detach` key, describing what symbol the layer has previously been an instance of.
 
 ```json
 {
