@@ -19,7 +19,7 @@ The core specification is published as JSON Schema from the [sketch-file-format]
 
 Use the JSON Schema to generate types, GraphQL schemas and model code or validate Sketch documents you create and manipulate programmatically.
 
-### Typescript
+### TypeScript
 
 The TypeScript types are generated automatically from the JSON Schema, and published via the [sketch-file-format-ts](https://github.com/sketch-hq/) package.
 
