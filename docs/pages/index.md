@@ -8,7 +8,7 @@ redirect_from:
 
 layout: home
 body_class: home
-excerpt: We’ve laid the foundations so you can build on the platform that empowers one million designers every day. Create plugins and integrations using the command-line interface or read and write Sketch files directly in JSON.
+excerpt: We’ve laid the foundations so you can build on the platform that empowers one million designers every day. Create plugins and integrations, read and write Sketch files directly in JSON or render Sketch documents using the command-line interface.
 
 masthead_cards:
   - icon: /images/icons/48/icon-plugins-light.svg
@@ -16,17 +16,17 @@ masthead_cards:
     description: Extend and customize the functionality of Sketch using JavaScript or Objective-C. Modify the document using Sketch’s APIs, add your own user interface, and integrate Sketch with your product or other applications.
     link_label: View documentation
     link: /plugins
-  - icon: /images/icons/48/icon-cli-light.svg
-    title: CLI
-    description: Use the `sketchtool` command-line interface to export assets, inspect documents and run plugins.
-    link_label: View documentation
-    link: /cli
-
-masthead_links:
   - icon: /images/icons/48/icon-file-format.svg
     title: Sketch file format
-    description: Generate, modify and process Sketch files directly with the open JSON file format.
+    description: Integrate Sketch into your existing workflows, server applications, on any platform. Generate, modify and process Sketch files directly with the open JSON file format.
     link: /file-format
+    link_label: View documentation
+
+masthead_links:
+  - icon: /images/icons/48/icon-cli-light.svg
+    title: CLI
+    description: Export assets, inspect documents and run plugins using `sketchtool`.
+    link: /cli
   - icon: /images/icons/48/icon-sketch.svg
     title: Sketch.app
     description: Integrate Sketch into your workflows with the `sketch://` URL scheme.

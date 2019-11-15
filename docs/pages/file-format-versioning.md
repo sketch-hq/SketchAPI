@@ -3,8 +3,7 @@ title: Versioning
 section: file-format
 chapter: Concepts
 permalink: /file-format/versioning
-
-order: 101
+order: 3
 excerpt: How Sketch stores version information in meta.json
 ---
 

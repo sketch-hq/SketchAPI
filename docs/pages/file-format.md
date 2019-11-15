@@ -3,8 +3,7 @@ title: File format
 section: file-format
 chapter: Concepts
 permalink: /file-format/
-
-order: 3
+order: 1
 excerpt: Sketch documents are stored as ZIP archives containing JSON encoded data
 ---
 
@@ -76,5 +75,8 @@ settings.setLayerSettingForKey(layer, 'comment', 'Looking great 👏')
 
 ## Related resources
 
+- [JSON Schema specification](https://github.com/sketch-hq/sketch-file-format)
+- [TypeScript types](https://github.com/sketch-hq/sketch-file-format-ts)
+- [Reference files](https://github.com/sketch-hq/sketch-reference-files)
 - [sketch-file JavaScript package](https://github.com/mathieudutour/sketch-file)
 - Render [React components to Sketch](https://github.com/airbnb/react-sketchapp)
