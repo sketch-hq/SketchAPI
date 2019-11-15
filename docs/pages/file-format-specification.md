@@ -7,7 +7,7 @@ order: 2
 excerpt: Sketch documents are stored as ZIP archives containing JSON encoded data
 ---
 
-The file format specification defines in human and machine readable format valid Sketch document JSON, and how this changes over time. The specification is written using the JSON Schema open standard, and published in a variety of formats via npm.
+The file format specification defines in human and machine readable format valid Sketch document JSON, and how this changes over time. The specification is written using the JSON Schema open standard, and published in a variety of formats via `npm`.
 
 Use the specification to build robust low level integrations of Sketch such as server and command-line applications. The specification is versioned independantly of Sketch itself and advances every time there's a change to the document structure.
 
