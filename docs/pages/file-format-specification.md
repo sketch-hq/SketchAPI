@@ -31,4 +31,4 @@ Use the types to strongly type data representing Sketch document objects, such a
 
 The [sketch-reference-files](https://github.com/sketch-hq/sketch-reference-files) are a store of automatically generated Sketch file JSON organised by document version and Sketch feature.
 
-The reference file JSON can be accessed from the repo, installed from npm or downloaded over HTTP and should provide a valuable resource when there's a requirement to automate tests or analysis of real Sketch file fixtures.
+The reference file JSON can be accessed from the repository, installed from `npm` or downloaded over HTTP and provide a valuable resource when there's a requirement to automate tests or analysis of real Sketch file fixtures.
