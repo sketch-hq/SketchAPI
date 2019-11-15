@@ -3,8 +3,7 @@ title: Coordinate systems
 section: file-format
 chapter: Concepts
 permalink: /file-format/coordinate-systems
-
-order: 102
+order: 4
 excerpt: Sketch stores the dimensions and position of layers within the canvas, the _frame_, separately from the _point coordinates_ describing shapes.
 ---
 

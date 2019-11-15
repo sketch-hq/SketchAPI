@@ -16,10 +16,14 @@ _Notarization is not App Review._ Apple will not review your code, and the proce
 
 **To notarize your plugin, you will need the following:**
 
-- An [Apple Developer Account](https://developer.apple.com) with two-factor authentication (2FA) enabled.
+- A **paid** [Apple Developer Account](https://developer.apple.com) with two-factor authentication (2FA) enabled.
 - An [app-specific password](https://support.apple.com/en-us/HT204397) for your plugin.
 
-You can use two methods to notarize your plugin: automatically using [`skpm`](https://github.com/skpm/skpm), or manually using the command-line.
+You can use three methods to notarize your plugin:
+
+1. automatically using [`skpm`](https://github.com/skpm/skpm)
+1. manually using the command-line
+1. using a helper plugin: [Sketch Notarizing Assistant](https://github.com/abynim/sketch-notarizing-assistant)
 
 
 ## 1. Use `skpm`
@@ -51,14 +55,19 @@ provide the command in the `.skpmrc` notarization settings:
 
 ## 2. From the command-line
 
-1. Create a ZIP archive of your `.sketchplugin` bundle including native frameworks or binaries.
-1. Code-sign the ZIP archive using the following command in the terminal. The identifier must match the bundle identifier of your plugin framework in Xcode, which may be different from your plugin identifier in the manifest.
+1. Code-sign the framework or binary using the following command in the terminal. The identifier must match the bundle identifier of your plugin framework in Xcode, which may be different from your plugin identifier in the manifest.
 
    ```bash
-   codesign -f -s "Developer ID Application: Bob Ross" --timestamp --identifier "com.example.sketch.plugin.select-shapes" path/to/select-shapes.sketchplugin-1.0.zip
+   codesign -f -s "Developer ID Application: Bob Ross" --timestamp --identifier "com.example.sketch.plugin.select-shapes.framework" --deep --options runtime path/to/select-shapes.sketchplugin/Content/Sketch/SelectShapes.framework
    ```
 
-1. Submit the ZIP archive to Apple for notarization:
+1. Create a ZIP archive of your `.sketchplugin` bundle including native frameworks or binaries.
+
+   ```
+   /usr/bin/ditto -c -k --keepParent path/to/select-shapes.sketchplugin path/to/select-shapes.sketchplugin-1.0.zip
+   ```
+
+1. Submit the ZIP archive to Apple for notarization. The identifier can be _anything you want_, as long as it is unique and makes sense to you (Apple only uses the identifier in their status reports).
 
    ```bash
    xcrun altool --notarize-app -f path/to/select-shapes.sketchplugin-1.0.zip --primary-bundle-id "com.example.sketch.plugin.select-shapes" -u "user@example.com" -p "app-specific-password"
@@ -68,6 +77,12 @@ provide the command in the `.skpmrc` notarization settings:
 
 > **Note:** If you make any changes to your plugin framework you’ll need to notarize again.
 
+
+## 3. Sketch Notarizing Assistant
+
+[Sketch Notarizing Assistant](https://github.com/abynim/sketch-notarizing-assistant) is a Sketch plugin developed by [Aby Nimbalkar](https://twitter.com/abynim) that makes it trivial to notarize your plugin. To use it, just follow the instructions on the plugin's page.
+
+> **Note:** Sketch Notarizing Assistant is not maintained or supported by Sketch.
 
 ## Keychain password storage
 
@@ -102,4 +117,4 @@ You can create the `AC_PASSWORD` keychain item using the command line, or the `K
 
 ## Related resources
 
-- [Notarizing Your App Before Distribution](https://developer.apple.com/documentation/xcode/notarizing_your_app_before_distribution) at Apple Developer Documentation
+- [Notarizing Your App Before Distribution](https://developer.apple.com/documentation/xcode/notarizing_your_app_before_distribution) at Apple Developer Documentation.
