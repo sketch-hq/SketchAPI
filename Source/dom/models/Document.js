@@ -1,5 +1,6 @@
 import { toArray, isNativeObject } from 'util'
 import { WrappedObject, DefinedPropertiesKey } from '../WrappedObject'
+// eslint-disable-next-line import/no-cycle
 import { Page } from '../layers/Page'
 import { Selection } from './Selection'
 import { getURLFromPath, isWrappedObject } from '../utils'
