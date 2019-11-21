@@ -15,9 +15,9 @@ A group of layers. It is also an instance of [Layer](#layer) so all the methods 
 | id<span class="arg-type">string</span> | The unique ID of the Group. |
 | name<span class="arg-type">string</span> | The name of the Group |
 | parent<span class="arg-type">[Group](#group)</span> | The group the Group is in. |
-| locked<span class="arg-type">boolean</span> | If the group is locked. |
-| hidden<span class="arg-type">boolean</span> | If the group is hidden. |
-| frame<span class="arg-type">[Rectangle](#rectangle)</span> | The frame of the Group. This is given in coordinates that are local to the parent of the layer. |
+| locked<span class="arg-type">boolean</span> | If the Group is locked. |
+| hidden<span class="arg-type">boolean</span> | If the Group is hidden. |
+| frame<span class="arg-type">[Rectangle](#rectangle)</span> | The frame of the Group. This is given in coordinates that are local to the parent of the Layer. |
 | selected<span class="arg-type">boolean</span> | If the Group is selected. |
 | flow<span class="arg-type">[Flow](#flow)</span> | The prototyping action associated with the Group. |
 | exportFormats<span class="arg-type">[ExportFormat](#export-format)[]</span> | The export formats of the Group. |
@@ -27,8 +27,8 @@ A group of layers. It is also an instance of [Layer](#layer) so all the methods 
 | transform.flippedVertically<span class="arg-type">boolean</span> | If the Group is vertically flipped. |
 | style<span class="arg-type">[Style](#style)</span> | The style of the Group. |
 | sharedStyleId<span class="arg-type">string / null</span> | The ID of the [SharedStyle](#shared-style) this Group is linked to if any. |
-| layers<span class="arg-type">[Layer](#layer)[]</span> | The layers that this component groups together. |
-| smartLayout<span class="arg-type">[SmartLayout](#smartlayout)</span> | The Group's smart layout. |
+| layers<span class="arg-type">[Layer](#layer)[]</span> | The Layers that this component groups together. |
+| smartLayout<span class="arg-type">[SmartLayout](#smartlayout)</span> | The Group's Smart Layout. |
 
 ## Create a new Group
 

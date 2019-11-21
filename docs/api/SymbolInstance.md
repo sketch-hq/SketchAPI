@@ -89,10 +89,10 @@ Change the value of the override.
 
 The current Symbol instance (useful if you want to chain the calls).
 
-## Trigger a smart layout
+## Trigger a Smart Layout
 
 ```javascript
 instance.resizeWithSmartLayout()
 ```
 
-In order to trigger a smart layout resize in an instance, for example after changing an override value, call the `resizeWithSmartLayout()` method.
+In order to trigger a Smart Layout resize in an instance, for example after changing an override value, call the `resizeWithSmartLayout()` method.
