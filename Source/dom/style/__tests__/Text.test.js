@@ -326,3 +326,33 @@ test('should get the default line height', () => {
 
   expect(group.style.getDefaultLineHeight()).toBe(undefined)
 })
+
+// Not sure how to test variable fonts any further, since it would require
+// having specific variable fonts installed on the OS
+test('fontAxes getter should return null when the font is not a variable font', () => {
+  const text = new Text({
+    text: 'test',
+    frame: new Rectangle(10, 10, 1000, 1000),
+  })
+
+  expect(text.style.fontAxes).toBe(null)
+})
+
+test('fontAxes setter should not error when setting non-existent axes', () => {
+  const text = new Text({
+    text: 'test',
+    frame: new Rectangle(10, 10, 1000, 1000),
+  })
+
+  try {
+    text.style.fontAxes = {
+      Weight: {
+        value: 900,
+        id: 123,
+      },
+    }
+    expect(true).toBe(true)
+  } catch (err) {
+    expect(false).toBe(true)
+  }
+})

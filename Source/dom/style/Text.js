@@ -761,4 +761,84 @@ export function defineTextStyleProperties(Style) {
       })
     },
   })
+
+  Style.define('fontAxes', {
+    get() {
+      const attributes = getAttributes(this._object)
+
+      if (!attributes) {
+        return null
+      }
+
+      const font = attributes[NSFontAttributeName]
+
+      if (!font) {
+        return null
+      }
+
+      const axes = font.variableFontAxes()
+
+      if (!axes) {
+        return null
+      }
+
+      // Normalize the native information about the font axes into a JS object
+      const axesObj = {}
+      axes.forEach(axis => {
+        axesObj[axis.name()] = {
+          id: axis.identifier(),
+          min: axis.minValue(),
+          max: axis.maxValue(),
+          value: axis.currentValue(),
+        }
+      })
+
+      return axesObj
+    },
+    set(fontAxes) {
+      if (this.isImmutable()) {
+        return
+      }
+      const current = this.fontAxes
+      // Return early if the current font doesn't have any axes
+      if (!current) {
+        return
+      }
+      Object.keys(fontAxes).forEach(name => {
+        // Only set an axis if it's available on the current font, and
+        // different to the current value
+        if (current[name] && fontAxes[name].value !== current[name].value) {
+          this._fontAxis = fontAxes[name]
+        }
+      })
+    },
+  })
+
+  // Private setter to set an individual font axis, used by public fontAxes setter
+  Style.define('_fontAxis', {
+    set(fontAxis) {
+      if (this.isImmutable()) {
+        return
+      }
+      updateAttributes(this._object, attributes => {
+        const font = attributes[NSFontAttributeName]
+
+        const subDic = NSMutableDictionary.dictionary()
+        subDic.setObject_forKey(fontAxis.value, fontAxis.id)
+
+        const dic = NSMutableDictionary.dictionary()
+        dic.setObject_forKey(subDic, 'NSCTFontVariationAttribute')
+
+        const fontDesc = font.fontDescriptor()
+        const nextFontDesc = fontDesc.fontDescriptorByAddingAttributes(dic)
+
+        // eslint-disable-next-line no-param-reassign
+        attributes[NSFontAttributeName] = NSFont.fontWithDescriptor_size(
+          nextFontDesc,
+          this.fontSize
+        )
+        return attributes
+      })
+    },
+  })
 }
