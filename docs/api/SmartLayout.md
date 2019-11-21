@@ -8,12 +8,12 @@ The [SmartLayout](#smartlayout) object contains the set of possible Smart Layout
 
 | Properties         |                                                     |
 | ------------------ | --------------------------------------------------- |
-| LeftToRight        | Smart layout flowing left to right                  |
-| HorizontallyCenter | Smart layout expanding horizontally from the center |
-| RightToLeft        | Smart layout flowing right to left                  |
-| TopToBottom        | Smart layout flowing from top to bottom             |
-| VerticallyCenter   | Smart layout expanding verically from the center    |
-| BottomToTop        | Smart layout flowing from bottom to top             |
+| LeftToRight        | Smart Layout flowing left to right                  |
+| HorizontallyCenter | Smart Layout expanding horizontally from the center |
+| RightToLeft        | Smart Layout flowing right to left                  |
+| TopToBottom        | Smart Layout flowing from top to bottom             |
+| VerticallyCenter   | Smart Layout expanding verically from the center    |
+| BottomToTop        | Smart Layout flowing from bottom to top             |
 
 ## Set a Smart Layout
 
