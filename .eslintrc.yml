@@ -168,6 +168,8 @@ globals:
   NSTextView: false
   NSMakeSize: false
   NSPopUpButton: false
+  MSInferredGroupLayout: false
+  MSFreeformGroupLayout: false
 
 rules:
   ###########
