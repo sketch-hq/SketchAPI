@@ -1,6 +1,7 @@
 /* globals expect, test */
 import { canBeLogged } from '../../../test-utils'
 import { Group, Text, Shape, Rectangle } from '../..'
+import { SmartLayout } from '../../models/SmartLayout'
 
 test('should return the layers and can iterate through them', (context, document) => {
   const page = document.selectedPage
@@ -94,4 +95,34 @@ test('should add a layer to a group', (context, document) => {
     text: 'hello world',
   })
   expect(group.layers.length).toBe(3)
+})
+
+test('should expose a smartLayout getter/setter', (context, document) => {
+  const page = document.selectedPage
+  const group = new Group({
+    parent: page,
+    layers: [],
+  })
+
+  // returns null by default
+  expect(group.smartLayout).toBe(null)
+  expect(group._object.groupLayout().isKindOfClass(MSFreeformGroupLayout)).toBe(
+    1
+  )
+
+  // can set to a value
+  group.smartLayout = SmartLayout.TopToBottom
+  expect(group.smartLayout).toBe(SmartLayout.TopToBottom)
+  expect(group._object.groupLayout().isKindOfClass(MSInferredGroupLayout)).toBe(
+    1
+  )
+  expect(group._object.groupLayout().axis()).toBe(1)
+  expect(group._object.groupLayout().layoutAnchor()).toBe(0)
+
+  // can clear the value
+  group.smartLayout = null
+  expect(group._object.groupLayout().isKindOfClass(MSFreeformGroupLayout)).toBe(
+    1
+  )
+  expect(group.smartLayout).toBe(null)
 })

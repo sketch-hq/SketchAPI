@@ -1,4 +1,5 @@
 import { DefinedPropertiesKey } from '../WrappedObject'
+// eslint-disable-next-line import/no-cycle
 import { Group } from './Group'
 import { Selection } from '../models/Selection'
 import { Types } from '../enums'
@@ -108,6 +109,7 @@ delete Page[DefinedPropertiesKey].locked
 delete Page[DefinedPropertiesKey].hidden
 delete Page[DefinedPropertiesKey].exportFormats
 delete Page[DefinedPropertiesKey].transform
+delete Page[DefinedPropertiesKey].smartLayout
 
 // override setting up the parent as it's needs to a be a Document
 Page.define('parent', {

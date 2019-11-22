@@ -5,6 +5,9 @@ import { Rectangle } from '../models/Rectangle'
 import { Types } from '../enums'
 import { Factory } from '../Factory'
 import { wrapNativeObject, wrapObject } from '../wrapNativeObject'
+// eslint-disable-next-line import/no-cycle
+import { Document } from '../models/Document'
+import { SmartLayout } from '../models/SmartLayout'
 
 /**
  * Represents a group of layers.
@@ -99,5 +102,48 @@ Group.define('layers', {
     const item = wrapNativeObject(this._object.layers()[index])
     this._object.removeLayerAtIndex(index)
     return item
+  },
+})
+
+Group.define('smartLayout', {
+  get() {
+    const groupLayout = this._object.groupLayout() || {}
+    if (!groupLayout.isKindOfClass(MSInferredGroupLayout)) return null
+    // Normalise groupLayout to one of our presets, or return null if there's no match
+    for (const key in SmartLayout) {
+      if (
+        SmartLayout[key].axis === (groupLayout.axis || (() => {}))() &&
+        SmartLayout[key].layoutAnchor ===
+          (groupLayout.layoutAnchor || (() => {}))()
+      ) {
+        return SmartLayout[key]
+      }
+    }
+    return null
+  },
+  set(_smartLayout) {
+    if (this.isImmutable()) return
+    const smartLayout = _smartLayout || {}
+    let layout
+    for (const key in SmartLayout) {
+      if (
+        SmartLayout[key].axis === smartLayout.axis &&
+        SmartLayout[key].layoutAnchor === smartLayout.layoutAnchor
+      ) {
+        layout = SmartLayout[key]
+      }
+    }
+    if (layout) {
+      const groupLayout = MSInferredGroupLayout.alloc().init()
+      groupLayout.isInferredLayout = 1
+      groupLayout.axis = layout.axis
+      groupLayout.layoutAnchor = layout.layoutAnchor
+      this._object.setGroupLayout(groupLayout)
+    } else {
+      this._object.setGroupLayout(MSFreeformGroupLayout.alloc().init())
+    }
+    // Inspector needs a reload after this
+    const doc = Document.getSelectedDocument()
+    if (doc) doc.sketchObject.inspectorController().reload()
   },
 })
