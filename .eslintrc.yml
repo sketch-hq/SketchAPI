@@ -168,6 +168,7 @@ globals:
   NSTextView: false
   NSMakeSize: false
   NSPopUpButton: false
+  NSMutableDictionary: false
   MSInferredGroupLayout: false
   MSFreeformGroupLayout: false
 
