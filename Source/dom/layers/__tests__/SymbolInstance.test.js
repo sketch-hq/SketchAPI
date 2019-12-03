@@ -2,6 +2,7 @@
 /* eslint-disable no-param-reassign */
 import { SymbolInstance } from '../..'
 import { createSymbolMaster, canBeLogged } from '../../../test-utils'
+import { SmartLayout } from '../../models/SmartLayout'
 
 test('should create a instance by setting the master property', (context, document) => {
   const { master } = createSymbolMaster(document)
@@ -62,4 +63,20 @@ test('should detach an instance', (context, document) => {
 
   const group = instance.detach()
   expect(group.type).toBe('Group')
+})
+
+test('should resize in response to smart layout changes', (context, document) => {
+  const { master } = createSymbolMaster(document)
+  master.smartLayout = SmartLayout.LeftToRight
+
+  const instance = new SymbolInstance({
+    symbolId: master.symbolId,
+    parent: document.selectedPage,
+  })
+
+  const initialWidth = instance.frame.width
+  instance.overrides[0].value = '0'.repeat(1000)
+  instance.resizeWithSmartLayout()
+  const widthAfterSmartLayout = instance.frame.width
+  expect(initialWidth < widthAfterSmartLayout).toBe(true)
 })
