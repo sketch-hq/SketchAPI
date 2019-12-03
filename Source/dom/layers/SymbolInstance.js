@@ -62,6 +62,14 @@ export class SymbolInstance extends StyledLayer {
     }
     return this
   }
+
+  resizeWithSmartLayout() {
+    if (this.isImmutable()) {
+      return this
+    }
+    this._object.resizeToFitContentsIfNeededNoCache()
+    return this
+  }
 }
 
 SymbolInstance.type = Types.SymbolInstance

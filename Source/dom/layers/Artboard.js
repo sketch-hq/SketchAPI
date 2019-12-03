@@ -51,6 +51,7 @@ delete Artboard[DefinedPropertiesKey].style
 delete Artboard[DefinedPropertiesKey].locked
 delete Artboard[DefinedPropertiesKey].hidden
 delete Artboard[DefinedPropertiesKey].transform
+delete Artboard[DefinedPropertiesKey].smartLayout
 
 Artboard.define('flowStartPoint', {
   get() {
