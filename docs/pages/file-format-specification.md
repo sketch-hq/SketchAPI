@@ -21,7 +21,7 @@ Use the JSON Schema to generate types, GraphQL schemas and model code or validat
 
 ### TypeScript
 
-The TypeScript types are generated automatically from the JSON Schema, and published via the [sketch-file-format-ts](https://github.com/sketch-hq/) package.
+The TypeScript types are generated automatically from the JSON Schema, and published via the [sketch-file-format-ts](https://github.com/sketch-hq/sketch-file-format-ts) package.
 
 Use the types to strongly type data representing Sketch document objects, such as layers and artboards in TypeScript projects.
 
