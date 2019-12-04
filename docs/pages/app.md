@@ -10,7 +10,13 @@ You can integrate Sketch into your app or workflow using the `sketch://` URL sch
 
 **Note:** If a document is already open the canvas view does not change.
 
-## Center layer and specify zoom level
+### Table of Contents
+
+1. [Center layer and specify zoom level](#centerlayer)
+2. [Run a plugin command](#runplugincommand)
+3. [Add a Remote Library](#addremotelibrary)
+
+## Center layer and specify zoom level <a name="centerlayer"></a>
 
 The URL scheme accepts two parameters. If the path to the file is provided without any parameters the file will be opened in the same way it was last saved.
 
@@ -36,7 +42,7 @@ document.selectedLayers.forEach(layer => console.log(layer.id))
 
 _Actual Size_ has a zoom level of `1`. To zoom out specify values between `0...1` while using values greater than `1` to zoom in, e.g. `2` for 200%.
 
-## Run a plugin command
+## Run a plugin command <a name="runplugincommand"></a>
 
 **Availability:** _Sketch 55+_
 
@@ -87,3 +93,23 @@ function handleURL(context) {
 Open the following link to display a _Hello World_ message within an open document. Provide any URL encoded string with the `msg` query parameter.
 
 [`sketch://plugin/com.example.sketch.messenger/message.show?msg=Hello%20World`](sketch://plugin/com.example.sketch.messenger/message.show?msg=Hello%20World)
+
+## Add a Remote Library <a name="addremotelibrary"></a>
+
+We can initiate the adding of a Remote Library to Sketch using the URL Scheme
+
+### Parameters
+
+Provide a `url` parameter to the `add-library` command.
+
+```sh
+sketch://add-library?url=RemoteLibraryURL
+```
+
+#### Example
+
+Open the link below to add a Remote Library to Sketch
+
+```sh
+sketch://add-library?url=https://developer.apple.com/design/downloads/sketch.rss
+```
