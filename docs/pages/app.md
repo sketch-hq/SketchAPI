@@ -96,7 +96,7 @@ Open the following link to display a _Hello World_ message within an open docume
 
 ## Add a Remote Library <a name="addremotelibrary"></a>
 
-We can initiate the adding of a Remote Library to Sketch using the URL Scheme
+We can initiate the adding of a Remote Library to Sketch using the URL Scheme.
 
 ### Parameters
 
