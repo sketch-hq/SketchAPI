@@ -12,9 +12,9 @@ You can integrate Sketch into your app or workflow using the `sketch://` URL sch
 
 ### Table of Contents
 
-1. [Center layer and specify zoom level](#centerlayer)
-2. [Run a plugin command](#runplugincommand)
-3. [Add a Remote Library](#addremotelibrary)
+- [Center layer and specify zoom level](#centerlayer)
+- [Run a plugin command](#runplugincommand)
+- [Add a Remote Library](#addremotelibrary)
 
 ## Center layer and specify zoom level <a name="centerlayer"></a>
 
@@ -96,14 +96,14 @@ Open the following link to display a _Hello World_ message within an open docume
 
 ## Add a Remote Library <a name="addremotelibrary"></a>
 
-We can initiate the adding of a Remote Library to Sketch using the URL Scheme.
+You can add a Remote Library to Sketch by providing a url to an appcast file.
 
 ### Parameters
 
-Provide a `url` parameter to the `add-library` command.
+Provide an `encoded appcast url` parameter to the `add-library` command.
 
 ```sh
-sketch://add-library?url=RemoteLibraryURL
+sketch://add-library?url=AppCastURL
 ```
 
 #### Example
@@ -111,5 +111,10 @@ sketch://add-library?url=RemoteLibraryURL
 Open the link below to add a Remote Library to Sketch
 
 ```sh
-sketch://add-library?url=https://developer.apple.com/design/downloads/sketch.rss
+sketch://add-library?url=https%3A%2F%2Fdeveloper.apple.com%2Fdesign%2Fdownloads%2Fsketch.rss
 ```
+
+## Related resources
+
+- [Sharing a Library](https://www.sketch.com/docs/libraries/#sharing-libraries)
+- [Appcast documentation](https://sparkle-project.org/documentation/)
