@@ -16,7 +16,9 @@ You can integrate Sketch into your app or workflow using the `sketch://` URL sch
 - [Run a plugin command](#run-plugin-command)
 - [Add a shared Library](#add-shared-library)
 
-## Center layer and specify zoom level <a name="center-layer"></a>
+<a name="center-layer"></a>
+
+## Center layer and specify zoom level
 
 The URL scheme accepts two parameters. If the path to the file is provided without any parameters the file will be opened in the same way it was last saved.
 
@@ -42,7 +44,9 @@ document.selectedLayers.forEach(layer => console.log(layer.id))
 
 _Actual Size_ has a zoom level of `1`. To zoom out specify values between `0...1` while using values greater than `1` to zoom in, e.g. `2` for 200%.
 
-## Run a plugin command <a name="run-plugin-command"></a>
+<a name="run-plugin-command"></a>
+
+## Run a plugin command
 
 **Availability:** _Sketch 55+_
 
@@ -94,7 +98,9 @@ Open the following link to display a _Hello World_ message within an open docume
 
 [`sketch://plugin/com.example.sketch.messenger/message.show?msg=Hello%20World`](sketch://plugin/com.example.sketch.messenger/message.show?msg=Hello%20World)
 
-## Add a shared Library <a name="add-shared-library"></a>
+<a name="add-shared-library"></a>
+
+## Add a shared Library
 
 Add a Library hosted on any server and shared using RSS by specifying the URL-encoded string to the appcast.
 
@@ -102,10 +108,9 @@ Add a Library hosted on any server and shared using RSS by specifying the URL-en
 sketch://add-library?url=APPCAST_RSS_URL
 ```
 
-To find out more about sharing your own libraries, see:
+### `url` string
 
-- [Sharing a Library](https://www.sketch.com/docs/libraries/#sharing-libraries) Sketch documentation
-- [Appcast documentation](https://sparkle-project.org/documentation/)
+Encoded appcast url.
 
 #### Example
 
@@ -114,3 +119,8 @@ URL to install the Apple iOS Sketch Library from [Apple Design Resources](https:
 ```sh
 sketch://add-library?url=https%3A%2F%2Fdeveloper.apple.com%2Fdesign%2Fdownloads%2Fsketch.rss
 ```
+
+To find out more about sharing your own libraries, see:
+
+- [Sharing a Library](https://www.sketch.com/docs/libraries/#sharing-libraries) Sketch documentation
+- [Appcast documentation](https://sparkle-project.org/documentation/)
