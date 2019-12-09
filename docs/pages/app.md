@@ -96,7 +96,7 @@ Open the following link to display a _Hello World_ message within an open docume
 
 ## Add a shared Library <a name="add-shared-library"></a>
 
-Add a Library hosted on any server and shared using RSS by specifying the URL to the appcast.
+Add a Library hosted on any server and shared using RSS by specifying the URL-encoded string to the appcast.
 
 ```sh
 sketch://add-library?url=APPCAST_RSS_URL
@@ -106,10 +106,6 @@ To find out more about sharing your own libraries, see:
 
 - [Sharing a Library](https://www.sketch.com/docs/libraries/#sharing-libraries) Sketch documentation
 - [Appcast documentation](https://sparkle-project.org/documentation/)
-
-### Parameters
-
-Provide an URL-encoded string specifying the address of the appcast RSS file.
 
 #### Example
 
