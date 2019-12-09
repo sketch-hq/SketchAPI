@@ -12,11 +12,11 @@ You can integrate Sketch into your app or workflow using the `sketch://` URL sch
 
 ### Table of Contents
 
-- [Center layer and specify zoom level](#centerlayer)
-- [Run a plugin command](#runplugincommand)
-- [Add a Remote Library](#addremotelibrary)
+- [Center layer and specify zoom level](#center-layer)
+- [Run a plugin command](#run-plugin-command)
+- [Add a shared Library](#add-shared-library)
 
-## Center layer and specify zoom level <a name="centerlayer"></a>
+## Center layer and specify zoom level <a name="center-layer"></a>
 
 The URL scheme accepts two parameters. If the path to the file is provided without any parameters the file will be opened in the same way it was last saved.
 
@@ -42,7 +42,7 @@ document.selectedLayers.forEach(layer => console.log(layer.id))
 
 _Actual Size_ has a zoom level of `1`. To zoom out specify values between `0...1` while using values greater than `1` to zoom in, e.g. `2` for 200%.
 
-## Run a plugin command <a name="runplugincommand"></a>
+## Run a plugin command <a name="run-plugin-command"></a>
 
 **Availability:** _Sketch 55+_
 
@@ -94,27 +94,27 @@ Open the following link to display a _Hello World_ message within an open docume
 
 [`sketch://plugin/com.example.sketch.messenger/message.show?msg=Hello%20World`](sketch://plugin/com.example.sketch.messenger/message.show?msg=Hello%20World)
 
-## Add a Remote Library <a name="addremotelibrary"></a>
+## Add a shared Library <a name="add-shared-library"></a>
 
-You can add a Remote Library to Sketch by providing a url to an appcast file.
+Add a Library hosted on any server and shared using RSS by specifying the URL to the appcast.
+
+```sh
+sketch://add-library?url=APPCAST_RSS_URL
+```
+
+To find out more about sharing your own libraries, see:
+
+- [Sharing a Library](https://www.sketch.com/docs/libraries/#sharing-libraries) Sketch documentation
+- [Appcast documentation](https://sparkle-project.org/documentation/)
 
 ### Parameters
 
-Provide an `encoded appcast url` parameter to the `add-library` command.
-
-```sh
-sketch://add-library?url=AppCastURL
-```
+Provide an URL-encoded string specifying the address of the appcast RSS file.
 
 #### Example
 
-Open the link below to add a Remote Library to Sketch
+URL to install the Apple iOS Sketch Library from [Apple Design Resources](https://developer.apple.com/design/resources/).
 
 ```sh
 sketch://add-library?url=https%3A%2F%2Fdeveloper.apple.com%2Fdesign%2Fdownloads%2Fsketch.rss
 ```
-
-## Related resources
-
-- [Sharing a Library](https://www.sketch.com/docs/libraries/#sharing-libraries)
-- [Appcast documentation](https://sparkle-project.org/documentation/)
