@@ -66,15 +66,4 @@ The earliest document `version` that a given version of Sketch can open.
 
 ## Version history
 
-| Sketch version | Document version | Compatibility document version |
-| -------------- | ---------------- | ------------------------------ |
-| 59             | 121              | 99                             |
-| 58             | 120              | 99                             |
-| 57             | 119              | 99                             |
-| 56             | 119              | 99                             |
-| 55.2           | 119              | 99                             |
-| 55.1           | 118              | 99                             |
-| 55             | 118              | 99                             |
-| 54.1           | 118              | 99                             |
-| 54             | 117              | 99                             |
-| 53             | 116              | 99                             |
+For information about how `appVersion` maps to document `version`, and how they relate to the new file format schema, head over to the [sketch-file-format](https://github.com/sketch-hq/sketch-file-format/#sketch-document-version-mapping) repo.
