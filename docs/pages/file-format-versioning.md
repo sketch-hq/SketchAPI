@@ -66,4 +66,4 @@ The earliest document `version` that a given version of Sketch can open.
 
 ## Version history
 
-For information about how `appVersion` maps to document `version`, and how they relate to the new file format schema, head over to the [sketch-file-format](https://github.com/sketch-hq/sketch-file-format/#sketch-document-version-mapping) repo.
+See [sketch-file-format](https://github.com/sketch-hq/sketch-file-format/#sketch-document-version-mapping) documentation for information about how `appVersion` maps to document `version`.
