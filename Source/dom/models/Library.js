@@ -16,14 +16,18 @@ const AddStatus = {
 
 const LibraryTypeMap = {
   0: 'Internal',
-  1: 'User', // Is this a library added by a user.
-  2: 'Remote', // Is this a library that can be updated using an appcast.
+  1: 'LocalUser', // Previously `User`, is this a library added by a user.
+  2: 'RemoteUser', // Previously `Remote`, is this a library that can be updated using an appcast.
+  3: 'RemoteTeam', // Is this a library hosted on Sketch for Teams
+  4: 'RemoteThirdParty', // Remote 3rd Party
 }
 
 const LibraryType = {
   Internal: 'Internal',
-  User: 'User',
-  Remote: 'Remote',
+  LocalUser: 'LocalUser', // Previously `User`
+  Remote: 'RemoteUser',
+  RemoteTeam: 'RemoteTeam',
+  RemoteThirdParty: 'RemoteThirdParty',
 }
 
 /* eslint-disable no-use-before-define, typescript/no-use-before-define */
