@@ -1,5 +1,6 @@
 ---
 title: Sketch.app
+section: app
 permalink: /app
 
 layout: single-page
