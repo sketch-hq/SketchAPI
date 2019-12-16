@@ -6,7 +6,7 @@
   }
 
   body > * {
-    padding: 0 1.5rem;
+    padding: 0 2rem;
   }
 
   .release-notes {
@@ -16,7 +16,7 @@
 
 @include tablet-and-below {
   body > * {
-    padding: 0 1.5rem;
+    padding: 0 1.25rem;
   }
 
   [class*='span-'] + [class*='span-'] {
