@@ -17,12 +17,12 @@ document.sharedTextStyles.push({
 
 A shared style (either a layer style or a text style).
 
-| Properties                                                                            |                                    |
-| ------------------------------------------------------------------------------------- | ---------------------------------- |
-| id<span class="arg-type">string</span>                                                | The unique ID of the Shared Style. |
-| styleType<span class="arg-type">[SharedStyle.StyleType](#sharedstylestyletype)</span> | The type of the Shared Style.      |
-| name<span class="arg-type">string</span>                                              | The name of the Shared Style.      |
-| style<span class="arg-type">[Style](#style)</span>                                    | The Style value that is shared.    |
+| Properties |  |
+| --- | --- |
+| id<span class="arg-type">string</span> | The unique ID of the Shared Style. |
+| styleType<span class="arg-type">[SharedStyle.StyleType](#sharedstylestyletype)</span> | The type of the Shared Style. |
+| name<span class="arg-type">string</span> | The name of the Shared Style. |
+| style<span class="arg-type">[Style](#style)</span> | The Style value that is shared. |
 
 > Note that the `id` of a Shared Style coming from a Library might look like this: `FBFF821E-20F3-48C5-AEDC-89F97A8C2344[D1A683E0-5333-4EBE-977C-48F64F934E99]`.
 >

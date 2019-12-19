@@ -26,10 +26,10 @@ An array of [ColorAsset](#color-asset) objects.
 
 ## Gradient Asset
 
-| Properties                                                  |                                 |
-| ----------------------------------------------------------- | ------------------------------- |
-| name<span class="arg-type">string</span>                    | The name of the asset, or null. |
-| gradient<span class="arg-type">[Gradient](#gradient)</span> | The gradient object.            |
+| Properties |  |
+| --- | --- |
+| name<span class="arg-type">string</span> | The name of the asset, or null. |
+| gradient<span class="arg-type">[Gradient](#gradient)</span> | The gradient object. |
 
 ### Get the Global Gradients
 

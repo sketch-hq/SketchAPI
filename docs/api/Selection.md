@@ -10,11 +10,11 @@ var selection = document.selectedLayers
 
 A utility class to represent the layers selection. Contains some methods to make interacting with a selection easier.
 
-| Properties                                               |                                                                               |
-| -------------------------------------------------------- | ----------------------------------------------------------------------------- |
-| layers<span class="arg-type">[Layer](#layer)[]</span>    | The Layers in the selection. Setting this property will change the selection. |
-| length<span class="arg-type">number - read-only</span>   | The number of Layers in the selection.                                        |
-| isEmpty<span class="arg-type">boolean - read-only</span> | Does the selection contain any layers?                                        |
+| Properties |  |
+| --- | --- |
+| layers<span class="arg-type">[Layer](#layer)[]</span> | The Layers in the selection. Setting this property will change the selection. |
+| length<span class="arg-type">number - read-only</span> | The number of Layers in the selection. |
+| isEmpty<span class="arg-type">boolean - read-only</span> | Does the selection contain any layers? |
 
 ## `map`, `forEach`, and `reduce`
 

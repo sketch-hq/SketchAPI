@@ -6,21 +6,21 @@ section: layers
 
 A Sketch layer. This is the base class for most of the Sketch components and defines methods to manipulate them.
 
-| Properties                                                                  |                                                                                                 |
-| --------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
-| id<span class="arg-type">string</span>                                      | The unique ID of the Layer.                                                                     |
-| name<span class="arg-type">string</span>                                    | The name of the Layer                                                                           |
-| parent<span class="arg-type">[Group](#group)</span>                         | The group the layer is in.                                                                      |
-| locked<span class="arg-type">boolean</span>                                 | If the layer is locked.                                                                         |
-| hidden<span class="arg-type">boolean</span>                                 | If the layer is hidden.                                                                         |
-| frame<span class="arg-type">[Rectangle](#rectangle)</span>                  | The frame of the Layer. This is given in coordinates that are local to the parent of the layer. |
-| selected<span class="arg-type">boolean</span>                               | If the layer is selected.                                                                       |
-| flow<span class="arg-type">[Flow](#flow)</span>                             | The prototyping action associated with the layer.                                               |
-| exportFormats<span class="arg-type">[ExportFormat](#export-format)[]</span> | The export formats of the Layer.                                                                |
-| transform<span class="arg-type">object</span>                               | The transformation applied to the Layer.                                                        |
-| transform.rotation<span class="arg-type">number</span>                      | The rotation of the Layer in degrees, clock-wise.                                               |
-| transform.flippedHorizontally<span class="arg-type">boolean</span>          | If the layer is horizontally flipped.                                                           |
-| transform.flippedVertically<span class="arg-type">boolean</span>            | If the layer is vertically flipped.                                                             |
+| Properties |  |
+| --- | --- |
+| id<span class="arg-type">string</span> | The unique ID of the Layer. |
+| name<span class="arg-type">string</span> | The name of the Layer |
+| parent<span class="arg-type">[Group](#group)</span> | The group the layer is in. |
+| locked<span class="arg-type">boolean</span> | If the layer is locked. |
+| hidden<span class="arg-type">boolean</span> | If the layer is hidden. |
+| frame<span class="arg-type">[Rectangle](#rectangle)</span> | The frame of the Layer. This is given in coordinates that are local to the parent of the layer. |
+| selected<span class="arg-type">boolean</span> | If the layer is selected. |
+| flow<span class="arg-type">[Flow](#flow)</span> | The prototyping action associated with the layer. |
+| exportFormats<span class="arg-type">[ExportFormat](#export-format)[]</span> | The export formats of the Layer. |
+| transform<span class="arg-type">object</span> | The transformation applied to the Layer. |
+| transform.rotation<span class="arg-type">number</span> | The rotation of the Layer in degrees, clock-wise. |
+| transform.flippedHorizontally<span class="arg-type">boolean</span> | If the layer is horizontally flipped. |
+| transform.flippedVertically<span class="arg-type">boolean</span> | If the layer is vertically flipped. |
 
 ## Duplicate the Layer
 
