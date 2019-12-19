@@ -19,10 +19,10 @@ const group = sketch.createLayerFromData(svgString, 'svg')
 
 Import a file as a Layer.
 
-| Parameters                                        |                                                                                |
-| ------------------------------------------------- | ------------------------------------------------------------------------------ |
-| data<span class="arg-type">Buffer / string</span> | The data for the file.                                                         |
-| type<span class="arg-type">string</span>          | The type of the file being imported. `"svg"`, `"pdf"`, `"eps"`, or `"bitmap"`. |
+| Parameters |  |
+| --- | --- |
+| data<span class="arg-type">Buffer / string</span> | The data for the file. |
+| type<span class="arg-type">string</span> | The type of the file being imported. `"svg"`, `"pdf"`, `"eps"`, or `"bitmap"`. |
 
 The method returns:
 

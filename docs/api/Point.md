@@ -8,10 +8,10 @@ A utility class to represent a point.
 
 <!-- Contains some methods to make interacting with a point easier. -->
 
-| Properties                                    |                                |
-| --------------------------------------------- | ------------------------------ |
+| Properties |  |
+| --- | --- |
 | x<span class="arg-type">number / Point</span> | The x coordinate of the point. |
-| y<span class="arg-type">number</span>         | The y coordinate of the point. |
+| y<span class="arg-type">number</span> | The y coordinate of the point. |
 
 ## Get a `CGPoint`
 

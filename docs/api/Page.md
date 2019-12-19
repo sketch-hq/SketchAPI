@@ -10,14 +10,14 @@ var Page = require('sketch/dom').Page
 
 A Sketch page. It is an instance of both [Layer](#layer) and [Group](#group) so all the methods defined there are available.
 
-| Properties                                                 |                                |
-| ---------------------------------------------------------- | ------------------------------ |
-| id<span class="arg-type">string</span>                     | The unique ID of the Page.     |
-| name<span class="arg-type">string</span>                   | The name of the Page           |
-| parent<span class="arg-type">[Document](#document)</span>  | The document the page is in.   |
-| layers<span class="arg-type">[Layer](#layer)</span>        | The layers that this page has. |
-| frame<span class="arg-type">[Rectangle](#rectangle)</span> | The frame of the page.         |
-| selected<span class="arg-type">boolean</span>              | If the Page is selected.       |
+| Properties |  |
+| --- | --- |
+| id<span class="arg-type">string</span> | The unique ID of the Page. |
+| name<span class="arg-type">string</span> | The name of the Page |
+| parent<span class="arg-type">[Document](#document)</span> | The document the page is in. |
+| layers<span class="arg-type">[Layer](#layer)</span> | The layers that this page has. |
+| frame<span class="arg-type">[Rectangle](#rectangle)</span> | The frame of the page. |
+| selected<span class="arg-type">boolean</span> | If the Page is selected. |
 
 ## Create a new Page
 
@@ -57,8 +57,8 @@ var symbolsPage = Page.getSymbolsPage(document)
 
 A method to get the Symbols Page of a Document.
 
-| Parameters                                                             |                                                    |
-| ---------------------------------------------------------------------- | -------------------------------------------------- |
+| Parameters |  |
+| --- | --- |
 | document<span class="arg-type">[Document](#document) - required</span> | The document from which you want the Symbols Page. |
 
 #### Returns

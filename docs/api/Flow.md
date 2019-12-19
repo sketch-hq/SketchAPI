@@ -10,11 +10,11 @@ var Flow = require('sketch/dom').Flow
 
 The prototyping action associated with a layer.
 
-| Properties                                                                                     |                                                                                             |
-| ---------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
-| target<span class="arg-type">[Artboard](#artboard) / [Flow.BackTarget](#flowbacktarget)</span> | The target artboard of the action or `Flow.BackTarget` if the action is a back action       |
-| targetId<span class="arg-type">string / [Flow.BackTarget](#flowbacktarget)</span>              | The ID of target artboard of the action or `Flow.BackTarget` if the action is a back action |
-| animationType<span class="arg-type">[AnimationType](#flowanimationtype)</span>                 | The type of the animation.                                                                  |
+| Properties |  |
+| --- | --- |
+| target<span class="arg-type">[Artboard](#artboard) / [Flow.BackTarget](#flowbacktarget)</span> | The target artboard of the action or `Flow.BackTarget` if the action is a back action |
+| targetId<span class="arg-type">string / [Flow.BackTarget](#flowbacktarget)</span> | The ID of target artboard of the action or `Flow.BackTarget` if the action is a back action |
+| animationType<span class="arg-type">[AnimationType](#flowanimationtype)</span> | The type of the animation. |
 
 ## Create a new prototyping action
 
