@@ -39,8 +39,8 @@ The style of a Layer.
 | innerShadows<span class="arg-type">[Shadow](#shadow)[]</span> | The inner shadows of a Layer. |
 | alignment<span class="arg-type">[Alignment](#textalignment)</span> | The horizontal alignment of the text of a Text Layer |
 | verticalAlignment<span class="arg-type">[VerticalAlignment](#textverticalalignment)</span> | The vertical alignment of the text of a Text Layer |
-| kerning<span class="arg-type">number / null</span> | The kerning between letters of a Text Layer. `null` means that the kerning will be the one defined by the font. |
-| lineHeight<span class="arg-type">number / null</span> | The height of a line of text in a Text Layer. `null` means "automatic". |
+| kerning<span class="arg-type">number / `null`</span> | The kerning between letters of a Text Layer. `null` means that the kerning will be the one defined by the font. |
+| lineHeight<span class="arg-type">number / `null`</span> | The height of a line of text in a Text Layer. `null` means "automatic". |
 | paragraphSpacing<span class="arg-type">number</span> | The space between 2 paragraphs of text in a Text Layer. |
 | textColor<span class="arg-type">string</span> | A rgba hex-string (`#000000ff` is opaque black) of the color of the text in a Text Layer. |
 | fontSize<span class="arg-type">number</span> | The size of the font in a Text Layer. |
@@ -178,7 +178,7 @@ An object that represent a Fill. `color`, `gradient` and `pattern` will always b
 | gradient<span class="arg-type">[Gradient](#gradient)</span> | The gradient of the fill. |
 | pattern<span class="arg-type">object</span> | The pattern of the fill. |
 | pattern.patternType<span class="arg-type">[PatternFillType](#stylepatternfilltype)</span> | How the pattern should fill the layer. |
-| pattern.image<span class="arg-type">[ImageData](#imagedata) / null</span> | The image of tile of the pattern. |
+| pattern.image<span class="arg-type">[ImageData](#imagedata) / `null`</span> | The image of tile of the pattern. |
 | pattern.tileScale<span class="arg-type">number</span> | The scale applied to the tile of the pattern. |
 | enabled<span class="arg-type">boolean</span> | Whether the fill is active or not. |
 
