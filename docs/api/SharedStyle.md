@@ -76,7 +76,7 @@ Returns an array of all layers with a Style which is an instance of the Shared S
 
 A [Layer](#layer) array.
 
-## Get the Library it was defined in
+## Get Library defining the style
 
 ```javascript
 var originLibrary = sharedStyle.getLibrary()

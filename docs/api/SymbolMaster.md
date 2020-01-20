@@ -83,7 +83,7 @@ var instances = master.getAllInstances()
 
 Returns an array of all instances of the symbol in the document, on all pages.
 
-## Get the Library it was defined in
+## Get Library defining the Symbol Master
 
 ```javascript
 var originLibrary = master.getLibrary()
