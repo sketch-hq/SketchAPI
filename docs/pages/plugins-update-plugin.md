@@ -18,7 +18,7 @@ Updating a plugin using `skpm` does four things:
 1. Create a GitHub release.
 1. Update the `.appcast.xml` with the latest release information.
 
-Run the following command providing either a specific version number of bump the existing version by `path`, `minor` or `major`. For more available options see `skpm publish --help`.
+Run the following command providing either a specific version number or bump the existing version by `patch`, `minor` or `major`. For more available options see `skpm publish --help`.
 
 ```sh
 skpm publish <version>
