@@ -10,22 +10,22 @@ var SymbolMaster = require('sketch/dom').SymbolMaster
 
 A [Symbol](https://sketch.com/docs/symbols/) master. It is an instance of [Artboard](#artboard) (hence of [Layer](#layer) and [Group](#group)) so all the methods defined there are available.
 
-| Properties                                                                  |                                                                                                         |
-| --------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
-| id<span class="arg-type">string</span>                                      | The unique ID of the Symbol Master object (not to be confused with `symbolId`).                         |
-| name<span class="arg-type">string</span>                                    | The name of the Symbol Master                                                                           |
-| parent<span class="arg-type">[Group](#group)</span>                         | The group the Symbol Master is in.                                                                      |
-| frame<span class="arg-type">[Rectangle](#rectangle)</span>                  | The frame of the Symbol Master. This is given in coordinates that are local to the parent of the layer. |
-| selected<span class="arg-type">boolean</span>                               | If the Symbol Master is selected.                                                                       |
-| exportFormats<span class="arg-type">[ExportFormat](#export-format)[]</span> | The export formats of the Symbol Master.                                                                |
-| layers<span class="arg-type">[Layer](#layer)[]</span>                       | The layers composing the Symbol Master.                                                                 |
-| background<span class="arg-type">object</span>                              | The background of the Symbol Master                                                                     |
-| background.enabled<span class="arg-type">boolean</span>                     | If the background should be enabled, eg. shown or not                                                   |
-| background.includedInExport<span class="arg-type">boolean</span>            | If the background should be exported or if it should be transparent during the export                   |
-| background.includedInInstance<span class="arg-type">boolean</span>          | If the background should appear in the instances of the Symbol Master                                   |
-| background.color<span class="arg-type">string</span>                        | The rgba representation of the color of the background                                                  |
-| symbolId<span class="arg-type">string</span>                                | The unique ID of the Symbol that the master and its instances share.                                    |
-| overrides<span class="arg-type">[Override](#symbol-override)[]</span>       | The array of the overrides that the instances of the Symbol Master will be able to change.              |
+| Properties |  |
+| --- | --- |
+| id<span class="arg-type">string</span> | The unique ID of the Symbol Master object (not to be confused with `symbolId`). |
+| name<span class="arg-type">string</span> | The name of the Symbol Master |
+| parent<span class="arg-type">[Group](#group)</span> | The group the Symbol Master is in. |
+| frame<span class="arg-type">[Rectangle](#rectangle)</span> | The frame of the Symbol Master. This is given in coordinates that are local to the parent of the layer. |
+| selected<span class="arg-type">boolean</span> | If the Symbol Master is selected. |
+| exportFormats<span class="arg-type">[ExportFormat](#export-format)[]</span> | The export formats of the Symbol Master. |
+| layers<span class="arg-type">[Layer](#layer)[]</span> | The layers composing the Symbol Master. |
+| background<span class="arg-type">object</span> | The background of the Symbol Master |
+| background.enabled<span class="arg-type">boolean</span> | If the background should be enabled, eg. shown or not |
+| background.includedInExport<span class="arg-type">boolean</span> | If the background should be exported or if it should be transparent during the export |
+| background.includedInInstance<span class="arg-type">boolean</span> | If the background should appear in the instances of the Symbol Master |
+| background.color<span class="arg-type">string</span> | The rgba representation of the color of the background |
+| symbolId<span class="arg-type">string</span> | The unique ID of the Symbol that the master and its instances share. |
+| overrides<span class="arg-type">[Override](#symbol-override)[]</span> | The array of the overrides that the instances of the Symbol Master will be able to change. |
 
 ## Create a new Symbol Master
 
@@ -43,8 +43,8 @@ var master = SymbolMaster.fromArtboard(artboard)
 
 Replace the artboard with a symbol master.
 
-| Parameters                                                             |                                         |
-| ---------------------------------------------------------------------- | --------------------------------------- |
+| Parameters |  |
+| --- | --- |
 | artboard<span class="arg-type">[Artboard](#artboard) - required</span> | The artboard to create the master from. |
 
 ### Returns
@@ -83,7 +83,7 @@ var instances = master.getAllInstances()
 
 Returns an array of all instances of the symbol in the document, on all pages.
 
-## Get the Library it was defined in
+## Get Library defining the Symbol Master
 
 ```javascript
 var originLibrary = master.getLibrary()

@@ -18,10 +18,10 @@ UI.message('Hello world!')
 
 Show a small, temporary, message to the user. The message appears at the bottom of the selected document, and is visible for a short period of time. It should consist of a single line of text.
 
-| Parameters                                          |                                        |
-| --------------------------------------------------- | -------------------------------------- |
-| text<span class="arg-type">string - required</span> | The message to show.                   |
-| document<span class="arg-type">Document</span>      | The document to show the message into. |
+| Parameters |  |
+| --- | --- |
+| text<span class="arg-type">string - required</span> | The message to show. |
+| document<span class="arg-type">Document</span> | The document to show the message into. |
 
 ## Show an alert
 
@@ -31,10 +31,10 @@ UI.alert('my title', 'Hello World!')
 
 Show an alert with a custom title and message. The alert is modal, so it will stay around until the user dismisses it by pressing the OK button.
 
-| Parameters                                           |                          |
-| ---------------------------------------------------- | ------------------------ |
-| title<span class="arg-type">string - required</span> | The title of the alert.  |
-| text<span class="arg-type">string - required</span>  | The text of the message. |
+| Parameters |  |
+| --- | --- |
+| title<span class="arg-type">string - required</span> | The title of the alert. |
+| text<span class="arg-type">string - required</span> | The text of the message. |
 
 ## Get an input from the user
 
@@ -54,15 +54,19 @@ UI.getInputFromUser(
 ```
 
 ```javascript
-UI.getInputFromUser("What's your favorite design tool?", {
-  type: UI.INPUT_TYPE.selection,
-  possibleValues: ['Sketch', 'Paper']
-}, (err, value) => {
-  if (err) {
-    // most likely the user canceled the input
-    return
+UI.getInputFromUser(
+  "What's your favorite design tool?",
+  {
+    type: UI.INPUT_TYPE.selection,
+    possibleValues: ['Sketch', 'Paper'],
+  },
+  (err, value) => {
+    if (err) {
+      // most likely the user canceled the input
+      return
+    }
   }
-})
+)
 ```
 
 <!--
@@ -84,16 +88,16 @@ UI.getInputFromUser(
 
 Shows a simple input sheet which displays a message, and asks for an input from the user.
 
-| Parameters                                                                              |                                                                                                                                                                                          |
-| --------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| message<span class="arg-type">string - required</span>                                  | The prompt message to show.                                                                                                                                                              |
-| options<span class="arg-type">object</span>                                             | Options to customize the input sheet. Most of the options depends on the type of the input.                                                                                              |
-| option.description<span class="arg-type">string</span>                                  | A secondary text to describe with more details the input.                                                                                                                                |
-| option.type<span class="arg-type">[Input Type](#uiinput_type)</span>                    | The type of the input.                                                                                                                                                                   |
-| option.initialValue<span class="arg-type">string / number</span>                        | The initial value of the input.   |
-| option.possibleValues<span class="arg-type">string[] - required with a selection</span> | The possible choices that the user can make. Only used for a `selection` input.                                                                                                          |
-| option.numberOfLines<span class="arg-type">number</span> | Controls the height of the input field. Only used for a `string` input. If a value is provided it converts the textfield into a scrollable textarea.                                                                                                      |
-| callback<span class="arg-type">function</span>                                          | A function called after the user entered the input. It is called with an `Error` if the user canceled the input and a `string` or `number` depending on the input type (or `undefined`). |
+| Parameters |  |
+| --- | --- |
+| message<span class="arg-type">string - required</span> | The prompt message to show. |
+| options<span class="arg-type">object</span> | Options to customize the input sheet. Most of the options depends on the type of the input. |
+| option.description<span class="arg-type">string</span> | A secondary text to describe with more details the input. |
+| option.type<span class="arg-type">[Input Type](#uiinput_type)</span> | The type of the input. |
+| option.initialValue<span class="arg-type">string / number</span> | The initial value of the input. |
+| option.possibleValues<span class="arg-type">string[] - required with a selection</span> | The possible choices that the user can make. Only used for a `selection` input. |
+| option.numberOfLines<span class="arg-type">number</span> | Controls the height of the input field. Only used for a `string` input. If a value is provided it converts the textfield into a scrollable textarea. |
+| callback<span class="arg-type">function</span> | A function called after the user entered the input. It is called with an `Error` if the user canceled the input and a `string` or `number` depending on the input type (or `undefined`). |
 
 <!--
 | option.maxValue<span class="arg-type">number</span>                                     | The maximal value. Only used for a `slider` input. Defaults to `1`.                                                                                                                      |

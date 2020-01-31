@@ -12,12 +12,12 @@ var symbolReferences = library.getImportableSymbolReferencesForDocument(
 
 An Object that can imported from a [Library](#library). All its properties are read-only.
 
-| Properties                                                                                   |                                                                                     |
-| -------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
-| id<span class="arg-type">string</span>                                                       | The unique ID of the Object.                                                        |
-| name<span class="arg-type">string</span>                                                     | The name of the Object.                                                             |
+| Properties |  |
+| --- | --- |
+| id<span class="arg-type">string</span> | The unique ID of the Object. |
+| name<span class="arg-type">string</span> | The name of the Object. |
 | objectType<span class="arg-type">[ImportableObjectType](#libraryimportableobjecttype)</span> | The type of the Object. Will only be `Library.ImportableObjectType.Symbol` for now. |
-| library<span class="arg-type">[Library](#library)</span>                                     | The Library the Object is part of.                                                  |
+| library<span class="arg-type">[Library](#library)</span> | The Library the Object is part of. |
 
 ## Import in the Document
 

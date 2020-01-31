@@ -26,7 +26,8 @@ A group of layers. It is also an instance of [Layer](#layer) so all the methods 
 | transform.flippedHorizontally<span class="arg-type">boolean</span> | If the Group is horizontally flipped. |
 | transform.flippedVertically<span class="arg-type">boolean</span> | If the Group is vertically flipped. |
 | style<span class="arg-type">[Style](#style)</span> | The style of the Group. |
-| sharedStyleId<span class="arg-type">string / null</span> | The ID of the [SharedStyle](#shared-style) this Group is linked to if any. |
+| sharedStyle<span class="arg-type">[SharedStyle](#shared-style) / `null`</span> | The associated shared style or `null`. |
+| sharedStyleId<span class="arg-type">string / `null`</span> | The ID of the [SharedStyle](#shared-style) or `null`, identical to `sharedStyle.id`. |
 | layers<span class="arg-type">[Layer](#layer)[]</span> | The Layers that this component groups together. |
 | smartLayout<span class="arg-type">[SmartLayout](#smartlayout)</span> | The Group's Smart Layout. |
 

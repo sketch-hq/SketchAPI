@@ -11,8 +11,8 @@ var document = sketch.fromNative(context.document)
 
 A utility function to get a wrapped object from a native Sketch model object.
 
-| Parameters                                               |                                         |
-| -------------------------------------------------------- | --------------------------------------- |
+| Parameters |  |
+| --- | --- |
 | object<span class="arg-type">Native Sketch Object</span> | The native Sketch model object to wrap. |
 
 ### Returns

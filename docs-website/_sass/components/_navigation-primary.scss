@@ -36,8 +36,8 @@
 @include tablet-and-above {
   .main-nav {
     width: 100%;
-    padding-top: 0.75rem;
-    padding-bottom: 0.75rem;
+    padding-top: rem(10px); /*7px*/
+    padding-bottom: rem(10px); /*7px*/
   }
 
   .main-nav nav {
@@ -93,8 +93,8 @@
     width: 100%;
     z-index: 99;
     top: 0;
-    padding-top: 0.1875rem;
-    padding-bottom: 0.1875rem;
+    padding-top: rem(3px);
+    padding-bottom: rem(3px);
 
     background-color: rgba($background-dark, 0.85) !important;
     -webkit-backdrop-filter: blur(10px) !important;
@@ -138,9 +138,8 @@
 
   .main-nav ul a {
     display: block;
-    width: calc(100% + 2rem);
-    margin-left: -1rem;
-    padding: 1rem;
+    width: calc(100% + 4rem);
+    padding: rem(18.5px) rem(10px) rem(18px);
     position: relative;
   }
 
