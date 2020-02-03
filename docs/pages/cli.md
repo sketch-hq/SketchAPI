@@ -23,7 +23,7 @@ Sketch includes `sketchtool`, a command-line interface to integrate into your sa
 The `sketchtool` binary is located within the Sketch application bundle.
 
 ```sh
-Sketch.app/Contents/Resources/sketchtool/bin/sketchtool
+Sketch.app/Contents/MacOS/sketchtool
 ```
 
 To run `sketchtool` from anywhere on the command-line, add the cli location to `$PATH` or use a convenience script to look up the correct path using `mdfind`.
@@ -34,7 +34,7 @@ To run `sketchtool` from anywhere on the command-line, add the cli location to `
 SKETCH=$(mdfind kMDItemCFBundleIdentifier == 'com.bohemiancoding.sketch3' | head -n 1)
 
 # pass on all given arguments
-"$SKETCH/Contents/Resources/sketchtool/bin/sketchtool" "$@"
+"$SKETCH/Contents/MacOS/sketchtool" "$@"
 ```
 
 > **Note:** `sketchtool` requires macOS 10.11 or later.
