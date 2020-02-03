@@ -34,7 +34,7 @@ To run `sketchtool` from anywhere on the command-line, add the cli location to `
 SKETCH=$(mdfind kMDItemCFBundleIdentifier == 'com.bohemiancoding.sketch3' | head -n 1)
 
 # pass on all given arguments
-"$SKETCH/Contents/Resources/sketchtool/bin/sketchtool" "$@"
+"$SKETCH/Contents/MacOS/sketchtool" "$@"
 ```
 
 > **Note:** `sketchtool` requires macOS 10.11 or later.
