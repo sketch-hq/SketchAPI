@@ -1,6 +1,9 @@
 {
   "unreleased": [],
   "releases": {
+    "63": [
+      "[New] Updated LibraryType enum with new valued, and deprecated `LibraryType.User` and `LibraryType.RemoteUser`"
+    ],
     "61": [
       "[New] Variable font API",
       "[New] Support for smart layout",
