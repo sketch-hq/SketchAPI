@@ -24,8 +24,14 @@ const LibraryTypeMap = {
 
 const LibraryType = {
   Internal: 'Internal',
-  User: 'LocalUser', // Mapping `User` to new value `LocalUser`
-  Remote: 'RemoteUser', // Mapping `Remote` to new value `RemoteUser`
+  /**
+   * @deprecated please use LibraryType.LocalUser instead
+   */
+  User: 'LocalUser', // This value has been remapped for compatibility and will be removed in the future
+  /**
+   * @deprecated please use LibraryType.RemoteUser instead
+   */
+  Remote: 'RemoteUser', // This value has been remapped for compatibility and will be removed in the future
   LocalUser: 'LocalUser', // A library added by a user
   RemoteUser: 'RemoteUser', // A library that can be updated using an appcast
   RemoteTeam: 'RemoteTeam', // A library hosted on Sketch for Teams
