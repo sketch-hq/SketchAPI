@@ -1,6 +1,7 @@
 {
   "unreleased": [],
   "releases": {
+    "63": ["[New] Updated `LibraryType` enum"],
     "61": [
       "[New] Variable font API",
       "[New] Support for smart layout",
