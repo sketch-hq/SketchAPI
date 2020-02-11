@@ -144,13 +144,15 @@ An array of [Shareable Object](#importable-object) that represents the Shared La
 ## `Library.LibraryType`
 
 ```javascript
-Library.LibraryType.User
+Library.LibraryType.LocalUser
 ```
 
 Enumeration of the types of Library.
 
-| Value      |
-| ---------- |
-| `Internal` |
-| `User`     |
-| `Remote`   |
+| Value              |
+| ------------------ |
+| `Internal`         |
+| `LocalUser`        |
+| `RemoteUser`       |
+| `RemoteTeam`       |
+| `RemoteThirdParty` |
