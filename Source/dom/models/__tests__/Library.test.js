@@ -114,7 +114,7 @@ if (!isRunningOnJenkins()) {
         }
       )
     }).then(result => {
-      expect(result.libraryType).toBe(Library.LibraryType.Remote)
+      expect(result.libraryType).toBe(Library.LibraryType.RemoteThirdParty)
       result.remove()
     }))
 }
