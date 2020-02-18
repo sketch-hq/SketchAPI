@@ -25,6 +25,14 @@ export class Image extends StyledLayer {
     }
 
     super(layer)
+
+    // If a `parent` is provided to the constructor, Sketch will draw the Image,
+    // creating a representation of it. So we'll use that to set the Image
+    // dimensions (unless there's also a `frame`, in which case we assume
+    // that's there for a good reason, and don't do any automatic scaling).
+    if (layer.parent && !layer.frame) {
+      this.resizeToOriginalSize()
+    }
   }
 
   resizeToOriginalSize() {
