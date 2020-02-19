@@ -10,5 +10,6 @@ _external
 .jekyll-metadata
 temp-sketchAPI-copy/
 .bundle
+.jekyll-cache
 
 examples/**/package-lock.json
