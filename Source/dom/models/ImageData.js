@@ -88,7 +88,7 @@ ImageData.define('size', {
    */
   get() {
     const s = this._object.image().size()
-    const size = { width: s.width, height: s.height }
+    const size = { width: parseFloat(s.width), height: parseFloat(s.height) }
     return size
   },
 })
