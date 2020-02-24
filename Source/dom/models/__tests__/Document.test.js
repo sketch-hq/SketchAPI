@@ -9,7 +9,12 @@ import { Document, Group, Shape, Text } from '../..'
 import { ColorSpaceMap } from '../Document'
 
 const outputPath = NSTemporaryDirectory() + 'SketchAPI/'
-NSFileManager.defaultManager().createDirectoryAtPath_withIntermediateDirectories_attributes_error(outputPath, true, nil, null)
+NSFileManager.defaultManager().createDirectoryAtPath_withIntermediateDirectories_attributes_error(
+  outputPath,
+  true,
+  nil,
+  null
+)
 
 test('should be able to log a document', (context, document) => {
   expect(true).toBe(true)
@@ -246,7 +251,9 @@ if (!isRunningOnJenkins()) {
       expect(result).toBe(_document)
       expect(_document.path).toBe(
         String(
-          NSString.stringWithString(`${outputPath}sketch-api-unit-tests-2.sketch`)
+          NSString.stringWithString(
+            `${outputPath}sketch-api-unit-tests-2.sketch`
+          )
         )
       )
     })

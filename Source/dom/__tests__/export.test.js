@@ -6,7 +6,12 @@ import { exportObject, objectFromJSON } from '../export'
 import { Shape } from '../layers/Shape'
 
 const outputPath = NSTemporaryDirectory() + 'SketchAPI/'
-NSFileManager.defaultManager().createDirectoryAtPath_withIntermediateDirectories_attributes_error(outputPath, true, nil, null)
+NSFileManager.defaultManager().createDirectoryAtPath_withIntermediateDirectories_attributes_error(
+  outputPath,
+  true,
+  nil,
+  null
+)
 
 test('should return exported json data', () => {
   const object = new Shape()
