@@ -70,7 +70,7 @@ Adjust the Image to its original size. This is equivalent to pressing the 'Origi
 
 The current Image (useful if you want to chain the calls).
 
-For performance reasons, Sketch initializes the `Image` object lazily. So if you want to set the dimensions of your Image layer to those of the original file, you'll first need to create the object, and then call the `resizeToOriginalSize` method.
+For performance reasons, Sketch initializes the `Image` object lazily. So if you want to set the dimensions of your Image layer to those of the original file, you'll first need to create the object, and then call the `originalSize` method.
 
 ## `ImageData`
 
