@@ -2,6 +2,9 @@
 import { isRunningOnJenkins } from '../../../test-utils'
 import { Library, Document, Artboard, Text, SymbolMaster } from '../..'
 
+const outputPath = NSTemporaryDirectory() + 'SketchAPI/'
+NSFileManager.defaultManager().createDirectoryAtPath_withIntermediateDirectories_attributes_error(outputPath, true, nil, null)
+
 // some tests cannot really run on jenkins because it doesn't have access to MSDocument
 if (!isRunningOnJenkins()) {
   test('should import a symbol from a lib', () => {
@@ -19,8 +22,7 @@ if (!isRunningOnJenkins()) {
     // eslint-disable-next-line
     const master = SymbolMaster.fromArtboard(artboard)
     return new Promise((resolve, reject) => {
-      document.save(
-        '~/Desktop/SketchAPI-tests-assets/sketch-api-unit-tests-importable-objects.sketch',
+      document.save(`${outputPath}/sketch-api-unit-tests-importable-objects.sketch`,
         err => {
           document.close()
           if (err) {
@@ -30,9 +32,7 @@ if (!isRunningOnJenkins()) {
         }
       )
     }).then(() => {
-      const lib = Library.getLibraryForDocumentAtPath(
-        '~/Desktop/SketchAPI-tests-assets/sketch-api-unit-tests-importable-objects.sketch'
-      )
+      const lib = Library.getLibraryForDocumentAtPath(`${outputPath}/sketch-api-unit-tests-importable-objects.sketch`)
 
       const document2 = new Document()
 

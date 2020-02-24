@@ -2,6 +2,9 @@
 import { isRunningOnJenkins } from '../../../test-utils'
 import { Library, Document, Artboard, Text, SymbolMaster } from '../..'
 
+const outputPath = NSTemporaryDirectory() + 'SketchAPI/'
+NSFileManager.defaultManager().createDirectoryAtPath_withIntermediateDirectories_attributes_error(outputPath, true, nil, null)
+
 function findValidLib(libs) {
   return libs.find(l => l.valid)
 }
@@ -48,8 +51,7 @@ if (!isRunningOnJenkins()) {
     const master = SymbolMaster.fromArtboard(artboard)
 
     return new Promise((resolve, reject) => {
-      document.save(
-        '~/Desktop/SketchAPI-tests-assets/sketch-api-unit-tests-library.sketch',
+      document.save(`${outputPath}sketch-api-unit-tests-library.sketch`,
         err => {
           if (err) {
             return reject(err)
@@ -60,9 +62,7 @@ if (!isRunningOnJenkins()) {
     }).then(() => {
       document.close()
 
-      lib = Library.getLibraryForDocumentAtPath(
-        '~/Desktop/SketchAPI-tests-assets/sketch-api-unit-tests-library.sketch'
-      )
+      lib = Library.getLibraryForDocumentAtPath(`${outputPath}sketch-api-unit-tests-library.sketch`)
       libId = lib.id
       expect(lib.type).toBe('Library')
 
@@ -88,9 +88,7 @@ if (!isRunningOnJenkins()) {
     expect(document.type).toBe('Document')
     expect(document.path).toBe(
       String(
-        NSString.stringWithString(
-          '~/Desktop/SketchAPI-tests-assets/sketch-api-unit-tests-library.sketch'
-        ).stringByExpandingTildeInPath()
+        NSString.stringWithString(`${outputPath}sketch-api-unit-tests-library.sketch`)
       )
     )
   })
