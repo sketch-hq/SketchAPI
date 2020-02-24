@@ -80,6 +80,19 @@ ImageData.define('nsdata', {
   },
 })
 
+ImageData.define('size', {
+  /**
+   * The size of the image.
+   *
+   * @return {object} The image's size.
+   */
+  get() {
+    const s = this._object.image().size()
+    const size = { width: parseFloat(s.width), height: parseFloat(s.height) }
+    return size
+  },
+})
+
 ImageData.define('id', {
   exportable: true,
   importable: false,

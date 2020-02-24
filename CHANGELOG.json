@@ -1,6 +1,7 @@
 {
   "unreleased": [
-    "[New] Add `resizeToOriginalSize` method on `Image`"
+    "[New] Add `resizeToOriginalSize` method on `Image`",
+    "[New] Add `size` property on `ImageData`"
   ],
   "releases": {
     "63": ["[New] Updated `LibraryType` enum"],

@@ -78,9 +78,15 @@ For performance reasons, Sketch initializes the `Image` object lazily. So if you
 var imageData = imageLayer.image
 
 imageData.nsimage // return a native NSImage
-image.nsdata // return a native NSData representation of the image
+imageData.nsdata // return a native NSData representation of the image
 ```
 
 An `ImageData` is a wrapper around a native `NSImage`.
 
 You can access the native `NSImage` with `nsimage` or a native `NSData` representation of the image with `nsdata`.
+
+```javascript
+imageLayer.image.size // { width: 100, height: 100 }
+```
+
+As a convenience, you can access the original size of an `ImageData` object via its `size` property.
