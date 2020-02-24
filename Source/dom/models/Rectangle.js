@@ -51,6 +51,21 @@ export class Rectangle {
     return this
   }
 
+  /**
+   * Adjust this rectangle by resizing it.
+   *
+   * @param {number} width The width to apply.
+   * @param {number} height The height to apply.
+   */
+  resize(width, height) {
+    this._width = parseFloat(width)
+    this._height = parseFloat(height)
+    if (this._parent && this._parentKey) {
+      this._parent[this._parentKey] = this
+    }
+    return this
+  }
+
   scale(factorWidth, factorHeight) {
     this._width *= parseFloat(factorWidth)
     this._height *= parseFloat(

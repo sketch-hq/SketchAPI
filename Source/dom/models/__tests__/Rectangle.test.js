@@ -118,3 +118,12 @@ test('should convert rect to different coord system', (context, document) => {
     height: 10,
   })
 })
+
+test('should resize a rectangle', () => {
+  const r = new Rectangle(1, 2, 3, 4)
+  r.resize(10, 20)
+  expect(r.x).toBe(1)
+  expect(r.y).toBe(2)
+  expect(r.width).toBe(10)
+  expect(r.height).toBe(20)
+})

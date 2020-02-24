@@ -27,11 +27,11 @@ export class Image extends StyledLayer {
     super(layer)
   }
 
-  resizeToOriginalSize() {
+  originalSize() {
     if (this.isImmutable()) {
       return this
     }
-    this._object.resizeToOriginalSize()
+    this.frame.resize(this.image.size.width, this.image.size.height)
     return this
   }
 }

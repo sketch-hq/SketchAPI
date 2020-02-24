@@ -61,7 +61,7 @@ By default, an `Image` layer will be created with a size of 100 × 100 pixels, u
 ## Original Size
 
 ```js
-imageLayer.resizeToOriginalSize()
+imageLayer.originalSize()
 ```
 
 Adjust the Image to its original size. This is equivalent to pressing the 'Original Size' button in Sketch's Inspector.

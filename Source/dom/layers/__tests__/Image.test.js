@@ -26,7 +26,7 @@ test('should resize image to its original size', (context, document) => {
   expect(image.frame.width).toBe(100)
   expect(image.frame.height).toBe(100)
 
-  image.resizeToOriginalSize()
+  image.originalSize()
 
   expect(image.frame.width).toBe(50)
   expect(image.frame.height).toBe(50)

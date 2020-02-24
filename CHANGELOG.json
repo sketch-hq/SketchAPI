@@ -1,6 +1,7 @@
 {
   "unreleased": [
-    "[New] Add `resizeToOriginalSize` method on `Image`",
+    "[New] Add `resize` method on `Rectangle`",
+    "[New] Add `originalSize` method on `Image`",
     "[New] Add `size` property on `ImageData`"
   ],
   "releases": {
