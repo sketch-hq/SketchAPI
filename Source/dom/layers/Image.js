@@ -26,14 +26,6 @@ export class Image extends StyledLayer {
 
     super(layer)
   }
-
-  originalSize() {
-    if (this.isImmutable()) {
-      return this
-    }
-    this.frame.resize(this.image.size.width, this.image.size.height)
-    return this
-  }
 }
 
 Image.type = Types.Image

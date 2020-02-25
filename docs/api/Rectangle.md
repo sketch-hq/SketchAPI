@@ -23,18 +23,6 @@ A utility class to represent a rectangle. Contains some methods to make interact
 | width<span class="arg-type">number</span> | The width of the rectangle. |
 | height<span class="arg-type">number</span> | The height of the rectangle. |
 
-## Resize the Rectangle
-
-```javascript
-var newRect = rect.resize(width, height)
-```
-
-Adjust the rectangle by resizing it.
-
-### Returns
-
-Return this rectangle (useful if you want to chain the calls).
-
 ## Offset the Rectangle
 
 ```javascript
