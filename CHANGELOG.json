@@ -1,6 +1,5 @@
 {
   "unreleased": [
-    "[New] Add `resizeToOriginalSize` method on `Image`",
     "[New] Add `size` property on `ImageData`"
   ],
   "releases": {
