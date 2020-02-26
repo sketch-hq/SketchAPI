@@ -1,14 +1,6 @@
 /* globals expect, test */
-import { isRunningOnJenkins } from '../../../test-utils'
+import { isRunningOnJenkins, outputPath } from '../../../test-utils'
 import { Library, Document, Artboard, Text, SymbolMaster } from '../..'
-
-const outputPath = NSTemporaryDirectory() + 'SketchAPI/'
-NSFileManager.defaultManager().createDirectoryAtPath_withIntermediateDirectories_attributes_error(
-  outputPath,
-  true,
-  nil,
-  null
-)
 
 // some tests cannot really run on jenkins because it doesn't have access to MSDocument
 if (!isRunningOnJenkins()) {
@@ -28,7 +20,7 @@ if (!isRunningOnJenkins()) {
     const master = SymbolMaster.fromArtboard(artboard)
     return new Promise((resolve, reject) => {
       document.save(
-        `${outputPath}/sketch-api-unit-tests-importable-objects.sketch`,
+        `${outputPath()}/sketch-api-unit-tests-importable-objects.sketch`,
         err => {
           document.close()
           if (err) {
@@ -39,7 +31,7 @@ if (!isRunningOnJenkins()) {
       )
     }).then(() => {
       const lib = Library.getLibraryForDocumentAtPath(
-        `${outputPath}/sketch-api-unit-tests-importable-objects.sketch`
+        `${outputPath()}/sketch-api-unit-tests-importable-objects.sketch`
       )
 
       const document2 = new Document()

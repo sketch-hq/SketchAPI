@@ -1,17 +1,9 @@
 /* globals expect, test */
 import { Buffer } from 'buffer'
 import fs from '@skpm/fs'
-import { isRunningOnJenkins } from '../../test-utils'
+import { isRunningOnJenkins, outputPath } from '../../test-utils'
 import { exportObject, objectFromJSON } from '../export'
 import { Shape } from '../layers/Shape'
-
-const outputPath = NSTemporaryDirectory() + 'SketchAPI/'
-NSFileManager.defaultManager().createDirectoryAtPath_withIntermediateDirectories_attributes_error(
-  outputPath,
-  true,
-  nil,
-  null
-)
 
 test('should return exported json data', () => {
   const object = new Shape()
@@ -80,7 +72,7 @@ if (!isRunningOnJenkins()) {
   })
 
   test('Should export a page to png file', (context, document) => {
-    const filePath = NSString.stringWithString(`${outputPath}/Page 1.png`)
+    const filePath = NSString.stringWithString(`${outputPath()}/Page 1.png`)
     try {
       fs.unlinkSync(filePath)
     } catch (err) {
@@ -92,13 +84,13 @@ if (!isRunningOnJenkins()) {
     })
     exportObject(document.selectedPage, {
       formats: 'png',
-      output: outputPath,
+      output: outputPath(),
     })
     expect(fs.existsSync(filePath)).toBe(true)
   })
 
   test('Should export a shape to png file', (context, document) => {
-    const filePath = NSString.stringWithString(`${outputPath}/Shape.png`)
+    const filePath = NSString.stringWithString(`${outputPath()}/Shape.png`)
     try {
       fs.unlinkSync(filePath)
     } catch (err) {
@@ -109,13 +101,13 @@ if (!isRunningOnJenkins()) {
     })
     exportObject(object, {
       formats: 'png',
-      output: outputPath,
+      output: outputPath(),
     })
     expect(fs.existsSync(filePath)).toBe(true)
   })
 
   test('Should export a shape to json file', (context, document) => {
-    const filePath = NSString.stringWithString(`${outputPath}/Shape.json`)
+    const filePath = NSString.stringWithString(`${outputPath()}/Shape.json`)
     try {
       fs.unlinkSync(filePath)
     } catch (err) {
@@ -126,7 +118,7 @@ if (!isRunningOnJenkins()) {
     })
     exportObject(object, {
       formats: 'json',
-      output: outputPath,
+      output: outputPath(),
     })
     expect(fs.existsSync(filePath)).toBe(true)
   })

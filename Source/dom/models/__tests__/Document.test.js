@@ -4,17 +4,10 @@ import {
   createSymbolMaster,
   createSharedStyle,
   canBeLogged,
+  outputPath,
 } from '../../../test-utils'
 import { Document, Group, Shape, Text } from '../..'
 import { ColorSpaceMap } from '../Document'
-
-const outputPath = NSTemporaryDirectory() + 'SketchAPI/'
-NSFileManager.defaultManager().createDirectoryAtPath_withIntermediateDirectories_attributes_error(
-  outputPath,
-  true,
-  nil,
-  null
-)
 
 test('should be able to log a document', (context, document) => {
   expect(true).toBe(true)
@@ -204,7 +197,7 @@ if (!isRunningOnJenkins()) {
   test('should save a file', () =>
     new Promise((resolve, reject) => {
       _document.save(
-        `${outputPath}sketch-api-unit-tests.sketch`,
+        `${outputPath()}sketch-api-unit-tests.sketch`,
         (err, result) => {
           if (err) {
             return reject(err)
@@ -216,7 +209,9 @@ if (!isRunningOnJenkins()) {
       expect(result).toBe(_document)
       expect(_document.path).toBe(
         String(
-          NSString.stringWithString(`${outputPath}sketch-api-unit-tests.sketch`)
+          NSString.stringWithString(
+            `${outputPath()}sketch-api-unit-tests.sketch`
+          )
         )
       )
     }))
@@ -233,13 +228,15 @@ if (!isRunningOnJenkins()) {
       expect(result).toBe(_document)
       expect(_document.path).toBe(
         String(
-          NSString.stringWithString(`${outputPath}sketch-api-unit-tests.sketch`)
+          NSString.stringWithString(
+            `${outputPath()}sketch-api-unit-tests.sketch`
+          )
         )
       )
     }))
 
   test('should save a file to a specific path when setting the path', () => {
-    _document.path = `${outputPath}sketch-api-unit-tests-2.sketch`
+    _document.path = `${outputPath()}sketch-api-unit-tests-2.sketch`
     return new Promise((resolve, reject) => {
       _document.save((err, result) => {
         if (err) {
@@ -252,7 +249,7 @@ if (!isRunningOnJenkins()) {
       expect(_document.path).toBe(
         String(
           NSString.stringWithString(
-            `${outputPath}sketch-api-unit-tests-2.sketch`
+            `${outputPath()}sketch-api-unit-tests-2.sketch`
           )
         )
       )
@@ -266,7 +263,9 @@ if (!isRunningOnJenkins()) {
   })
 
   test('should open a file', () => {
-    const document = Document.open(`${outputPath}sketch-api-unit-tests.sketch`)
+    const document = Document.open(
+      `${outputPath()}sketch-api-unit-tests.sketch`
+    )
     const documents = Document.getDocuments()
     expect(documents.find(d => d.id === document.id)).toEqual(document)
     // close it again because when watching the tests, it will open dozens of documents
@@ -275,7 +274,7 @@ if (!isRunningOnJenkins()) {
 
   test('should fail to open a non-existing file', () => {
     try {
-      Document.open(`${outputPath}non-existing-sketch-api-unit-tests.sketch`)
+      Document.open(`${outputPath()}non-existing-sketch-api-unit-tests.sketch`)
       expect(true).toBe(false)
     } catch (err) {
       expect(err.message).toMatch(

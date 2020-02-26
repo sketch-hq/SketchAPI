@@ -1,14 +1,6 @@
 /* globals expect, test */
-import { isRunningOnJenkins } from '../../../test-utils'
+import { isRunningOnJenkins, outputPath } from '../../../test-utils'
 import { Library, Document, Artboard, Text, SymbolMaster } from '../..'
-
-const outputPath = NSTemporaryDirectory() + 'SketchAPI/'
-NSFileManager.defaultManager().createDirectoryAtPath_withIntermediateDirectories_attributes_error(
-  outputPath,
-  true,
-  nil,
-  null
-)
 
 function findValidLib(libs) {
   return libs.find(l => l.valid)
@@ -57,7 +49,7 @@ if (!isRunningOnJenkins()) {
 
     return new Promise((resolve, reject) => {
       document.save(
-        `${outputPath}sketch-api-unit-tests-library.sketch`,
+        `${outputPath()}sketch-api-unit-tests-library.sketch`,
         err => {
           if (err) {
             return reject(err)
@@ -69,7 +61,7 @@ if (!isRunningOnJenkins()) {
       document.close()
 
       lib = Library.getLibraryForDocumentAtPath(
-        `${outputPath}sketch-api-unit-tests-library.sketch`
+        `${outputPath()}sketch-api-unit-tests-library.sketch`
       )
       libId = lib.id
       expect(lib.type).toBe('Library')
@@ -97,7 +89,7 @@ if (!isRunningOnJenkins()) {
     expect(document.path).toBe(
       String(
         NSString.stringWithString(
-          `${outputPath}sketch-api-unit-tests-library.sketch`
+          `${outputPath()}sketch-api-unit-tests-library.sketch`
         )
       )
     )
