@@ -61,7 +61,7 @@ export function createSharedStyle(document: any, Primitive: any, style?: any) {
 
 export function outputPath() {
   const output = isRunningOnJenkins()
-    ? `${process.env.$WORKSPACE}/UnitTestOutput/SketchAPI/`
+    ? `${process.env.WORKSPACE}/UnitTestOutput/SketchAPI/`
     : // eslint-disable-next-line
       `${NSTemporaryDirectory()}SketchAPI/`
   fs.mkdirSync(output, { recursive: true })
