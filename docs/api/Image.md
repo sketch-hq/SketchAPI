@@ -58,13 +58,19 @@ var imageLayer = new Image({
 
 By default, an `Image` layer will be created with a size of 100 × 100 pixels, unless you provide a `frame` property on its constructor.
 
-```javascript
-const image = imageLayer.image
-imageLayer.frame.width = image.size.width
-imageLayer.frame.height = image.size.height
+## Original Size
+
+```js
+imageLayer.resizeToOriginalSize()
 ```
 
-For performance reasons, Sketch initializes the `Image` object lazily. So if you want to set the dimensions of your Image layer to those of the original file, you'll first need to create the object, and then set its frame dimensions.
+Adjust the Image to its original size. This is equivalent to pressing the 'Original Size' button in Sketch's Inspector.
+
+### Returns
+
+The current Image (useful if you want to chain the calls).
+
+For performance reasons, Sketch initializes the `Image` object lazily. So if you want to set the dimensions of your Image layer to those of the original file, you'll first need to create the object, and then call the `resizeToOriginalSize` method.
 
 ## `ImageData`
 

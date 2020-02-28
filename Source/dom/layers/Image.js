@@ -26,6 +26,14 @@ export class Image extends StyledLayer {
 
     super(layer)
   }
+
+  resizeToOriginalSize() {
+    if (this.isImmutable()) {
+      return this
+    }
+    this._object.resizeToOriginalSize()
+    return this
+  }
 }
 
 Image.type = Types.Image
