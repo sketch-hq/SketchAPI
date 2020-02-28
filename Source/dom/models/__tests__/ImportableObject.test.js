@@ -1,5 +1,5 @@
 /* globals expect, test */
-import { isRunningOnJenkins } from '../../../test-utils'
+import { isRunningOnJenkins, outputPath } from '../../../test-utils'
 import { Library, Document, Artboard, Text, SymbolMaster } from '../..'
 
 // some tests cannot really run on jenkins because it doesn't have access to MSDocument
@@ -20,7 +20,7 @@ if (!isRunningOnJenkins()) {
     const master = SymbolMaster.fromArtboard(artboard)
     return new Promise((resolve, reject) => {
       document.save(
-        '~/Desktop/SketchAPI-tests-assets/sketch-api-unit-tests-importable-objects.sketch',
+        `${outputPath()}/sketch-api-unit-tests-importable-objects.sketch`,
         err => {
           document.close()
           if (err) {
@@ -31,7 +31,7 @@ if (!isRunningOnJenkins()) {
       )
     }).then(() => {
       const lib = Library.getLibraryForDocumentAtPath(
-        '~/Desktop/SketchAPI-tests-assets/sketch-api-unit-tests-importable-objects.sketch'
+        `${outputPath()}/sketch-api-unit-tests-importable-objects.sketch`
       )
 
       const document2 = new Document()

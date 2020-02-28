@@ -1,7 +1,7 @@
 /* globals expect, test */
 import { Buffer } from 'buffer'
 import fs from '@skpm/fs'
-import { isRunningOnJenkins } from '../../test-utils'
+import { isRunningOnJenkins, outputPath } from '../../test-utils'
 import { exportObject, objectFromJSON } from '../export'
 import { Shape } from '../layers/Shape'
 
@@ -72,9 +72,7 @@ if (!isRunningOnJenkins()) {
   })
 
   test('Should export a page to png file', (context, document) => {
-    const filePath = NSString.stringWithString(
-      '~/Desktop/SketchAPI-tests-assets/Page 1.png'
-    ).stringByExpandingTildeInPath()
+    const filePath = NSString.stringWithString(`${outputPath()}/Page 1.png`)
     try {
       fs.unlinkSync(filePath)
     } catch (err) {
@@ -86,15 +84,13 @@ if (!isRunningOnJenkins()) {
     })
     exportObject(document.selectedPage, {
       formats: 'png',
-      output: '~/Desktop/SketchAPI-tests-assets',
+      output: outputPath(),
     })
     expect(fs.existsSync(filePath)).toBe(true)
   })
 
   test('Should export a shape to png file', (context, document) => {
-    const filePath = NSString.stringWithString(
-      '~/Desktop/SketchAPI-tests-assets/Shape.png'
-    ).stringByExpandingTildeInPath()
+    const filePath = NSString.stringWithString(`${outputPath()}/Shape.png`)
     try {
       fs.unlinkSync(filePath)
     } catch (err) {
@@ -105,15 +101,13 @@ if (!isRunningOnJenkins()) {
     })
     exportObject(object, {
       formats: 'png',
-      output: '~/Desktop/SketchAPI-tests-assets',
+      output: outputPath(),
     })
     expect(fs.existsSync(filePath)).toBe(true)
   })
 
   test('Should export a shape to json file', (context, document) => {
-    const filePath = NSString.stringWithString(
-      '~/Desktop/SketchAPI-tests-assets/Shape.json'
-    ).stringByExpandingTildeInPath()
+    const filePath = NSString.stringWithString(`${outputPath()}/Shape.json`)
     try {
       fs.unlinkSync(filePath)
     } catch (err) {
@@ -124,7 +118,7 @@ if (!isRunningOnJenkins()) {
     })
     exportObject(object, {
       formats: 'json',
-      output: '~/Desktop/SketchAPI-tests-assets',
+      output: outputPath(),
     })
     expect(fs.existsSync(filePath)).toBe(true)
   })

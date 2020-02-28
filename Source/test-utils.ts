@@ -1,6 +1,8 @@
 import { inspect } from 'util'
 import { Style, SymbolMaster, Text, Artboard } from './dom'
 
+const fs = require('@skpm/fs')
+
 export function isRunningOnJenkins() {
   return !__command.pluginBundle()
 }
@@ -55,6 +57,15 @@ export function createSharedStyle(document: any, Primitive: any, style?: any) {
     sharedStyle,
     object,
   }
+}
+
+export function outputPath() {
+  const output = isRunningOnJenkins()
+    ? `${process.env.WORKSPACE}/UnitTestOutput/SketchAPI/`
+    : // eslint-disable-next-line
+      `${NSTemporaryDirectory()}SketchAPI/`
+  fs.mkdirSync(output, { recursive: true })
+  return output
 }
 
 // using a base64 image cause I'm not sure where and how to keep assets that would work with both local and jenkins tests
