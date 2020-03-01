@@ -64,7 +64,7 @@ Detached Symbol Layers include custom data in `userInfo` for the `com.bohemianco
 }
 ```
 
-> **Note:** Layer Groups created from a detached Symbol Instance may have different a position or dimensions. The custom data `frame` attribute contains the orginal value of the instance before it got detached.
+> **Note:** Layer Groups created from a detached Symbol Instance may have a different position or dimensions. The custom data `frame` attribute contains the original value of the instance before it got detached.
 
 ### Related resources
 
