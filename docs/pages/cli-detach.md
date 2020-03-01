@@ -68,7 +68,7 @@ Detached Symbol Layers include custom data in `userInfo` for the `com.bohemianco
 
 ### Related resources
 
-For more information on custom data and how to access within the raw JSON document data or via the plugin API, see also:
+For more information on custom data and how to access it within the raw JSON document data or via the plugin API, see also:
 
 - [Sketch file format](/file-format/)
 - [Layer settings](/reference/api/#get-a-layer-setting)
