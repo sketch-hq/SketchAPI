@@ -18,7 +18,9 @@ def check_dependencies
   `bundle check`
   if !$?.success?
     puts "Installing required Rubygems (we'll only do this once)"
-    system("bundle install --quiet --clean --jobs=4 --path _vendor")
+    system("bundle config set clean 'true'")
+    system("bundle config set path '_vendor'")
+    system("bundle install --quiet --jobs=4")
   end
   puts "✅  Dependencies ok"
 end
