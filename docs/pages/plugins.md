@@ -21,7 +21,7 @@ Plugins can make use of the following APIs:
 
 ## Plugin location
 
-Plugins are stored as folders within the user's home folder. Sketch scans this plugin location on launch for installed plugins.
+Plugins are stored as folders within the user’s home folder. Sketch scans this plugin location on launch for installed plugins.
 
 ```sh
 ~/Library/Application Support/com.bohemiancoding.sketch3/Plugins

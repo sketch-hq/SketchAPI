@@ -53,7 +53,7 @@ sketchtool help export layers
 
 ## Artboards
 
-Artboards are a subset of layers and `sketchtool` provides a convenience command to export them. It automatically exports both artboards that have been made _Exportable_ and such that haven't.
+Artboards are a subset of layers and `sketchtool` provides a convenience command to export them. It automatically exports both artboards that have been made _Exportable_ and such that haven’t.
 
 Export all artboards of a document running the following command:
 

@@ -1,24 +1,24 @@
 # Developer website
 
-The build process in this folder generates the developer website for [Sketch](http://sketch.com), that is hosted on Netlify at [developer.sketch.com](https://developer.sketch.com).
+The build process in this folder generates the developer website for [Sketch](https://sketch.com), that is hosted on Netlify at [developer.sketch.com](https://developer.sketch.com).
 
 Alternatively, the website content is contained in the sibling [`docs`](../docs) folder.
 
 ## Contribute!
 
-We've made this public so you can contribute to it. If you find a typo, or an error, or want to improve the content, feel free to send us a pull request. Also, if there's anything you'd like to see covered or documented, file an issue and we'll do it for you.
+We’ve made this public so you can contribute to it. If you find a typo, or an error, or want to improve the content, feel free to send us a pull request. Also, if there’s anything you’d like to see covered or documented, file an issue and we’ll do it for you.
 
 In order to make a change open a PR branching off `develop`. You should see a Netlify deploy preview appear in the PR, which is a convenient way to see how your changes will impact the live site.
 
 It may take some time to see your changes live on [developer.sketch.com](https://developer.sketch.com), since production deployments only happen alongside Sketch releases.
 
-> We use [Jekyll](http://jekyllrb.com) as our content backend, so make sure to read their docs if you need help understanding how the system works.
+> We use [Jekyll](https://jekyllrb.com) as our content backend, so make sure to read their docs if you need help understanding how the system works.
 
 ## Starting a local dev server
 
-If you want to get the site working locally to preview your changes, you'll need to have [node](https://nodejs.org/en/) and [bundler](http://bundler.io) installed. On OS X you'll also need to have Xcode's command-line tools installed (`xcode-select --install`).
+If you want to get the site working locally to preview your changes, you’ll need to have [node](https://nodejs.org/en/) and [bundler](https://bundler.io) installed. On macOS you’ll also need to have Xcode’s command-line tools installed (`xcode-select --install`).
 
-Once you have them, to start a local dev server invoke the `run` script in this folder,
+Once you have them, to start a local dev server invoke the `run` script in this folder:
 
 ```
 ./run
@@ -28,7 +28,7 @@ The `run` script will take care of installing all the needed dependencies if the
 
 Once the dev server is running, making changes to website content in the sibling [`docs`](../docs) folder should trigger a live reload.
 
-> Note: you may find issues with nokogiri when running `run`. If that's the case, try the following:
+> Note: you may find issues with nokogiri when running `run`. If that’s the case, try the following:
 >
 > ```sh
 > bundle config build.nokogiri \
@@ -36,7 +36,7 @@ Once the dev server is running, making changes to website content in the sibling
 >   --with-xml2-include=/usr/include/libxml2/
 > ```
 >
-> If that doesn't work, check the troubleshooting tips on [Nokogiri's page](http://www.nokogiri.org/tutorials/installing_nokogiri.html#mac_os_x)
+> If that doesn’t work, check the troubleshooting tips on [Nokogiri’s page](http://www.nokogiri.org/tutorials/installing_nokogiri.html#mac_os_x)
 
 ## Generated sections
 

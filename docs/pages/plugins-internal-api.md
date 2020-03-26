@@ -8,17 +8,17 @@ order: 500
 excerpt: For a deeper integration with Sketch, the internal APIs provides access to almost every aspect of the app
 ---
 
-For a deeper integration with Sketch, the internal APIs provides access to almost every aspect of the app. Use [CocoaScript](/plugins/cocoascript) or Objective-C if you're building plugins loading native frameworks.
+For a deeper integration with Sketch, the internal APIs provides access to almost every aspect of the app. Use [CocoaScript](/plugins/cocoascript) or Objective-C if you’re building plugins loading native frameworks.
 
 > **Important:** New versions of Sketch can introduce breaking changes to the internal API.
 >
-> Sketch does not provide an API reference nor support for the internal API. If you're using the internal APIs make sure to test your plugin with the [pre-release versions](https://sketch.com/beta) of Sketch.
+> Sketch does not provide an API reference nor support for the internal API. If you’re using the internal APIs make sure to test your plugin with the [pre-release versions](https://sketch.com/beta) of Sketch.
 >
 > We recommend using the [JavaScript API](/plugins/javascript-api) where possible. Something is missing? Please [submit feedback and feature requests]({{ site.github_repo }}/issues).
 
 ---
 
-> **Note:** Do not use Swift for native frameworks (yet) to avoid problems with Sketch's internal Swift modules. See the official post by the Swift team on [ABI Stability and More](https://swift.org/blog/abi-stability-and-more/).
+> **Note:** Do not use Swift for native frameworks (yet) to avoid problems with Sketch’s internal Swift modules. See the official post by the Swift team on [ABI Stability and More](https://swift.org/blog/abi-stability-and-more/).
 
 ## Sketch Headers
 

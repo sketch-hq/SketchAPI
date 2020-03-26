@@ -11,7 +11,7 @@ Layers are the building blocks of Sketch. Their dimensions and position within t
 
 ### Frame
 
-The _frame_ is a rectangle describing a layer's position and size relative to it's parent layer, such as a group or an artboard, or the canvas if there is no parent. The _frame_ is stored using absolute values.
+The _frame_ is a rectangle describing a layer’s position and size relative to its parent layer, such as a group or an artboard, or the canvas if there is no parent. The _frame_ is stored using absolute values.
 
 #### Layer directly on canvas
 
@@ -42,7 +42,7 @@ In the example below, the triangle is stored in the `.sketch` file with the foll
 
 #### Layer with a parent
 
-When placed inside an artboard, the triangle's position is relative to it, identical to the inspector values.
+When placed inside an artboard, the triangle’s position is relative to it, identical to the inspector values.
 
 <img src="/images/developer/file-format-coordinates-frame-parent.png"
      alt="Coordinates of a triangle placed in the same place of the canvas but as part of an artboard."
@@ -80,7 +80,7 @@ When placed inside an artboard, the triangle's position is relative to it, ident
 
 ### Point coordinates
 
-Shapes are contents of a layer and made of points. Each point's coordinate is relative to the layer's _frame_, using normalized values so they don't require any update in case the frame of the layer changes.
+Shapes are contents of a layer and made of points. Each point’s coordinate is relative to the layer’s _frame_, using normalized values so they don’t require any update in case the frame of the layer changes.
 
 <img src="/images/developer/file-format-coordinates-points.png"
      alt="Triangle coordinates in the Inspector"

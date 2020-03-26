@@ -9,7 +9,7 @@ excerpt: Sketch documents are stored as ZIP archives containing JSON encoded dat
 
 The file format specification defines in human and machine readable format valid Sketch document JSON, and how this changes over time. The specification is written using the JSON Schema open standard, and published in a variety of formats via `npm`.
 
-Use the specification to build robust low level integrations of Sketch such as server and command-line applications. The specification is versioned independantly of Sketch itself and advances every time there's a change to the document structure.
+Use the specification to build robust low level integrations of Sketch such as server and command-line applications. The specification is versioned independantly of Sketch itself and advances every time there’s a change to the document structure.
 
 ## Formats
 
@@ -31,4 +31,4 @@ Use the types to strongly type data representing Sketch document objects, such a
 
 The [sketch-reference-files](https://github.com/sketch-hq/sketch-reference-files) are a store of automatically generated Sketch file JSON organized by document version and Sketch feature.
 
-The reference file JSON can be accessed from the repository, installed from `npm` or downloaded over HTTP and provide a valuable resource when there's a requirement to automate tests or analysis of real Sketch file fixtures.
+The reference file JSON can be accessed from the repository, installed from `npm` or downloaded over HTTP and provide a valuable resource when there’s a requirement to automate tests or analysis of real Sketch file fixtures.

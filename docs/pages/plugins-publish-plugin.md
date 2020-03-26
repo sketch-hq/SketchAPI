@@ -10,10 +10,10 @@ redirect_from:
   - /guides/publishing-plugins/
 
 order: 105
-excerpt: Publish a plugin to make it available to the public or just your team and take advantage of Sketch's automatic update mechanism for plugins
+excerpt: Publish a plugin to make it available to the public or just your team and take advantage of Sketch’s automatic update mechanism for plugins
 ---
 
-Publish a plugin to make it available to the public or just your team and take advantage of Sketch's automatic update mechanism for plugins. To let others know about your plugin submit to the official listing on the [Sketch website](https://sketch.com/extensions/).
+Publish a plugin to make it available to the public or just your team and take advantage of Sketch’s automatic update mechanism for plugins. To let others know about your plugin submit to the official listing on the [Sketch website](https://sketch.com/extensions/).
 
 For automatic updates to work a plugin must be downloadable and available versions must be provided via an _appcast_. Sketch regularly checks for updates and prompts the user to install a new plugin version when it becomes available. Use the [Sketch Plugin Manager `skpm`](https://github.com/skpm/skpm) or follow the necessary steps manually to make your plugins available to others.
 
@@ -38,7 +38,7 @@ For all options such as not including a plugin in the official listing view the 
 skpm publish --help
 ```
 
-> **Note:** If you haven't used `skpm` with your GitHub repository before you'll need to login from the command-line first using a [_Personal Access Token_](https://help.github.com/en/articles/creating-a-personal-access-token-for-the-command-line) granting access to the **repo** scope.
+> **Note:** If you haven’t used `skpm` with your GitHub repository before you’ll need to login from the command-line first using a [_Personal Access Token_](https://help.github.com/en/articles/creating-a-personal-access-token-for-the-command-line) granting access to the **repo** scope.
 >
 > ```sh
 > skpm login
@@ -46,7 +46,7 @@ skpm publish --help
 
 ## 2. Submit manually
 
-If you can't use `skpm` or want to host your plugin somewhere else than GitHub, for instance on your product website, you'll have to
+If you can’t use `skpm` or want to host your plugin somewhere else than GitHub, for instance on your product website, you’ll have to
 
 1. Create an appcast XML and upload it to a server.
 1. Set the `appcast` property in the plugin manifest to the URL to the XML file.

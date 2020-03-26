@@ -29,7 +29,7 @@ sketch://path/to/file.sketch?centerOnLayer=LAYER_ID&zoom=ZOOM_LEVEL
 
 ### `centerOnLayer` string
 
-To obtain the layer id use either the JavaScript API or read the document's JSON data directly.
+To obtain the layer id use either the JavaScript API or read the document’s JSON data directly.
 
 #### Example
 
@@ -66,7 +66,7 @@ The command must implement the `HandleURL` action and have it defined in the plu
 ```js
 const sketch = require('sketch')
 
-// If you're using skpm: export function handleURL(context)
+// If you’re using skpm: export function handleURL(context)
 function handleURL(context) {
   let query = context.actionContext.query
   sketch.UI.message(query.msg || '👋')

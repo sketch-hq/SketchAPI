@@ -7,7 +7,7 @@ order: 3
 excerpt: How Sketch stores version information in meta.json
 ---
 
-The document's metadata includes information about the Sketch version used to create the document and which versions of Sketch can open the file.
+The document’s metadata includes information about the Sketch version used to create the document and which versions of Sketch can open the file.
 
 If a document was saved in a newer version of Sketch, openend and saved in an older, compatible version of Sketch, document data only supported by the newer version of Sketch **is not retained**.
 

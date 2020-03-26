@@ -55,7 +55,7 @@ The example `manifest.json` file below is for a plugin called _Select Shapes_, a
 
 #### `appcast`
 
-A URL to the plugin's appcast file containing information about the available versions, including URLs to download specific versions. Sketch automatically checks this file for updates and notifies the user when there's an update available.
+A URL to the plugin’s appcast file containing information about the available versions, including URLs to download specific versions. Sketch automatically checks this file for updates and notifies the user when there’s an update available.
 
 #### `author`
 
@@ -67,7 +67,7 @@ Specifies how to contact the plugin author by email. This is optional.
 
 #### `bundleVersion`
 
-Specifies the version of the plugin bundle's metadata structure and file layout. This is optional, and defaults to `1`. No other versions are currently supported.
+Specifies the version of the plugin bundle’s metadata structure and file layout. This is optional, and defaults to `1`. No other versions are currently supported.
 
 #### `compatibleVersion`
 
@@ -107,8 +107,8 @@ function selectAll() {
 | `identifier` | Defines a unique identifier of the command within the plugin bundle. |
 | `name` | Provides the name of the command which is used within the _Plugins_ menu. |
 | `shortcut` | Provides a default keyboard shortcut for the command, e.g. `ctrl shift t`. See table below for a reference of possible values. |
-| `script` | Specifies the relative path within the plugin bundle's `Sketch` folder to the script implementing the command. |
-| `handler` | Specifies the name of function to be called with the command. The function should be declared at the top level of the script, and accepts a single `context` parameter which contains information such as the current document and selection. If this field is omitted the plugin will default to using a handler named `onRun`. <br/><br/>Alternatively, if you're using the `skpm` tool you may `export` the function instead of declaring it, or omit this field and declare the handler with `export default` |
+| `script` | Specifies the relative path within the plugin bundle’s `Sketch` folder to the script implementing the command. |
+| `handler` | Specifies the name of function to be called with the command. The function should be declared at the top level of the script, and accepts a single `context` parameter which contains information such as the current document and selection. If this field is omitted the plugin will default to using a handler named `onRun`. <br/><br/>Alternatively, if you’re using the `skpm` tool you may `export` the function instead of declaring it, or omit this field and declare the handler with `export default` |
 | `handlers` | If more fine-grain control is required use the `handlers` field instead of `handler`, see below for in-depth documentation |
 
 ##### Shortcut Values
@@ -142,7 +142,7 @@ Make sure to test your shortcuts with different international keyboard layouts. 
 
 ##### `handlers`
 
-An object used to fully specify a command's _setup_ › _run_ › _tearDown_ lifecycle, as well as work with [Actions](/guides/action-api/). When specified the `handler` field is ignored.
+An object used to fully specify a command’s _setup_ › _run_ › _tearDown_ lifecycle, as well as work with [Actions](/guides/action-api/). When specified the `handler` field is ignored.
 
 The `handlers` object has five fields:
 
@@ -227,7 +227,7 @@ Provides a human-readable name for the plugin when displayed to the user, e.g. w
 
 Specifies if the plugin can be run without an open Sketch document.
 
-- `document`: default, disables the plugin's menu items when no document is open
+- `document`: default, disables the plugin’s menu items when no document is open
 - `application`: enables the plugin menu and allow to run the plugin without an open document
 
 ```json

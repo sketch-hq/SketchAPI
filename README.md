@@ -7,7 +7,7 @@ This is a JavaScript API for Sketch. The intention is to make something which is
 - fully supported by Bohemian between releases (ie. we try not to change it, unlike our internal API which we can and do change whenever we need to)
 - still allows you to drop down to our internal API when absolutely necessary
 
-This API is a very core layer which interfaces with Sketch itself. It's intentionally simple, and we want to keep it that way. If you feel like adding some high-level code to it, it’s probably better to add it to a community-maintained library that can be used on top of the API, and keep it separate from the core API effort.
+This API is a very core layer which interfaces with Sketch itself. It’s intentionally simple, and we want to keep it that way. If you feel like adding some high-level code to it, it’s probably better to add it to a community-maintained library that can be used on top of the API, and keep it separate from the core API effort.
 
 ![API layers](https://cloud.githubusercontent.com/assets/206306/19645098/f7d3615c-99ea-11e6-962a-439fb553bf2d.png)
 
@@ -25,7 +25,7 @@ var sketch = require('sketch')
 
 The full documentation is available on [https://developer.sketch.com/reference/api].
 
-Here's a very simple example script:
+Here’s a very simple example script:
 
 ```js
 // access the Sketch API
@@ -112,13 +112,13 @@ The API is organized as a series of files defining JavaScript classes, and writt
 
 However, the version that is embedded in Sketch is a single minified and transpiled library file called `SketchAPI.js`.
 
-If you want to build this library file locally, you need to have [Node.js](https://nodejs.org) installed, and then run the following in the project's root folder:
+If you want to build this library file locally, you need to have [Node.js](https://nodejs.org) installed, and then run the following in the project’s root folder:
 
 ```bash
 npm install
 ```
 
-Once that's ready, you can run:
+Once that’s ready, you can run:
 
 ```bash
 npm start

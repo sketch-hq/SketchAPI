@@ -37,7 +37,7 @@ Provide image or text data right within Sketch. Data Suppliers integrate directl
 
 ### Fibers in [`sketch/async`](/reference/api/#async)
 
-By default a plugin command's JavaScript context is destroyed after successful execution. For asynchronous operations the JavaScript API provides fibers as a method to prolong the lifetime of the JavaScript context.
+By default a plugin command’s JavaScript context is destroyed after successful execution. For asynchronous operations the JavaScript API provides fibers as a method to prolong the lifetime of the JavaScript context.
 
 ### Import from and export layers to disk
 

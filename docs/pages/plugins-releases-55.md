@@ -47,7 +47,7 @@ An object containing the query of the URL, e.g. for `sketch://plugin/my.plugin.i
 
 ### Usage
 
-You'll need to have manifest file setup properly to be able to trigger a function on the `HandleURL` Action:
+You’ll need to have manifest file setup properly to be able to trigger a function on the `HandleURL` Action:
 
 ```json
 {
@@ -145,7 +145,7 @@ console.log(pointSelectionArray)
 
 [_GitHub pull request_]({{ site.github_repo }}/pull/459)
 
-Babel would tranform `[nativeDocument] = NSApplication.sharedApplication().orderedDocuments()` assuming that it's a proper array but it's not, it's an `NSArray` so it would throw an error.
+Babel would tranform `[nativeDocument] = NSApplication.sharedApplication().orderedDocuments()` assuming that it’s a proper array but it’s not, it’s an `NSArray` so it would throw an error.
 
 This is a great addition with the URL example from earlier. We can confidently check if there is a current document open or not.
 

@@ -16,7 +16,7 @@ Released 05 February, 2019 – [_read release notes_](https://www.sketch.com/upd
 
 [_GitHub pull request_]({{ site.github_repo }}/pull/265)
 
-Previously when you used `library.getDocument()` the path of the Document would be undefined. It's now set correctly.
+Previously when you used `library.getDocument()` the path of the Document would be undefined. It’s now set correctly.
 
 ### Added `exportFormats` property on `Layer`
 
@@ -95,7 +95,7 @@ Pretty much every object from the JS API is a wrapper around a native object (li
 Instead of:
 
 ```js
-layer.exportFormats = [{type: 'ExportFormat, size: '2x'}]
+layer.exportFormats = [{ type: 'ExportFormat', size: '2x' }]
 ```
 
 you can just write:
@@ -124,7 +124,7 @@ The same UI inputs are there (`String` and `Select`) but its moved over to the m
 ```js
 // Default type .string
 UI.getInputFromUser(
-  "What's your name?",
+  'What’s your name?',
   {
     initialValue: 'Appleseed',
   },
@@ -138,7 +138,7 @@ UI.getInputFromUser(
 
 // Type .selection
 UI.getInputFromUser(
-  "What's your favorite design tool?",
+  'What’s your favorite design tool?',
   {
     type: UI.INPUT_TYPE.selection,
     possibleValues: ['Sketch'],
@@ -207,7 +207,7 @@ LOTS of added functionality here.
 - `fontFamily`
 - `fontWeight`
   - Default is 5
-  - If you attempt to set the weight to something that the font doesn't support Sketch will attempt to pick the closest one.
+  - If you attempt to set the weight to something that the font doesn’t support Sketch will attempt to pick the closest one.
 - `fontStyle`
   - `italic` , `normal`
   - default to `undefined`
@@ -266,7 +266,7 @@ text.style
 
 [_GitHub pull request_]({{ site.github_repo }}/pull/302)
 
-Session variables let you store a value which is persisted when the plugin finishes to run but is _not_ persisted when Sketch closes. It is useful when you want to keep a value between plugin's runs.
+Session variables let you store a value which is persisted when the plugin finishes to run but is _not_ persisted when Sketch closes. It is useful when you want to keep a value between plugin’s runs.
 
 Note that you still have `setSettingForKey` which will let you store things after closing Sketch.
 
@@ -287,7 +287,7 @@ Settings.sessionVariable('myVar')
 
 [_GitHub pull request_]({{ site.github_repo }}/pull/302)
 
-Previously you couldn't test anything from `'sketch/settings'` in the script panel and now you can!
+Previously you couldn’t test anything from `'sketch/settings'` in the script panel and now you can!
 
 ### Ability to make Slices
 
@@ -323,7 +323,7 @@ const artboard = new Slice({
 
 [_GitHub pull request_]({{ site.github_repo }}/pull/295)
 
-`require('path').resourcePath(string)` returns the path to a resource in the plugin bundle or `undefined` if it doesn't exist.
+`require('path').resourcePath(string)` returns the path to a resource in the plugin bundle or `undefined` if it doesn’t exist.
 
 ### A new action was added called `LayersResized`
 
@@ -360,7 +360,7 @@ export function layerResizedMethod(context) {
 
 // Remember, some actions have a begin and finish phase so if you
 // want the action to trigger once, you should modify the handler
-// to be YourAction.begin or YourAction.finish. If you don't add
+// to be YourAction.begin or YourAction.finish. If you don’t add
 // anything, the action will be triggered twice.
 // See https://developer.sketchapp.com/guides/action-api/ for more info
 ```
@@ -434,7 +434,7 @@ layer.transform.rotation
 // 10
 ```
 
-### You can now get access to an Artboard's background properties
+### You can now get access to an Artboard’s background properties
 
 [_GitHub pull request_]({{ site.github_repo }}/pull/311)
 

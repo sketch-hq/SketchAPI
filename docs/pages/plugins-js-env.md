@@ -43,7 +43,7 @@ The JavaScript context of a Sketch plugin is short-lived. Whenever a plugin is r
 let fiber = require('sketch/async').createFiber()
 
 longRunningAsyncTask(function(res) {
-  // after completion, tell the fiber we're done
+  // after completion, tell the fiber we’re done
   fiber.cleanup()
 })
 ```

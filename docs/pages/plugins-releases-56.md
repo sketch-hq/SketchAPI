@@ -28,7 +28,7 @@ Convert will change the RGB values for the selected profile, but colors will try
 
 For more information on color profiles read the sketch help document on [color management](https://www.sketch.com/docs/other/color-management/).
 
-### Usage
+#### Usage
 
 ```js
 let sketch = require('sketch')
@@ -43,7 +43,7 @@ document.changeColorSpace(ColorSpace.sRGB)
 // Pass true as an optional second argument to convert instead of assign
 document.changeColorSpace(ColorSpace.P3, true)
 
-// You can set colorSpace but you can only assign a new colorspace this way (you can't convert)
+// You can set colorSpace but you can only assign a new colorspace this way (you can’t convert)
 document.colorSpace = ColorSpace.P3
 
 // When creating a new document you can also specify the color profile
@@ -63,7 +63,7 @@ Previously, logging things like `NSRange` would return an unhelpful message and 
 
 Now there is more information about how a piece of text breaks across multiple lines.
 
-You'll have access to the `rect`, `baselineOffset`, `range`, and `text` of each line. `baselineOffset` is the distance from the bottom of the line fragment rectangle in which the glyph resides to the baseline (here is a graphic to help visualize this)
+You’ll have access to the `rect`, `baselineOffset`, `range`, and `text` of each line. `baselineOffset` is the distance from the bottom of the line fragment rectangle in which the glyph resides to the baseline (here is a graphic to help visualize this)
 
 ![typographic labels](https://developer.apple.com/library/archive/documentation/TextFonts/Conceptual/CocoaTextArchitecture/Art/glyph_metrics_2x.png) `baselineOffset` is the distance from the baseline to the bottom line (frame) of the text (or the Descent height + the Line gap height).
 
@@ -160,7 +160,7 @@ let myGroup = new Group({
 })
 ```
 
-### Changing the `pointType` of a CurvePoint wouldn't always restore the control points
+### Changing the `pointType` of a CurvePoint wouldn’t always restore the control points
 
 [_GitHub pull request_]({{ site.github_repo }}/pull/481)
 
@@ -223,7 +223,7 @@ let sketch = require('sketch')
 let UI = sketch.UI
 
 UI.getInputFromUser(
-  "What's your favorite design tool?",
+  'What’s your favorite design tool?',
   {
     type: UI.INPUT_TYPE.textarea,
     numberOfLines: 10,
@@ -243,7 +243,7 @@ UI.getInputFromUser(
 
 [_GitHub pull request_]({{ site.github_repo }}/pull/475)
 
-Previously, you couldn't draw a proper line with the API (you could get close but it didn't quite behave the same as a line that you could draw in Sketch). This has been now fixed.
+Previously, you couldn’t draw a proper line with the API (you could get close but it didn’t quite behave the same as a line that you could draw in Sketch). This has been now fixed.
 
 > _From the [API documentation on ShapePath](https://developer.sketch.com/reference/api/#create-a-new-shapepath)_:
 >
@@ -313,7 +313,7 @@ console.log(style.fills[0])
 
 [_GitHub pull request_]({{ site.github_repo }}/pull/357)
 
-Last but not least is a new way to find objects that meet various criteria. It's somewhat similar to jquery selectors. The find method can take two arguments:
+Last but not least is a new way to find objects that meet various criteria. It’s somewhat similar to jquery selectors. The find method can take two arguments:
 
 - A selector (the properties or criteria that you are trying to find)
 - The scope (what part of the sketch document do you want to search - by default it is the current document)

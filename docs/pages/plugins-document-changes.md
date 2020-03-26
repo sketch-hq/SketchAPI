@@ -12,7 +12,7 @@ Listen to arbitrary changes in a Sketch document using the `onDocumentChange` ha
 
 This API is available starting with Sketch 59 and is designed as a scalable and more flexible replacement for [_Actions_](./actions) that handle specific document changes.
 
-> 🚧 We're releasing this feature early to gather feedback from the community, so the API may change in future. Let us know what you think, [file an issue]({{ site.github_repo }}/issues) for comments, suggestions and bug reports or send an email to [developer@sketch.com](mailto:developer@sketch.com).
+> 🚧 We’re releasing this feature early to gather feedback from the community, so the API may change in future. Let us know what you think, [file an issue]({{ site.github_repo }}/issues) for comments, suggestions and bug reports or send an email to [developer@sketch.com](mailto:developer@sketch.com).
 
 > 🚀 Check the [document-change-sketchplugin](https://github.com/sketch-hq/document-change-sketchplugin) for an example implementation, or keep reading for a quick introduction.
 
@@ -20,7 +20,7 @@ This API is available starting with Sketch 59 and is designed as a scalable and 
 
 The fundamental document change types are:
 
-- **Property changes**, e.g. a layer's x/y position changing
+- **Property changes**, e.g. a layer’s x/y position changing
 - **Object addition**, e.g. adding a new layer to the canvas
 - **Object removal**, e.g. deleting a layer
 

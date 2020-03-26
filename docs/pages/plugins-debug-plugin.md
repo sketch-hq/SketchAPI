@@ -24,11 +24,11 @@ Use [`console`](https://developer.mozilla.org/en-US/docs/Web/API/console) to log
 - Sketch log file `~/Library/Logs/com.bohemiancoding.sketch3/Plugin Log.log`
 - [Sketch DevTools](https://github.com/skpm/sketch-dev-tools)
 
-> **Quick tip:** If you're using `skpm` run `skpm log -f` to stream logs on the command-line.
+> **Quick tip:** If you’re using `skpm` run `skpm log -f` to stream logs on the command-line.
 
 ## Safari Web Inspector
 
-> **Note:** Safari Web Inspector cannot be used with Sketch 56 or later. This is to meet stricter security guidelines in macOS. We're actively working with Apple to re-establish the JavaScript debugging as there _may_ be a possible option.
+> **Note:** Safari Web Inspector cannot be used with Sketch 56 or later. This is to meet stricter security guidelines in macOS. We’re actively working with Apple to re-establish the JavaScript debugging as there _may_ be a possible option.
 
 When a plugin is run, Sketch initializes a new [JavaScript runtime environment](/plugins/javascript-environment) for it. By default this `JSContext` is short-lived and destroyed once the plugin command is completed. However, it is still possible to attach the debugger provided by the _Safari Web Inspector_ (up to Sketch 55.2). From the submenu matching you computer name in the _Develop_ menu, select:
 
@@ -58,7 +58,7 @@ See the [Mocha documentation](https://github.com/logancollins/Mocha#introspectin
 
 [Sketch DevTools](https://github.com/skpm/sketch-dev-tools) is a Sketch plugin that lets you inspect elements within a document without writing code.
 
-## Inspect a plugin's webview
+## Inspect a plugin’s webview
 
 To inspect plugin user interfaces built using a webview you need to set a user default.
 
@@ -66,7 +66,7 @@ To inspect plugin user interfaces built using a webview you need to set a user d
 defaults write com.bohemiancoding.sketch3 WebKitDeveloperExtras -bool YES
 ```
 
-If you're using a Beta version of Sketch make sure to use the correct application bundle identifier.
+If you’re using a Beta version of Sketch make sure to use the correct application bundle identifier.
 
 ```sh
 defaults write com.bohemiancoding.sketch3.beta WebKitDeveloperExtras -bool YES
@@ -74,7 +74,7 @@ defaults write com.bohemiancoding.sketch3.beta WebKitDeveloperExtras -bool YES
 
 DOM elements can be inspected by right-clicking inside the webview and select _Inspect Element_ which brings up the Safari Web Inspector. If you have JavaScript code supressing the context menu you can still inspect elements by selecting them directly within _Elements_ in Safari Web Inspector.
 
-> **Note:** If you're using `skpm`, the `WebKitDeveloperExtras` user default will be set to `YES` automatically.
+> **Note:** If you’re using `skpm`, the `WebKitDeveloperExtras` user default will be set to `YES` automatically.
 
 ## Troubleshooting
 
@@ -88,7 +88,7 @@ defaults write com.bohemiancoding.sketch3 AlwaysReloadScript -bool YES
 
 Sketch only reloads a plugin directly before it gets invoked. For scripts using a long-running JavaScript context Sketch must be restarted. If you are still using `coscript.setShouldKeepAround(false)` we encourage you to instead use [`fibers`](https://developer.sketch.com/reference/api/#async) which provide more granular control over the lifecycle of a JavaScript context.
 
-> **Note:** If you're using `skpm`, the `AlwaysReloadScript` user default will be set to `YES` automatically.
+> **Note:** If you’re using `skpm`, the `AlwaysReloadScript` user default will be set to `YES` automatically.
 
 ### Automatically restart Sketch after plugin changes
 
@@ -123,7 +123,7 @@ A plugin installation fails if the plugin version specified in the appcast does 
 
 ### Disable Safe Mode after plugin crashing Sketch
 
-If a plugin causes Sketch to crash, Sketch uses _Safe Mode_ by default and disables all plugins next time it's launched. This behaviour can be disabled by setting a user default.
+If a plugin causes Sketch to crash, Sketch uses _Safe Mode_ by default and disables all plugins next time it’s launched. This behaviour can be disabled by setting a user default.
 
 ```sh
 defaults write com.bohemiancoding.sketch3 disableAutomaticSafeMode YES
@@ -159,4 +159,4 @@ Update the manifest to include a generic action handler by specifying a action w
   }
 ```
 
-> **Note:** Use wildcard action handlers for development and debugging only as they impact Sketch' performance negatively.
+> **Note:** Use wildcard action handlers for development and debugging only as they impact Sketch’s performance negatively.

@@ -25,7 +25,7 @@ zip -r -X document.sketch *
 
 ### **`meta.json`**
 
-Contains metadata about the document itself (a list of pages and artboards, Sketch version used to save the file, fonts used…). It's equivalent to the output you'd get from running `sketchtool metadata` on the file.
+Contains metadata about the document itself (a list of pages and artboards, Sketch version used to save the file, fonts used…). It’s equivalent to the output you’d get from running `sketchtool metadata` on the file.
 
 ### **`document.json`**
 
@@ -37,7 +37,7 @@ Contains user metadata for the file, like the canvas viewport & zoom level for e
 
 ### **`pages` folder**
 
-Contains a JSON file per page of the document. Each file describes the contents of a page, in a format similar to what you'd get by running `sketchtool dump` on the file.
+Contains a JSON file per page of the document. Each file describes the contents of a page, in a format similar to what you’d get by running `sketchtool dump` on the file.
 
 ### **`images` folder**
 
@@ -45,7 +45,7 @@ The `images` folder contains all the bitmaps that are used in the document, at
 
 ### **`previews` folder**
 
-Contains a preview image of the last page edited by the user. If the page's size is less than 2048x2048 it will be stored at full size, otherwise it'll be scaled to fit a 2048x2048 square.
+Contains a preview image of the last page edited by the user. If the page’s size is less than 2048x2048 it will be stored at full size, otherwise it’ll be scaled to fit a 2048x2048 square.
 
 ## Custom data
 

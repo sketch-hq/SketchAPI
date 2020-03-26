@@ -23,7 +23,7 @@ To get started quickly Sketch Plugin Manager provides a set of templates for dif
 
 ### Requirements
 
-You'll need [`npm`](https://www.npmjs.com/get-npm) installed to install `skpm` and any dependency of your Sketch plugin.
+You’ll need [`npm`](https://www.npmjs.com/get-npm) installed to install `skpm` and any dependency of your Sketch plugin.
 
 ### Install `skpm`
 
@@ -120,7 +120,7 @@ If you prefer using your own method to bundle the plugin, you must make sure to 
 
 ### Example
 
-This sample plugin contains two JavaScript files; `command.js` defines the handler invoked when the plugin's menu item is selected within Sketch, and `shared.js` contains code imported by `command.js` using `require`.
+This sample plugin contains two JavaScript files; `command.js` defines the handler invoked when the plugin’s menu item is selected within Sketch, and `shared.js` contains code imported by `command.js` using `require`.
 
 ```log
 .
@@ -190,7 +190,7 @@ module.exports = {
 
 Place your plugin in the [plugins location](/plugins), and once located there you can run the plugin manually from the plugins menu within Sketch.
 
-> Alternatively, if you're comfortable on the command line you can use [`sketchtool`](/cli) to run the plugin instead.
+> Alternatively, if you’re comfortable on the command line you can use [`sketchtool`](/cli) to run the plugin instead.
 
 ## Next steps
 

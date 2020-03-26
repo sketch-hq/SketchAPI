@@ -12,7 +12,7 @@ With the introduction of macOS 10.15 Catalina, native apps and frameworks are au
 
 > **Note:** Plugins written purely in JavaScript and not containing bundled binaries do not require notarization.
 
-_Notarization is not App Review._ Apple will not review your code, and the process shouldn't delay your publishing workflow. For more information, see [Notarizing Your App Before Distribution](https://developer.apple.com/documentation/xcode/notarizing_your_app_before_distribution), at Apple's Developer Site.
+_Notarization is not App Review._ Apple will not review your code, and the process shouldn’t delay your publishing workflow. For more information, see [Notarizing Your App Before Distribution](https://developer.apple.com/documentation/xcode/notarizing_your_app_before_distribution), at Apple’s Developer Site.
 
 **To notarize your plugin, you will need the following:**
 
@@ -25,10 +25,9 @@ You can use three methods to notarize your plugin:
 1. manually using the command-line
 1. using a helper plugin: [Sketch Notarizing Assistant](https://github.com/abynim/sketch-notarizing-assistant)
 
-
 ## 1. Use `skpm`
 
-1. Open or create a new `.skpmrc` file next to your plugin's `package.json` and add the notarization setting:
+1. Open or create a new `.skpmrc` file next to your plugin’s `package.json` and add the notarization setting:
 
    ```yaml
    notarization:
@@ -43,15 +42,14 @@ You can use three methods to notarize your plugin:
 
 Once all the information is there, `skpm` will automatically notarize your plugin whenever you publish it.
 
-> **Quick tip:** To use your own notarization mechanism and integrate with `skpm`,
-provide the command in the `.skpmrc` notarization settings:
+> **Quick tip:** To use your own notarization mechanism and integrate with `skpm`, provide the command in the `.skpmrc` notarization settings:
 >
 > ```yaml
 > notarization:
 >   command: './notarize-plugin.sh'
 > ```
+>
 > `skpm` will bundle your plugin, create a ZIP archive of it, and run your command automatically, passing the path to the archive as a parameter, e.g. `./notarize-plugin.sh path/to/select-shapes.sketchplugin-1.0.zip`.
-
 
 ## 2. From the command-line
 
@@ -77,10 +75,9 @@ provide the command in the `.skpmrc` notarization settings:
 
 > **Note:** If you make any changes to your plugin framework you’ll need to notarize again.
 
-
 ## 3. Sketch Notarizing Assistant
 
-[Sketch Notarizing Assistant](https://github.com/abynim/sketch-notarizing-assistant) is a Sketch plugin developed by [Aby Nimbalkar](https://twitter.com/abynim) that makes it trivial to notarize your plugin. To use it, just follow the instructions on the plugin's page.
+[Sketch Notarizing Assistant](https://github.com/abynim/sketch-notarizing-assistant) is a Sketch plugin developed by [Aby Nimbalkar](https://twitter.com/abynim) that makes it trivial to notarize your plugin. To use it, just follow the instructions on the plugin’s page.
 
 > **Note:** Sketch Notarizing Assistant is not maintained or supported by Sketch.
 
@@ -101,19 +98,18 @@ You can create the `AC_PASSWORD` keychain item using the command line, or the `K
 
 ### Use `security` command-line utility
 
-  ```bash
-  security add-generic-password -a "user@example.com" -w "app-specific-password" -s "AC_PASSWORD"
-  ```
+```bash
+security add-generic-password -a "user@example.com" -w "app-specific-password" -s "AC_PASSWORD"
+```
 
 ### Use Keychain Access
 
-  1. Open _Applications_ › _Utilities_ › _Keychain Access_.
-  1. Select _File_ › _New Password Item…_ and set these values on the dialog:
-      - **Keychain Item Name:** `AC_PASSWORD`.
-      - **Account Name:** `user@example.com` (your App Store Connect username).
-      - **Password:** `app specific password`.
-  1. Click _Add_.
-
+1. Open _Applications_ › _Utilities_ › _Keychain Access_.
+1. Select _File_ › _New Password Item…_ and set these values on the dialog:
+   - **Keychain Item Name:** `AC_PASSWORD`.
+   - **Account Name:** `user@example.com` (your App Store Connect username).
+   - **Password:** `app specific password`.
+1. Click _Add_.
 
 ## Related resources
 

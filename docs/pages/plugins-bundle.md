@@ -34,10 +34,10 @@ select-shapes.sketchplugin
       icon.png
 ```
 
-| Folder      | Description                                                                              |
-| ----------- | ---------------------------------------------------------------------------------------- |
-| `Contents`  | Contains the manifest and all JavaScript (`.js`) and CocoaScript (`.cocoascript`) files. |
-| `Resources` | Contains all of the plugin's resource files.                                             |
+| Folder | Description |
+| --- | --- |
+| `Contents` | Contains the manifest and all JavaScript (`.js`) and CocoaScript (`.cocoascript`) files. |
+| `Resources` | Contains all of the plugin’s resource files. |
 
 ## Plugin Manifest file
 
