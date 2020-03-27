@@ -8,6 +8,7 @@ _site
 .sass-cache
 _external
 .jekyll-metadata
+.jekyll-cache
 temp-sketchAPI-copy/
 .bundle
 
