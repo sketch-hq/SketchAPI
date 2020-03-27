@@ -11,5 +11,6 @@ _external
 .jekyll-cache
 temp-sketchAPI-copy/
 .bundle
+.jekyll-cache
 
 examples/**/package-lock.json

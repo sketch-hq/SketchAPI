@@ -64,11 +64,11 @@ Detached Symbol Layers include custom data in `userInfo` for the `com.bohemianco
 }
 ```
 
-> **Note:** Layer Groups created from a detached Symbol Instance may have different a position or dimensions. The custom data `frame` attribute contains the orginal value of the instance before it got detached.
+> **Note:** Layer Groups created from a detached Symbol Instance may have a different position or dimensions. The custom data `frame` attribute contains the original value of the instance before it got detached.
 
 ### Related resources
 
-For more information on custom data and how to access within the raw JSON document data or via the plugin API, see also:
+For more information on custom data and how to access it within the raw JSON document data or via the plugin API, see also:
 
 - [Sketch file format](/file-format/)
 - [Layer settings](/reference/api/#get-a-layer-setting)
