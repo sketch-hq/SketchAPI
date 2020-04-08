@@ -65,7 +65,7 @@ Some actions (like `SelectionChanged`) actually happen in two phases: `begin` an
 
 For a list of all the available actions in the API, check the [Actions Reference section](/reference/action).
 
-> Pro Tip: sometimes browsing the list is too much work, and you just want something a bit more direct. For those cases, you can [listen to all the actions](/guides/preferences/#listen-to-all-actions-in-the-action-api) to find the one you need.
+> Pro Tip: sometimes browsing the list is too much work, and you just want something a bit more direct. For those cases, you can [listen to all the actions](/plugins/debugging#handle-all-actions) to find the one you need.
 
 Again, if there's any event you'd like to see added to the list, let us know and we'll try to add it (some events are not on the list for performance reasons, like "layer is dragged").
 
