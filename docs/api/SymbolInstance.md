@@ -78,7 +78,7 @@ A new [Group](#group) or `null`
 instance.setOverrideValue(instance.overrides[0], 'overridden')
 ```
 
-Change the value of the override.
+Change the value of the override. To remove an override (set a Text override to its default value, set a Symbol Instance override to `No Symbol`, etc…), set its value to an empty string (`''`).
 
 | Parameters |  |
 | --- | --- |
