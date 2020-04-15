@@ -17,7 +17,7 @@ Export assets using `sketchtool export`:
 
 ## Formats
 
-By default `sketchtool` exports assets as `1x` PNG. Layers, including artboards, that have been made _Exportable_ will be exported using their defined export presents.
+By default `sketchtool` exports assets as `1x` PNG. Layers, including artboards, that have been made _Exportable_ will be exported using their defined export presets.
 
 To generate assets in other formats use the command-line arguments `--formats=jpg,png,svg` and `--scales=1,2` providing a comma-separated list of values and override the presets.
 
