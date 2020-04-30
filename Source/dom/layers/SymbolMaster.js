@@ -129,11 +129,15 @@ SymbolMaster.define('symbolId', {
 
 SymbolMaster.define('overrides', {
   get() {
+    const sketchVersion = MSApplicationMetadata.metadata().appVersion
+    const method =
+      sketchVersion < 65 ? 'overrideProperies' : 'overrideProperties'
+
     // undefined when immutable
-    if (!this._object.overrideProperies || !this._object.availableOverrides) {
+    if (!this._object[method] || !this._object.availableOverrides) {
       return undefined
     }
-    const overrideProperies = this._object.overrideProperies()
+    const overrideProperties = this._object[method]()
     const overrides = toArray(
       MSAvailableOverride.flattenAvailableOverrides(
         this._object.availableOverrides()
@@ -142,7 +146,7 @@ SymbolMaster.define('overrides', {
 
     return overrides.map(o => {
       const wrapped = Override.fromNative(o)
-      const property = overrideProperies[o.overridePoint().name()]
+      const property = overrideProperties[o.overridePoint().name()]
       Object.defineProperty(wrapped, '__symbolMaster', {
         writable: false,
         enumerable: false,
