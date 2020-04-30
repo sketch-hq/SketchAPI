@@ -233,12 +233,10 @@ export function exportObject(object, options) {
 export function objectFromJSON(sketchJSON, version) {
   const v = version || MSArchiveHeader.metadataForNewHeader().version
   const ptr = MOPointer.new()
-  let object = MSJSONDictionaryUnarchiver.unarchiveObjectFromDictionary_asVersion_corruptionDetected_error(
-    sketchJSON,
-    v,
-    null,
-    ptr
-  )
+  let object = (
+    MSJSONDictionaryUnarchiver.unarchiveObjectFromDictionary_asVersion_corruptionDetected_error ||
+    MSJSONDictionaryUnarchiver.unarchivedObjectFromDictionary_asVersion_corruptionDetected_error
+  )(sketchJSON, v, null, ptr)
   if (ptr.value()) {
     throw new Error(`Failed to create object from sketch JSON: ${ptr.value()}`)
   }
