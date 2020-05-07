@@ -159,7 +159,7 @@ If you want to run the tests with a specific version of Sketch, you can use
 SKETCH_PATH=/path/to/sketch.app npm run test
 ```
 
-If you want to run the tests with a the current regular version of Sketch, you can use
+If you want to run the tests with the current regular version of Sketch, you can use
 
 ```bash
 npm run test:no-variant

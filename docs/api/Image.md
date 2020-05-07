@@ -38,7 +38,7 @@ var imageLayer = new Image({
 })
 ```
 
-The image property accept a wide range of input:
+The image property accepts a wide range of input:
 
 - an [`ImageData`](#imagedata)
 - a `Buffer`
@@ -49,15 +49,44 @@ The image property accept a wide range of input:
 - an object with a `path` property: path to the file to load the image from
 - an object with a `base64` string: a base64 encoded image
 
+```javascript
+var imageLayer = new Image({
+  image: 'path/to/image.png',
+  frame: new Rectangle(0, 0, 300, 200),
+})
+```
+
+By default, an `Image` layer will be created with a size of 100 × 100 pixels, unless you provide a `frame` property on its constructor.
+
+## Original Size
+
+```js
+imageLayer.resizeToOriginalSize()
+```
+
+Adjust the Image to its original size. This is equivalent to pressing the 'Original Size' button in Sketch's Inspector.
+
+### Returns
+
+The current Image (useful if you want to chain the calls).
+
+For performance reasons, Sketch initializes the `Image` object lazily. So if you want to set the dimensions of your Image layer to those of the original file, you'll first need to create the object, and then call the `resizeToOriginalSize` method.
+
 ## `ImageData`
 
 ```javascript
 var imageData = imageLayer.image
 
 imageData.nsimage // return a native NSImage
-image.nsdata // return a native NSData representation of the image
+imageData.nsdata // return a native NSData representation of the image
 ```
 
 An `ImageData` is a wrapper around a native `NSImage`.
 
 You can access the native `NSImage` with `nsimage` or a native `NSData` representation of the image with `nsdata`.
+
+```javascript
+imageLayer.image.size // { width: 100, height: 100 }
+```
+
+As a convenience, you can access the original size of an `ImageData` object via its `size` property.
