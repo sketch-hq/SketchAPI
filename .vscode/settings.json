@@ -25,10 +25,6 @@
   "files.trimTrailingWhitespace": true,
   "javascript.validate.enable": false,
   "eslint.enable": true,
-  "prettier.semi": false,
-  "prettier.singleQuote": true,
-  "prettier.trailingComma": "es5",
-  "prettier.proseWrap": "never",
   "editor.formatOnSave": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode"
 }
