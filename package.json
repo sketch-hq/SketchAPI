@@ -22,8 +22,7 @@
     "run-tests:private": "skpm-test --app=\"/Applications/Sketch Private.app\"",
     "test:no-variant:watch": "npm run run-tests:no-variant -- --watch",
     "lint": "find . -name \"*.ts\" -o -name \"*.js\" | grep -v -f .gitignore | grep -v .d.ts | grep -v examples | grep -v docs-website | xargs eslint",
-    "prettier:base": "prettier --write",
-    "prettify": "find . -name \"*.ts\" -o -name \"*.js\" | grep -v -f .gitignore | grep -v docs-website | xargs npm run prettier:base",
+    "format-check": "prettier --check **/*.{js,md,json}",
     "postinstall": "rm -rf .awcache || true && cd core-modules && npm install",
     "update-sketch-with-latest-commit": "node ./scripts/update-sketch-with-latest-commit.js"
   },
@@ -43,7 +42,7 @@
     "eslint-plugin-import": "2.18.0",
     "eslint-plugin-prettier": "3.0.1",
     "eslint-plugin-typescript": "0.14.0",
-    "prettier": "1.18.2",
+    "prettier": "2.0.5",
     "semver": "6.3.0",
     "typescript": "3.6.2",
     "webpack": "4.39.3",

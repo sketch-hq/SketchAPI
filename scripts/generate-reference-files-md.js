@@ -26,10 +26,10 @@ const refFilesUrl = `${githubUrl}/tree/develop/reference-files`
 // to do this. Also generate a truncated version for display (trim rightmost
 // parts that are zero).
 const versions = readdirSync(dir)
-  .map(v => ({ original: v, coerced: semver.coerce(v) }))
-  .filter(v => !!v.coerced)
+  .map((v) => ({ original: v, coerced: semver.coerce(v) }))
+  .filter((v) => !!v.coerced)
   .sort((a, b) => semver.compare(b.coerced.version, a.coerced.version))
-  .map(v => {
+  .map((v) => {
     const truncated = v.original.split('.')
     while (truncated.slice(-1)[0] === '0') {
       truncated.pop()
@@ -57,7 +57,7 @@ ${cmd.description}
 
 ${table([
   ['Sketch version', '', '', ''],
-  ...versions.map(v => {
+  ...versions.map((v) => {
     return [
       `${v.truncated}`,
       `[JSON](${refFilesUrl}/${v.original}/${cmd.identifier}/output)`,

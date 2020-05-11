@@ -46,14 +46,14 @@ const pluginPath = resolve(__dirname, `../reference-files/plugin.sketchplugin`)
 
 const manifest = require(resolve(pluginPath, 'Contents/Sketch/manifest.json'))
 const commands = manifest.commands.filter(
-  cmd => identifier === '*' || cmd.identifier === identifier
+  (cmd) => identifier === '*' || cmd.identifier === identifier
 )
 
 console.log('Generating reference files...')
 console.log(`  Sketch version: ${sketchVersion}`)
-console.log(`  Commands: ${commands.map(cmd => cmd.identifier).join(',')}`)
+console.log(`  Commands: ${commands.map((cmd) => cmd.identifier).join(',')}`)
 
-const exec = cmd => {
+const exec = (cmd) => {
   try {
     console.log(execSync(cmd, { encoding: 'utf8' }))
   } catch (err) {
@@ -61,7 +61,7 @@ const exec = cmd => {
   }
 }
 
-commands.forEach(cmd => {
+commands.forEach((cmd) => {
   const dir = resolve(outputDir, cmd.identifier)
   del.sync(`${dir}/**`)
   exec(`mkdir -p ${dir}`)

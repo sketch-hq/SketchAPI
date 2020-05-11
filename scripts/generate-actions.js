@@ -275,7 +275,7 @@ if (!fs.existsSync(actionsPath)) {
   fs.mkdirSync(actionsPath)
 }
 
-allActions.forEach(action => {
+allActions.forEach((action) => {
   const actionPath = path.join(actionsPath, `${action}.md`)
   if (fs.existsSync(actionPath)) {
     return
