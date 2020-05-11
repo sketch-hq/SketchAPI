@@ -9,6 +9,7 @@ plugins:
   - prettier
 
 globals:
+  NSTemporaryDirectory: false
   NSFont: false
   MOPointer: false
   NSMakeRange: false

@@ -3,10 +3,6 @@ import { Style, SymbolMaster, Text, Artboard } from './dom'
 
 const fs = require('@skpm/fs')
 
-export function isRunningOnJenkins() {
-  return !__command.pluginBundle()
-}
-
 export function canBeLogged(obj: any, Constructor: any) {
   inspect(obj)
   if (obj.sketchObject && obj.sketchObject.immutableModelObject) {
@@ -60,10 +56,8 @@ export function createSharedStyle(document: any, Primitive: any, style?: any) {
 }
 
 export function outputPath() {
-  const output = isRunningOnJenkins()
-    ? `${process.env.WORKSPACE}/UnitTestOutput/SketchAPI/`
-    : // eslint-disable-next-line
-      `${NSTemporaryDirectory()}SketchAPI/`
+  // @ts-ignore
+  const output = `${NSTemporaryDirectory()}SketchAPI/`
   fs.mkdirSync(output, { recursive: true })
   return output
 }
