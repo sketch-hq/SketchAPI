@@ -2,10 +2,10 @@
 
 This is a JavaScript API for Sketch. The intention is to make something which is:
 
-- idiomatic JavaScript
-- an easily understandable subset of the full internals of Sketch
-- fully supported by Bohemian between releases (ie. we try not to change it, unlike our internal API which we can and do change whenever we need to)
-- still allows you to drop down to our internal API when absolutely necessary
+- Idiomatic JavaScript.
+- An easily understandable subset of the full internals of Sketch.
+- Fully supported by Sketch between releases (ie. we try not to change it, unlike our internal API which we can and do change whenever we need to).
+- Still allows you to drop down to our internal API when absolutely necessary.
 
 This API is a very core layer which interfaces with Sketch itself. It's intentionally simple, and we want to keep it that way. If you feel like adding some high-level code to it, it’s probably better to add it to a community-maintained library that can be used on top of the API, and keep it separate from the core API effort.
 
@@ -13,22 +13,14 @@ This API is a very core layer which interfaces with Sketch itself. It's intentio
 
 _Comments and suggestions for this API are welcome - [file an issue](https://github.com/sketch-hq/SketchAPI/issues) to discuss it or send them to developer@sketch.com._
 
-## Installation
-
-The API comes bundled inside Sketch, so no installation is required. You access it by requiring the `sketch` package:
-
-```js
-var sketch = require('sketch')
-```
-
 ## Usage
 
-The full documentation is available on [https://developer.sketch.com/reference/api].
+The full documentation is available on [developer.sketch.com/reference/api](https://developer.sketch.com/reference/api).
 
 Here's a very simple example script:
 
 ```js
-// access the Sketch API
+// access the Sketch API - comes bundled inside Sketch, so no "installation" is required
 var sketch = require('sketch')
 
 // get the current Document and Page
@@ -56,7 +48,7 @@ var rect = new Shape({
 var selection = document.selectedLayers
 
 console.log(selection.isEmpty)
-selection.forEach(function(item) {
+selection.forEach(function (item) {
   console.log(item.name)
 })
 
@@ -108,67 +100,62 @@ Happy coding!
 
 ## Development
 
-The API is organized as a series of files defining JavaScript classes, and written with ES6 syntax.
+This section of the readme is related to developing SketchAPI locally. If you're just interested in using SketchAPI to write Sketch Plugins you can stop reading here.
 
-However, the version that is embedded in Sketch is a single minified and transpiled library file called `SketchAPI.js`.
+You'll need the following tools available on your system to work on this repository:
 
-If you want to build this library file locally, you need to have [Node.js](https://nodejs.org) installed, and then run the following in the project's root folder:
+- Node 10 or greater
+- Yarn 1
 
-```bash
-npm install
-```
+### Overview
 
-Once that's ready, you can run:
+SketchAPI is written in JavaScript, as a collection of files in the `./Source` folder.
 
-```bash
-npm start
-```
+Webpack is used to bundle the files, and we include this in each release of Sketch. However you can build, run and test SketchAPI locally too - continue reading to find out how.
 
-to compile the library. By default, it will be saved to `./build/SketchAPI.js`.
+### Build and run
 
-For your convenience, you can use
+Following these steps will allow you to build the source files, and inject the changes into your local copy of Sketch to see the results.
 
-```bash
-npm run watch
-```
+Any plugins you have installed or code you invoke in Sketch's _Plugins > Run Script_ dialogue box will run against your changed version of SketchAPI.
 
-and a script will watch for any change in the `Source` folder, and build the `.js` file when anything has changed.
+1. Checkout this repository.
+1. Make your copy of Sketch use your local version of SketchAPI, rather than the one it has built-in. The value below should be an absolute path to the repository checkout location with `/build` appended.
+   ```sh
+   defaults write com.bohemiancoding.sketch3 SketchAPILocation "/path/to/your/SketchAPI/build"
+   ```
+1. Ensure you've installed the dependencies with Yan, and then build SketchAPI.
+   ```sh
+   yarn
+   yarn build
+   ```
+1. Start Sketch and your changes will be picked up.
 
-To test your changes, you need to get Sketch to use the version of `SketchAPI.js` you just built, instead of the one embedded inside it.
+> ⚠️ If you re-build SketchAPI by running `yarn build` again while Sketch is open you won't see your changes automatically reflected. You'll need to restart Sketch for this to happen.
 
-To do this you can run:
-
-```bash
-defaults write com.bohemiancoding.sketch3 SketchAPILocation "/path/to/your/SketchAPI_repo/build"
-```
-
-Sketch will then load the external `.js` files instead of the bundled version.
+> ⚠️ Once you've finished working on SketchAPI don't forget to stop Sketch using your customised version, to do this run:<br/>`defaults delete com.bohemiancoding.sketch3 SketchAPILocation`.
 
 ### Testing
 
-To run the tests, you can use
+The `*.test.js` files in this repository are integration tests that run in Sketch's plugin environment, using the skpm test runner.
+
+To run these tests using your current version of the Sketch as the host environment invoke:
 
 ```bash
-npm run test
-npm run test:watch
+yarn test
 ```
 
-If you want to run the tests with a specific version of Sketch, you can use
+Alternatively if you want to run the tests with a specific app binary run:
 
 ```bash
-SKETCH_PATH=/path/to/sketch.app npm run test
+SKETCH_PATH=/path/to/sketch.app yarn test
 ```
 
-If you want to run the tests with the current regular version of Sketch, you can use
-
-```bash
-npm run test:no-variant
-npm run test:no-variant:watch
-```
+> ℹ️ There is no need to re-build SketchAPI between test runs or use `defaults write` to set the API location; the test runner handles re-compiling test and source files and injecting them into Sketch.
 
 ## Website
 
-The website is hosted on Netlify at https://developer.sketch.com.
+This reposiotry also contains the content for https://developer.sketch.com, which is hosted on Netlify.
 
 The website’s contents live in the [`docs`](./docs) folder, while code related to the website’s build process lives in the [`docs-website`](./docs-website) folder.
 
