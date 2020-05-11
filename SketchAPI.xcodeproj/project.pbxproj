@@ -1,0 +1,174 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXAggregateTarget section */
+		4371214B2469F0F6000570FA /* SketchAPI */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 4371214C2469F0F6000570FA /* Build configuration list for PBXAggregateTarget "SketchAPI" */;
+			buildPhases = (
+				4371214F2469F105000570FA /* ShellScript */,
+			);
+			dependencies = (
+			);
+			name = SketchAPI;
+			productName = SketchAPI;
+		};
+/* End PBXAggregateTarget section */
+
+/* Begin PBXFileReference section */
+		437121392469F0D1000570FA /* tsconfig.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = tsconfig.json; sourceTree = "<group>"; };
+		4371213A2469F0D1000570FA /* docs-website */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "docs-website"; sourceTree = "<group>"; };
+		4371213B2469F0D1000570FA /* CHANGELOG.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = CHANGELOG.json; sourceTree = "<group>"; };
+		4371213C2469F0D1000570FA /* webpack.config.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = webpack.config.js; sourceTree = "<group>"; };
+		4371213D2469F0D1000570FA /* webpack.skpm.config.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = webpack.skpm.config.js; sourceTree = "<group>"; };
+		4371213E2469F0D1000570FA /* docs */ = {isa = PBXFileReference; lastKnownFileType = folder; path = docs; sourceTree = "<group>"; };
+		4371213F2469F0D1000570FA /* netlify.toml */ = {isa = PBXFileReference; lastKnownFileType = text; path = netlify.toml; sourceTree = "<group>"; };
+		437121402469F0D2000570FA /* CODE_OF_CONDUCT.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CODE_OF_CONDUCT.md; sourceTree = "<group>"; };
+		437121412469F0D2000570FA /* package.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = package.json; sourceTree = "<group>"; };
+		437121422469F0D2000570FA /* examples */ = {isa = PBXFileReference; lastKnownFileType = folder; path = examples; sourceTree = "<group>"; };
+		437121432469F0D2000570FA /* Source */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Source; sourceTree = "<group>"; };
+		437121442469F0D2000570FA /* dangerfile.ts */ = {isa = PBXFileReference; lastKnownFileType = text; path = dangerfile.ts; sourceTree = "<group>"; };
+		437121452469F0D2000570FA /* core-modules */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "core-modules"; sourceTree = "<group>"; };
+		437121462469F0D2000570FA /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		437121472469F0D2000570FA /* types */ = {isa = PBXFileReference; lastKnownFileType = folder; path = types; sourceTree = "<group>"; };
+		437121482469F0D2000570FA /* package-lock.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "package-lock.json"; sourceTree = "<group>"; };
+		437121492469F0D2000570FA /* LICENSE.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = LICENSE.md; sourceTree = "<group>"; };
+		4371214A2469F0D2000570FA /* scripts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = scripts; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		437121322469F097000570FA = {
+			isa = PBXGroup;
+			children = (
+				4371213B2469F0D1000570FA /* CHANGELOG.json */,
+				437121402469F0D2000570FA /* CODE_OF_CONDUCT.md */,
+				437121452469F0D2000570FA /* core-modules */,
+				437121442469F0D2000570FA /* dangerfile.ts */,
+				4371213E2469F0D1000570FA /* docs */,
+				4371213A2469F0D1000570FA /* docs-website */,
+				437121422469F0D2000570FA /* examples */,
+				437121492469F0D2000570FA /* LICENSE.md */,
+				4371213F2469F0D1000570FA /* netlify.toml */,
+				437121482469F0D2000570FA /* package-lock.json */,
+				437121412469F0D2000570FA /* package.json */,
+				437121462469F0D2000570FA /* README.md */,
+				4371214A2469F0D2000570FA /* scripts */,
+				437121432469F0D2000570FA /* Source */,
+				437121392469F0D1000570FA /* tsconfig.json */,
+				437121472469F0D2000570FA /* types */,
+				4371213C2469F0D1000570FA /* webpack.config.js */,
+				4371213D2469F0D1000570FA /* webpack.skpm.config.js */,
+			);
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXProject section */
+		437121332469F097000570FA /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 1140;
+				TargetAttributes = {
+					4371214B2469F0F6000570FA = {
+						CreatedOnToolsVersion = 11.4.1;
+					};
+				};
+			};
+			buildConfigurationList = 437121362469F097000570FA /* Build configuration list for PBXProject "SketchAPI" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 437121322469F097000570FA;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				4371214B2469F0F6000570FA /* SketchAPI */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		4371214F2469F105000570FA /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/zsh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\npwd\n\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		437121372469F097000570FA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Debug;
+		};
+		437121382469F097000570FA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Release;
+		};
+		4371214D2469F0F6000570FA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = WUGMZZ5K46;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		4371214E2469F0F6000570FA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = WUGMZZ5K46;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		437121362469F097000570FA /* Build configuration list for PBXProject "SketchAPI" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				437121372469F097000570FA /* Debug */,
+				437121382469F097000570FA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4371214C2469F0F6000570FA /* Build configuration list for PBXAggregateTarget "SketchAPI" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4371214D2469F0F6000570FA /* Debug */,
+				4371214E2469F0F6000570FA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 437121332469F097000570FA /* Project object */;
+}
