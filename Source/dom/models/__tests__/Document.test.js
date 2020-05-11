@@ -187,7 +187,7 @@ if (!isRunningOnJenkins()) {
     documentId = _document.id
     const documents = Document.getDocuments()
     expect(_document.type).toBe('Document')
-    expect(documents.find(d => d.id === documentId)).toEqual(_document)
+    expect(documents.find((d) => d.id === documentId)).toEqual(_document)
   })
 
   test('path should be undefined before saving it', () => {
@@ -205,7 +205,7 @@ if (!isRunningOnJenkins()) {
           return resolve(result)
         }
       )
-    }).then(result => {
+    }).then((result) => {
       expect(result).toBe(_document)
       expect(_document.path).toBe(
         String(
@@ -224,7 +224,7 @@ if (!isRunningOnJenkins()) {
         }
         return resolve(result)
       })
-    }).then(result => {
+    }).then((result) => {
       expect(result).toBe(_document)
       expect(_document.path).toBe(
         String(
@@ -244,7 +244,7 @@ if (!isRunningOnJenkins()) {
         }
         return resolve(result)
       })
-    }).then(result => {
+    }).then((result) => {
       expect(result).toBe(_document)
       expect(_document.path).toBe(
         String(
@@ -259,7 +259,7 @@ if (!isRunningOnJenkins()) {
   test('should close a file', () => {
     _document.close()
     const documents = Document.getDocuments()
-    expect(documents.find(d => d.id === documentId)).toBe(undefined)
+    expect(documents.find((d) => d.id === documentId)).toBe(undefined)
   })
 
   test('should open a file', () => {
@@ -267,7 +267,7 @@ if (!isRunningOnJenkins()) {
       `${outputPath()}sketch-api-unit-tests.sketch`
     )
     const documents = Document.getDocuments()
-    expect(documents.find(d => d.id === document.id)).toEqual(document)
+    expect(documents.find((d) => d.id === document.id)).toEqual(document)
     // close it again because when watching the tests, it will open dozens of documents
     document.close()
   })

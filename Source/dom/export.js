@@ -49,7 +49,7 @@ function exportToJSONFile(nativeObjects, options) {
     null
   )
 
-  nativeObjects.forEach(o => {
+  nativeObjects.forEach((o) => {
     const name =
       options['use-id-for-name'] === true || !o.name ? o.objectID() : o.name()
     const pathComps = comps.slice()
@@ -71,7 +71,7 @@ function exportToImageFile(nativeObjects, options) {
   // we need to class the objects by types as we need to do different things depending on it
   const pages = []
   const layers = []
-  nativeObjects.forEach(o => {
+  nativeObjects.forEach((o) => {
     if (o.isKindOfClass(MSPage)) {
       pages.push(o)
     } else {
@@ -84,7 +84,7 @@ function exportToImageFile(nativeObjects, options) {
   )
 
   // export the pages
-  pages.forEach(page => exporter.exportPage(page))
+  pages.forEach((page) => exporter.exportPage(page))
 
   // export the layers
   if (layers.length) {
@@ -164,8 +164,8 @@ function exportToBuffer(nativeObject, options) {
 export function exportObject(object, options) {
   // Validate the provided objects
   const objectsToExport = (Array.isArray(object) ? object : [object])
-    .map(o => (isWrappedObject(o) ? o.sketchObject : o))
-    .filter(o => o)
+    .map((o) => (isWrappedObject(o) ? o.sketchObject : o))
+    .filter((o) => o)
 
   if (!objectsToExport.length) {
     throw new Error('No objects provided to export')
@@ -177,7 +177,7 @@ export function exportObject(object, options) {
     formats = formats.split(',')
   }
 
-  formats = formats.map(format => format.trim())
+  formats = formats.map((format) => format.trim())
 
   // if we don't have any format, we default to png
   if (formats.length === 0) {
@@ -185,7 +185,7 @@ export function exportObject(object, options) {
   }
 
   const shouldExportToJSON = formats.indexOf('json') !== -1
-  const exportImagesFormat = formats.filter(format => format !== 'json')
+  const exportImagesFormat = formats.filter((format) => format !== 'json')
 
   const optionsWithDefaults = {
     ...DEFAULT_EXPORT_OPTIONS,
@@ -199,7 +199,7 @@ export function exportObject(object, options) {
       throw new Error('Can only return 1 format with no output type')
     }
     const format = formats[0]
-    const exported = objectsToExport.map(nativeObject => {
+    const exported = objectsToExport.map((nativeObject) => {
       if (format === 'json') {
         const str = getJSONString(nativeObject)
         return JSON.parse(str)

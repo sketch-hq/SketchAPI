@@ -3,7 +3,7 @@ import { isRunningOnJenkins, outputPath } from '../../../test-utils'
 import { Library, Document, Artboard, Text, SymbolMaster } from '../..'
 
 function findValidLib(libs) {
-  return libs.find(l => l.valid)
+  return libs.find((l) => l.valid)
 }
 
 // some tests cannot really run on jenkins because it doesn't have access to MSDocument
@@ -50,7 +50,7 @@ if (!isRunningOnJenkins()) {
     return new Promise((resolve, reject) => {
       document.save(
         `${outputPath()}sketch-api-unit-tests-library.sketch`,
-        err => {
+        (err) => {
           if (err) {
             return reject(err)
           }
@@ -67,7 +67,7 @@ if (!isRunningOnJenkins()) {
       expect(lib.type).toBe('Library')
 
       const libraries = Library.getLibraries()
-      expect(libraries.find(d => d.id === libId)).toEqual(lib)
+      expect(libraries.find((d) => d.id === libId)).toEqual(lib)
     })
   })
 
@@ -99,7 +99,7 @@ if (!isRunningOnJenkins()) {
     lib.remove()
 
     const libraries = Library.getLibraries()
-    expect(libraries.find(d => d.id === libId)).toBe(undefined)
+    expect(libraries.find((d) => d.id === libId)).toBe(undefined)
   })
 
   test('should add a remote library', () =>
@@ -113,7 +113,7 @@ if (!isRunningOnJenkins()) {
           return resolve(result)
         }
       )
-    }).then(result => {
+    }).then((result) => {
       expect(result.libraryType).toBe(Library.LibraryType.RemoteThirdParty)
       result.remove()
     }))

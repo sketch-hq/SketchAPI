@@ -82,7 +82,7 @@ Border.define('fillType', {
   get() {
     return (
       Object.keys(FillTypeMap).find(
-        key => FillTypeMap[key] === this._object.fillType()
+        (key) => FillTypeMap[key] === this._object.fillType()
       ) || this._object.fillType()
     )
   },
@@ -99,7 +99,7 @@ Border.define('position', {
   get() {
     return (
       Object.keys(BorderPositionMap).find(
-        key => BorderPositionMap[key] === this._object.position()
+        (key) => BorderPositionMap[key] === this._object.position()
       ) || this._object.position()
     )
   },

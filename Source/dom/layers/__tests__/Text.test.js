@@ -35,7 +35,7 @@ test('should change the text alignment', () => {
   // default to left
   expect(text.alignment).toBe(Text.Alignment.left)
 
-  Object.keys(Text.Alignment).forEach(key => {
+  Object.keys(Text.Alignment).forEach((key) => {
     // test setting by name
     text.alignment = key
     expect(text.alignment).toBe(
@@ -59,7 +59,7 @@ test('should change the line spacing behavior', () => {
   // default to constant baseline
   expect(text.lineSpacing).toBe(Text.LineSpacing.constantBaseline)
 
-  Object.keys(Text.LineSpacing).forEach(key => {
+  Object.keys(Text.LineSpacing).forEach((key) => {
     // test setting by name
     text.lineSpacing = key
     expect(text.lineSpacing).toBe(Text.LineSpacing[key])

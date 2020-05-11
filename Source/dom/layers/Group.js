@@ -72,10 +72,10 @@ Group.define('layers', {
 
     const layers = toArray(_layers)
       .map(wrapObject)
-      .map(l => l._object)
+      .map((l) => l._object)
 
     // remove the layers from their parent
-    layers.forEach(l => {
+    layers.forEach((l) => {
       if (l.parentGroup()) {
         l.removeFromParent()
       }

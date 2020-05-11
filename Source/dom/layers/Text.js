@@ -230,7 +230,7 @@ Text.define('lineSpacing', {
     const raw = this._object.lineSpacingBehaviour()
     return (
       Object.keys(TextLineSpacingBehaviourMap).find(
-        key => TextLineSpacingBehaviourMap[key] === raw
+        (key) => TextLineSpacingBehaviourMap[key] === raw
       ) || raw
     )
   },

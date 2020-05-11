@@ -21,7 +21,7 @@ if (!isRunningOnJenkins()) {
     return new Promise((resolve, reject) => {
       document.save(
         `${outputPath()}/sketch-api-unit-tests-importable-objects.sketch`,
-        err => {
+        (err) => {
           document.close()
           if (err) {
             return reject(err)

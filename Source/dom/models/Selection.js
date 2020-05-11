@@ -29,7 +29,7 @@ export class Selection {
       },
       set(layers) {
         this._object.changeSelectionBySelectingLayers(
-          (layers.layers || layers).map(l => wrapObject(l).sketchObject)
+          (layers.layers || layers).map((l) => wrapObject(l).sketchObject)
         )
       },
     })
@@ -37,10 +37,7 @@ export class Selection {
     Object.defineProperty(this, 'length', {
       enumerable: true,
       get() {
-        return this._object
-          .selectedLayers()
-          .layers()
-          .count()
+        return this._object.selectedLayers().layers().count()
       },
     })
 

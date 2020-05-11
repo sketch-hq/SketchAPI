@@ -1,10 +1,10 @@
 {
   "name": "sketch-api",
   "private": true,
-  "version": "UNVERSIONED",
+  "version": "0.0.1",
   "author": "Sam Deane",
   "license": "MIT",
-  "description": "Javascript API for Sketch",
+  "description": "JavaScript API for Sketch",
   "homepage": "https://github.com/sketch-hq/SketchAPI",
   "scripts": {
     "build": "mkdir -p ./build && npm run build:test && npm run build:api && (rm -rf ./build/core-modules || true) && cp -R ./core-modules/node_modules/. ./build/core-modules",
@@ -22,7 +22,8 @@
     "run-tests:private": "skpm-test --app=\"/Applications/Sketch Private.app\"",
     "test:no-variant:watch": "npm run run-tests:no-variant -- --watch",
     "lint": "find . -name \"*.ts\" -o -name \"*.js\" | grep -v -f .gitignore | grep -v .d.ts | grep -v examples | grep -v docs-website | xargs eslint",
-    "format-check": "prettier --check **/*.{js,md,json}",
+    "format-check": "prettier --check  \"**/*.{js,json}\"",
+    "format-fix": "prettier --write  \"**/*.{js,json}\"",
     "postinstall": "rm -rf .awcache || true && cd core-modules && npm install"
   },
   "devDependencies": {

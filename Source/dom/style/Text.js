@@ -70,7 +70,7 @@ function updateAttributes(_object, fn) {
 }
 
 function updateParagraphStyle(_object, fn) {
-  updateAttributes(_object, attributes => {
+  updateAttributes(_object, (attributes) => {
     let paragraphStyle = attributes[NSParagraphStyleAttributeName]
     if (!paragraphStyle) {
       paragraphStyle = NSParagraphStyle.defaultParagraphStyle()
@@ -183,7 +183,7 @@ export function defineTextStyleProperties(Style) {
         return
       }
 
-      updateParagraphStyle(this._object, paragraphStyle => {
+      updateParagraphStyle(this._object, (paragraphStyle) => {
         const translated = TextAlignmentMap[mode]
         paragraphStyle.setAlignment(
           typeof translated !== 'undefined' ? translated : mode
@@ -241,7 +241,7 @@ export function defineTextStyleProperties(Style) {
         return
       }
 
-      updateAttributes(this._object, attributes => {
+      updateAttributes(this._object, (attributes) => {
         // eslint-disable-next-line no-param-reassign
         attributes[NSKernAttributeName] = kerning
         return attributes
@@ -273,7 +273,7 @@ export function defineTextStyleProperties(Style) {
         return
       }
 
-      updateParagraphStyle(this._object, paragraphStyle => {
+      updateParagraphStyle(this._object, (paragraphStyle) => {
         // eslint-disable-next-line no-param-reassign
         paragraphStyle.minimumLineHeight = lineHeight
         // eslint-disable-next-line no-param-reassign
@@ -301,7 +301,7 @@ export function defineTextStyleProperties(Style) {
         return
       }
 
-      updateParagraphStyle(this._object, paragraphStyle => {
+      updateParagraphStyle(this._object, (paragraphStyle) => {
         // eslint-disable-next-line no-param-reassign
         paragraphStyle.paragraphSpacing = paragraphSpacing
         // eslint-disable-next-line no-param-reassign
@@ -330,7 +330,7 @@ export function defineTextStyleProperties(Style) {
 
       const _color = Color.from(color)
 
-      updateAttributes(this._object, attributes => {
+      updateAttributes(this._object, (attributes) => {
         // eslint-disable-next-line no-param-reassign
         attributes.MSAttributedStringColorAttribute = _color.toMSImmutableColor()
         return attributes
@@ -359,7 +359,7 @@ export function defineTextStyleProperties(Style) {
         return
       }
 
-      updateAttributes(this._object, attributes => {
+      updateAttributes(this._object, (attributes) => {
         const font = attributes[NSFontAttributeName]
         const newFont = NSFontManager.sharedFontManager().convertFont_toSize(
           font,
@@ -414,7 +414,7 @@ export function defineTextStyleProperties(Style) {
         attribute = transform
       }
 
-      updateAttributes(this._object, attributes => {
+      updateAttributes(this._object, (attributes) => {
         // eslint-disable-next-line no-param-reassign
         attributes.MSAttributedStringTextTransformAttribute = attribute
         return attributes
@@ -449,7 +449,7 @@ export function defineTextStyleProperties(Style) {
         return
       }
 
-      updateAttributes(this._object, attributes => {
+      updateAttributes(this._object, (attributes) => {
         const font = attributes[NSFontAttributeName]
 
         if (fontFamily === 'system') {
@@ -496,7 +496,7 @@ export function defineTextStyleProperties(Style) {
         return
       }
 
-      updateAttributes(this._object, attributes => {
+      updateAttributes(this._object, (attributes) => {
         let font = attributes[NSFontAttributeName]
         const manager = NSFontManager.sharedFontManager()
 
@@ -548,7 +548,7 @@ export function defineTextStyleProperties(Style) {
         return
       }
 
-      updateAttributes(this._object, attributes => {
+      updateAttributes(this._object, (attributes) => {
         const font = attributes[NSFontAttributeName]
         const manager = NSFontManager.sharedFontManager()
 
@@ -600,7 +600,7 @@ export function defineTextStyleProperties(Style) {
         return
       }
 
-      updateAttributes(this._object, attributes => {
+      updateAttributes(this._object, (attributes) => {
         const font = attributes[NSFontAttributeName]
         const manager = NSFontManager.sharedFontManager()
 
@@ -667,7 +667,7 @@ export function defineTextStyleProperties(Style) {
         return
       }
 
-      updateAttributes(this._object, attributes => {
+      updateAttributes(this._object, (attributes) => {
         const font = attributes[NSFontAttributeName]
         const manager = NSFontManager.sharedFontManager()
 
@@ -725,7 +725,7 @@ export function defineTextStyleProperties(Style) {
         return
       }
 
-      updateAttributes(this._object, attributes => {
+      updateAttributes(this._object, (attributes) => {
         // eslint-disable-next-line no-param-reassign
         attributes[NSUnderlineStyleAttributeName] = getUnderlineMask(
           textUnderline
@@ -751,7 +751,7 @@ export function defineTextStyleProperties(Style) {
         return
       }
 
-      updateAttributes(this._object, attributes => {
+      updateAttributes(this._object, (attributes) => {
         // eslint-disable-next-line no-param-reassign
         attributes[NSStrikethroughStyleAttributeName] = getUnderlineMask(
           textStrikethrough
@@ -784,7 +784,7 @@ export function defineTextStyleProperties(Style) {
 
       // Normalize the native information about the font axes into a JS object
       const axesObj = {}
-      axes.forEach(axis => {
+      axes.forEach((axis) => {
         axesObj[axis.name()] = {
           id: axis.identifier(),
           min: axis.minValue(),
@@ -804,7 +804,7 @@ export function defineTextStyleProperties(Style) {
       if (!current) {
         return
       }
-      Object.keys(fontAxes).forEach(name => {
+      Object.keys(fontAxes).forEach((name) => {
         // Only set an axis if it's available on the current font, and
         // different to the current value
         if (current[name] && fontAxes[name].value !== current[name].value) {
@@ -820,7 +820,7 @@ export function defineTextStyleProperties(Style) {
       if (this.isImmutable()) {
         return
       }
-      updateAttributes(this._object, attributes => {
+      updateAttributes(this._object, (attributes) => {
         const font = attributes[NSFontAttributeName]
 
         const subDic = NSMutableDictionary.dictionary()

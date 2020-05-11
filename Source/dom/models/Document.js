@@ -32,7 +32,7 @@ export const ColorSpace = {
 /* eslint-disable no-use-before-define, typescript/no-use-before-define */
 export function getDocuments() {
   return toArray(NSApp.orderedDocuments())
-    .filter(doc => doc.isKindOfClass(MSDocument))
+    .filter((doc) => doc.isKindOfClass(MSDocument))
     .map(Document.fromNative.bind(Document))
 }
 
@@ -58,7 +58,7 @@ export function getSelectedDocument() {
   if (!nativeDocument) {
     const documents = toArray(
       NSApplication.sharedApplication().orderedDocuments()
-    ).filter(d => d.isKindOfClass(MSDocument.class()))
+    ).filter((d) => d.isKindOfClass(MSDocument.class()))
     // eslint-disable-next-line prefer-destructuring
     nativeDocument = documents[0]
   }
@@ -362,7 +362,7 @@ export class Document extends WrappedObject {
       url,
       nativeSaveMode,
       coscript,
-      err => {
+      (err) => {
         try {
           if (callback) {
             if (err && !err.isEqual(NSNull.null())) {
@@ -451,7 +451,7 @@ Document.define('colorSpace', {
     const colorSpace = this._getMSDocumentData().colorSpace()
     return (
       Object.keys(ColorSpaceMap).find(
-        key => ColorSpaceMap[key] === colorSpace
+        (key) => ColorSpaceMap[key] === colorSpace
       ) || colorSpace
     )
   },
@@ -474,7 +474,7 @@ Document.define('pages', {
       return []
     }
     const pages = toArray(this._object.pages())
-    return pages.map(page => Page.fromNative(page))
+    return pages.map((page) => Page.fromNative(page))
   },
   set(pages) {
     if (this.isImmutable()) {
@@ -487,15 +487,15 @@ Document.define('pages', {
     }, {})
 
     toArray(pages)
-      .map(p => wrapObject(p, Types.Page))
-      .forEach(page => {
+      .map((p) => wrapObject(p, Types.Page))
+      .forEach((page) => {
         page.parent = this // eslint-disable-line
         delete pagesToRemove[page.id]
       })
 
     // remove the previous pages
     this._getMSDocumentData().removePages_detachInstances(
-      Object.keys(pagesToRemove).map(id => pagesToRemove[id]),
+      Object.keys(pagesToRemove).map((id) => pagesToRemove[id]),
       true
     )
   },
@@ -536,7 +536,7 @@ Document.define('selectedLayers', {
   },
   set(layers) {
     this.selectedPage.sketchObject.changeSelectionBySelectingLayers(
-      (layers.layers || layers || []).map(l => wrapObject(l).sketchObject)
+      (layers.layers || layers || []).map((l) => wrapObject(l).sketchObject)
     )
   },
 })
@@ -608,7 +608,7 @@ Document.define('colors', {
       return []
     }
     const documentData = this._getMSDocumentData()
-    return toArray(documentData.assets().colorAssets()).map(a =>
+    return toArray(documentData.assets().colorAssets()).map((a) =>
       ColorAsset.fromNative(a)
     )
   },
@@ -619,8 +619,8 @@ Document.define('colors', {
     const assets = this._getMSDocumentData().assets()
     assets.removeAllColorAssets()
     toArray(colors)
-      .map(c => ColorAsset.from(c))
-      .forEach(c => {
+      .map((c) => ColorAsset.from(c))
+      .forEach((c) => {
         assets.addColorAsset(c._object)
       })
   },
@@ -654,7 +654,7 @@ Document.define('gradients', {
       return []
     }
     const documentData = this._getMSDocumentData()
-    return toArray(documentData.assets().gradientAssets()).map(a =>
+    return toArray(documentData.assets().gradientAssets()).map((a) =>
       GradientAsset.fromNative(a)
     )
   },
@@ -665,8 +665,8 @@ Document.define('gradients', {
     const assets = this._getMSDocumentData().assets()
     assets.removeAllGradientAssets()
     toArray(gradients)
-      .map(c => GradientAsset.from(c))
-      .forEach(c => {
+      .map((c) => GradientAsset.from(c))
+      .forEach((c) => {
         assets.addGradientAsset(c._object)
       })
   },
@@ -689,7 +689,7 @@ Document.define('gradients', {
 })
 
 function isLocalSharedStyle(libraryController) {
-  return item => {
+  return (item) => {
     if (isWrappedObject(item)) {
       return (
         !libraryController.libraryForShareableObject(item.sketchObject) &&
@@ -722,9 +722,9 @@ function sharedStyleDescriptor(type) {
       }
       const documentData = this._getMSDocumentData()
       const localStyles = toArray(documentData[config.localStyles]().objects())
-      const foreignStyles = toArray(documentData[config.foreignStyles]()).map(
-        foreign => foreign.localSharedStyle()
-      )
+      const foreignStyles = toArray(
+        documentData[config.foreignStyles]()
+      ).map((foreign) => foreign.localSharedStyle())
       return foreignStyles.concat(localStyles).map(wrapObject)
     },
     set(sharedLayerStyles) {
@@ -742,7 +742,7 @@ function sharedStyleDescriptor(type) {
       container.addSharedObjects(
         toArray(sharedLayerStyles)
           .filter(isLocalSharedStyle(libraryController))
-          .map(item => {
+          .map((item) => {
             let sharedStyle
 
             if (isWrappedObject(item)) {

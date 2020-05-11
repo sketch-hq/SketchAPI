@@ -20,7 +20,7 @@ test('should change the text alignment', () => {
   // default to left
   expect(text.style.alignment).toBe(Text.Alignment.left)
 
-  Object.keys(Text.Alignment).forEach(key => {
+  Object.keys(Text.Alignment).forEach((key) => {
     const result = key === 'natural' ? Text.Alignment.left : Text.Alignment[key]
 
     // test setting by name
@@ -42,7 +42,7 @@ test('should change the text vertical alignment', () => {
   // default to top
   expect(text.style.verticalAlignment).toBe(Text.VerticalAlignment.top)
 
-  Object.keys(Text.VerticalAlignment).forEach(key => {
+  Object.keys(Text.VerticalAlignment).forEach((key) => {
     // test setting by name
     text.style.verticalAlignment = key
     expect(text.style.verticalAlignment).toBe(Text.VerticalAlignment[key])

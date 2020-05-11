@@ -165,8 +165,9 @@ Style.define('blendingMode', {
   get() {
     const mode = this._object.contextSettings().blendMode()
     return (
-      Object.keys(BlendingModeMap).find(key => BlendingModeMap[key] === mode) ||
-      mode
+      Object.keys(BlendingModeMap).find(
+        (key) => BlendingModeMap[key] === mode
+      ) || mode
     )
   },
   set(mode) {
