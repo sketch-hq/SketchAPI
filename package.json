@@ -23,8 +23,7 @@
     "test:no-variant:watch": "npm run run-tests:no-variant -- --watch",
     "lint": "find . -name \"*.ts\" -o -name \"*.js\" | grep -v -f .gitignore | grep -v .d.ts | grep -v examples | grep -v docs-website | xargs eslint",
     "format-check": "prettier --check **/*.{js,md,json}",
-    "postinstall": "rm -rf .awcache || true && cd core-modules && npm install",
-    "update-sketch-with-latest-commit": "node ./scripts/update-sketch-with-latest-commit.js"
+    "postinstall": "rm -rf .awcache || true && cd core-modules && npm install"
   },
   "devDependencies": {
     "@babel/preset-typescript": "7.6.0",
