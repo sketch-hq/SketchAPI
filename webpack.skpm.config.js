@@ -14,7 +14,7 @@ module.exports = (config) => {
       return prev
     },
     {
-      sketch: path.resolve(__dirname, 'Source/index.ts'),
+      sketch: path.resolve(__dirname, 'Source/index.js'),
     }
   )
   config.module = normalConfig.module

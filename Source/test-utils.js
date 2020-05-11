@@ -3,14 +3,14 @@ import { Style, SymbolMaster, Text, Artboard } from './dom'
 
 const fs = require('@skpm/fs')
 
-export function canBeLogged(obj: any, Constructor: any) {
+export function canBeLogged(obj, Constructor) {
   inspect(obj)
   if (obj.sketchObject && obj.sketchObject.immutableModelObject) {
     inspect(Constructor.fromNative(obj.sketchObject.immutableModelObject()))
   }
 }
 
-export function createSymbolMaster(document: any) {
+export function createSymbolMaster(document) {
   const artboard = new Artboard({
     name: 'Test',
     parent: document.selectedPage,
@@ -28,7 +28,7 @@ export function createSymbolMaster(document: any) {
   }
 }
 
-export function createSharedStyle(document: any, Primitive: any, style?: any) {
+export function createSharedStyle(document, Primitive, style) {
   const object = new Primitive({
     name: 'Test',
     parent: document.selectedPage,
@@ -56,7 +56,6 @@ export function createSharedStyle(document: any, Primitive: any, style?: any) {
 }
 
 export function outputPath() {
-  // @ts-ignore
   const output = `${NSTemporaryDirectory()}SketchAPI/`
   fs.mkdirSync(output, { recursive: true })
   return output

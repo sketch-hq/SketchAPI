@@ -1,10 +1,8 @@
 {
-  "typescript.tsdk": "./node_modules/typescript/lib",
   "search.exclude": {
     "**/node_modules": true,
     "**/build": true
   },
-  "javascript.validate.enable": false,
   "eslint.enable": true,
   "editor.formatOnSave": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode"

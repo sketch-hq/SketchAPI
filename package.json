@@ -16,7 +16,6 @@
     "postinstall": "cd core-modules && yarn --frozen-lockfile"
   },
   "devDependencies": {
-    "@babel/preset-typescript": "7.6.0",
     "@skpm/fs": "0.2.4",
     "@skpm/test-runner": "0.4.0",
     "@types/node": "12.7.4",
@@ -31,7 +30,6 @@
     "eslint-plugin-prettier": "3.0.1",
     "eslint-plugin-typescript": "0.14.0",
     "prettier": "2.0.5",
-    "typescript": "3.6.2",
     "webpack": "4.39.3",
     "webpack-cli": "3.3.8"
   },
