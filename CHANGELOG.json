@@ -1,11 +1,10 @@
 {
-  "unreleased": [
-  ],
+  "unreleased": [],
   "releases": {
     "65": [
       "[New] Add `resizeToOriginalSize` method on `Image`",
       "[New] Add `size` property on `ImageData`",
-      "[New] Provide detail of the shared style when syncWithSharedStyle locates a shared style linked to an external library.",
+      "[New] Provide detail of the shared style when syncWithSharedStyle locates a shared style linked to an external library."
     ],
     "63": ["[New] Updated `LibraryType` enum"],
     "61": [
