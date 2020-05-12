@@ -35,12 +35,6 @@ When a plugin was updated, previously installed versions are kept in a separate 
 
 > **Quick tip:** You can access the plugins folder by holding `alt` while opening the _Plugins_ menu in Sketch and then choose 'Reveal Plugins Folder'.
 
-### Install a plugin
-
-See the [Sketch documentation](https://sketch.com/docs/plugins/) on how to install plugins.
-
-For development
-
 ### Installing Plugins
 
 If you double-click a `.sketchplugin` file, Sketch will copy it into the Plugins folder for you. Any commands that it implements should immediately show up in the **Plugins** menu.
@@ -49,7 +43,7 @@ Alternatively, you can install plugins by simply moving them into the Plugins fo
 
 _Note: Sketch also supports using aliases and links to individual Plugins, or to the Plugins folder itself. This allows you to place them elsewhere (for example, a Dropbox folder to keep multiple installs of Sketch synced)._
 
-### Uninstall Plugins
+### Uninstalling Plugins
 
 To remove a Plugin, just select the **Plugins › Manage Plugins…** menu option, select the Plugin you want to remove from the list, and either right click the plugin or click the gear icon and select _Uninstall "Plugin Name"_:
 
