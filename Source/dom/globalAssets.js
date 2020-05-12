@@ -12,7 +12,7 @@ const nativeAssets = MSPersistentAssetCollection.sharedGlobalAssets()
  */
 const globalColorsDescriptor = {
   get() {
-    const arr = toArray(nativeAssets.colorAssets()).map(a =>
+    const arr = toArray(nativeAssets.colorAssets()).map((a) =>
       ColorAsset.fromNative(a)
     )
     return hookedArray(arr, null, globalColorsDescriptor)
@@ -20,8 +20,8 @@ const globalColorsDescriptor = {
   set(colors) {
     nativeAssets.removeAllColorAssets()
     toArray(colors)
-      .map(c => ColorAsset.from(c))
-      .forEach(c => {
+      .map((c) => ColorAsset.from(c))
+      .forEach((c) => {
         nativeAssets.addColorAsset(c._object)
       })
   },
@@ -43,7 +43,7 @@ Object.defineProperty(globalAssets, 'colors', globalColorsDescriptor)
  */
 const globalGradientsDescriptor = {
   get() {
-    const arr = toArray(nativeAssets.gradientAssets()).map(a =>
+    const arr = toArray(nativeAssets.gradientAssets()).map((a) =>
       GradientAsset.fromNative(a)
     )
     return hookedArray(arr, null, globalGradientsDescriptor)
@@ -51,8 +51,8 @@ const globalGradientsDescriptor = {
   set(gradients) {
     nativeAssets.removeAllGradientAssets()
     toArray(gradients)
-      .map(c => GradientAsset.from(c))
-      .forEach(c => {
+      .map((c) => GradientAsset.from(c))
+      .forEach((c) => {
         nativeAssets.addGradientAsset(c._object)
       })
   },
@@ -71,14 +71,16 @@ export function getGlobalColors() {
   console.warn(
     'sketch.getGlobalColors() is deprecated. Use sketch.globalAssets.colors instead'
   )
-  return toArray(nativeAssets.colorAssets()).map(a => ColorAsset.fromNative(a))
+  return toArray(nativeAssets.colorAssets()).map((a) =>
+    ColorAsset.fromNative(a)
+  )
 }
 
 export function getGlobalGradients() {
   console.warn(
     'sketch.getGlobalGradients() is deprecated. Use sketch.globalAssets.gradients instead'
   )
-  return toArray(nativeAssets.gradientAssets()).map(a =>
+  return toArray(nativeAssets.gradientAssets()).map((a) =>
     GradientAsset.fromNative(a)
   )
 }

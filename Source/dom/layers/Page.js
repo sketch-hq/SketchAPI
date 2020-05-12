@@ -1,5 +1,4 @@
 import { DefinedPropertiesKey } from '../WrappedObject'
-// eslint-disable-next-line import/no-cycle
 import { Group } from './Group'
 import { Selection } from '../models/Selection'
 import { Types } from '../enums'
@@ -20,9 +19,7 @@ export class Page extends Group {
   constructor(page = {}) {
     if (!page.sketchObject) {
       // eslint-disable-next-line no-param-reassign
-      page.sketchObject = Factory.createNative(Page)
-        .alloc()
-        .init()
+      page.sketchObject = Factory.createNative(Page).alloc().init()
     }
 
     super(page)

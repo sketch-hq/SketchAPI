@@ -8,7 +8,7 @@ test('should find by type', (context, document) => {
       layers: [{ type: 'Artboard' }, { type: 'Shape' }],
     },
   ]
-  expect(find('Artboard', document).map(x => x.id)).toEqual([
+  expect(find('Artboard', document).map((x) => x.id)).toEqual([
     document.pages[0].layers[0].id,
   ])
 })
@@ -20,7 +20,7 @@ test('should find by name', (context, document) => {
       layers: [{ type: 'Artboard' }, { type: 'Shape', name: 'test' }],
     },
   ]
-  expect(find('[name="test"]', document).map(x => x.id)).toEqual([
+  expect(find('[name="test"]', document).map((x) => x.id)).toEqual([
     document.pages[0].layers[1].id,
   ])
 })
@@ -36,7 +36,7 @@ test('should find by name containing', (context, document) => {
       ],
     },
   ]
-  expect(find('[name*="test"]', document).map(x => x.id)).toEqual([
+  expect(find('[name*="test"]', document).map((x) => x.id)).toEqual([
     document.pages[0].layers[1].id,
     document.pages[0].layers[2].id,
   ])
@@ -49,7 +49,7 @@ test('should find by different name', (context, document) => {
       layers: [],
     },
   ]
-  expect(find('[name!="test"]', document).map(x => x.id)).toEqual([
+  expect(find('[name!="test"]', document).map((x) => x.id)).toEqual([
     document.pages[0].id,
   ])
 })
@@ -65,7 +65,7 @@ test('should find by name ending with', (context, document) => {
       ],
     },
   ]
-  expect(find('[name$="2"]', document).map(x => x.id)).toEqual([
+  expect(find('[name$="2"]', document).map((x) => x.id)).toEqual([
     document.pages[0].layers[2].id,
   ])
 })
@@ -81,7 +81,7 @@ test('should find by name beginning with', (context, document) => {
       ],
     },
   ]
-  expect(find('[name^="test"]', document).map(x => x.id)).toEqual([
+  expect(find('[name^="test"]', document).map((x) => x.id)).toEqual([
     document.pages[0].layers[1].id,
     document.pages[0].layers[2].id,
   ])
@@ -98,7 +98,7 @@ test('should find by frame.x greater than', (context, document) => {
       ],
     },
   ]
-  expect(find('[frame.x>300]', document).map(x => x.id)).toEqual([
+  expect(find('[frame.x>300]', document).map((x) => x.id)).toEqual([
     document.pages[0].layers[1].id,
   ])
 })
@@ -114,7 +114,7 @@ test('should find with 2 criteria', (context, document) => {
       ],
     },
   ]
-  expect(find('Shape, [frame.x>300]', document).map(x => x.id)).toEqual([
+  expect(find('Shape, [frame.x>300]', document).map((x) => x.id)).toEqual([
     document.pages[0].layers[1].id,
   ])
 })
@@ -131,6 +131,6 @@ test('should find with id', (context, document) => {
     },
   ]
   expect(
-    find(`#${document.pages[0].layers[1].id}`, document).map(x => x.id)
+    find(`#${document.pages[0].layers[1].id}`, document).map((x) => x.id)
   ).toEqual([document.pages[0].layers[1].id])
 })

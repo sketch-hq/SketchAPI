@@ -5,7 +5,7 @@ const webpack = require('webpack')
 // used for tests
 const { config: normalConfig, CORE_MODULES } = require('./webpack.config')
 
-module.exports = config => {
+module.exports = (config) => {
   config.externals = []
   config.resolve = normalConfig.resolve
   config.resolve.alias = CORE_MODULES.reduce(
@@ -14,7 +14,7 @@ module.exports = config => {
       return prev
     },
     {
-      sketch: path.resolve(__dirname, 'Source/index.ts'),
+      sketch: path.resolve(__dirname, 'Source/index.js'),
     }
   )
   config.module = normalConfig.module

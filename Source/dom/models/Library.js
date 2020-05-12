@@ -38,7 +38,6 @@ const LibraryType = {
   RemoteThirdParty: 'RemoteThirdParty', // A library hosted by a 3rd party
 }
 
-/* eslint-disable no-use-before-define, typescript/no-use-before-define */
 export function getLibraries() {
   const libraryController = AppController.sharedInstance().librariesController()
   return toArray(libraryController.libraries()).map(
@@ -178,7 +177,7 @@ export class Library extends WrappedObject {
     const shareableObjectRefsForCurrentLib = toArray(
       shareableObjectRefsMap
     ).find(
-      o =>
+      (o) =>
         o.library &&
         String(o.library.libraryID()) === currentId &&
         String(o.library.name()) === currentName
@@ -188,7 +187,7 @@ export class Library extends WrappedObject {
       return []
     }
     const documentData = document._getMSDocumentData()
-    return toArray(shareableObjectRefsForCurrentLib.objectRefs).map(ref => {
+    return toArray(shareableObjectRefsForCurrentLib.objectRefs).map((ref) => {
       const obj = ImportableObject.fromNative(ref)
       obj._documentData = documentData
       return obj

@@ -114,8 +114,9 @@ BorderOptions.define('startArrowhead', {
   get() {
     const startType = this._object.startMarkerType()
     return (
-      Object.keys(ArrowheadMap).find(key => ArrowheadMap[key] === startType) ||
-      startType
+      Object.keys(ArrowheadMap).find(
+        (key) => ArrowheadMap[key] === startType
+      ) || startType
     )
   },
   set(arrowhead) {
@@ -130,7 +131,7 @@ BorderOptions.define('endArrowhead', {
   get() {
     const endType = this._object.endMarkerType()
     return (
-      Object.keys(ArrowheadMap).find(key => ArrowheadMap[key] === endType) ||
+      Object.keys(ArrowheadMap).find((key) => ArrowheadMap[key] === endType) ||
       endType
     )
   },
@@ -155,7 +156,7 @@ BorderOptions.define('lineEnd', {
   get() {
     const lineCap = this._object.borderOptions().lineCapStyle()
     return (
-      Object.keys(LineEndMap).find(key => LineEndMap[key] === lineCap) ||
+      Object.keys(LineEndMap).find((key) => LineEndMap[key] === lineCap) ||
       lineCap
     )
   },
@@ -173,7 +174,7 @@ BorderOptions.define('lineJoin', {
   get() {
     const lineJoin = this._object.borderOptions().lineJoinStyle()
     return (
-      Object.keys(LineJoinMap).find(key => LineJoinMap[key] === lineJoin) ||
+      Object.keys(LineJoinMap).find((key) => LineJoinMap[key] === lineJoin) ||
       lineJoin
     )
   },

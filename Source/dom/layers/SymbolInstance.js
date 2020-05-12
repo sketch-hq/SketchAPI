@@ -117,7 +117,7 @@ SymbolInstance.define('master', {
       // find a matching master and hope that the right one
       const id = this.symbolId
       const docs = getDocuments()
-      docs.some(doc => {
+      docs.some((doc) => {
         master = doc.getSymbolMasterWithID(id)
         return !!master
       })
@@ -153,7 +153,7 @@ SymbolInstance.define('overrides', {
       )
     )
 
-    return overrides.map(o => {
+    return overrides.map((o) => {
       const wrapped = Override.fromNative(o)
       Object.defineProperty(wrapped, '__symbolInstance', {
         writable: false,

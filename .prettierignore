@@ -1,1 +1,6 @@
 package.json
+build
+node_modules
+docs
+docs-website
+core-modules
