@@ -103,8 +103,6 @@
 		4371214D2469F0F6000570FA /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = WUGMZZ5K46;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -112,8 +110,6 @@
 		4371214E2469F0F6000570FA /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = WUGMZZ5K46;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
