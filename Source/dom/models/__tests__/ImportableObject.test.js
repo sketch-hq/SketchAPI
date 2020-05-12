@@ -2,7 +2,6 @@
 import { outputPath } from '../../../test-utils'
 import { Library, Document, Artboard, Text, SymbolMaster } from '../..'
 
-// some tests cannot really run on jenkins because it doesn't have access to MSDocument
 test('should import a symbol from a lib', () => {
   const document = new Document()
 
