@@ -1,7 +1,7 @@
 {
   "name": "sketch-api",
   "private": true,
-  "version": "1.0.0",
+  "version": "2.0.0",
   "author": "Sketch",
   "license": "MIT",
   "description": "JavaScript API for Sketch",
@@ -12,7 +12,7 @@
     "test:latest": "skpm-test --app=latest",
     "test:xcode": "skpm-test --app=xcode",
     "lint": "eslint \"Source/**\"",
-    "format-check": "prettier --check  \"**/*.{js,json}\"",
+    "format-check": "prettier --check \"**/*.{js,json}\"",
     "postinstall": "cd core-modules && npm ci"
   },
   "devDependencies": {},
