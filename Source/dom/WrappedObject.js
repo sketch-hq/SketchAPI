@@ -48,7 +48,7 @@ export class WrappedObject {
         }
         return 0
       })
-      .forEach(k => {
+      .forEach((k) => {
         if (!propertyList[k]) {
           // ignore the properties that starts with _, they are workarounds
           if (k && k[0] !== '_') {
@@ -83,13 +83,13 @@ export class WrappedObject {
 
     const json = {}
 
-    Object.keys(propertyList).forEach(k => {
+    Object.keys(propertyList).forEach((k) => {
       if (!propertyList[k].exportable) {
         return
       }
       const value = this[k]
       if (value && Array.isArray(value)) {
-        json[k] = value.map(x => {
+        json[k] = value.map((x) => {
           if (x && typeof x.toJSON === 'function') {
             return x.toJSON()
           }
@@ -186,7 +186,7 @@ export class WrappedObject {
           value: Object.keys(fields),
         })
 
-        self._keys.forEach(field => {
+        self._keys.forEach((field) => {
           Object.defineProperty(self, field, fields[field])
         })
       }
@@ -218,7 +218,7 @@ export class WrappedObject {
       },
       set(object) {
         const proxy = this[propertyName]
-        Object.keys(object).forEach(k => {
+        Object.keys(object).forEach((k) => {
           proxy[k] = object[k]
         })
       },
@@ -242,7 +242,7 @@ export class WrappedObject {
         const newKeys = Object.keys(fields)
         this._keys = this._keys.concat(newKeys)
 
-        newKeys.forEach(field => {
+        newKeys.forEach((field) => {
           Object.defineProperty(self, field, fields[field])
         })
       }

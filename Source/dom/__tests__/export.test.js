@@ -1,7 +1,7 @@
 /* globals expect, test */
 import { Buffer } from 'buffer'
 import fs from '@skpm/fs'
-import { isRunningOnJenkins, outputPath } from '../../test-utils'
+import { outputPath } from '../../test-utils'
 import { exportObject, objectFromJSON } from '../export'
 import { Shape } from '../layers/Shape'
 
@@ -59,67 +59,65 @@ test('should fail with to return with multiple formats', () => {
   }
 })
 
-if (!isRunningOnJenkins()) {
-  test('Should return a buffer', (context, document) => {
-    const object = new Shape({
-      parent: document.selectedPage,
-    })
-    const buffer = exportObject(object, {
-      formats: 'png',
-      output: false,
-    })
-    expect(Buffer.isBuffer(buffer)).toBe(true)
+test('Should return a buffer', (context, document) => {
+  const object = new Shape({
+    parent: document.selectedPage,
   })
+  const buffer = exportObject(object, {
+    formats: 'png',
+    output: false,
+  })
+  expect(Buffer.isBuffer(buffer)).toBe(true)
+})
 
-  test('Should export a page to png file', (context, document) => {
-    const filePath = NSString.stringWithString(`${outputPath()}/Page 1.png`)
-    try {
-      fs.unlinkSync(filePath)
-    } catch (err) {
-      // just ignore
-    }
-    // eslint-disable-next-line no-unused-vars
-    const object = new Shape({
-      parent: document.selectedPage,
-    })
-    exportObject(document.selectedPage, {
-      formats: 'png',
-      output: outputPath(),
-    })
-    expect(fs.existsSync(filePath)).toBe(true)
+test('Should export a page to png file', (context, document) => {
+  const filePath = NSString.stringWithString(`${outputPath()}/Page 1.png`)
+  try {
+    fs.unlinkSync(filePath)
+  } catch (err) {
+    // just ignore
+  }
+  // eslint-disable-next-line no-unused-vars
+  const object = new Shape({
+    parent: document.selectedPage,
   })
+  exportObject(document.selectedPage, {
+    formats: 'png',
+    output: outputPath(),
+  })
+  expect(fs.existsSync(filePath)).toBe(true)
+})
 
-  test('Should export a shape to png file', (context, document) => {
-    const filePath = NSString.stringWithString(`${outputPath()}/Shape.png`)
-    try {
-      fs.unlinkSync(filePath)
-    } catch (err) {
-      // just ignore
-    }
-    const object = new Shape({
-      parent: document.selectedPage,
-    })
-    exportObject(object, {
-      formats: 'png',
-      output: outputPath(),
-    })
-    expect(fs.existsSync(filePath)).toBe(true)
+test('Should export a shape to png file', (context, document) => {
+  const filePath = NSString.stringWithString(`${outputPath()}/Shape.png`)
+  try {
+    fs.unlinkSync(filePath)
+  } catch (err) {
+    // just ignore
+  }
+  const object = new Shape({
+    parent: document.selectedPage,
   })
+  exportObject(object, {
+    formats: 'png',
+    output: outputPath(),
+  })
+  expect(fs.existsSync(filePath)).toBe(true)
+})
 
-  test('Should export a shape to json file', (context, document) => {
-    const filePath = NSString.stringWithString(`${outputPath()}/Shape.json`)
-    try {
-      fs.unlinkSync(filePath)
-    } catch (err) {
-      // just ignore
-    }
-    const object = new Shape({
-      parent: document.selectedPage,
-    })
-    exportObject(object, {
-      formats: 'json',
-      output: outputPath(),
-    })
-    expect(fs.existsSync(filePath)).toBe(true)
+test('Should export a shape to json file', (context, document) => {
+  const filePath = NSString.stringWithString(`${outputPath()}/Shape.json`)
+  try {
+    fs.unlinkSync(filePath)
+  } catch (err) {
+    // just ignore
+  }
+  const object = new Shape({
+    parent: document.selectedPage,
   })
-}
+  exportObject(object, {
+    formats: 'json',
+    output: outputPath(),
+  })
+  expect(fs.existsSync(filePath)).toBe(true)
+})

@@ -102,7 +102,7 @@ Flow.define('animationType', {
     const raw = this._object.animationType()
     return (
       Object.keys(AnimationTypeMap).find(
-        key => AnimationTypeMap[key] === raw
+        (key) => AnimationTypeMap[key] === raw
       ) || raw
     )
   },

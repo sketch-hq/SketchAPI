@@ -123,7 +123,7 @@ ShapePath.define('shapeType', {
 
 ShapePath.define('points', {
   get() {
-    return toArray(this._object.points()).map(p => {
+    return toArray(this._object.points()).map((p) => {
       const point = CurvePoint.fromNative(p)
       point._parent = this._object
       return point
@@ -137,7 +137,7 @@ ShapePath.define('points', {
     this._object.removeAllCurvePoints()
 
     const curvePoints = points.map(
-      p => wrapObject(p, Types.CurvePoint).sketchObject
+      (p) => wrapObject(p, Types.CurvePoint).sketchObject
     )
     this._object.addCurvePoints(curvePoints)
     this._object.adjustFrameAfterEditIntegral_fixAncestors(false, true)

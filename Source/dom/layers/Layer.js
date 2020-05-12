@@ -324,7 +324,7 @@ Layer.define('exportFormats', {
       .exportOptions()
       .setExportFormats(
         toArray(exportFormats).map(
-          e => wrapObject(e, Types.ExportFormat).sketchObject
+          (e) => wrapObject(e, Types.ExportFormat).sketchObject
         )
       )
   },

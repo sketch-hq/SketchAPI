@@ -7,7 +7,7 @@
 const sketch = require('sketch')
 
 // eslint-disable-next-line no-restricted-syntax
-export default function() {
+export default function () {
   // Get the selected (front-most) document
   const document = sketch.getSelectedDocument()
 

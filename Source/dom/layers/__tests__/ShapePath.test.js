@@ -1,5 +1,5 @@
 /* globals expect, test */
-import { isRunningOnJenkins, canBeLogged } from '../../../test-utils'
+import { canBeLogged } from '../../../test-utils'
 import { ShapePath } from '../..'
 import { CurvePoint } from '../../models/CurvePoint'
 
@@ -14,7 +14,7 @@ test('should expose PointType', () => {
 })
 
 test('should create shape paths of different shape type', () => {
-  Object.keys(ShapePath.ShapeType).forEach(shapeType => {
+  Object.keys(ShapePath.ShapeType).forEach((shapeType) => {
     const shapePath = new ShapePath({
       shapeType,
     })
@@ -25,7 +25,7 @@ test('should create shape paths of different shape type', () => {
 
 test('should return the points of a shape', () => {
   const shapePath = new ShapePath()
-  expect(shapePath.points.map(p => p.toJSON())).toEqual([
+  expect(shapePath.points.map((p) => p.toJSON())).toEqual([
     {
       type: 'CurvePoint',
       pointType: 'Straight',
@@ -61,10 +61,8 @@ test('should return the points of a shape', () => {
   ])
 })
 
-if (!isRunningOnJenkins()) {
-  test('should create a shape path from an svg path', () => {
-    const svgPath = 'M10,10 L90,10 L90,90 L10,90 L10,10'
-    const shapePath = ShapePath.fromSVGPath(svgPath)
-    expect(shapePath.getSVGPath()).toBe(svgPath)
-  })
-}
+test('should create a shape path from an svg path', () => {
+  const svgPath = 'M10,10 L90,10 L90,90 L10,90 L10,10'
+  const shapePath = ShapePath.fromSVGPath(svgPath)
+  expect(shapePath.getSVGPath()).toBe(svgPath)
+})
