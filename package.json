@@ -11,26 +11,21 @@
     "test": "yarn test:latest",
     "test:latest": "skpm-test --app=latest",
     "test:xcode": "skpm-test --app=xcode",
-    "lint": "find . -name \"*.ts\" -o -name \"*.js\" | grep -v -f .gitignore | grep -v .d.ts | grep -v examples | grep -v docs-website | xargs eslint",
+    "lint": "eslint \"Source/**\"",
     "format-check": "prettier --check  \"**/*.{js,json}\"",
     "postinstall": "cd core-modules && yarn --frozen-lockfile"
   },
-  "devDependencies": {
+  "devDependencies": {},
+  "dependencies": {
     "@skpm/fs": "0.2.4",
     "@skpm/test-runner": "0.4.0",
     "@types/node": "12.7.4",
-    "@typescript-eslint/parser": "1.13.0",
     "babel-loader": "8.0.6",
-    "eslint": "6.3.0",
-    "eslint-config-airbnb-base": "14.0.0",
-    "eslint-config-prettier": "6.2.0",
-    "eslint-plugin-babel": "5.3.0",
-    "eslint-plugin-import": "2.18.0",
-    "eslint-plugin-prettier": "3.0.1",
-    "eslint-plugin-typescript": "0.14.0",
+    "eslint": "7.0.0",
+    "eslint-config-prettier": "6.11.0",
+    "eslint-plugin-import": "2.20.2",
     "prettier": "2.0.5",
     "webpack": "4.39.3",
     "webpack-cli": "3.3.8"
-  },
-  "dependencies": {}
+  }
 }

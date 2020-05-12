@@ -5,7 +5,6 @@ import { Rectangle } from '../models/Rectangle'
 import { Types } from '../enums'
 import { Factory } from '../Factory'
 import { wrapNativeObject, wrapObject } from '../wrapNativeObject'
-// eslint-disable-next-line import/no-cycle
 import { Document } from '../models/Document'
 import { SmartLayout } from '../models/SmartLayout'
 

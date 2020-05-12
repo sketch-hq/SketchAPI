@@ -1,6 +1,5 @@
 import { toArray, isNativeObject } from 'util'
 import { WrappedObject, DefinedPropertiesKey } from '../WrappedObject'
-// eslint-disable-next-line import/no-cycle
 import { Page } from '../layers/Page'
 import { Selection } from './Selection'
 import { getURLFromPath, isWrappedObject } from '../utils'
@@ -29,7 +28,6 @@ export const ColorSpace = {
   P3: 'P3',
 }
 
-/* eslint-disable no-use-before-define, typescript/no-use-before-define */
 export function getDocuments() {
   return toArray(NSApp.orderedDocuments())
     .filter((doc) => doc.isKindOfClass(MSDocument))

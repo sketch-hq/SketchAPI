@@ -1,5 +1,4 @@
 import { DefinedPropertiesKey } from '../WrappedObject'
-// eslint-disable-next-line import/no-cycle
 import { Group } from './Group'
 import { Selection } from '../models/Selection'
 import { Types } from '../enums'

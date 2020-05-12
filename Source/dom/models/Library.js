@@ -38,7 +38,6 @@ const LibraryType = {
   RemoteThirdParty: 'RemoteThirdParty', // A library hosted by a 3rd party
 }
 
-/* eslint-disable no-use-before-define, typescript/no-use-before-define */
 export function getLibraries() {
   const libraryController = AppController.sharedInstance().librariesController()
   return toArray(libraryController.libraries()).map(
