@@ -11,7 +11,7 @@
 			isa = PBXAggregateTarget;
 			buildConfigurationList = 4371214C2469F0F6000570FA /* Build configuration list for PBXAggregateTarget "SketchAPI" */;
 			buildPhases = (
-				4371214F2469F105000570FA /* ShellScript */,
+				4371214F2469F105000570FA /* Build SketchAPI */,
 			);
 			dependencies = (
 			);
@@ -39,12 +39,14 @@
 		437121482469F0D2000570FA /* package-lock.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "package-lock.json"; sourceTree = "<group>"; };
 		437121492469F0D2000570FA /* LICENSE.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = LICENSE.md; sourceTree = "<group>"; };
 		4371214A2469F0D2000570FA /* scripts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = scripts; sourceTree = "<group>"; };
+		43712152246AD00A000570FA /* install-sketchapi.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; name = "install-sketchapi.sh"; path = "scripts/install-sketchapi.sh"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
 		437121322469F097000570FA = {
 			isa = PBXGroup;
 			children = (
+				43712152246AD00A000570FA /* install-sketchapi.sh */,
 				4371213B2469F0D1000570FA /* CHANGELOG.json */,
 				437121402469F0D2000570FA /* CODE_OF_CONDUCT.md */,
 				437121452469F0D2000570FA /* core-modules */,
@@ -97,7 +99,7 @@
 /* End PBXProject section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		4371214F2469F105000570FA /* ShellScript */ = {
+		4371214F2469F105000570FA /* Build SketchAPI */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -106,13 +108,16 @@
 			);
 			inputPaths = (
 			);
+			name = "Build SketchAPI";
 			outputFileListPaths = (
 			);
 			outputPaths = (
+				"",
+				"$(SOURCE_ROOT)/build/",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/zsh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\npwd\n\n";
+			shellScript = "EXIT_VALUE=0\nLEVEL=\"warning\"\nif [[ \"$BC_EXTERNAL_BUILD\" == \"YES\" ]]; then\n  EXIT_VALUE=1\n  LEVEL=\"error\"\nfi\n\nOUTPUT=`which npm`\nRETVAL=$?\n\nif [[ $RETVAL -ne 0 ]]; then\n  echo \"npm not found. Aborting SketchAPI build.\"\n  echo \"${FULL_PRODUCT_NAME}:13:1: ${LEVEL}: npm not found\"\n  exit $EXIT_VALUE\nfi\n\necho \"Running npm install.\"\nnpm install\nRETVAL=$?\nif [[ $RETVAL -ne 0 ]]; then\n  echo \"npm install failed. Aborting SketchAPI build.\"\n  echo \"${FULL_PRODUCT_NAME}:22:1: ${LEVEL}: npm install failed\"\n  exit $EXIT_VALUE\nfi\n\necho \"Executing npm run build.\"\nnpm run build\nRETVAL=$?\nif [[ $RETVAL -ne 0 ]]; then\n  echo \"npm run build failed. Aborting SketchAPI build.\"\n  echo \"${FULL_PRODUCT_NAME}:31:1: ${LEVEL}: npm run build failed\"\n  exit $EXIT_VALUE\nfi\n\necho \"project dir: $PROJECT_DIR\"\necho \"source dir: $SOURCE_ROOT\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
