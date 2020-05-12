@@ -105,12 +105,26 @@ This section of the readme is related to developing SketchAPI locally. If you're
 You'll need the following tools available on your system to work on this repository:
 
 - Node 10 or greater
+- Visual Studio Code (recommended)
 
 ### Overview
 
 SketchAPI is written in JavaScript, as a collection of files in the `./Source` folder.
 
 Webpack is used to bundle the files, and we include this in each release of Sketch. However you can build, run and test SketchAPI locally too - continue reading to find out how.
+
+#### Scripts
+
+The following npm scripts are available. Carry on reading below for more in-depth guides.
+
+| Script                        | Description                             |
+| ----------------------------- | --------------------------------------- |
+| `npm run build`               | Build SketchAPI into the `build` folder |
+| `npm run test`                | Run the integreation tests using skpm   |
+| `npm run lint`                | Lint the source code                    |
+| `npm run format-check`        | Check the format with Prettier          |
+| `npm run api-location:write`  | Tell Sketch to use your local SketchAPI |
+| `npm run api-location:delete` | Undo `npm run api-location:write`       |
 
 ### Build and run
 
@@ -119,9 +133,9 @@ Following these steps will allow you to build the source files, and inject the c
 Any plugins you have installed or code you invoke in Sketch's _Plugins > Run Script_ dialogue box will run against your changed version of SketchAPI.
 
 1. Checkout this repository.
-1. Make your copy of Sketch use your local version of SketchAPI, rather than the one it has built-in. The value below should be an absolute path to the repository checkout location with `/build` appended.
+1. Make your copy of Sketch use your local version of SketchAPI, rather than the one it has built-in.
    ```sh
-   defaults write com.bohemiancoding.sketch3 SketchAPILocation "/path/to/your/SketchAPI/build"
+   npm run api-location:write
    ```
 1. Ensure you've installed the dependencies with npm, and then build SketchAPI.
    ```sh
@@ -132,7 +146,7 @@ Any plugins you have installed or code you invoke in Sketch's _Plugins > Run Scr
 
 > ⚠️ If you re-build SketchAPI by running `npm run build` again while Sketch is open you won't see your changes automatically reflected. You'll need to restart Sketch for this to happen.
 
-> ⚠️ Once you've finished working on SketchAPI don't forget to stop Sketch using your customised version, to do this run:<br/>`defaults delete com.bohemiancoding.sketch3 SketchAPILocation`.
+> ⚠️ Once you've finished working on SketchAPI don't forget to stop Sketch using your customised version, to do this run:<br/>`npm run api-location:delete`.
 
 ### Testing
 

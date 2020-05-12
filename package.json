@@ -13,6 +13,8 @@
     "test:xcode": "skpm-test --app=xcode",
     "lint": "eslint \"Source/**\"",
     "format-check": "prettier --check \"**/*.{js,json}\"",
+    "api-location:write": "defaults write com.bohemiancoding.sketch3 SketchAPILocation \"$(pwd)/build\"",
+    "api-location:delete": "defaults delete com.bohemiancoding.sketch3 SketchAPILocation",
     "postinstall": "cd core-modules && npm ci"
   },
   "devDependencies": {},
