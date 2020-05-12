@@ -8,7 +8,7 @@
   "homepage": "https://github.com/sketch-hq/SketchAPI",
   "scripts": {
     "build": "./build.sh",
-    "test": "yarn test:latest",
+    "test": "npm run test:latest",
     "test:latest": "skpm-test --app=latest",
     "test:xcode": "skpm-test --app=xcode",
     "lint": "eslint \"Source/**\"",
