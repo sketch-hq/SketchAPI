@@ -13,7 +13,7 @@
     "test:xcode": "skpm-test --app=xcode",
     "lint": "eslint \"Source/**\"",
     "format-check": "prettier --check  \"**/*.{js,json}\"",
-    "postinstall": "cd core-modules && yarn --frozen-lockfile"
+    "postinstall": "cd core-modules && npm ci"
   },
   "devDependencies": {},
   "dependencies": {

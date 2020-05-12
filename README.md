@@ -105,7 +105,6 @@ This section of the readme is related to developing SketchAPI locally. If you're
 You'll need the following tools available on your system to work on this repository:
 
 - Node 10 or greater
-- Yarn 1
 
 ### Overview
 
@@ -124,14 +123,14 @@ Any plugins you have installed or code you invoke in Sketch's _Plugins > Run Scr
    ```sh
    defaults write com.bohemiancoding.sketch3 SketchAPILocation "/path/to/your/SketchAPI/build"
    ```
-1. Ensure you've installed the dependencies with Yan, and then build SketchAPI.
+1. Ensure you've installed the dependencies with npm, and then build SketchAPI.
    ```sh
-   yarn
-   yarn build
+   npm install
+   npm run build
    ```
 1. Start Sketch and your changes will be picked up.
 
-> ⚠️ If you re-build SketchAPI by running `yarn build` again while Sketch is open you won't see your changes automatically reflected. You'll need to restart Sketch for this to happen.
+> ⚠️ If you re-build SketchAPI by running `npm run build` again while Sketch is open you won't see your changes automatically reflected. You'll need to restart Sketch for this to happen.
 
 > ⚠️ Once you've finished working on SketchAPI don't forget to stop Sketch using your customised version, to do this run:<br/>`defaults delete com.bohemiancoding.sketch3 SketchAPILocation`.
 
@@ -142,13 +141,13 @@ The `*.test.js` files in this repository are integration tests that run in Sketc
 To run these tests using your current version of the Sketch as the host environment invoke:
 
 ```bash
-yarn test
+npm run test
 ```
 
 Alternatively if you want to run the tests with a specific app binary run:
 
 ```bash
-SKETCH_PATH=/path/to/sketch.app yarn test
+SKETCH_PATH=/path/to/sketch.app npm run test
 ```
 
 > ℹ️ There is no need to re-build SketchAPI between test runs or use `defaults write` to set the API location; the test runner handles re-compiling test and source files and injecting them into Sketch.
