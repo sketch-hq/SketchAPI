@@ -2,7 +2,7 @@
   "name": "sketch-api",
   "private": true,
   "version": "0.1.0",
-  "author": "Sam Deane",
+  "author": "Sketch",
   "license": "MIT",
   "description": "JavaScript API for Sketch",
   "homepage": "https://github.com/sketch-hq/SketchAPI",
