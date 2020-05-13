@@ -4,39 +4,39 @@
 
 - None
 
-### Releases
+## Releases
 
-#### Sketch 65
+### Sketch 65
 
 - [New] Add `resizeToOriginalSize` method on `Image`.
 - [New] Add `size` property on `ImageData`.
 - [New] Provide detail of the shared style when syncWithSharedStyle locates a shared style linked to an external library.
 
-#### Sketch 63
+### Sketch 63
 
 - [New] Updated `LibraryType` enum.
 
-#### Sketch 61
+### Sketch 61
 
 - [New] Variable font API.
 - [New] Support for smart layout.
 - [Improved] Update to @skpm/process@0.1.4.
 
-#### Sketch 59
+### Sketch 59
 
 - [Improved] When setting the `trimmed` option to `false` during an export, it will not trim the image even if there is no background color.
 - [New] `onDocumentChanged` handler.
 
-#### Sketch 58.1
+### Sketch 58.1
 
 - [Fixed] `ShapePath.fromSVGPath` no longer throws an error.
 
-#### Sketch 57
+### Sketch 57
 
 - [New] Expose the `PointType` enum on `ShapePath`.
 - [Fixed] `document.centerOnLayer` not centering on nested layers.
 
-#### Sketch 56
+### Sketch 56
 
 - [Fixed] Changing the `pointType` of a CurvePoint wouldn't always restore the control points.
 - [Fixed] Do not default to `ShapeType.Rectangle` if some points are specified when create a new ShapePath.
@@ -47,13 +47,13 @@
 - [Fixed] `symbolMaster.getParentSymbolMaster` used to throw an error. It will now return `undefined`.
 - [New] Added a `colorSpace` property and a `changeColorSpace` method to `Document`.
 
-#### Sketch 55
+### Sketch 55
 
 - [New] Add `isSelected` method on a CurvePoint.
 - [Improved] Improve consistency by deprecating `Fill.fill` in favor of `Fill.fileType` (to match `Border.fileType` and other types).
 - [Fixed] `getSelectedDocument()` could throw an error when no document was opened. Now it will return `undefined`.
 
-#### Sketch 54
+### Sketch 54
 
 - [New] Add `colors` and `gradients` properties on Document.
 - [New] `export` now returns a Buffer if `options.output` is `false` and `options.formats` is an image format.
@@ -73,11 +73,11 @@
 - [Improved] `layer.index` can now be set.
 - [Fixed] `new Text({ style: {} })` now works as expected.
 
-#### Sketch 53.1
+### Sketch 53.1
 
 - [Fixed] Setting mutable colors where it should.
 
-#### Sketch 53
+### Sketch 53
 
 - [Improved] Obj-C exceptions will be thrown as JS Errors which will reference the exception in their `nativeException` property.
 - [Improved] `setTimeout` and all the other timeout, interval, immediate methods are now available directly, no need to polyfill them.
@@ -100,11 +100,11 @@
 - [New] Add `overrides` property on Symbol Master to be able to change their `editable` property.
 - [Improved] Add an options parameter when detaching a Symbol Instance.
 
-#### Sketch 52.1
+### Sketch 52.1
 
 - [New] Add basic support for Shape path.
 
-#### Sketch 52
+### Sketch 52
 
 - [Improved] Make sure Document.save will not overwrite a folder by mistake.
 - [Fixed] Using 0 as a shadow's value shouldn't fall back to the default.
@@ -119,7 +119,7 @@
 - [Improved] Allow storing a setting on an Override or DataOverride.
 - [Improved] Settings will now be serialized even if they are of native types.
 
-#### Sketch 51
+### Sketch 51
 
 - [New] Add `path` property to Document.
 - [New] Add `lastModifiedAt` property to Library.
@@ -134,12 +134,12 @@
 - [Fixed] Opening a document without a path would fail.
 - [Fixed] Setting the `to` of a gradient would actually change the `from`.
 
-#### Sketch 50.1
+### Sketch 50.1
 
 - [Improved] Add `Rectangle.changeBasis` method and deprecate the specific implementations from Layer and Group.
 - [Fixed] Add missing wrapper for some libraries.
 
-#### Sketch 50
+### Sketch 50
 
 - [Fixed] Creating a Rectangle with an Object having an `x` value of `0` now works as expected.
 - [New] Add `locked` and `hidden` property on Layer.
@@ -153,7 +153,7 @@
 - [Improved] Add support for style on all the layers.
 - [Improved] Add support for Shadows, Inner Shadows, opacity, blur, border options, blending mode, and gradients in Style.
 
-#### Sketch 49.1
+### Sketch 49.1
 
 - [New] Add `HotSpot` component.
 - [New] Add convinient array methods to Selection.
