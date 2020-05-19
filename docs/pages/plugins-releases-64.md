@@ -41,3 +41,4 @@ layer.style.fills = [newTint]
 
 - [API reference](/reference/api)
 - [New in Sketch 57](/plugins/updates/new-in-sketch-57)
+- [New in Sketch 66](/plugins/updates/new-in-sketch-66)
