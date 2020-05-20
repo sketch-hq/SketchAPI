@@ -10,7 +10,7 @@ test('should return the layers and can iterate through them', (context, document
 
   let iterations = 0
   let groups = 0
-  page.layers.forEach(layer => {
+  page.layers.forEach((layer) => {
     iterations += 1
     if (layer.isEqual(group)) {
       groups += 1

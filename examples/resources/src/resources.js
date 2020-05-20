@@ -7,7 +7,7 @@
 const sketch = require('sketch')
 
 // eslint-disable-next-line no-restricted-syntax
-export default function(context) {
+export default function (context) {
   // We are going to make a new image layer using the PDF file we included in
   // our Resources folder. To do this, we'll need to fetch the full location
   // of the resource.

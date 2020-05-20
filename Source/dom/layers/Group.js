@@ -5,7 +5,6 @@ import { Rectangle } from '../models/Rectangle'
 import { Types } from '../enums'
 import { Factory } from '../Factory'
 import { wrapNativeObject, wrapObject } from '../wrapNativeObject'
-// eslint-disable-next-line import/no-cycle
 import { Document } from '../models/Document'
 import { SmartLayout } from '../models/SmartLayout'
 
@@ -72,10 +71,10 @@ Group.define('layers', {
 
     const layers = toArray(_layers)
       .map(wrapObject)
-      .map(l => l._object)
+      .map((l) => l._object)
 
     // remove the layers from their parent
-    layers.forEach(l => {
+    layers.forEach((l) => {
       if (l.parentGroup()) {
         l.removeFromParent()
       }

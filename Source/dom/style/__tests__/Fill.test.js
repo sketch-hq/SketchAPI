@@ -44,7 +44,7 @@ test('should set the fills', () => {
 test('should get the fills', () => {
   const style = new Style()
   style.fills = ['#11223344', '#1234']
-  expect(style.fills.map(f => f.toJSON())).toEqual([
+  expect(style.fills.map((f) => f.toJSON())).toEqual([
     {
       color: '#11223344',
       fillType: 'Color',

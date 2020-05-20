@@ -101,7 +101,7 @@ export function hookedArray(arr, binding, descriptor) {
     Array.prototype.reverse.apply(arr)
     descriptor.set.bind(binding)(arr)
   }
-  arr.sort = compareFunction => {
+  arr.sort = (compareFunction) => {
     Array.prototype.reverse.apply(arr, [compareFunction])
     descriptor.set.bind(binding)(arr)
   }

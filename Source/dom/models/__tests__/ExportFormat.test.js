@@ -11,7 +11,7 @@ test('should be able to log an ExportFormat', () => {
     ],
   })
   log(artboard.exportFormats)
-  expect(artboard.exportFormats.map(e => e.toJSON())).toEqual([
+  expect(artboard.exportFormats.map((e) => e.toJSON())).toEqual([
     {
       type: 'ExportFormat',
       fileFormat: 'png',

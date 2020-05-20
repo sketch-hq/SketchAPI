@@ -16,7 +16,7 @@ export class Override extends WrappedObject {
     }
     return toArray(
       this.__symbolInstance.sketchObject.overrideContainer().flattenedChildren()
-    ).find(x => x.availableOverride() == this.sketchObject)
+    ).find((x) => x.availableOverride() == this.sketchObject)
   }
 
   getFrame() {
@@ -149,7 +149,7 @@ Override.define('selected', {
 
     let selectedOverrides = toArray(documentData.selectedOverrides())
 
-    const alreadySelected = selectedOverrides.some(id =>
+    const alreadySelected = selectedOverrides.some((id) =>
       id.isEqual(selectionId)
     )
 
@@ -169,7 +169,7 @@ Override.define('selected', {
       }
 
       selectedOverrides = selectedOverrides.filter(
-        id => !id.isEqual(selectionId)
+        (id) => !id.isEqual(selectionId)
       )
     }
 

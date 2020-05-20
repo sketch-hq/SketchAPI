@@ -2,75 +2,31 @@
   "name": "sketch-api",
   "private": true,
   "version": "2.0.0",
-  "author": "Sam Deane",
+  "author": "Sketch",
   "license": "MIT",
-  "description": "Javascript API for Sketch",
+  "description": "JavaScript API for Sketch",
   "homepage": "https://github.com/sketch-hq/SketchAPI",
   "scripts": {
-    "build": "mkdir -p ./build && npm run build:test && npm run build:api && (rm -rf ./build/core-modules || true) && cp -R ./core-modules/node_modules/. ./build/core-modules",
-    "build:test": "skpm-test --build-only && cp ./node_modules/@skpm/test-runner/test-runner.sketchplugin/Contents/Sketch/compiled-tests.js ./build/SketchAPI.tests.js",
-    "build:api": "webpack",
-    "start": "npm run build",
-    "watch": "webpack --watch",
-    "docs:start": "cd docs-website && ./run",
-    "docs:generate-actions": "node ./scripts/generate-actions",
-    "run-tests:no-variant": "skpm-test --app=latest",
-    "run-tests": "skpm-test --app=xcode",
-    "test": "npm run lint -- --quiet && npm run run-tests",
-    "test:watch": "npm run run-tests -- --watch",
-    "test:no-variant": "npm run lint -- --quiet && npm run run-tests:no-variant",
-    "run-tests:private": "skpm-test --app=\"/Applications/Sketch Private.app\"",
-    "test:no-variant:watch": "npm run run-tests:no-variant -- --watch",
-    "lint": "find . -name \"*.ts\" -o -name \"*.js\" | grep -v -f .gitignore | grep -v .d.ts | grep -v examples | grep -v docs-website | xargs eslint",
-    "prettier:base": "prettier --write",
-    "prettify": "find . -name \"*.ts\" -o -name \"*.js\" | grep -v -f .gitignore | grep -v docs-website | xargs npm run prettier:base",
-    "lint-staged": "lint-staged",
-    "postinstall": "node ./scripts/install-pre-commit.js && node ./scripts/inject-new-api-in-tester.js && rm -rf .awcache || true && cd core-modules && npm install",
-    "update-sketch-with-latest-commit": "node ./scripts/update-sketch-with-latest-commit.js"
+    "build": "./build.sh",
+    "test": "skpm-test",
+    "test:latest": "skpm-test --app=latest",
+    "test:xcode": "skpm-test --app=xcode",
+    "lint": "eslint \"Source/**\"",
+    "format-check": "prettier --check \"**/*.{js,json}\"",
+    "api-location:write": "defaults write com.bohemiancoding.sketch3 SketchAPILocation \"$(pwd)/build\"",
+    "api-location:delete": "defaults delete com.bohemiancoding.sketch3 SketchAPILocation",
+    "postinstall": "cd core-modules && npm ci"
   },
-  "devDependencies": {
-    "@babel/preset-typescript": "7.6.0",
+  "devDependencies": {},
+  "dependencies": {
     "@skpm/fs": "0.2.4",
     "@skpm/test-runner": "0.4.0",
-    "@types/node": "12.7.4",
-    "@typescript-eslint/parser": "1.13.0",
     "babel-loader": "8.0.6",
-    "danger": "9.2.2",
-    "del": "5.1.0",
-    "eslint": "6.3.0",
-    "eslint-config-airbnb-base": "14.0.0",
-    "eslint-config-prettier": "6.2.0",
-    "eslint-plugin-babel": "5.3.0",
-    "eslint-plugin-import": "2.18.0",
-    "eslint-plugin-prettier": "3.0.1",
-    "eslint-plugin-typescript": "0.14.0",
-    "lint-staged": "9.2.5",
-    "pre-commit": "1.2.2",
-    "prettier": "1.18.2",
-    "semver": "6.3.0",
-    "typescript": "3.6.2",
+    "eslint": "7.0.0",
+    "eslint-config-prettier": "6.11.0",
+    "eslint-plugin-import": "2.20.2",
+    "prettier": "2.0.5",
     "webpack": "4.39.3",
     "webpack-cli": "3.3.8"
-  },
-  "dependencies": {},
-  "pre-commit": [
-    "lint-staged"
-  ],
-  "lint-staged": {
-    "*.{js,ts}": [
-      "npm run prettier:base",
-      "eslint",
-      "git add"
-    ],
-    "*.{md}": [
-      "npm run prettier:base",
-      "git add"
-    ]
-  },
-  "prettier": {
-    "proseWrap": "never",
-    "singleQuote": true,
-    "trailingComma": "es5",
-    "semi": false
   }
 }

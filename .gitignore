@@ -1,5 +1,5 @@
 .DS_Store
-
+*.log
 node_modules/
 build/
 .awcache/
@@ -14,3 +14,4 @@ temp-sketchAPI-copy/
 .jekyll-cache
 
 examples/**/package-lock.json
+/SketchAPI.xcodeproj/xcuserdata

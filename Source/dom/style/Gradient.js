@@ -62,7 +62,7 @@ export class Gradient extends WrappedObject {
       }
       if (object.stops) {
         nativeGradient.setStops(
-          object.stops.map(GradientStop.from).map(g => g._object)
+          object.stops.map(GradientStop.from).map((g) => g._object)
         )
       }
     }
@@ -87,7 +87,7 @@ Gradient.define('gradientType', {
   get() {
     return (
       Object.keys(GradientTypeMap).find(
-        key => GradientTypeMap[key] === this._object.gradientType()
+        (key) => GradientTypeMap[key] === this._object.gradientType()
       ) || this._object.gradientType()
     )
   },
@@ -150,7 +150,7 @@ Gradient.define('stops', {
   },
   set(stops) {
     this._object.setStops(
-      stops.map(GradientStop.from.bind(GradientStop)).map(g => g._object)
+      stops.map(GradientStop.from.bind(GradientStop)).map((g) => g._object)
     )
   },
 })
