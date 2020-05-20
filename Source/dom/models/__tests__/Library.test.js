@@ -2,10 +2,6 @@
 import { outputPath } from '../../../test-utils'
 import { Library, Document, Artboard, Text, SymbolMaster } from '../..'
 
-function findValidLib(libs) {
-  return libs.find((l) => l.valid)
-}
-
 let lib
 let libId
 
