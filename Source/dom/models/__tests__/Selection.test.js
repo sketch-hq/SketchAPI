@@ -65,7 +65,7 @@ test('should be able to go through the layers', (context, document) => {
 
   let iterations = 0
   let groups = 0
-  selection.layers.forEach(layer => {
+  selection.layers.forEach((layer) => {
     iterations += 1
     if (layer.isEqual(group)) {
       groups += 1

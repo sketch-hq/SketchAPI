@@ -105,7 +105,7 @@ Blur.define('blurType', {
   get() {
     const blurType = this._object.type()
     return (
-      Object.keys(BlurTypeMap).find(key => BlurTypeMap[key] === blurType) ||
+      Object.keys(BlurTypeMap).find((key) => BlurTypeMap[key] === blurType) ||
       blurType
     )
   },

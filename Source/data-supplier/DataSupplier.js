@@ -14,11 +14,7 @@ function getPluginIdentifier() {
  * @param {string} dataName The data name, will be used as the menu item title for the data.
  * @param {string} dynamicDataKey The key to use to select the dynamic data to supply in onSupplyData.
  */
-export function registerDataSupplier(
-  dataType: 'public.text' | 'public.image',
-  dataName: INSString | string,
-  dynamicDataKey: INSString | string
-) {
+export function registerDataSupplier(dataType, dataName, dynamicDataKey) {
   const dataManager = AppController.sharedInstance().dataSupplierManager()
   const identifier = getPluginIdentifier()
   const commandIdentifier = __command.identifier()
@@ -43,10 +39,7 @@ export function deregisterDataSuppliers() {
 /**
  * When the plugin providing the dynamic data has finished generating the data, it will call this function with the data key and the data.
  */
-export function supplyData(
-  key: string | INSString,
-  data: Array<string | INSString>
-) {
+export function supplyData(key, data) {
   const dataManager = AppController.sharedInstance().dataSupplierManager()
   dataManager.supplyData_forKey(data, key)
 }
@@ -54,11 +47,7 @@ export function supplyData(
 /**
  * When we want to only supply 1 bit of the requested data.
  */
-export function supplyDataAtIndex(
-  key: string | INSString,
-  datum: string | INSString,
-  index: number
-) {
+export function supplyDataAtIndex(key, datum, index) {
   const dataManager = AppController.sharedInstance().dataSupplierManager()
   dataManager.supplyData_atIndex_forKey(datum, index, key)
 }

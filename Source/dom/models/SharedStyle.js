@@ -125,7 +125,8 @@ SharedStyle.define('style', {
   set(newStyle) {
     if (this._object.isForeign()) {
       throw new Error(
-        'Can not set the style of a shared style coming from a library', this._object
+        'Can not set the style of a shared style coming from a library',
+        this._object
       )
     }
     this._object.updateToMatch(wrapObject(newStyle).sketchObject)

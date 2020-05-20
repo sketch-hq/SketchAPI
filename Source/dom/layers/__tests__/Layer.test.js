@@ -237,7 +237,7 @@ test('should change the exportFormats', () => {
       suffix: '@2x',
     },
   ]
-  expect(group.exportFormats.map(e => e.toJSON())).toEqual([
+  expect(group.exportFormats.map((e) => e.toJSON())).toEqual([
     {
       type: 'ExportFormat',
       fileFormat: 'png',

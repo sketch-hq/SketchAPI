@@ -55,8 +55,8 @@ export function onExportSlices(context) {
   // find all exported SVGs
   const exportRequests = toArray(context.actionContext.exports)
   const svgPaths = exportRequests
-    .filter(currentExport => currentExport.request.format() == 'svg')
-    .map(currentExport => String(currentExport.path))
+    .filter((currentExport) => currentExport.request.format() == 'svg')
+    .map((currentExport) => String(currentExport.path))
 
   if (svgPaths.length === 0) {
     return

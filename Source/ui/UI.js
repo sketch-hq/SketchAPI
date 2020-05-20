@@ -206,15 +206,7 @@ export function getInputFromUser(messageText, options, callback) {
   switch (type) {
     case INPUT_TYPE.string:
       if (typeof options.numberOfLines !== 'undefined') {
-        callback(
-          null,
-          String(
-            accessory
-              .documentView()
-              .textStorage()
-              .string()
-          )
-        )
+        callback(null, String(accessory.documentView().textStorage().string()))
       } else {
         callback(null, String(accessory.stringValue()))
       }

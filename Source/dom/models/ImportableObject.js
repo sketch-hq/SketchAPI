@@ -131,7 +131,8 @@ ImportableObject.define('objectType', {
   get() {
     const raw = this._object.shareableObjectType()
     return (
-      Object.keys(ObjectTypeMap).find(key => ObjectTypeMap[key] === raw) || raw
+      Object.keys(ObjectTypeMap).find((key) => ObjectTypeMap[key] === raw) ||
+      raw
     )
   },
 })

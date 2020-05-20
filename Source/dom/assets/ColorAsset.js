@@ -31,7 +31,7 @@ export class ColorAsset extends Asset {
         try {
           const c = Color.from(object).toMSColor()
           nativeAsset = MSColorAsset.alloc().initWithAsset_name(c, null)
-        } catch {
+        } catch (error) {
           throw new Error(
             `Cannot create a color asset from a ${String(object.class())}`
           )

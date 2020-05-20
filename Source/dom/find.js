@@ -37,7 +37,7 @@ const attributesMap = {
     if (!nativeClasses) {
       throw new Error(`Unknown layer type ${value}`)
     }
-    nativeClasses.forEach(c => {
+    nativeClasses.forEach((c) => {
       predicate.push(`className ${operator} %@`)
       addPredicateVar(String(c))
     })
@@ -124,8 +124,8 @@ export function find(predicate, root) {
 
   const predicateParts = predicate
     .split(/,/g)
-    .map(x => x.trim())
-    .filter(x => x)
+    .map((x) => x.trim())
+    .filter((x) => x)
 
   const nativePredicateParts = []
   const predicateVars = []
@@ -139,8 +139,8 @@ export function find(predicate, root) {
     },
   }
 
-  predicateParts.forEach(part => {
-    const matched = Object.keys(matchExpr).some(k => {
+  predicateParts.forEach((part) => {
+    const matched = Object.keys(matchExpr).some((k) => {
       const match = matchExpr[k].exec(part)
 
       if (!match) {
@@ -202,5 +202,5 @@ export function find(predicate, root) {
 
   const matches = children.filteredArrayUsingPredicate(nativePredicate)
 
-  return toArray(matches).map(x => wrapObject(x))
+  return toArray(matches).map((x) => wrapObject(x))
 }

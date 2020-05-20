@@ -53,7 +53,7 @@ export class CurvePoint extends WrappedObject {
       eventHandler.pathController().selectedObjects()
     )
 
-    return selectedPoints.some(selectedPoint => selectedPoint == this._object)
+    return selectedPoints.some((selectedPoint) => selectedPoint == this._object)
   }
 }
 
@@ -129,7 +129,8 @@ CurvePoint.define('pointType', {
   get() {
     const mode = this._object.curveMode()
     return (
-      Object.keys(PointTypeMap).find(key => PointTypeMap[key] === mode) || mode
+      Object.keys(PointTypeMap).find((key) => PointTypeMap[key] === mode) ||
+      mode
     )
   },
   set(_mode) {

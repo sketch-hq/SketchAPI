@@ -144,7 +144,7 @@ SymbolMaster.define('overrides', {
       )
     )
 
-    return overrides.map(o => {
+    return overrides.map((o) => {
       const wrapped = Override.fromNative(o)
       const property = overrideProperties[o.overridePoint().name()]
       Object.defineProperty(wrapped, '__symbolMaster', {
@@ -166,7 +166,7 @@ SymbolMaster.define('overrides', {
     if (this.isImmutable()) {
       return
     }
-    overrides.forEach(o => {
+    overrides.forEach((o) => {
       const overridePoint = MSOverridePoint.alloc().init()
       overridePoint.name = o.id
       this._object.setOverridePoint_editable(overridePoint, o.editable)

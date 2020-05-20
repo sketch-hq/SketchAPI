@@ -119,7 +119,7 @@ Fill.define('fillType', {
   get() {
     return (
       Object.keys(FillTypeMap).find(
-        key => FillTypeMap[key] === this._object.fillType()
+        (key) => FillTypeMap[key] === this._object.fillType()
       ) || this._object.fillType()
     )
   },
@@ -157,7 +157,7 @@ Fill.defineObject('pattern', {
     get() {
       return (
         Object.keys(PatternFillTypeMap).find(
-          key => PatternFillTypeMap[key] === this._object.patternFillType()
+          (key) => PatternFillTypeMap[key] === this._object.patternFillType()
         ) || this._object.patternFillType()
       )
     },
