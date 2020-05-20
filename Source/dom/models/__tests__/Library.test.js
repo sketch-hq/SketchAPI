@@ -6,27 +6,6 @@ function findValidLib(libs) {
   return libs.find((l) => l.valid)
 }
 
-test('should list the libraries', () => {
-  const libraries = Library.getLibraries()
-  expect(libraries[0].type).toBe('Library')
-})
-
-test('should be able to get the document', () => {
-  const libraries = Library.getLibraries()
-  const lib = findValidLib(libraries)
-  expect(lib.getDocument().type).toBe('Document')
-})
-
-test('should be able to get the list of symbols to be imported', () => {
-  const document = new Document()
-  const libraries = Library.getLibraries()
-  const lib = findValidLib(libraries)
-  expect(lib.getImportableSymbolReferencesForDocument(document)[0].type).toBe(
-    'ImportableObject'
-  )
-  document.close()
-})
-
 let lib
 let libId
 
@@ -69,7 +48,21 @@ test('should create a library from a document', () => {
   })
 })
 
-test('should disabled a library', () => {
+test('should list the libraries', () => {
+  const libraries = Library.getLibraries()
+  expect(libraries.length).toBeGreaterThan(0)
+  expect(libraries[0].type).toBe('Library')
+})
+
+test('should be able to get the list of symbols to be imported', () => {
+  const document = new Document()
+  expect(lib.getImportableSymbolReferencesForDocument(document)[0].type).toBe(
+    'ImportableObject'
+  )
+  document.close()
+})
+
+test('should disable a library', () => {
   expect(lib.enabled).toBe(true)
   lib.enabled = false
   expect(lib.enabled).toBe(false)
