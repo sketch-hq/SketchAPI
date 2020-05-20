@@ -120,8 +120,7 @@ test('should return the fragments of a text layer', () => {
     width: 22.0078125,
     height: 14,
   })
-  // TODO: Reinstate (seems flakey?)
-  // expect(fragments[0].text).toBe('Test')
+  expect(fragments[0].text).toBe('Test\n')
   expect(fragments[1].baselineOffset).toBe(3)
   expect(Number(fragments[1].range.location)).toBe(5)
   expect(Number(fragments[1].range.length)).toBe(6)
@@ -131,8 +130,7 @@ test('should return the fragments of a text layer', () => {
     width: 27.345703125,
     height: 14,
   })
-  // TODO: Reinstate (seems flakey?)
-  // expect(fragments[1].text).toBe('Hello')
+  expect(fragments[1].text).toBe('Hello\n')
   expect(fragments[2].baselineOffset).toBe(3)
   expect(Number(fragments[2].range.location)).toBe(11)
   expect(Number(fragments[2].range.length)).toBe(4)
@@ -142,6 +140,5 @@ test('should return the fragments of a text layer', () => {
     width: 20.021484375,
     height: 14,
   })
-  // TODO: Reinstate (seems flakey?)
-  // expect(fragments[2].text).toBe('o')
+  expect(fragments[2].text).toBe('123\n')
 })
