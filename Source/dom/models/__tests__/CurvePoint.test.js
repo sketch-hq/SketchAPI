@@ -1,4 +1,4 @@
-/* globals test */
+/* globals test, expect */
 
 // import { Document, ShapePath } from '../..'
 import { CurvePoint } from '../CurvePoint'
