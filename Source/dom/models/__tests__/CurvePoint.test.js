@@ -1,6 +1,6 @@
 /* globals test, expect */
 
-// import { Document, ShapePath } from '../..'
+import { Document, ShapePath } from '../..'
 import { CurvePoint } from '../CurvePoint'
 
 test('should be able to log an CurvePoint', () => {
@@ -50,25 +50,21 @@ test('should be able to modify a CurvePoint', () => {
   })
 })
 
-// TODO: Reinstate
-// test('should show if a point is selected', () => {
-//   const document = new Document()
-//   const shape = new ShapePath({
-//     parent: document.selectedPage,
-//   })
-//   expect(shape.points[0].isSelected()).toBe(false)
+test('should show if a point is selected', () => {
+  const document = new Document()
+  const shape = new ShapePath({
+    parent: document.selectedPage,
+  })
+  expect(shape.points[0].isSelected()).toBe(false)
 
-//   // switch to path editing mode
-//   const eventHandler = document.sketchObject
-//     .eventHandlerManager()
-//     .switchToEventHandlerClass(MSShapeEventHandler.class())
+  shape.selected = true
 
-//   eventHandler.pathController().setContent([shape.sketchObject])
-//   eventHandler
-//     .pathController()
-//     .setSelectionIndexPath(NSIndexPath.indexPathForPoint_ofShape(0, 0))
+  // switch to path editing mode
+  document.sketchObject
+    .eventHandlerManager()
+    .switchToEventHandlerClass(MSShapeEventHandler.class())
 
-//   expect(shape.points[0].isSelected()).toBe(true)
+  expect(shape.points[0].isSelected()).toBe(true)
 
-//   document.close()
-// })
+  document.close()
+})
