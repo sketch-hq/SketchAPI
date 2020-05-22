@@ -1,6 +1,6 @@
-/* globals test */
+/* globals test, expect */
 
-// import { Document, ShapePath } from '../..'
+import { Document, ShapePath } from '../..'
 import { CurvePoint } from '../CurvePoint'
 
 test('should be able to log an CurvePoint', () => {
@@ -8,68 +8,63 @@ test('should be able to log an CurvePoint', () => {
   log(curvePoint)
 })
 
-// TODO: Reinstate
-// test('should be able to modify a CurvePoint', () => {
-//   const curvePoint = new CurvePoint()
-//   expect(curvePoint.toJSON()).toEqual({
-//     type: 'CurvePoint',
-//     pointType: 'Undefined',
-//     cornerRadius: 0,
-//     curveFrom: { x: 0, y: 0 },
-//     curveTo: { x: 0, y: 0 },
-//     point: { x: 0, y: 0 },
-//   })
+test('should be able to modify a CurvePoint', () => {
+  const curvePoint = new CurvePoint()
+  expect(curvePoint.toJSON()).toEqual({
+    type: 'CurvePoint',
+    cornerRadius: 0,
+    curveFrom: { x: 0, y: 0 },
+    curveTo: { x: 0, y: 0 },
+    point: { x: 0, y: 0 },
+    pointType: 'Straight',
+  })
 
-//   curvePoint.cornerRadius = 3
-//   expect(curvePoint.cornerRadius).toBe(3)
+  curvePoint.cornerRadius = 3
+  expect(curvePoint.cornerRadius).toBe(3)
 
-//   curvePoint.curveFrom = {
-//     x: 25,
-//     y: 3,
-//   }
-//   expect(curvePoint.curveFrom.toJSON()).toEqual({
-//     x: 25,
-//     y: 3,
-//   })
+  curvePoint.curveFrom = {
+    x: 25,
+    y: 3,
+  }
+  expect(curvePoint.curveFrom.toJSON()).toEqual({
+    x: 25,
+    y: 3,
+  })
 
-//   curvePoint.curveTo = {
-//     x: 24,
-//     y: 4,
-//   }
-//   expect(curvePoint.curveTo.toJSON()).toEqual({
-//     x: 24,
-//     y: 4,
-//   })
+  curvePoint.curveTo = {
+    x: 24,
+    y: 4,
+  }
+  expect(curvePoint.curveTo.toJSON()).toEqual({
+    x: 24,
+    y: 4,
+  })
 
-//   curvePoint.point = {
-//     x: 3,
-//     y: 4,
-//   }
-//   expect(curvePoint.point.toJSON()).toEqual({
-//     x: 3,
-//     y: 4,
-//   })
-// })
+  curvePoint.point = {
+    x: 3,
+    y: 4,
+  }
+  expect(curvePoint.point.toJSON()).toEqual({
+    x: 3,
+    y: 4,
+  })
+})
 
-// TODO: Reinstate
-// test('should show if a point is selected', () => {
-//   const document = new Document()
-//   const shape = new ShapePath({
-//     parent: document.selectedPage,
-//   })
-//   expect(shape.points[0].isSelected()).toBe(false)
+test('should show if a point is selected', () => {
+  const document = new Document()
+  const shape = new ShapePath({
+    parent: document.selectedPage,
+  })
+  expect(shape.points[0].isSelected()).toBe(false)
 
-//   // switch to path editing mode
-//   const eventHandler = document.sketchObject
-//     .eventHandlerManager()
-//     .switchToEventHandlerClass(MSShapeEventHandler.class())
+  shape.selected = true
 
-//   eventHandler.pathController().setContent([shape.sketchObject])
-//   eventHandler
-//     .pathController()
-//     .setSelectionIndexPath(NSIndexPath.indexPathForPoint_ofShape(0, 0))
+  // switch to path editing mode
+  document.sketchObject
+    .eventHandlerManager()
+    .switchToEventHandlerClass(MSShapeEventHandler.class())
 
-//   expect(shape.points[0].isSelected()).toBe(true)
+  expect(shape.points[0].isSelected()).toBe(true)
 
-//   document.close()
-// })
+  document.close()
+})
