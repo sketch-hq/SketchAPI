@@ -2,7 +2,7 @@
 
 ## Unreleased
 
-- None
+- [Fixed] Return `system` font family name correctly on macOS 10.15
 
 ## Releases
 
