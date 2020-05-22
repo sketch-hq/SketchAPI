@@ -437,7 +437,9 @@ export function defineTextStyleProperties(Style) {
 
       const fontFamily = String(font.familyName())
 
-      if (fontFamily === '.SF NS Text') {
+      // Font family names are reported differently on 10.14 and 10.15
+      const MACOS_SYSTEM_FONTS = ['.SF NS Text', '.AppleSystemUIFont']
+      if (MACOS_SYSTEM_FONTS.includes(fontFamily)) {
         return 'system'
       }
 
