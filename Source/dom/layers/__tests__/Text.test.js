@@ -57,7 +57,7 @@ test('should change the line spacing behavior', () => {
   })
 
   // default to constant baseline
-  expect(text.lineSpacing).toBe(Text.LineSpacing.constantBaseline)
+  expect(text.lineSpacing).toBe(Text.LineSpacing.natural)
 
   Object.keys(Text.LineSpacing).forEach((key) => {
     // test setting by name
