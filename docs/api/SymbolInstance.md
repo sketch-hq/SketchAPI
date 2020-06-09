@@ -89,7 +89,7 @@ Change the value of the override.
 
 The current Symbol instance (useful if you want to chain the calls).
 
-## Trigger a Smart Layout
+## Resize with Smart Layout
 
 ```javascript
 instance.resizeWithSmartLayout()
