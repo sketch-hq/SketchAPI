@@ -1,5 +1,5 @@
 ---
-layout: null
+layout: blank
 ---
 [
   {% assign all = site.pages | where_exp: 'item', 'item.title != null' | concat: site.actions %}
