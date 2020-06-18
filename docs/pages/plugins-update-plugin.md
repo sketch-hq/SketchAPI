@@ -31,9 +31,9 @@ skpm publish <version>
 Similar to [publishing the initial release](/plugins/publish-a-plugin), follow the steps below to release a new version of your plugin.
 
 1. Update the version number in the [plugin manifest](/plugins/plugin-manifest)
-1. Create a ZIP archive of the plugin bundle, e.g. `select-shapes.sketchplugin` › `select-shapes.sketchplugin-1.1.zip`.
+1. Create a ZIP archive of the plugin bundle, e.g. `select-shapes.sketchplugin` › `select-shapes.sketchplugin-1.1.0.zip`.
 1. Upload the archive to a location where it can be downloaded from.
-1. Add a version entry to the appcast XML file on the server as shown in the following example for a new version `1.1` of the _Select Shapes_ plugin.
+1. Add a version entry to the appcast XML file on the server as shown in the following example for a new version `1.1.0` of the _Select Shapes_ plugin.
    ```xml
    <?xml version="1.0" encoding="utf-8"?>
    <rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" xmlns:dc="http://purl.org/dc/elements/1.1/">
@@ -43,19 +43,21 @@ Similar to [publishing the initial release](/plugins/publish-a-plugin), follow t
    <description>Quickly select all or just specific shape types</description>
    <language>en</language>
    <item>
-     <title>Version 1.0</title>
+     <title>Version 1.0.0</title>
      <description>
        🚀 Select all shapes or just circles and rectangles.
      </description>
-     <enclosure url="https://example.com/select-shapes.sketchplugin-1.0.zip" sparkle:version="1.0"/>
+     <enclosure url="https://example.com/select-shapes.sketchplugin-1.0.0.zip" sparkle:version="1.0.0"/>
    </item>
    <item>
-     <title>Version 1.1</title>
+     <title>Version 1.1.0</title>
      <description>
        You can now specifically select boolean shapes.
      </description>
-     <enclosure url="https://example.com/select-shapes.sketchplugin-1.1.zip" sparkle:version="1.1"/>
+     <enclosure url="https://example.com/select-shapes.sketchplugin-1.1.0.zip" sparkle:version="1.1.0"/>
    </item>
    </channel>
    </rss>
    ```
+
+> **Note:** Sketch expects the `sparkle:version` attribute to be of the form `X.X.X`. If you are using semantic updates with `skpm` you can only use "major", "minor", or "patch". Using "prerelease" would add a dash to the end (`X.X.X-X`) and Sketch won't recognize the update.
