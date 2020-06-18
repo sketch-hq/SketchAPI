@@ -60,4 +60,4 @@ Similar to [publishing the initial release](/plugins/publish-a-plugin), follow t
    </rss>
    ```
 
-> **Note:** Sketch expects the `sparkle:version` attribute to be of the form `X.X.X`. If you are using semantic updates with `skpm` you can only use "major", "minor", or "patch". Using something like "prerelease" would add a dash to the end (`X.X.X-X`) and Sketch won't recognize the update.
+> **Note:** Sketch expects the `sparkle:version` attribute to be of the form `X.X.X`. If you are using semantic updates with `skpm` you can only use "major", "minor", or "patch". Using "prerelease" would add a dash to the end (`X.X.X-X`) and Sketch won't recognize the update.
