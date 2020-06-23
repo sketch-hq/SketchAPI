@@ -21,7 +21,7 @@ From CocoaScript’s `README`:
 
 > CocoaScript is built on top of Apple’s JavaScriptCore, the same JavaScript engine that powers Safari. So when you write in CocoaScript, you are really writing JavaScript.
 >
-> CocoaScript also includes a bridge which lets you access Apple’s Cocoa frameworks from JavaScript. This means you have a ton wonderful classes and functions you can use in addition to the standard JavaScript library.
+> CocoaScript also includes a bridge which lets you access Apple’s Cocoa frameworks from JavaScript. This means you have a ton of wonderful classes and functions you can use in addition to the standard JavaScript library.
 
 ## Syntax
 
