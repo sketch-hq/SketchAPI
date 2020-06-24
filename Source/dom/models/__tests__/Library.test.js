@@ -89,6 +89,7 @@ test('should remove a library', () => {
   expect(libraries.find((d) => d.id === libId)).toBe(undefined)
 })
 
+/*
 test('should add a remote library', () =>
   new Promise((resolve, reject) => {
     Library.getRemoteLibraryWithRSS(
@@ -104,3 +105,4 @@ test('should add a remote library', () =>
     expect(result.libraryType).toBe(Library.LibraryType.RemoteThirdParty)
     result.remove()
   }))
+*/
