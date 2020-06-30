@@ -166,6 +166,12 @@ SKETCH_PATH=/path/to/sketch.app npm run test
 
 > ℹ️ There is no need to re-build SketchAPI between test runs or use `defaults write` to set the API location; the test runner handles re-compiling test and source files and injecting them into Sketch.
 
+### Documentation
+
+The API documentation is part of the [`developer.sketch.com`](https://github.com/sketch-hq/developer.sketch.com) repository.
+
+Make sure to update the API and the action reference accordingly when you make changes to the API.
+
 ## Acknowledgements
 
 We would like to thank:
