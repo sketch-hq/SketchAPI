@@ -1,0 +1,21 @@
+name: Check
+on:
+  pull_request:
+    types: [assigned, opened, synchronize, reopened]
+jobs:
+  test:
+    name: Check Repo
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@master
+      - name: Setup Node
+        uses: actions/setup-node@master
+        with:
+          node-version: '10.16.3'
+      - name: Install Dependencies
+        run: npm ci
+      - name: Build
+        run: npm run build # Build here just to check it completes w/o error
+      - name: Lint
+        run: npm run lint
