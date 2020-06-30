@@ -166,14 +166,6 @@ SKETCH_PATH=/path/to/sketch.app npm run test
 
 > ℹ️ There is no need to re-build SketchAPI between test runs or use `defaults write` to set the API location; the test runner handles re-compiling test and source files and injecting them into Sketch.
 
-## Website
-
-This reposiotry also contains the content for https://developer.sketch.com, which is hosted on Netlify.
-
-The website’s contents live in the [`docs`](./docs) folder, while code related to the website’s build process lives in the [`docs-website`](./docs-website) folder.
-
-For further details read the docs-website [README](./docs-website/README.md).
-
 ## Acknowledgements
 
 We would like to thank:
