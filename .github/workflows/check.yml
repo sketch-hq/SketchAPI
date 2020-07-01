@@ -19,5 +19,3 @@ jobs:
         run: npm run build # Build here just to check it completes w/o error
       - name: Lint
         run: npm run lint
-      - name: Prettier Check
-        run: npm run format-check

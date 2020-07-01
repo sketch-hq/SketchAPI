@@ -1,8 +1,0 @@
-[build]
-  base    = ""
-  publish = "docs-website/_site"
-  command = "cd docs-website && bundle install && jekyll build"
-# This makes sure that we don't build the site for changes outside the docs or docs-website folders
-  ignore = "git diff --quiet HEAD^..HEAD -- docs docs-website"
-[build.environment]
-  RUBY_VERSION = "2.7.1"
