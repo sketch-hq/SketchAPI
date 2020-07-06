@@ -21,7 +21,6 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXFileReference section */
-		4376303D246AECFD00AD2CE1 /* install-sketchapi.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; name = "install-sketchapi.sh"; path = "scripts/install-sketchapi.sh"; sourceTree = "<group>"; };
 		4376303E246AED1700AD2CE1 /* package.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = package.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -30,7 +29,6 @@
 			isa = PBXGroup;
 			children = (
 				4376303E246AED1700AD2CE1 /* package.json */,
-				4376303D246AECFD00AD2CE1 /* install-sketchapi.sh */,
 			);
 			sourceTree = "<group>";
 		};
@@ -84,6 +82,7 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/zsh;
 			shellScript = "EXIT_VALUE=0\nLEVEL=\"warning\"\nif [[ \"$BC_EXTERNAL_BUILD\" == \"YES\" ]]; then\n  EXIT_VALUE=1\n  LEVEL=\"error\"\nfi\n\nOUTPUT=`which npm`\nRETVAL=$?\n\nif [[ $RETVAL -ne 0 ]]; then\n  echo \"npm not found. Aborting SketchAPI build.\"\n  echo \"${FULL_PRODUCT_NAME}:13:1: ${LEVEL}: npm not found\"\n  exit $EXIT_VALUE\nfi\n\necho \"Running npm install.\"\nnpm ci\nRETVAL=$?\nif [[ $RETVAL -ne 0 ]]; then\n  echo \"npm ci failed. Aborting SketchAPI build.\"\n  echo \"${FULL_PRODUCT_NAME}:22:1: ${LEVEL}: npm ci failed\"\n  exit $EXIT_VALUE\nfi\n\necho \"Executing npm run build.\"\nnpm run build\nRETVAL=$?\nif [[ $RETVAL -ne 0 ]]; then\n  echo \"npm run build failed. Aborting SketchAPI build.\"\n  echo \"${FULL_PRODUCT_NAME}:31:1: ${LEVEL}: npm run build failed\"\n  exit $EXIT_VALUE\nfi\n\necho \"project dir: $PROJECT_DIR\"\necho \"source dir: $SOURCE_ROOT\"\n";
+			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
