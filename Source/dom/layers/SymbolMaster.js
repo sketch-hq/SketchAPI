@@ -129,9 +129,15 @@ SymbolMaster.define('symbolId', {
 
 SymbolMaster.define('overrides', {
   get() {
-    const sketchVersion = MSApplicationMetadata.metadata().appVersion
-    const method =
-      sketchVersion < 65 ? 'overrideProperies' : 'overrideProperties'
+    const method = (function(sketchVersion){
+      if (sketchVersion < 65) {
+        return 'overrideProperies'
+      }
+      if (sketchVersion < 71) {
+        return 'overrideProperties'
+      }
+      return 'overridePropertyDict'
+    })(MSApplicationMetadata.metadata().appVersion)
 
     // undefined when immutable
     if (!this._object[method] || !this._object.availableOverrides) {
