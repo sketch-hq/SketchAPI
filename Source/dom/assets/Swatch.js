@@ -30,7 +30,7 @@ export class Swatch extends Asset {
       } else {
         try {
           const c = Color.from(object).toMSColor()
-          nativeAsset = MSSwatch.alloc().initWithAsset_name(c, null)
+          nativeAsset = MSSwatch.alloc().initWithName_color(null, c)
         } catch (error) {
           throw new Error(
             `Cannot create a color asset from a ${String(object.class())}`

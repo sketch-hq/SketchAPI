@@ -2,16 +2,17 @@
 import { Swatch } from '../Swatch'
 
 test('should create swatch from hex', () => {
-  const asset = Swatch.from('#FFFFFF')
-  expect(asset.color).toBe('#ffffffff')
-  expect(asset.name).toBe(null)
+  const swatch = Swatch.from('#FFFFFF')
+  expect(swatch.color).toBe('#ffffffff')
+  expect(swatch.name).toBe(null)
 })
 
-// test('should create color asset from MSColor', () => {
-//   const color = MSImmutableColor.colorWithSVGString('#FFFFFF')
-//   const asset = Swatch.from(color)
-//   expect(asset.color).toBe('#ffffffff')
-// })
+test('should create swatch from MSColor', () => {
+  const color = MSImmutableColor.colorWithSVGString('#FFFFFF')
+  const swatch = Swatch.from(color)
+  expect(swatch.color).toBe('#ffffffff')
+})
+
 //
 // test('should create color asset from MSSwatch', () => {
 //   const color = MSImmutableColor.colorWithSVGString(
