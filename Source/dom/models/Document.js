@@ -698,44 +698,26 @@ Document.define('swatches', {
       return []
     }
     const documentData = this._getMSDocumentData()
-    return toArray(documentData.sharedSwatches()).map((a) =>
+    return toArray(documentData.sharedSwatches().swatches()).map((a) =>
       Swatch.fromNative(a)
     )
   },
-  set(swatches) {
+  set(s) {
     if (this.isImmutable()) {
       return
     }
     const assets = this._getMSDocumentData().sharedSwatches().swatches()
     // TODO: find a removeAllSwatches equivalent, or do this by iterating the swatches collection
     // swatches.removeAllGradientAssets()
-    toArray(swatches)
+    toArray(s)
       .map((c) => Swatch.from(c))
       .forEach((c) => {
         console.log(c)
         assets.addSwatchWithName_color(c.name, c.color)
       })
   },
-  insertItem(gradient, index) {
-    if (this.isImmutable()) {
-      return undefined
-    }
-    const assets = this._getMSDocumentData().assets()
-    const wrapped = GradientAsset.from(gradient)
-    assets.insertGradientAsset_atIndex(wrapped._object, index)
-    // addSwatchWithName:color:
-    return wrapped
-  },
-  removeItem(index) {
-    if (this.isImmutable()) {
-      return undefined
-    }
-    const documentData = this._getMSDocumentData()
-    // remove(_ sharedObjects:[array])
-    return documentData.assets().removeGradientAssetAtIndex(index)
-  },
-  // allColorReferencesToSwatch:
-  // updateReferencesToSwatch:
+  insertItem(swatch, index){},
+  removeItem(index){},
 })
 
 function isLocalSharedStyle(libraryController) {
