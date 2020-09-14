@@ -13,20 +13,20 @@ test('should create swatch from MSColor', () => {
   expect(swatch.color).toBe('#ffffffff')
 })
 
-test('should create color asset from MSSwatch', () => {
+test('should create swatch from MSSwatch', () => {
   const color = MSImmutableColor.colorWithSVGString(
     '#FFFFFF'
   ).newMutableCounterpart()
-  const nativeAsset = MSSwatch.alloc().initWithName_color(null, color)
-  const asset = Swatch.from(nativeAsset)
-  expect(asset.color).toBe('#ffffffff')
+  const nativeSwatch = MSSwatch.alloc().initWithName_color(null, color)
+  const swatch = Swatch.from(nativeSwatch)
+  expect(swatch.color).toBe('#ffffffff')
 })
 
-// test('should create color asset with name', () => {
-//   const asset = Swatch.from({
-//     name: 'White',
-//     color: '#ffffff',
-//   })
-//   expect(asset.color).toBe('#ffffffff')
-//   expect(asset.name).toBe('White')
-// })
+test('should create swatch with name', () => {
+  const swatch = Swatch.from({
+    name: 'White',
+    color: '#ffffff',
+  })
+  expect(swatch.color).toBe('#ffffffff')
+  expect(swatch.name).toBe('White')
+})
