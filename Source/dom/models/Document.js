@@ -7,7 +7,7 @@ import { wrapObject } from '../wrapNativeObject'
 import { Types } from '../enums'
 import { Factory } from '../Factory'
 import { StyleType } from '../style/Style'
-import { ColorAsset, GradientAsset } from '../assets'
+import { ColorAsset, GradientAsset, Swatch } from '../assets'
 import { SharedStyle } from './SharedStyle'
 
 export const SaveModeType = {
@@ -684,6 +684,58 @@ Document.define('gradients', {
     const documentData = this._getMSDocumentData()
     return documentData.assets().removeGradientAssetAtIndex(index)
   },
+})
+
+/**
+ * A list of document swatches
+ *
+ * @return {Array<Swatch>} A mutable array of swatches defined in the document
+ */
+Document.define('swatches', {
+  array: true,
+  get() {
+    if (!this._object) {
+      return []
+    }
+    const documentData = this._getMSDocumentData()
+    return toArray(documentData.sharedSwatches()).map((a) =>
+      Swatch.fromNative(a)
+    )
+  },
+  set(swatches) {
+    if (this.isImmutable()) {
+      return
+    }
+    const assets = this._getMSDocumentData().sharedSwatches().swatches()
+    // TODO: find a removeAllSwatches equivalent, or do this by iterating the swatches collection
+    // swatches.removeAllGradientAssets()
+    toArray(swatches)
+      .map((c) => Swatch.from(c))
+      .forEach((c) => {
+        console.log(c)
+        assets.addSwatchWithName_color(c.name, c.color)
+      })
+  },
+  insertItem(gradient, index) {
+    if (this.isImmutable()) {
+      return undefined
+    }
+    const assets = this._getMSDocumentData().assets()
+    const wrapped = GradientAsset.from(gradient)
+    assets.insertGradientAsset_atIndex(wrapped._object, index)
+    // addSwatchWithName:color:
+    return wrapped
+  },
+  removeItem(index) {
+    if (this.isImmutable()) {
+      return undefined
+    }
+    const documentData = this._getMSDocumentData()
+    // remove(_ sharedObjects:[array])
+    return documentData.assets().removeGradientAssetAtIndex(index)
+  },
+  // allColorReferencesToSwatch:
+  // updateReferencesToSwatch:
 })
 
 function isLocalSharedStyle(libraryController) {

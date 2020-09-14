@@ -1,5 +1,5 @@
 import { toArray } from 'util'
-import { ColorAsset, GradientAsset } from './assets'
+import { ColorAsset, GradientAsset, Swatch } from './assets'
 import { hookedArray } from './utils'
 
 export const globalAssets = {}
