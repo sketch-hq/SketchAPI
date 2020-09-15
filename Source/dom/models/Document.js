@@ -8,6 +8,7 @@ import { Types } from '../enums'
 import { Factory } from '../Factory'
 import { StyleType } from '../style/Style'
 import { ColorAsset, GradientAsset, Swatch } from '../assets'
+import { Color } from '../style/Color'
 import { SharedStyle } from './SharedStyle'
 
 export const SaveModeType = {
@@ -702,23 +703,46 @@ Document.define('swatches', {
       Swatch.fromNative(a)
     )
   },
-  set(s) {
+  set(swatches) {
     if (this.isImmutable()) {
       return
     }
-    const assets = this._getMSDocumentData().sharedSwatches().swatches()
-    // TODO: find a removeAllSwatches equivalent, or do this by iterating the swatches collection
-    // swatches.removeAllGradientAssets()
-    toArray(s)
+    const assets = this._getMSDocumentData().sharedSwatches()
+    assets.removeSharedObjects(assets.swatches())
+    toArray(swatches)
       .map((c) => Swatch.from(c))
       .forEach((c) => {
-        console.log(c)
-        assets.addSwatchWithName_color(c.name, c.color)
+        const color = Color.from(c.color).toMSColor()
+        assets.addSwatchWithName_color(c.name, color)
       })
   },
-  insertItem(swatch, index){},
-  removeItem(index){},
+  insertItem(swatch, index) {
+    if (this.isImmutable()) {
+      return
+    }
+    // TODO: what do we do with the index?
+    const assets = this._getMSDocumentData().sharedSwatches()
+    const wrapped = Swatch.from(swatch)
+    const color = Color.from(wrapped.color).toMSColor()
+    assets.addSwatchWithName_color_(wrapped.name, color)
+  },
+  removeItem(index){
+    // SwatchContainer.remove(array)
+  },
 })
+// SwatchContainer methods:
+// .sharedObjectClass() -> MSSwatch
+// .addSwatchWithName_color(String, MSColor)
+// .updateReferencesToSwatch(MSSwatch)
+// .objectsReferencing_inContainer(set of strings, MSLayerContainment)
+// .colorReferencesTo()
+// .allColorReferencesTo()
+// .removeSharedObjects(Array of MSSharedObjects)
+// swatchWithID(string)
+// swatchAt(index)
+// indexOfSwatch(MSSwatch)
+// .numberOfSwatches()
+// .swatches()
 
 function isLocalSharedStyle(libraryController) {
   return (item) => {
