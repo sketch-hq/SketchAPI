@@ -351,7 +351,14 @@ test('can add a swatch to Document', (context, document) => {
 })
 
 test('can remove a swatch from Document', (context, document) => {
-  //
+  const swatchOne = Swatch.from('#ffffff')
+  const swatchTwo = Swatch.from('#000000')
+  document.swatches = [swatchOne, swatchTwo]
+  expect(document.swatches.length).toBe(2)
+  document.swatches.pop()
+  expect(document.swatches.length).toBe(1)
+  document.swatches.pop()
+  expect(document.swatches.length).toBe(0)
 })
 
 test('can replace all swatches in Document', (context, document) => {
@@ -364,5 +371,10 @@ test('can replace all swatches in Document', (context, document) => {
 })
 
 test('can remove all swatches in Document', (context, document) => {
-  //
+  const swatchOne = Swatch.from('#ffffff')
+  const swatchTwo = Swatch.from('#000000')
+  document.swatches = [swatchOne, swatchTwo]
+  expect(document.swatches.length).toBe(2)
+  document.swatches = []
+  expect(document.swatches.length).toBe(0)
 })

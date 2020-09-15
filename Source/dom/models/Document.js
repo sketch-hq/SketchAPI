@@ -720,29 +720,20 @@ Document.define('swatches', {
     if (this.isImmutable()) {
       return
     }
-    // TODO: what do we do with the index?
     const assets = this._getMSDocumentData().sharedSwatches()
     const wrapped = Swatch.from(swatch)
     const color = Color.from(wrapped.color).toMSColor()
     assets.addSwatchWithName_color_(wrapped.name, color)
   },
   removeItem(index){
-    // SwatchContainer.remove(array)
+    if (this.isImmutable()) {
+      return
+    }
+    const assets = this._getMSDocumentData().sharedSwatches()
+    const swatch = assets.swatchAt(index)
+    assets.removeSharedObjects([swatch])
   },
 })
-// SwatchContainer methods:
-// .sharedObjectClass() -> MSSwatch
-// .addSwatchWithName_color(String, MSColor)
-// .updateReferencesToSwatch(MSSwatch)
-// .objectsReferencing_inContainer(set of strings, MSLayerContainment)
-// .colorReferencesTo()
-// .allColorReferencesTo()
-// .removeSharedObjects(Array of MSSharedObjects)
-// swatchWithID(string)
-// swatchAt(index)
-// indexOfSwatch(MSSwatch)
-// .numberOfSwatches()
-// .swatches()
 
 function isLocalSharedStyle(libraryController) {
   return (item) => {
