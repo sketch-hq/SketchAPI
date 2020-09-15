@@ -29,6 +29,7 @@ const { SymbolMaster } = require('./layers/SymbolMaster')
 const { SymbolInstance } = require('./layers/SymbolInstance')
 const { HotSpot } = require('./layers/HotSpot')
 const { Slice } = require('./layers/Slice')
+const { Swatch } = require('./assets/Swatch')
 
 const { Types } = require('./enums')
 const { wrapObject } = require('./wrapNativeObject')
@@ -70,6 +71,7 @@ const DOM = {
   SymbolInstance,
   HotSpot,
   Slice,
+  Swatch,
   Types,
   fromNative: wrapObject,
   getGlobalColors,
