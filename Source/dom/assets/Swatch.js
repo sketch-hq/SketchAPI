@@ -25,25 +25,30 @@ export class Swatch extends Asset {
     let nativeAsset
 
     if (isNativeObject(object)) {
-      if (object.isKindOfClass(MSSwatch)) {
-        nativeAsset = object
-      } else {
-        try {
+      try {
+        if (object.isKindOfClass(MSSwatch)) {
+          nativeAsset = object
+        } else if (object.isKindOfClass(MSImmutableColor) || object.isKindOfClass(MSColor)){
           const c = Color.from(object).toMSColor()
-          nativeAsset = MSSwatch.alloc().initWithName_color(null, c)
-        } catch (error) {
-          throw new Error(
-            `Cannot create a color asset from a ${String(object.class())}`
-          )
+          const name = colorToString(c).slice(0,7)
+          nativeAsset = MSSwatch.alloc().initWithName_color(name, c)
+        } else if (object.isKindOfClass(NSColor)) {
+          const c = MSColor.colorWithNSColor(object)
+          const name = colorToString(c).slice(0,7)
+          nativeAsset = MSSwatch.alloc().initWithName_color(name, c)
         }
+      } catch (error) {
+        throw new Error(
+          `Cannot create a color asset from a ${String(object.class())}`
+        )
       }
     } else if (typeof object == 'object') {
       const { color, name } = object
       const c = Color.from(color).toMSColor()
-      nativeAsset = MSSwatch.alloc().initWithName_color(name, c)
+      nativeAsset = MSSwatch.alloc().initWithName_color(name || color, c)
     } else {
       const c = Color.from(object).toMSColor()
-      nativeAsset = MSSwatch.alloc().initWithName_color(null, c)
+      nativeAsset = MSSwatch.alloc().initWithName_color(object, c)
     }
 
     return Swatch.fromNative(nativeAsset)
