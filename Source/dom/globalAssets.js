@@ -84,3 +84,34 @@ export function getGlobalGradients() {
     GradientAsset.fromNative(a)
   )
 }
+
+/**
+ * Access any global swatches
+ *
+ * @return {Array<Swatch>} A list of swatches defined globally
+ */
+const globalSwatchesDescriptor = {
+  get() {
+    const arr = toArray(nativeAssets.colorAssets()).map((a) =>
+      Swatch.fromNative(a)
+    )
+    return hookedArray(arr, null, globalSwatchesDescriptor)
+  },
+  set(swatches) {
+    nativeAssets.removeAllColorAssets()
+    toArray(swatches)
+      .map((c) => ColorAsset.from(c))
+      .forEach((c) => {
+        nativeAssets.addColorAsset(c._object)
+      })
+  },
+  insertItem(color, index) {
+    const wrapped = ColorAsset.from(color)
+    nativeAssets.insertColorAsset_atIndex(wrapped._object, index)
+    return wrapped
+  },
+  removeItem(index) {
+    return nativeAssets.removeColorAssetAtIndex(index)
+  },
+}
+Object.defineProperty(globalAssets, 'swatches', globalSwatchesDescriptor)
