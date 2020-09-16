@@ -723,7 +723,11 @@ Document.define('swatches', {
     const assets = this._getMSDocumentData().sharedSwatches()
     const wrapped = Swatch.from(swatch)
     const color = Color.from(wrapped.color).toMSColor()
-    assets.addSwatchWithName_color_(wrapped.name, color)
+    if (index != undefined) {
+      // do something to insert the swatch at the right position
+    } else {
+      assets.addSwatchWithName_color_(wrapped.name, color)
+    }
   },
   removeItem(index){
     if (this.isImmutable()) {

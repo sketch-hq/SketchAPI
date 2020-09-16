@@ -2,7 +2,7 @@
 import {
   createSymbolMaster,
   createSharedStyle,
-  canBeLogged,
+//  canBeLogged,
   outputPath,
 } from '../../../test-utils'
 import { Document, Group, Shape, Text } from '../..'
