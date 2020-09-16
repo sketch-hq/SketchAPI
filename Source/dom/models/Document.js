@@ -724,7 +724,8 @@ Document.define('swatches', {
     const wrapped = Swatch.from(swatch)
     const color = Color.from(wrapped.color).toMSColor()
     if (index != undefined) {
-      // do something to insert the swatch at the right position
+      // TODO: do something to insert the swatch at the right position
+      assets.addSwatchWithName_color_(wrapped.name, color)
     } else {
       assets.addSwatchWithName_color_(wrapped.name, color)
     }
