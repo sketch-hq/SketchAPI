@@ -716,7 +716,7 @@ Document.define('swatches', {
         assets.addSwatchWithName_color(c.name, color)
       })
   },
-  insertItem(swatch, index) {
+  insertItem(swatch) {
     if (this.isImmutable()) {
       return
     }
