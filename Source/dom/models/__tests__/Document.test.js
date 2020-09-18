@@ -9,7 +9,6 @@ import { Document, Group, Shape, Text } from '../..'
 import { ColorSpaceMap } from '../Document'
 import { Swatch } from '../../assets/Swatch'
 
-// TODO: restore and fix this
 test('should be able to log a document', (context, document) => {
   expect(true).toBe(true)
   canBeLogged(document, Document)
