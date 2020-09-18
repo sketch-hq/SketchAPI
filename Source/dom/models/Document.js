@@ -698,10 +698,8 @@ Document.define('swatches', {
     if (!this._object) {
       return []
     }
-    const documentData = this._getMSDocumentData()
-    return toArray(documentData.sharedSwatches().swatches()).map((a) =>
-      Swatch.fromNative(a)
-    )
+    const assets = this._getMSDocumentData().sharedSwatches()
+    return toArray(assets.swatches()).map((a) => Swatch.fromNative(a))
   },
   set(swatches) {
     if (this.isImmutable()) {
@@ -725,7 +723,7 @@ Document.define('swatches', {
     const color = Color.from(wrapped.color).toMSColor()
     assets.addSwatchWithName_color_(wrapped.name, color)
   },
-  removeItem(index){
+  removeItem(index) {
     if (this.isImmutable()) {
       return
     }
