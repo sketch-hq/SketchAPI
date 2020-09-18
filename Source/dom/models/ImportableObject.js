@@ -7,13 +7,15 @@ const ObjectTypeMap = {
   Symbol: 0,
   LayerStyle: 1,
   TextStyle: 2,
-  Unknown: 3,
+  Swatch: 3,
+  Unknown: 4,
 }
 
 export const ImportableObjectType = {
   Symbol: 'Symbol',
   LayerStyle: 'LayerStyle',
   TextStyle: 'TextStyle',
+  Swatch: 'Swatch',
   Unknown: 'Unknown',
 }
 
@@ -70,6 +72,15 @@ export class ImportableObject extends WrappedObject {
           }
           return undefined
         }
+        case ImportableObjectType.Swatch: {
+          const sharedSwatch = this._documentData.swatchWithID(
+            this._object.sharedObjectID()
+          )
+          if (sharedSwatch) {
+            return wrapNativeObject(sharedSwatch)
+          }
+          return undefined
+        }
         default:
           throw new Error(
             'Cannot import an already imported object other than a Symbol or a Shared Style'
@@ -103,6 +114,7 @@ if (typeof MSShareableObjectReference !== 'undefined') {
   Factory.registerClass(ImportableObject, MSSharedStyleReference)
   Factory.registerClass(ImportableObject, MSSharedLayerReference)
   Factory.registerClass(ImportableObject, MSSharedTextReference)
+  Factory.registerClass(ImportableObject, MSSwatchReference)
 }
 
 ImportableObject.define('id', {
