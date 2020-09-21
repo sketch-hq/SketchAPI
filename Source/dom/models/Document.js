@@ -7,7 +7,8 @@ import { wrapObject } from '../wrapNativeObject'
 import { Types } from '../enums'
 import { Factory } from '../Factory'
 import { StyleType } from '../style/Style'
-import { ColorAsset, GradientAsset } from '../assets'
+import { ColorAsset, GradientAsset, Swatch } from '../assets'
+import { Color } from '../style/Color'
 import { SharedStyle } from './SharedStyle'
 
 export const SaveModeType = {
@@ -683,6 +684,52 @@ Document.define('gradients', {
     }
     const documentData = this._getMSDocumentData()
     return documentData.assets().removeGradientAssetAtIndex(index)
+  },
+})
+
+/**
+ * A list of document swatches
+ *
+ * @return {Array<Swatch>} A mutable array of swatches defined in the document
+ */
+Document.define('swatches', {
+  array: true,
+  get() {
+    if (!this._object) {
+      return []
+    }
+    const assets = this._getMSDocumentData().sharedSwatches()
+    return toArray(assets.swatches()).map((a) => Swatch.fromNative(a))
+  },
+  set(swatches) {
+    if (this.isImmutable()) {
+      return
+    }
+    const assets = this._getMSDocumentData().sharedSwatches()
+    assets.removeSharedObjects(assets.swatches())
+    toArray(swatches)
+      .map((c) => Swatch.from(c))
+      .forEach((c) => {
+        const color = Color.from(c.color).toMSColor()
+        assets.addSwatchWithName_color(c.name, color)
+      })
+  },
+  insertItem(swatch) {
+    if (this.isImmutable()) {
+      return
+    }
+    const assets = this._getMSDocumentData().sharedSwatches()
+    const wrapped = Swatch.from(swatch)
+    const color = Color.from(wrapped.color).toMSColor()
+    assets.addSwatchWithName_color_(wrapped.name, color)
+  },
+  removeItem(index) {
+    if (this.isImmutable()) {
+      return
+    }
+    const assets = this._getMSDocumentData().sharedSwatches()
+    const swatch = assets.swatchAt(index)
+    assets.removeSharedObjects([swatch])
   },
 })
 

@@ -7,6 +7,7 @@ import {
 } from '../../../test-utils'
 import { Document, Group, Shape, Text } from '../..'
 import { ColorSpaceMap } from '../Document'
+import { Swatch } from '../../assets/Swatch'
 
 test('should be able to log a document', (context, document) => {
   expect(true).toBe(true)
@@ -333,4 +334,46 @@ test('can assign the P3 color space', (context, document) => {
 test('can convert to the P3 color space', (context, document) => {
   document.changeColorSpace(Document.ColorSpace.P3, true)
   expect(document.colorSpace).toBe(Document.ColorSpace.P3)
+})
+
+// Swatches
+test('can list swatches in Document', (context, document) => {
+  expect(Array.isArray(document.swatches)).toBe(true)
+})
+
+test('can add a swatch to Document', (context, document) => {
+  let newSwatch = Swatch.from('#ff6600')
+  document.swatches.push(newSwatch)
+  expect(document.swatches.length).toBe(1)
+  document.swatches.push(newSwatch)
+  expect(document.swatches.length).toBe(2)
+})
+
+test('can remove a swatch from Document', (context, document) => {
+  const swatchOne = Swatch.from('#ffffff')
+  const swatchTwo = Swatch.from('#000000')
+  document.swatches = [swatchOne, swatchTwo]
+  expect(document.swatches.length).toBe(2)
+  document.swatches.pop()
+  expect(document.swatches.length).toBe(1)
+  document.swatches.pop()
+  expect(document.swatches.length).toBe(0)
+})
+
+test('can replace all swatches in Document', (context, document) => {
+  const swatchOne = Swatch.from('#ffffff')
+  const swatchTwo = Swatch.from('#000000')
+  document.swatches = [swatchOne, swatchTwo]
+  expect(document.swatches.length).toBe(2)
+  document.swatches = [swatchOne]
+  expect(document.swatches.length).toBe(1)
+})
+
+test('can remove all swatches in Document', (context, document) => {
+  const swatchOne = Swatch.from('#ffffff')
+  const swatchTwo = Swatch.from('#000000')
+  document.swatches = [swatchOne, swatchTwo]
+  expect(document.swatches.length).toBe(2)
+  document.swatches = []
+  expect(document.swatches.length).toBe(0)
 })

@@ -30,4 +30,5 @@ export const Types = {
   CurvePoint: 'CurvePoint',
   ColorAsset: 'ColorAsset',
   GradientAsset: 'GradientAsset',
+  Swatch: 'Swatch',
 }
