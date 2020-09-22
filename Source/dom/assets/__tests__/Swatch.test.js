@@ -54,3 +54,11 @@ test('should create swatch from MSSwatch', () => {
   expect(swatch.color).toBe('#ffffffff')
   expect(swatch.name).toBe('#ffffff')
 })
+
+test('should create referencing color', () => {
+  const swatch = Swatch.from({
+    name: 'Safety Orange',
+    color: '#ff6600'
+  })
+  expect(swatch.referencingColor.isKindOfClass(MSColor)).toBeTruthy()
+})
