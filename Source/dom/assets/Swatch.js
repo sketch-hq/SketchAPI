@@ -64,3 +64,8 @@ Swatch.define('color', {
     return colorToString(this._object.color())
   },
 })
+Swatch.define('referencingColor', {
+  get() {
+    return this._object.makeReferencingColor()
+  },
+})
