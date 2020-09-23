@@ -22,7 +22,7 @@ test('should create a library from a document', () => {
 
   return new Promise((resolve, reject) => {
     document.save(
-      `${outputPath()}sketch-api-unit-tests-library.sketch`,
+      `${outputPath()}/sketch-api-unit-tests-library.sketch`,
       (err) => {
         if (err) {
           return reject(err)
@@ -34,7 +34,7 @@ test('should create a library from a document', () => {
     document.close()
 
     lib = Library.getLibraryForDocumentAtPath(
-      `${outputPath()}sketch-api-unit-tests-library.sketch`
+      `${outputPath()}/sketch-api-unit-tests-library.sketch`
     )
     libId = lib.id
     expect(lib.type).toBe('Library')

@@ -162,6 +162,11 @@ export class Library extends WrappedObject {
           document._getMSDocument()
         )
         break
+      case ImportableObjectType.Swatch:
+        provider = MSSwatchProvider.alloc().initWithDocument(
+          document._getMSDocument()
+        )
+        break
       default:
         throw new Error('Unknown object type')
     }
@@ -212,6 +217,13 @@ export class Library extends WrappedObject {
     return this.getImportableReferencesForDocument(
       document,
       ImportableObjectType.TextStyle
+    )
+  }
+
+  getImportableSwatchReferencesForDocument(document) {
+    return this.getImportableReferencesForDocument(
+      document,
+      ImportableObjectType.Swatch
     )
   }
 

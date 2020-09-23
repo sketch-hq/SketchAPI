@@ -177,6 +177,9 @@
     "NSPopUpButton": "readonly",
     "NSMutableDictionary": "readonly",
     "MSInferredGroupLayout": "readonly",
-    "MSFreeformGroupLayout": "readonly"
+    "MSFreeformGroupLayout": "readonly",
+    "MSSwatch": "readonly",
+    "MSSwatchReference": "readonly",
+    "MSSwatchProvider": "readonly"
   }
 }
