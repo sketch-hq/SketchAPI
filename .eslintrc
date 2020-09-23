@@ -180,6 +180,7 @@
     "MSFreeformGroupLayout": "readonly",
     "MSSwatch": "readonly",
     "MSSwatchReference": "readonly",
-    "MSSwatchProvider": "readonly"
+    "MSSwatchProvider": "readonly",
+    "NSUUID": "readonly"
   }
 }
