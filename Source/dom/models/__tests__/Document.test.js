@@ -9,6 +9,8 @@ import { Document, Group, Shape, Text } from '../..'
 import { ColorSpaceMap } from '../Document'
 import { Swatch } from '../../assets/Swatch'
 
+const testOutputPath = outputPath()
+
 test('should be able to log a document', (context, document) => {
   expect(true).toBe(true)
   canBeLogged(document, Document)
@@ -195,7 +197,7 @@ test('path should be undefined before saving it', () => {
 test('should save a file', () =>
   new Promise((resolve, reject) => {
     _document.save(
-      `${outputPath()}sketch-api-unit-tests.sketch`,
+      `${testOutputPath}/sketch-api-unit-tests.sketch`,
       (err, result) => {
         if (err) {
           return reject(err)
@@ -207,7 +209,7 @@ test('should save a file', () =>
     expect(result).toBe(_document)
     expect(_document.path).toBe(
       String(
-        NSString.stringWithString(`${outputPath()}sketch-api-unit-tests.sketch`)
+        NSString.stringWithString(`${testOutputPath}/sketch-api-unit-tests.sketch`)
       )
     )
   }))
@@ -224,13 +226,13 @@ test('should save a file without specifying the path', () =>
     expect(result).toBe(_document)
     expect(_document.path).toBe(
       String(
-        NSString.stringWithString(`${outputPath()}sketch-api-unit-tests.sketch`)
+        NSString.stringWithString(`${testOutputPath}/sketch-api-unit-tests.sketch`)
       )
     )
   }))
 
 test('should save a file to a specific path when setting the path', () => {
-  _document.path = `${outputPath()}sketch-api-unit-tests-2.sketch`
+  _document.path = `${testOutputPath}/sketch-api-unit-tests-2.sketch`
   return new Promise((resolve, reject) => {
     _document.save((err, result) => {
       if (err) {
@@ -243,7 +245,7 @@ test('should save a file to a specific path when setting the path', () => {
     expect(_document.path).toBe(
       String(
         NSString.stringWithString(
-          `${outputPath()}sketch-api-unit-tests-2.sketch`
+          `${testOutputPath}/sketch-api-unit-tests-2.sketch`
         )
       )
     )
@@ -257,7 +259,7 @@ test('should close a file', () => {
 })
 
 test('should open a file', () => {
-  const document = Document.open(`${outputPath()}sketch-api-unit-tests.sketch`)
+  const document = Document.open(`${testOutputPath}/sketch-api-unit-tests.sketch`)
   const documents = Document.getDocuments()
   expect(documents.find((d) => d.id === document.id)).toEqual(document)
   // close it again because when watching the tests, it will open dozens of documents
@@ -266,7 +268,7 @@ test('should open a file', () => {
 
 test('should fail to open a non-existing file', () => {
   try {
-    Document.open(`${outputPath()}non-existing-sketch-api-unit-tests.sketch`)
+    Document.open(`${testOutputPath}/non-existing-sketch-api-unit-tests.sketch`)
     expect(true).toBe(false)
   } catch (err) {
     expect(err.message).toMatch(

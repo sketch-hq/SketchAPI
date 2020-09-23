@@ -56,7 +56,8 @@ export function createSharedStyle(document, Primitive, style) {
 }
 
 export function outputPath() {
-  const output = `${NSTemporaryDirectory()}SketchAPI/`
+  const uuid = NSUUID.UUID().UUIDString()
+  const output = NSTemporaryDirectory().stringByAppendingPathComponent('SketchAPI/').stringByAppendingPathComponent(uuid).stringByAppendingPathComponent('/')
   fs.mkdirSync(output, { recursive: true })
   return output
 }
