@@ -2,9 +2,15 @@
 
 ## Unreleased
 
-- [Fixed] Return `system` font family name correctly on macOS 10.15
-
 ## Releases
+
+### Sketch 69
+
+- [New] Color Variables API.
+
+### Sketch 67
+
+- [Fixed] Return `system` font family name correctly on macOS 10.15
 
 ### Sketch 65
 
