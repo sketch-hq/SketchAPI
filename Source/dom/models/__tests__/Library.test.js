@@ -5,6 +5,8 @@ import { Library, Document, Artboard, Text, SymbolMaster } from '../..'
 let lib
 let libId
 
+const testOutputPath = outputPath()
+
 test('should create a library from a document', () => {
   const document = new Document()
 
@@ -22,7 +24,7 @@ test('should create a library from a document', () => {
 
   return new Promise((resolve, reject) => {
     document.save(
-      `${outputPath()}/sketch-api-unit-tests-library.sketch`,
+      `${testOutputPath}/sketch-api-unit-tests-library.sketch`,
       (err) => {
         if (err) {
           return reject(err)
@@ -34,7 +36,7 @@ test('should create a library from a document', () => {
     document.close()
 
     lib = Library.getLibraryForDocumentAtPath(
-      `${outputPath()}/sketch-api-unit-tests-library.sketch`
+      `${testOutputPath}/sketch-api-unit-tests-library.sketch`
     )
     libId = lib.id
     expect(lib.type).toBe('Library')
@@ -76,7 +78,7 @@ test('should get the document of the library', () => {
   expect(document.path).toBe(
     String(
       NSString.stringWithString(
-        `${outputPath()}sketch-api-unit-tests-library.sketch`
+        `${testOutputPath}/sketch-api-unit-tests-library.sketch`
       )
     )
   )

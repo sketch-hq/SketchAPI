@@ -2,6 +2,8 @@
 import { outputPath } from '../../../test-utils'
 import { Library, Document, Artboard, Text, SymbolMaster, Swatch } from '../..'
 
+const testOutputPath = outputPath()
+
 test('should import a symbol from a lib', () => {
   const document = new Document()
 
@@ -18,7 +20,7 @@ test('should import a symbol from a lib', () => {
   const master = SymbolMaster.fromArtboard(artboard)
   return new Promise((resolve, reject) => {
     document.save(
-      `${outputPath()}/sketch-api-unit-tests-importable-objects.sketch`,
+      `${testOutputPath}/sketch-api-unit-tests-importable-objects.sketch`,
       (err) => {
         document.close()
         if (err) {
@@ -29,7 +31,7 @@ test('should import a symbol from a lib', () => {
     )
   }).then(() => {
     const lib = Library.getLibraryForDocumentAtPath(
-      `${outputPath()}/sketch-api-unit-tests-importable-objects.sketch`
+      `${testOutputPath}/sketch-api-unit-tests-importable-objects.sketch`
     )
 
     const document2 = new Document()
@@ -58,7 +60,7 @@ test('should import a swatch from a Library', () => {
 
   return new Promise((resolve, reject) => {
     document.save(
-      `${outputPath()}/sketch-api-unit-tests-importable-objects-swatches.sketch`,
+      `${testOutputPath}/sketch-api-unit-tests-importable-objects-swatches.sketch`,
       (err) => {
         document.close()
         if (err) {
@@ -69,7 +71,7 @@ test('should import a swatch from a Library', () => {
     )
   }).then(() => {
     const lib = Library.getLibraryForDocumentAtPath(
-      `${outputPath()}/sketch-api-unit-tests-importable-objects-swatches.sketch`
+      `${testOutputPath}/sketch-api-unit-tests-importable-objects-swatches.sketch`
     )
 
     const document2 = new Document()
