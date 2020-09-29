@@ -5,6 +5,8 @@ import { outputPath } from '../../test-utils'
 import { exportObject, objectFromJSON } from '../export'
 import { Shape } from '../layers/Shape'
 
+const testOutputPath = outputPath()
+
 test('should return exported json data', () => {
   const object = new Shape()
   const archive = exportObject(object, {
@@ -71,7 +73,8 @@ test('Should return a buffer', (context, document) => {
 })
 
 test('Should export a page to png file', (context, document) => {
-  const filePath = NSString.stringWithString(`${outputPath()}/Page 1.png`)
+  // const filePath = NSString.stringWithString(testOutputPath).stringByAppendingPathComponent('Page 1.png')
+  const filePath = `${testOutputPath}/Page 1.png`
   try {
     fs.unlinkSync(filePath)
   } catch (err) {
@@ -83,13 +86,14 @@ test('Should export a page to png file', (context, document) => {
   })
   exportObject(document.selectedPage, {
     formats: 'png',
-    output: outputPath(),
+    output: testOutputPath,
   })
   expect(fs.existsSync(filePath)).toBe(true)
 })
 
 test('Should export a shape to png file', (context, document) => {
-  const filePath = NSString.stringWithString(`${outputPath()}/Shape.png`)
+  // const filePath = NSString.stringWithString(testOutputPath).stringByAppendingPathComponent('Shape.png')
+  const filePath = `${testOutputPath}/Shape.png`
   try {
     fs.unlinkSync(filePath)
   } catch (err) {
@@ -100,13 +104,13 @@ test('Should export a shape to png file', (context, document) => {
   })
   exportObject(object, {
     formats: 'png',
-    output: outputPath(),
+    output: testOutputPath,
   })
   expect(fs.existsSync(filePath)).toBe(true)
 })
 
 test('Should export a shape to json file', (context, document) => {
-  const filePath = NSString.stringWithString(`${outputPath()}/Shape.json`)
+  const filePath = `${testOutputPath}/Shape.json`
   try {
     fs.unlinkSync(filePath)
   } catch (err) {
@@ -117,7 +121,7 @@ test('Should export a shape to json file', (context, document) => {
   })
   exportObject(object, {
     formats: 'json',
-    output: outputPath(),
+    output: testOutputPath,
   })
   expect(fs.existsSync(filePath)).toBe(true)
 })

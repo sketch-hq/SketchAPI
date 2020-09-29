@@ -56,9 +56,13 @@ export function createSharedStyle(document, Primitive, style) {
 }
 
 export function outputPath() {
-  const output = `${NSTemporaryDirectory()}SketchAPI/`
-  fs.mkdirSync(output, { recursive: true })
-  return output
+  const uuid = NSUUID.UUID().UUIDString()
+  const path = NSTemporaryDirectory()
+    .stringByAppendingPathComponent('SketchAPI/')
+    .stringByAppendingPathComponent(uuid)
+  
+  fs.mkdirSync(path, { recursive: true })
+  return path
 }
 
 // using a base64 image cause I'm not sure where and how to keep assets that would work with both local and jenkins tests
