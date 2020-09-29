@@ -1,6 +1,13 @@
 /* globals expect, test */
 import { outputPath } from '../../../test-utils'
-import { Library, Document, Artboard, Text, SymbolMaster, Swatch } from '../..'
+import {
+  Library,
+  Document,
+  Artboard,
+  ShapePath,
+  SymbolMaster,
+  Swatch,
+} from '../..'
 
 const testOutputPath = outputPath()
 
@@ -12,8 +19,9 @@ test('should import a symbol from a lib', () => {
     parent: document.selectedPage,
   })
   // eslint-disable-next-line
-  const text = new Text({
-    text: 'Test value',
+  const path = new ShapePath({
+    name: 'oval',
+    shapeType: ShapePath.ShapeType.Oval,
     parent: artboard,
   })
   // eslint-disable-next-line
@@ -43,7 +51,8 @@ test('should import a symbol from a lib', () => {
 
     const importedMaster = symbolRefs[0].import()
 
-    expect(importedMaster.layers[0].text).toBe('Test value')
+    expect(importedMaster.layers.length).toBe(1)
+    expect(importedMaster.layers[0].name).toBe('oval')
     document2.close()
     lib.remove()
   })
