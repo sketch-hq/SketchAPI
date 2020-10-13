@@ -19,14 +19,14 @@
   },
   "devDependencies": {},
   "dependencies": {
-    "@skpm/fs": "0.2.4",
-    "@skpm/test-runner": "0.4.0",
-    "babel-loader": "8.0.6",
-    "eslint": "7.0.0",
-    "eslint-config-prettier": "6.11.0",
-    "eslint-plugin-import": "2.20.2",
-    "prettier": "2.0.5",
-    "webpack": "4.39.3",
-    "webpack-cli": "3.3.8"
+    "@skpm/fs": "0.2.6",
+    "@skpm/test-runner": "0.4.1",
+    "babel-loader": "8.1.0",
+    "eslint": "7.11.0",
+    "eslint-config-prettier": "6.12.0",
+    "eslint-plugin-import": "2.22.1",
+    "prettier": "2.1.2",
+    "webpack": "4.44.2",
+    "webpack-cli": "3.3.12"
   }
 }
