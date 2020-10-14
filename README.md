@@ -2,7 +2,7 @@
 
 JavaScript API for [Sketch](https://sketch.com) for writing scripts and creating plugins.
 
-![Schema](https://user-images.githubusercontent.com/69443/95841168-b8436700-0d4d-11eb-8343-49eebea95fb9.png)
+<img src="https://user-images.githubusercontent.com/69443/95841168-b8436700-0d4d-11eb-8343-49eebea95fb9.png" alt="Sketch JavaScript API Architecture" width="568">
 
 ## Usage
 
