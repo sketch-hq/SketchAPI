@@ -17,7 +17,9 @@
     "api-location:delete": "defaults delete com.bohemiancoding.sketch3 SketchAPILocation",
     "postinstall": "cd core-modules && npm ci"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "globby": "^11.0.1"
+  },
   "dependencies": {
     "@skpm/fs": "0.2.6",
     "@skpm/test-runner": "0.4.1",
