@@ -1,6 +1,9 @@
-const { existsSync, mkdirSync, writeFileSync } = require('fs')
+const fs = require('fs')
 const os = require('os')
 const path = require('path')
+const globby = require('globby')
+
+const webpack = require('webpack')
 
 // TODO:
 // - scan source folder recursively
@@ -10,6 +13,7 @@ const path = require('path')
 // - parse results
 // - return appropriate exit code
 // - use UUID for plugin name and identifier in manifest
+// - use argument as output file path (include in script)
 // - delete plugin after run
 
 const plugin = path.join(
@@ -18,8 +22,8 @@ const plugin = path.join(
   'Contents/Sketch'
 )
 
-if (!existsSync(plugin)) {
-  mkdirSync(plugin, { recursive: true })
+if (!fs.existsSync(plugin)) {
+  fs.mkdirSync(plugin, { recursive: true })
 }
 
 const manifest = {
@@ -56,5 +60,47 @@ const script = `
     data.writeToFile_atomically_encoding_error(out, false, NSUTF8StringEncoding, err)
   }
 `
-writeFileSync(path.join(plugin, 'manifest.json'), JSON.stringify(manifest))
-writeFileSync(path.join(plugin, 'tests.js'), script)
+fs.writeFileSync(path.join(plugin, 'manifest.json'), JSON.stringify(manifest))
+// fs.writeFileSync(path.join(plugin, 'tests.js'), script)
+
+// Run plugin within Sketch using `open`
+
+async function* walk(dir) {
+  for await (const d of await fs.promises.opendir(dir)) {
+    const entry = path.join(dir, d.name)
+    if (d.isDirectory()) yield* walk(entry)
+    else if (d.isFile()) yield entry
+  }
+}
+
+async function main() {
+  const isIgnored = await globby.gitignore()
+  const isTest = /(.*\/)*__tests__\/(.*)\.test\.js/i
+
+  let dir = process.cwd()
+  let all = []
+  for await (const p of walk(dir)) {
+    if (isIgnored(p)) continue
+    if (!isTest.test(p)) continue
+
+    all.push({ name: p.replace(isTest, '$2'), path: p })
+  }
+
+  let config = {
+    output: {
+      filename: 'tests.js',
+      path: plugin,
+    },
+    entry: path.join(plugin, 'source.js'),
+  }
+
+  webpack(config)
+}
+
+function source(tests) {
+  return tests.reduce(
+    (prev, curr) => `${prev}\nimport ${curr.name} from '${curr.path}'`
+  )
+}
+
+main()
