@@ -24,20 +24,6 @@ const plugin = path.join(
   'Contents/Sketch'
 )
 
-const script = `
-  function onRun(context) {
-    const path = require('path')
-    const os = require('os')
-    
-    let out = path.join(os.tmpdir(), 'SketchIntegationTests-output.log')
-    
-    let data = NSString.alloc().initWithString('sample test output log')
-    let err = MOPointer.alloc().init()
-    
-    data.writeToFile_atomically_encoding_error(out, false, NSUTF8StringEncoding, err)
-  }
-`
-
 /**
  * Walks a directory and returns a generator for all files within the
  * directory and all included subdirectories.
@@ -101,10 +87,9 @@ function testSuites(dir) {
     if (!isTest.test(p)) continue
 
     all.push({ name: p.replace(isTest, '$2'), path: p })
-    // TODO: Remove, bailing early during development.
-    return all
   }
-  return all
+  // TODO: Return entire array, limiting during development.
+  return all.slice(0, 1)
 }
 
 /**
@@ -116,7 +101,26 @@ function testSuites(dir) {
 function source(tests) {
   const reducer = (prev, curr) =>
     `${prev}\nimport ${curr.name} from '${curr.path}'`
-  return tests.reduce(reducer, '')
+
+  // return `${tests.reduce(reducer, '')}
+  return `
+
+  function onRun(context) {
+    console.log('✅ Test output written to disk.')
+    // const path = require('path')
+    // const os = require('os')
+    const sketch = require('sketch')
+    
+    // let out = path.join(os.tmpdir(), 'SketchIntegationTests-output.log')
+    
+    // let data = NSString.alloc().initWithString('sample test output log')
+    // let err = MOPointer.alloc().init()
+    
+    // data.writeToFile_atomically_encoding_error(out, false, NSUTF8StringEncoding, err)
+
+    sketch.UI.message('✅ Test output written to disk.')
+  }
+  `
 }
 
 const { NODE_ENV } = process.env
@@ -133,6 +137,7 @@ module.exports = {
   output: {
     filename: 'tests.js',
     path: plugin,
+    library: 'exports', // TODO: Fix so that `onRun` is available globally
   },
   entry: {
     index: './tests.js',
@@ -140,8 +145,8 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.m?js$/,
-        exclude: /(node_modules)/,
+        test: /\.js$/,
+        exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
           options: {
@@ -151,6 +156,17 @@ module.exports = {
       },
     ],
   },
+  externals: [
+    // Don't resolve modules that are available at runtime within the Sketch
+    // environment.
+    (ctx, req, callback) => {
+      // Sketch JavaScript API, e.g. `sketch`, `sketch/dom`
+      if (/^sketch($|\/.+)/.test(req)) {
+        return callback(null, `commonjs ${req}`)
+      }
+      return callback()
+    },
+  ],
   plugins: [
     // All __tests__/*.test.js files are gathered and bundled as a single plugin.
     new VirtualModulesPlugin({
