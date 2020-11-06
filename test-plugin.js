@@ -44,16 +44,23 @@ const script = `
  *
  * @param {string} dir A path to a directory to be read recursively.
  */
-async function* walk(dir) {
-  for await (const d of await fs.promises.opendir(dir)) {
-    const entry = path.join(dir, d.name)
-    if (d.isDirectory()) yield* walk(entry)
-    else if (d.isFile()) yield entry
+function* walk(dir) {
+  const d = fs.opendirSync(dir)
+  var f = d.readSync()
+  while (f) {
+    const entry = path.join(dir, f.name)
+    if (f.isDirectory()) yield* walk(entry)
+    else if (f.isFile()) yield entry
+
+    f = d.readSync()
   }
+  d.closeSync()
 }
 
 /**
  * Converts package.json into a plugin manifest.
+ *
+ * @param {Object} pkg A parsed package.json object.
  */
 function manifest(pkg) {
   return JSON.stringify({
@@ -78,20 +85,34 @@ function manifest(pkg) {
   })
 }
 
-async function testSuites(dir) {
-  const isIgnored = await globby.gitignore()
+/**
+ * Scans a given directory and returns a `Promise` that resolves with
+ * a list of test suites containing name and path for each entry.
+ *
+ * @param {string} dir A path to a directory containing test files.
+ */
+function testSuites(dir) {
+  const isIgnored = globby.gitignore.sync()
   const isTest = /(.*\/)*__tests__\/(.*)\.test\.js/i
 
   let all = []
-  for await (const p of walk(dir)) {
+  for (const p of walk(dir)) {
     if (isIgnored(p)) continue
     if (!isTest.test(p)) continue
 
     all.push({ name: p.replace(isTest, '$2'), path: p })
+    // TODO: Remove, bailing early during development.
+    return all
   }
   return all
 }
 
+/**
+ * Generate the source code of the entry script to import and run all
+ * provided test suites.
+ *
+ * @param {Object[]} tests An array of test suites to run.
+ */
 function source(tests) {
   const reducer = (prev, curr) =>
     `${prev}\nimport ${curr.name} from '${curr.path}'`
@@ -99,6 +120,13 @@ function source(tests) {
 }
 
 const { NODE_ENV } = process.env
+
+/**
+ * Creates webpack configuration
+ */
+let src = source(testSuites(process.cwd()))
+
+console.log(src)
 
 module.exports = {
   mode: NODE_ENV || 'development',
@@ -109,9 +137,24 @@ module.exports = {
   entry: {
     index: './tests.js',
   },
+  module: {
+    rules: [
+      {
+        test: /\.m?js$/,
+        exclude: /(node_modules)/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['@babel/preset-env'],
+          },
+        },
+      },
+    ],
+  },
   plugins: [
+    // All __tests__/*.test.js files are gathered and bundled as a single plugin.
     new VirtualModulesPlugin({
-      './tests.js': testSuites(process.cwd()).then((tests) => source(tests)),
+      './tests.js': src,
     }),
     new CopyPlugin({
       patterns: [
