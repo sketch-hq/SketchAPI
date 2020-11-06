@@ -18,6 +18,9 @@
     "postinstall": "cd core-modules && npm ci"
   },
   "devDependencies": {
+    "@babel/core": "^7.12.3",
+    "@babel/preset-env": "^7.12.1",
+    "babel-loader": "^8.1.0",
     "copy-webpack-plugin": "^6.3.0",
     "globby": "^11.0.1",
     "webpack-virtual-modules": "^0.3.2"
@@ -25,7 +28,6 @@
   "dependencies": {
     "@skpm/fs": "0.2.6",
     "@skpm/test-runner": "0.4.1",
-    "babel-loader": "8.1.0",
     "eslint": "7.11.0",
     "eslint-config-prettier": "6.12.0",
     "eslint-plugin-import": "2.22.1",
