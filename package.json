@@ -18,7 +18,9 @@
     "postinstall": "cd core-modules && npm ci"
   },
   "devDependencies": {
-    "globby": "^11.0.1"
+    "copy-webpack-plugin": "^6.3.0",
+    "globby": "^11.0.1",
+    "webpack-virtual-modules": "^0.3.2"
   },
   "dependencies": {
     "@skpm/fs": "0.2.6",
