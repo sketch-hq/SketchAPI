@@ -22,14 +22,14 @@
     "@babel/preset-env": "^7.12.1",
     "babel-loader": "^8.1.0",
     "copy-webpack-plugin": "^6.3.0",
+    "eslint": "7.11.0",
     "eslint-config-prettier": "6.12.0",
     "eslint-plugin-import": "2.22.1",
-    "eslint": "7.11.0",
     "globby": "^11.0.1",
     "prettier": "2.1.2",
+    "webpack": "4.44.2",
     "webpack-cli": "3.3.12",
-    "webpack-virtual-modules": "^0.3.2",
-    "webpack": "4.44.2"
+    "webpack-virtual-modules": "^0.3.2"
   },
   "dependencies": {
     "@skpm/fs": "0.2.6",

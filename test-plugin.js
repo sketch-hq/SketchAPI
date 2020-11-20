@@ -116,17 +116,17 @@ function source(tests) {
   ${tests.reduce(reducer('testSuites'), '')}
 
   export default function(context) {
-    console.log('✅ Test output written to disk.')
-    // const path = require('path')
-    // const os = require('os')
+    const path = require('path')
+    const os = require('os')
     const sketch = require('sketch')
     
-    // let out = path.join(os.tmpdir(), 'SketchIntegationTests-output.log')
+    let out = path.join(os.tmpdir(), 'SketchIntegationTests-output.log')
     
-    // let data = NSString.alloc().initWithString('sample test output log')
-    // let err = MOPointer.alloc().init()
+    let data = NSString.alloc().initWithString('sample test output log')
+    let err = MOPointer.alloc().init()
     
-    // data.writeToFile_atomically_encoding_error(out, false, NSUTF8StringEncoding, err)
+    data.writeToFile_atomically_encoding_error(out, false, NSUTF8StringEncoding, err)
+    console.log('✅ Test output written to disk: ' + out)
 
     sketch.UI.message('✅ Test output written to disk.')
   }
@@ -139,6 +139,8 @@ const { NODE_ENV } = process.env
  * Creates webpack configuration
  */
 let src = source(testSuites(process.cwd()))
+
+console.log(src)
 
 module.exports = {
   mode: NODE_ENV || 'development',
@@ -170,21 +172,19 @@ module.exports = {
     // Don't resolve modules that are available at runtime within the Sketch
     // environment.
     (ctx, req, callback) => {
-      // Sketch JavaScript API, e.g. `sketch`, `sketch/dom`
-      if (/^sketch($|\/.+)/.test(req)) {
+      // Sketch JavaScript API, e.g. `sketch`, `sketch/dom`, or core module
+      // included with the Sketch application bundle.
+      if (/^sketch($|\/.+)/.test(req) || coreModules.includes(req)) {
         return callback(null, `commonjs ${req}`)
       }
 
-      // Sketch API source imported using relative paths
-      const res = path.join(ctx, req)
+      // Sketch API source imported using relative paths must point at the
+      // `sketch` module bundled with the application.
+      const isSource = /^\Source\/(.+)/
+      const res = path.join(ctx, req) // fully resolved path
       const rel = path.relative(__dirname, res)
-      if (/^\Source\/.+/.test(rel)) {
-        return callback(null, `commonjs ${req}`)
-      }
-
-      // Core modules included in the Sketch bundle
-      if (coreModules.includes(req)) {
-        return callback(null, `commonjs ${req}`)
+      if (isSource.test(rel)) {
+        return callback(null, rel.replace(isSource, 'sketch/$1'), `commonjs`)
       }
 
       return callback()
