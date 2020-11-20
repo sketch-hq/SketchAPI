@@ -6,10 +6,16 @@ const globby = require('globby')
 const VirtualModulesPlugin = require('webpack-virtual-modules')
 const CopyPlugin = require('copy-webpack-plugin')
 
+// All core modules are made available within the Sketch runtime environment
+// without using the `@skpm/` organisation namespace.
+const coreModules = Object.keys(
+  require('./core-modules/package.json').dependencies
+).map((name) => name.replace(/^@skpm\/(.+)/, '$1'))
+
 // TODO:
 // ✔ scan source folder recursively
 // ✔ skip if ignored
-// - export default module containing test suites, bundle all into single script
+// ✔ export default module containing test suites, bundle all into single script
 // - load output file
 // - parse results
 // - return appropriate exit code
@@ -57,9 +63,9 @@ function manifest(pkg) {
         script: 'tests.js',
         scope: 'application',
         handlers: {
-          run: 'onRun',
+          run: 'tests',
           actions: {
-            HandleURL: 'onRun',
+            HandleURL: 'tests',
           },
         },
       },
@@ -89,7 +95,7 @@ function testSuites(dir) {
     all.push({ name: p.replace(isTest, '$2'), path: p })
   }
   // TODO: Return entire array, limiting during development.
-  return all.slice(0, 1)
+  return all //.slice(0, 1)
 }
 
 /**
@@ -99,13 +105,17 @@ function testSuites(dir) {
  * @param {Object[]} tests An array of test suites to run.
  */
 function source(tests) {
-  const reducer = (prev, curr) =>
-    `${prev}\nimport ${curr.name} from '${curr.path}'`
+  const reducer = (name) => {
+    return (prev, curr) =>
+      `${prev}\n${name}['${curr.name}'] = require('${curr.path}')`
+  }
 
-  // return `${tests.reduce(reducer, '')}
+  // return `
   return `
+  var testSuites = {}
+  ${tests.reduce(reducer('testSuites'), '')}
 
-  function onRun(context) {
+  export default function(context) {
     console.log('✅ Test output written to disk.')
     // const path = require('path')
     // const os = require('os')
@@ -130,14 +140,14 @@ const { NODE_ENV } = process.env
  */
 let src = source(testSuites(process.cwd()))
 
-console.log(src)
-
 module.exports = {
   mode: NODE_ENV || 'development',
   output: {
     filename: 'tests.js',
     path: plugin,
-    library: 'exports', // TODO: Fix so that `onRun` is available globally
+    libraryTarget: 'var',
+    libraryExport: 'default',
+    library: 'tests',
   },
   entry: {
     index: './tests.js',
@@ -164,6 +174,19 @@ module.exports = {
       if (/^sketch($|\/.+)/.test(req)) {
         return callback(null, `commonjs ${req}`)
       }
+
+      // Sketch API source imported using relative paths
+      const res = path.join(ctx, req)
+      const rel = path.relative(__dirname, res)
+      if (/^\Source\/.+/.test(rel)) {
+        return callback(null, `commonjs ${req}`)
+      }
+
+      // Core modules included in the Sketch bundle
+      if (coreModules.includes(req)) {
+        return callback(null, `commonjs ${req}`)
+      }
+
       return callback()
     },
   ],
