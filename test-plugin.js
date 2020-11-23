@@ -6,6 +6,8 @@ const globby = require('globby')
 const VirtualModulesPlugin = require('webpack-virtual-modules')
 const CopyPlugin = require('copy-webpack-plugin')
 
+const TestGlobalsPlugin = require('./Source/test/globals')
+
 // All core modules are made available within the Sketch runtime environment
 // without using the `@skpm/` organisation namespace.
 const coreModules = Object.keys(
@@ -105,6 +107,17 @@ function testSuites(dir) {
  * @param {Object[]} tests An array of test suites to run.
  */
 function source(tests) {
+  // The test suites are build up by `test` function within unit tests
+  // and have the following structure:
+  //
+  // {
+  //   tests: [Getter],
+  //   logs: [Getter],
+  //   afterAlls: [Getter],
+  //   beforeAlls: [Getter],
+  //   afterEachs: [Getter],
+  //   beforeEachs: [Getter]
+  // }
   const reducer = (name) => {
     return (prev, curr) =>
       `${prev}\n${name}['${curr.name}'] = require('${curr.path}')`
@@ -163,6 +176,7 @@ module.exports = {
           loader: 'babel-loader',
           options: {
             presets: ['@babel/preset-env'],
+            plugins: [TestGlobalsPlugin],
           },
         },
       },
@@ -179,11 +193,14 @@ module.exports = {
       }
 
       // Sketch API source imported using relative paths must point at the
-      // `sketch` module bundled with the application.
-      const isSource = /^\Source\/(.+)/
+      // `sketch` module bundled with the application, with the exception of
+      // the test package containing the babel plugin and the test utils used
+      // by the unit tests.
+      const isRelative = /^\.{1,2}/
+      const isSource = /^\Source\/(?!test\/|test-utils)(.+)/
       const res = path.join(ctx, req) // fully resolved path
       const rel = path.relative(__dirname, res)
-      if (isSource.test(rel)) {
+      if (isRelative.test(req) && isSource.test(rel)) {
         return callback(null, rel.replace(isSource, 'sketch/$1'), `commonjs`)
       }
 
