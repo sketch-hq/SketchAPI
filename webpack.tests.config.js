@@ -123,7 +123,6 @@ function source(tests) {
       `${prev}\n${name}['${curr.name}'] = require('${curr.path}')`
   }
 
-  // return `
   return `
   var testSuites = {}
   ${tests.reduce(reducer('testSuites'), '')}
@@ -132,6 +131,8 @@ function source(tests) {
     const path = require('path')
     const os = require('os')
     const sketch = require('sketch')
+
+    console.log(testSuites)
     
     let out = path.join(os.tmpdir(), 'SketchIntegationTests-output.log')
     
