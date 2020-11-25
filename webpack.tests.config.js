@@ -3,6 +3,7 @@ const os = require('os')
 const path = require('path')
 const globby = require('globby')
 
+const { ProvidePlugin } = require('webpack')
 const VirtualModulesPlugin = require('webpack-virtual-modules')
 const CopyPlugin = require('copy-webpack-plugin')
 
@@ -123,6 +124,29 @@ function source(tests) {
       `${prev}\n${name}['${curr.name}'] = require('${curr.path}')`
   }
 
+  const runner = ({ context, suites, createNewDocument }) => {
+    // Runs all test suites
+    Object.entries(suites).forEach(([key, val]) => {
+      console.log(`Run ${key}: ${Object.keys(val.tests)}`)
+
+      let res = Object.entries(val.tests).map(([title, test]) => {
+        var status = 'pending'
+        try {
+          test(context, createNewDocument())
+          status = 'passed'
+        } catch (err) {
+          console.log(err)
+          status = 'failed'
+        }
+
+        return {
+          title,
+          status,
+        }
+      })
+    })
+  }
+
   return `
   var testSuites = {}
   ${tests.reduce(reducer('testSuites'), '')}
@@ -132,7 +156,12 @@ function source(tests) {
     const os = require('os')
     const sketch = require('sketch')
 
-    console.log(testSuites)
+    const runner = ${runner.toString()}
+    runner({ 
+      context, 
+      suites: testSuites,
+      createNewDocument: () => { return sketch.fromNative(MSDocumentData.new()) }
+    })
     
     let out = path.join(os.tmpdir(), 'SketchIntegationTests-output.log')
     
@@ -224,6 +253,11 @@ module.exports = {
           },
         },
       ],
+    }),
+    // Unit tests make use of `expect` but don't explicitely import it. Provide
+    // it by default instead.
+    new ProvidePlugin({
+      expect: require.resolve('./Source/test/expect'),
     }),
   ],
 }
