@@ -1,8 +1,7 @@
 /* globals expect, test */
 /* eslint-disable no-param-reassign */
-import { SymbolInstance } from '../..'
+import { SymbolInstance, SmartLayout } from '../..'
 import { createSymbolMaster, canBeLogged } from '../../../test-utils'
-import { SmartLayout } from '../../models/SmartLayout'
 
 test('should create a instance by setting the master property', (context, document) => {
   const { master } = createSymbolMaster(document)

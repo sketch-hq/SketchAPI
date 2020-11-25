@@ -1,8 +1,8 @@
 /* globals expect, test */
 import { canBeLogged } from '../../../test-utils'
 import { Text, Rectangle } from '../..'
-import { TextLineSpacingBehaviourMap } from '../Text'
-import { TextAlignmentMap } from '../../style/Text'
+
+const { TextLineSpacingBehaviourMap } = Text
 
 test('should create a Text layer', () => {
   const text = new Text()
@@ -35,6 +35,18 @@ test('should change the text alignment', () => {
   // default to left
   expect(text.alignment).toBe(Text.Alignment.left)
 
+  // TextAlignmentMap/TextAlignmentReverseMap are private APIs. Test API
+  // the way users would set them instead using raw values.
+  const map = {
+    0: 'left', // Visually left aligned
+    1: 'right', // Visually right aligned
+    2: 'center', // Visually centered
+    3: 'justified', // Fully-justified. The last line in a paragraph is natural-aligned.
+    4: 'left', // Indicates the default alignment for script
+  }
+
+  // The 'natural' aligment defaults to left and is therefore specifically
+  // included in the expectation.
   Object.keys(Text.Alignment).forEach((key) => {
     // test setting by name
     text.alignment = key
@@ -43,7 +55,7 @@ test('should change the text alignment', () => {
     )
 
     // test setting by value
-    text.alignment = TextAlignmentMap[key]
+    text.alignment = map[key]
     expect(text.alignment).toBe(
       Text.Alignment[key] === 'natural' ? 'left' : Text.Alignment[key]
     )

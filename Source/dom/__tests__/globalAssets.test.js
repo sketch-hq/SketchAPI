@@ -1,10 +1,6 @@
 /* globals expect, test */
 
-import {
-  getGlobalColors,
-  getGlobalGradients,
-  globalAssets,
-} from '../globalAssets'
+import { getGlobalColors, getGlobalGradients, globalAssets } from '..'
 
 test('should return global colors', () => {
   const colors = getGlobalColors()

@@ -1,5 +1,5 @@
 /* globals expect, test */
-import { find } from '../find'
+import { find } from '..'
 
 test('should find by type', (context, document) => {
   // eslint-disable-next-line no-param-reassign
