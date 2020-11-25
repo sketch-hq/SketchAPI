@@ -1,25 +1,45 @@
 /* globals expect, test */
-import { GradientAsset } from '../GradientAsset'
-import { Gradient } from '../../style/Gradient'
+import { Document } from '../..'
 
 test('should create gradient asset from dictionary', () => {
-  const asset = GradientAsset.from({})
+  const doc = new Document()
+
+  doc.gradients.push({})
+  expect(doc.gradients.length).toEqual(1)
+
+  const asset = doc.gradients[0]
   expect(asset.gradient.type).toBe('Gradient')
   expect(asset.name).toBe(null)
+
+  doc.close()
 })
 
 test('should create gradient asset from MSGradientAsset', () => {
-  const gradient = Gradient.from({})._object
-  const nativeAsset = MSGradientAsset.alloc().initWithAsset_name(gradient, null)
-  const asset = GradientAsset.from(nativeAsset)
+  const doc = new Document()
+  const gradient = MSGradientAsset.alloc().init()
+
+  doc.gradients.push(gradient)
+  expect(doc.gradients.length).toEqual(1)
+
+  const asset = doc.gradients[0]
   expect(asset.gradient.type).toBe('Gradient')
+
+  doc.close()
 })
 
 test('should create gradient asset with name', () => {
-  const asset = GradientAsset.from({
+  const doc = new Document()
+  const gradient = {
     name: 'My Gradient',
     gradient: {},
-  })
+  }
+
+  doc.gradients.push(gradient)
+  expect(doc.gradients.length).toEqual(1)
+
+  const asset = doc.gradients[0]
   expect(asset.gradient.type).toBe('Gradient')
   expect(asset.name).toBe('My Gradient')
+
+  doc.close()
 })

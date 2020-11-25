@@ -1,6 +1,6 @@
 /* globals expect, test */
 import { Text, Rectangle, Group } from '../..'
-import { VerticalTextAlignmentMap, TextAlignmentMap } from '../Text'
+const { VerticalTextAlignmentMap, TextAlignmentMap } = Text
 
 test('should create a text style for a text layer', () => {
   const { style } = new Text({

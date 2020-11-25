@@ -5,9 +5,7 @@ import {
   canBeLogged,
   outputPath,
 } from '../../../test-utils'
-import { Document, Group, Shape, Text } from '../..'
-import { ColorSpaceMap } from '../Document'
-import { Swatch } from '../../assets/Swatch'
+import { Document, Group, Shape, Text, Swatch } from '../..'
 
 const testOutputPath = outputPath()
 
@@ -209,7 +207,9 @@ test('should save a file', () =>
     expect(result).toBe(_document)
     expect(_document.path).toBe(
       String(
-        NSString.stringWithString(`${testOutputPath}/sketch-api-unit-tests.sketch`)
+        NSString.stringWithString(
+          `${testOutputPath}/sketch-api-unit-tests.sketch`
+        )
       )
     )
   }))
@@ -226,7 +226,9 @@ test('should save a file without specifying the path', () =>
     expect(result).toBe(_document)
     expect(_document.path).toBe(
       String(
-        NSString.stringWithString(`${testOutputPath}/sketch-api-unit-tests.sketch`)
+        NSString.stringWithString(
+          `${testOutputPath}/sketch-api-unit-tests.sketch`
+        )
       )
     )
   }))
@@ -259,7 +261,9 @@ test('should close a file', () => {
 })
 
 test('should open a file', () => {
-  const document = Document.open(`${testOutputPath}/sketch-api-unit-tests.sketch`)
+  const document = Document.open(
+    `${testOutputPath}/sketch-api-unit-tests.sketch`
+  )
   const documents = Document.getDocuments()
   expect(documents.find((d) => d.id === document.id)).toEqual(document)
   // close it again because when watching the tests, it will open dozens of documents
@@ -281,9 +285,6 @@ test('should have defined colorSpace enums', () => {
   expect(Document.ColorSpace.Unmanaged).toBe('Unmanaged')
   expect(Document.ColorSpace.sRGB).toBe('sRGB')
   expect(Document.ColorSpace.P3).toBe('P3')
-  expect(ColorSpaceMap.Unmanaged).toBe(0)
-  expect(ColorSpaceMap.sRGB).toBe(1)
-  expect(ColorSpaceMap.P3).toBe(2)
 })
 
 test('should have a colorSpace getter', (context, document) => {
