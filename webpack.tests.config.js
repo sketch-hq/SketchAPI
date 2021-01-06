@@ -22,16 +22,10 @@ const coreModules = Object.keys(
 // - load output file
 // - parse results
 // - return appropriate exit code
-// - use UUID for plugin name and identifier in manifest
+// ✔ use UUID for plugin name and identifier in manifest
 // - use argument as output file path (include in script)
 // - delete plugin after run
 // - Run plugin within Sketch using `open`
-
-const plugin = path.join(
-  os.homedir(),
-  'Library/Application Support/com.bohemiancoding.sketch3/Plugins/SketchIntegrationTests.sketchplugin',
-  'Contents/Sketch'
-)
 
 /**
  * Walks a directory and returns a generator for all files within the
@@ -56,8 +50,9 @@ function* walk(dir) {
  * Converts package.json into a plugin manifest.
  *
  * @param {Object} pkg A parsed package.json object.
+ * @param {Object} identifier A unique identifier for the plugin.
  */
-function manifest(pkg) {
+function manifest(pkg, identifier) {
   return JSON.stringify({
     commands: [
       {
@@ -75,7 +70,7 @@ function manifest(pkg) {
     ],
     version: pkg.version,
     name: 'Sketch API Integration Tests',
-    identifier: 'com.sketch.plugin.integration-tests',
+    identifier: `com.sketch.plugin.integration-tests.${identifier}`,
     disableCocoaScriptPreprocessor: true,
   })
 }
@@ -98,7 +93,7 @@ function testSuites(dir) {
     all.push({ name: p.replace(isTest, '$2'), path: p })
   }
   // TODO: Return entire array, limiting during development.
-  return all //.slice(0, 1)
+  return all.slice(0, 1)
 }
 
 /**
@@ -124,27 +119,48 @@ function source(tests) {
       `${prev}\n${name}['${curr.name}'] = require('${curr.path}')`
   }
 
-  const runner = ({ context, suites, createNewDocument }) => {
+  const runner = ({ context, suites, createNewDocument, expect }) => {
     // Runs all test suites
-    Object.entries(suites).forEach(([key, val]) => {
-      console.log(`Run ${key}: ${Object.keys(val.tests)}`)
-
+    var all = []
+    Object.entries(suites).forEach(([suiteTitle, val]) => {
       let res = Object.entries(val.tests).map(([title, test]) => {
         var status = 'pending'
+        var document = createNewDocument()
         try {
-          test(context, createNewDocument())
+          expect.resetAssertionsLocalState()
+
+          // All tests are givent he plugin command context and a new
+          // document.
+          //
+          // TODO: check if the document needs to be closed, what happens
+          // with unsaved changes, etc. or if it would be better to have
+          // unit tests handle document creation and closing.
+          let t = test(context, document)
+          console.log(typeof t)
           status = 'passed'
         } catch (err) {
           console.log(err)
           status = 'failed'
         }
 
+        try {
+          document.close()
+        } catch (err) {
+          console.log(`Failed to close document: ${err}`)
+        }
+
         return {
-          title,
+          ancestorTitles: [suiteTitle], // we don't have nested test suites in the API but sticking to Jest types anyway.
+          fullName: `${suiteTitle} ${title}`,
           status,
+          title,
         }
       })
+
+      all = all.concat(res)
     })
+
+    console.log(all)
   }
 
   return `
@@ -158,7 +174,8 @@ function source(tests) {
 
     const runner = ${runner.toString()}
     runner({ 
-      context, 
+      context,
+      expect,
       suites: testSuites,
       createNewDocument: () => { return sketch.fromNative(MSDocumentData.new()) }
     })
@@ -183,81 +200,93 @@ const { NODE_ENV } = process.env
  */
 let src = source(testSuites(process.cwd()))
 
-console.log(src)
+module.exports = ({ identifier }) => {
+  // To allow multiple instances of Sketch to run API tests concurrently
+  // the plugin must use a unique name and plugin identifier.
+  //
+  // The plugin itself is written to the build artefacts and can be used
+  // from there by copying into:
+  //
+  //   ~/Library/Application Support/com.bohemiancoding.sketch3/Plugins
+  //
+  // or by creating a symbolic link.
+  let pluginName = `SketchIntegrationTests-${identifier}.sketchplugin`
+  let plugin = path.join(__dirname, 'build', pluginName, 'Contents/Sketch')
 
-module.exports = {
-  mode: NODE_ENV || 'development',
-  output: {
-    filename: 'tests.js',
-    path: plugin,
-    libraryTarget: 'var',
-    libraryExport: 'default',
-    library: 'tests',
-  },
-  entry: {
-    index: './tests.js',
-  },
-  module: {
-    rules: [
-      {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        use: {
-          loader: 'babel-loader',
-          options: {
-            presets: ['@babel/preset-env'],
-            plugins: [TestGlobalsPlugin],
-          },
-        },
-      },
-    ],
-  },
-  externals: [
-    // Don't resolve modules that are available at runtime within the Sketch
-    // environment.
-    (ctx, req, callback) => {
-      // Sketch JavaScript API, e.g. `sketch`, `sketch/dom`, or core module
-      // included with the Sketch application bundle.
-      if (/^sketch($|\/.+)/.test(req) || coreModules.includes(req)) {
-        return callback(null, `commonjs ${req}`)
-      }
-
-      // Sketch API source imported using relative paths must point at the
-      // `sketch` module bundled with the application, with the exception of
-      // the test package containing the babel plugin and the test utils used
-      // by the unit tests.
-      const isRelative = /^\.{1,2}/
-      const isSource = /^\Source\/(?!test\/|test-utils)(.+)/
-      const res = path.join(ctx, req) // fully resolved path
-      const rel = path.relative(__dirname, res)
-      if (isRelative.test(req) && isSource.test(rel)) {
-        return callback(null, rel.replace(isSource, 'sketch/$1'), `commonjs`)
-      }
-
-      return callback()
+  return {
+    mode: NODE_ENV || 'development',
+    output: {
+      filename: 'tests.js',
+      path: plugin,
+      libraryTarget: 'var',
+      libraryExport: 'default',
+      library: 'tests',
     },
-  ],
-  plugins: [
-    // All __tests__/*.test.js files are gathered and bundled as a single plugin.
-    new VirtualModulesPlugin({
-      './tests.js': src,
-    }),
-    new CopyPlugin({
-      patterns: [
+    entry: {
+      index: './tests.js',
+    },
+    module: {
+      rules: [
         {
-          from: './package.json',
-          to: `${plugin}/manifest.json`,
-          transform(content) {
-            const pkg = JSON.parse(content.toString())
-            return manifest(pkg)
+          test: /\.js$/,
+          exclude: /node_modules/,
+          use: {
+            loader: 'babel-loader',
+            options: {
+              presets: ['@babel/preset-env'],
+              plugins: [TestGlobalsPlugin],
+            },
           },
         },
       ],
-    }),
-    // Unit tests make use of `expect` but don't explicitely import it. Provide
-    // it by default instead.
-    new ProvidePlugin({
-      expect: require.resolve('./Source/test/expect'),
-    }),
-  ],
+    },
+    externals: [
+      // Don't resolve modules that are available at runtime within the Sketch
+      // environment.
+      (ctx, req, callback) => {
+        // Sketch JavaScript API, e.g. `sketch`, `sketch/dom`, or core module
+        // included with the Sketch application bundle.
+        if (/^sketch($|\/.+)/.test(req) || coreModules.includes(req)) {
+          return callback(null, `commonjs ${req}`)
+        }
+
+        // Sketch API source imported using relative paths must point at the
+        // `sketch` module bundled with the application, with the exception of
+        // the test package containing the babel plugin and the test utils used
+        // by the unit tests.
+        const isRelative = /^\.{1,2}/
+        const isSource = /^\Source\/(?!test\/|test-utils)(.+)/
+        const res = path.join(ctx, req) // fully resolved path
+        const rel = path.relative(__dirname, res)
+        if (isRelative.test(req) && isSource.test(rel)) {
+          return callback(null, rel.replace(isSource, 'sketch/$1'), `commonjs`)
+        }
+
+        return callback()
+      },
+    ],
+    plugins: [
+      // All __tests__/*.test.js files are gathered and bundled as a single plugin.
+      new VirtualModulesPlugin({
+        './tests.js': src,
+      }),
+      new CopyPlugin({
+        patterns: [
+          {
+            from: './package.json',
+            to: `${plugin}/manifest.json`,
+            transform(content) {
+              const pkg = JSON.parse(content.toString())
+              return manifest(pkg, identifier)
+            },
+          },
+        ],
+      }),
+      // Unit tests make use of `expect` but don't explicitely import it. Provide
+      // it by default instead.
+      new ProvidePlugin({
+        expect: require.resolve('./Source/test/expect'),
+      }),
+    ],
+  }
 }

@@ -52,12 +52,10 @@ test('should list the libraries', () => {
   expect(libraries[0].type).toBe('Library')
 })
 
-test('should be able to get the list of symbols to be imported', () => {
-  const document = new Document()
+test('should be able to get the list of symbols to be imported', (context, document) => {
   expect(lib.getImportableSymbolReferencesForDocument(document)[0].type).toBe(
     'ImportableObject'
   )
-  document.close()
 })
 
 test('should disable a library', () => {
