@@ -137,7 +137,7 @@ SymbolMaster.define('overrides', {
         return 'overrideProperties'
       }
       return 'overridePropertyDict'
-    })(BCSketchInfo.shared.metadata().appVersion)
+    })(BCSketchInfo.shared().metadata().appVersion)
 
     // undefined when immutable
     if (!this._object[method] || !this._object.availableOverrides) {

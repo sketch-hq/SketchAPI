@@ -85,6 +85,6 @@ module.exports = DOM
 module.exports.default = DOM
 
 module.exports.version = {
-  sketch: BCSketchInfo.shared.metadata().appVersion,
+  sketch: BCSketchInfo.shared().metadata().appVersion,
   api: process.env.API_VERSION,
 }
