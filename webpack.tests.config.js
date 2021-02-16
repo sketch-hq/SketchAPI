@@ -19,13 +19,13 @@ const coreModules = Object.keys(
 // ✔ scan source folder recursively
 // ✔ skip if ignored
 // ✔ export default module containing test suites, bundle all into single script
-// - load output file
-// - parse results
-// - return appropriate exit code
+// ✔ load output file
+// ✔ parse results
+// ✔ return appropriate exit code
 // ✔ use UUID for plugin name and identifier in manifest
 // - use argument as output file path (include in script)
 // - delete plugin after run
-// - Run plugin within Sketch using `open`
+// ✔ Run plugin within Sketch using `open`
 
 /**
  * Walks a directory and returns a generator for all files within the
@@ -93,7 +93,7 @@ function testSuites(dir) {
     all.push({ name: p.replace(isTest, '$2'), path: p })
   }
   // TODO: Return entire array, limiting during development.
-  return all.slice(0, 1)
+  return all
 }
 
 /**
@@ -102,7 +102,7 @@ function testSuites(dir) {
  *
  * @param {Object[]} tests An array of test suites to run.
  */
-function source(tests) {
+function source(tests, outputFileName) {
   // The test suites are build up by `test` function within unit tests
   // and have the following structure:
   //
@@ -139,7 +139,6 @@ function source(tests) {
           console.log(typeof t)
           status = 'passed'
         } catch (err) {
-          console.log(err)
           status = 'failed'
         }
 
@@ -160,7 +159,7 @@ function source(tests) {
       all = all.concat(res)
     })
 
-    console.log(all)
+    return all
   }
 
   return `
@@ -173,20 +172,23 @@ function source(tests) {
     const sketch = require('sketch')
 
     const runner = ${runner.toString()}
-    runner({ 
+    const result = runner({ 
       context,
       expect,
       suites: testSuites,
       createNewDocument: () => { return sketch.fromNative(MSDocumentData.new()) }
     })
-    
-    let out = path.join(os.tmpdir(), 'SketchIntegationTests-output.log')
-    
-    let data = NSString.alloc().initWithString('sample test output log')
-    let err = MOPointer.alloc().init()
-    
-    data.writeToFile_atomically_encoding_error(out, false, NSUTF8StringEncoding, err)
-    console.log('✅ Test output written to disk: ' + out)
+
+    const out = path.join(os.tmpdir(), ${outputFileName})
+    const data = NSString.alloc().initWithString(JSON.stringify(result))
+    const err = MOPointer.alloc().init()
+
+    data.writeToFile_atomically_encoding_error(
+      out,
+      false,
+      NSUTF8StringEncoding,
+      err
+    )
 
     sketch.UI.message('✅ Test output written to disk.')
   }
@@ -198,9 +200,9 @@ const { NODE_ENV } = process.env
 /**
  * Creates webpack configuration
  */
-let src = source(testSuites(process.cwd()))
+let src = (outputFileName) => source(testSuites(process.cwd()), outputFileName)
 
-module.exports = ({ identifier }) => {
+module.exports = ({ identifier, outputFileName }) => {
   // To allow multiple instances of Sketch to run API tests concurrently
   // the plugin must use a unique name and plugin identifier.
   //
@@ -215,15 +217,16 @@ module.exports = ({ identifier }) => {
 
   return {
     mode: NODE_ENV || 'development',
+    target: 'node',
     output: {
-      filename: 'tests.js',
+      filename: '[name].js',
       path: plugin,
       libraryTarget: 'var',
       libraryExport: 'default',
       library: 'tests',
     },
     entry: {
-      index: './tests.js',
+      tests: './tests.js',
     },
     module: {
       rules: [
@@ -268,7 +271,7 @@ module.exports = ({ identifier }) => {
     plugins: [
       // All __tests__/*.test.js files are gathered and bundled as a single plugin.
       new VirtualModulesPlugin({
-        './tests.js': src,
+        './tests.js': src(outputFileName),
       }),
       new CopyPlugin({
         patterns: [
