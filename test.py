@@ -45,14 +45,14 @@ def colored_status_text(status, status_text):
 
 
 def has_failed_tests(results):
-    hasFailedTests = False
+    has_failed_tests = False
 
     for result in results:
         if result['status'] == 'failed':
-            hasFailedTests = True
+            has_failed_tests = True
             break
 
-    return hasFailedTests
+    return has_failed_tests
 
 
 def print_results(results):
@@ -105,14 +105,7 @@ def parse_test_results(outputFile):
             # remove test output file
             os.remove(output_file_path)
 
-            if (has_failed_tests(json_data)):
-                RED = '\033[91m'
-                print(RED + 'Failed with exit code 1')
-                sys.exit(1)
-            else:
-                GREEN = '\033[92m'
-                print(GREEN + 'All test suites passed.')
-                sys.exit(0)
+            return has_failed_tests(json_data)
     else:
         raise 'File not found'
 
@@ -151,12 +144,16 @@ def main(argv):
         "Library/Application Support/com.bohemiancoding.sketch3/Plugins",
         os.path.basename(plugin))
 
-    # FIXME: not sure if we need this in prod
+    # in cases when the execution is stopped, make sure to remove the symbolic 
+    # link before adding the new one
     if (os.path.exists(plugin_path)):
         os.remove(plugin_path)
 
     os.symlink(os.path.abspath(plugin), plugin_path, target_is_directory=True)
 
+    # start execution time
+    start_time = time.time()
+    
     # get the plugin identifier from the manifest, Sketch uses the
     # identifier to look up the corresponding plugin.
     with open(PurePath(plugin, 'Contents/Sketch/manifest.json'), 'r') as f:
@@ -168,12 +165,25 @@ def main(argv):
         "sketch://plugin/{}/test".format(manifest['identifier']),
     ])
 
-    # Read test output file, parse and log the results 
-    parse_test_results(outputFile)
+    # read test output file, parse and log the results 
+    end_with_failed_tests = parse_test_results(outputFile)
+
+    # calc and display execution time 
+    end_time = time.time()
+    print('\nDone in {} seconds'.format(round(end_time - start_time, 2)))
 
     # cleanup and delete the symbolic link
     os.remove(plugin_path)
 
+    if (end_with_failed_tests):
+        RED = '\033[91m'
+        print(RED + 'Failed with exit code 1')
+        sys.exit(1)
+    else:
+        GREEN = '\033[92m'
+        print(GREEN + 'All test suites passed.')
+        sys.exit(0)
+    
 
 if __name__ == "__main__":
     main(sys.argv[1:])
