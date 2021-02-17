@@ -92,7 +92,7 @@ function testSuites(dir) {
 
     all.push({ name: p.replace(isTest, '$2'), path: p })
   }
-  // TODO: Return entire array, limiting during development.
+
   return all
 }
 
@@ -116,14 +116,17 @@ function source(tests, outputFileName) {
   // }
   const reducer = (name) => {
     return (prev, curr) =>
-      `${prev}\n${name}['${curr.name}'] = require('${curr.path}')`
+      `${prev}\n${name}['${curr.name}'] = {
+        source: require('${curr.path}'),
+        path: '${curr.path}'
+      }`
   }
 
   const runner = ({ context, suites, createNewDocument, expect }) => {
     // Runs all test suites
     var all = []
     Object.entries(suites).forEach(([suiteTitle, val]) => {
-      let res = Object.entries(val.tests).map(([title, test]) => {
+      let res = Object.entries(val.source.tests).map(([title, test]) => {
         var status = 'pending'
         var document = createNewDocument()
         try {
@@ -153,6 +156,7 @@ function source(tests, outputFileName) {
           fullName: `${suiteTitle} ${title}`,
           status,
           title,
+          relativePath: `.${val.path.split(/SketchAPI/)[1]}`,
         }
       })
 
@@ -179,7 +183,7 @@ function source(tests, outputFileName) {
       createNewDocument: () => { return sketch.fromNative(MSDocumentData.new()) }
     })
 
-    const out = path.join(os.tmpdir(), ${outputFileName})
+    const out = path.join(os.tmpdir(), '${outputFileName}')
     const data = NSString.alloc().initWithString(JSON.stringify(result))
     const err = MOPointer.alloc().init()
 

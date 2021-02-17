@@ -22,6 +22,7 @@ def group_results_by_parent(results):
             })
         else:
             grouped_results[parent_title] = {
+                'relativePath': result['relativePath'],
                 'results': [
                     {
                         'ancestorTitles': result['ancestorTitles'][1:],
@@ -59,9 +60,10 @@ def print_results(results):
         test_results = results[parent_name]["results"]
 
         global_status = 'failed' if has_failed_tests(test_results) else 'passed'
-        print('\n{status} {name}'.format(
+        print('\n{status} {name} \033[1m{relativePath}\033[0;0m'.format(
             status=colored_status_text(global_status, global_status.upper()),
-            name=parent_name
+            name=parent_name,
+            relativePath=results[parent_name]['relativePath']
         ))
 
         for result in test_results:
@@ -82,7 +84,7 @@ def print_results(results):
 
 def parse_test_results():
     output_file_path = PurePath(
-        tempfile.gettempdir(), 'SketchIntegationTests-output.log')
+        tempfile.gettempdir(), 'SketchIntegrationTests-output.log')
 
     # TODO: Find a better approach for waiting to output file to be available
     while not os.path.exists(output_file_path):
