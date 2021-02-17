@@ -46,7 +46,7 @@ def colored_status_text(status, status_text):
 
 def has_failed_tests(results):
     hasFailedTests = False
-    
+
     for result in results:
         if result['status'] == 'failed':
             hasFailedTests = True
@@ -59,7 +59,9 @@ def print_results(results):
     for parent_name in results:
         test_results = results[parent_name]["results"]
 
-        global_status = 'failed' if has_failed_tests(test_results) else 'passed'
+        global_status = 'failed' if has_failed_tests(
+            test_results) else 'passed'
+
         print('\n{status} {name} \033[1m{relativePath}\033[0;0m'.format(
             status=colored_status_text(global_status, global_status.upper()),
             name=parent_name,
@@ -83,11 +85,13 @@ def print_results(results):
 
 
 def parse_test_results(outputFile):
-    output_file_path = PurePath(
-        tempfile.gettempdir(), outputFile)
+    output_file_path = PurePath(tempfile.gettempdir(), outputFile)
 
-    # TODO: Find a better approach for waiting to output file to be available
+    # Wait for output file to be available on disk
+    print('Running tests, wait for tests results to become available',
+          end="", flush=True)
     while not os.path.exists(output_file_path):
+        print('.', end="", flush=True)
         time.sleep(2)
 
     if os.path.isfile(output_file_path):
@@ -98,6 +102,9 @@ def parse_test_results(outputFile):
             grouped_results = group_results_by_parent(json_data)
             print_results(grouped_results)
 
+            # remove test output file
+            os.remove(output_file_path)
+
             if (has_failed_tests(json_data)):
                 RED = '\033[91m'
                 print(RED + 'Failed with exit code 1')
@@ -106,9 +113,6 @@ def parse_test_results(outputFile):
                 GREEN = '\033[92m'
                 print(GREEN + 'All test suites passed.')
                 sys.exit(0)
-            
-            # remove test output file
-            os.remove(output_file_path)
     else:
         raise 'File not found'
 
@@ -159,12 +163,12 @@ def main(argv):
         data = f.read()
 
     manifest = json.loads(data)
-    sketch_process = subprocess.Popen([
+    subprocess.Popen([
         "open", "-a", sketch,
         "sketch://plugin/{}/test".format(manifest['identifier']),
     ])
-    sketch_process.wait()
 
+    # Read test output file, parse and log the results 
     parse_test_results(outputFile)
 
     # cleanup and delete the symbolic link
