@@ -82,9 +82,9 @@ def print_results(results):
             ))
 
 
-def parse_test_results():
+def parse_test_results(outputFile):
     output_file_path = PurePath(
-        tempfile.gettempdir(), 'SketchIntegrationTests-output.log')
+        tempfile.gettempdir(), outputFile)
 
     # TODO: Find a better approach for waiting to output file to be available
     while not os.path.exists(output_file_path):
@@ -116,26 +116,29 @@ def parse_test_results():
 def main(argv):
     sketch = '/Applications/Sketch.app'
     plugin = ''
+    outputFile = ''
 
     try:
         opts, args = getopt.getopt(
-            argv, "hs:p:", [
-                "sketch=", "plugin="])
+            argv, "hs:p:o:", [
+                "sketch=", "plugin=", "outputFile="])
     except getopt.GetoptError:
-        print('test.py -s <sketch> -p <plugin>')
+        print('test.py -s <sketch> -p <plugin> -o <outputFile>')
         sys.exit(2)
 
     for opt, arg in opts:
         if opt == '-h':
-            print('test.py -s <sketch> -p <plugin>')
+            print('test.py -s <sketch> -p <plugin> -o <outputFile>')
             sys.exit()
         elif opt in ("-s", "--sketch"):
             sketch = arg
         elif opt in ("-p", "--plugin"):
             plugin = arg
+        elif opt in ("-o", "--outputFile"):
+            outputFile = arg
 
     if not plugin:
-        print('test.py -s <sketch> -p <plugin>')
+        print('test.py -s <sketch> -p <plugin> -o <outputFile>')
 
     # create a symbolic link to the plugin because Sketch expects it to
     # be inside the Application Support Plugins folder.
@@ -162,7 +165,7 @@ def main(argv):
     ])
     sketch_process.wait()
 
-    parse_test_results()
+    parse_test_results(outputFile)
 
     # cleanup and delete the symbolic link
     os.remove(plugin_path)
