@@ -107,19 +107,27 @@ Note, any plugins you have installed or code you invoke in Sketch's _Plugins_ �
 
 ### Testing
 
-The `*.test.js` files in this repository are integration tests that run in Sketch's plugin environment and can be run using:
+The SketchAPI builds on top of macOS and internal Sketch APIs via CocoaScript. To ensure the API works for a specific Sketch version or build, this repository includes `*.test.js` files containing integration tests.
 
-```bash
-npm run test
-```
+These integration tests are compiled into a single test plugin using Webpack and can run by the `test.py` Python script, or from the Sketch application menu in _Plugins_ › _Sketch Integration Tests (…)_ › _Test Sketch API_.
 
-To run the tests with a specific installation of Sketch, run:
+**Build and run test plugin**
 
 ```sh
-SKETCH_PATH=/path/to/sketch.app npm run test
+./run_tests.sh
 ```
 
-> ℹ️ There is no need to re-build SketchAPI between test runs or use `defaults write` to set the API location; the test runner handles re-compiling test and source files and injecting them into Sketch.
+**Build test plugin**
+
+To build the plugin separately, e.g. to install and run it manually, run this command:
+
+```sh
+npm run test:build --identifier=IDENTIFIER --output=FILE_PATH
+```
+
+The output `FILE_PATH` is "baked" into the plugin. Test results are always written to the same file, overwriting any previous contents. Use different `IDENTIFIER` values if you are testing different versions of Sketch or want to run integration tests concurrently on the same machine.
+
+> **Note:** The Sketch JavaScript API does not need to be rebuilt. The integration tests use the API bundled within Sketch or the custom API location specified in the user defaults.
 
 ## Acknowledgements
 
