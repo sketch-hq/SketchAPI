@@ -2,9 +2,9 @@
 export IDENTIFIER=xpto
 export OUTPUT_FILE_NAME=SketchIntegrationTests-output.log
 
-npx webpack --config webpack.tests.config.js \
---env.identifier=${IDENTIFIER} \
---env.outputFileName=${OUTPUT_FILE_NAME} && \
+npm run test:build \
+--identifier=${IDENTIFIER} \
+--output=${OUTPUT_FILE_NAME} && \
 
 python3 test.py \
 -s /Applications/Sketch.app \
