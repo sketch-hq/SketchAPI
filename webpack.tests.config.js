@@ -101,7 +101,7 @@ function testSuites(dir) {
  *
  * @param {Object[]} tests An array of test suites to run.
  */
-function source(tests, outputFileName) {
+function source(tests, output) {
   // The test suites are build up by `test` function within unit tests
   // and have the following structure:
   //
@@ -200,7 +200,7 @@ function source(tests, outputFileName) {
     const sketch = require('sketch')
 
     const fileManager = NSFileManager.defaultManager()
-    const out = path.join(os.tmpdir(), '${outputFileName}')
+    const out = path.join('${process.cwd()}/${output}')
 
     // Create the results file and write extended file attributes with zero
     // progress information
@@ -246,9 +246,9 @@ const { NODE_ENV } = process.env
 /**
  * Creates webpack configuration
  */
-let src = (outputFileName) => source(testSuites(process.cwd()), outputFileName)
+let src = (output) => source(testSuites(process.cwd()), output)
 
-module.exports = ({ identifier, outputFileName }) => {
+module.exports = ({ identifier, output }) => {
   // To allow multiple instances of Sketch to run API tests concurrently
   // the plugin must use a unique name and plugin identifier.
   //
@@ -317,7 +317,7 @@ module.exports = ({ identifier, outputFileName }) => {
     plugins: [
       // All __tests__/*.test.js files are gathered and bundled as a single plugin.
       new VirtualModulesPlugin({
-        './tests.js': src(outputFileName),
+        './tests.js': src(output),
       }),
       new CopyPlugin({
         patterns: [
