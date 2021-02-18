@@ -5,6 +5,7 @@ import os
 import json
 import tempfile
 import time
+import re
 from pathlib import Path, PurePath
 
 
@@ -55,6 +56,32 @@ def has_failed_tests(results):
     return has_failed_tests
 
 
+# Read 'com.apple.progress.fractionCompleted' metafield from ouput file
+# and display the test runner progress.
+def watch_test_runner_progress(file_path):
+    # Wait for output file to be available on disk
+    while not os.path.exists(file_path):
+        time.sleep(2)
+    
+    if os.path.isfile(file_path):
+        progress_percentage = 0
+
+        while not (progress_percentage == 100):
+            stream = subprocess.Popen(
+                ['xattr', '-l', file_path],
+                stdout=subprocess.PIPE)
+
+            output = str(stream.communicate())
+            output = output.split("com.apple.progress.fractionCompleted:")[1]
+            match = re.search('\d+(.\d+)*', output)
+
+            progress_percentage = float(match.group(0)) * 100
+            print('Running tests - {}%'.format(round(progress_percentage, 2)), end="\r")
+            time.sleep(1)
+    else:
+        raise 'File not found'
+
+
 def print_results(results):
     for parent_name in results:
         test_results = results[parent_name]["results"]
@@ -84,18 +111,10 @@ def print_results(results):
             ))
 
 
-def parse_test_results(outputFile):
-    output_file_path = PurePath(tempfile.gettempdir(), outputFile)
-
-    # Wait for output file to be available on disk
-    print('Running tests, wait for tests results to become available',
-          end="", flush=True)
-    while not os.path.exists(output_file_path):
-        print('.', end="", flush=True)
-        time.sleep(2)
-
-    if os.path.isfile(output_file_path):
-        with open(output_file_path, 'r') as f:
+def parse_test_results(file_path):
+    if os.path.isfile(file_path):
+        # Open the output file and parse the results 
+        with open(file_path, 'r') as f:
             data = f.read()
             json_data = json.loads(data)
 
@@ -103,7 +122,7 @@ def parse_test_results(outputFile):
             print_results(grouped_results)
 
             # remove test output file
-            os.remove(output_file_path)
+            os.remove(file_path)
 
             return has_failed_tests(json_data)
     else:
@@ -113,29 +132,29 @@ def parse_test_results(outputFile):
 def main(argv):
     sketch = '/Applications/Sketch.app'
     plugin = ''
-    outputFile = ''
+    output_file_path = ''
 
     try:
         opts, args = getopt.getopt(
             argv, "hs:p:o:", [
-                "sketch=", "plugin=", "outputFile="])
+                "sketch=", "plugin=", "outputFilePath="])
     except getopt.GetoptError:
-        print('test.py -s <sketch> -p <plugin> -o <outputFile>')
+        print('test.py -s <sketch> -p <plugin> -o <outputFilePath>')
         sys.exit(2)
 
     for opt, arg in opts:
         if opt == '-h':
-            print('test.py -s <sketch> -p <plugin> -o <outputFile>')
+            print('test.py -s <sketch> -p <plugin> -o <outputFilePath>')
             sys.exit()
         elif opt in ("-s", "--sketch"):
             sketch = arg
         elif opt in ("-p", "--plugin"):
             plugin = arg
-        elif opt in ("-o", "--outputFile"):
-            outputFile = arg
+        elif opt in ("-o", "--outputFilePath"):
+            output_file_path = PurePath(os.getcwd(), arg)
 
     if not plugin:
-        print('test.py -s <sketch> -p <plugin> -o <outputFile>')
+        print('test.py -s <sketch> -p <plugin> -o <outputFilePath>')
 
     # create a symbolic link to the plugin because Sketch expects it to
     # be inside the Application Support Plugins folder.
@@ -144,7 +163,7 @@ def main(argv):
         "Library/Application Support/com.bohemiancoding.sketch3/Plugins",
         os.path.basename(plugin))
 
-    # in cases when the execution is stopped, make sure to remove the symbolic 
+    # in cases when the execution is stopped, make sure to remove the symbolic
     # link before adding the new one
     if (os.path.exists(plugin_path)):
         os.remove(plugin_path)
@@ -153,13 +172,14 @@ def main(argv):
 
     # start execution time
     start_time = time.time()
-    
+
     # get the plugin identifier from the manifest, Sketch uses the
     # identifier to look up the corresponding plugin.
     with open(PurePath(plugin, 'Contents/Sketch/manifest.json'), 'r') as f:
         data = f.read()
 
     manifest = json.loads(data)
+
     # use macOS `open` command to spawn new, fresh instance without restoring
     # windows, wait for Sketch to quit and use specific path to Sketch app
     subprocess.Popen([
@@ -167,10 +187,12 @@ def main(argv):
         "sketch://plugin/{}/test".format(manifest['identifier']),
     ])
 
-    # read test output file, parse and log the results 
-    end_with_failed_tests = parse_test_results(outputFile)
+    watch_test_runner_progress(output_file_path)
 
-    # calc and display execution time 
+    # read test output file, parse and log the results
+    end_with_failed_tests = parse_test_results(output_file_path)
+
+    # calc and display execution time
     end_time = time.time()
     print('\nDone in {} seconds'.format(round(end_time - start_time, 2)))
 
@@ -185,7 +207,7 @@ def main(argv):
         GREEN = '\033[92m'
         print(GREEN + 'All test suites passed.')
         sys.exit(0)
-    
+
 
 if __name__ == "__main__":
     main(sys.argv[1:])
