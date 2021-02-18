@@ -17,8 +17,8 @@ function validateResult(result) {
     typeof result !== 'object' ||
     typeof result.pass !== 'boolean' ||
     (result.message &&
-      (typeof result.message !== 'string' &&
-        typeof result.message !== 'function'))
+      typeof result.message !== 'string' &&
+      typeof result.message !== 'function')
   ) {
     throw new Error(
       'Unexpected return from a matcher function.\n' +
@@ -56,6 +56,7 @@ function makeThrowingMatcher(matcher, isNot, actual) {
     )
     let result
 
+    // eslint-disable-next-line no-useless-catch
     try {
       result = matcher.apply(matcherContext, [actual].concat(args))
     } catch (error) {
@@ -101,7 +102,7 @@ const expect = (actual, ...rest) => {
     resolves: { not: {} },
   }
 
-  Object.keys(allMatchers).forEach(name => {
+  Object.keys(allMatchers).forEach((name) => {
     const matcher = allMatchers[name]
     expectation[name] = makeThrowingMatcher(matcher, false, actual)
     expectation.not[name] = makeThrowingMatcher(matcher, true, actual)
@@ -110,19 +111,19 @@ const expect = (actual, ...rest) => {
   return expectation
 }
 
-expect.extend = _matchers => setMatchers(_matchers)
+expect.extend = (_matchers) => setMatchers(_matchers)
 
 // add default jest matchers
 expect.extend(matchers)
 expect.extend(sketchMatchers)
 
-expect.assertions = expected => {
+expect.assertions = (expected) => {
   setState({
     expectedAssertionsNumber: expected,
   })
 }
 
-expect.hasAssertions = expected => {
+expect.hasAssertions = (expected) => {
   utils.ensureNoExpected(expected, '.hasAssertions')
   setState({
     isExpectingAssertions: true,
