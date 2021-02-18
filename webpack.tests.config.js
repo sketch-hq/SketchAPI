@@ -121,10 +121,17 @@ function source(tests, outputFileName) {
       }`
   }
 
-  const runner = ({ context, suites, createNewDocument, expect }) => {
+  const runner = ({
+    context,
+    suites,
+    createNewDocument,
+    expect,
+    onProgress,
+  }) => {
     // Runs all test suites
+    const numSuites = Object.entries(suites).length
     var all = []
-    Object.entries(suites).forEach(([suiteTitle, val]) => {
+    Object.entries(suites).forEach(([suiteTitle, val], index) => {
       let res = Object.entries(val.source.tests).map(([title, test]) => {
         var status = 'pending'
         var document = createNewDocument()
@@ -160,6 +167,11 @@ function source(tests, outputFileName) {
       })
 
       all = all.concat(res)
+
+      if (!onProgress) return
+
+      const progress = index / (numSuites - 1)
+      onProgress(progress)
     })
 
     return all
@@ -169,20 +181,50 @@ function source(tests, outputFileName) {
   var testSuites = {}
   ${tests.reduce(reducer('testSuites'), '')}
 
+  // Returns file attributes with extended file attributes containing the
+  // progress information.
+  const attributes = (fractionCompleted) => {
+    const data = NSString.alloc()
+                  .initWithString(String(fractionCompleted))
+                  .dataUsingEncoding(NSASCIIStringEncoding)
+    return {
+      'NSFileExtendedAttributes': {
+        'com.apple.progress.fractionCompleted': data
+      }
+    }
+  }
+
   export default function(context) {
     const path = require('path')
     const os = require('os')
     const sketch = require('sketch')
+
+    const fileManager = NSFileManager.defaultManager()
+    const out = path.join(os.tmpdir(), '${outputFileName}')
+
+    // Create the results file and write extended file attributes with zero
+    // progress information
+    fileManager.createFileAtPath_contents_attributes(
+      out,
+      nil,
+      attributes(0),
+    )
 
     const runner = ${runner.toString()}
     const result = runner({ 
       context,
       expect,
       suites: testSuites,
-      createNewDocument: () => { return sketch.fromNative(MSDocumentData.new()) }
+      createNewDocument: () => { return sketch.fromNative(MSDocumentData.new()) },
+      onProgress: (fraction) => { // update the extended file attributes
+        fileManager.setAttributes_ofItemAtPath_error(
+          attributes(fraction),
+          out,
+          nil,
+        )
+      },
     })
 
-    const out = path.join(os.tmpdir(), '${outputFileName}')
     const data = NSString.alloc().initWithString(JSON.stringify(result))
     const err = MOPointer.alloc().init()
 
@@ -193,7 +235,8 @@ function source(tests, outputFileName) {
       err
     )
 
-    sketch.UI.message('✅ Test output written to disk.')
+    console.log('✅ Test results saved to: ' + out)
+    sketch.UI.message('✅ Test results saved to disk.')
   }
   `
 }
