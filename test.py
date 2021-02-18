@@ -160,8 +160,10 @@ def main(argv):
         data = f.read()
 
     manifest = json.loads(data)
+    # use macOS `open` command to spawn new, fresh instance without restoring
+    # windows, wait for Sketch to quit and use specific path to Sketch app
     subprocess.Popen([
-        "open", "-a", sketch,
+        "open", "-nFa", sketch,
         "sketch://plugin/{}/test".format(manifest['identifier']),
     ])
 
