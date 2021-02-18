@@ -8,9 +8,7 @@
   "homepage": "https://github.com/sketch-hq/SketchAPI",
   "scripts": {
     "build": "./build.sh",
-    "test": "skpm-test",
-    "test:latest": "skpm-test --app=latest",
-    "test:xcode": "skpm-test --app=xcode",
+    "test:build": "webpack --config webpack.tests.config.js --env.identifier=$npm_config_identifier --env.outputFileName=$npm_config_output",
     "lint": "eslint \"Source/**\"",
     "format-check": "prettier --check \"**/*.{js,json}\"",
     "api-location:write": "defaults write com.bohemiancoding.sketch3 SketchAPILocation \"$(pwd)/build\"",
