@@ -6,7 +6,7 @@ npm run test:build \
 --identifier=${IDENTIFIER} \
 --output=${OUTPUT_FILE_PATH} && \
 
-python3 test.py \
+python3 run_tests.py \
 -s /Applications/Sketch.app \
 -p build/SketchIntegrationTests-xpto.sketchplugin \
 -o ${OUTPUT_FILE_PATH}
