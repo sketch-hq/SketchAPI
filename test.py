@@ -8,6 +8,9 @@ import time
 import re
 from pathlib import Path, PurePath
 
+# timeout (in seconds) between test runs
+TEST_TIMEOUT = 5
+
 
 def group_results_by_parent(results):
     grouped_results = {}
@@ -62,9 +65,10 @@ def watch_test_runner_progress(file_path):
     # Wait for output file to be available on disk
     while not os.path.exists(file_path):
         time.sleep(2)
-    
+
     if os.path.isfile(file_path):
         progress_percentage = 0
+        start_time = time.time()
 
         while not (progress_percentage == 100):
             stream = subprocess.Popen(
@@ -75,11 +79,20 @@ def watch_test_runner_progress(file_path):
             output = output.split("com.apple.progress.fractionCompleted:")[1]
             match = re.search('\d+(.\d+)*', output)
 
-            progress_percentage = float(match.group(0)) * 100
-            print('Running tests - {}%'.format(round(progress_percentage, 2)), end="\r")
+            new_progress_percentage = float(match.group(0)) * 100
             time.sleep(1)
+
+            if (new_progress_percentage != progress_percentage):
+                progress_percentage = new_progress_percentage
+                start_time = time.time()
+                print('Running tests - {}%'.format(round(progress_percentage, 2)),
+                      end='\r')
+            else:
+                end_time = time.time()
+                if (end_time - start_time > TEST_TIMEOUT):
+                    raise Exception('Timeout')
     else:
-        raise 'File not found'
+        raise Exception('File not found')
 
 
 def print_results(results):
@@ -113,7 +126,7 @@ def print_results(results):
 
 def parse_test_results(file_path):
     if os.path.isfile(file_path):
-        # Open the output file and parse the results 
+        # Open the output file and parse the results
         with open(file_path, 'r') as f:
             data = f.read()
             json_data = json.loads(data)
@@ -121,12 +134,10 @@ def parse_test_results(file_path):
             grouped_results = group_results_by_parent(json_data)
             print_results(grouped_results)
 
-            # remove test output file
-            os.remove(file_path)
-
-            return has_failed_tests(json_data)
+            if (has_failed_tests(json_data)):
+                raise Exception('Finished with failed tests')
     else:
-        raise 'File not found'
+        raise Exception('File not found')
 
 
 def main(argv):
@@ -187,27 +198,33 @@ def main(argv):
         "sketch://plugin/{}/test".format(manifest['identifier']),
     ])
 
-    watch_test_runner_progress(output_file_path)
+    try:
+        # wait until test runner finishes running all tests
+        watch_test_runner_progress(output_file_path)
 
-    # read test output file, parse and log the results
-    end_with_failed_tests = parse_test_results(output_file_path)
+        # read test output file, parse and log the results
+        parse_test_results(output_file_path)
 
-    # calc and display execution time
-    end_time = time.time()
-    print('\nDone in {} seconds'.format(round(end_time - start_time, 2)))
+        # calc and display execution time
+        end_time = time.time()
+        print('\nDone in {} seconds'.format(round(end_time - start_time, 2)))
 
-    # cleanup and delete the symbolic link
-    os.remove(plugin_path)
-
-    if (end_with_failed_tests):
-        RED = '\033[91m'
-        print(RED + 'Failed with exit code 1')
-        sys.exit(1)
-    else:
         GREEN = '\033[92m'
         print(GREEN + 'All test suites passed.')
         sys.exit(0)
 
+    except Exception as e:
+        RED = '\033[91m'
+        print(RED + '{}. Failed with exit code 1.'.format(e))
+        sys.exit(1)
+        
+    finally:
+        # remove test output file
+        if os.path.isfile(output_file_path):
+            os.remove(output_file_path)
+
+        # cleanup and delete the symbolic link
+        os.remove(plugin_path)
 
 if __name__ == "__main__":
     main(sys.argv[1:])
