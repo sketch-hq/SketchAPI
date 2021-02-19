@@ -10,8 +10,7 @@ import {
 } from '..'
 
 test('non existing settings should return undefined', () => {
-  expect(settingForKey('non-existing-key')).toBe('foo')
-  // expect(settingForKey('non-existing-key')).toBe(undefined)
+  expect(settingForKey('non-existing-key')).toBe(undefined)
 })
 
 test('should set a boolean', () => {
