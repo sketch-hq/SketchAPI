@@ -200,7 +200,7 @@ function source(tests, output) {
     const sketch = require('sketch')
 
     const fileManager = NSFileManager.defaultManager()
-    const out = path.join('${process.cwd()}/${output}')
+    const out = '${path.resolve(output)}'
 
     // Create the results file and write extended file attributes with zero
     // progress information

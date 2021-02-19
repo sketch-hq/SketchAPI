@@ -3,7 +3,6 @@ import sys
 import getopt
 import os
 import json
-import tempfile
 import time
 import re
 from pathlib import Path, PurePath
@@ -16,25 +15,15 @@ def group_results_by_parent(results):
     grouped_results = {}
 
     for result in results:
-        parent_title = result['ancestorTitles'][0]
-        if (parent_title in grouped_results):
-            parent = grouped_results[result['ancestorTitles'][0]]
-            parent['results'].append({
-                'ancestorTitles': result['ancestorTitles'][1:],
-                'title': result['title'],
-                'status': result['status']
-            })
-        else:
-            grouped_results[parent_title] = {
-                'relativePath': result['relativePath'],
-                'results': [
-                    {
-                        'ancestorTitles': result['ancestorTitles'][1:],
-                        'title': result['title'],
-                        'status': result['status'],
-                    },
-                ]
-            }
+        parent_title = result['ancestorTitles'][0] # test suite name
+        grouped_results[parent_title] = grouped_results.get(parent_title, {
+            'relativePath': result['relativePath'],
+            'results': [],
+        })
+
+        # drop the suite name from the ancestors
+        result['ancestorTitles'] = result['ancestorTitles'][1:]
+        grouped_results[parent_title]['results'].append(result)
 
     return grouped_results
 
@@ -44,63 +33,63 @@ def colored_status_text(status, status_text):
     RED = '\033[91m'
     RESET = "\033[0;0m"
 
-    status_color = GREEN if status == 'passed' else RED
+    status_color = GREEN if status == "passed" else RED
     return status_color + status_text + RESET
 
 
 def has_failed_tests(results):
-    has_failed_tests = False
-
     for result in results:
-        if result['status'] == 'failed':
-            has_failed_tests = True
-            break
+        if result['status'] == "failed":
+            return True
 
-    return has_failed_tests
+    return False
 
 
-# Read 'com.apple.progress.fractionCompleted' metafield from ouput file
-# and display the test runner progress.
+# Read 'com.apple.progress.fractionCompleted' extended file attribute from
+# ouput file to display the test runner progress.
 def watch_test_runner_progress(file_path):
     # Wait for output file to be available on disk
     while not os.path.exists(file_path):
         time.sleep(2)
 
-    if os.path.isfile(file_path):
-        progress_percentage = 0
-        start_time = time.time()
+    if not os.path.isfile(file_path):
+        raise Exception("File not found")
 
-        while not (progress_percentage == 100):
-            stream = subprocess.Popen(
-                ['xattr', '-l', file_path],
-                stdout=subprocess.PIPE)
+    progress = 0
+    last_progress_time = time.time()
 
-            output = str(stream.communicate())
-            output = output.split("com.apple.progress.fractionCompleted:")[1]
-            match = re.search('\d+(.\d+)*', output)
+    while progress < 1:
+        stream = subprocess.Popen(
+            ['xattr', '-l', file_path],
+            stdout=subprocess.PIPE)
 
-            new_progress_percentage = float(match.group(0)) * 100
+        output = str(stream.communicate())
+        output = output.split("com.apple.progress.fractionCompleted:")[1]
+        match = re.search('\d+(.\d+)*', output)
+
+        latest_progress = float(match.group(0))
+        if latest_progress == progress:
+            # no progress since last run
+            if (time.time() - last_progress_time > TEST_TIMEOUT):
+                raise Exception("Timeout")
+
             time.sleep(1)
+            continue
 
-            if (new_progress_percentage != progress_percentage):
-                progress_percentage = new_progress_percentage
-                start_time = time.time()
-                print('Running tests - {}%'.format(round(progress_percentage, 2)),
-                      end='\r')
-            else:
-                end_time = time.time()
-                if (end_time - start_time > TEST_TIMEOUT):
-                    raise Exception('Timeout')
-    else:
-        raise Exception('File not found')
+        progress = latest_progress
+        print("Running tests - {}%".format(round(progress * 100, 2)),
+                end='\r')
+
+        time.sleep(1)
+        last_progress_time = time.time()
 
 
 def print_results(results):
     for parent_name in results:
         test_results = results[parent_name]["results"]
 
-        global_status = 'failed' if has_failed_tests(
-            test_results) else 'passed'
+        global_status = "failed" if has_failed_tests(
+            test_results) else "passed"
 
         print('\n{status} {name} \033[1m{relativePath}\033[0;0m'.format(
             status=colored_status_text(global_status, global_status.upper()),
@@ -109,14 +98,9 @@ def print_results(results):
         ))
 
         for result in test_results:
-            ancestorTitles = result['ancestorTitles']
-            ancestors = ''
-
-            if (len(ancestorTitles)):
-                for ancestor in result['ancestorTitles']:
-                    ancestors += ' → {}'.format(ancestor)
-
-            status_text = '✔' if result['status'] == 'passed' else '𐄂'
+            status_text = "✔" if result['status'] == "passed" else "𐄂"
+            ancestors = " → ".join(result.get('ancestorTitles', []))
+            
             print('{status} {ancestors} {title}'.format(
                 status=colored_status_text(result['status'], status_text),
                 ancestors=ancestors,
@@ -125,19 +109,19 @@ def print_results(results):
 
 
 def parse_test_results(file_path):
-    if os.path.isfile(file_path):
-        # Open the output file and parse the results
-        with open(file_path, 'r') as f:
-            data = f.read()
-            json_data = json.loads(data)
-
-            grouped_results = group_results_by_parent(json_data)
-            print_results(grouped_results)
-
-            if (has_failed_tests(json_data)):
-                raise Exception('Finished with failed tests')
-    else:
+    if not os.path.isfile(file_path):
         raise Exception('File not found')
+
+    # Open the output file and parse the results
+    with open(file_path, 'r') as f:
+        data = f.read()
+        json_data = json.loads(data)
+
+        grouped_results = group_results_by_parent(json_data)
+        print_results(grouped_results)
+
+        if (has_failed_tests(json_data)):
+            raise Exception('Finished with failed tests')
 
 
 def main(argv):
@@ -162,7 +146,7 @@ def main(argv):
         elif opt in ("-p", "--plugin"):
             plugin = arg
         elif opt in ("-o", "--outputFilePath"):
-            output_file_path = PurePath(os.getcwd(), arg)
+            output_file_path = Path(arg).resolve()
 
     if not plugin:
         print('test.py -s <sketch> -p <plugin> -o <outputFilePath>')
