@@ -14,18 +14,6 @@ const coreModules = Object.keys(
   require('./core-modules/package.json').dependencies
 ).map((name) => name.replace(/^@skpm\/(.+)/, '$1'))
 
-// TODO:
-// ✔ scan source folder recursively
-// ✔ skip if ignored
-// ✔ export default module containing test suites, bundle all into single script
-// ✔ load output file
-// ✔ parse results
-// ✔ return appropriate exit code
-// ✔ use UUID for plugin name and identifier in manifest
-// - use argument as output file path (include in script)
-// - delete plugin after run
-// ✔ Run plugin within Sketch using `open`
-
 /**
  * Walks a directory and returns a generator for all files within the
  * directory and all included subdirectories.
@@ -68,7 +56,7 @@ function manifest(pkg, identifier) {
       },
     ],
     version: pkg.version,
-    name: 'Sketch API Integration Tests',
+    name: `Sketch API Integration Tests (${identifier})`,
     identifier: `com.sketch.plugin.integration-tests.${identifier}`,
     disableCocoaScriptPreprocessor: true,
   })
@@ -251,6 +239,9 @@ let src = (output) => source(testSuites(process.cwd()), output)
 module.exports = ({ identifier, output }) => {
   // To allow multiple instances of Sketch to run API tests concurrently
   // the plugin must use a unique name and plugin identifier.
+  //
+  // The `identifier` and `output` parameters are passed in from the
+  // command-line.
   //
   // The plugin itself is written to the build artefacts and can be used
   // from there by copying into:
