@@ -28,15 +28,6 @@ def group_results_by_parent(results):
     return grouped_results
 
 
-def colored_status_text(status, status_text):
-    GREEN = '\033[92m'
-    RED = '\033[91m'
-    RESET = "\033[0;0m"
-
-    status_color = GREEN if status == "passed" else RED
-    return status_color + status_text + RESET
-
-
 def has_failed_tests(results):
     for result in results:
         if result['status'] == "failed":
@@ -91,8 +82,8 @@ def print_results(results):
         global_status = "failed" if has_failed_tests(
             test_results) else "passed"
 
-        print('\n{status} {name} \033[1m{relativePath}\033[0;0m'.format(
-            status=colored_status_text(global_status, global_status.upper()),
+        print('\n{status} {name} {relativePath}'.format(
+            status=global_status.upper(),
             name=parent_name,
             relativePath=results[parent_name]['relativePath']
         ))
@@ -102,7 +93,7 @@ def print_results(results):
             ancestors = " > ".join(result.get('ancestorTitles', []))
             
             print('{status} {ancestors} {title}'.format(
-                status=colored_status_text(result['status'], status_text),
+                status=status_text,
                 ancestors=ancestors,
                 title=result['title']
             ))
@@ -193,13 +184,11 @@ def main(argv):
         end_time = time.time()
         print('\nDone in {} seconds'.format(round(end_time - start_time, 2)))
 
-        GREEN = '\033[92m'
-        print(GREEN + 'All test suites passed.')
+        print('All test suites passed.')
         sys.exit(0)
 
     except Exception as e:
-        RED = '\033[91m'
-        print(RED + '{}. Failed with exit code 1.'.format(e))
+        print('{}. Failed with exit code 1.'.format(e))
         sys.exit(1)
         
     finally:
