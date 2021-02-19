@@ -98,8 +98,8 @@ def print_results(results):
         ))
 
         for result in test_results:
-            status_text = "✔" if result['status'] == "passed" else "𐄂"
-            ancestors = " → ".join(result.get('ancestorTitles', []))
+            status_text = "PASSED" if result['status'] == "passed" else "FAILED"
+            ancestors = " > ".join(result.get('ancestorTitles', []))
             
             print('{status} {ancestors} {title}'.format(
                 status=colored_status_text(result['status'], status_text),
