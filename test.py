@@ -125,7 +125,7 @@ def parse_test_results(file_path):
 
 
 def main(argv):
-    sketch = '/Applications/Sketch.app'
+    sketch = '/Applications/Sketch.app' # default Sketch installation path
     plugin = ''
     output_file_path = ''
 
