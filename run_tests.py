@@ -141,6 +141,7 @@ def main(argv):
 
     if not plugin:
         print('test.py -s <sketch> -p <plugin> -o <outputFilePath>')
+        sys.exit(2)
 
     # create a symbolic link to the plugin because Sketch expects it to
     # be inside the Application Support Plugins folder.
