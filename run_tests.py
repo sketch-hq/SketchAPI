@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import subprocess
 import sys
 import getopt
@@ -5,6 +7,15 @@ import os
 import json
 import time
 import re
+
+terminate_sketch_on_completion = False
+try:
+    import psutil
+    terminate_sketch_on_completion = True
+except ImportError:
+    print('Sketch will remain open after running the tests and must be terminated manually.')
+
+
 from pathlib import Path, PurePath
 
 # timeout (in seconds) between test runs
@@ -68,7 +79,7 @@ def watch_test_runner_progress(file_path):
             continue
 
         progress = latest_progress
-        print("Running tests - {}%".format(round(progress * 100, 2)),
+        print("Running tests: {}% complete".format(round(progress * 100, 2)),
                 end='\r')
 
         time.sleep(1)
@@ -113,6 +124,35 @@ def parse_test_results(file_path):
 
         if (has_failed_tests(json_data)):
             raise Exception('Finished with failed tests')
+
+def terminate_process(path):
+    for proc in psutil.process_iter(['cmdline', 'name', 'pid', 'status']):
+        pid = proc.info.get('pid')
+
+        if not pid: continue
+        if not psutil.pid_exists(pid): continue
+        if not proc.is_running(): continue
+
+        try:
+            exe = proc.exe()
+        except Exception as e:
+            print("Could not get executable for process {0}: {1}".format(
+                pid,
+                e
+            ))
+            continue
+
+        name = proc.info['name']
+
+        # Use partial string comparison because binary is placed within the
+        # application bundle in /Contents/MacOS/Sketch and the bundle also
+        # includes binaries for XPC services such as Mirror and Assistants.
+        # Furthermore, pre-release builds of Sketch have their binaries named
+        # differently, e.g. Sketch Beta.
+        if exe and exe.startswith(F"{path}/Contents/MacOS"):
+            print(f"Terminating process {pid}: {proc.info}")
+            proc.kill()     
+            break
 
 
 def main(argv):
@@ -199,6 +239,8 @@ def main(argv):
     finally:
         # cleanup and delete the symbolic link
         os.remove(plugin_path)
+
+        if terminate_sketch_on_completion: terminate_process(sketch)
 
 if __name__ == "__main__":
     main(sys.argv[1:])
