@@ -109,13 +109,7 @@ Note, any plugins you have installed or code you invoke in Sketch's _Plugins_ �
 
 The SketchAPI builds on top of macOS and internal Sketch APIs via CocoaScript. To ensure the API works for a specific Sketch version or build, this repository includes `*.test.js` files containing integration tests.
 
-These integration tests are compiled into a single test plugin using Webpack and can run by the `test.py` Python script, or from the Sketch application menu in _Plugins_ › _Sketch Integration Tests (…)_ › _Test Sketch API_.
-
-**Build and run test plugin**
-
-```sh
-./run_tests.sh
-```
+These integration tests are compiled into a single test plugin using Webpack and can run by the `run_tests.py` Python script, or from the Sketch application menu.
 
 **Build test plugin**
 
@@ -143,7 +137,9 @@ Optionally, specify the Sketch installation to be used for the tests. If none is
 
 Tests can also be run manually from within Sketch:
 
-1. Install the Sketch Integration Tests
+1. Doubleclick to install the `SketchIntegrationTests-$UUID.sketchplugin`.
+2. Open Sketch version to test.
+3. Select _Test Sketch API_ from the application menu in _Plugins_ › _Sketch Integration Tests (`$UUID`)_
 
 ## Acknowledgements
 
