@@ -129,6 +129,22 @@ The output `FILE_PATH` is "baked" into the plugin. Test results are always writt
 
 > **Note:** The Sketch JavaScript API does not need to be rebuilt. The integration tests use the API bundled within Sketch or the custom API location specified in the user defaults.
 
+**Run test plugin**
+
+To run the integration test plugin from the command-line, you must provide the path to the plugin and the same output file path specified at build-time of the plugin.
+
+```sh
+python run_tests.py -p /path/to/SketchIntegrationTests-$UUID.sketchplugin -o FILE_PATH [-s SKETCH_PATH]
+```
+
+Optionally, specify the Sketch installation to be used for the tests. If none is provided the default installation path `/Applications/Sketch.app` is going to be used.
+
+> **Note:** Tests can be run concurrently but only for different Sketch installations. Only one test run per Sketch installation location is supported because the Sketch process is terminated at the end of the test run based on its path on disk.
+
+Tests can also be run manually from within Sketch:
+
+1. Install the Sketch Integration Tests
+
 ## Acknowledgements
 
 We would like to thank:

@@ -150,7 +150,7 @@ def terminate_process(path):
         # Furthermore, pre-release builds of Sketch have their binaries named
         # differently, e.g. Sketch Beta.
         if exe and exe.startswith(F"{path}/Contents/MacOS"):
-            print(f"Terminating process {pid}: {proc.info}")
+            print(f"Terminating process: {proc.info}")
             proc.kill()     
             break
 
