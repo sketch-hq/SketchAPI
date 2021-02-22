@@ -139,7 +139,7 @@ def main(argv):
         elif opt in ("-o", "--outputFilePath"):
             output_file_path = Path(arg).resolve()
 
-    if not plugin:
+    if not plugin or not output_file_path:
         print('test.py -s <sketch> -p <plugin> -o <outputFilePath>')
         sys.exit(2)
 
@@ -156,6 +156,10 @@ def main(argv):
         os.remove(plugin_path)
 
     os.symlink(os.path.abspath(plugin), plugin_path, target_is_directory=True)
+
+    # remove any previous test results
+    if os.path.exists(output_file_path):
+        os.remove(output_file_path)
 
     # start execution time
     start_time = time.time()
@@ -193,10 +197,6 @@ def main(argv):
         sys.exit(1)
         
     finally:
-        # remove test output file
-        if os.path.isfile(output_file_path):
-            os.remove(output_file_path)
-
         # cleanup and delete the symbolic link
         os.remove(plugin_path)
 

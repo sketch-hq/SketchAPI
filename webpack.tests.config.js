@@ -213,7 +213,7 @@ function source(tests, output) {
       },
     })
 
-    const data = NSString.alloc().initWithString(JSON.stringify(result))
+    const data = NSString.alloc().initWithString(JSON.stringify(result, null, 2))
     const err = MOPointer.alloc().init()
 
     data.writeToFile_atomically_encoding_error(
