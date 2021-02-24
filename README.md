@@ -119,6 +119,12 @@ To build the plugin separately, e.g. to install and run it manually, run this co
 npm run test:build --identifier=IDENTIFIER --output=FILE_PATH
 ```
 
+To build the plugin including only one spec file, e.g. run tests from one spec only, run this command:
+
+```sh
+npm run test:build --identifier=IDENTIFIER --output=FILE_PATH --spec=SpecFileName.test.js
+```
+
 The output `FILE_PATH` is "baked" into the plugin. Test results are always written to the same file, overwriting any previous contents. Use different `IDENTIFIER` values if you are testing different versions of Sketch or want to run integration tests concurrently on the same machine.
 
 > **Note:** The Sketch JavaScript API does not need to be rebuilt. The integration tests use the API bundled within Sketch or the custom API location specified in the user defaults.
