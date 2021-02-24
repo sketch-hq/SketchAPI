@@ -63,6 +63,28 @@ function manifest(pkg, identifier) {
 }
 
 /**
+ * Scan a given directory searching for the given test file.
+ *
+ * @param {string} dir A path to a directory containing test files.
+ * @param {string} fileName The spec file name.
+ */
+function searchTestFile(dir, fileName) {
+  const isIgnored = globby.gitignore.sync()
+  const isTest = /(.*\/)*__tests__\/(.*)\.test\.js/i
+
+  let testFile = []
+  for (const p of walk(dir)) {
+    if (isIgnored(p)) continue
+    if (!isTest.test(p)) continue
+    if (!new RegExp(fileName).test(p)) continue
+
+    testFile.push({ name: p.replace(isTest, '$2'), path: p })
+  }
+
+  return testFile
+}
+
+/**
  * Scans a given directory and returns a `Promise` that resolves with
  * a list of test suites containing name and path for each entry.
  *
@@ -81,6 +103,14 @@ function testSuites(dir) {
   }
 
   return all
+}
+
+const findTestSuites = (spec) => {
+  const testFileRegex = /\w*.test\.js/i
+
+  return testFileRegex.test(spec)
+    ? searchTestFile(process.cwd(), spec)
+    : testSuites(process.cwd())
 }
 
 /**
@@ -191,7 +221,8 @@ function source(tests, output) {
 
       if (!onProgress) return
 
-      const progress = index / (numSuites - 1)
+      // When only one suite return "1", otherwhise progress will always be "0"
+      const progress = numSuites === 1 ? 1 : index / (numSuites - 1)
       onProgress(progress)
     })
 
@@ -269,9 +300,9 @@ const { NODE_ENV } = process.env
 /**
  * Creates webpack configuration
  */
-let src = (output) => source(testSuites(process.cwd()), output)
+let src = (output, spec) => source(findTestSuites(spec), output)
 
-module.exports = ({ identifier, output }) => {
+module.exports = ({ identifier, output, spec }) => {
   // To allow multiple instances of Sketch to run API tests concurrently
   // the plugin must use a unique name and plugin identifier.
   //
@@ -343,7 +374,7 @@ module.exports = ({ identifier, output }) => {
     plugins: [
       // All __tests__/*.test.js files are gathered and bundled as a single plugin.
       new VirtualModulesPlugin({
-        './tests.js': src(output),
+        './tests.js': src(output, spec),
       }),
       new CopyPlugin({
         patterns: [
