@@ -32,7 +32,7 @@
     "CGRectMake": "readonly",
     "MSArtboardGroup": "readonly",
     "MSPage": "readonly",
-    "MSApplicationMetadata": "readonly",
+    "BCSketchInfo": "readonly",
     "log": "readonly",
     "NSApplication": "readonly",
     "NSDocumentController": "readonly",
