@@ -115,14 +115,46 @@ function source(tests, output) {
     createNewDocument,
     expect,
     onProgress,
+    prepareStackTrace,
   }) => {
+    function getTestFailure(err) {
+      let testFailure
+      if (err instanceof Error) {
+        testFailure = {
+          message: err.message,
+          name: err.name,
+          stack: prepareStackTrace(err.stack || ''),
+        }
+        if (err.actual) {
+          testFailure.actual = err.actual
+          testFailure.expected = err.expected
+          testFailure.operator = err.operator
+        }
+        if (err.nativeException) {
+          testFailure.message += ' '
+          testFailure.message += String(err.nativeException.reason())
+        }
+      } else if (err.reason && err.name) {
+        testFailure = {
+          message: String(err.reason()),
+          name: String(err.name()),
+        }
+      } else {
+        testFailure = err
+      }
+      return testFailure
+    }
+
     // Runs all test suites
     const numSuites = Object.entries(suites).length
-    var all = []
+    let all = []
     Object.entries(suites).forEach(([suiteTitle, val], index) => {
       let res = Object.entries(val.source.tests).map(([title, test]) => {
-        var status = 'pending'
-        var document = createNewDocument()
+        const document = createNewDocument()
+
+        let status = 'pending'
+        let failureReason
+
         try {
           expect.resetAssertionsLocalState()
 
@@ -132,11 +164,11 @@ function source(tests, output) {
           // TODO: check if the document needs to be closed, what happens
           // with unsaved changes, etc. or if it would be better to have
           // unit tests handle document creation and closing.
-          let t = test(context, document)
-          console.log(typeof t)
+          test(context, document)
           status = 'passed'
         } catch (err) {
           status = 'failed'
+          failureReason = getTestFailure(err)
         }
 
         try {
@@ -151,6 +183,7 @@ function source(tests, output) {
           status,
           title,
           relativePath: `.${val.path.split(/SketchAPI/)[1]}`,
+          failureReason,
         }
       })
 
@@ -186,6 +219,7 @@ function source(tests, output) {
     const path = require('path')
     const os = require('os')
     const sketch = require('sketch')
+    const prepareStackTrace = require('sketch-utils/prepare-stack-trace')
 
     const fileManager = NSFileManager.defaultManager()
     const out = '${path.resolve(output)}'
@@ -211,6 +245,7 @@ function source(tests, output) {
           nil,
         )
       },
+      prepareStackTrace
     })
 
     const data = NSString.alloc().initWithString(JSON.stringify(result, null, 2))
