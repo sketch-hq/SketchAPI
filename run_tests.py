@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+from pathlib import Path, PurePath
 import subprocess
 import sys
 import getopt
@@ -16,8 +17,6 @@ except ImportError:
     print('Sketch will remain open after running the tests and must be terminated manually.')
 
 
-from pathlib import Path, PurePath
-
 # timeout (in seconds) between test runs
 TEST_TIMEOUT = 5
 
@@ -26,7 +25,7 @@ def group_results_by_parent(results):
     grouped_results = {}
 
     for result in results:
-        parent_title = result['ancestorTitles'][0] # test suite name
+        parent_title = result['ancestorTitles'][0]  # test suite name
         grouped_results[parent_title] = grouped_results.get(parent_title, {
             'relativePath': result['relativePath'],
             'results': [],
@@ -80,7 +79,7 @@ def watch_test_runner_progress(file_path):
 
         progress = latest_progress
         print("Running tests: {}% complete".format(round(progress * 100, 2)),
-                end='\r')
+              end='\r')
 
         time.sleep(1)
         last_progress_time = time.time()
@@ -102,11 +101,17 @@ def print_results(results):
         for result in test_results:
             status_text = "PASSED" if result['status'] == "passed" else "FAILED"
             ancestors = " > ".join(result.get('ancestorTitles', []))
-            
-            print('{status} {ancestors} {title}'.format(
+
+            failure_reason = ''
+            if 'failureReason' in result:
+                failure_reason = re.sub(
+                    '{{{((\w*)|(\/\w*))}}}', '', result['failureReason']['message'])
+
+            print('{status} {ancestors} {title}\n{failure_reason}'.format(
                 status=status_text,
                 ancestors=ancestors,
-                title=result['title']
+                title=result['title'],
+                failure_reason=failure_reason
             ))
 
 
@@ -125,13 +130,17 @@ def parse_test_results(file_path):
         if (has_failed_tests(json_data)):
             raise Exception('Finished with failed tests')
 
+
 def terminate_process(path):
     for proc in psutil.process_iter(['cmdline', 'name', 'pid', 'status']):
         pid = proc.info.get('pid')
 
-        if not pid: continue
-        if not psutil.pid_exists(pid): continue
-        if not proc.is_running(): continue
+        if not pid:
+            continue
+        if not psutil.pid_exists(pid):
+            continue
+        if not proc.is_running():
+            continue
 
         try:
             exe = proc.exe()
@@ -151,12 +160,12 @@ def terminate_process(path):
         # differently, e.g. Sketch Beta.
         if exe and exe.startswith(F"{path}/Contents/MacOS"):
             print(f"Terminating process: {proc.info}")
-            proc.kill()     
+            proc.kill()
             break
 
 
 def main(argv):
-    sketch = '/Applications/Sketch.app' # default Sketch installation path
+    sketch = '/Applications/Sketch.app'  # default Sketch installation path
     plugin = ''
     output_file_path = ''
 
@@ -235,12 +244,14 @@ def main(argv):
     except Exception as e:
         print('{}. Failed with exit code 1.'.format(e))
         sys.exit(1)
-        
+
     finally:
         # cleanup and delete the symbolic link
         os.remove(plugin_path)
 
-        if terminate_sketch_on_completion: terminate_process(sketch)
+        if terminate_sketch_on_completion:
+            terminate_process(sketch)
+
 
 if __name__ == "__main__":
     main(sys.argv[1:])
