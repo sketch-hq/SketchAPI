@@ -1,5 +1,18 @@
 #!/usr/bin/env python3
 
+'''
+
+Usage:
+    run_tests.py -s SKETCH_PATH -p PLUGIN -o OUTPUT_FILE_PATH'
+
+Options:
+    -s SKETCH_PATH      The path to the Sketch.app bundle
+    -p PLUGIN           The path to the plugin that was the result of running `npm run test:build --identifier=X
+                        Will live somewhere like Modules/SketchAPI/build/SketchIntegrationTests-X.sketchplugin
+    -o OUTPUT           Writes the log to here
+
+'''
+
 from pathlib import Path, PurePath
 import subprocess
 import sys
