@@ -116,6 +116,7 @@ These integration tests are compiled into a single test plugin using Webpack and
 To build the plugin separately, e.g. to install and run it manually, run this command:
 
 ```sh
+npm install # if you haven't installed dependencies already
 npm run test:build --identifier=IDENTIFIER --output=FILE_PATH
 ```
 
