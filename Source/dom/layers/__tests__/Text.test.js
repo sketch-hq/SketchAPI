@@ -2,8 +2,6 @@
 import { canBeLogged } from '../../../test-utils'
 import { Text, Rectangle } from '../..'
 
-const { TextLineSpacingBehaviourMap } = Text
-
 test('should create a Text layer', () => {
   const text = new Text()
   expect(text.type).toBe('Text')
@@ -38,11 +36,11 @@ test('should change the text alignment', () => {
   // TextAlignmentMap/TextAlignmentReverseMap are private APIs. Test API
   // the way users would set them instead using raw values.
   const map = {
-    0: 'left', // Visually left aligned
-    1: 'right', // Visually right aligned
-    2: 'center', // Visually centered
-    3: 'justified', // Fully-justified. The last line in a paragraph is natural-aligned.
-    4: 'left', // Indicates the default alignment for script
+    left: 'left', // Visually left aligned
+    right: 'right', // Visually right aligned
+    center: 'center', // Visually centered
+    justified: 'justified', // Fully-justified. The last line in a paragraph is natural-aligned.
+    natural: 'natural', // Indicates the default alignment for script
   }
 
   // The 'natural' aligment defaults to left and is therefore specifically
@@ -70,6 +68,13 @@ test('should change the line spacing behavior', () => {
 
   // default to constant baseline
   expect(text.lineSpacing).toBe(Text.LineSpacing.natural)
+
+  // TextLineSpacingBehaviourMap is private API.
+  const TextLineSpacingBehaviourMap = {
+    variable: 1, // Uses min & max line height on paragraph style
+    constantBaseline: 2, // Uses MSConstantBaselineTypesetter for fixed line height
+    natural: 3, // Uses MSConstantBaselineTypesetter for fixed line heights, and MSEmojiAwareLayoutManagerDelegate for natural line heights
+  }
 
   Object.keys(Text.LineSpacing).forEach((key) => {
     // test setting by name
