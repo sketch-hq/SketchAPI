@@ -72,16 +72,27 @@ function searchTestFile(dir, fileName) {
   const isIgnored = globby.gitignore.sync()
   const isTest = /(.*\/)*__tests__\/(.*)\.test\.js/i
 
-  let testFile = []
+  let testFiles = []
   for (const p of walk(dir)) {
     if (isIgnored(p)) continue
     if (!isTest.test(p)) continue
     if (!new RegExp(fileName).test(p)) continue
 
-    testFile.push({ name: p.replace(isTest, '$2'), path: p })
+    testFiles.push({ name: p.replace(isTest, '$2'), path: p })
   }
 
-  return testFile
+  if (!testFiles) throw `Test file "${fileName}" not found.`
+
+  console.log('Test files:')
+  testFiles.forEach(({ path }, index) => {
+    console.log(
+      `- ${path.split(/SketchAPI/)[1]} ${
+        index === testFiles.length - 1 && '\n'
+      }`
+    )
+  })
+
+  return testFiles
 }
 
 /**
@@ -106,11 +117,7 @@ function testSuites(dir) {
 }
 
 const findTestSuites = (spec) => {
-  const testFileRegex = /\w*.test\.js/i
-
-  return testFileRegex.test(spec)
-    ? searchTestFile(process.cwd(), spec)
-    : testSuites(process.cwd())
+  return spec ? searchTestFile(process.cwd(), spec) : testSuites(process.cwd())
 }
 
 /**
