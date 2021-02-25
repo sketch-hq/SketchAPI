@@ -6,11 +6,19 @@ import { createSharedStyle } from '../../../test-utils'
 test('should create a shared text style from a normal style', (context, document) => {
   // build the shared style
   const { sharedStyle, object } = createSharedStyle(document, Shape)
+
+  const { ...sharedStyleWithoutId } = sharedStyle.style
+  const { ...objectStyleWithoutId } = object.style
+
+  // Compare without ids
+  delete sharedStyleWithoutId.id
+  delete objectStyleWithoutId.id
+
   // check that a shared style can be logged
   log(sharedStyle)
   expect(sharedStyle.type).toBe('SharedStyle')
 
-  expect(sharedStyle.style).toEqual(object.style)
+  expect(sharedStyleWithoutId).toEqual(objectStyleWithoutId)
   expect(sharedStyle.name).toEqual('test shared style')
 
   expect(document.getSharedLayerStyles()).toEqual([sharedStyle])
@@ -21,7 +29,14 @@ test('should create a shared text style from a text style', (context, document) 
   // build the shared style
   const { sharedStyle, object } = createSharedStyle(document, Text)
 
-  expect(sharedStyle.style).toEqual(object.style)
+  const { ...sharedStyleWithoutId } = sharedStyle.style
+  const { ...objectStyleWithoutId } = object.style
+
+  // Compare without ids
+  delete sharedStyleWithoutId.id
+  delete objectStyleWithoutId.id
+
+  expect(sharedStyleWithoutId).toEqual(objectStyleWithoutId)
   expect(document.getSharedLayerStyles()).toEqual([])
   expect(document.getSharedTextStyles()).toEqual([sharedStyle])
 })
