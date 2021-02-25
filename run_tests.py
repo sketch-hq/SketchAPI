@@ -105,7 +105,7 @@ def print_results(results):
         global_status = "failed" if has_failed_tests(
             test_results) else "passed"
 
-        print('\n{status} {name} {relativePath}'.format(
+        print('\n:: {status} {name} {relativePath}'.format(
             status=global_status.upper(),
             name=parent_name,
             relativePath=results[parent_name]['relativePath']
@@ -117,8 +117,8 @@ def print_results(results):
 
             failure_reason = ''
             if 'failureReason' in result:
-                failure_reason = re.sub(
-                    '{{{((\w*)|(\/\w*))}}}', '', result['failureReason']['message'])
+                failure_reason = '{}\n'.format(re.sub(
+                    '{{{((\w*)|(\/\w*))}}}', '', result['failureReason']['message']))
 
             print('{status} {ancestors} {title}\n{failure_reason}'.format(
                 status=status_text,
