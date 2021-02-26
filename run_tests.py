@@ -10,6 +10,7 @@ Options:
     -p PLUGIN           The path to the plugin that was the result of running `npm run test:build --identifier=X
                         Will live somewhere like Modules/SketchAPI/build/SketchIntegrationTests-X.sketchplugin
     -o OUTPUT           Writes the log to here
+    -t TIMEOUT          The duration in seconds for a test to complete, default at 30 seconds. If one test exceeds this time, the entire test run will be aborted.
 
 '''
 
@@ -28,10 +29,6 @@ try:
     terminate_sketch_on_completion = True
 except ImportError:
     print('Sketch will remain open after running the tests and must be terminated manually.')
-
-
-# timeout (in seconds) between test runs
-TEST_TIMEOUT = 5
 
 
 def group_results_by_parent(results):
@@ -61,7 +58,7 @@ def has_failed_tests(results):
 
 # Read 'com.apple.progress.fractionCompleted' extended file attribute from
 # ouput file to display the test runner progress.
-def watch_test_runner_progress(file_path):
+def watch_test_runner_progress(file_path, timeout=30):
     # Wait for output file to be available on disk
     while not os.path.exists(file_path):
         time.sleep(2)
@@ -84,7 +81,7 @@ def watch_test_runner_progress(file_path):
         latest_progress = float(match.group(0))
         if latest_progress == progress:
             # no progress since last run
-            if (time.time() - last_progress_time > TEST_TIMEOUT):
+            if (time.time() - last_progress_time > timeout):
                 raise Exception("Timeout")
 
             time.sleep(1)
@@ -181,18 +178,20 @@ def main(argv):
     sketch = '/Applications/Sketch.app'  # default Sketch installation path
     plugin = ''
     output_file_path = ''
+    timeout = 30
 
+    usage = 'run_tests.py -s <sketch> -p <plugin> -o <outputFilePath> [-t <timeout>]'
     try:
         opts, args = getopt.getopt(
-            argv, "hs:p:o:", [
-                "sketch=", "plugin=", "outputFilePath="])
+            argv, "hs:p:o:t:", [
+                "sketch=", "plugin=", "outputFilePath=", "timeout="])
     except getopt.GetoptError:
-        print('run_tests.py -s <sketch> -p <plugin> -o <outputFilePath>')
+        print(usage)
         sys.exit(2)
 
     for opt, arg in opts:
         if opt == '-h':
-            print('test.py -s <sketch> -p <plugin> -o <outputFilePath>')
+            print(usage)
             sys.exit()
         elif opt in ("-s", "--sketch"):
             sketch = arg
@@ -200,9 +199,11 @@ def main(argv):
             plugin = arg
         elif opt in ("-o", "--outputFilePath"):
             output_file_path = Path(arg).resolve()
+        elif opt in ("-t", "--timeout"):
+            timeout = float(arg)
 
     if not plugin or not output_file_path:
-        print('test.py -s <sketch> -p <plugin> -o <outputFilePath>')
+        print(usage)
         sys.exit(2)
 
     # create a symbolic link to the plugin because Sketch expects it to
@@ -242,7 +243,7 @@ def main(argv):
 
     try:
         # wait until test runner finishes running all tests
-        watch_test_runner_progress(output_file_path)
+        watch_test_runner_progress(output_file_path, timeout)
 
         # read test output file, parse and log the results
         parse_test_results(output_file_path)
