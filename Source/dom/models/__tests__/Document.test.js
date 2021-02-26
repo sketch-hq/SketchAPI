@@ -5,7 +5,7 @@ import {
   canBeLogged,
   outputPath,
 } from '../../../test-utils'
-import { Document, Group, Shape, Text, Swatch } from '../..'
+import { Document, Group, Shape, Text, Swatch, getDocuments } from '../..'
 
 const testOutputPath = outputPath()
 
@@ -177,24 +177,24 @@ test('should remove document gradients', (context, document) => {
   expect(document.gradients[0].name).toEqual('Gradient 2')
 })
 
-let _document
-let documentId
-
 test('should create a new document', () => {
-  _document = new Document()
-  documentId = _document.id
-  const documents = Document.getDocuments()
-  expect(_document.type).toBe('Document')
-  expect(documents.find((d) => d.id === documentId)).toEqual(_document)
+  const document = new Document()
+  const documentId = document.id
+
+  expect(document.type).toBe('Document')
+  expect(getDocuments().find((d) => d.id === documentId)).toEqual(document)
 })
 
 test('path should be undefined before saving it', () => {
-  expect(_document.path).toBe(undefined)
+  const document = new Document()
+  expect(document.path).toBe(undefined)
 })
 
-test('should save a file', () =>
+test('should save a file', () => {
+  const document = new Document()
+
   new Promise((resolve, reject) => {
-    _document.save(
+    document.save(
       `${testOutputPath}/sketch-api-unit-tests.sketch`,
       (err, result) => {
         if (err) {
@@ -204,47 +204,53 @@ test('should save a file', () =>
       }
     )
   }).then((result) => {
-    expect(result).toBe(_document)
-    expect(_document.path).toBe(
+    expect(result).toBe(document)
+    expect(document.path).toBe(
       String(
         NSString.stringWithString(
           `${testOutputPath}/sketch-api-unit-tests.sketch`
         )
       )
     )
-  }))
+  })
+})
 
-test('should save a file without specifying the path', () =>
+test('should save a file without specifying the path', () => {
+  const document = new Document()
+
   new Promise((resolve, reject) => {
-    _document.save((err, result) => {
+    document.save((err, result) => {
       if (err) {
         return reject(err)
       }
       return resolve(result)
     })
   }).then((result) => {
-    expect(result).toBe(_document)
-    expect(_document.path).toBe(
+    expect(result).toBe(document)
+    expect(document.path).toBe(
       String(
         NSString.stringWithString(
           `${testOutputPath}/sketch-api-unit-tests.sketch`
         )
       )
     )
-  }))
+  })
+})
 
 test('should save a file to a specific path when setting the path', () => {
-  _document.path = `${testOutputPath}/sketch-api-unit-tests-2.sketch`
+  const document = new Document()
+
+  document.path = `${testOutputPath}/sketch-api-unit-tests-2.sketch`
   return new Promise((resolve, reject) => {
-    _document.save((err, result) => {
+    document.save((err, result) => {
       if (err) {
         return reject(err)
       }
       return resolve(result)
     })
   }).then((result) => {
-    expect(result).toBe(_document)
-    expect(_document.path).toBe(
+    expect(result).toBe(document)
+    expect(document.path).toBe(
       String(
         NSString.stringWithString(
           `${testOutputPath}/sketch-api-unit-tests-2.sketch`
@@ -255,17 +261,20 @@ test('should save a file to a specific path when setting the path', () => {
 })
 
 test('should close a file', () => {
-  _document.close()
-  const documents = Document.getDocuments()
-  expect(documents.find((d) => d.id === documentId)).toBe(undefined)
+  const document = new Document()
+
+  // Force this to run async
+  setTimeout(() => document.close(), 0)
+
+  expect(getDocuments().find((d) => d.id === document.id)).toBe(undefined)
 })
 
 test('should open a file', () => {
   const document = Document.open(
     `${testOutputPath}/sketch-api-unit-tests.sketch`
   )
-  const documents = Document.getDocuments()
-  expect(documents.find((d) => d.id === document.id)).toEqual(document)
+
+  expect(getDocuments().find((d) => d.id === document.id)).toEqual(document)
   // close it again because when watching the tests, it will open dozens of documents
   document.close()
 })

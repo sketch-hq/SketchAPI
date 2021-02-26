@@ -1,6 +1,21 @@
 /* globals expect, test */
 import { Text, Rectangle, Group } from '../..'
-const { VerticalTextAlignmentMap, TextAlignmentMap } = Text
+
+// Constants from 'dom/style/Text'
+// VerticalTextAlignmentMap  and TextAlignmentMap are private APIs.
+const VerticalTextAlignmentMap = {
+  top: 0, // Visually top aligned
+  center: 1, // Visually centered
+  bottom: 2, // Visually bottom aligned
+}
+
+const TextAlignmentMap = {
+  left: 0, // Visually left aligned
+  right: 1, // Visually right aligned
+  center: 2, // Visually centered
+  justified: 3, // Fully-justified. The last line in a paragraph is natural-aligned.
+  natural: 4, // Indicates the default alignment for script
+}
 
 test('should create a text style for a text layer', () => {
   const { style } = new Text({

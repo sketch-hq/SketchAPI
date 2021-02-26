@@ -11,7 +11,7 @@ const testOutputPath = outputPath()
 
 test('should return exported json data', () => {
   const object = new Shape()
-  const archive = sketch.sketch.export(object, {
+  const archive = sketch.export(object, {
     formats: 'json',
     output: false,
   })
