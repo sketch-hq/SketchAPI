@@ -187,7 +187,7 @@ def main(argv):
             argv, "hs:p:o:", [
                 "sketch=", "plugin=", "outputFilePath="])
     except getopt.GetoptError:
-        print('test.py -s <sketch> -p <plugin> -o <outputFilePath>')
+        print('run_tests.py -s <sketch> -p <plugin> -o <outputFilePath>')
         sys.exit(2)
 
     for opt, arg in opts:
