@@ -229,7 +229,7 @@ def main(argv):
 
     # get the plugin identifier from the manifest, Sketch uses the
     # identifier to look up the corresponding plugin.
-    with open(PurePath(plugin, 'Contents/Sketch/manifest.json'), 'r') as f:
+    with open(PurePath(plugin_path, 'Contents/Sketch/manifest.json'), 'r') as f:
         data = f.read()
 
     manifest = json.loads(data)
