@@ -215,7 +215,9 @@ def main(argv):
 
     # in cases when the execution is stopped, make sure to remove the symbolic
     # link before adding the new one
-    if (os.path.exists(plugin_path)):
+    # We need the two tests because a broken symlink returns false, but the symlink
+    # is still actually there. If it's still actually there, the create symlink command barfs.
+    if os.path.exists(plugin_path) or os.path.islink(plugin_path):
         os.remove(plugin_path)
 
     os.symlink(os.path.abspath(plugin), plugin_path, target_is_directory=True)
