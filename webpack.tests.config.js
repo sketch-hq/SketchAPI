@@ -126,7 +126,7 @@ const findTestSuites = (spec) => {
  *
  * @param {Object[]} tests An array of test suites to run.
  */
-function source(tests, output) {
+function source(identifier, tests) {
   // The test suites are build up by `test` function within unit tests
   // and have the following structure:
   //
@@ -260,12 +260,20 @@ function source(tests, output) {
     const prepareStackTrace = require('sketch-utils/prepare-stack-trace')
 
     const fileManager = NSFileManager.defaultManager()
-    const out = '${path.resolve(output)}'
+    // Use a default path for the test results if not specified by the user,
+    // for instance when running the test plugin from the Sketch app menu.
+    const { 
+      actionContext: {
+        query: {
+          output = path.resolve(os.tmpdir(), "SketchIntegrationTests-${identifier}.log")
+        }, 
+      },
+    } = { actionContext: { query: { output: undefined}}, ...context }
 
     // Create the results file and write extended file attributes with zero
     // progress information
     fileManager.createFileAtPath_contents_attributes(
-      out,
+      output,
       nil,
       attributes(0),
     )
@@ -279,7 +287,7 @@ function source(tests, output) {
       onProgress: (fraction) => { // update the extended file attributes
         fileManager.setAttributes_ofItemAtPath_error(
           attributes(fraction),
-          out,
+          output,
           nil,
         )
       },
@@ -290,13 +298,13 @@ function source(tests, output) {
     const err = MOPointer.alloc().init()
 
     data.writeToFile_atomically_encoding_error(
-      out,
+      output,
       false,
       NSUTF8StringEncoding,
       err
     )
 
-    console.log('✅ Test results saved to: ' + out)
+    console.log('✅ Test results saved to: ' + output)
     sketch.UI.message('✅ Test results saved to disk.')
   }
   `
@@ -307,14 +315,13 @@ const { NODE_ENV } = process.env
 /**
  * Creates webpack configuration
  */
-let src = (output, spec) => source(findTestSuites(spec), output)
+let src = (identifier, spec) => source(identifier, findTestSuites(spec))
 
-module.exports = ({ identifier, output, spec }) => {
+module.exports = ({ identifier, spec }) => {
   // To allow multiple instances of Sketch to run API tests concurrently
   // the plugin must use a unique name and plugin identifier.
   //
-  // The `identifier` and `output` parameters are passed in from the
-  // command-line.
+  // The `identifier` parameter is passed in from the command-line.
   //
   // The plugin itself is written to the build artefacts and can be used
   // from there by copying into:
@@ -381,7 +388,7 @@ module.exports = ({ identifier, output, spec }) => {
     plugins: [
       // All __tests__/*.test.js files are gathered and bundled as a single plugin.
       new VirtualModulesPlugin({
-        './tests.js': src(output, spec),
+        './tests.js': src(identifier, spec),
       }),
       new CopyPlugin({
         patterns: [

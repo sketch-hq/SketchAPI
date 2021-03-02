@@ -113,11 +113,11 @@ These integration tests are compiled into a single test plugin using Webpack and
 
 **Build test plugin**
 
-To build the plugin separately, e.g. to install and run it manually, run this command:
+To build the plugin separately, e.g. to install and run it manually, run the following command.
 
 ```sh
 npm install # if you haven't installed dependencies already
-npm run test:build --identifier=IDENTIFIER --output=FILE_PATH
+npm run test:build --identifier=IDENTIFIER
 ```
 
 To build the plugin including only one spec file, e.g. run tests from one spec only, run this command:
@@ -126,13 +126,13 @@ To build the plugin including only one spec file, e.g. run tests from one spec o
 npm run test:build --identifier=IDENTIFIER --output=FILE_PATH --spec=SpecFileName.test.js
 ```
 
-The output `FILE_PATH` is "baked" into the plugin. Test results are always written to the same file, overwriting any previous contents. Use different `IDENTIFIER` values if you are testing different versions of Sketch or want to run integration tests concurrently on the same machine.
+Use different `IDENTIFIER` values if you are testing different versions of Sketch or want to run integration tests concurrently on the same machine.
 
 > **Note:** The Sketch JavaScript API does not need to be rebuilt. The integration tests use the API bundled within Sketch or the custom API location specified in the user defaults.
 
 **Run test plugin**
 
-To run the integration test plugin from the command-line, you must provide the path to the plugin and the same output file path specified at build-time of the plugin.
+To run the integration test plugin from the command-line, you must provide the path to the plugin and a file path to be used by the plugin to write the test results and can be watched by the Python script for changes.
 
 ```sh
 python run_tests.py -p /path/to/SketchIntegrationTests-$UUID.sketchplugin -o FILE_PATH [-s SKETCH_PATH]
