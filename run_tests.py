@@ -154,6 +154,8 @@ def terminate_process(path):
 
         try:
             exe = proc.exe()
+        except psutil.AccessDenied:
+            continue
         except Exception as e:
             print(f"Could not get executable for process {pid}: {e}", file=sys.stderr)
             continue
@@ -191,11 +193,11 @@ def main(argv):
             print(usage)
             sys.exit()
         elif opt in ("-s", "--sketch"):
-            sketch = arg
+            sketch = Path(arg).expanduser().resolve()
         elif opt in ("-p", "--plugin"):
-            plugin = Path(arg).resolve()
+            plugin = Path(arg).expanduser().resolve()
         elif opt in ("-o", "--outputFilePath"):
-            output_file_path = Path(arg).resolve()
+            output_file_path = Path(arg).expanduser().resolve()
         elif opt in ("-t", "--timeout"):
             timeout = float(arg)
 
@@ -204,9 +206,13 @@ def main(argv):
         sys.exit(2)
 
     if not os.path.exists(plugin):
-        print(f"Plugin does not exist at: {plugin}", file=sys.stderr)
+        print(f"Plugin not found at: {plugin}", file=sys.stderr)
         sys.exit(2)
-
+    
+    if not os.path.exists(sketch):
+        print(f"Sketch bundle not found at: {sketch}", file=sys.stderr)
+        sys.exit(2)
+    
     # create a symbolic link to the plugin because Sketch expects it to
     # be inside the Application Support Plugins folder.
     plugin_path = PurePath(
@@ -241,7 +247,7 @@ def main(argv):
     # windows, wait for Sketch to quit and use specific path to Sketch app
     subprocess.Popen([
         "open", "-nFa", sketch,
-        f"sketch://plugin/{manifest['identifier']}/test",
+        f"sketch://plugin/{manifest['identifier']}/test?output={output_file_path}",
     ])
 
     try:
