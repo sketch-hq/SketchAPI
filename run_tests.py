@@ -28,8 +28,7 @@ try:
     import psutil
     terminate_sketch_on_completion = True
 except ImportError:
-    print('Sketch will remain open after running the tests and must be terminated manually.')
-
+    print('Sketch will remain open after running the tests and must be terminated manually.', file=sys.stderr)
 
 def group_results_by_parent(results):
     grouped_results = {}
@@ -88,8 +87,7 @@ def watch_test_runner_progress(file_path, timeout=30):
             continue
 
         progress = latest_progress
-        print("Running tests: {}% complete".format(round(progress * 100, 2)),
-              end='\r')
+        print(f"Running tests: {round(progress * 100, 2)}% complete", end='\r')
 
         time.sleep(1)
         last_progress_time = time.time()
@@ -151,14 +149,13 @@ def terminate_process(path):
             continue
         if not proc.is_running():
             continue
+        if proc.status() == psutil.STATUS_ZOMBIE:
+            continue
 
         try:
             exe = proc.exe()
         except Exception as e:
-            print("Could not get executable for process {0}: {1}".format(
-                pid,
-                e
-            ))
+            print(f"Could not get executable for process {pid}: {e}", file=sys.stderr)
             continue
 
         name = proc.info['name']
@@ -169,7 +166,7 @@ def terminate_process(path):
         # Furthermore, pre-release builds of Sketch have their binaries named
         # differently, e.g. Sketch Beta.
         if exe and exe.startswith(F"{path}/Contents/MacOS"):
-            print(f"Terminating process: {proc.info}")
+            print(f"Terminating process: {proc.info}", file=sys.stderr)
             proc.kill()
             break
 
@@ -196,7 +193,7 @@ def main(argv):
         elif opt in ("-s", "--sketch"):
             sketch = arg
         elif opt in ("-p", "--plugin"):
-            plugin = arg
+            plugin = Path(arg).resolve()
         elif opt in ("-o", "--outputFilePath"):
             output_file_path = Path(arg).resolve()
         elif opt in ("-t", "--timeout"):
@@ -204,6 +201,10 @@ def main(argv):
 
     if not plugin or not output_file_path:
         print(usage)
+        sys.exit(2)
+
+    if not os.path.exists(plugin):
+        print(f"Plugin does not exist at: {plugin}", file=sys.stderr)
         sys.exit(2)
 
     # create a symbolic link to the plugin because Sketch expects it to
@@ -240,7 +241,7 @@ def main(argv):
     # windows, wait for Sketch to quit and use specific path to Sketch app
     subprocess.Popen([
         "open", "-nFa", sketch,
-        "sketch://plugin/{}/test".format(manifest['identifier']),
+        f"sketch://plugin/{manifest['identifier']}/test",
     ])
 
     try:
@@ -252,13 +253,13 @@ def main(argv):
 
         # calc and display execution time
         end_time = time.time()
-        print('\nDone in {} seconds'.format(round(end_time - start_time, 2)))
+        print(f"\nDone in {round(end_time - start_time, 2)} seconds")
 
         print('All test suites passed.')
         sys.exit(0)
 
     except Exception as e:
-        print('{}. Failed with exit code 1.'.format(e))
+        print("{e}\nFailed with exit code 1")
         sys.exit(1)
 
     finally:
