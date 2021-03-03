@@ -28,7 +28,7 @@ test('default style should not have any fills', () => {
   expect(style.sketchObject.fills().count()).toBe(0)
 })
 
-test('should be in and out of sync with its shared style', (context, document) => {
+test('should be in and out of sync with its shared style', (_context, document) => {
   const { sharedStyle } = createSharedStyle(document, Shape)
 
   const shape = new Shape({

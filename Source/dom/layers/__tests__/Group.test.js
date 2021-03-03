@@ -1,9 +1,8 @@
 /* globals expect, test */
 import { canBeLogged } from '../../../test-utils'
-import { Group, Text, Shape, Rectangle } from '../..'
-import { SmartLayout } from '../../models/SmartLayout'
+import { Group, Text, Shape, Rectangle, SmartLayout } from '../..'
 
-test('should return the layers and can iterate through them', (context, document) => {
+test('should return the layers and can iterate through them', (_context, document) => {
   const page = document.selectedPage
   const group = new Group({ parent: page })
   const text = new Text({ parent: page }) // eslint-disable-line
@@ -20,7 +19,7 @@ test('should return the layers and can iterate through them', (context, document
   expect(groups).toBe(1)
 })
 
-test('should transform a rectangle in page coords to local coords', (context, document) => {
+test('should transform a rectangle in page coords to local coords', (_context, document) => {
   const page = document.selectedPage
   const group = new Group({
     parent: page,
@@ -31,7 +30,7 @@ test('should transform a rectangle in page coords to local coords', (context, do
   expect(local).toEqual(new Rectangle(25, -25, 50, 200))
 })
 
-test('should adjust the frame to fit its layers', (context, document) => {
+test('should adjust the frame to fit its layers', (_context, document) => {
   const page = document.selectedPage
   const group = new Group({
     parent: page,
@@ -46,7 +45,7 @@ test('should adjust the frame to fit its layers', (context, document) => {
   expect(group.frame).toEqual(new Rectangle(150, 150, 50, 50))
 })
 
-test('should create a group', (context, document) => {
+test('should create a group', (_context, document) => {
   const page = document.selectedPage
 
   const group = new Group({ parent: page })
@@ -55,7 +54,7 @@ test('should create a group', (context, document) => {
   canBeLogged(group, Group)
 })
 
-test('should create a group with some layers', (context, document) => {
+test('should create a group with some layers', (_context, document) => {
   const page = document.selectedPage
 
   const group = new Group({
@@ -70,7 +69,7 @@ test('should create a group with some layers', (context, document) => {
   expect(group.layers[0].type).toBe('Text')
 })
 
-test('should add a layer to a group', (context, document) => {
+test('should add a layer to a group', (_context, document) => {
   const page = document.selectedPage
 
   const group = new Group({
@@ -97,7 +96,7 @@ test('should add a layer to a group', (context, document) => {
   expect(group.layers.length).toBe(3)
 })
 
-test('should expose a smartLayout getter/setter', (context, document) => {
+test('should expose a smartLayout getter/setter', (_context, document) => {
   const page = document.selectedPage
   const group = new Group({
     parent: page,

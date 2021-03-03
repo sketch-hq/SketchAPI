@@ -1,11 +1,24 @@
 /* globals expect, test */
 
-import { Gradient, GradientType } from '../Gradient'
+// Gradient is not a public API and must be used with a fill,
+// so it gets imported from the sketch/dom module.
+import { Style } from '../..'
+
+const { FillType, GradientType } = Style
 
 test('should create a default gradient', () => {
-  const gradient = Gradient.from({})
-  expect(String(gradient._object.class())).toBe('MSGradient')
-  expect(gradient.toJSON()).toEqual({
+  const s = new Style({
+    fills: [
+      {
+        fillType: FillType.Gradient,
+        gradient: {},
+      },
+    ],
+  })
+
+  expect(s.fills.length).toEqual(1)
+  expect(String(s.fills[0].gradient._object.class())).toBe('MSGradient')
+  expect(s.fills[0].gradient.toJSON()).toEqual({
     gradientType: 'Linear',
     from: { x: 0.5, y: 0 },
     to: { x: 0.5, y: 1 },
@@ -15,8 +28,17 @@ test('should create a default gradient', () => {
 })
 
 test('should create a gradient with a specific type', () => {
-  const gradient = Gradient.from({ gradientType: GradientType.Angular })
-  expect(gradient.toJSON()).toEqual({
+  const s = new Style({
+    fills: [
+      {
+        fillType: FillType.Gradient,
+        gradient: {
+          gradientType: GradientType.Angular,
+        },
+      },
+    ],
+  })
+  expect(s.fills[0].gradient.toJSON()).toEqual({
     gradientType: 'Angular',
     from: { x: 0.5, y: 0 },
     to: { x: 0.5, y: 1 },
@@ -26,17 +48,18 @@ test('should create a gradient with a specific type', () => {
 })
 
 test('should create a gradient with a specific from and to coordinates', () => {
-  const gradient = Gradient.from({
-    from: {
-      x: 1,
-      y: 0.5,
-    },
-    to: {
-      x: 2,
-      y: 5,
-    },
+  const s = new Style({
+    fills: [
+      {
+        fillType: FillType.Gradient,
+        gradient: {
+          from: { x: 1, y: 0.5 },
+          to: { x: 2, y: 5 },
+        },
+      },
+    ],
   })
-  expect(gradient.toJSON()).toEqual({
+  expect(s.fills[0].gradient.toJSON()).toEqual({
     gradientType: 'Linear',
     from: { x: 1, y: 0.5 },
     to: { x: 2, y: 5 },
@@ -46,7 +69,16 @@ test('should create a gradient with a specific from and to coordinates', () => {
 })
 
 test('should change the from', () => {
-  const gradient = Gradient.from({})
+  const s = new Style({
+    fills: [
+      {
+        fillType: FillType.Gradient,
+        gradient: {},
+      },
+    ],
+  })
+
+  const gradient = s.fills[0].gradient
   expect(gradient.toJSON()).toEqual({
     gradientType: 'Linear',
     from: { x: 0.5, y: 0 },
@@ -54,6 +86,7 @@ test('should change the from', () => {
     aspectRatio: 0,
     stops: [],
   })
+
   gradient.from.x = 0.7
   expect(gradient.toJSON()).toEqual({
     gradientType: 'Linear',
@@ -87,7 +120,16 @@ test('should change the from', () => {
 
 // https://github.com/sketch-hq/SketchAPI/issues/216
 test('should change the to', () => {
-  const gradient = Gradient.from({})
+  const s = new Style({
+    fills: [
+      {
+        fillType: FillType.Gradient,
+        gradient: {},
+      },
+    ],
+  })
+
+  const gradient = s.fills[0].gradient
   expect(gradient.toJSON()).toEqual({
     gradientType: 'Linear',
     from: { x: 0.5, y: 0 },
@@ -95,6 +137,7 @@ test('should change the to', () => {
     aspectRatio: 0,
     stops: [],
   })
+
   gradient.to.x = 0.7
   expect(gradient.toJSON()).toEqual({
     gradientType: 'Linear',
@@ -128,17 +171,18 @@ test('should change the to', () => {
 
 // https://github.com/sketch-hq/SketchAPI/issues/230
 test('should create a gradient with a specific from and to coordinates including 0s', () => {
-  const gradient = Gradient.from({
-    from: {
-      x: 0,
-      y: 0,
-    },
-    to: {
-      x: 0,
-      y: 0,
-    },
+  const s = new Style({
+    fills: [
+      {
+        fillType: FillType.Gradient,
+        gradient: {
+          from: { x: 0, y: 0 },
+          to: { x: 0, y: 0 },
+        },
+      },
+    ],
   })
-  expect(gradient.toJSON()).toEqual({
+  expect(s.fills[0].gradient.toJSON()).toEqual({
     gradientType: 'Linear',
     from: { x: 0, y: 0 },
     to: { x: 0, y: 0 },
@@ -148,12 +192,20 @@ test('should create a gradient with a specific from and to coordinates including
 })
 
 test('should set the aspect ratio of a gradient', () => {
-  const gradient = Gradient.from({
-    gradientType: 'Radial',
+  const s = new Style({
+    fills: [
+      {
+        fillType: FillType.Gradient,
+        gradient: {
+          gradientType: 'Radial',
+        },
+      },
+    ],
   })
+
+  const gradient = s.fills[0].gradient
   expect(gradient.aspectRatio).toBe(0)
 
   gradient.aspectRatio = 2
-
   expect(gradient.aspectRatio).toBe(2)
 })

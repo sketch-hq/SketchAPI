@@ -36,13 +36,13 @@ test('should set object', () => {
   expect(settingForKey('object-key')).toEqual({ a: 1 })
 })
 
-test('should set a setting on a layer', (context, document) => {
+test('should set a setting on a layer', (_context, document) => {
   const layer = new Text({ parent: document.selectedPage })
   setLayerSettingForKey(layer, 'object-key', { a: 1 })
   expect(layerSettingForKey(layer, 'object-key')).toEqual({ a: 1 })
 })
 
-test('should set an undefined setting on a layer', (context, document) => {
+test('should set an undefined setting on a layer', (_context, document) => {
   const layer = new Text({ parent: document.selectedPage })
   expect(layerSettingForKey(layer, 'object-key')).toBe(undefined)
 
@@ -59,7 +59,7 @@ test('should set an undefined setting on a layer', (context, document) => {
   expect(layerSettingForKey(layer, 'object-key')).toBe(null)
 })
 
-test('should set a setting on a document', (context, document) => {
+test('should set a setting on a document', (_context, document) => {
   setDocumentSettingForKey(document, 'object-key', { a: 1 })
   expect(documentSettingForKey(document, 'object-key')).toEqual({ a: 1 })
 })

@@ -1,7 +1,7 @@
 /* globals expect, test */
 import { Artboard, Group, Flow } from '../..'
 
-test('should create a flow between a layer and an artboard with a default animation', (context, document) => {
+test('should create a flow between a layer and an artboard with a default animation', (_context, document) => {
   const artboard = new Artboard({
     name: 'Test1',
     parent: document.selectedPage,
@@ -29,7 +29,7 @@ test('should create a flow between a layer and an artboard with a default animat
   expect(rect.flow.isValidConnection()).toBe(true)
 })
 
-test('should create a flow between a layer and an artboard with a targetId', (context, document) => {
+test('should create a flow between a layer and an artboard with a targetId', (_context, document) => {
   const artboard = new Artboard({
     name: 'Test1',
     parent: document.selectedPage,
@@ -53,7 +53,7 @@ test('should create a flow between a layer and an artboard with a targetId', (co
   })
 })
 
-test('target should return the wrapped artboard', (context, document) => {
+test('target should return the wrapped artboard', (_context, document) => {
   const artboard = new Artboard({
     name: 'Test1',
     parent: document.selectedPage,
