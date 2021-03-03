@@ -3,7 +3,7 @@
 import { SymbolInstance, SmartLayout } from '../..'
 import { createSymbolMaster, canBeLogged } from '../../../test-utils'
 
-test('should create a instance by setting the master property', (context, document) => {
+test('should create a instance by setting the master property', (_context, document) => {
   const { master } = createSymbolMaster(document)
   const instance = new SymbolInstance({
     parent: document.selectedPage,
@@ -17,7 +17,7 @@ test('should create a instance by setting the master property', (context, docume
   canBeLogged(instance, SymbolInstance)
 })
 
-test('should create a instance by setting the symbolId property', (context, document) => {
+test('should create a instance by setting the symbolId property', (_context, document) => {
   const { master } = createSymbolMaster(document)
   const instance = new SymbolInstance({
     symbolId: master.symbolId,
@@ -28,7 +28,7 @@ test('should create a instance by setting the symbolId property', (context, docu
   expect(instance.master).toEqual(master)
 })
 
-test('should have overrides', (context, document) => {
+test('should have overrides', (_context, document) => {
   const { master, text } = createSymbolMaster(document)
   const instance = master.createNewInstance()
   document.selectedPage.layers = document.selectedPage.layers.concat(instance)
@@ -52,7 +52,7 @@ test('should have overrides', (context, document) => {
   expect(override.toJSON()).toEqual(result)
 })
 
-test('should detach an instance', (context, document) => {
+test('should detach an instance', (_context, document) => {
   const { master } = createSymbolMaster(document)
   const instance = new SymbolInstance({
     symbolId: master.symbolId,
@@ -64,7 +64,7 @@ test('should detach an instance', (context, document) => {
   expect(group.type).toBe('Group')
 })
 
-test('should resize in response to smart layout changes', (context, document) => {
+test('should resize in response to smart layout changes', (_context, document) => {
   const { master } = createSymbolMaster(document)
   master.smartLayout = SmartLayout.LeftToRight
 

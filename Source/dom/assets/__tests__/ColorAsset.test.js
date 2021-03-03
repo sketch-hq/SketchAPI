@@ -1,6 +1,6 @@
 /* globals expect, test */
 
-test('should create color asset from hex', (context, document) => {
+test('should create color asset from hex', (_context, document) => {
   document.colors.push('#FFFFFF')
   expect(document.colors.length).toEqual(1)
 
@@ -9,7 +9,7 @@ test('should create color asset from hex', (context, document) => {
   expect(asset.name).toBe(null)
 })
 
-test('should create color asset from MSColor', (context, document) => {
+test('should create color asset from MSColor', (_context, document) => {
   const color = MSImmutableColor.colorWithSVGString('#FFFFFF')
 
   document.colors.push(color)
@@ -19,7 +19,7 @@ test('should create color asset from MSColor', (context, document) => {
   expect(asset.color).toBe('#ffffffff')
 })
 
-test('should create color asset from MSColorAsset', (context, document) => {
+test('should create color asset from MSColorAsset', (_context, document) => {
   const color = MSImmutableColor.colorWithSVGString(
     '#FFFFFF'
   ).newMutableCounterpart()
@@ -31,7 +31,7 @@ test('should create color asset from MSColorAsset', (context, document) => {
   expect(asset.color).toBe('#ffffffff')
 })
 
-test('should create color asset with name', (context, document) => {
+test('should create color asset with name', (_context, document) => {
   const color = {
     name: 'White',
     color: '#ffffff',

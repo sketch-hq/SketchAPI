@@ -3,7 +3,7 @@
 import { SymbolMaster, Text, Artboard } from '../..'
 import { createSymbolMaster, canBeLogged } from '../../../test-utils'
 
-test('should create a symbol master from an artboard', (context, document) => {
+test('should create a symbol master from an artboard', (_context, document) => {
   // build the symbol master
   const { master } = createSymbolMaster(document)
 
@@ -14,7 +14,7 @@ test('should create a symbol master from an artboard', (context, document) => {
   canBeLogged(master, SymbolMaster)
 })
 
-test('should replace a symbol master by an artboard', (context, document) => {
+test('should replace a symbol master by an artboard', (_context, document) => {
   // build the symbol master
   const { master } = createSymbolMaster(document)
   expect(master.type).toBe('SymbolMaster')
@@ -27,7 +27,7 @@ test('should replace a symbol master by an artboard', (context, document) => {
   expect(artboard.type).toBe('Artboard')
 })
 
-test('should create a symbol instance from a master', (context, document) => {
+test('should create a symbol instance from a master', (_context, document) => {
   // build the symbol master
   const { master } = createSymbolMaster(document)
 
@@ -46,7 +46,7 @@ test('should create a symbol instance from a master', (context, document) => {
   expect(instance.master).toEqual(master)
 })
 
-test('should create a symbol master with a nested symbol', (context, document) => {
+test('should create a symbol master with a nested symbol', (_context, document) => {
   // build the first symbol master
   const { master: nestedMaster, text } = createSymbolMaster(document)
 
@@ -116,7 +116,7 @@ test('should create a symbol master with a nested symbol', (context, document) =
   expect(instance.overrides[2].toJSON()).toEqual(result2)
 })
 
-test('should have overrides', (context, document) => {
+test('should have overrides', (_context, document) => {
   const { master, text } = createSymbolMaster(document)
 
   expect(master.overrides.length).toBe(1)
@@ -137,7 +137,7 @@ test('should have overrides', (context, document) => {
   expect(override.toJSON()).toEqual(result)
 })
 
-test('should set overrides as editable or not', (context, document) => {
+test('should set overrides as editable or not', (_context, document) => {
   const { master } = createSymbolMaster(document)
 
   expect(master.overrides[0].editable).toBe(true)
@@ -153,7 +153,7 @@ test('should set overrides as editable or not', (context, document) => {
   expect(master.overrides[0].editable).toBe(true)
 })
 
-test('should include `includedInInstance` in the `background`', (context, document) => {
+test('should include `includedInInstance` in the `background`', (_context, document) => {
   // build the symbol master
   const { master } = createSymbolMaster(document)
 
