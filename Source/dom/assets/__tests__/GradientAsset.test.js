@@ -1,6 +1,6 @@
 /* globals expect, test */
 
-test('should create gradient asset from dictionary', (context, document) => {
+test('should create gradient asset from dictionary', (_context, document) => {
   document.gradients.push({})
   expect(document.gradients.length).toEqual(1)
 
@@ -9,7 +9,7 @@ test('should create gradient asset from dictionary', (context, document) => {
   expect(asset.name).toBe(null)
 })
 
-test('should create gradient asset from MSGradientAsset', (context, document) => {
+test('should create gradient asset from MSGradientAsset', (_context, document) => {
   const gradient = MSGradientAsset.alloc().init()
 
   document.gradients.push(gradient)
@@ -19,7 +19,7 @@ test('should create gradient asset from MSGradientAsset', (context, document) =>
   expect(asset.gradient.type).toBe('Gradient')
 })
 
-test('should create gradient asset with name', (context, document) => {
+test('should create gradient asset with name', (_context, document) => {
   const gradient = {
     name: 'My Gradient',
     gradient: {},

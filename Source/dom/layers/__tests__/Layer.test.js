@@ -1,7 +1,7 @@
 /* globals expect, test */
 import { Group, Rectangle, Artboard, SymbolMaster } from '../..'
 
-test('should set the name of the layer', (context, document) => {
+test('should set the name of the layer', (_context, document) => {
   // setting an existing name
   const page = document.selectedPage
   page.name = 'This is a page'
@@ -32,7 +32,7 @@ test('mutating a frame should change the frame of a layer', () => {
   expect(group.frame.width).toBe(400)
 })
 
-test('should duplicate the layer and add it as a sibling', (context, document) => {
+test('should duplicate the layer and add it as a sibling', (_context, document) => {
   const page = document.selectedPage
   const group = new Group({ parent: page })
   expect(page.layers.length).toBe(1)
@@ -47,7 +47,7 @@ test('should duplicate the layer with no parent', () => {
   expect(result.type).toBe('Group')
 })
 
-test('should remove the layer from its parent', (context, document) => {
+test('should remove the layer from its parent', (_context, document) => {
   const page = document.selectedPage
   const group = new Group({
     parent: page,
@@ -58,7 +58,7 @@ test('should remove the layer from its parent', (context, document) => {
   expect(result).toEqual(group)
 })
 
-test('should select the layer', (context, document) => {
+test('should select the layer', (_context, document) => {
   const page = document.selectedPage
   const group = new Group({
     parent: page,
@@ -86,7 +86,7 @@ test('should select the layer', (context, document) => {
   expect(page.selectedLayers.length).toBe(2)
 })
 
-test('should be able to add the layer to a group', (context, document) => {
+test('should be able to add the layer to a group', (_context, document) => {
   const page = document.selectedPage
   const group = new Group({
     parent: page,
@@ -99,7 +99,7 @@ test('should be able to add the layer to a group', (context, document) => {
   expect(group2.parent).toEqual(page)
 })
 
-test('should reorder the layers', (context, document) => {
+test('should reorder the layers', (_context, document) => {
   const page = document.selectedPage
   const group1 = new Group({
     parent: page,
@@ -135,7 +135,7 @@ test('should reorder the layers', (context, document) => {
   expect(group2.index).toBe(2)
 })
 
-test('should reorder the layers using the index property', (context, document) => {
+test('should reorder the layers using the index property', (_context, document) => {
   const page = document.selectedPage
   const group1 = new Group({
     parent: page,
@@ -176,7 +176,7 @@ test('should reorder the layers using the index property', (context, document) =
   expect(group1.index).toBe(2)
 })
 
-test('should convert rect to different coord system', (context, document) => {
+test('should convert rect to different coord system', (_context, document) => {
   const page = document.selectedPage
   const group = new Group({
     parent: page,
@@ -247,7 +247,7 @@ test('should change the exportFormats', () => {
   ])
 })
 
-test('should get the different parents', (context, document) => {
+test('should get the different parents', (_context, document) => {
   const page = document.selectedPage
   expect(page.parent).toEqual(document)
   expect(page.getParentPage()).toEqual(undefined)
@@ -310,7 +310,7 @@ test('should transform the layer', () => {
   expect(group.transform.rotation).toBe(0)
 })
 
-test('should remove a flow from a layer', (context, document) => {
+test('should remove a flow from a layer', (_context, document) => {
   const artboard = new Artboard({
     name: 'Test1',
     parent: document.selectedPage,

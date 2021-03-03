@@ -57,7 +57,7 @@ test('should list the libraries', () => {
   expect(libraries[0].type).toBe('Library')
 })
 
-test('should be able to get the list of symbols to be imported', () => {
+test('should be able to get the list of symbols to be imported', (_context, document) => {
   createLibrary().then((lib) => {
     expect(lib.getImportableSymbolReferencesForDocument(document)[0].type).toBe(
       'ImportableObject'
@@ -100,7 +100,7 @@ test('should remove a library', () => {
   createLibrary().then((lib) => {
     lib.remove()
 
-    expect(getLibraries().find((d) => d.id === libId)).toBe(undefined)
+    expect(getLibraries().find((d) => d.id === lib.id)).toBe(undefined)
   })
 })
 

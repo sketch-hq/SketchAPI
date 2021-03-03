@@ -9,7 +9,7 @@ test('should create a new HotSpot', () => {
   canBeLogged(hotspot, HotSpot)
 })
 
-test('should create a new HotSpot from a layer', (context, document) => {
+test('should create a new HotSpot from a layer', (_context, document) => {
   const artboard = new Artboard({
     name: 'Test1',
     parent: document.selectedPage,
@@ -38,7 +38,7 @@ test('should create a new HotSpot from a layer', (context, document) => {
   })
 })
 
-test('should throw an error when trying to create a new HotSpot from a layer without flow', (context, document) => {
+test('should throw an error when trying to create a new HotSpot from a layer without flow', (_context, document) => {
   const artboard = new Artboard({
     name: 'Test1',
     parent: document.selectedPage,

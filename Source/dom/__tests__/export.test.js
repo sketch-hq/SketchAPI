@@ -63,7 +63,7 @@ test('should fail with to return with multiple formats', () => {
   }
 })
 
-test('Should return a buffer', (context, document) => {
+test('Should return a buffer', (_context, document) => {
   const object = new Shape({
     parent: document.selectedPage,
   })
@@ -74,7 +74,7 @@ test('Should return a buffer', (context, document) => {
   expect(Buffer.isBuffer(buffer)).toBe(true)
 })
 
-test('Should export a page to png file', (context, document) => {
+test('Should export a page to png file', (_context, document) => {
   // const filePath = NSString.stringWithString(testOutputPath).stringByAppendingPathComponent('Page 1.png')
   const filePath = `${testOutputPath}/Page 1.png`
   try {
@@ -93,7 +93,7 @@ test('Should export a page to png file', (context, document) => {
   expect(fs.existsSync(filePath)).toBe(true)
 })
 
-test('Should export a shape to png file', (context, document) => {
+test('Should export a shape to png file', (_context, document) => {
   // const filePath = NSString.stringWithString(testOutputPath).stringByAppendingPathComponent('Shape.png')
   const filePath = `${testOutputPath}/Shape.png`
   try {
@@ -111,7 +111,7 @@ test('Should export a shape to png file', (context, document) => {
   expect(fs.existsSync(filePath)).toBe(true)
 })
 
-test('Should export a shape to json file', (context, document) => {
+test('Should export a shape to json file', (_context, document) => {
   const filePath = `${testOutputPath}/Shape.json`
   try {
     fs.unlinkSync(filePath)

@@ -1,11 +1,11 @@
 /* globals expect, test */
 import { Group, Text } from '../..'
 
-test('an empty document should have an empty selection', (context, document) => {
+test('an empty document should have an empty selection', (_context, document) => {
   expect(document.selectedLayers.isEmpty).toBe(true)
 })
 
-test('should clear the selection', (context, document) => {
+test('should clear the selection', (_context, document) => {
   const group = new Group({
     parent: document.selectedPage,
     selected: true,
@@ -20,7 +20,7 @@ test('should clear the selection', (context, document) => {
   expect(selection.isEmpty).toBe(true)
 })
 
-test('should change the selection', (context, document) => {
+test('should change the selection', (_context, document) => {
   const group = new Group({
     parent: document.selectedPage,
     selected: true,
@@ -35,7 +35,7 @@ test('should change the selection', (context, document) => {
   expect(selection.isEmpty).toBe(true)
 })
 
-test('should return the length without wrapping all the object', (context, document) => {
+test('should return the length without wrapping all the object', (_context, document) => {
   // eslint-disable-next-line
   const group = new Group({
     parent: document.selectedPage,
@@ -51,7 +51,7 @@ test('should return the length without wrapping all the object', (context, docum
   expect(selection.length).toBe(2)
 })
 
-test('should be able to go through the layers', (context, document) => {
+test('should be able to go through the layers', (_context, document) => {
   const group = new Group({
     parent: document.selectedPage,
     selected: true,
@@ -75,7 +75,7 @@ test('should be able to go through the layers', (context, document) => {
   expect(groups).toBe(1)
 })
 
-test('should define convenience array methods', (context, document) => {
+test('should define convenience array methods', (_context, document) => {
   // eslint-disable-next-line
   const group = new Group({
     parent: document.selectedPage,

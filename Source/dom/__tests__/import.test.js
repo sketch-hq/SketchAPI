@@ -15,7 +15,7 @@ test('should create Group from an SVG', () => {
   expect(group.layers[0].frame.height).toEqual(100)
 })
 
-test('should create group from a PDF', (context, document) => {
+test('should create group from a PDF', (_context, document) => {
   const layer = new Shape({
     parent: document.selectedPage,
     frame: new Rectangle(0, 0, 200, 100),
@@ -37,7 +37,7 @@ test('should create group from a PDF', (context, document) => {
   expect(page.frame.height).toEqual(100)
 })
 
-test('should create Image from a bitmap', (context, document) => {
+test('should create Image from a bitmap', (_context, document) => {
   const layer = new Shape({
     parent: document.selectedPage,
     frame: new Rectangle(0, 0, 200, 100),
