@@ -5,7 +5,7 @@
     "@skpm/events": "0.2.0",
     "@skpm/os": "0.1.1",
     "@skpm/path": "0.1.4",
-    "@skpm/process": "0.1.4",
+    "@skpm/process": "0.1.5",
     "@skpm/querystring": "0.1.0",
     "@skpm/stream": "0.1.4",
     "@skpm/string_decoder": "0.1.5",
