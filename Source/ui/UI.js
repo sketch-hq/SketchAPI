@@ -18,16 +18,14 @@ function getPluginAlertIcon() {
  * @param [Document] document The document in which we will show the message
  */
 export function message(text, document) {
-  if (!document) {
-    NSApplication.sharedApplication()
-      .orderedDocuments()
-      .firstObject()
-      .showMessage(text)
-  } else if (util.isNativeObject(document)) {
-    document.showMessage(text)
-  } else {
-    document.sketchObject.showMessage(text)
-  }
+  document = document
+    ? document.sketchObject || document // Drop down to native object if required
+    : NSApplication.sharedApplication().orderedDocuments().firstObject()
+
+  // Only documents have `showMessage` API
+  if (!(document instanceof MSDocument)) return
+
+  document.showMessage(text)
 }
 
 /**
