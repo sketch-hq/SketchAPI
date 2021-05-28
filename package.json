@@ -19,7 +19,7 @@
   },
   "devDependencies": {},
   "dependencies": {
-    "@skpm/fs": "0.2.4",
+    "@skpm/fs": "^0.2.6",
     "@skpm/test-runner": "^0.4.1",
     "babel-loader": "8.0.6",
     "eslint": "7.0.0",
