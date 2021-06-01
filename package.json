@@ -19,12 +19,12 @@
   },
   "devDependencies": {},
   "dependencies": {
-    "@skpm/fs": "0.2.4",
-    "@skpm/test-runner": "0.4.0",
+    "@skpm/fs": "^0.2.6",
+    "@skpm/test-runner": "^0.4.1",
     "babel-loader": "8.0.6",
-    "eslint": "7.0.0",
-    "eslint-config-prettier": "6.11.0",
-    "eslint-plugin-import": "2.20.2",
+    "eslint": "7.27.0",
+    "eslint-config-prettier": "8.3.0",
+    "eslint-plugin-import": "2.23.3",
     "prettier": "2.0.5",
     "webpack": "4.39.3",
     "webpack-cli": "3.3.8"
