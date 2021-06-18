@@ -86,7 +86,7 @@ test('should return an NSRect', () => {
   expect(parseInt(c.size.height, 10)).toBe(4)
 })
 
-test('should convert rect to different coord system', (context, document) => {
+test('should convert rect to different coord system', (_context, document) => {
   const page = document.selectedPage
   const group = new Group({
     parent: page,

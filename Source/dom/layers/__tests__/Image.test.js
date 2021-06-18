@@ -2,7 +2,7 @@
 import { canBeLogged, base64Image } from '../../../test-utils'
 import { Image } from '../..'
 
-test('should create an empty image', (context, document) => {
+test('should create an empty image', (_context, document) => {
   const page = document.selectedPage
 
   const image = new Image({ parent: page })
@@ -13,7 +13,7 @@ test('should create an empty image', (context, document) => {
   canBeLogged(image, Image)
 })
 
-test('should resize image to its original size', (context, document) => {
+test('should resize image to its original size', (_context, document) => {
   const page = document.selectedPage
 
   const image = new Image({

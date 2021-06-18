@@ -1,5 +1,5 @@
 /* globals expect, test */
-import { Swatch } from '../Swatch'
+import { Swatch } from '../..'
 
 test('should create swatch from hex string', () => {
   const swatch = Swatch.from('#FFFFFF')
@@ -9,7 +9,7 @@ test('should create swatch from hex string', () => {
 
 test('should create swatch from object', () => {
   const swatch = Swatch.from({
-    color: '#ffffff'
+    color: '#ffffff',
   })
   expect(swatch.color).toBe('#ffffffff')
   expect(swatch.name).toBe('#ffffff')
@@ -32,7 +32,9 @@ test('should create swatch from MSImmutableColor', () => {
 })
 
 test('should create swatch from MSColor', () => {
-  const color = MSImmutableColor.colorWithSVGString('#FFFFFF').newMutableCounterpart()
+  const color = MSImmutableColor.colorWithSVGString(
+    '#FFFFFF'
+  ).newMutableCounterpart()
   const swatch = Swatch.from(color)
   expect(swatch.color).toBe('#ffffffff')
   expect(swatch.name).toBe('#ffffff')
@@ -58,7 +60,7 @@ test('should create swatch from MSSwatch', () => {
 test('should create referencing color', () => {
   const swatch = Swatch.from({
     name: 'Safety Orange',
-    color: '#ff6600'
+    color: '#ff6600',
   })
   expect(swatch.referencingColor.isKindOfClass(MSColor)).toBeTruthy()
 })

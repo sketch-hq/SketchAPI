@@ -2,7 +2,7 @@
 import { canBeLogged } from '../../../test-utils'
 import { Group, Page } from '../..'
 
-test('should return a Selection with the selected layers of the page', (context, document) => {
+test('should return a Selection with the selected layers of the page', (_context, document) => {
   const page = document.selectedPage
   const selection = page.selectedLayers
   expect(selection.isEmpty).toBe(true)
@@ -15,25 +15,25 @@ test('should return a Selection with the selected layers of the page', (context,
   canBeLogged(page, Page)
 })
 
-test('should create a page', (context, document) => {
+test('should create a page', (_context, document) => {
   const page = new Page({ parent: document })
   expect(page.type).toBe('Page')
   expect(document.pages[1]).toEqual(page)
 })
 
-test('parent should be the document', (context, document) => {
+test('parent should be the document', (_context, document) => {
   const page = document.selectedPage
   expect(page.parent).toEqual(document)
 })
 
-test('should duplicate a page', (context, document) => {
+test('should duplicate a page', (_context, document) => {
   const page = document.selectedPage
   const newPage = page.duplicate()
   expect(document.pages.length).toBe(2)
   expect(newPage).toEqual(document.pages[1])
 })
 
-test('should remove a page', (context, document) => {
+test('should remove a page', (_context, document) => {
   const page = document.selectedPage
   const newPage = page.duplicate()
   expect(document.pages.length).toBe(2)
@@ -42,7 +42,7 @@ test('should remove a page', (context, document) => {
   expect(document.pages[0]).toEqual(page)
 })
 
-test('should return whether a page is selected or not', (context, document) => {
+test('should return whether a page is selected or not', (_context, document) => {
   const page = document.selectedPage
   expect(page.selected).toBe(true)
 
@@ -59,20 +59,20 @@ test('should return whether a page is selected or not', (context, document) => {
   expect(page.selected).toBe(true)
 })
 
-test('should return if the page is the Symbols page', (context, document) => {
+test('should return if the page is the Symbols page', (_context, document) => {
   const page = new Page({ parent: document })
   expect(page.isSymbolsPage()).toBe(false)
   page.name = 'Symbols'
   expect(page.isSymbolsPage()).toBe(true)
 })
 
-test('should create the Symbols page', (context, document) => {
+test('should create the Symbols page', (_context, document) => {
   const page = Page.createSymbolsPage()
   page.parent = document
   expect(page.isSymbolsPage()).toBe(true)
 })
 
-test('should get the Symbols page', (context, document) => {
+test('should get the Symbols page', (_context, document) => {
   const page = Page.createSymbolsPage()
   page.parent = document
   expect(Page.getSymbolsPage(document)).toEqual(page)

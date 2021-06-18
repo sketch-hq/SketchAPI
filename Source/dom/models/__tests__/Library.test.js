@@ -1,28 +1,30 @@
 /* globals expect, test */
 import { outputPath } from '../../../test-utils'
-import { Library, Document, Artboard, Text, SymbolMaster } from '../..'
-
-let lib
-let libId
+import {
+  Artboard,
+  Text,
+  SymbolMaster,
+  Library,
+  getLibraries,
+  Document,
+} from '../..'
 
 const testOutputPath = outputPath()
 
-test('should create a library from a document', () => {
+function createLibrary() {
   const document = new Document()
 
-  const artboard = new Artboard({
-    name: 'Test',
-    parent: document.selectedPage,
-  })
-  // eslint-disable-next-line
-  const text = new Text({
-    text: 'Test value',
-    parent: artboard,
-  })
-  // eslint-disable-next-line
-  const master = SymbolMaster.fromArtboard(artboard)
-
   return new Promise((resolve, reject) => {
+    const artboard = new Artboard({
+      name: 'Test',
+      parent: document.selectedPage,
+    })
+    new Text({
+      text: 'Test value',
+      parent: artboard,
+    })
+    SymbolMaster.fromArtboard(artboard)
+
     document.save(
       `${testOutputPath}/sketch-api-unit-tests-library.sketch`,
       (err) => {
@@ -35,60 +37,71 @@ test('should create a library from a document', () => {
   }).then(() => {
     document.close()
 
-    lib = Library.getLibraryForDocumentAtPath(
+    return Library.getLibraryForDocumentAtPath(
       `${testOutputPath}/sketch-api-unit-tests-library.sketch`
     )
-    libId = lib.id
-    expect(lib.type).toBe('Library')
+  })
+}
 
-    const libraries = Library.getLibraries()
-    expect(libraries.find((d) => d.id === libId)).toEqual(lib)
+test('should create a library from a document', () => {
+  createLibrary().then((lib) => {
+    expect(lib.type).toBe('Library')
+    expect(getLibraries().find((d) => d.id === lib.id)).toEqual(lib)
   })
 })
 
 test('should list the libraries', () => {
-  const libraries = Library.getLibraries()
+  const libraries = getLibraries()
+
   expect(libraries.length).toBeGreaterThan(0)
   expect(libraries[0].type).toBe('Library')
 })
 
-test('should be able to get the list of symbols to be imported', () => {
-  const document = new Document()
-  expect(lib.getImportableSymbolReferencesForDocument(document)[0].type).toBe(
-    'ImportableObject'
-  )
-  document.close()
+test('should be able to get the list of symbols to be imported', (_context, document) => {
+  createLibrary().then((lib) => {
+    expect(lib.getImportableSymbolReferencesForDocument(document)[0].type).toBe(
+      'ImportableObject'
+    )
+  })
 })
 
 test('should disable a library', () => {
-  expect(lib.enabled).toBe(true)
-  lib.enabled = false
-  expect(lib.enabled).toBe(false)
-  lib.enabled = true
-  expect(lib.enabled).toBe(true)
+  createLibrary().then((lib) => {
+    expect(lib.enabled).toBe(true)
+    lib.enabled = false
+    expect(lib.enabled).toBe(false)
+    lib.enabled = true
+    expect(lib.enabled).toBe(true)
+  })
 })
 
 test('should get the lastModifiedAt date', () => {
-  expect(lib.lastModifiedAt instanceof Date).toBe(true)
+  createLibrary().then((lib) => {
+    expect(lib.lastModifiedAt instanceof Date).toBe(true)
+  })
 })
 
 test('should get the document of the library', () => {
-  const document = lib.getDocument()
-  expect(document.type).toBe('Document')
-  expect(document.path).toBe(
-    String(
-      NSString.stringWithString(
-        `${testOutputPath}/sketch-api-unit-tests-library.sketch`
+  createLibrary().then((lib) => {
+    const libDocument = lib.getDocument()
+
+    expect(libDocument.type).toBe('Document')
+    expect(libDocument.path).toBe(
+      String(
+        NSString.stringWithString(
+          `${testOutputPath}/sketch-api-unit-tests-library.sketch`
+        )
       )
     )
-  )
+  })
 })
 
 test('should remove a library', () => {
-  lib.remove()
+  createLibrary().then((lib) => {
+    lib.remove()
 
-  const libraries = Library.getLibraries()
-  expect(libraries.find((d) => d.id === libId)).toBe(undefined)
+    expect(getLibraries().find((d) => d.id === lib.id)).toBe(undefined)
+  })
 })
 
 /*

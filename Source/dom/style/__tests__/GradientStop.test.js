@@ -1,25 +1,38 @@
 /* globals expect, test */
 
-import { Gradient } from '../Gradient'
+// Gradient is not a public API and must be used with a fill,
+// so it gets imported from the sketch/dom module.
+import { Style } from '../..'
+
+const { FillType, GradientType } = Style
 
 test('should create a gradient with some stops', () => {
-  const gradient = Gradient.from({
-    stops: [
+  const s = new Style({
+    fills: [
       {
-        position: 1,
-        color: '#123',
-      },
-      {
-        position: 0,
-        color: '#534',
-      },
-      {
-        position: 0.5,
-        color: '#1234',
+        fillType: FillType.Gradient,
+        gradient: {
+          gradientType: GradientType.Linear,
+          stops: [
+            {
+              position: 1,
+              color: '#123',
+            },
+            {
+              position: 0,
+              color: '#534',
+            },
+            {
+              position: 0.5,
+              color: '#1234',
+            },
+          ],
+        },
       },
     ],
   })
-  expect(gradient.toJSON()).toEqual({
+  expect(s.fills.length).toEqual(1)
+  expect(s.fills[0].gradient.toJSON()).toEqual({
     gradientType: 'Linear',
     from: { x: 0.5, y: 0 },
     to: { x: 0.5, y: 1 },
