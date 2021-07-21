@@ -31,7 +31,7 @@ test('should change the text alignment', () => {
   })
 
   // default to left
-  expect(text.alignment).toBe(Text.Alignment.left)
+  expect(text.style.alignment).toBe(Text.Alignment.left)
 
   // TextAlignmentMap/TextAlignmentReverseMap are private APIs. Test API
   // the way users would set them instead using raw values.
@@ -47,14 +47,14 @@ test('should change the text alignment', () => {
   // included in the expectation.
   Object.keys(Text.Alignment).forEach((key) => {
     // test setting by name
-    text.alignment = key
-    expect(text.alignment).toBe(
+    text.style.alignment = key
+    expect(text.style.alignment).toBe(
       Text.Alignment[key] === 'natural' ? 'left' : Text.Alignment[key]
     )
 
     // test setting by value
-    text.alignment = map[key]
-    expect(text.alignment).toBe(
+    text.style.alignment = map[key]
+    expect(text.style.alignment).toBe(
       Text.Alignment[key] === 'natural' ? 'left' : Text.Alignment[key]
     )
   })
