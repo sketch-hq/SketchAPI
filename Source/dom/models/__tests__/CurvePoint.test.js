@@ -33,11 +33,9 @@ test('should be able to modify a CurvePoint', () => {
   expect(p.point.toJSON()).toEqual({ x: 0.3, y: 0.4 })
 })
 
-test('should show if a point is selected', () => {
-  const document = new Document()
-
+test('should show if a point is selected', (_, document) => {
   const shape = new ShapePath({
-    parent: document.selectedPage,
+    parent: document.pages[0],
   })
   expect(shape.points[0].isSelected()).toBe(false)
 
@@ -49,7 +47,4 @@ test('should show if a point is selected', () => {
     .switchToEventHandlerClass(MSShapeEventHandler.class())
 
   expect(shape.points[0].isSelected()).toBe(true)
-
-  // Close the document
-  document.close()
 })

@@ -262,11 +262,11 @@ test('should save a file to a specific path when setting the path', () => {
 
 test('should close a file', () => {
   const document = new Document()
+  const { id } = document
 
-  // Force this to run async
-  setTimeout(() => document.close(), 0)
+  document.close()
 
-  expect(getDocuments().find((d) => d.id === document.id)).toBe(undefined)
+  expect(getDocuments().find((d) => d.id === id)).toBe(undefined)
 })
 
 test('should open a file', () => {
