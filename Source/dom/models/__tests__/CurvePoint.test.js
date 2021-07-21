@@ -2,7 +2,7 @@
 
 // Use ShapePath to indirectly instantiate CurvePoint as there's no public,
 // direct API.
-import { ShapePath, Document } from '../..'
+import { ShapePath } from '../..'
 
 test('should be able to log an CurvePoint', () => {
   const p = new ShapePath().points[0]
