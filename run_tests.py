@@ -94,33 +94,31 @@ def watch_test_runner_progress(file_path, timeout=30):
 
 
 def print_results(results):
-    for parent_name in results:
-        test_results = results[parent_name]["results"]
+    
+    for suite_name, suite_results in results.items():
 
-        global_status = "failed" if has_failed_tests(
-            test_results) else "passed"
+        suite_status = "failed" if has_failed_tests(suite_results['results']) else "passed"
 
-        print('\n:: {status} {name} {relativePath}'.format(
-            status=global_status.upper(),
-            name=parent_name,
-            relativePath=results[parent_name]['relativePath']
+        print('\n:: {status}\t{name} {relativePath}'.format(
+            status=suite_status.upper(),
+            name=suite_name,
+            relativePath=suite_results['relativePath']
         ))
 
-        for result in test_results:
-            status_text = "PASSED" if result['status'] == "passed" else "FAILED"
-            ancestors = " > ".join(result.get('ancestorTitles', []))
-
-            failure_reason = ''
-            if 'failureReason' in result:
-                failure_reason = '{}\n'.format(re.sub(
-                    '{{{((\w*)|(\/\w*))}}}', '', result['failureReason']['message']))
-
-            print('{status} {ancestors} {title}\n{failure_reason}'.format(
-                status=status_text,
+        for res in suite_results['results']:
+            ancestors = " › ".join(res.get('ancestorTitles', []))
+            print(' • {status}\t{ancestors} {title}'.format(
+                status=res['status'].upper(),
                 ancestors=ancestors,
-                title=result['title'],
-                failure_reason=failure_reason
+                title=res['title'],
             ))
+
+            if 'failureReason' not in res:
+                continue
+
+            failure_reason = '{}\n'.format(re.sub(
+                '{{{((\w*)|(\/\w*))}}}', '', res['failureReason']['message']))
+            print('\t {failure_reason}'.format(failure_reason=failure_reason))
 
 
 def parse_test_results(file_path):
@@ -246,7 +244,7 @@ def main(argv):
     # use macOS `open` command to spawn new, fresh instance without restoring
     # windows, wait for Sketch to quit and use specific path to Sketch app
     subprocess.Popen([
-        "open", "-nFa", sketch,
+        "open", "-n", "-F", "-a", sketch,
         f"sketch://plugin/{manifest['identifier']}/test?output={output_file_path}",
     ])
 
