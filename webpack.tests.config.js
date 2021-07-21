@@ -7,7 +7,6 @@ const VirtualModulesPlugin = require('webpack-virtual-modules')
 const CopyPlugin = require('copy-webpack-plugin')
 
 const TestGlobalsPlugin = require('./Source/test/globals')
-const prepareStackTrace = require('sketch-utils/prepare-stack-trace')
 
 // All core modules are made available within the Sketch runtime environment
 // without using the `@skpm/` organisation namespace.
@@ -153,6 +152,7 @@ function source(identifier, tests) {
     createNewDocument,
     expect,
     onProgress,
+    prepareStackTrace,
   }) => {
     function getTestFailure(err) {
       let testFailure
@@ -187,6 +187,8 @@ function source(identifier, tests) {
     let all = []
     Object.entries(suites).forEach(([suiteTitle, val], index) => {
       let res = Object.entries(val.source.tests).map(([title, test]) => {
+        console.log(`Running test: ${suiteTitle} ${title}`)
+
         const document = createNewDocument()
 
         let status = 'pending'
@@ -258,6 +260,8 @@ function source(identifier, tests) {
     const os = require('os')
     const sketch = require('sketch')
 
+    const { Document } = sketch
+
     const fileManager = NSFileManager.defaultManager()
     // Use a default path for the test results if not specified by the user,
     // for instance when running the test plugin from the Sketch app menu.
@@ -277,19 +281,22 @@ function source(identifier, tests) {
       attributes(0),
     )
 
+    console.log('⏳ Starting tests, writing results to: ' + output)
+
     const runner = ${runner.toString()}
     const result = runner({ 
       context,
       expect,
       suites: testSuites,
-      createNewDocument: () => { return sketch.fromNative(MSDocumentData.new()) },
+      createNewDocument: () => { return new Document() },
       onProgress: (fraction) => { // update the extended file attributes
         fileManager.setAttributes_ofItemAtPath_error(
           attributes(fraction),
           output,
           nil,
         )
-      }
+      },
+      prepareStackTrace
     })
 
     const data = NSString.alloc().initWithString(JSON.stringify(result, null, 2))
@@ -404,6 +411,7 @@ module.exports = ({ identifier, spec }) => {
       // it by default instead.
       new ProvidePlugin({
         expect: require.resolve('./Source/test/expect'),
+        prepareStackTrace: require.resolve('sketch-utils/prepare-stack-trace'),
       }),
     ],
   }
