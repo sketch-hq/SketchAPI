@@ -263,7 +263,7 @@ def main(argv):
         sys.exit(0)
 
     except Exception as e:
-        print("{e}\nFailed with exit code 1")
+        print("{e}\nFailed with exit code 1".format(e=e))
         sys.exit(1)
 
     finally:
