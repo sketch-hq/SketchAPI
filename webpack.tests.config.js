@@ -7,6 +7,7 @@ const VirtualModulesPlugin = require('webpack-virtual-modules')
 const CopyPlugin = require('copy-webpack-plugin')
 
 const TestGlobalsPlugin = require('./Source/test/globals')
+const prepareStackTrace = require('sketch-utils/prepare-stack-trace')
 
 // All core modules are made available within the Sketch runtime environment
 // without using the `@skpm/` organisation namespace.
@@ -152,7 +153,6 @@ function source(identifier, tests) {
     createNewDocument,
     expect,
     onProgress,
-    prepareStackTrace,
   }) => {
     function getTestFailure(err) {
       let testFailure
@@ -257,7 +257,6 @@ function source(identifier, tests) {
     const path = require('path')
     const os = require('os')
     const sketch = require('sketch')
-    const prepareStackTrace = require('sketch-utils/prepare-stack-trace')
 
     const fileManager = NSFileManager.defaultManager()
     // Use a default path for the test results if not specified by the user,
@@ -290,8 +289,7 @@ function source(identifier, tests) {
           output,
           nil,
         )
-      },
-      prepareStackTrace
+      }
     })
 
     const data = NSString.alloc().initWithString(JSON.stringify(result, null, 2))
