@@ -4,10 +4,10 @@ const { inspect } = require('util')
 module.exports.stringify = inspect
 
 const chalk = {
-  green: s => `{{{CHALK_green}}}${s}{{{/CHALK_green}}}`,
-  red: s => `{{{CHALK_red}}}${s}{{{/CHALK_red}}}`,
-  dim: s => `{{{CHALK_dim}}}${s}{{{/CHALK_dim}}}`,
-  inverse: s => `{{{CHALK_inverse}}}${s}{{{/CHALK_inverse}}}`,
+  green: (s) => `{{{CHALK_green}}}${s}{{{/CHALK_green}}}`,
+  red: (s) => `{{{CHALK_red}}}${s}{{{/CHALK_red}}}`,
+  dim: (s) => `{{{CHALK_dim}}}${s}{{{/CHALK_dim}}}`,
+  inverse: (s) => `{{{CHALK_inverse}}}${s}{{{/CHALK_inverse}}}`,
 }
 
 const REVERSE_REGEX = /{{{CHALK_([a-z]+)}}}([\s\S]*?){{{\/CHALK_\1}}}/gm
@@ -45,20 +45,20 @@ module.exports.SUGGEST_TO_EQUAL = chalk.dim(
   'Looks like you wanted to test for object/array equality with strict `toBe` matcher. You probably need to use `toEqual` instead.'
 )
 
-const highlightTrailingWhitespace = text =>
+const highlightTrailingWhitespace = (text) =>
   text.replace(/\s+$/gm, chalk.inverse('$&'))
 
 module.exports.highlightTrailingWhitespace = highlightTrailingWhitespace
 
-const printReceived = object =>
+const printReceived = (object) =>
   RECEIVED_COLOR(highlightTrailingWhitespace(inspect(object)))
-const printExpected = value =>
+const printExpected = (value) =>
   EXPECTED_COLOR(highlightTrailingWhitespace(inspect(value)))
 
 module.exports.printReceived = printReceived
 module.exports.printExpected = printExpected
 
-const getType = value => {
+const getType = (value) => {
   if (typeof value === 'undefined') {
     return 'undefined'
   }

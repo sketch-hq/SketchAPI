@@ -60,7 +60,7 @@ export function outputPath() {
   const path = NSTemporaryDirectory()
     .stringByAppendingPathComponent('SketchAPI/')
     .stringByAppendingPathComponent(uuid)
-  
+
   fs.mkdirSync(path, { recursive: true })
   return path
 }

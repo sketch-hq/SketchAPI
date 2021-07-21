@@ -13,7 +13,7 @@ const {
   getType,
 } = require('./utils')
 
-const escapeStrForRegex = string =>
+const escapeStrForRegex = (string) =>
   string.replace(/[[\]{}()*+?.\\^$|]/g, '\\$&')
 
 const getPath = (object, propertyPath) => {
@@ -372,7 +372,7 @@ const matchers = {
     }
 
     const pass =
-      converted.findIndex(item =>
+      converted.findIndex((item) =>
         isDeepStrictEqual(item, value, [isDeepStrictEqual.iterableEquality])
       ) !== -1
     const message = pass

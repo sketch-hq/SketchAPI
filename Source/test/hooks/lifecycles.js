@@ -3,7 +3,7 @@ const { declareEmptyArrayVariable } = require('./utils')
 const lifecyles = ['afterAll', 'beforeAll', 'afterEach', 'beforeEach']
 
 module.exports = (programBody, t) => {
-  lifecyles.forEach(lifecycle => {
+  lifecyles.forEach((lifecycle) => {
     const varName = `__skpm_${lifecycle}s__`
 
     // var __skpm_afterAlls__ = []
