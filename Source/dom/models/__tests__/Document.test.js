@@ -270,19 +270,29 @@ test('should close a file', () => {
 })
 
 test('should open a file', () => {
-  const document = Document.open(
-    `${testOutputPath}/sketch-api-unit-tests.sketch`
-  )
+  const document = new Document()
+  const filepath = `${testOutputPath}/should-open-a-file.sketch` 
 
-  expect(getDocuments().find((d) => d.id === document.id)).toEqual(document)
-  // close it again because when watching the tests, it will open dozens of documents
-  document.close()
+  document.path = filepath
+  return new Promise((resolve, reject) => {
+    document.save((err, result) => {
+      if (err) { return reject(err) }
+      return resolve(result)
+    })
+  }).then(() => {
+    document.close()
+
+    const openedDocument = Document.open(filepath)
+    expect(getDocuments().find((d) => d.id === openedDocument.id)).toEqual(openedDocument)
+
+    openedDocument.close()
+  })
 })
 
 test('should fail to open a non-existing file', () => {
   try {
     Document.open(`${testOutputPath}/non-existing-sketch-api-unit-tests.sketch`)
-    expect(true).toBe(false)
+    expect(true).toBe(false) // open should not fail and throw an error, hence this expectation should never be met
   } catch (err) {
     expect(err.message).toMatch(
       'couldn’t be opened because there is no such file'
