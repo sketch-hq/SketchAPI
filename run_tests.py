@@ -244,7 +244,7 @@ def main(argv):
     # use macOS `open` command to spawn new, fresh instance without restoring
     # windows, wait for Sketch to quit and use specific path to Sketch app
     subprocess.Popen([
-        "open", "-n", "-F", "-a", sketch,
+        "open", "-n", "-F", "-j", "-a", sketch,
         f"sketch://plugin/{manifest['identifier']}/test?output={output_file_path}",
     ])
 
