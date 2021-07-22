@@ -1,5 +1,5 @@
 /* globals expect, test */
-import { find } from '..'
+import { find, Rectangle } from '..'
 
 test('should find by type', (_context, document) => {
   // eslint-disable-next-line no-param-reassign
@@ -93,7 +93,7 @@ test('should find by frame.x greater than', (_context, document) => {
     {
       layers: [
         { type: 'Artboard' },
-        { type: 'Shape', name: 'test', frame: { x: 400 } },
+        { type: 'Shape', name: 'test', frame: new Rectangle(400, 0, 100, 100) },
         { type: 'Shape', name: 'test2' },
       ],
     },
@@ -108,8 +108,8 @@ test('should find with 2 criteria', (_context, document) => {
   document.pages = [
     {
       layers: [
-        { type: 'Artboard', frame: { x: 400 } },
-        { type: 'Shape', name: 'test', frame: { x: 400 } },
+        { type: 'Artboard', frame: new Rectangle(400, 0, 100, 100) },
+        { type: 'Shape', name: 'test', frame: new Rectangle(400, 0, 50, 50) },
         { type: 'Shape', name: 'test2' },
       ],
     },
@@ -124,8 +124,8 @@ test('should find with id', (_context, document) => {
   document.pages = [
     {
       layers: [
-        { type: 'Artboard', frame: { x: 400 } },
-        { type: 'Shape', name: 'test', frame: { x: 400 } },
+        { type: 'Artboard', frame: new Rectangle(400, 0, 100, 100) },
+        { type: 'Shape', name: 'test', frame: new Rectangle(400, 0, 50, 50) },
         { type: 'Shape', name: 'test2' },
       ],
     },
