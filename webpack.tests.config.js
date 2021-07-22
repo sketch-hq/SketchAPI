@@ -149,7 +149,7 @@ function source(identifier, tests) {
   const runner = ({
     context,
     suites,
-    createNewDocument,
+    createDocumentData,
     expect,
     onProgress,
     prepareStackTrace,
@@ -189,31 +189,23 @@ function source(identifier, tests) {
       let res = Object.entries(val.source.tests).map(([title, test]) => {
         console.log(`Running test: ${suiteTitle} ${title}`)
 
-        const document = createNewDocument()
-
         let status = 'pending'
         let failureReason
-
+        
         try {
           expect.resetAssertionsLocalState()
-
-          // All tests are givent he plugin command context and a new
-          // document.
+          
+          // All tests are given the plugin command context and a new document data
+          // object.
           //
-          // TODO: check if the document needs to be closed, what happens
-          // with unsaved changes, etc. or if it would be better to have
-          // unit tests handle document creation and closing.
-          test(context, document)
+          // Note: This is not a full Document instance wrapping MSDocument. Using
+          // MSDocument slows down tests massively, so we rely on the private API
+          // creating document data from MSDocumentData.
+          test(context, createDocumentData())
           status = 'passed'
         } catch (err) {
           status = 'failed'
           failureReason = getTestFailure(err)
-        }
-
-        try {
-          document.close()
-        } catch (err) {
-          console.log(`Failed to close document: ${err}`)
         }
 
         return {
@@ -260,8 +252,6 @@ function source(identifier, tests) {
     const os = require('os')
     const sketch = require('sketch')
 
-    const { Document } = sketch
-
     const fileManager = NSFileManager.defaultManager()
     // Use a default path for the test results if not specified by the user,
     // for instance when running the test plugin from the Sketch app menu.
@@ -273,6 +263,8 @@ function source(identifier, tests) {
       },
     } = { actionContext: { query: { output: undefined}}, ...context }
 
+    console.log('⏳ Starting tests, writing results to: ' + output)
+
     // Create the results file and write extended file attributes with zero
     // progress information
     fileManager.createFileAtPath_contents_attributes(
@@ -281,14 +273,14 @@ function source(identifier, tests) {
       attributes(0),
     )
 
-    console.log('⏳ Starting tests, writing results to: ' + output)
+    console.log(\`🏇 Running \${Object.keys(testSuites).length} test suites…\`)
 
     const runner = ${runner.toString()}
     const result = runner({ 
       context,
       expect,
       suites: testSuites,
-      createNewDocument: () => { return new Document() },
+      createDocumentData: () => { return sketch.fromNative(MSDocumentData.new()) },
       onProgress: (fraction) => { // update the extended file attributes
         fileManager.setAttributes_ofItemAtPath_error(
           attributes(fraction),

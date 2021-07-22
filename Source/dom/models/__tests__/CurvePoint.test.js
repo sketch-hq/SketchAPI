@@ -2,7 +2,7 @@
 
 // Use ShapePath to indirectly instantiate CurvePoint as there's no public,
 // direct API.
-import { ShapePath } from '../..'
+import { Document, ShapePath } from '../..'
 
 test('should be able to log an CurvePoint', () => {
   const p = new ShapePath().points[0]
@@ -33,7 +33,8 @@ test('should be able to modify a CurvePoint', () => {
   expect(p.point.toJSON()).toEqual({ x: 0.3, y: 0.4 })
 })
 
-test('should show if a point is selected', (_, document) => {
+test('should show if a point is selected', () => {
+  const document = new Document()
   const shape = new ShapePath({
     parent: document.pages[0],
   })
@@ -47,4 +48,5 @@ test('should show if a point is selected', (_, document) => {
     .switchToEventHandlerClass(MSShapeEventHandler.class())
 
   expect(shape.points[0].isSelected()).toBe(true)
+  document.close()
 })
