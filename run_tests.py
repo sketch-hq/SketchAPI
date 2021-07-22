@@ -58,16 +58,22 @@ def has_failed_tests(results):
 # Read 'com.apple.progress.fractionCompleted' extended file attribute from
 # ouput file to display the test runner progress.
 def watch_test_runner_progress(file_path, timeout=30):
-    # Wait for output file to be available on disk
-    while not os.path.exists(file_path):
-        time.sleep(2)
-
-    if not os.path.isfile(file_path):
-        raise Exception("File not found")
-
     progress = 0
     last_progress_time = time.time()
 
+    print("Waiting for file to be created…")
+    # Wait for output file to be available on disk. This file is written
+    # at the beginning of the integration tests plugin run.
+    while not os.path.exists(file_path):
+        time.sleep(2)
+
+        if (time.time() - last_progress_time > timeout):
+            raise Exception("Timeout")
+
+    if not os.path.isfile(file_path):
+        raise Exception("Path to test output is not a file")
+
+    print("Waiting for tests to complete…")
     while progress < 1:
         stream = subprocess.Popen(
             ['xattr', '-l', file_path],
