@@ -72,7 +72,7 @@ The following npm scripts are available for development of the API.
 | Script                        | Description                             |
 | ----------------------------- | --------------------------------------- |
 | `npm run build`               | Build SketchAPI into the `build` folder |
-| `npm run test`                | Run integreation tests                  |
+| `npm run test:build`          | Build integration test plugin           |
 | `npm run lint`                | Lint the source code                    |
 | `npm run format-check`        | Check the format with Prettier          |
 | `npm run api-location:write`  | Tell Sketch to use your local SketchAPI |
@@ -123,7 +123,7 @@ npm run test:build --identifier=IDENTIFIER
 To build the plugin including only one spec file, e.g. run tests from one spec only, run this command:
 
 ```sh
-npm run test:build --identifier=IDENTIFIER --output=FILE_PATH --spec=SpecFileName.test.js
+npm run test:build --identifier=IDENTIFIER
 ```
 
 Use different `IDENTIFIER` values if you are testing different versions of Sketch or want to run integration tests concurrently on the same machine.
@@ -135,7 +135,7 @@ Use different `IDENTIFIER` values if you are testing different versions of Sketc
 To run the integration test plugin from the command-line, you must provide the path to the plugin and a file path to be used by the plugin to write the test results and can be watched by the Python script for changes.
 
 ```sh
-python run_tests.py -p /path/to/SketchIntegrationTests-$UUID.sketchplugin -o FILE_PATH [-s SKETCH_PATH]
+python run_tests.py -p /path/to/SketchIntegrationTests-$UUID.sketchplugin -o FILE_PATH [-s SKETCH_PATH] [-t TIMEOUT]
 ```
 
 Optionally, specify the Sketch installation to be used for the tests. If none is provided the default installation path `/Applications/Sketch.app` is going to be used.
@@ -147,6 +147,8 @@ Tests can also be run manually from within Sketch:
 1. Doubleclick to install the `SketchIntegrationTests-$UUID.sketchplugin`.
 2. Open Sketch version to test.
 3. Select _Test Sketch API_ from the application menu in _Plugins_ › _Sketch Integration Tests (`$UUID`)_
+
+The test results are written to the specified output file or, if no dedicated path is provided, to a temporary file. Use macOS' _Console.app_ to view Sketch's logs containing information on the file location and test progress in general.
 
 ## Acknowledgements
 
