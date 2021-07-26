@@ -184,17 +184,20 @@ function source(identifier, tests) {
 
     // Runs all test suites
     const numSuites = Object.entries(suites).length
-    let all = []
+    let results = []
+
     Object.entries(suites).forEach(([suiteTitle, val], index) => {
-      let res = Object.entries(val.source.tests).map(([title, test]) => {
+      const numTests = Object.entries(val.source.tests).length
+
+      Object.entries(val.source.tests).forEach(([title, test], testIndex) => {
         console.log(`Running test: ${suiteTitle} ${title}`)
 
         let status = 'pending'
         let failureReason
-        
+
         try {
           expect.resetAssertionsLocalState()
-          
+
           // All tests are given the plugin command context and a new document data
           // object.
           //
@@ -208,26 +211,23 @@ function source(identifier, tests) {
           failureReason = getTestFailure(err)
         }
 
-        return {
+        const fraction =
+          index / numSuites + (testIndex + 1) / numTests / numSuites
+
+        results.push({
           ancestorTitles: [suiteTitle], // we don't have nested test suites in the API but sticking to Jest types anyway.
           fullName: `${suiteTitle} ${title}`,
           status,
           title,
           relativePath: `.${val.path.split(/SketchAPI/)[1]}`,
           failureReason,
-        }
+        })
+
+        if (!onProgress) return
+
+        onProgress({ fraction, results })
       })
-
-      all = all.concat(res)
-
-      if (!onProgress) return
-
-      // When only one suite return "1", otherwhise progress will always be "0"
-      const progress = numSuites === 1 ? 1 : index / (numSuites - 1)
-      onProgress(progress)
     })
-
-    return all
   }
 
   return `
@@ -247,12 +247,34 @@ function source(identifier, tests) {
     }
   }
 
+  // Writes the file contents as UTF8 encoded string and attributes to the file
+  // at the given path.
+  const writeToFile = ({ path, contents = '', attributes }) => {
+    const fileManager = NSFileManager.defaultManager()
+    fileManager.setAttributes_ofItemAtPath_error(
+      attributes,
+      path,
+      nil,
+    )
+
+    const data = NSString.alloc().initWithString(contents)
+    const err = MOPointer.alloc().init()
+
+    data.writeToFile_atomically_encoding_error(
+      path,
+      false,
+      NSUTF8StringEncoding,
+      err
+    )
+  }
+
+  const runner = ${runner.toString()}
+
   export default function(context) {
     const path = require('path')
     const os = require('os')
     const sketch = require('sketch')
 
-    const fileManager = NSFileManager.defaultManager()
     // Use a default path for the test results if not specified by the user,
     // for instance when running the test plugin from the Sketch app menu.
     const { 
@@ -267,6 +289,7 @@ function source(identifier, tests) {
 
     // Create the results file and write extended file attributes with zero
     // progress information
+    const fileManager = NSFileManager.defaultManager()
     fileManager.createFileAtPath_contents_attributes(
       output,
       nil,
@@ -275,18 +298,19 @@ function source(identifier, tests) {
 
     console.log(\`🏇 Running \${Object.keys(testSuites).length} test suites…\`)
 
-    const runner = ${runner.toString()}
     const result = runner({ 
       context,
       expect,
       suites: testSuites,
       createDocumentData: () => { return sketch.fromNative(MSDocumentData.new()) },
-      onProgress: (fraction) => { // update the extended file attributes
-        fileManager.setAttributes_ofItemAtPath_error(
-          attributes(fraction),
-          output,
-          nil,
-        )
+      onProgress: ({ fraction, results }) => {
+        // Overwrite the file with latest results and update the extended file 
+        // attributes. We can't append JSON, so we replace all file contents.
+        writeToFile({
+          path: output,
+          attributes: attributes(fraction),
+          contents: JSON.stringify(results, null, 2)
+        })
       },
       prepareStackTrace
     })
