@@ -1,9 +1,43 @@
 #!/usr/bin/env python3
 
 '''
+Runs the Sketch JavaScript API integration tests plugin against a given Sketch application bundle
+or the default installation /Applications/Sketch.app if not specified. The application instance
+is terminated after a running this script, but only if the Python module `psutil` is available.
+
+The script expects a path to the plugin containing the JavaScript bundle with all unit tests. This
+is a build product of the SketchAPI project and created by calling `npm run test:build` command
+from the project root, see the README for more detail.
+
+Sketch instances share state in ~/Library/Application/Support/com.bohemiancoding.sketch3, which
+means plugins must be named uniquely to avoid issues with concurrent test runs. Subsequently, the
+integration test plugin is named SketchIntegrationTests-IDENTIFIER.sketchplugin with `IDENTIFIER`
+being a user provided value at build time of the plugin, which could be a Jenkins job number or
+GitHub issue number.
+
+This script uses the macOS `open` command to launch a Sketch instance with the `sketch://`
+application URL scheme:
+
+    sketch://plugin/PLUGIN_IDENTIFIER/COMMAND_IDENTIFIER
+
+Both PLUGIN_IDENTIFIER and COMMAND_IDENTIFIER are inferred from the plugin bundle.
+
+During a test plugin run, the test results are continuously written to the specified test output
+file and the extended Finder file attribute `com.apple.progress.fractionCompleted` gets updated
+accordingly, while this script monitors this file attribute for changes. On completion, this
+attribute reaches a value of 1 at which point the file contents are parsed and logged to the
+console.
+
+If the parsed results include a failed test, this script returns with an exit code of 1.
+
+Should this completion not occur, due to a hanging test or testing taking too long, this script
+will time out and also return with an exit code of 1.
+
+If all tests have passed successfully, this script exits with code zero.
+
 
 Usage:
-    run_tests.py -s SKETCH_PATH -p PLUGIN -o OUTPUT_FILE_PATH'
+    run_tests.py -s SKETCH_PATH -p PLUGIN -o OUTPUT_FILE_PATH
 
 Options:
     -s SKETCH_PATH      The path to the Sketch.app bundle
@@ -93,10 +127,12 @@ def watch_test_runner_progress(file_path, timeout=30):
             continue
 
         progress = latest_progress
-        print(f"Running tests: {round(progress * 100, 2)}% complete", end='\r')
+        print(f"Running tests: {round(progress * 100, 2):.2f}% complete", end='\r')
 
         time.sleep(1)
         last_progress_time = time.time()
+    
+    print("\n")
 
 
 def print_results(results):
@@ -105,26 +141,19 @@ def print_results(results):
 
         suite_status = "failed" if has_failed_tests(suite_results['results']) else "passed"
 
-        print('\n:: {status}\t{name} {relativePath}'.format(
-            status=suite_status.upper(),
-            name=suite_name,
-            relativePath=suite_results['relativePath']
-        ))
+        print(f":: {suite_status.upper()}\t{suite_name} {suite_results['relativePath']}")
 
         for res in suite_results['results']:
             ancestors = " › ".join(res.get('ancestorTitles', []))
-            print(' • {status}\t{ancestors} {title}'.format(
-                status=res['status'].upper(),
-                ancestors=ancestors,
-                title=res['title'],
-            ))
+            print(f" • {res['status'].upper()}\t{ancestors} {res['title']}")
 
             if 'failureReason' not in res:
                 continue
 
-            failure_reason = '{}\n'.format(re.sub(
-                '{{{((\w*)|(\/\w*))}}}', '', res['failureReason']['message']))
-            print('\t {failure_reason}'.format(failure_reason=failure_reason))
+            failure_reason = re.sub('{{{((\w*)|(\/\w*))}}}', '', res['failureReason']['message'])
+            print(f"\t {failure_reason}")
+
+        print("") # for legibility
 
 
 def parse_test_results(file_path):
@@ -171,7 +200,7 @@ def terminate_process(path):
         # includes binaries for XPC services such as Mirror and Assistants.
         # Furthermore, pre-release builds of Sketch have their binaries named
         # differently, e.g. Sketch Beta.
-        if exe and exe.startswith(F"{path}/Contents/MacOS"):
+        if exe and exe.startswith(f"{path}/Contents/MacOS"):
             print(f"Terminating process: {proc.info}", file=sys.stderr)
             proc.kill()
             break
@@ -269,7 +298,7 @@ def main(argv):
         sys.exit(0)
 
     except Exception as e:
-        print("{e}\nFailed with exit code 1".format(e=e))
+        print(f"{e}\n\nFailed with exit code 1")
         sys.exit(1)
 
     finally:
