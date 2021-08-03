@@ -1,8 +1,6 @@
 /* globals expect, test */
 import { canBeLogged } from '../../../test-utils'
 import { Text, Rectangle } from '../..'
-import { TextLineSpacingBehaviourMap } from '../Text'
-import { TextAlignmentMap } from '../../style/Text'
 
 test('should create a Text layer', () => {
   const text = new Text()
@@ -33,18 +31,30 @@ test('should change the text alignment', () => {
   })
 
   // default to left
-  expect(text.alignment).toBe(Text.Alignment.left)
+  expect(text.style.alignment).toBe(Text.Alignment.left)
 
+  // TextAlignmentMap/TextAlignmentReverseMap are private APIs. Test API
+  // the way users would set them instead using raw values.
+  const map = {
+    left: 'left', // Visually left aligned
+    right: 'right', // Visually right aligned
+    center: 'center', // Visually centered
+    justified: 'justified', // Fully-justified. The last line in a paragraph is natural-aligned.
+    natural: 'natural', // Indicates the default alignment for script
+  }
+
+  // The 'natural' aligment defaults to left and is therefore specifically
+  // included in the expectation.
   Object.keys(Text.Alignment).forEach((key) => {
     // test setting by name
-    text.alignment = key
-    expect(text.alignment).toBe(
+    text.style.alignment = key
+    expect(text.style.alignment).toBe(
       Text.Alignment[key] === 'natural' ? 'left' : Text.Alignment[key]
     )
 
     // test setting by value
-    text.alignment = TextAlignmentMap[key]
-    expect(text.alignment).toBe(
+    text.style.alignment = map[key]
+    expect(text.style.alignment).toBe(
       Text.Alignment[key] === 'natural' ? 'left' : Text.Alignment[key]
     )
   })
@@ -58,6 +68,13 @@ test('should change the line spacing behavior', () => {
 
   // default to constant baseline
   expect(text.lineSpacing).toBe(Text.LineSpacing.natural)
+
+  // TextLineSpacingBehaviourMap is private API.
+  const TextLineSpacingBehaviourMap = {
+    variable: 1, // Uses min & max line height on paragraph style
+    constantBaseline: 2, // Uses MSConstantBaselineTypesetter for fixed line height
+    natural: 3, // Uses MSConstantBaselineTypesetter for fixed line heights, and MSEmojiAwareLayoutManagerDelegate for natural line heights
+  }
 
   Object.keys(Text.LineSpacing).forEach((key) => {
     // test setting by name

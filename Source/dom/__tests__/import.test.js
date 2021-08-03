@@ -1,8 +1,6 @@
 /* globals expect, test */
-import { createLayerFromData } from '../import'
-import { Rectangle } from '../models/Rectangle'
-import { exportObject } from '../export'
-import { Shape } from '../layers/Shape'
+import sketch from '../..'
+const { Shape, Rectangle, createLayerFromData } = sketch
 
 test('should create Group from an SVG', () => {
   const svgString =
@@ -17,7 +15,7 @@ test('should create Group from an SVG', () => {
   expect(group.layers[0].frame.height).toEqual(100)
 })
 
-test('should create group from a PDF', (context, document) => {
+test('should create group from a PDF', (_context, document) => {
   const layer = new Shape({
     parent: document.selectedPage,
     frame: new Rectangle(0, 0, 200, 100),
@@ -29,7 +27,7 @@ test('should create group from a PDF', (context, document) => {
       ],
     },
   })
-  const buffer = exportObject(layer, {
+  const buffer = sketch.export(layer, {
     formats: 'pdf',
     output: null,
   })
@@ -39,12 +37,12 @@ test('should create group from a PDF', (context, document) => {
   expect(page.frame.height).toEqual(100)
 })
 
-test('should create Image from a bitmap', (context, document) => {
+test('should create Image from a bitmap', (_context, document) => {
   const layer = new Shape({
     parent: document.selectedPage,
     frame: new Rectangle(0, 0, 200, 100),
   })
-  const buffer = exportObject(layer, {
+  const buffer = sketch.export(layer, {
     formats: 'png',
     output: null,
   })

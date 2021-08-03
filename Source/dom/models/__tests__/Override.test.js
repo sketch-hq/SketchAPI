@@ -27,7 +27,7 @@ function createSymbolMaster(document) {
   }
 }
 
-test('should be able to set overrides', (context, document) => {
+test('should be able to set overrides', (_context, document) => {
   const { master, text } = createSymbolMaster(document)
   const instance = master.createNewInstance()
   document.selectedPage.layers = document.selectedPage.layers.concat(instance)
@@ -59,7 +59,7 @@ test('should be able to set overrides', (context, document) => {
   expect(instance.overrides[0].toJSON()).toEqual(result)
 })
 
-test('should change a nested symbol', (context, document) => {
+test('should change a nested symbol', (_context, document) => {
   // build the first symbol master
   const { master: nestedMaster } = createSymbolMaster(document)
   const { master: nestedMaster2 } = createSymbolMaster(document)
@@ -103,7 +103,7 @@ test('should change a nested symbol', (context, document) => {
   expect(instance.overrides[1].toJSON()).toEqual(result)
 })
 
-test('should handle image override', (context, document) => {
+test('should handle image override', (_context, document) => {
   const artboard = new Artboard({
     name: 'Test',
     parent: document.selectedPage,
@@ -136,7 +136,7 @@ test('should handle image override', (context, document) => {
   expect(instance.overrides[0].value.type).toBe('ImageData')
 })
 
-test('hidden layers should not be editable', (context, document) => {
+test('hidden layers should not be editable', (_context, document) => {
   const { master } = createSymbolMaster(document)
   master.layers[0].hidden = true
   const instance = master.createNewInstance()
@@ -145,7 +145,7 @@ test('hidden layers should not be editable', (context, document) => {
   expect(instance.overrides[0].editable).toBe(false)
 })
 
-test('should be able to select an override', (context, document) => {
+test('should be able to select an override', (_context, document) => {
   const { master } = createSymbolMaster(document)
   const instance = master.createNewInstance()
   document.selectedPage.layers = document.selectedPage.layers.concat(instance)
@@ -164,7 +164,7 @@ test('should be able to select an override', (context, document) => {
   expect(instance.selected).toBe(true)
 })
 
-test('should be able to access the frame of an override', (context, document) => {
+test('should be able to access the frame of an override', (_context, document) => {
   const { master } = createSymbolMaster(document)
   const instance = master.createNewInstance()
   document.selectedPage.layers = document.selectedPage.layers.concat(instance)

@@ -1,7 +1,7 @@
 /* globals expect, test */
-import { find } from '../find'
+import { find, Rectangle } from '..'
 
-test('should find by type', (context, document) => {
+test('should find by type', (_context, document) => {
   // eslint-disable-next-line no-param-reassign
   document.pages = [
     {
@@ -13,7 +13,7 @@ test('should find by type', (context, document) => {
   ])
 })
 
-test('should find by name', (context, document) => {
+test('should find by name', (_context, document) => {
   // eslint-disable-next-line no-param-reassign
   document.pages = [
     {
@@ -25,7 +25,7 @@ test('should find by name', (context, document) => {
   ])
 })
 
-test('should find by name containing', (context, document) => {
+test('should find by name containing', (_context, document) => {
   // eslint-disable-next-line no-param-reassign
   document.pages = [
     {
@@ -42,7 +42,7 @@ test('should find by name containing', (context, document) => {
   ])
 })
 
-test('should find by different name', (context, document) => {
+test('should find by different name', (_context, document) => {
   // eslint-disable-next-line no-param-reassign
   document.pages = [
     {
@@ -54,7 +54,7 @@ test('should find by different name', (context, document) => {
   ])
 })
 
-test('should find by name ending with', (context, document) => {
+test('should find by name ending with', (_context, document) => {
   // eslint-disable-next-line no-param-reassign
   document.pages = [
     {
@@ -70,7 +70,7 @@ test('should find by name ending with', (context, document) => {
   ])
 })
 
-test('should find by name beginning with', (context, document) => {
+test('should find by name beginning with', (_context, document) => {
   // eslint-disable-next-line no-param-reassign
   document.pages = [
     {
@@ -87,13 +87,13 @@ test('should find by name beginning with', (context, document) => {
   ])
 })
 
-test('should find by frame.x greater than', (context, document) => {
+test('should find by frame.x greater than', (_context, document) => {
   // eslint-disable-next-line no-param-reassign
   document.pages = [
     {
       layers: [
         { type: 'Artboard' },
-        { type: 'Shape', name: 'test', frame: { x: 400 } },
+        { type: 'Shape', name: 'test', frame: new Rectangle(400, 0, 100, 100) },
         { type: 'Shape', name: 'test2' },
       ],
     },
@@ -103,13 +103,13 @@ test('should find by frame.x greater than', (context, document) => {
   ])
 })
 
-test('should find with 2 criteria', (context, document) => {
+test('should find with 2 criteria', (_context, document) => {
   // eslint-disable-next-line no-param-reassign
   document.pages = [
     {
       layers: [
-        { type: 'Artboard', frame: { x: 400 } },
-        { type: 'Shape', name: 'test', frame: { x: 400 } },
+        { type: 'Artboard', frame: new Rectangle(400, 0, 100, 100) },
+        { type: 'Shape', name: 'test', frame: new Rectangle(400, 0, 50, 50) },
         { type: 'Shape', name: 'test2' },
       ],
     },
@@ -119,13 +119,13 @@ test('should find with 2 criteria', (context, document) => {
   ])
 })
 
-test('should find with id', (context, document) => {
+test('should find with id', (_context, document) => {
   // eslint-disable-next-line no-param-reassign
   document.pages = [
     {
       layers: [
-        { type: 'Artboard', frame: { x: 400 } },
-        { type: 'Shape', name: 'test', frame: { x: 400 } },
+        { type: 'Artboard', frame: new Rectangle(400, 0, 100, 100) },
+        { type: 'Shape', name: 'test', frame: new Rectangle(400, 0, 50, 50) },
         { type: 'Shape', name: 'test2' },
       ],
     },

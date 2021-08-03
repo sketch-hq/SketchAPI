@@ -28,13 +28,16 @@ export class Swatch extends Asset {
       try {
         if (object.isKindOfClass(MSSwatch)) {
           nativeAsset = object
-        } else if (object.isKindOfClass(MSImmutableColor) || object.isKindOfClass(MSColor)){
+        } else if (
+          object.isKindOfClass(MSImmutableColor) ||
+          object.isKindOfClass(MSColor)
+        ) {
           const c = Color.from(object).toMSColor()
-          const name = colorToString(c).slice(0,7)
+          const name = colorToString(c).slice(0, 7)
           nativeAsset = MSSwatch.alloc().initWithName_color(name, c)
         } else if (object.isKindOfClass(NSColor)) {
           const c = MSColor.colorWithNSColor(object)
-          const name = colorToString(c).slice(0,7)
+          const name = colorToString(c).slice(0, 7)
           nativeAsset = MSSwatch.alloc().initWithName_color(name, c)
         }
       } catch (error) {

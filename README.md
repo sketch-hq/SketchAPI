@@ -1,126 +1,78 @@
-# Sketch API
+# Sketch JavaScript API
 
-This is a JavaScript API for Sketch. The intention is to make something which is:
+JavaScript API for [Sketch](https://sketch.com) for writing scripts and creating plugins.
 
-- Idiomatic JavaScript.
-- An easily understandable subset of the full internals of Sketch.
-- Fully supported by Sketch between releases (ie. we try not to change it, unlike our internal API which we can and do change whenever we need to).
-- Still allows you to drop down to our internal API when absolutely necessary.
-
-This API is a very core layer which interfaces with Sketch itself. It's intentionally simple, and we want to keep it that way. If you feel like adding some high-level code to it, it’s probably better to add it to a community-maintained library that can be used on top of the API, and keep it separate from the core API effort.
-
-![API layers](https://cloud.githubusercontent.com/assets/206306/19645098/f7d3615c-99ea-11e6-962a-439fb553bf2d.png)
-
-_Comments and suggestions for this API are welcome - [file an issue](https://github.com/sketch-hq/SketchAPI/issues) to discuss it or send them to developer@sketch.com._
+<img src="https://user-images.githubusercontent.com/69443/95841168-b8436700-0d4d-11eb-8343-49eebea95fb9.png" alt="Sketch JavaScript API Architecture" width="568">
 
 ## Usage
 
-The full documentation is available on [developer.sketch.com/reference/api](https://developer.sketch.com/reference/api).
+For guides, concepts and regular updates on what's new in the latest version of Sketch, see the [Plugin Developer Documentation](https://developer.sketch.com/plugins/).
 
-Here's a very simple example script:
+- ℹ️ [**API Reference**](https://developer.sketch.com/reference/api/)
+- 🐛 [**Issues**](https://github.com/sketch-hq/SketchAPI/issue) for bug reports and API feature requests
+
+### Example
+
+Try the following script within the _Plugins_ › _Run Script…_ panel.
 
 ```js
-// access the Sketch API - comes bundled inside Sketch, so no "installation" is required
-var sketch = require('sketch')
+// The Sketch JavaScript API is bundled with the Sketch Mac app
+// and must be imported before it can be used.
+const sketch = require('sketch')
+const { Group, Shape, Rectangle } = sketch
 
-// get the current Document and Page
-var document = sketch.getSelectedDocument()
-var page = document.selectedPage
+// Get the current Document and Page
+const doc = sketch.getSelectedDocument()
+const page = doc.selectedPage
 
-var Group = sketch.Group
-var Shape = sketch.Shape
-var Rectangle = sketch.Rectangle
-
-// create a new Group belonging to the current Page
+// Create and select a new Group within the current Page
 var group = new Group({
   parent: page,
   frame: new Rectangle(0, 0, 100, 100),
   name: 'Test',
   selected: true,
 })
-// create a new rectangle Shape belonging to the previously created Group
+
+// Add a new Rectangle Shape Layer to newly created Group
 var rect = new Shape({
   parent: group,
   frame: new Rectangle(10, 10, 80, 80),
 })
 
-// get the current selection
-var selection = document.selectedLayers
+// Get and log the current selection
+var sel = doc.selectedLayers
+console.log(sel.isEmpty)
 
-console.log(selection.isEmpty)
-selection.forEach(function (item) {
-  console.log(item.name)
+sel.forEach(function (elem) {
+  console.log(elem.name)
 })
-
-// deselect all the layers
-selection.clear()
-console.log(selection.isEmpty)
-
-// select the rectangle we created
-rect.selected = true
-console.log(selection.isEmpty)
-
-// ask the user for a string
-sketch.UI.getInputFromUser(
-  'Test',
-  {
-    type: 'String',
-    initialValue: 'default',
-  },
-  (err, outputString) => {
-    if (err) {
-      return
-    }
-    // store the string in the settings
-    // it will be remembered even when Sketch closes
-    sketch.Settings.setSettingForKey('setting-to-remember', outputString)
-    console.log(sketch.Settings.settingForKey('setting-to-remember'))
-
-    sketch.UI.getInputFromUser(
-      'Test',
-      {
-        type: 'Selection',
-        possibleValues: ['Sketch', 'Paper'],
-      },
-      (err, outputSelection) => {
-        if (err) {
-          return
-        }
-        sketch.UI.message('Hello mum!')
-        sketch.UI.alert('Title', outputSelection)
-      }
-    )
-  }
-)
 ```
-
-For more examples, we recommend checking out the [examples section of the developer website](https://developer.sketch.com/examples/).
-
-Happy coding!
 
 ## Development
 
-This section of the readme is related to developing SketchAPI locally. If you're just interested in using SketchAPI to write Sketch Plugins you can stop reading here.
+### Prerequisits
 
-You'll need the following tools available on your system to work on this repository:
-
-- Node 10 or greater
-- Visual Studio Code (recommended)
+- Have [Node](https://nodejs.org) installed
+- [Visual Studio Code](https://code.visualstudio.com) (recommended)
 
 ### Overview
 
-SketchAPI is written in JavaScript, as a collection of files in the `./Source` folder.
+The Sketch API is written in JavaScript/CocoaScript and gets bundled as part of the build process using webpack.
 
-Webpack is used to bundle the files, and we include this in each release of Sketch. However you can build, run and test SketchAPI locally too - continue reading to find out how.
+In addition to the API, this project also defines core modules to be included in Sketch as part of the official release process. Both are written to the `build` output folder when the build script is run:
+
+```sh
+./build.sh
+```
 
 #### Scripts
 
-The following npm scripts are available. Carry on reading below for more in-depth guides.
+The following npm scripts are available for development of the API.
 
 | Script                        | Description                             |
 | ----------------------------- | --------------------------------------- |
 | `npm run build`               | Build SketchAPI into the `build` folder |
-| `npm run test`                | Run the integreation tests using skpm   |
+| `npm run test:build`          | Build integration test plugin           |
 | `npm run lint`                | Lint the source code                    |
 | `npm run format-check`        | Check the format with Prettier          |
 | `npm run api-location:write`  | Tell Sketch to use your local SketchAPI |
@@ -128,12 +80,12 @@ The following npm scripts are available. Carry on reading below for more in-dept
 
 ### Build and run
 
-Following these steps will allow you to build the source files, and inject the changes into your local copy of Sketch to see the results.
+Follow the steps below to use a local copy of the API with your installation of Sketch.
 
-Any plugins you have installed or code you invoke in Sketch's _Plugins > Run Script_ dialogue box will run against your changed version of SketchAPI.
+Note, any plugins you have installed or code you invoke in Sketch's _Plugins_ › _Run Script…_ sheet will use your local copy of the API.
 
 1. Checkout this repository.
-1. Make your copy of Sketch use your local version of SketchAPI, rather than the one it has built-in.
+1. Configure Sketch to use your local version of `SketchAPI` instead of the built-in.
    ```sh
    npm run api-location:write
    ```
@@ -144,33 +96,59 @@ Any plugins you have installed or code you invoke in Sketch's _Plugins > Run Scr
    ```
 1. Start Sketch and your changes will be picked up.
 
-> ⚠️ If you re-build SketchAPI by running `npm run build` again while Sketch is open you won't see your changes automatically reflected. You'll need to restart Sketch for this to happen.
+> ⚠️ Sketch must be restarted for API changes to take effect after running `npm run build`.
 
-> ⚠️ Once you've finished working on SketchAPI don't forget to stop Sketch using your customised version, to do this run:<br/>`npm run api-location:delete`.
+> ⚠️ You must remove the custom location configuration to make your installation of Sketch use the version of the API included with the app.
+>
+> ```
+> npm run api-location:delete
+>
+> ```
 
 ### Testing
 
-The `*.test.js` files in this repository are integration tests that run in Sketch's plugin environment, using the skpm test runner.
+The SketchAPI builds on top of macOS and internal Sketch APIs via CocoaScript. To ensure the API works for a specific Sketch version or build, this repository includes `*.test.js` files containing integration tests.
 
-To run these tests using your current version of the Sketch as the host environment invoke:
+These integration tests are compiled into a single test plugin using Webpack and can run by the `run_tests.py` Python script, or from the Sketch application menu.
 
-```bash
-npm run test
+**Build test plugin**
+
+To build the plugin separately, e.g. to install and run it manually, run the following command.
+
+```sh
+npm install # if you haven't installed dependencies already
+npm run test:build --identifier=IDENTIFIER
 ```
 
-Alternatively if you want to run the tests with a specific app binary run:
+To build the plugin including only one spec file, e.g. run tests from one spec only, run this command:
 
-```bash
-SKETCH_PATH=/path/to/sketch.app npm run test
+```sh
+npm run test:build --identifier=IDENTIFIER
 ```
 
-> ℹ️ There is no need to re-build SketchAPI between test runs or use `defaults write` to set the API location; the test runner handles re-compiling test and source files and injecting them into Sketch.
+Use different `IDENTIFIER` values if you are testing different versions of Sketch or want to run integration tests concurrently on the same machine.
 
-### Documentation
+> **Note:** The Sketch JavaScript API does not need to be rebuilt. The integration tests use the API bundled within Sketch or the custom API location specified in the user defaults.
 
-The API documentation is part of the [`developer.sketch.com`](https://github.com/sketch-hq/developer.sketch.com) repository.
+**Run test plugin**
 
-Make sure to update the API and the action reference accordingly when you make changes to the API.
+To run the integration test plugin from the command-line, you must provide the path to the plugin and a file path to be used by the plugin to write the test results and can be watched by the Python script for changes.
+
+```sh
+python run_tests.py -p /path/to/SketchIntegrationTests-$UUID.sketchplugin -o FILE_PATH [-s SKETCH_PATH] [-t TIMEOUT]
+```
+
+Optionally, specify the Sketch installation to be used for the tests. If none is provided the default installation path `/Applications/Sketch.app` is going to be used.
+
+> **Note:** Tests can be run concurrently but only for different Sketch installations. Only one test run per Sketch installation location is supported because the Sketch process is terminated at the end of the test run based on its path on disk.
+
+Tests can also be run manually from within Sketch:
+
+1. Doubleclick to install the `SketchIntegrationTests-$UUID.sketchplugin`.
+2. Open Sketch version to test.
+3. Select _Test Sketch API_ from the application menu in _Plugins_ › _Sketch Integration Tests (`$UUID`)_
+
+The test results are written to the specified output file or, if no dedicated path is provided, to a temporary file. Use macOS' _Console.app_ to view Sketch's logs containing information on the file location and test progress in general.
 
 ## Acknowledgements
 

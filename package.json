@@ -8,25 +8,28 @@
   "homepage": "https://github.com/sketch-hq/SketchAPI",
   "scripts": {
     "build": "./build.sh",
-    "test": "skpm-test",
-    "test:latest": "skpm-test --app=latest",
-    "test:xcode": "skpm-test --app=xcode",
+    "test:build": "webpack --config webpack.tests.config.js --env.identifier=$npm_config_identifier --env.spec=$npm_config_spec",
     "lint": "eslint \"Source/**\"",
     "format-check": "prettier --check \"**/*.{js,json}\"",
     "api-location:write": "defaults write com.bohemiancoding.sketch3 SketchAPILocation \"$(pwd)/build\"",
     "api-location:delete": "defaults delete com.bohemiancoding.sketch3 SketchAPILocation",
     "postinstall": "cd core-modules && npm ci"
   },
-  "devDependencies": {},
-  "dependencies": {
-    "@skpm/fs": "^0.2.6",
-    "@skpm/test-runner": "^0.4.1",
-    "babel-loader": "8.0.6",
-    "eslint": "7.27.0",
-    "eslint-config-prettier": "8.3.0",
-    "eslint-plugin-import": "2.23.3",
-    "prettier": "2.0.5",
-    "webpack": "4.39.3",
-    "webpack-cli": "3.3.8"
+  "devDependencies": {
+    "@babel/core": "^7.12.3",
+    "@babel/preset-env": "^7.12.1",
+    "@skpm/builder": "0.7.11",
+    "@skpm/fs": "0.2.6",
+    "babel-loader": "^8.1.0",
+    "copy-webpack-plugin": "^6.3.0",
+    "eslint": "7.11.0",
+    "eslint-config-prettier": "6.12.0",
+    "eslint-plugin-import": "2.22.1",
+    "globby": "^11.0.1",
+    "prettier": "2.1.2",
+    "sketch-utils": "0.2.10",
+    "webpack": "4.44.2",
+    "webpack-cli": "3.3.12",
+    "webpack-virtual-modules": "^0.3.2"
   }
 }

@@ -2,7 +2,7 @@
 import { base64Image } from '../../../test-utils'
 import { Image, Rectangle } from '../..'
 
-test('should return an ImageData when accessing `image`', (context, document) => {
+test('should return an ImageData when accessing `image`', (_context, document) => {
   const page = document.selectedPage
 
   const image = new Image({
@@ -14,7 +14,7 @@ test('should return an ImageData when accessing `image`', (context, document) =>
   expect(image.image.type).toBe('ImageData')
 })
 
-test('should return image size when accessing `size`', (context, document) => {
+test('should return image size when accessing `size`', (_context, document) => {
   const page = document.selectedPage
 
   const image = new Image({
@@ -27,7 +27,7 @@ test('should return image size when accessing `size`', (context, document) => {
   expect(image.image.size.height).toBe(50)
 })
 
-test('should return image size regardless of scale', (context, document) => {
+test('should return image size regardless of scale', (_context, document) => {
   const page = document.selectedPage
 
   const image = new Image({

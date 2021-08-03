@@ -1,16 +1,17 @@
 /* globals test, expect */
 
+// Use ShapePath to indirectly instantiate CurvePoint as there's no public,
+// direct API.
 import { Document, ShapePath } from '../..'
-import { CurvePoint } from '../CurvePoint'
 
 test('should be able to log an CurvePoint', () => {
-  const curvePoint = new CurvePoint()
-  log(curvePoint)
+  const p = new ShapePath().points[0]
+  log(p)
 })
 
 test('should be able to modify a CurvePoint', () => {
-  const curvePoint = new CurvePoint()
-  expect(curvePoint.toJSON()).toEqual({
+  const p = new ShapePath().points[0]
+  expect(p.toJSON()).toEqual({
     type: 'CurvePoint',
     cornerRadius: 0,
     curveFrom: { x: 0, y: 0 },
@@ -19,41 +20,23 @@ test('should be able to modify a CurvePoint', () => {
     pointType: 'Straight',
   })
 
-  curvePoint.cornerRadius = 3
-  expect(curvePoint.cornerRadius).toBe(3)
+  p.cornerRadius = 3
+  expect(p.cornerRadius).toBe(3)
 
-  curvePoint.curveFrom = {
-    x: 25,
-    y: 3,
-  }
-  expect(curvePoint.curveFrom.toJSON()).toEqual({
-    x: 25,
-    y: 3,
-  })
+  p.curveFrom = { x: 25, y: 3 }
+  expect(p.curveFrom.toJSON()).toEqual({ x: 25, y: 3 })
 
-  curvePoint.curveTo = {
-    x: 24,
-    y: 4,
-  }
-  expect(curvePoint.curveTo.toJSON()).toEqual({
-    x: 24,
-    y: 4,
-  })
+  p.curveTo = { x: 24, y: 4 }
+  expect(p.curveTo.toJSON()).toEqual({ x: 24, y: 4 })
 
-  curvePoint.point = {
-    x: 3,
-    y: 4,
-  }
-  expect(curvePoint.point.toJSON()).toEqual({
-    x: 3,
-    y: 4,
-  })
+  p.point = { x: 0.3, y: 0.4 }
+  expect(p.point.toJSON()).toEqual({ x: 0.3, y: 0.4 })
 })
 
 test('should show if a point is selected', () => {
   const document = new Document()
   const shape = new ShapePath({
-    parent: document.selectedPage,
+    parent: document.pages[0],
   })
   expect(shape.points[0].isSelected()).toBe(false)
 
@@ -65,6 +48,5 @@ test('should show if a point is selected', () => {
     .switchToEventHandlerClass(MSShapeEventHandler.class())
 
   expect(shape.points[0].isSelected()).toBe(true)
-
   document.close()
 })

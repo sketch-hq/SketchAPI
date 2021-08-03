@@ -16,7 +16,7 @@ test('should create a Layer with a style property', () => {
   expect(shape.style.type).toBe('Style')
 })
 
-test('should set a shared style', (context, document) => {
+test('should set a shared style', (_context, document) => {
   const shape = new Shape()
   const { sharedStyle } = createSharedStyle(document, Shape, {
     fills: ['#111'],

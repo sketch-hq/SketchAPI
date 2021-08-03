@@ -1,15 +1,17 @@
 /* globals expect, test */
 import { Buffer } from 'buffer'
 import fs from '@skpm/fs'
+
+import sketch from '../..'
+const { Shape } = sketch
+
 import { outputPath } from '../../test-utils'
-import { exportObject, objectFromJSON } from '../export'
-import { Shape } from '../layers/Shape'
 
 const testOutputPath = outputPath()
 
 test('should return exported json data', () => {
   const object = new Shape()
-  const archive = exportObject(object, {
+  const archive = sketch.export(object, {
     formats: 'json',
     output: false,
   })
@@ -19,7 +21,7 @@ test('should return exported json data', () => {
 
 test('should return array of exported json data', () => {
   const objects = [new Shape(), new Shape()]
-  const archive = exportObject(objects, {
+  const archive = sketch.export(objects, {
     formats: 'json',
     output: false,
   })
@@ -30,17 +32,17 @@ test('should return array of exported json data', () => {
 
 test('should restore object from json data', () => {
   const object = new Shape()
-  const archive = exportObject(object, {
+  const archive = sketch.export(object, {
     formats: ['json'],
     output: false,
   })
-  const restored = objectFromJSON(archive)
+  const restored = sketch.fromSketchJSON(archive)
   expect(restored.id).toEqual(String(object.id))
 })
 
 test('Should fail with no object provided', () => {
   try {
-    exportObject([], {
+    sketch.export([], {
       output: false,
     })
   } catch (err) {
@@ -51,7 +53,7 @@ test('Should fail with no object provided', () => {
 test('should fail with to return with multiple formats', () => {
   try {
     const object = new Shape()
-    exportObject(object, {
+    sketch.export(object, {
       formats: ['png', 'json'],
       output: false,
     })
@@ -61,18 +63,18 @@ test('should fail with to return with multiple formats', () => {
   }
 })
 
-test('Should return a buffer', (context, document) => {
+test('Should return a buffer', (_context, document) => {
   const object = new Shape({
     parent: document.selectedPage,
   })
-  const buffer = exportObject(object, {
+  const buffer = sketch.export(object, {
     formats: 'png',
     output: false,
   })
   expect(Buffer.isBuffer(buffer)).toBe(true)
 })
 
-test('Should export a page to png file', (context, document) => {
+test('Should export a page to png file', (_context, document) => {
   // const filePath = NSString.stringWithString(testOutputPath).stringByAppendingPathComponent('Page 1.png')
   const filePath = `${testOutputPath}/Page 1.png`
   try {
@@ -84,14 +86,14 @@ test('Should export a page to png file', (context, document) => {
   const object = new Shape({
     parent: document.selectedPage,
   })
-  exportObject(document.selectedPage, {
+  sketch.export(document.selectedPage, {
     formats: 'png',
     output: testOutputPath,
   })
   expect(fs.existsSync(filePath)).toBe(true)
 })
 
-test('Should export a shape to png file', (context, document) => {
+test('Should export a shape to png file', (_context, document) => {
   // const filePath = NSString.stringWithString(testOutputPath).stringByAppendingPathComponent('Shape.png')
   const filePath = `${testOutputPath}/Shape.png`
   try {
@@ -102,14 +104,14 @@ test('Should export a shape to png file', (context, document) => {
   const object = new Shape({
     parent: document.selectedPage,
   })
-  exportObject(object, {
+  sketch.export(object, {
     formats: 'png',
     output: testOutputPath,
   })
   expect(fs.existsSync(filePath)).toBe(true)
 })
 
-test('Should export a shape to json file', (context, document) => {
+test('Should export a shape to json file', (_context, document) => {
   const filePath = `${testOutputPath}/Shape.json`
   try {
     fs.unlinkSync(filePath)
@@ -119,7 +121,7 @@ test('Should export a shape to json file', (context, document) => {
   const object = new Shape({
     parent: document.selectedPage,
   })
-  exportObject(object, {
+  sketch.export(object, {
     formats: 'json',
     output: testOutputPath,
   })
