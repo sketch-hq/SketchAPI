@@ -102,7 +102,7 @@ def watch_test_runner_progress(file_path, timeout=30):
         time.sleep(2)
 
         if (time.time() - last_progress_time > timeout):
-            raise Exception("Timeout")
+            raise TimeoutError
 
     if not os.path.isfile(file_path):
         raise Exception("Path to test output is not a file")
@@ -121,7 +121,7 @@ def watch_test_runner_progress(file_path, timeout=30):
         if latest_progress == progress:
             # no progress since last run
             if (time.time() - last_progress_time > timeout):
-                raise Exception("Timeout")
+                raise TimeoutError
 
             time.sleep(1)
             continue
@@ -156,20 +156,16 @@ def print_results(results):
         print("") # for legibility
 
 
+# returns tuple of parsed test results and whether any of the tests has failed
 def parse_test_results(file_path):
     if not os.path.isfile(file_path):
         raise Exception('File not found')
 
     # Open the output file and parse the results
     with open(file_path, 'r') as f:
-        data = f.read()
-        json_data = json.loads(data)
+        json_data = json.loads(f.read())
 
-        grouped_results = group_results_by_parent(json_data)
-        print_results(grouped_results)
-
-        if (has_failed_tests(json_data)):
-            raise Exception('Finished with failed tests')
+        return (group_results_by_parent(json_data), has_failed_tests(json_data))
 
 
 def terminate_process(path):
@@ -287,20 +283,17 @@ def main(argv):
         # wait until test runner finishes running all tests
         watch_test_runner_progress(output_file_path, timeout)
 
-        # read test output file, parse and log the results
-        parse_test_results(output_file_path)
-
         # calc and display execution time
         end_time = time.time()
         print(f"\nDone in {round(end_time - start_time, 2)} seconds")
 
-        print('All test suites passed.')
-        sys.exit(0)
+    except TimeoutError:
+        print('Test run timed out')
+        sys.exit(1)
 
     except Exception as e:
         print(f"{e}\n\nFailed with exit code 1")
         sys.exit(1)
-
     finally:
         # cleanup and delete the symbolic link
         os.remove(plugin_path)
@@ -308,6 +301,21 @@ def main(argv):
         if terminate_sketch_on_completion:
             terminate_process(sketch)
 
+    try:
+        # read test output file, parse and log the results, even if tests timed out the file
+        # contains all results up to the point where it timed out
+        results, failed = parse_test_results(output_file_path)
+        print_results(results)
+
+        if (failed):
+            raise Exception('Some tests failed')
+
+        print('All test suites passed')
+        sys.exit(0)
+    
+    except Exception as e:
+        print(f"{e}\n\nFailed with exit code 1")
+        sys.exit(1)
 
 if __name__ == "__main__":
     main(sys.argv[1:])
