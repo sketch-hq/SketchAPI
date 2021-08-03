@@ -163,7 +163,7 @@ def parse_test_results(file_path):
 
     # Open the output file and parse the results
     with open(file_path, 'r') as f:
-        json_data = json.loads(f.read())
+        json_data = json.load(f)
 
         return (group_results_by_parent(json_data), has_failed_tests(json_data))
 
@@ -268,9 +268,7 @@ def main(argv):
     # get the plugin identifier from the manifest, Sketch uses the
     # identifier to look up the corresponding plugin.
     with open(PurePath(plugin_path, 'Contents/Sketch/manifest.json'), 'r') as f:
-        data = f.read()
-
-    manifest = json.loads(data)
+        manifest = json.load(f)
 
     # use macOS `open` command to spawn new, fresh instance without restoring
     # windows, wait for Sketch to quit and use specific path to Sketch app
