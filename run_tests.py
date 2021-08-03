@@ -165,7 +165,7 @@ def parse_test_results(file_path):
     with open(file_path, 'r') as f:
         json_data = json.load(f)
 
-        return (group_results_by_parent(json_data), has_failed_tests(json_data))
+    return (group_results_by_parent(json_data), has_failed_tests(json_data))
 
 
 def terminate_process(path):
