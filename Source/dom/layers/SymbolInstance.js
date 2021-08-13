@@ -26,22 +26,20 @@ export class SymbolInstance extends StyledLayer {
     super(master)
   }
 
-  // Replaces the instance with a group that contains a copy of the Symbol this instance refers to. Returns null if the master contains no layers instead of inserting an empty group
+  // Replaces the instance with a group that contains a copy of the Symbol this instance refers to.
+  // Returns null if the master contains no layers instead of inserting an empty group
+  // #38614 adjust to internal changes
   detach(options) {
     if (this.isImmutable()) {
       return null
     }
 
-    const recursively = (options || {}).recursively || false
-    const group = this._object.detachStylesAndReplaceWithGroupRecursively(
-      recursively
-    )
+    const { recursively = false } = options || {}
+    const group = recursively
+      ? this._object.detachStylesAndReplaceWithGroupRecursively()
+      : this._object.detachStylesAndReplaceWithGroup()
 
-    if (group) {
-      return wrapObject(group)
-    }
-
-    return null
+    return group ? wrapObject(group) : null
   }
 
   setOverrideValue(override, value) {
