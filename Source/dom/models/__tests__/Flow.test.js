@@ -24,6 +24,7 @@ test('should create a flow between a layer and an artboard with a default animat
     targetId: artboard2.id,
     type: 'Flow',
     animationType: 'slideFromRight',
+    maintainScrollPosition: false,
   })
   expect(rect.flow.isBackAction()).toBe(false)
   expect(rect.flow.isValidConnection()).toBe(true)
@@ -50,6 +51,7 @@ test('should create a flow between a layer and an artboard with a targetId', (_c
     targetId: artboard2.id,
     type: 'Flow',
     animationType: 'slideFromRight',
+    maintainScrollPosition: false,
   })
 })
 
@@ -73,6 +75,32 @@ test('target should return the wrapped artboard', (_context, document) => {
   expect(rect.flow.target).toEqual(artboard2)
 })
 
+test('maintain scroll position should persist', (_context, document) => {
+  const artboard = new Artboard({
+    name: 'Test1',
+    parent: document.selectedPage,
+  })
+  const artboard2 = new Artboard({
+    name: 'Test2',
+    parent: document.selectedPage,
+  })
+
+  const rect = new Group({
+    parent: artboard,
+    flow: {
+      targetId: artboard2.id,
+      maintainScrollPosition: true,
+    },
+  })
+
+  expect(rect.flow.toJSON()).toEqual({
+    targetId: artboard2.id,
+    type: 'Flow',
+    animationType: 'slideFromRight',
+    maintainScrollPosition: true,
+  })
+})
+
 test('should create a flow between a layer and an artboard with a specific animation', () => {
   const artboard = new Artboard({ name: 'Test1' })
   const artboard2 = new Artboard({ name: 'Test2' })
@@ -89,6 +117,7 @@ test('should create a flow between a layer and an artboard with a specific anima
     targetId: artboard2.id,
     type: 'Flow',
     animationType: 'slideFromLeft',
+    maintainScrollPosition: false,
   })
 })
 
@@ -106,6 +135,7 @@ test('should create a back action', () => {
     targetId: Flow.BackTarget,
     type: 'Flow',
     animationType: 'slideFromRight',
+    maintainScrollPosition: false,
   })
   expect(rect.flow.isBackAction()).toBe(true)
 })

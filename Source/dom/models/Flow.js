@@ -113,5 +113,17 @@ Flow.define('animationType', {
   },
 })
 
+Flow.define('maintainScrollPosition', {
+  get() {
+    return Boolean(this._object.maintainScrollPosition());
+  },
+  set(maintainScrollPosition) {
+    if (this.isImmutable()) {
+      return
+    }
+    this._object.setMaintainScrollPosition(maintainScrollPosition)
+  },
+})
+
 // override the WrappedObject id
 delete Flow[DefinedPropertiesKey].id
