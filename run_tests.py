@@ -244,10 +244,14 @@ def main(argv):
     
     # create a symbolic link to the plugin because Sketch expects it to
     # be inside the Application Support Plugins folder.
-    plugin_path = PurePath(
+    app_plugins_path = PurePath(
         str(Path.home()),
-        "Library/Application Support/com.bohemiancoding.sketch3/Plugins",
-        os.path.basename(plugin))
+        "Library/Application Support/com.bohemiancoding.sketch3/Plugins")
+    
+    # ensure Plugins folder exists which may not be the case on new machines or user directories
+    os.makedirs(app_plugins_path, exist_ok=True)
+
+    plugin_path = app_plugins_path.joinpath(os.path.basename(plugin))
 
     # in cases when the execution is stopped, make sure to remove the symbolic
     # link before adding the new one
