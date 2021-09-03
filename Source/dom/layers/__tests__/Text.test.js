@@ -67,13 +67,14 @@ test('should change the line spacing behavior', () => {
   })
 
   // default to constant baseline
-  expect(text.lineSpacing).toBe(Text.LineSpacing.natural)
+  expect(text.lineSpacing).toBe(Text.LineSpacing.system)
 
   // TextLineSpacingBehaviourMap is private API.
   const TextLineSpacingBehaviourMap = {
     variable: 1, // Uses min & max line height on paragraph style
     constantBaseline: 2, // Uses MSConstantBaselineTypesetter for fixed line height
     natural: 3, // Uses MSConstantBaselineTypesetter for fixed line heights, and MSEmojiAwareLayoutManagerDelegate for natural line heights
+    system: 4, // Natural, but uses MSConstantBaselineTypesetter with Apple-supplied baseline values instead of calculating our own
   }
 
   Object.keys(Text.LineSpacing).forEach((key) => {

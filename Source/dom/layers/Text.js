@@ -13,12 +13,14 @@ const TextLineSpacingBehaviour = {
   variable: 'variable', // Uses min & max line height on paragraph style
   constantBaseline: 'constantBaseline', // Uses MSConstantBaselineTypesetter for fixed line height
   natural: 'natural', // Uses MSConstantBaselineTypesetter for fixed line heights, and MSEmojiAwareLayoutManagerDelegate for natural line heights
+  system: 'system', // Natural, but uses MSConstantBaselineTypesetter with Apple-supplied baseline values instead of calculating our own
 }
 
 export const TextLineSpacingBehaviourMap = {
   variable: 1, // Uses min & max line height on paragraph style
   constantBaseline: 2, // Uses MSConstantBaselineTypesetter for fixed line height
   natural: 3, // Uses MSConstantBaselineTypesetter for fixed line heights, and MSEmojiAwareLayoutManagerDelegate for natural line heights
+  system: 4, // Natural, but uses MSConstantBaselineTypesetter with Apple-supplied baseline values instead of calculating our own
 }
 
 // Mapping between text alignment names and values.
