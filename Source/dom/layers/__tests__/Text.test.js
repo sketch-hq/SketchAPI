@@ -66,7 +66,8 @@ test('should change the line spacing behavior', () => {
     frame: new Rectangle(10, 10, 1000, 1000),
   })
 
-  // default to constant baseline
+// the default will change over time as we improve behaviour.  default is always "newest" 
+// and right now thats what we're calling 'system' - see the map below for an explanation.
   expect(text.lineSpacing).toBe(Text.LineSpacing.system)
 
   // TextLineSpacingBehaviourMap is private API.
