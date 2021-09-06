@@ -105,23 +105,17 @@ test('should expose a smartLayout getter/setter', (_context, document) => {
 
   // returns null by default
   expect(group.smartLayout).toBe(null)
-  expect(group._object.groupLayout().isKindOfClass(MSFreeformGroupLayout)).toBe(
-    1
-  )
+  expect(group._object.groupLayout().isKindOfClass(MSFreeformGroupLayout)).toBeTruthy()
 
   // can set to a value
   group.smartLayout = SmartLayout.TopToBottom
   expect(group.smartLayout).toBe(SmartLayout.TopToBottom)
-  expect(group._object.groupLayout().isKindOfClass(MSInferredGroupLayout)).toBe(
-    1
-  )
+  expect(group._object.groupLayout().isKindOfClass(MSInferredGroupLayout)).toBeTruthy()
   expect(group._object.groupLayout().axis()).toBe(1)
   expect(group._object.groupLayout().layoutAnchor()).toBe(0)
 
   // can clear the value
   group.smartLayout = null
-  expect(group._object.groupLayout().isKindOfClass(MSFreeformGroupLayout)).toBe(
-    1
-  )
+  expect(group._object.groupLayout().isKindOfClass(MSFreeformGroupLayout)).toBeTruthy()
   expect(group.smartLayout).toBe(null)
 })
