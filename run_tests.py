@@ -289,6 +289,9 @@ def main(argv):
     subprocess.Popen([
         "open", "-n", "-F", "-j", "-a", sketch,
         f"sketch://plugin/{manifest['identifier']}/test?output={output_file_path}",
+        "--args",
+        "-ApplePersistenceIgnoreState",
+        "YES",
     ])
 
     try:
