@@ -183,11 +183,13 @@ test('should create a new document', () => {
 
   expect(document.type).toBe('Document')
   expect(getDocuments().find((d) => d.id === documentId)).toEqual(document)
+  document.close()
 })
 
 test('path should be undefined before saving it', () => {
   const document = new Document()
   expect(document.path).toBe(undefined)
+  document.close()
 })
 
 test('should save a file', () => {
@@ -212,6 +214,7 @@ test('should save a file', () => {
         )
       )
     )
+    document.close()
   })
 })
 
@@ -234,6 +237,7 @@ test('should save a file without specifying the path', () => {
         )
       )
     )
+    document.close()
   })
 })
 
@@ -257,6 +261,7 @@ test('should save a file to a specific path when setting the path', () => {
         )
       )
     )
+    document.close()
   })
 })
 
