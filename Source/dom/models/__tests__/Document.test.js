@@ -7,8 +7,6 @@ import {
 } from '../../../test-utils'
 import { Document, Group, Shape, Text, Swatch, getDocuments } from '../..'
 
-const testOutputPath = outputPath()
-
 test('should be able to log a document', (_context, document) => {
   expect(true).toBe(true)
   canBeLogged(document, Document)
@@ -183,14 +181,17 @@ test('should create a new document', () => {
 
   expect(document.type).toBe('Document')
   expect(getDocuments().find((d) => d.id === documentId)).toEqual(document)
+  document.close()
 })
 
 test('path should be undefined before saving it', () => {
   const document = new Document()
   expect(document.path).toBe(undefined)
+  document.close()
 })
 
 test('should save a file', () => {
+  const testOutputPath = outputPath()
   const document = new Document()
 
   new Promise((resolve, reject) => {
@@ -212,10 +213,12 @@ test('should save a file', () => {
         )
       )
     )
+    document.close()
   })
 })
 
 test('should save a file without specifying the path', () => {
+  const testOutputPath = outputPath()
   const document = new Document()
 
   new Promise((resolve, reject) => {
@@ -234,10 +237,12 @@ test('should save a file without specifying the path', () => {
         )
       )
     )
+    document.close()
   })
 })
 
 test('should save a file to a specific path when setting the path', () => {
+  const testOutputPath = outputPath()
   const document = new Document()
 
   document.path = `${testOutputPath}/sketch-api-unit-tests-2.sketch`
@@ -257,6 +262,7 @@ test('should save a file to a specific path when setting the path', () => {
         )
       )
     )
+    document.close()
   })
 })
 
@@ -270,6 +276,7 @@ test('should close a file', () => {
 })
 
 test('should open a file', () => {
+  const testOutputPath = outputPath()
   const document = new Document()
   const filepath = `${testOutputPath}/should-open-a-file.sketch` 
 
@@ -291,6 +298,7 @@ test('should open a file', () => {
 
 test('should fail to open a non-existing file', () => {
   try {
+    const testOutputPath = outputPath()
     Document.open(`${testOutputPath}/non-existing-sketch-api-unit-tests.sketch`)
     expect(true).toBe(false) // open should not fail and throw an error, hence this expectation should never be met
   } catch (err) {

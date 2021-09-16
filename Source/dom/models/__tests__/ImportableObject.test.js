@@ -9,9 +9,8 @@ import {
   Swatch,
 } from '../..'
 
-const testOutputPath = outputPath()
-
 test('should import a symbol from a lib', () => {
+  const testOutputPath = outputPath()
   const document = new Document()
 
   const artboard = new Artboard({
@@ -59,6 +58,7 @@ test('should import a symbol from a lib', () => {
 })
 
 test('should import a swatch from a Library', () => {
+  const testOutputPath = outputPath()
   const document = new Document()
   const swatch = Swatch.from({
     name: 'Safety Orange',
