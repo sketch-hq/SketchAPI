@@ -1,5 +1,11 @@
 import { isWrappedObject } from './utils'
 import { wrapNativeObject } from './wrapNativeObject'
+import {
+  isArray,
+  toArray,
+  isObject,
+  toObject,
+} from 'util'
 
 let Buffer
 
@@ -83,12 +89,32 @@ function exportToImageFile(nativeObjects, options) {
     options
   )
 
+  let success = true
+
   // export the pages
-  pages.forEach((page) => exporter.exportPage(page))
+  pages.forEach((page) => {
+    success = exporter.exportPage(page) && success
+  })
 
   // export the layers
   if (layers.length) {
-    exporter.exportLayers(layers)
+    success = exporter.exportLayers(layers) && success
+  }
+
+  if (!success) {
+    const errors = exporter.results()["errors"]
+
+    if (isArray(errors) && errors.length) {
+      const errorMessages = toArray(errors)
+        .filter((error) => isObject(error))
+        .map((error) => toObject(error)["error"])
+        .filter((error) => error && error.isKindOfClass(NSError))
+        .map((error) => error.localizedDescription())
+
+      if (errorMessages && errorMessages.length) {
+        throw Error("Failed to export. " + errorMessages.join("\n"))
+      }
+    }
   }
 }
 

@@ -111,6 +111,49 @@ test('Should export a shape to png file', (_context, document) => {
   expect(fs.existsSync(filePath)).toBe(true)
 })
 
+test('Should export a shape to WebP file', (_context, document) => {
+  const testOutputPath = outputPath()
+  const filePath = `${testOutputPath}/Shape.webp`
+  try {
+    fs.unlinkSync(filePath)
+  } catch (err) {
+    // just ignore
+  }
+  const object = new Shape({
+    parent: document.selectedPage,
+  })
+  sketch.export(object, {
+    formats: 'webp',
+    output: testOutputPath,
+  })
+  expect(fs.existsSync(filePath)).toBe(true)
+})
+
+test('Should fail when exporting a shape too large for WebP', (_context, document) => {
+  const testOutputPath = outputPath()
+  const filePath = `${testOutputPath}/LargeShape.webp`
+  try {
+    fs.unlinkSync(filePath)
+  } catch (err) {
+    // just ignore
+  }
+  const object = new Shape({
+    parent: document.selectedPage,
+  })
+
+  object.frame.height = 16800
+
+  try {
+    sketch.export(object, {
+      formats: 'webp',
+      output: testOutputPath,
+    })
+    expect(false).toBe(true)
+  } catch (err) {
+    expect(err.message).toMatch('Failed to export. Exported image size for \'Shape\' exceeds maximum pixel dimensions supported by the WebP format (16383 x 16383): 100 x 16800.')
+  }
+})
+
 test('Should export a shape to json file', (_context, document) => {
   const testOutputPath = outputPath()
   const filePath = `${testOutputPath}/Shape.json`
