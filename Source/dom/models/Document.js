@@ -293,12 +293,6 @@ export class Document extends WrappedObject {
     let document
     const url = getURLFromPath(path)
 
-    if (app.documentForURL(url)) {
-      document = Document.fromNative(app.documentForURL(url))
-      if (callback) callback(null, document)
-      return document
-    }
-
     const error = MOPointer.alloc().init()
 
     document = app.openDocumentWithContentsOfURL_display_error(url, true, error)
