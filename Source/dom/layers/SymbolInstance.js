@@ -35,9 +35,17 @@ export class SymbolInstance extends StyledLayer {
     }
 
     const { recursively = false } = options || {}
-    const group = recursively
-      ? this._object.detachStylesAndReplaceWithGroupRecursively()
-      : this._object.detachStylesAndReplaceWithGroup()
+
+    let group = null
+
+    if (recursively) {
+      const result = this._object.detachStylesAndReplaceWithGroupRecursively()
+      if (result.isKindOfClass(NSMapTable)) {
+        group = result.objectForKey(this._object)
+      }
+    } else {
+      group = this._object.detachStylesAndReplaceWithGroup()
+    }
 
     return group ? wrapObject(group) : null
   }

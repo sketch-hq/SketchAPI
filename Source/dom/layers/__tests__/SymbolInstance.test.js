@@ -64,6 +64,19 @@ test('should detach an instance', (_context, document) => {
   expect(group.type).toBe('Group')
 })
 
+// Regression SketchAPI#851, #39113, .
+test('should detach an instance recursively', (_context, document) => {
+  const { master } = createSymbolMaster(document)
+  const instance = new SymbolInstance({
+    symbolId: master.symbolId,
+    parent: document.selectedPage,
+  })
+  expect(instance.type).toBe('SymbolInstance')
+
+  const group = instance.detach({ recursively: true })
+  expect(group.type).toBe('Group')
+})
+
 test('should resize in response to smart layout changes', (_context, document) => {
   const { master } = createSymbolMaster(document)
   master.smartLayout = SmartLayout.LeftToRight
