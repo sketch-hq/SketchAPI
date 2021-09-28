@@ -3,6 +3,7 @@
 // Use ShapePath to indirectly instantiate CurvePoint as there's no public,
 // direct API.
 import { Document, ShapePath } from '../..'
+import { toArray } from 'util'
 
 test('should be able to log an CurvePoint', () => {
   const p = new ShapePath().points[0]
@@ -31,6 +32,40 @@ test('should be able to modify a CurvePoint', () => {
 
   p.point = { x: 0.3, y: 0.4 }
   expect(p.point.toJSON()).toEqual({ x: 0.3, y: 0.4 })
+})
+
+test('should be able to modify the corner radius of a rectangle\'s CurvePoint', () => {
+  const cornerRadius = 42
+
+  const rectangle = new ShapePath()
+  rectangle.points[1].cornerRadius = cornerRadius
+  expect(toArray(rectangle.sketchObject.CSSAttributes()).join(''))
+    .toEqual('border-radius: 0 ' + cornerRadius + 'px 0 0;')
+  expect(rectangle.sketchObject.fixedRadius())
+    .toEqual(0)
+})
+
+test('should be able to modify the corner radius of a rectangle\'s first CurvePoint', () => {
+  const cornerRadius = 42
+
+  const rectangle = new ShapePath()
+  rectangle.points[0].cornerRadius = cornerRadius
+  expect(toArray(rectangle.sketchObject.CSSAttributes()).join(''))
+    .toEqual('border-radius: ' + cornerRadius + 'px 0 0 0;')
+  expect(rectangle.sketchObject.fixedRadius())
+    .toEqual(cornerRadius)
+})
+
+// sketch-hq/SketchAPI#775, #39183.
+test('should be able to modify the corner radius of every rectangle\'s CurvePoint', () => {
+  const cornerRadius = 42
+
+  const rectangle = new ShapePath()
+  rectangle.points.forEach(point => point.cornerRadius = cornerRadius)
+  expect(toArray(rectangle.sketchObject.CSSAttributes()).join(''))
+    .toEqual('border-radius: ' + cornerRadius + 'px;')
+  expect(rectangle.sketchObject.fixedRadius())
+    .toEqual(cornerRadius)
 })
 
 test('should show if a point is selected', () => {
