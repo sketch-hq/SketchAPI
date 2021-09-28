@@ -39,6 +39,8 @@ export class SymbolInstance extends StyledLayer {
     let group = null
 
     if (recursively) {
+      // The method is expected to return a map table mapping symbol instances to the groups
+      // that have replaced them (SketchAPI#851).
       const result = this._object.detachStylesAndReplaceWithGroupRecursively()
       if (result.isKindOfClass(NSMapTable)) {
         group = result.objectForKey(this._object)

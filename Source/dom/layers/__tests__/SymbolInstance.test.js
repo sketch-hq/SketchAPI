@@ -64,7 +64,7 @@ test('should detach an instance', (_context, document) => {
   expect(group.type).toBe('Group')
 })
 
-// Regression SketchAPI#851, #39113, .
+// Regression SketchAPI#851, #39113.
 test('should detach an instance recursively', (_context, document) => {
   const { master } = createSymbolMaster(document)
   const instance = new SymbolInstance({
