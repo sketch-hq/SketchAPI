@@ -53,8 +53,10 @@ test('should be able to tell if a point is selected)', () => {
   expect(shape.points[0].isSelected()).toBe(false)
 
   //select the first point  
-  document.sketchObject
-    .eventHandlerManager()currentHandler.pathController.selectNext()
+  .eventHandlerManager()
+    .currentHandler()
+    .pathController()
+    .selectNext(null)
 
   //now selected true  
   expect(shape.points[0].isSelected()).toBe(true)
