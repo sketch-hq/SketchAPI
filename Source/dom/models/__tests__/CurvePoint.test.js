@@ -33,11 +33,13 @@ test('should be able to modify a CurvePoint', () => {
   expect(p.point.toJSON()).toEqual({ x: 0.3, y: 0.4 })
 })
 
-test('switching to path edit mode does not select a point (#32796)', () => {
+test('should be able to tell if a point is selected)', () => {
   const document = new Document()
   const shape = new ShapePath({
     parent: document.pages[0],
   })
+  
+  // no point selected
   expect(shape.points[0].isSelected()).toBe(false)
 
   shape.selected = true
@@ -47,6 +49,14 @@ test('switching to path edit mode does not select a point (#32796)', () => {
     .eventHandlerManager()
     .switchToEventHandlerClass(MSShapeEventHandler.class())
 
+  //still no selection
   expect(shape.points[0].isSelected()).toBe(false)
+
+  //select the first point  
+  shapeEventHandler.pathController.selectNext()
+
+  //now selected true  
+  expect(shape.points[0].isSelected()).toBe(true)
+  
   document.close()
 })
