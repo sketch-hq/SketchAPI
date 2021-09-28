@@ -112,7 +112,7 @@ function exportToImageFile(nativeObjects, options) {
         .map((error) => error.localizedDescription())
 
       if (errorMessages && errorMessages.length) {
-        throw Error("Failed to export. " + errorMessages.join("\n"))
+        throw Error(errorMessages.join("\n"))
       }
     }
   }
