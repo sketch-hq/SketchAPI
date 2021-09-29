@@ -183,5 +183,6 @@
     "MSSwatchProvider": "readonly",
     "NSUUID": "readonly",
     "NSError": "readonly",
+    "NSMapTable": "readonly",
   }
 }
