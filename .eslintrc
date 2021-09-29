@@ -181,6 +181,7 @@
     "MSSwatch": "readonly",
     "MSSwatchReference": "readonly",
     "MSSwatchProvider": "readonly",
-    "NSUUID": "readonly"
+    "NSUUID": "readonly",
+    "NSError": "readonly",
   }
 }
