@@ -68,11 +68,13 @@ test('should be able to modify the corner radius of every rectangle\'s CurvePoin
     .toEqual(cornerRadius)
 })
 
-test('should show if a point is selected', () => {
+test('should be able to tell if a point is selected)', () => {
   const document = new Document()
   const shape = new ShapePath({
     parent: document.pages[0],
   })
+  
+  // no point selected
   expect(shape.points[0].isSelected()).toBe(false)
 
   shape.selected = true
@@ -82,6 +84,17 @@ test('should show if a point is selected', () => {
     .eventHandlerManager()
     .switchToEventHandlerClass(MSShapeEventHandler.class())
 
+  //still no selection
+  expect(shape.points[0].isSelected()).toBe(false)
+
+  //select the first point  
+  .eventHandlerManager()
+    .currentHandler()
+    .pathController()
+    .selectNext(null)
+
+  //now selected true  
   expect(shape.points[0].isSelected()).toBe(true)
+  
   document.close()
 })
