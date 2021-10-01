@@ -3,6 +3,7 @@ import { DefinedPropertiesKey, WrappedObject } from '../WrappedObject'
 import { Types } from '../enums'
 import { Factory } from '../Factory'
 import { Point } from './Point'
+import { Document } from '../models/Document'
 
 const PointTypeMap = {
   Undefined: 0,
@@ -68,10 +69,37 @@ CurvePoint.define('cornerRadius', {
     return parseFloat(this._object.cornerRadius())
   },
   set(cornerRadius) {
+    const parent = this._parent
+
     this._object.setCornerRadius(cornerRadius)
-    if (this._parent) {
-      this._parent.setEdited(true)
-      this._parent.adjustFrameAfterEditIntegral_fixAncestors(false, true)
+
+    if (parent) {
+      parent.setEdited(true)
+      parent.adjustFrameAfterEditIntegral_fixAncestors(false, true)
+    
+      if (parent.isKindOfClass(MSRectangleShape)) {
+        // Rectangle shapes have a `fixedRadius` property we need to manually update
+        // to the first point's radius (sketch-hq/SketchAPI#775, #39183).
+        const firstPoint = parent.points().firstObject()
+
+        if (firstPoint === this._object) {
+          // We changed the first point, so we need to update the fixed radius.
+          parent.setFixedRadius(cornerRadius)
+        } else {
+          // The inspector only updates if we change the fixed radius. Since we haven't
+          // changed it in this case, we need to manually reload the current inspector.
+          const document = Document.getSelectedDocument()
+          if (document) {
+            const inspectorController = document.sketchObject.inspectorController()
+            if (inspectorController) {
+              const currentController = inspectorController.currentController()
+              if (currentController) {
+                currentController.prepareForDisplay()
+              }
+            }
+          }
+        }
+      }
     }
   },
 })
