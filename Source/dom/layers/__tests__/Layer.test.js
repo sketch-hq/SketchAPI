@@ -317,13 +317,13 @@ test('should return valid line rotation', () => {
   let layer = MSShapePathLayer.layerWithPath(path)
 
   let immutableShape = new ShapePath({sketchObject: layer.immutableModelObject()})
-  expect(immutableShape.sketchObject.isLine()).toBe(1)
+  expect(Number(immutableShape.sketchObject.isLine())).toBe(1)
   expect(immutableShape.transform.rotation).toBe(45)
   immutableShape.transform.rotation = 80
   expect(immutableShape.transform.rotation).toBe(45)
 
   let shape = new ShapePath({sketchObject: layer})
-  expect(shape.sketchObject.isLine()).toBe(1)
+  expect(Number(shape.sketchObject.isLine())).toBe(1)
   expect(shape.transform.rotation).toBe(45)
 
   shape.transform.rotation = 80
