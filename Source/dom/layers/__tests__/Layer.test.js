@@ -310,6 +310,7 @@ test('should transform the layer', () => {
   expect(group.transform.rotation).toBe(0)
 })
 
+// Regression #39358, SketchAPI#772.
 test('should return valid line rotation', () => {
   let start = CGPointMake(0, 0)
   let end = CGPointMake(200, 200)
@@ -319,7 +320,9 @@ test('should return valid line rotation', () => {
   let immutableShape = new ShapePath({sketchObject: layer.immutableModelObject()})
   expect(Number(immutableShape.sketchObject.isLine())).toBe(1)
   expect(immutableShape.transform.rotation).toBe(45)
+  
   immutableShape.transform.rotation = 80
+  // It should not be possible to modify an immutable object.
   expect(immutableShape.transform.rotation).toBe(45)
 
   let shape = new ShapePath({sketchObject: layer})
