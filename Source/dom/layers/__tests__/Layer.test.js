@@ -1,5 +1,5 @@
 /* globals expect, test */
-import { Group, Rectangle, Artboard, SymbolMaster } from '../..'
+import { Group, Rectangle, Artboard, SymbolMaster, ShapePath } from '../..'
 
 test('should set the name of the layer', (_context, document) => {
   // setting an existing name
@@ -308,6 +308,32 @@ test('should transform the layer', () => {
 
   group.transform.rotation = 720
   expect(group.transform.rotation).toBe(0)
+})
+
+// Regression #39358, SketchAPI#772.
+test('should return valid line rotation', () => {
+  let start = CGPointMake(0, 0)
+  let end = CGPointMake(200, 200)
+  let path = MSPath.alloc().initWithLineFrom_to(start, end)
+  let layer = MSShapePathLayer.layerWithPath(path)
+
+  let immutableShape = new ShapePath({sketchObject: layer.immutableModelObject()})
+  expect(Number(immutableShape.sketchObject.isLine())).toBe(1)
+  expect(immutableShape.transform.rotation).toBe(45)
+  
+  immutableShape.transform.rotation = 80
+  // It should not be possible to modify an immutable object.
+  expect(immutableShape.transform.rotation).toBe(45)
+
+  let shape = new ShapePath({sketchObject: layer})
+  expect(Number(shape.sketchObject.isLine())).toBe(1)
+  expect(shape.transform.rotation).toBe(45)
+
+  shape.transform.rotation = 80
+  expect(shape.transform.rotation).toBe(80)
+  
+  shape.transform.rotation = 0
+  expect(shape.transform.rotation).toBe(0)
 })
 
 test('should remove a flow from a layer', (_context, document) => {
