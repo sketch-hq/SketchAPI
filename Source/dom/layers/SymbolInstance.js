@@ -43,7 +43,7 @@ export class SymbolInstance extends StyledLayer {
       // that have replaced them (SketchAPI#851).
       const result = this._object.detachStylesAndReplaceWithGroupRecursively()
       if (result.isKindOfClass(NSMapTable)) {
-        group = result.objectForKey(this._object)
+        group = result.objectForKey(this._object.immutableModelObject())
       }
     } else {
       group = this._object.detachStylesAndReplaceWithGroup()
