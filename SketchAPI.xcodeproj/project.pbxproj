@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXAggregateTarget section */
@@ -38,7 +38,7 @@
 		437121332469F097000570FA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1300;
+				LastUpgradeCheck = 1310;
 				TargetAttributes = {
 					4371214B2469F0F6000570FA = {
 						CreatedOnToolsVersion = 11.4.1;
@@ -46,7 +46,7 @@
 				};
 			};
 			buildConfigurationList = 437121362469F097000570FA /* Build configuration list for PBXProject "SketchAPI" */;
-			compatibilityVersion = "Xcode 10.0";
+			compatibilityVersion = "Xcode 11.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
