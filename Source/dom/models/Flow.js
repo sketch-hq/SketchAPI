@@ -121,6 +121,11 @@ Flow.define('maintainScrollPosition', {
     if (this.isImmutable()) {
       return
     }
+
+    if (typeof maintainScrollPosition !== 'boolean') {
+      throw new Error('`maintainScrollPosition` must be a boolean value.');
+    }
+
     this._object.setMaintainScrollPosition(maintainScrollPosition)
   },
 })
