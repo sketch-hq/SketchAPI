@@ -9,9 +9,7 @@ import {
   Document,
 } from '../..'
 
-const testOutputPath = outputPath()
-
-function createLibrary() {
+function createLibrary(testOutputPath = outputPath()) {
   const document = new Document()
 
   return new Promise((resolve, reject) => {
@@ -82,7 +80,9 @@ test('should get the lastModifiedAt date', () => {
 })
 
 test('should get the document of the library', () => {
-  createLibrary().then((lib) => {
+  const testOutputPath = outputPath()
+  
+  createLibrary(testOutputPath).then((lib) => {
     const libDocument = lib.getDocument()
 
     expect(libDocument.type).toBe('Document')
