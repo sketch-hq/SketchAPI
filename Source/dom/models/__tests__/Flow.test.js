@@ -140,7 +140,7 @@ test('should create a back action', () => {
   expect(rect.flow.isBackAction()).toBe(true)
 })
 
-test('adding a flow action with an unknow target work but isValidConnection should return false', () => {
+test('adding a flow action with an unknown target work but isValidConnection should return false', () => {
   const artboard = new Artboard({ name: 'Test1' })
 
   const rect = new Group({
