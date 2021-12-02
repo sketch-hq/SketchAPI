@@ -91,14 +91,23 @@ test('maintain scroll position should persist', (_context, document) => {
       targetId: artboard2.id,
       maintainScrollPosition: true,
     },
-  })
+  });
 
   expect(rect.flow.toJSON()).toEqual({
     targetId: artboard2.id,
     type: 'Flow',
     animationType: 'slideFromRight',
     maintainScrollPosition: true,
-  })
+  });
+
+  rect.flow.maintainScrollPosition = false;
+
+  expect(rect.flow.toJSON()).toEqual({
+    targetId: artboard2.id,
+    type: 'Flow',
+    animationType: 'slideFromRight',
+    maintainScrollPosition: false,
+  });
 })
 
 test('should create a flow between a layer and an artboard with a specific animation', () => {
