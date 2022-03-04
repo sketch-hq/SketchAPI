@@ -20,19 +20,94 @@
 		};
 /* End PBXAggregateTarget section */
 
+/* Begin PBXBuildFile section */
+		824D366F27D10D3B009CCC4C /* SketchAPIWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 824D366E27D10D3B009CCC4C /* SketchAPIWrapper.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		824D367027D10D5D009CCC4C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 437121332469F097000570FA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4371214B2469F0F6000570FA;
+			remoteInfo = SketchAPI;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		4376303E246AED1700AD2CE1 /* package.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = package.json; sourceTree = "<group>"; };
+		824D366527D10D23009CCC4C /* libSketchAPIWrapper.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libSketchAPIWrapper.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		824D366E27D10D3B009CCC4C /* SketchAPIWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SketchAPIWrapper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		824D366327D10D23009CCC4C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		437121322469F097000570FA = {
 			isa = PBXGroup;
 			children = (
 				4376303E246AED1700AD2CE1 /* package.json */,
+				824D366627D10D23009CCC4C /* SketchAPIWrapper */,
+				82E076C727D1037600402C93 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
+		824D366627D10D23009CCC4C /* SketchAPIWrapper */ = {
+			isa = PBXGroup;
+			children = (
+				824D366E27D10D3B009CCC4C /* SketchAPIWrapper.swift */,
+			);
+			path = SketchAPIWrapper;
+			sourceTree = "<group>";
+		};
+		82E076C727D1037600402C93 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				824D366527D10D23009CCC4C /* libSketchAPIWrapper.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		824D366127D10D23009CCC4C /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		824D366427D10D23009CCC4C /* SketchAPIWrapper */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 824D366B27D10D23009CCC4C /* Build configuration list for PBXNativeTarget "SketchAPIWrapper" */;
+			buildPhases = (
+				824D366127D10D23009CCC4C /* Headers */,
+				824D366227D10D23009CCC4C /* Sources */,
+				824D366327D10D23009CCC4C /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				824D367127D10D5D009CCC4C /* PBXTargetDependency */,
+			);
+			name = SketchAPIWrapper;
+			productName = SketchAPIWrapper;
+			productReference = 824D366527D10D23009CCC4C /* libSketchAPIWrapper.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		437121332469F097000570FA /* Project object */ = {
@@ -42,6 +117,10 @@
 				TargetAttributes = {
 					4371214B2469F0F6000570FA = {
 						CreatedOnToolsVersion = 11.4.1;
+					};
+					824D366427D10D23009CCC4C = {
+						CreatedOnToolsVersion = 13.2.1;
+						LastSwiftMigration = 1320;
 					};
 				};
 			};
@@ -54,10 +133,12 @@
 				Base,
 			);
 			mainGroup = 437121322469F097000570FA;
+			productRefGroup = 82E076C727D1037600402C93 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
 				4371214B2469F0F6000570FA /* SketchAPI */,
+				824D366427D10D23009CCC4C /* SketchAPIWrapper */,
 			);
 		};
 /* End PBXProject section */
@@ -85,6 +166,25 @@
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		824D366227D10D23009CCC4C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				824D366F27D10D3B009CCC4C /* SketchAPIWrapper.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		824D367127D10D5D009CCC4C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4371214B2469F0F6000570FA /* SketchAPI */;
+			targetProxy = 824D367027D10D5D009CCC4C /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		437121372469F097000570FA /* Debug */ = {
@@ -169,6 +269,88 @@
 			};
 			name = Release;
 		};
+		824D366C27D10D23009CCC4C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				EXECUTABLE_PREFIX = lib;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		824D366D27D10D23009CCC4C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				EXECUTABLE_PREFIX = lib;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -186,6 +368,15 @@
 			buildConfigurations = (
 				4371214D2469F0F6000570FA /* Debug */,
 				4371214E2469F0F6000570FA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		824D366B27D10D23009CCC4C /* Build configuration list for PBXNativeTarget "SketchAPIWrapper" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				824D366C27D10D23009CCC4C /* Debug */,
+				824D366D27D10D23009CCC4C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
