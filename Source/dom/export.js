@@ -1,6 +1,11 @@
 import { isWrappedObject } from './utils'
 import { wrapNativeObject } from './wrapNativeObject'
-import { isArray, toArray, isObject, toObject } from 'util'
+import {
+  isArray,
+  toArray,
+  isObject,
+  toObject,
+} from 'util'
 
 let Buffer
 
@@ -97,17 +102,17 @@ function exportToImageFile(nativeObjects, options) {
   }
 
   if (!success) {
-    const errors = exporter.results()['errors']
+    const errors = exporter.results()["errors"]
 
     if (isArray(errors) && errors.length) {
       const errorMessages = toArray(errors)
         .filter((error) => isObject(error))
-        .map((error) => toObject(error)['error'])
+        .map((error) => toObject(error)["error"])
         .filter((error) => error && error.isKindOfClass(NSError))
         .map((error) => error.localizedDescription())
 
       if (errorMessages && errorMessages.length) {
-        throw Error(errorMessages.join('\n'))
+        throw Error(errorMessages.join("\n"))
       }
     }
   }
