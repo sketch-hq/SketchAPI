@@ -135,7 +135,7 @@ function exportToBuffer(nativeObject, options) {
   )[0]
   const colorSpace = NSColorSpace.colorSpaceForSketchColorSpace(
     request.immutableDocument().colorSpace()
-  )
+  ).CGColorSpace()
   const renderer = MSExporter.exporterForRequest_colorSpace_driver(
     request,
     colorSpace,
