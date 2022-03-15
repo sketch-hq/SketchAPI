@@ -22,7 +22,7 @@ export class Selection {
     Object.defineProperty(this, 'layers', {
       enumerable: true,
       get() {
-        const layers = toArray(this._object.selectedLayers().layers()).map(
+        const layers = toArray(this._object.selectedLayers()).map(
           wrapNativeObject
         )
         return layers
@@ -37,7 +37,7 @@ export class Selection {
     Object.defineProperty(this, 'length', {
       enumerable: true,
       get() {
-        return this._object.selectedLayers().layers().count()
+        return this._object.selectedLayers().count()
       },
     })
 
