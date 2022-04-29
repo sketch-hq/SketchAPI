@@ -69,14 +69,15 @@ In addition to the API, this project also defines core modules to be included in
 
 The following npm scripts are available for development of the API.
 
-| Script                        | Description                             |
-| ----------------------------- | --------------------------------------- |
-| `npm run build`               | Build SketchAPI into the `build` folder |
-| `npm run test:build`          | Build integration test plugin           |
-| `npm run lint`                | Lint the source code                    |
-| `npm run format-check`        | Check the format with Prettier          |
-| `npm run api-location:write`  | Tell Sketch to use your local SketchAPI |
-| `npm run api-location:delete` | Undo `npm run api-location:write`       |
+| Script                        | Description                                 |
+| ----------------------------- | ------------------------------------------- |
+| `npm run build`               | Build SketchAPI into the `build` folder     |
+| `npm run watch`               | Watch for changes and automatically rebuild |
+| `npm run test:build`          | Build integration test plugin               |
+| `npm run lint`                | Lint the source code                        |
+| `npm run format-check`        | Check the format with Prettier              |
+| `npm run api-location:write`  | Tell Sketch to use your local SketchAPI     |
+| `npm run api-location:delete` | Undo `npm run api-location:write`           |
 
 ### Build and run
 
@@ -89,11 +90,24 @@ Note, any plugins you have installed or code you invoke in Sketch's _Plugins_ �
    ```sh
    npm run api-location:write
    ```
-1. Ensure you've installed the dependencies with npm, and then build SketchAPI.
+1. Ensure you've installed the dependencies with npm
+
    ```sh
    npm install
+   ```
+
+1. Build SketchAPI
+
+   ```sh
    npm run build
    ```
+
+   Alternatively you can watch for changes and automatically rebuild
+
+   ```sh
+   npm run watch
+   ```
+
 1. Start Sketch and your changes will be picked up.
 
 > ⚠️ Sketch must be restarted for API changes to take effect after running `npm run build`.
