@@ -184,5 +184,6 @@
     "NSUUID": "readonly",
     "NSError": "readonly",
     "NSMapTable": "readonly",
+    "MSTextAlignmentConverter": "readonly",
   }
 }

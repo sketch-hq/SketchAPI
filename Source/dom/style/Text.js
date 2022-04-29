@@ -175,7 +175,11 @@ export function defineTextStyleProperties(Style) {
         return undefined
       }
 
-      const raw = paragraphStyle.alignment()
+      // Get a platform independent raw text alignment value
+      // NSTextAlignment is represented differently on Intel and M1 chips
+      let raw = MSTextAlignmentConverter.archiveNSTextAlignment(
+        paragraphStyle.alignment()
+      )
       return TextAlignmentReverseMap[raw] || raw
     },
     set(mode) {
