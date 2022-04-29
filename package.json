@@ -8,6 +8,7 @@
   "homepage": "https://github.com/sketch-hq/SketchAPI",
   "scripts": {
     "build": "./build.sh",
+    "watch": "webpack --watch",
     "test:build": "webpack --config webpack.tests.config.js --env.identifier=$npm_config_identifier --env.spec=$npm_config_spec",
     "lint": "eslint \"Source/**\"",
     "format-check": "prettier --check \"**/*.{js,json}\"",
