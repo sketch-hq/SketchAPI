@@ -188,15 +188,16 @@ export function defineTextStyleProperties(Style) {
       }
 
       updateParagraphStyle(this._object, (paragraphStyle) => {
+        const rawValue = TextAlignmentMap[mode]
+
         // Get a platform independent raw text alignment value
         // NSTextAlignment is represented differently on Intel and M1 chips
-        const translated =
-          TextAlignmentMap[
-            MSTextAlignmentConverter.archiveNSTextAlignment(mode)
-          ]
-        paragraphStyle.setAlignment(
-          typeof translated !== 'undefined' ? translated : mode
+        const alignment = MSTextAlignmentConverter.archiveNSTextAlignment(
+          rawValue || mode
         )
+
+        paragraphStyle.setAlignment(alignment)
+
         return paragraphStyle
       })
     },
