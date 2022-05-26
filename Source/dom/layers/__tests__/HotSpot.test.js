@@ -35,6 +35,7 @@ test('should create a new HotSpot from a layer', (_context, document) => {
     targetId: artboard2.id,
     type: 'Flow',
     animationType: 'slideFromRight',
+    maintainScrollPosition: false,
   })
 })
 
