@@ -23,7 +23,12 @@ export function globalSettingForKey(key) {
   if (typeof value === 'undefined' || value === 'undefined' || value === null) {
     return undefined
   }
-  return JSON.parse(value)
+
+  try {
+    return JSON.parse(value)
+  } catch (e) {
+    return util.toJSObject(value)
+  }
 }
 
 /**

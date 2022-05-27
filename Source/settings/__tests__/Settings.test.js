@@ -3,6 +3,7 @@ import { Text } from '../../dom'
 import {
   settingForKey,
   setSettingForKey,
+  globalSettingForKey,
   setLayerSettingForKey,
   layerSettingForKey,
   setDocumentSettingForKey,
@@ -11,6 +12,13 @@ import {
 
 test('non existing settings should return undefined', () => {
   expect(settingForKey('non-existing-key')).toBe(undefined)
+})
+
+test(`returns raw value when value is not valid JSON`, () => {
+  const store = NSUserDefaults.standardUserDefaults()
+  store.setObject_forKey_('raw-string-value', 'raw-string-key')
+
+  expect(globalSettingForKey('raw-string-key')).toBe('raw-string-value')
 })
 
 test('should set a boolean', () => {
