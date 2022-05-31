@@ -14,16 +14,22 @@ function getPluginIdentifier() {
  * @param key The setting to look up.
  * @return The setting value.
  *
- * This is equivalent to reading a setting for the currently
- * running version of Sketch using the `defaults` command line tool,
- * eg: defaults read com.bohemiancoding.sketch3 <key>
+ * When the global settings value is not JSON his is equivalent to reading a
+ * setting for the currently running version of Sketch using the `defaults`
+ * command line tool, eg: defaults read com.bohemiancoding.sketch3 <key>
+ * When the value is JSON than this will return the parsed JSON value instead.
  * */
 export function globalSettingForKey(key) {
   const value = NSUserDefaults.standardUserDefaults().objectForKey_(key)
   if (typeof value === 'undefined' || value === 'undefined' || value === null) {
     return undefined
   }
-  return JSON.parse(value)
+
+  try {
+    return JSON.parse(value)
+  } catch (e) {
+    return util.toJSObject(value)
+  }
 }
 
 /**
@@ -31,10 +37,6 @@ export function globalSettingForKey(key) {
  *
  * @param key The setting to set.
  * @param value The value to set it to.
- *
- * This is equivalent to writing a setting for the currently
- * running version of Sketch using the `defaults` command line tool,
- * eg: defaults write com.bohemiancoding.sketch3 <key> <value>
  */
 export function setGlobalSettingForKey(key, value) {
   const store = NSUserDefaults.standardUserDefaults()
