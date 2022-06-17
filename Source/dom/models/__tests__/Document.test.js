@@ -407,3 +407,11 @@ test('can remove all swatches in Document', (_context, document) => {
   document.swatches = []
   expect(document.swatches.length).toBe(0)
 })
+
+test('can get Document name', () => {
+  const document = new Document()
+  expect(document.name).toBe('Untitled.sketch')
+  document.save('test.sketch', {}, () => {
+    expect(document.name).toBe('test.sketch')
+  })
+})
