@@ -175,7 +175,11 @@ export function defineTextStyleProperties(Style) {
         return undefined
       }
 
-      const raw = paragraphStyle.alignment()
+      // Get a platform independent raw text alignment value
+      // NSTextAlignment is represented differently on Intel and M1 chips
+      let raw = MSTextAlignmentConverter.archiveNSTextAlignment(
+        paragraphStyle.alignment()
+      )
       return TextAlignmentReverseMap[raw] || raw
     },
     set(mode) {
@@ -184,10 +188,25 @@ export function defineTextStyleProperties(Style) {
       }
 
       updateParagraphStyle(this._object, (paragraphStyle) => {
-        const translated = TextAlignmentMap[mode]
-        paragraphStyle.setAlignment(
-          typeof translated !== 'undefined' ? translated : mode
+        const rawValue = TextAlignmentMap[mode]
+
+        const alignment = typeof rawValue === 'undefined' ? mode : rawValue
+
+        // Ensure our new alignment value is known because the Mac app crashes
+        // when using `archiveNSTextAlignent` with an unknown text alignment
+        // value
+        if (typeof TextAlignmentReverseMap[alignment] === 'undefined') {
+          return paragraphStyle
+        }
+
+        // Get a platform independent raw text alignment value
+        // NSTextAlignment is represented differently on Intel and M1 chips
+        const platformIndependentAlignment = MSTextAlignmentConverter.archiveNSTextAlignment(
+          alignment
         )
+
+        paragraphStyle.setAlignment(platformIndependentAlignment)
+
         return paragraphStyle
       })
     },
