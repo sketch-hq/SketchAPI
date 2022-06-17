@@ -156,12 +156,12 @@ test('should be able to select an override', (_context, document) => {
   instance.overrides[0].selected = true
 
   expect(instance.overrides[0].selected).toBe(true)
-  expect(instance.selected).toBe(true)
+  expect(instance.selected).toBe(false)
 
   instance.overrides[0].selected = false
 
   expect(instance.overrides[0].selected).toBe(false)
-  expect(instance.selected).toBe(true)
+  expect(instance.selected).toBe(false)
 })
 
 test('should be able to access the frame of an override', (_context, document) => {
