@@ -119,7 +119,7 @@ test('should create a symbol master with a nested symbol', (_context, document) 
 test('should have overrides', (_context, document) => {
   const { master, text } = createSymbolMaster(document)
 
-  expect(master.overrides.length).toBe(1)
+  expect(master.overrides.length).toBe(5)
   const override = master.overrides[0]
   const result = {
     type: 'Override',
