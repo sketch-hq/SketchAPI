@@ -33,7 +33,7 @@ test('should have overrides', (_context, document) => {
   const instance = master.createNewInstance()
   document.selectedPage.layers = document.selectedPage.layers.concat(instance)
 
-  expect(instance.overrides.length).toBe(1)
+  expect(instance.overrides.length).toBe(5)
   const override = instance.overrides[0]
   const result = {
     type: 'Override',

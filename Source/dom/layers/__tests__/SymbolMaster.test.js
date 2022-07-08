@@ -66,7 +66,7 @@ test('should create a symbol master with a nested symbol', (_context, document) 
 
   // add the instance to the page
   document.selectedPage.layers = document.selectedPage.layers.concat(instance)
-  expect(instance.overrides.length).toBe(3)
+  expect(instance.overrides.length).toBe(11)
   const result0 = {
     type: 'Override',
     id: `${text2.id}_stringValue`,
