@@ -14,9 +14,10 @@ export class Override extends WrappedObject {
     if (!this.__symbolInstance) {
       return undefined
     }
+		this.__symbolInstance.sketchObject.ensureDetachHasUpdated()
     return toArray(
       this.__symbolInstance.sketchObject.overrideContainer().flattenedChildren()
-    ).find((x) => x.availableOverride() == this.sketchObject)
+    ).find((x) => x.availableOverride().overridePoint().name().isEqual(this.sketchObject.overridePoint().name()))
   }
 
   getFrame() {
@@ -115,9 +116,6 @@ Override.define('selected', {
       return undefined
     }
 
-    if (!this.__symbolInstance.selected) {
-      return false
-    }
     const representation = this._findRepresentation()
 
     if (!representation) {
@@ -145,34 +143,20 @@ Override.define('selected', {
       return
     }
 
-    const selectionId = representation.selectionID()
+		var selectionItem = representation.selectionItem()
+		if (!selectionItem) {
+			return
+		}
+		
+		var page = this.__symbolInstance.sketchObject.parentPage()
+		if (!page) {
+			return
+		}
 
-    let selectedOverrides = toArray(documentData.selectedOverrides())
-
-    const alreadySelected = selectedOverrides.some((id) =>
-      id.isEqual(selectionId)
-    )
-
-    if (selected) {
-      if (alreadySelected) {
-        return
-      }
-
-      selectedOverrides.push(selectionId)
-
-      if (!this.__symbolInstance.selected) {
-        this.__symbolInstance.selected = true
-      }
-    } else {
-      if (!alreadySelected) {
-        return
-      }
-
-      selectedOverrides = selectedOverrides.filter(
-        (id) => !id.isEqual(selectionId)
-      )
-    }
-
-    documentData.setSelectedOverrides(selectedOverrides)
+		if (selected) {
+  		page.changeSelectionByAddingItems_extendExisting([selectionItem], true)
+		} else {
+  		page.changeSelectionByRemovingItems([selectionItem])
+		}
   },
 })
