@@ -32,7 +32,7 @@ test('should be able to set overrides', (_context, document) => {
   const instance = master.createNewInstance()
   document.selectedPage.layers = document.selectedPage.layers.concat(instance)
 
-  expect(instance.overrides.length).toBe(5)
+  expect(instance.overrides.length).toBe(6)
   const override = instance.overrides[0]
   expect(override.isDefault).toBe(true)
   // check that an override can be logged
@@ -80,7 +80,7 @@ test('should change a nested symbol', (_context, document) => {
 
   // add the instance to the page
   document.selectedPage.layers = document.selectedPage.layers.concat(instance)
-  expect(instance.overrides.length).toBe(11)
+  expect(instance.overrides.length).toBe(13)
 
   const override = instance.overrides[1]
   override.value = nestedMaster2.symbolId
