@@ -32,7 +32,7 @@ test('should be able to set overrides', (_context, document) => {
   const instance = master.createNewInstance()
   document.selectedPage.layers = document.selectedPage.layers.concat(instance)
 
-  expect(instance.overrides.length).toBe(5)
+  expect(instance.overrides.length).toBe(6)
   const override = instance.overrides[0]
   expect(override.isDefault).toBe(true)
   // check that an override can be logged
