@@ -41,7 +41,7 @@ test('should be able to set overrides', (_context, document) => {
   // override
   override.value = 'overridden'
 
-  expect(instance.overrides.length).toBe(5)
+  expect(instance.overrides.length).toBe(6)
   const result = {
     type: 'Override',
     id: `${text.id}_stringValue`,
@@ -82,7 +82,7 @@ test('should change a nested symbol', (_context, document) => {
   document.selectedPage.layers = document.selectedPage.layers.concat(instance)
   expect(instance.overrides.length).toBe(13)
 
-  const override = instance.overrides[1]
+  const override = instance.overrides[6]
   override.value = nestedMaster2.symbolId
 
   const result = {
@@ -99,8 +99,8 @@ test('should change a nested symbol', (_context, document) => {
   }
   delete result.affectedLayer.overrides
   delete result.affectedLayer.selected
-  result.affectedLayer.style = instance.overrides[1].affectedLayer.style.toJSON()
-  expect(instance.overrides[1].toJSON()).toEqual(result)
+  result.affectedLayer.style = instance.overrides[6].affectedLayer.style.toJSON()
+  expect(instance.overrides[6].toJSON()).toEqual(result)
 })
 
 test('should handle image override', (_context, document) => {
