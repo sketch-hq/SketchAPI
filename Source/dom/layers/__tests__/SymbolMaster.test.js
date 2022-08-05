@@ -96,7 +96,7 @@ test('should create a symbol master with a nested symbol', (_context, document) 
   }
   delete result1.affectedLayer.overrides
   delete result1.affectedLayer.selected
-  result1.affectedLayer.style = instance.overrides[1].affectedLayer.style.toJSON()
+  result1.affectedLayer.style = instance.overrides[6].affectedLayer.style.toJSON()
   const result2 = {
     type: 'Override',
     id: `${nestedInstance.id}/${text.id}_stringValue`,
@@ -110,10 +110,10 @@ test('should create a symbol master with a nested symbol', (_context, document) 
     selected: false,
   }
   delete result2.affectedLayer.selected
-  result2.affectedLayer.style = instance.overrides[2].affectedLayer.style.toJSON()
+  result2.affectedLayer.style = instance.overrides[7].affectedLayer.style.toJSON()
   expect(instance.overrides[0].toJSON()).toEqual(result0)
-  expect(instance.overrides[1].toJSON()).toEqual(result1)
-  expect(instance.overrides[2].toJSON()).toEqual(result2)
+  expect(instance.overrides[6].toJSON()).toEqual(result1)
+  expect(instance.overrides[7].toJSON()).toEqual(result2)
 })
 
 test('should have overrides', (_context, document) => {
