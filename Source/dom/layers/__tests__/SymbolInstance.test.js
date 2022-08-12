@@ -33,7 +33,7 @@ test('should have overrides', (_context, document) => {
   const instance = master.createNewInstance()
   document.selectedPage.layers = document.selectedPage.layers.concat(instance)
 
-  expect(instance.overrides.length).toBe(1)
+  expect(instance.overrides.length).toBe(6)
   const override = instance.overrides[0]
   const result = {
     type: 'Override',
@@ -90,5 +90,16 @@ test('should resize in response to smart layout changes', (_context, document) =
   instance.overrides[0].value = '0'.repeat(1000)
   instance.resizeWithSmartLayout()
   const widthAfterSmartLayout = instance.frame.width
-  expect(initialWidth < widthAfterSmartLayout).toBe(true)
+  expect(widthAfterSmartLayout).toBeGreaterThan(initialWidth)
+})
+
+test('should change an override value', (_context, document) => {
+  const { master } = createSymbolMaster(document)
+  const instance = new SymbolInstance({
+    symbolId: master.symbolId,
+    parent: document.selectedPage,
+  })
+  expect(instance.overrides[0].value).toBe('Test value')
+  instance.overrides[0].value = 'New value'
+  expect(instance.overrides[0].value).toBe('New value')
 })
