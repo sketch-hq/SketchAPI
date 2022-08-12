@@ -92,3 +92,14 @@ test('should resize in response to smart layout changes', (_context, document) =
   const widthAfterSmartLayout = instance.frame.width
   expect(initialWidth < widthAfterSmartLayout).toBe(true)
 })
+
+test('should change an override value', (_context, document) => {
+  const { master } = createSymbolMaster(document)
+  const instance = new SymbolInstance({
+    symbolId: master.symbolId,
+    parent: document.selectedPage,
+  })
+  expect(instance.overrides[0].value).toBe('Test value')
+  instance.overrides[0].value = 'New value'
+  expect(instance.overrides[0].value).toBe('New value')
+})
