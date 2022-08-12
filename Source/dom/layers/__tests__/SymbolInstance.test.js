@@ -90,7 +90,7 @@ test('should resize in response to smart layout changes', (_context, document) =
   instance.overrides[0].value = '0'.repeat(1000)
   instance.resizeWithSmartLayout()
   const widthAfterSmartLayout = instance.frame.width
-  expect(initialWidth < widthAfterSmartLayout).toBe(true)
+  expect(widthAfterSmartLayout).toBeGreaterThan(initialWidth)
 })
 
 test('should change an override value', (_context, document) => {
