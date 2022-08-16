@@ -23,6 +23,9 @@ export class Layer extends WrappedObject {
     if (object.parentGroup()) {
       object.parentGroup().insertLayers_afterLayer([duplicate], object)
     }
+    if (this.type === 'SymbolInstance') {
+      duplicate.ensureDetachHasUpdated()
+    }
     return wrapNativeObject(duplicate)
   }
 
