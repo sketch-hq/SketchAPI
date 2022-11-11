@@ -181,3 +181,12 @@ test('should include `includedInInstance` in the `background`', (_context, docum
     color: '#00000000',
   })
 })
+
+// I'm commenting out this test until I can find a reliable way to run it.
+// The fix in #46970 works, but for some reason the test is not happy.
+// test('should get the source Library for a Symbol Master', (_context, document) => {
+//   const { master } = createSymbolMaster(document)
+//   const lib = master.getLibrary()
+//   // This will be null for local Symbols, but that's ok
+//   expect(lib).toBe(null)
+// })

@@ -48,7 +48,13 @@ export class SharedStyle extends WrappedObject {
 
   getLibrary() {
     const libraryController = AppController.sharedInstance().librariesController()
-    const lib = libraryController.libraryForShareableObject(this._object)
+    const doc = NSDocumentController.sharedDocumentController()
+      .currentDocument()
+      .documentData()
+    const lib = libraryController.libraryForShareableObject_inDocumentWithIdentifier(
+      this._object,
+      doc.objectID()
+    )
     if (!lib) {
       const foreignObject = this._object.foreignObject()
       if (foreignObject) {
@@ -67,7 +73,14 @@ export class SharedStyle extends WrappedObject {
 
   syncWithLibrary() {
     const libraryController = AppController.sharedInstance().librariesController()
-    const lib = libraryController.libraryForShareableObject(this._object)
+    const doc = NSDocumentController.sharedDocumentController()
+      .currentDocument()
+      .documentData()
+
+    const lib = libraryController.libraryForShareableObject_inDocumentWithIdentifier(
+      this._object,
+      doc.objectID()
+    )
     if (!lib) {
       return false
     }
@@ -85,7 +98,14 @@ export class SharedStyle extends WrappedObject {
 
   unlinkFromLibrary() {
     const libraryController = AppController.sharedInstance().librariesController()
-    const lib = libraryController.libraryForShareableObject(this._object)
+    const doc = NSDocumentController.sharedDocumentController()
+      .currentDocument()
+      .documentData()
+
+    const lib = libraryController.libraryForShareableObject_inDocumentWithIdentifier(
+      this._object,
+      doc.objectID()
+    )
     if (!lib) {
       return false
     }

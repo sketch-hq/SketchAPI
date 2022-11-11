@@ -40,7 +40,7 @@ const LibraryType = {
 
 export function getLibraries() {
   const libraryController = AppController.sharedInstance().librariesController()
-  return toArray(libraryController.libraries()).map(
+  return toArray(libraryController.appLibraries()).map(
     Library.fromNative.bind(Library)
   )
 }
@@ -68,7 +68,7 @@ export class Library extends WrappedObject {
     const libraryController = AppController.sharedInstance().librariesController()
 
     // check if we already imported the library
-    const existingLibraries = libraryController.libraries()
+    const existingLibraries = libraryController.appLibraries()
     for (let i = 0; i < existingLibraries.count(); i += 1) {
       const existingLibrary = existingLibraries.objectAtIndex(i)
       const location = existingLibrary.locationOnDisk()
