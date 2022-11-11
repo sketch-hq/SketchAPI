@@ -6,6 +6,7 @@ import { Types } from '../enums'
 import { Factory } from '../Factory'
 import { wrapObject } from '../wrapNativeObject'
 import { Override } from '../models/Override'
+import { Document } from '../models/Document'
 
 /**
  * A Sketch symbol master.
@@ -52,7 +53,11 @@ export class SymbolMaster extends Artboard {
 
   getLibrary() {
     const libraryController = AppController.sharedInstance().librariesController()
-    const lib = libraryController.libraryForShareableObject(this._object)
+    const doc = Document.getSelectedDocument()
+    const lib = libraryController.libraryForShareableObject_inDocumentWithIdentifier(
+      this._object,
+      doc.id
+    )
     if (!lib) {
       const foreignObject = this._object.foreignObject()
       if (foreignObject) {
@@ -74,7 +79,11 @@ export class SymbolMaster extends Artboard {
       return false
     }
     const libraryController = AppController.sharedInstance().librariesController()
-    const lib = libraryController.libraryForShareableObject(this._object)
+    const doc = Document.getSelectedDocument()
+    const lib = libraryController.libraryForShareableObject_inDocumentWithIdentifier(
+      this._object,
+      doc.id
+    )
     if (!lib) {
       return false
     }
@@ -95,7 +104,11 @@ export class SymbolMaster extends Artboard {
       return false
     }
     const libraryController = AppController.sharedInstance().librariesController()
-    const lib = libraryController.libraryForShareableObject(this._object)
+    const doc = Document.getSelectedDocument()
+    const lib = libraryController.libraryForShareableObject_inDocumentWithIdentifier(
+      this._object,
+      doc.id
+    )
     if (!lib) {
       return false
     }
