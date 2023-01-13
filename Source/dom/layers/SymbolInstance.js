@@ -71,7 +71,7 @@ export class SymbolInstance extends StyledLayer {
       return this
     }
 		this._object.ensureDetachHasUpdated()
-    this._object.resizeToFitContentsIfNeededNoCache()
+    this._object.resizeToFitContentsIfNeeded()
     return this
   }
 }
