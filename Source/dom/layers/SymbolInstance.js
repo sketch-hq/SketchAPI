@@ -70,8 +70,8 @@ export class SymbolInstance extends StyledLayer {
     if (this.isImmutable()) {
       return this
     }
-		this._object.ensureDetachHasUpdated()
-    this._object.resizeToFitContentsIfNeededNoCache()
+    this._object.ensureDetachHasUpdated()
+    this._object.resizeToFitContentsIfNeeded()
     return this
   }
 }

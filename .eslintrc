@@ -176,6 +176,8 @@
     "NSMakeSize": "readonly",
     "NSPopUpButton": "readonly",
     "NSMutableDictionary": "readonly",
+    "NSDictionary": "readonly",
+    "SmartLayout": "readonly",
     "MSInferredGroupLayout": "readonly",
     "MSFreeformGroupLayout": "readonly",
     "MSSwatch": "readonly",

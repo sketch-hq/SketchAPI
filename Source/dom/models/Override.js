@@ -14,10 +14,10 @@ export class Override extends WrappedObject {
     if (!this.__symbolInstance) {
       return undefined
     }
-		this.__symbolInstance.sketchObject.ensureDetachHasUpdated()
+    this.__symbolInstance.sketchObject.ensureDetachHasUpdated()
     return toArray(
       this.__symbolInstance.sketchObject.overrideContainer().flattenedChildren()
-    ).find((x) => x.availableOverride().overridePoint().name().isEqual(this.sketchObject.overridePoint().name()))
+    ).find((x) => x.availableOverride().overridePoint().fullPath().isEqual(this.sketchObject.overridePoint().fullPath()))
   }
 
   getFrame() {
@@ -42,7 +42,7 @@ Override.define('path', {
 
 Override.define('property', {
   get() {
-    return String(this._object.overridePoint().property())
+    return String(this._object.overridePoint().attributeName())
   },
 })
 
@@ -72,6 +72,14 @@ Override.define('value', {
     if (this.property === 'image') {
       return ImageData.fromNative(value)
     }
+    if (value !== null && value.isKindOfClass_(NSDictionary.class())) {
+      // Map dictionary overrides into a javascript dictionary
+      var map = {}
+      Object.keys(value).forEach((name) => {
+        map[name] = value[name]
+      })
+	  return map
+    }
     return String(this._object.currentValue())
   },
   set(value) {
@@ -91,17 +99,49 @@ Override.define('isDefault', {
 
 Override.define('editable', {
   get() {
-    if (typeof this.__editable !== 'undefined') {
-      return this.__editable
+    var overrides
+    var master
+    if (typeof this.__symbolMaster !== 'undefined') {
+      master = this.__symbolMaster.sketchObject
+      overrides = master.overridePoints
+    } else if (typeof this.__symbolInstance !== 'undefined') {
+      var masterGetter = this.__symbolInstance.sketchObject.symbolMaster
+      if (masterGetter !== 'undefined') {
+        master = masterGetter()
+      }
+      overrides = this.__symbolInstance.sketchObject.overridePoints
     }
-    return Boolean(Number(this._object.isEditable()))
+  
+    if (typeof overrides == 'undefined') {
+      // Can't get the override points - maybe this is an immutable?
+      return false
+    }
+    if (typeof master == 'undefined') {
+      throw new Error('Unable to find the symbol source for this override')
+    }
+
+    var point
+    overrides().forEach((o) => {
+      if (o.fullPath().isEqual(this._object.overridePoint().fullPath())) {
+        point = o
+      }
+    })
+  
+    if (typeof point == 'undefined') {
+      return false
+    }
+
+    if (master.allowsOverrides() && master.isOverridePointEditable(point) && point.isConfigurable()) {
+      return true
+    } else {
+      return false
+    }
   },
   set(editable) {
     // __symbolInstance is set when building the Override
-    if (!this.__symbolMaster) {
+    if (typeof this.__symbolMaster == 'undefined') {
       throw new Error('Can only set `editable` for a symbol master')
     }
-    this.__editable = editable
     this.__symbolMaster.sketchObject.setOverridePoint_editable(
       this._object.overridePoint(),
       editable
@@ -143,20 +183,20 @@ Override.define('selected', {
       return
     }
 
-		var selectionItem = representation.selectionItem()
-		if (!selectionItem) {
-			return
-		}
-		
-		var page = this.__symbolInstance.sketchObject.parentPage()
-		if (!page) {
-			return
-		}
+    var selectionItem = representation.selectionItem()
+    if (!selectionItem) {
+      return
+    }
+    
+    var page = this.__symbolInstance.sketchObject.parentPage()
+    if (!page) {
+      return
+    }
 
-		if (selected) {
-  		page.changeSelectionByAddingItems_extendExisting([selectionItem], true)
-		} else {
-  		page.changeSelectionByRemovingItems([selectionItem])
-		}
+    if (selected) {
+      page.changeSelectionByAddingItems_extendExisting([selectionItem], true)
+    } else {
+      page.changeSelectionByRemovingItems([selectionItem])
+    }
   },
 })

@@ -21,8 +21,11 @@ export function createSymbolMaster(document) {
   })
 
   // build the symbol master
+  const master = SymbolMaster.fromArtboard(artboard)
+  master.sketchObject.ensureDetachHasUpdated()
+
   return {
-    master: SymbolMaster.fromArtboard(artboard),
+    master: master,
     text,
     artboard,
   }
