@@ -32,6 +32,7 @@ test('should have overrides', (_context, document) => {
   const { master, text } = createSymbolMaster(document)
   const instance = master.createNewInstance()
   document.selectedPage.layers = document.selectedPage.layers.concat(instance)
+  instance.sketchObject.ensureDetachHasUpdated()
 
   expect(instance.overrides.length).toBe(6)
   const override = instance.overrides[0]
@@ -77,19 +78,19 @@ test('should detach an instance recursively', (_context, document) => {
   expect(group.type).toBe('Group')
 })
 
-// test('should resize in response to smart layout changes', (_context, document) => {
-//   const { master } = createSymbolMaster(document)
-//   master.smartLayout = SmartLayout.LeftToRight
-//   const instance = new SymbolInstance({
-//     symbolId: master.symbolId,
-//     parent: document.selectedPage,
-//   })
-//   const initialWidth = instance.frame.width
-//   instance.overrides[0].value = '0'.repeat(1000)
-//   instance.resizeWithSmartLayout()
-//   const widthAfterSmartLayout = instance.frame.width
-//   expect(widthAfterSmartLayout).toBeGreaterThan(initialWidth)
-// })
+test('should resize in response to smart layout changes', (_context, document) => {
+  const { master } = createSymbolMaster(document)
+  master.smartLayout = SmartLayout.LeftToRight
+  const instance = new SymbolInstance({
+    symbolId: master.symbolId,
+    parent: document.selectedPage,
+  })
+  const initialWidth = instance.frame.width
+  instance.overrides[0].value = 'A string that is long enough to cause a size change, hopefully in the positive direction'
+  instance.resizeWithSmartLayout()
+  const widthAfterSmartLayout = instance.frame.width
+  expect(widthAfterSmartLayout).toBeGreaterThan(initialWidth)
+})
 
 // test('should change an override value', (_context, document) => {
 //   const { master } = createSymbolMaster(document)

@@ -142,22 +142,11 @@ SymbolMaster.define('symbolId', {
 
 SymbolMaster.define('overrides', {
   get() {
-    const method = (function (sketchVersion) {
-      if (sketchVersion < 65) {
-        return 'overrideProperies'
-      }
-      if (sketchVersion < 71) {
-        return 'overrideProperties'
-      }
-      return 'overridePropertyDict'
-    })(BCSketchInfo.shared().metadata().appVersion)
-
-    // undefined when immutable
-    if (!this._object[method] || !this._object.availableOverrides) {
-      return undefined
-    }
-    const overrideProperties = this._object[method]()
-    const overrides = toArray(
+  if (!this._object.availableOverrides) {
+    return undefined
+  }
+  
+  const overrides = toArray(
       MSAvailableOverride.flattenAvailableOverrides(
         this._object.availableOverrides()
       )
@@ -165,19 +154,11 @@ SymbolMaster.define('overrides', {
 
     return overrides.map((o) => {
       const wrapped = Override.fromNative(o)
-      const property = overrideProperties[o.overridePoint().name()]
       Object.defineProperty(wrapped, '__symbolMaster', {
         writable: false,
         enumerable: false,
         value: this,
       })
-      if (property && !o.isVisible) {
-        Object.defineProperty(wrapped, '__editable', {
-          writable: true,
-          enumerable: false,
-          value: property.canOverride,
-        })
-      }
       return wrapped
     })
   },
@@ -185,10 +166,17 @@ SymbolMaster.define('overrides', {
     if (this.isImmutable()) {
       return
     }
+
+    var dict = {}
+    this._object.overridePoints().forEach((o) => {
+      dict[o.name()] = o
+    })
+  
     overrides.forEach((o) => {
-      const overridePoint = MSOverridePoint.alloc().init()
-      overridePoint.name = o.id
-      this._object.setOverridePoint_editable(overridePoint, o.editable)
+      const overridePoint = dict[o.id]
+      if (overridePoint) {
+        this._object.setOverridePoint_editable(overridePoint, o.editable)
+      }
     })
   },
 })
