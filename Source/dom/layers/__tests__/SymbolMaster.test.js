@@ -1,6 +1,6 @@
 /* globals expect, test */
 /* eslint-disable no-param-reassign */
-import { SymbolMaster, Text, Artboard } from '../..'
+import { SymbolInstance, SymbolMaster, Text, Artboard } from '../..'
 import { createSymbolMaster, canBeLogged } from '../../../test-utils'
 
 test('should create a symbol master from an artboard', (_context, document) => {
@@ -132,7 +132,7 @@ test('should have overrides', (_context, document) => {
     isDefault: true,
     editable: true,
     affectedLayer: text.toJSON(),
-    selected: false
+    selected: false,
   }
   delete result.affectedLayer.selected
   result.affectedLayer.style = master.overrides[0].affectedLayer.style.toJSON()

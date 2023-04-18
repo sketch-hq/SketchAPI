@@ -1,4 +1,3 @@
-import { toArray } from 'util'
 import { DefinedPropertiesKey, WrappedObject } from '../WrappedObject'
 import { Types } from '../enums'
 import { Factory } from '../Factory'
@@ -7,45 +6,55 @@ import { wrapNativeObject } from '../wrapNativeObject'
 import { Rectangle } from './Rectangle'
 
 export class Override extends WrappedObject {
-// Returns any override directly set on the symbol instance or null if none is set or this is an override point on a symbol source
+  // Returns any override directly set on the symbol instance or null if none is set or this is an override point on a symbol source
   getValueSetOnInstance() {
     if (!this.__symbolInstance) {
       return null
     }
     var overrideValues = this.__symbolInstance.sketchObject.overrideValues()
     for (var i = 0; i < overrideValues.length; i++) {
-      if (overrideValues[i].overridePath().isEqual(this._object.overridePath())) {
+      if (
+        overrideValues[i].overridePath().isEqual(this._object.overridePath())
+      ) {
         return overrideValues[i].value()
       }
     }
     return null
   }
-  
+
   // Returns the current value of the override point. This is the value set on the layer in the detached version of the symbol. It may be
   // out-of-date if the detached symbol hasn't yet updated.
   getResolvedValueOnDetachedSymbol() {
-    return this.affectedLayer.sketchObject.valueForOverrideAttribute(this.property)
+    return this.affectedLayer.sketchObject.valueForOverrideAttribute(
+      this.property
+    )
   }
-  
+
   // Returns the value the override point will have if there is no override set on this instance.
   getDefaultValue() {
     if (!this.__symbolInstance) {
       return this.getResolvedValueOnDetachedSymbol()
     }
-    return this.__symbolInstance.sketchObject.defaultValueForOverridePoint(this._object)
+    return this.__symbolInstance.sketchObject.defaultValueForOverridePoint(
+      this._object
+    )
   }
-  
+
   // Returns a SelectionItem representing this override point
   selectionItem() {
     if (this.__symbolInstance) {
-      return this.__symbolInstance.sketchObject.selectionItemForOverridePoint(this.sketchObject)
+      return this.__symbolInstance.sketchObject.selectionItemForOverridePoint(
+        this.sketchObject
+      )
     }
     if (this.__symbolMaster) {
-      return this.__symbolMaster.sketchObject.selectionItemForOverridePoint(this.sketchObject)
+      return this.__symbolMaster.sketchObject.selectionItemForOverridePoint(
+        this.sketchObject
+      )
     }
     return null
   }
-  
+
   getOwningPage() {
     if (this.__symbolInstance) {
       return this.__symbolInstance.sketchObject.parentPage()
@@ -55,7 +64,7 @@ export class Override extends WrappedObject {
     }
     return null
   }
-  
+
   getFrame() {
     return new Rectangle(this._object.layer().frame().rect())
   }
@@ -131,7 +140,7 @@ Override.define('value', {
 Override.define('isDefault', {
   get() {
     return this.getValueSetOnInstance() == null
-  }
+  },
 })
 
 Override.define('editable', {
@@ -145,11 +154,15 @@ Override.define('editable', {
         master = masterGetter()
       }
     }
-   
+
     if (typeof master == 'undefined') {
       throw new Error('Unable to find the symbol source for this override')
     }
-    if (master.allowsOverrides() && master.isOverridePointEditable(this._object) && this._object.isConfigurable()) {
+    if (
+      master.allowsOverrides() &&
+      master.isOverridePointEditable(this._object) &&
+      this._object.isConfigurable()
+    ) {
       return true
     } else {
       return false
@@ -165,29 +178,29 @@ Override.define('editable', {
       editable
     )
   },
- })
+})
 
- Override.define('selected', {
-   get() {
-     let item = this.selectionItem()
-     if (this.getOwningPage().selection().isItemSelected(item)) {
-       return true
-     }
-     return false
-   },
-   set(selected) {
-     let item = this.selectionItem()
-     if (!item) {
-       return
-     }
-     let page = this.getOwningPage()
-     if (!page) {
-       return
-     }
-     if (selected) {
-       page.changeSelectionByAddingItems_extendExisting([item], true)
-     } else {
-       page.changeSelectionByRemovingItems([item])
-     }
+Override.define('selected', {
+  get() {
+    let item = this.selectionItem()
+    if (this.getOwningPage().selection().isItemSelected(item)) {
+      return true
+    }
+    return false
   },
- })
+  set(selected) {
+    let item = this.selectionItem()
+    if (!item) {
+      return
+    }
+    let page = this.getOwningPage()
+    if (!page) {
+      return
+    }
+    if (selected) {
+      page.changeSelectionByAddingItems_extendExisting([item], true)
+    } else {
+      page.changeSelectionByRemovingItems([item])
+    }
+  },
+})
