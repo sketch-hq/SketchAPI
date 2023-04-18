@@ -40,7 +40,7 @@ test('should create a gradient with a specific type', () => {
   })
   expect(s.fills[0].gradient.toJSON()).toEqual({
     gradientType: 'Angular',
-    from: { x: 0.5, y: 0 },
+    from: { x: 0.5, y: 0.5 },
     to: { x: 0.5, y: 1 },
     aspectRatio: 0,
     stops: [],

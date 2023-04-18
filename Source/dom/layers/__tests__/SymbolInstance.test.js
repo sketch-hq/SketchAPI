@@ -59,6 +59,7 @@ test('should detach an instance', (_context, document) => {
     symbolId: master.symbolId,
     parent: document.selectedPage,
   })
+  instance.sketchObject.ensureDetachHasUpdated()
   expect(instance.type).toBe('SymbolInstance')
 
   const group = instance.detach()
@@ -72,6 +73,7 @@ test('should detach an instance recursively', (_context, document) => {
     symbolId: master.symbolId,
     parent: document.selectedPage,
   })
+  instance.sketchObject.ensureDetachHasUpdated()
   expect(instance.type).toBe('SymbolInstance')
 
   const group = instance.detach({ recursively: true })

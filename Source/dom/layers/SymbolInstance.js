@@ -52,7 +52,7 @@ export class SymbolInstance extends StyledLayer {
       return this
     }
     const wrappedOverride = wrapObject(override)
-    const overridePoint = wrappedOverride.sketchObject.overridePoint()
+    const overridePoint = wrappedOverride.sketchObject
     if (wrappedOverride.property === 'image') {
       this._object.setValue_forOverridePoint(
         ImageData.from(value).sketchObject,
@@ -148,15 +148,13 @@ SymbolInstance.define('master', {
 SymbolInstance.define('overrides', {
   get() {
     // undefined when immutable
-    if (!this._object.availableOverrides) {
+    if (!this._object.overridePoints) {
       return undefined
     }
-    const overrides = toArray(
-      MSAvailableOverride.flattenAvailableOverrides(
-        this._object.availableOverrides()
-      )
-    )
 
+    this._object.ensureDetachHasUpdated()
+
+    const overrides = toArray(this._object.overridePoints())
     return overrides.map((o) => {
       const wrapped = Override.fromNative(o)
       Object.defineProperty(wrapped, '__symbolInstance', {
