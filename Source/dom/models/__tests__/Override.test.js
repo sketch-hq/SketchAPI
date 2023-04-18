@@ -54,8 +54,7 @@ test('should be able to set overrides', (_context, document) => {
     affectedLayer: text.toJSON(),
     selected: false,
   }
-  delete result.affectedLayer.selected
-  result.affectedLayer.style = instance.overrides[0].affectedLayer.style.toJSON()
+  result.affectedLayer = instance.overrides[0].affectedLayer.toJSON()
   expect(instance.overrides[0].toJSON()).toEqual(result)
 })
 
@@ -80,9 +79,9 @@ test('should change a nested symbol', (_context, document) => {
 
   // add the instance to the page
   document.selectedPage.layers = document.selectedPage.layers.concat(instance)
-  expect(instance.overrides.length).toBe(13)
+  expect(instance.overrides.length).toBe(14)
 
-  const override = instance.overrides[6]
+  const override = instance.overrides[7]
   override.value = nestedMaster2.symbolId
 
   const result = {
@@ -99,8 +98,8 @@ test('should change a nested symbol', (_context, document) => {
   }
   delete result.affectedLayer.overrides
   delete result.affectedLayer.selected
-  result.affectedLayer.style = instance.overrides[6].affectedLayer.style.toJSON()
-  expect(instance.overrides[6].toJSON()).toEqual(result)
+  result.affectedLayer.style = instance.overrides[7].affectedLayer.style.toJSON()
+  expect(instance.overrides[7].toJSON()).toEqual(result)
 })
 
 test('should handle image override', (_context, document) => {
@@ -142,7 +141,9 @@ test('hidden layers should not be editable', (_context, document) => {
   const instance = master.createNewInstance()
   document.selectedPage.layers = document.selectedPage.layers.concat(instance)
 
-  expect(instance.overrides[0].editable).toBe(false)
+  // We used to test that hidden layers weren't marked as editable, but now hidden
+  // layers don't surface overrides at all. #47514
+  expect(instance.overrides.length).toBe(0)
 })
 
 test('should be able to select an override', (_context, document) => {

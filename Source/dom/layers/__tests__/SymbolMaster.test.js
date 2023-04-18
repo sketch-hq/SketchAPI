@@ -1,6 +1,6 @@
 /* globals expect, test */
 /* eslint-disable no-param-reassign */
-import { SymbolMaster, Text, Artboard } from '../..'
+import { SymbolInstance, SymbolMaster, Text, Artboard } from '../..'
 import { createSymbolMaster, canBeLogged } from '../../../test-utils'
 
 test('should create a symbol master from an artboard', (_context, document) => {
@@ -66,7 +66,8 @@ test('should create a symbol master with a nested symbol', (_context, document) 
 
   // add the instance to the page
   document.selectedPage.layers = document.selectedPage.layers.concat(instance)
-  expect(instance.overrides.length).toBe(13)
+  expect(instance.overrides.length).toBe(14)
+  canBeLogged(instance, SymbolInstance)
   const result0 = {
     type: 'Override',
     id: `${text2.id}_stringValue`,
@@ -96,7 +97,7 @@ test('should create a symbol master with a nested symbol', (_context, document) 
   }
   delete result1.affectedLayer.overrides
   delete result1.affectedLayer.selected
-  result1.affectedLayer.style = instance.overrides[6].affectedLayer.style.toJSON()
+  result1.affectedLayer.style = instance.overrides[7].affectedLayer.style.toJSON()
   const result2 = {
     type: 'Override',
     id: `${nestedInstance.id}/${text.id}_stringValue`,
@@ -110,10 +111,10 @@ test('should create a symbol master with a nested symbol', (_context, document) 
     selected: false,
   }
   delete result2.affectedLayer.selected
-  result2.affectedLayer.style = instance.overrides[7].affectedLayer.style.toJSON()
+  result2.affectedLayer.style = instance.overrides[8].affectedLayer.style.toJSON()
   expect(instance.overrides[0].toJSON()).toEqual(result0)
-  expect(instance.overrides[6].toJSON()).toEqual(result1)
-  expect(instance.overrides[7].toJSON()).toEqual(result2)
+  expect(instance.overrides[7].toJSON()).toEqual(result1)
+  expect(instance.overrides[8].toJSON()).toEqual(result2)
 })
 
 test('should have overrides', (_context, document) => {
@@ -131,6 +132,7 @@ test('should have overrides', (_context, document) => {
     isDefault: true,
     editable: true,
     affectedLayer: text.toJSON(),
+    selected: false,
   }
   delete result.affectedLayer.selected
   result.affectedLayer.style = master.overrides[0].affectedLayer.style.toJSON()

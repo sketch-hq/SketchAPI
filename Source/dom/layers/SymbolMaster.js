@@ -142,15 +142,12 @@ SymbolMaster.define('symbolId', {
 
 SymbolMaster.define('overrides', {
   get() {
-  if (!this._object.availableOverrides) {
-    return undefined
-  }
-  
-  const overrides = toArray(
-      MSAvailableOverride.flattenAvailableOverrides(
-        this._object.availableOverrides()
-      )
-    )
+    if (!this._object.overridePoints) {
+      return undefined
+    }
+
+    this._object.ensureDetachHasUpdated()
+    const overrides = toArray(this._object.overridePoints())
 
     return overrides.map((o) => {
       const wrapped = Override.fromNative(o)
