@@ -232,10 +232,12 @@ export class Document extends WrappedObject {
     if (this.isImmutable()) {
       return
     }
-    const wrappedLayer = wrapObject(layer)
+    
+    let relative = layer.frame
+    let absoluteRect = relative.changeBasis({ from: layer.parent })
     this._object
       .contentDrawView()
-      .centerRect_(wrappedLayer.sketchObject.absoluteRect().rect())
+      .centerRect_(absoluteRect.asCGRect())
   }
 
   static open(path, callback) {

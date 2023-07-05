@@ -138,6 +138,10 @@ test('Should fail when exporting a shape too large for WebP', (_context, documen
     // just ignore
   }
   const object = new Shape({
+    style: {
+      fills: ['#FFF'],
+      borders: [],
+    },
     parent: document.selectedPage,
   })
 
