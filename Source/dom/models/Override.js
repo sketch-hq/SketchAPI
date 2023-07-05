@@ -25,7 +25,8 @@ export class Override extends WrappedObject {
   // Returns the current value of the override point. This is the value set on the layer in the detached version of the symbol. It may be
   // out-of-date if the detached symbol hasn't yet updated.
   getResolvedValueOnDetachedSymbol() {
-    return this.affectedLayer.sketchObject.valueForOverrideAttribute(
+    var layer = this._object.layer()
+    return layer.valueForOverrideAttribute(
       this.property
     )
   }

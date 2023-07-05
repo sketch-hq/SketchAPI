@@ -333,7 +333,7 @@ test('should return valid line rotation', () => {
   expect(shape.transform.rotation).toBe(80)
   
   shape.transform.rotation = 0
-  expect(shape.transform.rotation).toBe(0)
+  expect(shape.transform.rotation).toBeCloseTo(0)
 })
 
 test('should remove a flow from a layer', (_context, document) => {
