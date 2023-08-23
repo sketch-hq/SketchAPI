@@ -56,7 +56,7 @@ function updateAttributes(_object, fn) {
   let textStyle = _object.textStyle()
 
   if (!textStyle) {
-    textStyle = MSTextStyle.styleWithAttributes(
+    textStyle = MSTextStyle.alloc().initWithAttributes(
       MSDefaultTextStyle.defaultTextStyle()
     )
     _object.setTextStyle(textStyle)
@@ -229,7 +229,7 @@ export function defineTextStyleProperties(Style) {
       let textStyle = this._object.textStyle()
 
       if (!textStyle) {
-        textStyle = MSTextStyle.styleWithAttributes({})
+        textStyle = MSTextStyle.alloc().initWithAttributes({})
         this._object.setTextStyle(textStyle)
       }
 

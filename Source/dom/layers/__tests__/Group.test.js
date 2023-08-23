@@ -1,6 +1,6 @@
 /* globals expect, test */
 import { canBeLogged } from '../../../test-utils'
-import { Group, Text, Shape, Rectangle, SmartLayout } from '../..'
+import { Group, Text, Rectangle, SmartLayout } from '../..'
 
 test('should return the layers and can iterate through them', (_context, document) => {
   const page = document.selectedPage
