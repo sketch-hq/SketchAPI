@@ -53,7 +53,7 @@
     "MSDocumentData": "readonly",
     "MSSymbolMaster": "readonly",
     "MSSymbolInstance": "readonly",
-    "MSAvailableOverride": "readonly",
+    "MSOverridePoint": "readonly",
     "MSAssetLibrary": "readonly",
     "MSDocument": "readonly",
     "NSURL": "readonly",

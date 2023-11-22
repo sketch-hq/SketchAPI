@@ -121,18 +121,31 @@ test('should handle image override', (_context, document) => {
 
   // add the instance to the page
   document.selectedPage.layers = document.selectedPage.layers.concat(instance)
-  expect(instance.overrides.length).toBe(1)
-  expect(instance.overrides[0].property).toBe('image')
+  expect(instance.overrides.length).toBe(2)
+  
+  // check image resize behavior
+  expect(instance.overrides[0].property).toBe('imageResizeBehavior')
   expect(instance.overrides[0].isDefault).toBe(true)
-  expect(instance.overrides[0].value.type).toBe('ImageData')
+  expect(instance.overrides[0].value).toBe('Original')
 
-  instance.overrides[0].value = {
+  instance.overrides[0].value = '1'
+
+  expect(instance.overrides[0].property).toBe('imageResizeBehavior')
+  expect(instance.overrides[0].isDefault).toBe(false)
+  expect(instance.overrides[0].value).toBe('1')
+
+  // check image
+  expect(instance.overrides[1].property).toBe('image')
+  expect(instance.overrides[1].isDefault).toBe(true)
+  expect(instance.overrides[1].value.type).toBe('ImageData')
+
+  instance.overrides[1].value = {
     base64: base64Image2,
   }
 
-  expect(instance.overrides[0].property).toBe('image')
-  expect(instance.overrides[0].isDefault).toBe(false)
-  expect(instance.overrides[0].value.type).toBe('ImageData')
+  expect(instance.overrides[1].property).toBe('image')
+  expect(instance.overrides[1].isDefault).toBe(false)
+  expect(instance.overrides[1].value.type).toBe('ImageData')
 })
 
 test('hidden layers should not be editable', (_context, document) => {
