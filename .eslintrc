@@ -157,7 +157,6 @@
     "MSGradientAsset": "readonly",
     "MSPersistentAssetCollection": "readonly",
     "MSOverrideProperty": "readonly",
-    "MSOverridePoint": "readonly",
     "NSMutableArray": "readonly",
     "CGRectNull": "readonly",
     "NSColorSpace": "readonly",
