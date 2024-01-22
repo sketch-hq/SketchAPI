@@ -591,6 +591,17 @@ Document.define('path', {
   },
 })
 
+Document.define('name', {
+  exportable: true,
+  get() {
+    if (this.path !== undefined) {
+      return this.path.split('/').pop()
+    } else {
+      return 'Untitled.sketch'
+    }
+  },
+})
+
 /**
  * A list of document colors
  *
