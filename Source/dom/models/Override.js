@@ -183,8 +183,12 @@ Override.define('editable', {
 
 Override.define('selected', {
   get() {
+    let page = this.getOwningPage()
+    if (!page) {
+	  return false
+    }
     let item = this.selectionItem()
-    if (this.getOwningPage().selection().isItemSelected(item)) {
+    if (page.selection().isItemSelected(item)) {
       return true
     }
     return false
