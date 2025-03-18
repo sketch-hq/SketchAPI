@@ -30,7 +30,6 @@
     "NSArray": "readonly",
     "NSMakePoint": "readonly",
     "CGRectMake": "readonly",
-    "MSArtboardGroup": "readonly",
     "MSPage": "readonly",
     "BCSketchInfo": "readonly",
     "log": "readonly",
@@ -51,6 +50,7 @@
     "MSDefaultStyle": "readonly",
     "MSLayer": "readonly",
     "MSDocumentData": "readonly",
+    "MSDetachedSymbol": "readonly",
     "MSSymbolMaster": "readonly",
     "MSSymbolInstance": "readonly",
     "MSOverridePoint": "readonly",
@@ -72,7 +72,6 @@
     "MSForeignSymbolProvider": "readonly",
     "MSForeignObjectCollector": "readonly",
     "MSStyleShadow": "readonly",
-    "MSStyleInnerShadow": "readonly",
     "MSGradientStop": "readonly",
     "MSImmutableGradientStop": "readonly",
     "MSGradient": "readonly",
@@ -95,7 +94,6 @@
     "MSSharedStyle": "readonly",
     "MSStyle": "readonly",
     "MSDataOverride": "readonly",
-    "MSImmutableArtboardGroup": "readonly",
     "MSImmutableLayerGroup": "readonly",
     "MSImmutableHotspotLayer": "readonly",
     "MSImmutableBitmapLayer": "readonly",
@@ -104,6 +102,7 @@
     "MSImmutableShapeGroup": "readonly",
     "MSStyledLayer": "readonly",
     "MSImmutableStyledLayer": "readonly",
+    "MSImmutableDetachedSymbol": "readonly",
     "MSImmutableSymbolInstance": "readonly",
     "MSImmutableSymbolMaster": "readonly",
     "MSImmutableTextLayer": "readonly",
@@ -185,6 +184,6 @@
     "NSUUID": "readonly",
     "NSError": "readonly",
     "NSMapTable": "readonly",
-    "MSTextAlignmentConverter": "readonly",
+    "MSTextAlignmentConverter": "readonly"
   }
 }
