@@ -1,5 +1,5 @@
 /* globals expect, test */
-import { find, Rectangle, Group } from '..'
+import { find, Rectangle } from '..'
 
 test('should find Artboard by type', (_context, document) => {
   // eslint-disable-next-line no-param-reassign
