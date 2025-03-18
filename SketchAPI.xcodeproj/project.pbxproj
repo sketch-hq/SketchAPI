@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 63;
 	objects = {
 
 /* Begin PBXAggregateTarget section */
@@ -113,7 +113,9 @@
 		437121332469F097000570FA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1520;
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1620;
+				ORGANIZATIONNAME = Sketch;
 				TargetAttributes = {
 					4371214B2469F0F6000570FA = {
 						CreatedOnToolsVersion = 11.4.1;
@@ -125,7 +127,7 @@
 				};
 			};
 			buildConfigurationList = 437121362469F097000570FA /* Build configuration list for PBXProject "SketchAPI" */;
-			compatibilityVersion = "Xcode 11.0";
+			compatibilityVersion = "Xcode 15.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -133,6 +135,7 @@
 				Base,
 			);
 			mainGroup = 437121322469F097000570FA;
+			minimizedProjectReferenceProxies = 1;
 			productRefGroup = 82E076C727D1037600402C93 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -302,7 +305,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -341,7 +344,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
