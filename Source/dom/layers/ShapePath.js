@@ -140,7 +140,7 @@ ShapePath.define('points', {
       (p) => wrapObject(p, Types.CurvePoint).sketchObject
     )
     this._object.addCurvePoints(curvePoints)
-    this._object.adjustFrameAfterEditIntegral_fixAncestors(false, true)
+    this._object.adjustFrameAfterEditIntegral(false)
   },
 })
 
@@ -154,6 +154,6 @@ ShapePath.define('closed', {
     }
     this._object.setEdited(true)
     this._object.setIsClosed(closed)
-    this._object.adjustFrameAfterEditIntegral_fixAncestors(false, true)
+    this._object.adjustFrameAfterEditIntegral(false)
   },
 })

@@ -34,8 +34,8 @@ test('should have overrides', (_context, document) => {
   document.selectedPage.layers = document.selectedPage.layers.concat(instance)
   instance.sketchObject.ensureDetachHasUpdated()
 
-  expect(instance.overrides.length).toBe(7)
-  const override = instance.overrides[0]
+  expect(instance.overrides.length).toBe(11)
+  const override = instance.overrides.find(o => o.property === 'stringValue')
   const result = {
     type: 'Override',
     id: `${text.id}_stringValue`,
@@ -49,8 +49,10 @@ test('should have overrides', (_context, document) => {
     selected: false,
   }
   delete result.affectedLayer.selected
-  result.affectedLayer.style = instance.overrides[0].affectedLayer.style.toJSON()
-  expect(override.toJSON()).toEqual(result)
+  result.affectedLayer.style = override.affectedLayer.style.toJSON()
+
+  const overrideAfter = instance.overrides.find(o => o.property === 'stringValue')
+  expect(overrideAfter.toJSON()).toEqual(result)
 })
 
 // Disabled via #49647 and #49751

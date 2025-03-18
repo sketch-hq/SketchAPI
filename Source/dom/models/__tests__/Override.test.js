@@ -32,8 +32,10 @@ test('should be able to set overrides', (_context, document) => {
   const instance = master.createNewInstance()
   document.selectedPage.layers = document.selectedPage.layers.concat(instance)
 
-  expect(instance.overrides.length).toBe(7)
-  const override = instance.overrides[0]
+  expect(instance.overrides.length).toBe(11)
+
+  // find the override point for the text layer's string value
+  const override = instance.overrides.find(o => o.property === 'stringValue')
   expect(override.isDefault).toBe(true)
   // check that an override can be logged
   log(override)
@@ -41,7 +43,7 @@ test('should be able to set overrides', (_context, document) => {
   // override
   override.value = 'overridden'
 
-  expect(instance.overrides.length).toBe(7)
+  expect(instance.overrides.length).toBe(11)
   const result = {
     type: 'Override',
     id: `${text.id}_stringValue`,
@@ -54,8 +56,11 @@ test('should be able to set overrides', (_context, document) => {
     affectedLayer: text.toJSON(),
     selected: false,
   }
-  result.affectedLayer = instance.overrides[0].affectedLayer.toJSON()
-  expect(instance.overrides[0].toJSON()).toEqual(result)
+
+  // find the same override after being modified
+  const overrideAfter = instance.overrides.find(o => o.property === 'stringValue')
+  result.affectedLayer = overrideAfter.affectedLayer.toJSON()
+  expect(overrideAfter.toJSON()).toEqual(result)
 })
 
 test('should change a nested symbol', (_context, document) => {
@@ -79,9 +84,13 @@ test('should change a nested symbol', (_context, document) => {
 
   // add the instance to the page
   document.selectedPage.layers = document.selectedPage.layers.concat(instance)
-  expect(instance.overrides.length).toBe(17)
+  expect(instance.overrides.length).toBe(25)
 
-  const override = instance.overrides[9]
+  // find the symbol override point
+  const symbolOverrides = instance.overrides.filter(o => o.property === 'symbolID')
+  expect(symbolOverrides.length).toBe(1)
+
+  const override = symbolOverrides[0]
   override.value = nestedMaster2.symbolId
 
   const result = {
@@ -98,8 +107,13 @@ test('should change a nested symbol', (_context, document) => {
   }
   delete result.affectedLayer.overrides
   delete result.affectedLayer.selected
-  result.affectedLayer.style = instance.overrides[9].affectedLayer.style.toJSON()
-  expect(instance.overrides[9].toJSON()).toEqual(result)
+
+  const symbolOverridesAfter = instance.overrides.filter(o => o.property === 'symbolID')
+  expect(symbolOverridesAfter.length).toBe(1)
+  const overrideAfter = symbolOverridesAfter[0]
+
+  result.affectedLayer.style = overrideAfter.affectedLayer.style.toJSON()
+  expect(overrideAfter.toJSON()).toEqual(result)
 })
 
 test('should handle image override', (_context, document) => {
@@ -121,31 +135,30 @@ test('should handle image override', (_context, document) => {
 
   // add the instance to the page
   document.selectedPage.layers = document.selectedPage.layers.concat(instance)
-  expect(instance.overrides.length).toBe(3)
+  expect(instance.overrides.length).toBe(7)
 
   // check image resize behavior
-  expect(instance.overrides[0].property).toBe('imageResizeBehavior')
-  expect(instance.overrides[0].isDefault).toBe(true)
-  expect(instance.overrides[0].value).toBe('Original')
-
-  instance.overrides[0].value = '1'
-
-  expect(instance.overrides[0].property).toBe('imageResizeBehavior')
-  expect(instance.overrides[0].isDefault).toBe(false)
-  expect(instance.overrides[0].value).toBe('1')
+  const imageResizeOverride = instance.overrides.find(o => o.property === 'imageResizeBehavior')
+  expect(imageResizeOverride.isDefault).toBe(true)
+  expect(imageResizeOverride.value).toBe('Original')
+  imageResizeOverride.value = 1
+  const imageResizeOverrideAfter = instance.overrides.find(o => o.property === 'imageResizeBehavior')
+  expect(imageResizeOverrideAfter.isDefault).toBe(false)
+  expect(imageResizeOverrideAfter.value).toBe('1')
 
   // check image
-  expect(instance.overrides[1].property).toBe('image')
-  expect(instance.overrides[1].isDefault).toBe(true)
-  expect(instance.overrides[1].value.type).toBe('ImageData')
+  const imageOverride = instance.overrides.find(o => o.property === 'image')
+  expect(imageOverride.isDefault).toBe(true)
+  expect(imageOverride.value.type).toBe('ImageData')
 
-  instance.overrides[1].value = {
+  imageOverride.value = {
     base64: base64Image2,
   }
 
-  expect(instance.overrides[1].property).toBe('image')
-  expect(instance.overrides[1].isDefault).toBe(false)
-  expect(instance.overrides[1].value.type).toBe('ImageData')
+  const imageOverrideAfter = instance.overrides.find(o => o.property === 'image')
+  expect(imageOverrideAfter.property).toBe('image')
+  expect(imageOverrideAfter.isDefault).toBe(false)
+  expect(imageOverrideAfter.value.type).toBe('ImageData')
 })
 
 test('hidden layers still editable', (_context, document) => {
@@ -155,7 +168,7 @@ test('hidden layers still editable', (_context, document) => {
   document.selectedPage.layers = document.selectedPage.layers.concat(instance)
 
   // Update for 51800 - overrides should be available in hidden layers
-  expect(instance.overrides.length).toBe(7)
+  expect(instance.overrides.length).toBe(11)
 })
 
 test('should be able to select an override', (_context, document) => {
@@ -163,17 +176,25 @@ test('should be able to select an override', (_context, document) => {
   const instance = master.createNewInstance()
   document.selectedPage.layers = document.selectedPage.layers.concat(instance)
 
-  expect(instance.overrides[0].selected).toBe(false)
+  // find the override point for the text layer's string value
+  const override = instance.overrides.find(o => o.property === 'stringValue')
+
+  expect(override.selected).toBe(false)
   expect(instance.selected).toBe(false)
 
-  instance.overrides[0].selected = true
+  // toggle selected on the text layer
+  override.selected = true
 
-  expect(instance.overrides[0].selected).toBe(true)
+  const overrideAfter = instance.overrides.find(o => o.property === 'stringValue')
+
+  expect(overrideAfter.selected).toBe(true)
   expect(instance.selected).toBe(false)
 
-  instance.overrides[0].selected = false
+  // toggle selected again
+  overrideAfter.selected = false
 
-  expect(instance.overrides[0].selected).toBe(false)
+  const overrideAfter2 = instance.overrides.find(o => o.property === 'stringValue')
+  expect(overrideAfter2.selected).toBe(false)
   expect(instance.selected).toBe(false)
 })
 
@@ -182,7 +203,11 @@ test('should be able to access the frame of an override', (_context, document) =
   const instance = master.createNewInstance()
   document.selectedPage.layers = document.selectedPage.layers.concat(instance)
 
-  expect(instance.overrides[0].getFrame().toJSON()).toEqual({
+  // find the override point for the text layer's string value
+  const override = instance.overrides.find(o => o.property === 'stringValue')
+
+  // expects to be able to access the frame of the affected text layer
+  expect(override.getFrame().toJSON()).toEqual({
     x: 0,
     y: 0,
     width: 55,

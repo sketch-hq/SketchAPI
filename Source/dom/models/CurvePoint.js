@@ -75,7 +75,7 @@ CurvePoint.define('cornerRadius', {
 
     if (parent) {
       parent.setEdited(true)
-      parent.adjustFrameAfterEditIntegral_fixAncestors(false, true)
+      parent.adjustFrameAfterEditIntegral(false)
     
       if (parent.isKindOfClass(MSRectangleShape)) {
         // Rectangle shapes have a `fixedRadius` property we need to manually update
@@ -115,7 +115,7 @@ CurvePoint.define('curveFrom', {
     this._object.setCurveFrom(NSMakePoint(curveFrom.x, curveFrom.y))
     if (this._parent) {
       this._parent.setEdited(true)
-      this._parent.adjustFrameAfterEditIntegral_fixAncestors(false, true)
+      this._parent.adjustFrameAfterEditIntegral(false)
     }
   },
 })
@@ -131,7 +131,7 @@ CurvePoint.define('curveTo', {
     this._object.setCurveTo(NSMakePoint(curveTo.x, curveTo.y))
     if (this._parent) {
       this._parent.setEdited(true)
-      this._parent.adjustFrameAfterEditIntegral_fixAncestors(false, true)
+      this._parent.adjustFrameAfterEditIntegral(false)
     }
   },
 })
@@ -147,7 +147,7 @@ CurvePoint.define('point', {
     this._object.setPoint(NSMakePoint(point.x, point.y))
     if (this._parent) {
       this._parent.setEdited(true)
-      this._parent.adjustFrameAfterEditIntegral_fixAncestors(false, true)
+      this._parent.adjustFrameAfterEditIntegral(false)
     }
   },
 })
@@ -174,7 +174,7 @@ CurvePoint.define('pointType', {
 
     if (this._parent) {
       this._parent.setEdited(true)
-      this._parent.adjustFrameAfterEditIntegral_fixAncestors(false, true)
+      this._parent.adjustFrameAfterEditIntegral(false)
     }
   },
 })

@@ -13,8 +13,6 @@ test('should set the shadows', () => {
       spread: 20,
       enabled: false,
     },
-  ]
-  style.innerShadows = [
     {
       color: '#11223344',
       blur: 10,
@@ -22,9 +20,10 @@ test('should set the shadows', () => {
       y: 8,
       spread: 20,
       enabled: false,
+      isInnerShadow: true,
     },
   ]
-  expect(style.sketchObject.shadows().count()).toBe(1)
+  expect(style.sketchObject.dropShadows().count()).toBe(1)
   expect(style.sketchObject.innerShadows().count()).toBe(1)
 })
 
@@ -39,6 +38,15 @@ test('should get the shadows', () => {
       spread: 20,
       enabled: false,
     },
+    {
+      color: '#11223344',
+      blur: 5,
+      x: 2,
+      y: 23,
+      spread: 10,
+      enabled: true,
+      isInnerShadow: true,
+    },
   ]
   expect(style.shadows[0].toJSON()).toEqual({
     color: '#11223344',
@@ -47,17 +55,8 @@ test('should get the shadows', () => {
     y: 8,
     spread: 20,
     enabled: false,
+    isInnerShadow: false,
   })
-  style.innerShadows = [
-    {
-      color: '#11223344',
-      blur: 5,
-      x: 2,
-      y: 23,
-      spread: 10,
-      enabled: true,
-    },
-  ]
   expect(style.innerShadows[0].toJSON()).toEqual({
     color: '#11223344',
     blur: 5,
@@ -65,6 +64,7 @@ test('should get the shadows', () => {
     y: 23,
     spread: 10,
     enabled: true,
+    isInnerShadow: true,
   })
 })
 
@@ -79,14 +79,13 @@ test('should set the shadows with 0 values', () => {
       y: 0,
       color: '#ebc100',
     },
-  ]
-  style.innerShadows = [
     {
       spread: 0,
       blur: 0,
       x: 1,
       y: 0,
       color: '#ebc100',
+      isInnerShadow: true,
     },
   ]
   expect(style.shadows[0].blur).toBe(0)

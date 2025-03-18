@@ -1,5 +1,5 @@
 import { DefinedPropertiesKey } from '../WrappedObject'
-import { Group } from './Group'
+import { Group, GroupBehavior } from './Group'
 import { Rectangle } from '../models/Rectangle'
 import { Types } from '../enums'
 import { Factory } from '../Factory'
@@ -19,11 +19,18 @@ export class Artboard extends Group {
   constructor(artboard = {}) {
     if (!artboard.sketchObject) {
       // eslint-disable-next-line no-param-reassign
-      artboard.sketchObject = Factory.createNative(Artboard)
+      artboard.sketchObject = Factory.createNative(Group)
         .alloc()
-        .initWithFrame(new Rectangle(0, 0, 100, 100).asCGRect())
+        .initWithFrame_behavior(
+          new Rectangle(0, 0, 100, 100).asCGRect(),
+          GroupBehavior.Frame
+        )
     }
     super(artboard)
+    // Mimics behaviour implemented at the controller level where they call
+    // `MSLayer.adjustAfterInsert()` which will apply the default styling.
+    this.background.enabled = true
+    // eslint-enable no-param-reassign
   }
 
   /**
@@ -43,11 +50,9 @@ export class Artboard extends Group {
 
 Artboard.type = Types.Artboard
 Artboard[DefinedPropertiesKey] = { ...Group[DefinedPropertiesKey] }
-Factory.registerClass(Artboard, MSArtboardGroup)
-Factory.registerClass(Artboard, MSImmutableArtboardGroup)
+Factory.registerAlias(Artboard, Group)
 
 delete Artboard[DefinedPropertiesKey].flow
-delete Artboard[DefinedPropertiesKey].style
 delete Artboard[DefinedPropertiesKey].locked
 delete Artboard[DefinedPropertiesKey].hidden
 delete Artboard[DefinedPropertiesKey].transform
@@ -68,13 +73,30 @@ Artboard.define('flowStartPoint', {
 Artboard.defineObject('background', {
   enabled: {
     get() {
-      return Boolean(Number(this._object.hasBackgroundColor()))
+      return (
+        this._object.style &&
+        this._object.style().fills &&
+        this._object.style().fills().length > 0
+      )
     },
     set(enabled) {
       if (this._parent.isImmutable()) {
         return
       }
-      this._object.setHasBackgroundColor(enabled)
+      const style = this._object.style ? this._object.style() : undefined
+      if (!style) {
+        return
+      }
+      if (enabled) {
+        const numFills = style.fills ? style.fills().length : 0
+        if (numFills === 0) {
+          // Create a default fill if enabling and no fills exist
+          style.addStylePartOfType(0) // 0 is for fills
+        }
+      } else {
+        // Remove all fills if disabling
+        style.removeAllStyleFills()
+      }
     },
   },
   includedInExport: {
@@ -90,13 +112,26 @@ Artboard.defineObject('background', {
   },
   color: {
     get() {
-      return colorToString(this._object.backgroundColor())
+      const firstFill = this._object.style
+        ? this._object.style().firstEnabledFill()
+        : undefined
+      return firstFill ? colorToString(firstFill.color()) : '#00000000'
     },
     set(color) {
       if (this._parent.isImmutable()) {
         return
       }
-      this._object.setBackgroundColor(Color.from(color).toMSColor())
+      if (!this._object.style) {
+        return
+      }
+      if (
+        !this._object.style().fills ||
+        this._object.style().fills().length === 0
+      ) {
+        this._object.style().addStylePartOfType(0) // Add a fill if none exists
+      }
+      const firstFill = this._object.style().firstEnabledFill()
+      firstFill.color = Color.from(color).toMSColor()
     },
   },
 })

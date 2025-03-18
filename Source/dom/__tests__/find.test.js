@@ -1,15 +1,39 @@
 /* globals expect, test */
-import { find, Rectangle } from '..'
+import { find, Rectangle, Group } from '..'
 
-test('should find by type', (_context, document) => {
+test('should find Artboard by type', (_context, document) => {
   // eslint-disable-next-line no-param-reassign
   document.pages = [
     {
-      layers: [{ type: 'Artboard' }, { type: 'Shape' }],
+      layers: [
+        { type: 'Artboard' },
+        { type: 'Shape' }, 
+        { type: 'Group', layers: { type: 'Text' } }
+      ]
     },
   ]
+  // expect to find only one artboard
   expect(find('Artboard', document).map((x) => x.id)).toEqual([
     document.pages[0].layers[0].id,
+  ])
+})
+
+test('should find Group by type', (_context, document) => {
+  document.pages = [
+    {
+      layers: [
+        { type: 'Artboard', layers: [
+          { type: 'Group', layers: { type: 'Text' } } 
+        ]},
+        { type: 'Shape' }, 
+        { type: 'Group', layers: { type: 'Text' } }
+      ]
+    },
+  ]
+  // expect to find only multiple groups including nested
+  expect(find('Group', document).map((x) => x.id)).toEqual([
+    document.pages[0].layers[0].layers[0].id, // nested group on artboard
+    document.pages[0].layers[2].id, // regular group on page
   ])
 })
 

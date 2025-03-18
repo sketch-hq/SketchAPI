@@ -5,7 +5,6 @@ import { Rectangle } from '../models/Rectangle'
 import { Types } from '../enums'
 import { Factory } from '../Factory'
 import { wrapNativeObject, wrapObject } from '../wrapNativeObject'
-import { Document } from '../models/Document'
 import { SmartLayout } from '../models/SmartLayout'
 
 /**
@@ -56,6 +55,20 @@ Group.type = Types.Group
 Group[DefinedPropertiesKey] = { ...StyledLayer[DefinedPropertiesKey] }
 Factory.registerClass(Group, MSLayerGroup)
 Factory.registerClass(Group, MSImmutableLayerGroup)
+
+Group.define('groupBehavior', {
+  get() {
+    return this._object.groupBehavior()
+  },
+  set(value) {
+    if (this.isImmutable()) return
+    if (typeof value === 'string') {
+      this._object.setGroupBehavior(GroupBehavior[value])
+    } else {
+      this._object.setGroupBehavior(value)
+    }
+  },
+})
 
 Group.define('layers', {
   array: true,
@@ -134,15 +147,50 @@ Group.define('smartLayout', {
     }
     if (layout) {
       const groupLayout = MSInferredGroupLayout.alloc().init()
-      groupLayout.isInferredLayout = 1
       groupLayout.axis = layout.axis
       groupLayout.layoutAnchor = layout.layoutAnchor
       this._object.setGroupLayout(groupLayout)
     } else {
       this._object.setGroupLayout(MSFreeformGroupLayout.alloc().init())
     }
-    // Inspector needs a reload after this
-    const doc = Document.getSelectedDocument()
-    if (doc) doc.sketchObject.inspectorController().reload()
   },
 })
+
+/**
+ * Defines how a Group should behave.
+ */
+export const GroupBehavior = {
+  /**
+   * The default behavior according to other properties of the group.
+   * 
+   * Normally, if no other properties influence the behavior, it will behave like a plain group
+   * that fits around its children.
+   */
+  Default: 0,
+
+  /**
+   * A frame has fixed size, and the contents can use different constraints to influence how
+   * they adjust when the frame is resized.
+   */
+  Frame: 1,
+
+  /**
+   * A graphic gets both the frame trait and the graphic trait.
+   * 
+   * Graphics are much like frames but the contents don't support constraints, and they resize 
+   * proportionally instead.
+   */
+  Graphic: 2,
+}
+
+/**
+ * Returns the name of a GroupBehavior for a given value.
+ *
+ * @param {number} value The value of the behavior
+ * @return {string} The name of the behavior
+ */
+export function getGroupBehaviorName(value) {
+  return Object.keys(GroupBehavior).find(
+    (key) => GroupBehavior[key] === value
+  )
+}

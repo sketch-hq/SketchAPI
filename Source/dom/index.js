@@ -18,7 +18,8 @@ const { SmartLayout } = require('./models/SmartLayout')
 const { Style } = require('./style/Style')
 
 const { Layer } = require('./layers/Layer')
-const { Group } = require('./layers/Group')
+const { Pin, FlexSizing } = require('./layers/Layer')
+const { Group, GroupBehavior } = require('./layers/Group')
 const { Text } = require('./layers/Text')
 const { Image } = require('./layers/Image')
 const { Shape } = require('./layers/Shape')
@@ -60,7 +61,10 @@ const DOM = {
   Rectangle,
   Style,
   Layer,
+  FlexSizing,
+  Pin,
   Group,
+  GroupBehavior,
   Text,
   Image,
   Shape,

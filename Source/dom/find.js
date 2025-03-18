@@ -33,7 +33,10 @@ const attributesMap = {
       operator = '='
     }
     const predicate = []
-    const nativeClasses = Factory._typeToNative[value]
+    const nativeClasses =
+      Factory._typeToNative[
+        value in Factory._typeAliases ? Factory._typeAliases[value].type : value
+      ]
     if (!nativeClasses) {
       throw new Error(`Unknown layer type ${value}`)
     }
@@ -139,6 +142,14 @@ export function find(predicate, root) {
     },
   }
 
+  const FilterStragegy = Object.freeze({
+    None: 'none',
+    Artboard: 'artboard',
+    Group: 'group',
+  })
+
+  let filterStragegy = FilterStragegy.None
+
   predicateParts.forEach((part) => {
     const matched = Object.keys(matchExpr).some((k) => {
       const match = matchExpr[k].exec(part)
@@ -152,10 +163,18 @@ export function find(predicate, root) {
       }
 
       if (k === 'TYPE') {
-        if (match[1] === '*') {
-          nativePredicateParts.push('TRUEPREDICATE')
-        } else {
-          attributesMap.type('=', match[1], mutations)
+        switch (match[1]) {
+          case '*':
+            nativePredicateParts.push('TRUEPREDICATE')
+            break
+          // Artboards no longer exist as a dedicated type. All artboards are now layer
+          // groups with frame behaviour.
+          case 'Artboard':
+          case 'Group':
+            filterStragegy = FilterStragegy[match[1]] // set filter strategy and fallthrough
+          default:
+            attributesMap.type('=', match[1], mutations)
+            break
         }
       }
 
@@ -200,7 +219,47 @@ export function find(predicate, root) {
         }, NSMutableArray.new())
       : root.sketchObject.childrenIncludingSelf(false)
 
-  const matches = children.filteredArrayUsingPredicate(nativePredicate)
+  // Different filter strategies are used for backwards compatibility with plugins and
+  // scripts that work on the concept of artboards.
+  // Artboards no longer exist. Instead everything is a group with different behaviours:
+  // - Regular group: implicit size based on its contents
+  // - Frames: explicit size, independent of its contents, frames can exist on the canvas
+  //   or inside groups. Its contents resize based on the frame size and resizing
+  //   constraints.
+  // - Graphics: explicit size, independent of its contents, graphics can exist on the
+  //   canvas or inside groups. Its contents scale based on the group size.
+  var cb = (s) => {
+    // By default, return all children
+    if (s == FilterStragegy.None) {
+      return () => true
+    }
 
-  return toArray(matches).map((x) => wrapObject(x))
+    // The closest to artboards are canvas frames. These may be a frame or a graphic but
+    // cannot be a regular group.
+    const canvasFrames =
+      root.type == Types.Document
+        ? root.sketchObject.pages().reduce((prev, page) => {
+            prev.addObjectsFromArray(page.canvasFrames())
+            return prev
+          }, NSMutableArray.new())
+        : root.type == Types.Page
+        ? root.sketchObject.canvasFrames()
+        : []
+
+    switch (s) {
+      // Only include anything that is a canvas frame
+      case FilterStragegy.Artboard:
+        return (v) => canvasFrames.includes(v)
+      // Only include anything that is not a canvas frame, i.e. a regular group
+      case FilterStragegy.Group:
+        return (v) => !canvasFrames.includes(v)
+      // Should never happen, caught earlier
+      default:
+        return () => true
+    }
+  }
+
+  return toArray(children.filteredArrayUsingPredicate(nativePredicate))
+    .filter(cb(filterStragegy))
+    .map((x) => wrapObject(x))
 }

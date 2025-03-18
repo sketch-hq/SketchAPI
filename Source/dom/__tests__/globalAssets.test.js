@@ -22,7 +22,7 @@ test('should reset global colors', () => {
 })
 
 test('should append global colors', () => {
-  globalAssets.colors = ['000000']
+  globalAssets.colors = ['#000000']
   globalAssets.colors.push('#FFFFFF')
   expect(globalAssets.colors.length).toEqual(2)
   expect(globalAssets.colors[1].color).toEqual('#ffffffff')

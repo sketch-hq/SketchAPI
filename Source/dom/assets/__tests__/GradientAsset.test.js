@@ -6,7 +6,7 @@ test('should create gradient asset from dictionary', (_context, document) => {
 
   const asset = document.gradients[0]
   expect(asset.gradient.type).toBe('Gradient')
-  expect(asset.name).toBe(null)
+  expect(asset.name).toBe('')
 })
 
 test('should create gradient asset from MSGradientAsset', (_context, document) => {

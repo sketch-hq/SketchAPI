@@ -1,5 +1,6 @@
 export const Factory = {
   _typeToBox: {},
+  _typeAliases: {},
   _nativeToBox: {},
   _typeToNative: {},
   registerClass(boxedClass, nativeClass) {
@@ -11,12 +12,17 @@ export const Factory = {
     }
     this._nativeToBox[String(nativeClass.class())] = boxedClass
   },
+  registerAlias(boxedClass, otherBoxedClass) {
+    this._typeToBox[boxedClass.type] = boxedClass
+    this._typeAliases[boxedClass.type] = otherBoxedClass
+  },
   create(type, props) {
     const _type = type && type.type ? type.type : type
     const BoxedClass = this._typeToBox[_type]
     if (BoxedClass) {
       return new BoxedClass(props)
     }
+
     return undefined
   },
   createNative(type) {

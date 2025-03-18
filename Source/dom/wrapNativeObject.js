@@ -2,6 +2,8 @@ import { isNativeObject, isObject } from 'util'
 import { WrappedObject } from './WrappedObject'
 import { isWrappedObject } from './utils'
 import { Factory } from './Factory'
+import { Artboard } from './layers/Artboard'
+import { Group } from './layers/Group'
 
 /**
  * Return a wrapped version of a Sketch object.
@@ -23,6 +25,15 @@ export function wrapNativeObject(nativeObject) {
   if (!JsClass) {
     console.warn(`no mapped wrapper for ${className}`)
     JsClass = WrappedObject
+  }
+
+  // A special case for a Group object that is a Canvas Frame.
+  // When possible, SketchAPI will return this as `Artboard` instances
+  // for backward compatibility.
+  // NOTE: This exception only applies to mutable MSLayerGroup, since `isCanvasFrames()`
+  // is not available on MSImmutableLayerGroup (we'd need its Layer Ancestry).
+  if (JsClass === Group && nativeObject.isCanvasFrame && nativeObject.isCanvasFrame()) {
+    JsClass = Artboard
   }
 
   return JsClass.fromNative(nativeObject)

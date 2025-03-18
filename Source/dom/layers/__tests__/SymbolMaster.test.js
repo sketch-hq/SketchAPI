@@ -66,8 +66,17 @@ test('should create a symbol master with a nested symbol', (_context, document) 
 
   // add the instance to the page
   document.selectedPage.layers = document.selectedPage.layers.concat(instance)
-  expect(instance.overrides.length).toBe(17)
+  expect(instance.overrides.length).toBe(25)
   canBeLogged(instance, SymbolInstance)
+
+  // Find the override points being tested here:
+  // - Two string value override points from the top level text layer and the nested.
+  // - One symbol override point from the the nested instance.
+  const stringValueOverrides = instance.overrides.filter(o => o.property === 'stringValue')
+  expect(stringValueOverrides.length).toBe(2)
+  const symbolOverrides = instance.overrides.filter(o => o.property === 'symbolID')
+  expect(symbolOverrides.length).toBe(1)
+
   const result0 = {
     type: 'Override',
     id: `${text2.id}_stringValue`,
@@ -82,7 +91,9 @@ test('should create a symbol master with a nested symbol', (_context, document) 
   }
   delete result0.affectedLayer.overrides
   delete result0.affectedLayer.selected
-  result0.affectedLayer.style = instance.overrides[0].affectedLayer.style.toJSON()
+  const stringOverride0 = stringValueOverrides[0]
+  result0.affectedLayer.style = stringOverride0.affectedLayer.style.toJSON()
+
   const result1 = {
     type: 'Override',
     id: `${nestedInstance.id}_symbolID`,
@@ -97,7 +108,9 @@ test('should create a symbol master with a nested symbol', (_context, document) 
   }
   delete result1.affectedLayer.overrides
   delete result1.affectedLayer.selected
-  result1.affectedLayer.style = instance.overrides[9].affectedLayer.style.toJSON()
+  const symbolOverride = symbolOverrides[0]
+  result1.affectedLayer.style = symbolOverride.affectedLayer.style.toJSON()
+
   const result2 = {
     type: 'Override',
     id: `${nestedInstance.id}/${text.id}_stringValue`,
@@ -111,17 +124,26 @@ test('should create a symbol master with a nested symbol', (_context, document) 
     selected: false,
   }
   delete result2.affectedLayer.selected
-  result2.affectedLayer.style = instance.overrides[10].affectedLayer.style.toJSON()
-  expect(instance.overrides[0].toJSON()).toEqual(result0)
-  expect(instance.overrides[9].toJSON()).toEqual(result1)
-  expect(instance.overrides[10].toJSON()).toEqual(result2)
+  const stringOverride1 = stringValueOverrides[1]
+  result2.affectedLayer.style = stringOverride1.affectedLayer.style.toJSON()
+
+
+  // Find the same override points again from the source
+  const stringValueOverridesAfter = instance.overrides.filter(o => o.property === 'stringValue')
+  expect(stringValueOverridesAfter.length).toBe(2)
+  const symbolOverridesAfter = instance.overrides.filter(o => o.property === 'symbolID')
+  expect(symbolOverridesAfter.length).toBe(1)
+
+  expect(stringValueOverridesAfter[0].toJSON()).toEqual(result0)
+  expect(stringValueOverridesAfter[1].toJSON()).toEqual(result2)
+  expect(symbolOverridesAfter[0].toJSON()).toEqual(result1)
 })
 
 test('should have overrides', (_context, document) => {
   const { master, text } = createSymbolMaster(document)
 
-  expect(master.overrides.length).toBe(7)
-  const override = master.overrides[0]
+  expect(master.overrides.length).toBe(9)
+  const override = master.overrides.find(o => o.property === 'stringValue')
   const result = {
     type: 'Override',
     id: `${text.id}_stringValue`,
@@ -161,7 +183,7 @@ test('should include `includedInInstance` in the `background`', (_context, docum
 
   // defaults
   expect(master.background.toJSON()).toEqual({
-    enabled: false,
+    enabled: true,
     includedInExport: true,
     includedInInstance: true,
     color: '#ffffffff',

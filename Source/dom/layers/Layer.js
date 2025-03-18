@@ -92,7 +92,7 @@ export class Layer extends WrappedObject {
   }
 
   getParentArtboard() {
-    return wrapNativeObject(this._object.parentArtboard())
+    return wrapNativeObject(this._object.canvasFrame())
   }
 
   getParentSymbolMaster() {
@@ -100,7 +100,7 @@ export class Layer extends WrappedObject {
   }
 
   getParentShape() {
-    return wrapNativeObject(this._object.parentShape())
+    return wrapNativeObject(this._object.enclosingShapeGroup())
   }
 
   // @deprecated
@@ -391,5 +391,111 @@ Layer.defineObject('transform', {
       }
       this._object.setIsFlippedVertical(flipped)
     },
+  },
+})
+
+/** 
+ * -----------
+ * Flex Sizing
+ * -----------
+ */
+
+export const FlexSizing = {
+  /** The item determines its own size, but other properties may override it. */
+  Fixed: 0,
+  /** The item hugs its children or contents. */
+  Fit: 1,
+  /** The item fills the available space in the parent container. */
+  Fill: 2,
+  /** The item is sized proportionally relative to its parent. */
+  Relative: 3,
+}
+
+/**
+ * Determines how the item is sized horizontally relative to its children or 
+ * its parent group when their size changes.
+ */
+Layer.define('horizontalSizing', {
+  get() {
+    return this._object.horizontalSizing()
+  },
+  set(value) {
+    if (this.isImmutable()) { return }
+    const sizingValue = typeof value === 'string' ? FlexSizing[value] : value;
+    if (Object.values(FlexSizing).includes(sizingValue)) {
+      this._object.setHorizontalSizing(sizingValue)
+    }
+  },
+})
+
+/**
+ * Determines how the item is sized vertically relative to its children or 
+ * its parent group when their size changes.
+ */
+Layer.define('verticalSizing', {
+  get() {
+    return this._object.verticalSizing()
+  },
+  set(value) {
+    if (this.isImmutable()) { return }
+    const sizingValue = typeof value === 'string' ? FlexSizing[value] : value;
+    if (Object.values(FlexSizing).includes(sizingValue)) {
+      this._object.setVerticalSizing(sizingValue)
+    }
+  },
+})
+
+/**
+ * Returns the name of a FlexSizing for a given integer value.
+ *
+ * @param {number} value The integer value of the sizing
+ * @return {string} The name of the sizing
+ */
+export function getFlexSizing(value) {
+  return Object.keys(FlexSizing).find(
+    (key) => FlexSizing[key] === value
+  )
+}
+
+/** 
+ * -----------
+ * Horizontal and Vertical Pinning
+ * -----------
+ */
+
+export const Pin = {
+  /** No pinning. */
+  None: 0,
+  /** Pin to the leading edge, normally left and top. */
+  Min: 1 << 0,
+  /** Pin to trailing edge, normally right and bottom. */
+  Max: 1 << 2,
+  /** Pin to both edges. */
+  All: (1 << 0) | (1 << 2),
+}
+
+Layer.define('horizontalPins', {
+  get() {
+    return this._object.horizontalPins()
+  },
+  set(value) {
+    if (this.isImmutable()) { return }
+    const pinValue = typeof value === 'string' ? Pin[value] : value;
+    if (Object.values(Pin).includes(pinValue)) {
+      this._object.setHorizontalPins(pinValue)
+    }
+  },
+})
+
+Layer.define('verticalPins', {
+  get() {
+    return this._object.verticalPins()
+  },
+  set(value) {
+    if (this.isImmutable()) { return }
+    const pinValue = typeof value === 'string' ? Pin[value] : value;
+    if (Object.values(Pin).includes(pinValue)) {
+      this._object.setVerticalPins(pinValue)
+    }
   },
 })
