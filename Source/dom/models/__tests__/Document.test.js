@@ -117,7 +117,7 @@ test('should reset document colors', (_context, document) => {
 
 test('should append document colors', (_context, document) => {
   const doc = document
-  doc.colors = ['000000']
+  doc.colors = ['#000000']
   doc.colors.push('#FFFFFF')
   expect(document.colors.length).toEqual(2)
   expect(document.colors[1].color).toEqual('#ffffffff')
@@ -315,7 +315,7 @@ test('should have defined colorSpace enums', () => {
 })
 
 test('should have a colorSpace getter', (_context, document) => {
-  expect(document.colorSpace).toBe(Document.ColorSpace.Unmanaged)
+  expect(document.colorSpace).toBe(Document.ColorSpace.sRGB)
 })
 
 test('colorSpace setter should assign color profiles', (_context, document) => {

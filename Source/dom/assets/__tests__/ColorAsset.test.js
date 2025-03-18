@@ -6,7 +6,7 @@ test('should create color asset from hex', (_context, document) => {
 
   const asset = document.colors[0]
   expect(asset.color).toBe('#ffffffff')
-  expect(asset.name).toBe(null)
+  expect(asset.name).toBe('')
 })
 
 test('should create color asset from MSColor', (_context, document) => {

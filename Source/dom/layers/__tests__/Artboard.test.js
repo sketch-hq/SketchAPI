@@ -1,6 +1,6 @@
 /* globals expect, test */
 import { canBeLogged } from '../../../test-utils'
-import { Artboard } from '../..'
+import { Artboard, Document } from '../..'
 
 test('should create an artboard', () => {
   const artboard = new Artboard({ name: 'Test' })
@@ -15,11 +15,14 @@ test('should set the artboard as a flow start point', () => {
 })
 
 test('should set the background', () => {
-  const artboard = new Artboard()
+  const document = new Document()
+  const artboard = new Artboard({
+    parent: document.selectedPage
+  })
 
   // defaults
   expect(artboard.background.toJSON()).toEqual({
-    enabled: false,
+    enabled: true,
     includedInExport: true,
     color: '#ffffffff',
   })

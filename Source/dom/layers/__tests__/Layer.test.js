@@ -1,5 +1,5 @@
 /* globals expect, test */
-import { Group, Rectangle, Artboard, SymbolMaster, ShapePath } from '../..'
+import { Group, Rectangle, Artboard, SymbolMaster, Shape, ShapePath } from '../..'
 
 test('should set the name of the layer', (_context, document) => {
   // setting an existing name
@@ -358,4 +358,111 @@ test('should remove a flow from a layer', (_context, document) => {
   rect.flow = undefined
 
   expect(rect.flow).toBe(undefined)
+})
+
+test('should handle layer sizing properties', (_context, document) => {
+  const frame = new Artboard({
+    frame: { x: 0, y: 0, width: 10, height: 10 },
+    parent: document.selectedPage,
+  })
+  const layer = new Shape({
+    frame: { x: 2, y: 2, width: 6, height: 6 },
+    parent: frame,
+  })
+  // Test horizontal sizing
+  expect(layer.horizontalSizing).toBe(3) // Default should be Relative (3)
+  layer.horizontalSizing = 'Fill'
+  expect(layer.horizontalSizing).toBe(2) // Fill is 2
+  layer.horizontalSizing = 1 // Set using number
+  expect(layer.horizontalSizing).toBe(1) // Fit is 1
+
+  // Test vertical sizing
+  expect(layer.verticalSizing).toBe(3) // Default should be Relative (3)
+  layer.verticalSizing = 'Fill'
+  expect(layer.verticalSizing).toBe(2) // Fill is 2
+  layer.verticalSizing = 1 // Set using number
+  expect(layer.verticalSizing).toBe(1) // Fit is 1
+})
+
+test('should not accept invalid layer sizing values', (_context, document) => {
+  const frame = new Artboard({
+    frame: { x: 0, y: 0, width: 10, height: 10 },
+    parent: document.selectedPage,
+  })
+  const layer = new Shape({
+    frame: { x: 2, y: 2, width: 6, height: 6 },
+    parent: frame,
+  })
+  // Set initial valid values
+  layer.horizontalSizing = 1
+  layer.verticalSizing = 1
+  // Test invalid values don't change the sizing
+  layer.horizontalSizing = 'Invalid'
+  expect(layer.horizontalSizing).toBe(1) // Should remain at previous valid value
+  layer.horizontalSizing = 999
+  expect(layer.horizontalSizing).toBe(1) // Should remain at previous valid value
+  layer.verticalSizing = 'Invalid' 
+  expect(layer.verticalSizing).toBe(1) // Should remain at previous valid value
+  layer.verticalSizing = 999
+  expect(layer.verticalSizing).toBe(1) // Should remain at previous valid value
+})
+
+test('should handle layer pin properties', (_context, document) => {
+  const frame = new Artboard({
+    frame: { x: 0, y: 0, width: 10, height: 10 },
+    parent: document.selectedPage
+  })
+  const layer = new Shape({
+    frame: { x: 2, y: 2, width: 6, height: 6 },
+    parent: frame
+  })
+  // Test horizontal pins
+  expect(layer.horizontalPins).toBe(0) // Default should be None (0)
+  layer.horizontalPins = 'Min'
+  expect(layer.horizontalPins).toBe(1) // Min is 1<<0
+  layer.horizontalPins = 'Max'
+  expect(layer.horizontalPins).toBe(4) // Max is 1<<2
+  layer.horizontalPins = 'All'
+  expect(layer.horizontalPins).toBe(5) // All is Min|Max (5)
+  
+  // Test setting numeric values
+  layer.horizontalPins = 0
+  expect(layer.horizontalPins).toBe(0)
+  
+  // Test vertical pins
+  expect(layer.verticalPins).toBe(0) // Default should be None (0)
+  layer.verticalPins = 'Min'
+  expect(layer.verticalPins).toBe(1) // Min is 1<<0
+  layer.verticalPins = 'Max'  
+  expect(layer.verticalPins).toBe(4) // Max is 1<<2
+  layer.verticalPins = 'All'
+  expect(layer.verticalPins).toBe(5) // All is Min|Max (5)
+  
+  // Test setting numeric values
+  layer.verticalPins = 0
+  expect(layer.verticalPins).toBe(0)
+})
+
+test('should not accept invalid layer pin values', (_context, document) => {
+  const frame = new Artboard({
+    frame: { x: 0, y: 0, width: 10, height: 10 },
+    parent: document.selectedPage,
+  })
+  const layer = new Shape({
+    frame: { x: 2, y: 2, width: 6, height: 6 },
+    parent: frame,
+  })
+  // Set initial valid values
+  layer.horizontalPins = 1 // Min
+  layer.verticalPins = 1 // Min
+
+  // Test invalid values don't change the pins
+  layer.horizontalPins = 'Invalid'
+  expect(layer.horizontalPins).toBe(1) // Should remain at previous valid value
+  layer.horizontalPins = 999 
+  expect(layer.horizontalPins).toBe(1) // Should remain at previous valid value
+  layer.verticalPins = 'Invalid'
+  expect(layer.verticalPins).toBe(1) // Should remain at previous valid value
+  layer.verticalPins = 999
+  expect(layer.verticalPins).toBe(1) // Should remain at previous valid value
 })

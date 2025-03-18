@@ -191,12 +191,27 @@ Style.define('borderOptions', {
 })
 
 Style.BlurType = BlurType
-Style.define('blur', {
+Style.define('blurs', {
+  array: true,
   get() {
-    return Blur.fromNative(this._object.blur())
+    const blurs = toArray(this._object.blurs())
+    return blurs.map(Blur.fromNative.bind(Blur))
   },
-  set(blur) {
-    Blur.updateNative(this._object.blur(), blur)
+  set(values) {
+    const objects = values.map(Blur.toNative.bind(Blur))
+    this._object.setBlurs(objects)
+  },
+  insertItem(item, index) {
+    const arr = toArray(this._object.blurs())
+    arr.splice(index, 0, item)
+    this.blurs = arr
+    return Blur.fromNative(Blur.toNative(item))
+  },
+  removeItem(index) {
+    const arr = toArray(this._object.blurs())
+    const removed = arr.splice(index, 1)
+    this.blurs = arr
+    return Blur.fromNative(removed[0])
   },
 })
 
@@ -254,23 +269,28 @@ Style.define('borders', {
 Style.define('shadows', {
   array: true,
   get() {
-    return toArray(this._object.shadows()).map(Shadow.fromNative.bind(Shadow))
+    return toArray(this._object.dropShadows()).map(Shadow.fromNative.bind(Shadow))
   },
   set(values) {
+    // remove all existing drop shadows
+    toArray(this._object.dropShadows()).forEach(shadow => 
+      this._object.removeStyleShadow(shadow)
+    )
+    // create native counterparts and add each as a new shadow style part
     const objects = values.map(Shadow.toNative.bind(Shadow, MSStyleShadow))
-    this._object.setShadows(objects)
+    objects.forEach(shadow => this._object.addStylePart(shadow))
   },
   insertItem(item, index) {
-    const arr = toArray(this._object.shadows())
+    item.isInnerShadow = false // force the provide item to be a drop shadow
+    const arr = toArray(this._object.dropShadows())
     arr.splice(index, 0, item)
     this.shadows = arr
     return Shadow.fromNative(Shadow.toNative(MSStyleShadow, item))
   },
   removeItem(index) {
-    const arr = toArray(this._object.shadows())
-    const removed = arr.splice(index, 1)
-    this.shadows = arr
-    return Shadow.fromNative(removed[0])
+    const removed = this._object.stylePartsOfType(StylePartType.Shadow)[index]
+    this._object.deleteStylePartOfType_atIndex(StylePartType.Shadow, index)
+    return Shadow.fromNative(removed)
   },
 })
 
@@ -282,20 +302,25 @@ Style.define('innerShadows', {
     )
   },
   set(values) {
-    const objects = values.map(Shadow.toNative.bind(Shadow, MSStyleInnerShadow))
-    this._object.setInnerShadows(objects)
+    // remove all existing inner shadows
+    toArray(this._object.innerShadows()).forEach(shadow => 
+      this._object.removeStyleShadow(shadow)
+    )
+    // create native counterparts and add each as a new shadow style part
+    const objects = values.map(Shadow.toNative.bind(Shadow, MSStyleShadow))
+    objects.forEach(shadow => this._object.addStylePart(shadow))
   },
   insertItem(item, index) {
+    item.isInnerShadow = true // force the provide item to be a inner shadow
     const arr = toArray(this._object.innerShadows())
     arr.splice(index, 0, item)
     this.innerShadows = arr
-    return Shadow.fromNative(Shadow.toNative(MSStyleInnerShadow, item))
+    return Shadow.fromNative(Shadow.toNative(MSStyleShadow, item))
   },
   removeItem(index) {
-    const arr = toArray(this._object.innerShadows())
-    const removed = arr.splice(index, 1)
-    this.innerShadows = arr
-    return Shadow.fromNative(removed[0])
+    const removed = this._object.stylePartsOfType(StylePartType.InnerShadow)[index]
+    this._object.deleteStylePartOfType_atIndex(StylePartType.InnerShadow, index)
+    return Shadow.fromNative(removed)
   },
 })
 
@@ -308,5 +333,13 @@ Style.define('styleType', {
       : StyleType.Layer
   },
 })
+
+
+// Map to values from the `MSStylePartType` enum in SketchModel.
+// Other values ommitted because they are not currently used.
+const StylePartType = {
+  Shadow: 6,
+  InnerShadow: 7,
+}
 
 defineTextStyleProperties(Style)

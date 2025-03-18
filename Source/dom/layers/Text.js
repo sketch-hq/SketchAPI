@@ -266,9 +266,9 @@ Text.define('fixedWidth', {
       return
     }
     if (fixed) {
-      this._object.textBehaviour = TextBehaviour.fixedWidth
+      this._object.setTextBehaviour(TextBehaviour.fixedWidth)
     } else {
-      this._object.textBehaviour = TextBehaviour.flexibleWidth
+      this._object.setTextBehaviour(TextBehaviour.flexibleWidth)
     }
   },
 })

@@ -24,7 +24,7 @@ export const ColorSpaceMap = {
 }
 
 export const ColorSpace = {
-  Unmanaged: 'Unmanaged',
+  Unmanaged: 'Unmanaged', // TODO: mark this deprecated; it's no longer valid
   sRGB: 'sRGB',
   P3: 'P3',
 }
@@ -160,7 +160,7 @@ export class Document extends WrappedObject {
     let page = loopPages.nextObject()
     const predicate = NSPredicate.predicateWithFormat('name == %@', layerName)
     while (page) {
-      const scope = page.children()
+      const scope = page.childrenIncludingSelf(false)
       filteredArray = filteredArray.arrayByAddingObjectsFromArray(
         scope.filteredArrayUsingPredicate(predicate)
       )

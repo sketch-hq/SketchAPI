@@ -30,11 +30,13 @@ export class Shadow extends WrappedObject {
     if (typeof value.spread !== 'undefined') {
       shadow.spread = value.spread
     }
-
     if (typeof value.enabled === 'undefined') {
       shadow.isEnabled = true
     } else {
       shadow.isEnabled = value.enabled
+    }
+    if (typeof value.isInnerShadow !== 'undefined') {
+      shadow.isInnerShadow = Boolean(value.isInnerShadow)
     }
     return shadow
   }
@@ -104,5 +106,14 @@ Shadow.define('enabled', {
   },
   set(enabled) {
     this._object.isEnabled = enabled
+  },
+})
+
+Shadow.define('isInnerShadow', {
+  get() {
+    return this._object.isInnerShadow()
+  },
+  set(value) {
+    this._object.setIsInnerShadow(value)
   },
 })

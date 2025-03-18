@@ -1,6 +1,7 @@
 import { toArray } from 'util'
 import { DefinedPropertiesKey } from '../WrappedObject'
 import { Artboard } from './Artboard'
+import { Layer } from './Layer'
 import { Rectangle } from '../models/Rectangle'
 import { Types } from '../enums'
 import { Factory } from '../Factory'
@@ -30,23 +31,23 @@ export class SymbolMaster extends Artboard {
     const wrappedArtboard = wrapObject(artboard)
 
     return SymbolMaster.fromNative(
-      MSSymbolMaster.convertArtboardToSymbol(wrappedArtboard.sketchObject)
+      MSSymbolMaster.convertFrameToSymbol(wrappedArtboard.sketchObject)
     )
   }
 
   // Replace the symbol with an artboard and detach all its instances converting them into groups.
   toArtboard() {
-    const artboard = MSSymbolMaster.convertSymbolToArtboard(this._object)
+    const artboard = MSSymbolMaster.convertSymbolToFrame(this._object)
 
     return Artboard.fromNative(artboard)
   }
 
-  // Returns a new SymbolInstance linked to this artboard, ready for inserting in the document
+  // Returns a new SymbolInstance linked to this Frame, ready for inserting in the document
   createNewInstance() {
     return wrapObject(this._object.newSymbolInstance())
   }
 
-  // Returns all instances of the artboard in the document, on all pages
+  // Returns all instances of the Frame in the document, on all pages
   getAllInstances() {
     return toArray(this._object.allInstances()).map(wrapObject)
   }
@@ -130,6 +131,9 @@ SymbolMaster.type = Types.SymbolMaster
 SymbolMaster[DefinedPropertiesKey] = { ...Artboard[DefinedPropertiesKey] }
 Factory.registerClass(SymbolMaster, MSSymbolMaster)
 Factory.registerClass(SymbolMaster, MSImmutableSymbolMaster)
+
+Factory.registerClass(Layer, MSDetachedSymbol)
+Factory.registerClass(Layer, MSImmutableDetachedSymbol)
 
 SymbolMaster.define('symbolId', {
   get() {
