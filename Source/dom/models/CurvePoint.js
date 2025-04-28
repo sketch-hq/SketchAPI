@@ -3,7 +3,6 @@ import { DefinedPropertiesKey, WrappedObject } from '../WrappedObject'
 import { Types } from '../enums'
 import { Factory } from '../Factory'
 import { Point } from './Point'
-import { Document } from '../models/Document'
 
 const PointTypeMap = {
   Undefined: 0,
