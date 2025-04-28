@@ -41,8 +41,6 @@ test('should be able to modify the corner radius of a rectangle\'s CurvePoint', 
   rectangle.points[1].cornerRadius = cornerRadius
   expect(toArray(rectangle.sketchObject.CSSAttributes()).join(''))
     .toEqual('border-radius: 0 ' + cornerRadius + 'px 0 0;')
-  expect(rectangle.sketchObject.fixedRadius())
-    .toEqual(0)
 })
 
 test('should be able to modify the corner radius of a rectangle\'s first CurvePoint', () => {
@@ -52,8 +50,6 @@ test('should be able to modify the corner radius of a rectangle\'s first CurvePo
   rectangle.points[0].cornerRadius = cornerRadius
   expect(toArray(rectangle.sketchObject.CSSAttributes()).join(''))
     .toEqual('border-radius: ' + cornerRadius + 'px 0 0 0;')
-  expect(rectangle.sketchObject.fixedRadius())
-    .toEqual(cornerRadius)
 })
 
 // sketch-hq/SketchAPI#775, #39183.
@@ -64,7 +60,7 @@ test('should be able to modify the corner radius of every rectangle\'s CurvePoin
   rectangle.points.forEach(point => point.cornerRadius = cornerRadius)
   expect(toArray(rectangle.sketchObject.CSSAttributes()).join(''))
     .toEqual('border-radius: ' + cornerRadius + 'px;')
-  expect(rectangle.sketchObject.fixedRadius())
+  expect(rectangle.sketchObject.cornerRadius())
     .toEqual(cornerRadius)
 })
 

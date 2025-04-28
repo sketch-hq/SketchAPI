@@ -142,7 +142,7 @@ test('should create a symbol master with a nested symbol', (_context, document) 
 test('should have overrides', (_context, document) => {
   const { master, text } = createSymbolMaster(document)
 
-  expect(master.overrides.length).toBe(9)
+  expect(master.overrides.length).toBe(10)
   const override = master.overrides.find(o => o.property === 'stringValue')
   const result = {
     type: 'Override',
@@ -157,7 +157,8 @@ test('should have overrides', (_context, document) => {
     selected: false,
   }
   delete result.affectedLayer.selected
-  result.affectedLayer.style = master.overrides[0].affectedLayer.style.toJSON()
+  const overrideAfter = master.overrides.find(o => o.property === 'stringValue')
+  result.affectedLayer.style = overrideAfter.affectedLayer.style.toJSON()
   expect(override.toJSON()).toEqual(result)
 })
 

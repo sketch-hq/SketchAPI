@@ -1,4 +1,5 @@
 import { DefinedPropertiesKey } from '../WrappedObject'
+import { FlexSizing } from './Layer'
 import { StyledLayer } from './StyledLayer'
 import { Rectangle } from '../models/Rectangle'
 import { Types } from '../enums'
@@ -266,9 +267,11 @@ Text.define('fixedWidth', {
       return
     }
     if (fixed) {
-      this._object.setTextBehaviour(TextBehaviour.fixedWidth)
+      this.horizontalSizing = FlexSizing.Fixed
+      this.verticalSizing = FlexSizing.Fit
     } else {
-      this._object.setTextBehaviour(TextBehaviour.flexibleWidth)
+      this.horizontalSizing = FlexSizing.Fit
+      this.verticalSizing = FlexSizing.Fit
     }
   },
 })

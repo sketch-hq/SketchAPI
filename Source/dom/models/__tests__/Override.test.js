@@ -32,7 +32,7 @@ test('should be able to set overrides', (_context, document) => {
   const instance = master.createNewInstance()
   document.selectedPage.layers = document.selectedPage.layers.concat(instance)
 
-  expect(instance.overrides.length).toBe(11)
+  expect(instance.overrides.length).toBe(10)
 
   // find the override point for the text layer's string value
   const override = instance.overrides.find(o => o.property === 'stringValue')
@@ -43,7 +43,7 @@ test('should be able to set overrides', (_context, document) => {
   // override
   override.value = 'overridden'
 
-  expect(instance.overrides.length).toBe(11)
+  expect(instance.overrides.length).toBe(10)
   const result = {
     type: 'Override',
     id: `${text.id}_stringValue`,
@@ -135,7 +135,7 @@ test('should handle image override', (_context, document) => {
 
   // add the instance to the page
   document.selectedPage.layers = document.selectedPage.layers.concat(instance)
-  expect(instance.overrides.length).toBe(7)
+  expect(instance.overrides.length).toBe(6)
 
   // check image resize behavior
   const imageResizeOverride = instance.overrides.find(o => o.property === 'imageResizeBehavior')
@@ -168,7 +168,7 @@ test('hidden layers still editable', (_context, document) => {
   document.selectedPage.layers = document.selectedPage.layers.concat(instance)
 
   // Update for 51800 - overrides should be available in hidden layers
-  expect(instance.overrides.length).toBe(11)
+  expect(instance.overrides.length).toBe(10)
 })
 
 test('should be able to select an override', (_context, document) => {

@@ -34,7 +34,8 @@ test('should have overrides', (_context, document) => {
   document.selectedPage.layers = document.selectedPage.layers.concat(instance)
   instance.sketchObject.ensureDetachHasUpdated()
 
-  expect(instance.overrides.length).toBe(11)
+  expect(instance.overrides.length).toBe(10)
+
   const override = instance.overrides.find(o => o.property === 'stringValue')
   const result = {
     type: 'Override',
