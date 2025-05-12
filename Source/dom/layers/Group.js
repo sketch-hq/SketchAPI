@@ -46,7 +46,7 @@ export class Group extends StyledLayer {
     if (this.isImmutable()) {
       return this
     }
-    this._object.legacyFixGeometryWithOptions(0)
+    this._object.resizeToFitChildren()
     return this
   }
 }
@@ -162,7 +162,7 @@ Group.define('smartLayout', {
 export const GroupBehavior = {
   /**
    * The default behavior according to other properties of the group.
-   * 
+   *
    * Normally, if no other properties influence the behavior, it will behave like a plain group
    * that fits around its children.
    */
@@ -176,8 +176,8 @@ export const GroupBehavior = {
 
   /**
    * A graphic gets both the frame trait and the graphic trait.
-   * 
-   * Graphics are much like frames but the contents don't support constraints, and they resize 
+   *
+   * Graphics are much like frames but the contents don't support constraints, and they resize
    * proportionally instead.
    */
   Graphic: 2,
@@ -190,7 +190,5 @@ export const GroupBehavior = {
  * @return {string} The name of the behavior
  */
 export function getGroupBehaviorName(value) {
-  return Object.keys(GroupBehavior).find(
-    (key) => GroupBehavior[key] === value
-  )
+  return Object.keys(GroupBehavior).find((key) => GroupBehavior[key] === value)
 }
