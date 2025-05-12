@@ -33,15 +33,6 @@ export class Artboard extends Group {
     // eslint-enable no-param-reassign
   }
 
-  /**
-   * Adjust the Artboard to fit its children.
-   * override the group's method
-   */
-  adjustToFit() {
-    this._object.resizeToFitChildren()
-    return this
-  }
-
   // eslint-disable-next-line
   getParentArtboard() {
     return undefined
