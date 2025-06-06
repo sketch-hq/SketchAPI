@@ -59,7 +59,7 @@ test('should list the libraries', () => {
   expect(libraries[0].type).toBe('Library')
 })
 
-test('should be able to get the list of symbols to be imported', (_context, documentData) => {
+test('should be able to get the list of symbols to be imported', () => {
   return createLibrary().then((lib) => {
     try {
       // Library.getImportableSymbolReferencesForDocument() and its sibling methods all expect
@@ -79,7 +79,7 @@ test('should be able to get the list of symbols to be imported', (_context, docu
   })
 })
 
-test('should return references to already imported local copies of symbols if they exist', (_context, _) => {
+test('should return references to already imported local copies of symbols if they exist', () => {
   return createLibrary().then((lib) => {
     try {
       const document = new Document()
