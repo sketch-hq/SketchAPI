@@ -174,25 +174,12 @@ export class Library extends WrappedObject {
     const collector = MSForeignObjectCollector.alloc().initWithProvider(
       provider
     )
-    const shareableObjectRefsMap = collector.buildCollectionWithFilter(null)
-
-    const currentId = this.id
-    const currentName = this.name
-
-    const shareableObjectRefsForCurrentLib = toArray(
-      shareableObjectRefsMap
-    ).find(
-      (o) =>
-        o.library &&
-        String(o.library.libraryID()) === currentId &&
-        String(o.library.name()) === currentName
+    const shareableObjectRefs = toArray(
+      collector.collectImportableReferencesFromLibrary(this.sketchObject)
     )
 
-    if (!shareableObjectRefsForCurrentLib) {
-      return []
-    }
     const documentData = document._getMSDocumentData()
-    return toArray(shareableObjectRefsForCurrentLib.objectRefs).map((ref) => {
+    return toArray(shareableObjectRefs).map((ref) => {
       const obj = ImportableObject.fromNative(ref)
       obj._documentData = documentData
       return obj
