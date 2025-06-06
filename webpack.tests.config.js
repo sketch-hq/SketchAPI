@@ -185,49 +185,48 @@ function source(identifier, tests) {
     // Runs all test suites
     const numSuites = Object.entries(suites).length
     let results = []
+    let promise = Promise.resolve()
 
     Object.entries(suites).forEach(([suiteTitle, val], index) => {
       const numTests = Object.entries(val.source.tests).length
 
       Object.entries(val.source.tests).forEach(([title, test], testIndex) => {
-        console.log(`Running test: ${suiteTitle} ${title}`)
-
-        let status = 'pending'
-        let failureReason
-
-        try {
-          expect.resetAssertionsLocalState()
-
-          // All tests are given the plugin command context and a new document data
-          // object.
-          //
-          // Note: This is not a full Document instance wrapping MSDocument. Using
-          // MSDocument slows down tests massively, so we rely on the private API
-          // creating document data from MSDocumentData.
-          test(context, createDocumentData())
-          status = 'passed'
-        } catch (err) {
-          status = 'failed'
-          failureReason = getTestFailure(err)
-        }
-
-        const fraction =
-          index / numSuites + (testIndex + 1) / numTests / numSuites
-
-        results.push({
-          ancestorTitles: [suiteTitle], // we don't have nested test suites in the API but sticking to Jest types anyway.
-          fullName: `${suiteTitle} ${title}`,
-          status,
-          title,
-          relativePath: `.${val.path.split(/SketchAPI/)[1]}`,
-          failureReason,
-        })
-
-        if (!onProgress) return
-
-        onProgress({ fraction, results })
+        promise = promise
+          .then(() => {
+            console.log(`Running test: ${suiteTitle} ${title}`)
+            return test(context, createDocumentData())
+          })
+          .then(() => {
+            results.push({
+              ancestorTitles: [suiteTitle],
+              fullName: `${suiteTitle} ${title}`,
+              status: 'passed',
+              title,
+              relativePath: `.${val.path.split(/SketchAPI/)[1]}`,
+              failureReason: undefined,
+            })
+          })
+          .catch((err) => {
+            results.push({
+              ancestorTitles: [suiteTitle],
+              fullName: `${suiteTitle} ${title}`,
+              status: 'failed',
+              title,
+              relativePath: `.${val.path.split(/SketchAPI/)[1]}`,
+              failureReason: getTestFailure(err),
+            })
+          })
+          .then(() => {
+            if (onProgress) {
+              const fraction =
+                index / numSuites + (testIndex + 1) / numTests / numSuites
+              onProgress({ fraction, results })
+            }
+          })
       })
     })
+
+    return promise
   }
 
   return `
@@ -298,7 +297,10 @@ function source(identifier, tests) {
 
     console.log(\`🏇 Running \${Object.keys(testSuites).length} test suites…\`)
 
-    const result = runner({ 
+    const { createFiber } = require('sketch/async')
+    const fiber = createFiber();
+
+    runner({ 
       context,
       expect,
       suites: testSuites,
@@ -314,19 +316,11 @@ function source(identifier, tests) {
       },
       prepareStackTrace
     })
-
-    const data = NSString.alloc().initWithString(JSON.stringify(result, null, 2))
-    const err = MOPointer.alloc().init()
-
-    data.writeToFile_atomically_encoding_error(
-      output,
-      false,
-      NSUTF8StringEncoding,
-      err
-    )
-
-    console.log('✅ Test results saved to: ' + output)
-    sketch.UI.message('✅ Test results saved to disk.')
+    .finally(() => {
+      console.log('✅ Test results saved to: ' + output)
+      sketch.UI.message('✅ Test results saved to disk.')
+      fiber.cleanup()
+    })
   }
   `
 }
