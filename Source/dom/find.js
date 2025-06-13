@@ -70,7 +70,9 @@ const attributesMap = {
 
 const operatorMap = {
   '=': '=',
+  '~=': 'LIKE[c]',
   '*=': 'CONTAINS',
+  '~*=': 'CONTAINS[c]',
   '$=': 'ENDSWITH',
   '!=': '!=',
   '^=': 'BEGINSWITH',
@@ -89,7 +91,7 @@ const whitespace = '[\\x20\\t\\r\\n\\f]'
 // with a small twist: we accept `.` for nested property path
 const identifier = '(?:\\\\.|[\\w-]|[^\0-\\xa0]|\\.)+'
 
-const operator = `(?:[*^$!]?=|>=|>|<|<=)`
+const operator = `(?:[~]*[*^$!]?=|>=|>|<|<=)`
 
 const attributes = `\\[${whitespace}*(${identifier})(?:${whitespace}*(${operator})${whitespace}*(?:'((?:\\\\.|[^\\\\'])*)'|"((?:\\\\.|[^\\\\"])*)"|(${identifier}))|)${whitespace}*\\]`
 const booleans = 'locked|hidden|selected'
@@ -111,7 +113,7 @@ function parseValue(value) {
   return Number(value)
 }
 
-export function find(predicate, root) {
+export function find(predicate, root, options = {}) {
   if (!root) {
     // eslint-disable-next-line no-param-reassign
     root = Document.getSelectedDocument()
@@ -211,13 +213,15 @@ export function find(predicate, root) {
     predicateVars
   )
 
+  const { inclusive = false } = options || {}
+
   const children =
     root.type == Types.Document
       ? root.sketchObject.pages().reduce((prev, page) => {
           prev.addObjectsFromArray(page.childrenIncludingSelf(true))
           return prev
         }, NSMutableArray.new())
-      : root.sketchObject.childrenIncludingSelf(false)
+      : root.sketchObject.childrenIncludingSelf(inclusive)
 
   // Different filter strategies are used for backwards compatibility with plugins and
   // scripts that work on the concept of artboards.

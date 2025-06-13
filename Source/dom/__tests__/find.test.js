@@ -111,6 +111,39 @@ test('should find by name beginning with', (_context, document) => {
   ])
 })
 
+test('should find by full name match ignoring case', (_context, document) => {
+  // eslint-disable-next-line no-param-reassign
+  document.pages = [
+    {
+      layers: [
+        { type: 'Artboard' },
+        { type: 'Shape', name: 'test' },
+        { type: 'Shape', name: 'test2' },
+      ],
+    },
+  ]
+  expect(find('[name~="tEsT"]', document).map((x) => x.id)).toEqual([
+    document.pages[0].layers[1].id,
+  ])
+})
+
+test('should find by partial name ignoring case', (_context, document) => {
+  // eslint-disable-next-line no-param-reassign
+  document.pages = [
+    {
+      layers: [
+        { type: 'Artboard' },
+        { type: 'Shape', name: 'test' },
+        { type: 'Shape', name: 'test2' },
+      ],
+    },
+  ]
+  expect(find('[name~*="tEsT"]', document).map((x) => x.id)).toEqual([
+    document.pages[0].layers[1].id,
+    document.pages[0].layers[2].id,
+  ])
+})
+
 test('should find by frame.x greater than', (_context, document) => {
   // eslint-disable-next-line no-param-reassign
   document.pages = [
@@ -157,4 +190,63 @@ test('should find with id', (_context, document) => {
   expect(
     find(`#${document.pages[0].layers[1].id}`, document).map((x) => x.id)
   ).toEqual([document.pages[0].layers[1].id])
+})
+
+test('should find within root progeny', (_context, document) => {
+  // eslint-disable-next-line no-param-reassign
+  document.pages = [
+    {
+      layers: [
+        {
+          type: 'Artboard',
+          frame: new Rectangle(400, 0, 100, 100),
+          layers: [
+            {
+              type: 'Shape',
+              name: 'test',
+              frame: new Rectangle(400, 0, 50, 50),
+            },
+          ],
+        },
+        { type: 'Shape', name: 'test' },
+      ],
+    },
+  ]
+
+  const root = document.pages[0].layers[0]
+  expect(find("[name='test']", root).map((x) => x.id)).toEqual([
+    root.layers[0].id,
+  ])
+
+  expect(
+    find("[name='test']", root, { inclusive: false }).map((x) => x.id)
+  ).toEqual([root.layers[0].id])
+})
+
+test('should find within root progeny + root itself', (_context, document) => {
+  // eslint-disable-next-line no-param-reassign
+  document.pages = [
+    {
+      layers: [
+        {
+          type: 'Artboard',
+          name: 'test',
+          frame: new Rectangle(400, 0, 100, 100),
+          layers: [
+            {
+              type: 'Shape',
+              name: 'test',
+              frame: new Rectangle(400, 0, 50, 50),
+            },
+          ],
+        },
+        { type: 'Shape', name: 'test' },
+      ],
+    },
+  ]
+
+  const root = document.pages[0].layers[0]
+  expect(
+    find("[name='test']", root, { inclusive: true }).map((x) => x.id)
+  ).toEqual([root.id, root.layers[0].id])
 })
