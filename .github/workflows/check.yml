@@ -12,7 +12,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@master
         with:
-          node-version: '10.16.3'
+          node-version: 'lts/*'
       - name: Install Dependencies
         run: npm ci
       - name: Build

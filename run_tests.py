@@ -62,7 +62,7 @@ try:
     import psutil
     terminate_sketch_on_completion = True
 except ImportError:
-    print('Sketch will remain open after running the tests and must be terminated manually.', file=sys.stderr)
+    print('\n[!] Sketch will remain open after running the tests and must be terminated manually. Install `psutil` Python module to terminate Sketch automatically upon test completion.\n', file=sys.stderr)
 
 def group_results_by_parent(results):
     grouped_results = {}

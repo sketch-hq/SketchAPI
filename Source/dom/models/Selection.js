@@ -61,6 +61,10 @@ export class Selection {
     return this.layers.reduce(fn, initial)
   }
 
+  filter(fn) {
+    return this.layers.filter(fn)
+  }
+
   /**
    * Clear the selection.
    */

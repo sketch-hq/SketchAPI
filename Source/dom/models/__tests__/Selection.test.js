@@ -91,4 +91,5 @@ test('should define convenience array methods', (_context, document) => {
   expect(selection.forEach).toBeDefined()
   expect(selection.map).toBeDefined()
   expect(selection.reduce).toBeDefined()
+  expect(selection.filter).toBeDefined()
 })

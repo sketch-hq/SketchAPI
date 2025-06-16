@@ -1,0 +1,70 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Build & lint",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "dependsOrder": "sequence",
+      "dependsOn": ["Lint", "Build"]
+    },
+    {
+      "label": "Build",
+      "type": "npm",
+      "script": "build",
+      "group": {
+        "kind": "build"
+      }
+    },
+    {
+      "label": "Lint",
+      "type": "npm",
+      "script": "lint",
+      "group": {
+        "kind": "build"
+      }
+    },
+    {
+      "label": "Build and run tests",
+      "dependsOrder": "sequence",
+      "dependsOn": ["Build", "Please choose target Xcode variant", "Run tests"],
+      "group": {
+        "kind": "test",
+        "isDefault": true
+      }
+    },
+    {
+      "label": "Please choose target Xcode variant",
+      "type": "shell",
+      "command": "echo -e '\\033[0;34m=====================================================================\nSelect the Sketch variant to test against in the VSCode popup above ☝️\n(or just press Enter)\n=====================================================================\\033[0m'",
+      "group": {
+        "kind": "test"
+      }
+    },
+    {
+      "label": "Run tests",
+      "type": "npm",
+      "script": "test",
+      "options": {
+        "env": {
+          "TARGET_SKETCH_VARIANT_BUNDLE_ID": "${input:sketchTarget}"
+        }
+      }
+    }
+  ],
+  "inputs": [
+    {
+      "id": "sketchTarget",
+      "description": "Choose the target Sketch variant",
+      "type": "pickString",
+      "options": [
+        "com.bohemiancoding.sketch3.xcode",
+        "com.bohemiancoding.sketch3.beta",
+        "com.bohemiancoding.sketch3"
+      ],
+      "default": "com.bohemiancoding.sketch3.xcode"
+    }
+  ]
+}
