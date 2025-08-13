@@ -157,3 +157,15 @@ ShapePath.define('closed', {
     this._object.adjustFrameAfterEditIntegral(false)
   },
 })
+
+ShapePath.define('edited', {
+  get() {
+    return Boolean(Number(this._object.edited()))
+  },
+  set(edited) {
+    if (this.isImmutable()) {
+      return
+    }
+    this._object.setEdited(edited)
+  },
+})

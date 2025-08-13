@@ -77,3 +77,40 @@ test('should get the Symbols page', (_context, document) => {
   page.parent = document
   expect(Page.getSymbolsPage(document)).toEqual(page)
 })
+
+test('should return canvas-level frames', (_context, document) => {
+  const page = new Page({
+    parent: document,
+    name: 'PageWithFrames',
+    layers: [
+      new Group.Frame({
+        name: 'TopLevelFrame',
+        layers: [
+          new Group.Graphic({
+            name: 'TopLevelFrame->NestedGraphic',
+          }),
+        ],
+      }),
+      new Group.Graphic({
+        name: 'TopLevelGraphic',
+        layers: [
+          new Group.Frame({
+            name: 'TopLevelGraphic->NestedFrame',
+          }),
+        ],
+      }),
+      new Group({
+        name: 'TopLevelGroup',
+        layers: [
+          new Group.Frame({
+            name: 'TopLevelGroup->NestedFrame',
+          }),
+        ],
+      }),
+    ],
+  })
+
+  expect(page.canvasLevelFrames.length).toBe(2)
+  expect(page.canvasLevelFrames[0].name).toBe('TopLevelFrame')
+  expect(page.canvasLevelFrames[1].name).toBe('TopLevelGraphic')
+})

@@ -4,6 +4,7 @@ import { wrapObject } from './wrapNativeObject'
 import { Types } from './enums'
 import { Factory } from './Factory'
 import { colorFromString } from './style/Color'
+import { Group } from './layers/Group'
 
 const simpleAttribute = (attribute, opposite) => (
   operator,
@@ -33,10 +34,16 @@ const attributesMap = {
       operator = '='
     }
     const predicate = []
-    const nativeClasses =
-      Factory._typeToNative[
-        value in Factory._typeAliases ? Factory._typeAliases[value].type : value
-      ]
+
+    if (['Artboard', 'Frame', 'Graphic'].includes(value)) {
+      // Artboards have been replaced by Frames and Graphics (which are
+      // ultimately just fancy names for Groups), but we still allow
+      // querying for Artboards for backwards compatibility.
+      // See `FilterStrategy` below for details
+      value = 'Group'
+    }
+
+    const nativeClasses = Factory._typeToNative[value]
     if (!nativeClasses) {
       throw new Error(`Unknown layer type ${value}`)
     }
@@ -144,13 +151,15 @@ export function find(predicate, root, options = {}) {
     },
   }
 
-  const FilterStragegy = Object.freeze({
+  const FilterStrategy = Object.freeze({
     None: 'none',
     Artboard: 'artboard',
     Group: 'group',
+    Frame: 'frame',
+    Graphic: 'graphic',
   })
 
-  let filterStragegy = FilterStragegy.None
+  let filterStrategy = FilterStrategy.None
 
   predicateParts.forEach((part) => {
     const matched = Object.keys(matchExpr).some((k) => {
@@ -173,7 +182,9 @@ export function find(predicate, root, options = {}) {
           // groups with frame behaviour.
           case 'Artboard':
           case 'Group':
-            filterStragegy = FilterStragegy[match[1]] // set filter strategy and fallthrough
+          case 'Frame':
+          case 'Graphic':
+            filterStrategy = FilterStrategy[match[1]] // set filter strategy and fallthrough
           default:
             attributesMap.type('=', match[1], mutations)
             break
@@ -234,7 +245,7 @@ export function find(predicate, root, options = {}) {
   //   canvas or inside groups. Its contents scale based on the group size.
   var cb = (s) => {
     // By default, return all children
-    if (s == FilterStragegy.None) {
+    if (s == FilterStrategy.None) {
       return () => true
     }
 
@@ -252,11 +263,20 @@ export function find(predicate, root, options = {}) {
 
     switch (s) {
       // Only include anything that is a canvas frame
-      case FilterStragegy.Artboard:
-        return (v) => canvasFrames.includes(v)
+      case FilterStrategy.Artboard:
+        return (group) => canvasFrames.includes(group)
       // Only include anything that is not a canvas frame, i.e. a regular group
-      case FilterStragegy.Group:
-        return (v) => !canvasFrames.includes(v)
+      case FilterStrategy.Group:
+        return (group) => !canvasFrames.includes(group)
+      // Include all Frames, including canvas frames and Graphics
+      case FilterStrategy.Frame:
+        return (group) =>
+          group.isKindOfClass(MSLayerGroup) && Group.fromNative(group).isFrame
+      // Include all Graphics, including canvas frames
+      case FilterStrategy.Graphic:
+        return (group) =>
+          group.isKindOfClass(MSLayerGroup) &&
+          Group.fromNative(group).isGraphicFrame
       // Should never happen, caught earlier
       default:
         return () => true
@@ -264,6 +284,6 @@ export function find(predicate, root, options = {}) {
   }
 
   return toArray(children.filteredArrayUsingPredicate(nativePredicate))
-    .filter(cb(filterStragegy))
+    .filter(cb(filterStrategy))
     .map((x) => wrapObject(x))
 }

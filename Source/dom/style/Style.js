@@ -3,7 +3,7 @@ import { WrappedObject, DefinedPropertiesKey } from '../WrappedObject'
 import { Factory } from '../Factory'
 import { wrapObject } from '../wrapNativeObject'
 import { Types } from '../enums'
-import { GradientType } from './Gradient'
+import { Gradient, GradientType } from './Gradient'
 import { colorFromString, colorToString } from './Color'
 import { Shadow } from './Shadow'
 import { BorderOptions, Arrowhead, LineEnd, LineJoin } from './BorderOptions'
@@ -11,44 +11,8 @@ import { Blur, BlurType } from './Blur'
 import { Fill, FillType, PatternFillType } from './Fill'
 import { Border, BorderPosition } from './Border'
 import { defineTextStyleProperties } from './Text'
-
-const BlendingModeMap = {
-  Normal: 0,
-  Darken: 1,
-  Multiply: 2,
-  ColorBurn: 3,
-  Lighten: 4,
-  Screen: 5,
-  ColorDodge: 6,
-  Overlay: 7,
-  SoftLight: 8,
-  HardLight: 9,
-  Difference: 10,
-  Exclusion: 11,
-  Hue: 12,
-  Saturation: 13,
-  Color: 14,
-  Luminosity: 15,
-}
-
-const BlendingMode = {
-  Normal: 'Normal',
-  Darken: 'Darken',
-  Multiply: 'Multiply',
-  ColorBurn: 'ColorBurn',
-  Lighten: 'Lighten',
-  Screen: 'Screen',
-  ColorDodge: 'ColorDodge',
-  Overlay: 'Overlay',
-  SoftLight: 'SoftLight',
-  HardLight: 'HardLight',
-  Difference: 'Difference',
-  Exclusion: 'Exclusion',
-  Hue: 'Hue',
-  Saturation: 'Saturation',
-  Color: 'Color',
-  Luminosity: 'Luminosity',
-}
+import { BlendingMode, BlendingModeMap } from '../models/BlendingMode'
+import { Corners } from './Corners'
 
 const DEFAULT_STYLE = {
   fills: [],
@@ -160,6 +124,30 @@ Style.define('opacity', {
   },
 })
 
+Style.define('progressiveAlpha', {
+  get() {
+    if (!this._object.contextSettings().isProgressive()) {
+      return undefined
+    }
+    let nativeGradient = this._object.contextSettings().gradient()
+    if (!nativeGradient) {
+      return undefined
+    }
+    return Gradient.from(nativeGradient)
+  },
+  set(newGradient) {
+    if (newGradient) {
+      this._object.contextSettings().setIsProgressive(true)
+      this._object
+        .contextSettings()
+        .setGradient(Gradient.from(newGradient).sketchObject)
+    } else {
+      this._object.contextSettings().setIsProgressive(false)
+      this._object.contextSettings().setGradient(null)
+    }
+  },
+})
+
 Style.BlendingMode = BlendingMode
 Style.define('blendingMode', {
   get() {
@@ -215,13 +203,64 @@ Style.define('blurs', {
   },
 })
 
+const FillLayeringType = Object.freeze({
+  // Shape fills, text color and group/artboard backgrounds
+  Regular: 0,
+  // Group tints specifically
+  Tint: 1,
+  // Frames as overlay can draw a backdrop _around_ themselves
+  Backdrop: 2,
+})
+
+Style.define('tint', {
+  get() {
+    const fills = toArray(this._object.fills())
+    // There could be at most one group tint fill
+    return fills.map(Fill.fromNative.bind(Fill)).find((fill) => {
+      return fill.sketchObject.layeringType() === FillLayeringType.Tint
+    })
+  },
+  set(newTint) {
+    if (this.isImmutable()) {
+      return
+    }
+    // See if we have a tint fill we can update or remove
+    const existingTint = this.tint
+    if (existingTint) {
+      if (newTint) {
+        existingTint.update(newTint)
+      } else {
+        const nativeFillsWithoutTint = toArray(
+          this._object.fills() ?? []
+        ).filter((nativeFill) => {
+          return nativeFill !== existingTint.sketchObject
+        })
+        this._object.setFills(nativeFillsWithoutTint)
+      }
+      return
+    }
+
+    const tint = Fill.fromNative(
+      Fill.toNative({
+        ...newTint,
+        fillType: FillType.Color,
+      })
+    )
+    tint.sketchObject.setLayeringType(FillLayeringType.Tint)
+    this.fills.push(tint)
+  },
+})
+
 Style.FillType = FillType
 Style.PatternFillType = PatternFillType
 Style.define('fills', {
   array: true,
   get() {
     const fills = toArray(this._object.fills())
-    return fills.map(Fill.fromNative.bind(Fill))
+    return fills.map(Fill.fromNative.bind(Fill)).filter((fill) => {
+      // Only return items that are regular fills. See `Style.tint`
+      return fill.sketchObject.layeringType() === FillLayeringType.Regular
+    })
   },
   set(values) {
     const objects = values.map(Fill.toNative.bind(Fill))
@@ -334,6 +373,29 @@ Style.define('styleType', {
   },
 })
 
+Style.CornerStyle = Corners.Style
+Style.define('corners', {
+  get() {
+    const nativeCorners = this._object.corners()
+    if (nativeCorners) {
+      return Corners.fromNative(nativeCorners)
+    }
+
+    const corners = new Corners()
+    if (!this.isImmutable()) {
+      this._object.setCorners(corners.sketchObject)
+    }
+    return corners
+  },
+  set(newCorners) {
+    if (this.isImmutable()) {
+      return
+    }
+    // Calling the getter to force a corners object to be created if needed
+    const existingCorners = this.corners
+    existingCorners.update(newCorners)
+  },
+})
 
 // Map to values from the `MSStylePartType` enum in SketchModel.
 // Other values ommitted because they are not currently used.

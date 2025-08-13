@@ -60,7 +60,7 @@ test('should create a symbol master with a nested symbol', (_context, document) 
   const nestedInstance = nestedMaster.createNewInstance()
   artboard.layers = [nestedInstance, text2]
 
-  const master = SymbolMaster.fromArtboard(artboard)
+  const master = SymbolMaster.fromFrame(artboard)
 
   const instance = master.createNewInstance()
 
@@ -72,9 +72,13 @@ test('should create a symbol master with a nested symbol', (_context, document) 
   // Find the override points being tested here:
   // - Two string value override points from the top level text layer and the nested.
   // - One symbol override point from the the nested instance.
-  const stringValueOverrides = instance.overrides.filter(o => o.property === 'stringValue')
+  const stringValueOverrides = instance.overrides.filter(
+    (o) => o.property === 'stringValue'
+  )
   expect(stringValueOverrides.length).toBe(2)
-  const symbolOverrides = instance.overrides.filter(o => o.property === 'symbolID')
+  const symbolOverrides = instance.overrides.filter(
+    (o) => o.property === 'symbolID'
+  )
   expect(symbolOverrides.length).toBe(1)
 
   const result0 = {
@@ -83,6 +87,7 @@ test('should create a symbol master with a nested symbol', (_context, document) 
     path: text2.id,
     property: 'stringValue',
     symbolOverride: false,
+    colorOverride: false,
     value: 'Test value 2',
     isDefault: true,
     editable: true,
@@ -91,6 +96,8 @@ test('should create a symbol master with a nested symbol', (_context, document) 
   }
   delete result0.affectedLayer.overrides
   delete result0.affectedLayer.selected
+  delete result0.affectedLayer.ignoresStackLayout
+  delete result0.affectedLayer.preservesSpaceInStackLayoutWhenHidden
   const stringOverride0 = stringValueOverrides[0]
   result0.affectedLayer.style = stringOverride0.affectedLayer.style.toJSON()
 
@@ -100,6 +107,7 @@ test('should create a symbol master with a nested symbol', (_context, document) 
     path: nestedInstance.id,
     property: 'symbolID',
     symbolOverride: true,
+    colorOverride: false,
     value: nestedInstance.symbolId,
     isDefault: true,
     editable: true,
@@ -108,6 +116,8 @@ test('should create a symbol master with a nested symbol', (_context, document) 
   }
   delete result1.affectedLayer.overrides
   delete result1.affectedLayer.selected
+  delete result1.affectedLayer.ignoresStackLayout
+  delete result1.affectedLayer.preservesSpaceInStackLayoutWhenHidden
   const symbolOverride = symbolOverrides[0]
   result1.affectedLayer.style = symbolOverride.affectedLayer.style.toJSON()
 
@@ -117,6 +127,7 @@ test('should create a symbol master with a nested symbol', (_context, document) 
     path: `${nestedInstance.id}/${text.id}`,
     property: 'stringValue',
     symbolOverride: false,
+    colorOverride: false,
     value: 'Test value',
     isDefault: true,
     editable: true,
@@ -124,14 +135,19 @@ test('should create a symbol master with a nested symbol', (_context, document) 
     selected: false,
   }
   delete result2.affectedLayer.selected
+  delete result2.affectedLayer.ignoresStackLayout
+  delete result2.affectedLayer.preservesSpaceInStackLayoutWhenHidden
   const stringOverride1 = stringValueOverrides[1]
   result2.affectedLayer.style = stringOverride1.affectedLayer.style.toJSON()
 
-
   // Find the same override points again from the source
-  const stringValueOverridesAfter = instance.overrides.filter(o => o.property === 'stringValue')
+  const stringValueOverridesAfter = instance.overrides.filter(
+    (o) => o.property === 'stringValue'
+  )
   expect(stringValueOverridesAfter.length).toBe(2)
-  const symbolOverridesAfter = instance.overrides.filter(o => o.property === 'symbolID')
+  const symbolOverridesAfter = instance.overrides.filter(
+    (o) => o.property === 'symbolID'
+  )
   expect(symbolOverridesAfter.length).toBe(1)
 
   expect(stringValueOverridesAfter[0].toJSON()).toEqual(result0)
@@ -143,13 +159,14 @@ test('should have overrides', (_context, document) => {
   const { master, text } = createSymbolMaster(document)
 
   expect(master.overrides.length).toBe(10)
-  const override = master.overrides.find(o => o.property === 'stringValue')
+  const override = master.overrides.find((o) => o.property === 'stringValue')
   const result = {
     type: 'Override',
     id: `${text.id}_stringValue`,
     path: text.id,
     property: 'stringValue',
     symbolOverride: false,
+    colorOverride: false,
     value: 'Test value',
     isDefault: true,
     editable: true,
@@ -157,7 +174,11 @@ test('should have overrides', (_context, document) => {
     selected: false,
   }
   delete result.affectedLayer.selected
-  const overrideAfter = master.overrides.find(o => o.property === 'stringValue')
+  delete result.affectedLayer.ignoresStackLayout
+  delete result.affectedLayer.preservesSpaceInStackLayoutWhenHidden
+  const overrideAfter = master.overrides.find(
+    (o) => o.property === 'stringValue'
+  )
   result.affectedLayer.style = overrideAfter.affectedLayer.style.toJSON()
   expect(override.toJSON()).toEqual(result)
 })

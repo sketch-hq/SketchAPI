@@ -61,3 +61,12 @@ GradientStop.define('color', {
     this._object.color = color.toMSColor()
   },
 })
+
+GradientStop.define('alpha', {
+  exportable: false,
+  enumerable: false,
+  importable: false,
+  get() {
+    return this._object.color().alpha()
+  },
+})

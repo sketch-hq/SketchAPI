@@ -68,6 +68,7 @@ test('should get the borders', () => {
     position: 'Center',
     thickness: 30,
     enabled: true,
+    blendingMode: 'Normal',
     gradient: {
       gradientType: 'Linear',
       from: { x: 0.5, y: 0 },
@@ -85,6 +86,7 @@ test('should get the borders', () => {
     position: 'Outside',
     thickness: 1,
     enabled: true,
+    blendingMode: 'Normal',
     gradient: {
       gradientType: 'Linear',
       from: { x: 0.5, y: 0 },
@@ -120,4 +122,63 @@ test('should set the borders with 0s', () => {
     ],
   })
   expect(style.borders[0].thickness).toBe(0)
+})
+
+test('should set and get blending mode', () => {
+  const style = new Style({
+    blendingMode: Style.BlendingMode.Darken,
+    borders: [
+      {
+        color: '##aabbccff',
+        blendingMode: Style.BlendingMode.ColorBurn,
+      },
+      {
+        color: 'black',
+        blendingMode: Style.BlendingMode.ColorDodge,
+      },
+    ],
+  })
+  expect(style.borders[0].blendingMode).toBe(Style.BlendingMode.ColorBurn)
+  expect(style.borders[1].blendingMode).toBe(Style.BlendingMode.ColorDodge)
+
+  style.borders[0].blendingMode = Style.BlendingMode.Lighten
+  style.borders[1].blendingMode = Style.BlendingMode.Screen
+  style.blendingMode = Style.BlendingMode.Multiply
+
+  expect(style.borders[0].blendingMode).toBe(Style.BlendingMode.Lighten)
+  expect(style.borders[1].blendingMode).toBe(Style.BlendingMode.Screen)
+})
+
+test('should set and get gradient property', () => {
+  const style = new Style({
+    borders: [
+      {
+        fillType: Style.FillType.Color,
+        color: '#000000ff',
+      },
+    ],
+  })
+  expect(style.borders[0].fillType).toBe(Style.FillType.Color)
+
+  style.borders[0].fillType = Style.FillType.Gradient
+  style.borders[0].gradient = {
+    gradientType: Style.GradientType.Linear,
+    from: { x: 0, y: 0 },
+    to: { x: 1, y: 1 },
+    stops: [
+      { position: 0, color: '#ff00007f' },
+      { position: 1, color: '#00ff00ff' },
+    ],
+  }
+
+  expect(style.borders[0].gradient.toJSON()).toEqual({
+    gradientType: Style.GradientType.Linear,
+    from: { x: 0, y: 0 },
+    to: { x: 1, y: 1 },
+    aspectRatio: 0,
+    stops: [
+      { position: 0, color: '#ff00007f' },
+      { position: 1, color: '#00ff00ff' },
+    ],
+  })
 })

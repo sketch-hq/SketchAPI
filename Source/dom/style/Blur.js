@@ -1,6 +1,9 @@
 import { WrappedObject, DefinedPropertiesKey } from '../WrappedObject'
+import { isWrappedObject } from '../utils'
+import { isNativeObject } from 'util'
 import { Point } from '../models/Point'
 import { Types } from '../enums'
+import { Gradient } from './Gradient'
 
 const BlurTypeMap = {
   Gaussian: 0,
@@ -22,30 +25,54 @@ const DEFAULT_BLUR = {
   radius: 10,
   enabled: false,
   blurType: BlurType.Gaussian,
+  saturation: 1,
 }
 
 export class Blur extends WrappedObject {
-  static updateNative(s, blur) {
+  static toNative(value) {
+    if (isNativeObject(value)) {
+      return value
+    }
+    if (isWrappedObject(value)) {
+      return value.sketchObject
+    }
+    const nativeBlur = MSStyleBlur.new()
+    this.updateNative(nativeBlur, value)
+    return nativeBlur
+  }
+
+  static updateNative(nativeBlur, blur) {
     const blurWithDefault = Object.assign({}, DEFAULT_BLUR, blur)
     if (typeof blurWithDefault.center !== 'undefined') {
-      s.setCenter(
+      nativeBlur.setCenter(
         CGPointMake(blurWithDefault.center.x, blurWithDefault.center.y)
       )
     }
     if (typeof blurWithDefault.motionAngle !== 'undefined') {
-      s.setMotionAngle(blurWithDefault.motionAngle)
+      nativeBlur.setMotionAngle(blurWithDefault.motionAngle)
     }
     if (typeof blurWithDefault.radius !== 'undefined') {
-      s.setRadius(blurWithDefault.radius)
+      nativeBlur.setRadius(blurWithDefault.radius)
+    }
+    if (typeof blurWithDefault.saturation !== 'undefined') {
+      nativeBlur.setSaturation(blurWithDefault.saturation)
     }
     if (typeof blurWithDefault.blurType !== 'undefined') {
       const blurType = BlurTypeMap[blurWithDefault.blurType]
-      s.setType(
+      nativeBlur.setType(
         typeof blurType !== 'undefined' ? blurType : blurWithDefault.blurType
       )
     }
     if (typeof blurWithDefault.enabled !== 'undefined') {
-      s.isEnabled = blurWithDefault.enabled // eslint-disable-line
+      nativeBlur.isEnabled = blurWithDefault.enabled // eslint-disable-line
+    }
+    if (typeof blurWithDefault.progressive !== 'undefined') {
+      nativeBlur.setIsProgressive(blurWithDefault.progressive)
+    }
+    if (typeof blurWithDefault.gradient !== 'undefined') {
+      nativeBlur.setGradient(
+        Gradient.from(blurWithDefault.gradient).sketchObject
+      )
     }
   }
 }
@@ -92,6 +119,16 @@ Blur.define('radius', {
   },
 })
 
+Blur.define('saturation', {
+  get() {
+    return Number(this._object.saturation())
+  },
+  set(saturation) {
+    saturation = Math.max(0, Math.min(2, Number(saturation))) // Clamp to [0, 2]
+    this._object.setSaturation(saturation)
+  },
+})
+
 Blur.define('enabled', {
   get() {
     return !!this._object.isEnabled()
@@ -112,5 +149,27 @@ Blur.define('blurType', {
   set(type) {
     const blurType = BlurTypeMap[type]
     this._object.setType(typeof blurType !== 'undefined' ? blurType : type)
+  },
+})
+
+Blur.define('progressive', {
+  get() {
+    return Boolean(this._object.isProgressive())
+  },
+  set(progressive) {
+    this._object.setIsProgressive(progressive)
+  },
+})
+
+Blur.define('gradient', {
+  get() {
+    const gradient = this._object.gradient()
+    if (gradient) {
+      return Gradient.from(gradient)
+    }
+    return undefined
+  },
+  set(gradient) {
+    this._object.setGradient(Gradient.from(gradient).sketchObject)
   },
 })

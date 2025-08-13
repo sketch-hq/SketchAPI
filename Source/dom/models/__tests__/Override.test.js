@@ -1,6 +1,6 @@
 /* globals expect, test */
 /* eslint-disable no-param-reassign */
-import { SymbolMaster, Text, Artboard, Image } from '../..'
+import { SymbolMaster, Text, Artboard, Image, ShapePath } from '../..'
 
 // using a base64 image cause I'm not sure where and how to keep assets that would work with both local and jenkins tests
 const base64Image =
@@ -21,7 +21,7 @@ function createSymbolMaster(document) {
 
   // build the symbol master
   return {
-    master: SymbolMaster.fromArtboard(artboard),
+    master: SymbolMaster.fromFrame(artboard),
     text,
     artboard,
   }
@@ -35,7 +35,7 @@ test('should be able to set overrides', (_context, document) => {
   expect(instance.overrides.length).toBe(10)
 
   // find the override point for the text layer's string value
-  const override = instance.overrides.find(o => o.property === 'stringValue')
+  const override = instance.overrides.find((o) => o.property === 'stringValue')
   expect(override.isDefault).toBe(true)
   // check that an override can be logged
   log(override)
@@ -50,6 +50,7 @@ test('should be able to set overrides', (_context, document) => {
     path: text.id,
     property: 'stringValue',
     symbolOverride: false,
+    colorOverride: false,
     value: 'overridden',
     isDefault: false,
     editable: true,
@@ -58,7 +59,9 @@ test('should be able to set overrides', (_context, document) => {
   }
 
   // find the same override after being modified
-  const overrideAfter = instance.overrides.find(o => o.property === 'stringValue')
+  const overrideAfter = instance.overrides.find(
+    (o) => o.property === 'stringValue'
+  )
   result.affectedLayer = overrideAfter.affectedLayer.toJSON()
   expect(overrideAfter.toJSON()).toEqual(result)
 })
@@ -78,7 +81,7 @@ test('should change a nested symbol', (_context, document) => {
   const nestedInstance = nestedMaster.createNewInstance()
   artboard.layers = [nestedInstance, text2]
 
-  const master = SymbolMaster.fromArtboard(artboard)
+  const master = SymbolMaster.fromFrame(artboard)
 
   const instance = master.createNewInstance()
 
@@ -87,7 +90,9 @@ test('should change a nested symbol', (_context, document) => {
   expect(instance.overrides.length).toBe(25)
 
   // find the symbol override point
-  const symbolOverrides = instance.overrides.filter(o => o.property === 'symbolID')
+  const symbolOverrides = instance.overrides.filter(
+    (o) => o.property === 'symbolID'
+  )
   expect(symbolOverrides.length).toBe(1)
 
   const override = symbolOverrides[0]
@@ -100,6 +105,7 @@ test('should change a nested symbol', (_context, document) => {
     property: 'symbolID',
     affectedLayer: nestedInstance.toJSON(),
     symbolOverride: true,
+    colorOverride: false,
     value: nestedMaster2.symbolId,
     isDefault: false,
     editable: true,
@@ -107,8 +113,12 @@ test('should change a nested symbol', (_context, document) => {
   }
   delete result.affectedLayer.overrides
   delete result.affectedLayer.selected
+  delete result.affectedLayer.ignoresStackLayout
+  delete result.affectedLayer.preservesSpaceInStackLayoutWhenHidden
 
-  const symbolOverridesAfter = instance.overrides.filter(o => o.property === 'symbolID')
+  const symbolOverridesAfter = instance.overrides.filter(
+    (o) => o.property === 'symbolID'
+  )
   expect(symbolOverridesAfter.length).toBe(1)
   const overrideAfter = symbolOverridesAfter[0]
 
@@ -130,7 +140,7 @@ test('should handle image override', (_context, document) => {
   })
 
   // build the symbol master
-  const master = SymbolMaster.fromArtboard(artboard)
+  const master = SymbolMaster.fromFrame(artboard)
   const instance = master.createNewInstance()
 
   // add the instance to the page
@@ -138,16 +148,20 @@ test('should handle image override', (_context, document) => {
   expect(instance.overrides.length).toBe(6)
 
   // check image resize behavior
-  const imageResizeOverride = instance.overrides.find(o => o.property === 'imageResizeBehavior')
+  const imageResizeOverride = instance.overrides.find(
+    (o) => o.property === 'imageResizeBehavior'
+  )
   expect(imageResizeOverride.isDefault).toBe(true)
   expect(imageResizeOverride.value).toBe('Original')
   imageResizeOverride.value = 1
-  const imageResizeOverrideAfter = instance.overrides.find(o => o.property === 'imageResizeBehavior')
+  const imageResizeOverrideAfter = instance.overrides.find(
+    (o) => o.property === 'imageResizeBehavior'
+  )
   expect(imageResizeOverrideAfter.isDefault).toBe(false)
   expect(imageResizeOverrideAfter.value).toBe('1')
 
   // check image
-  const imageOverride = instance.overrides.find(o => o.property === 'image')
+  const imageOverride = instance.overrides.find((o) => o.property === 'image')
   expect(imageOverride.isDefault).toBe(true)
   expect(imageOverride.value.type).toBe('ImageData')
 
@@ -155,7 +169,9 @@ test('should handle image override', (_context, document) => {
     base64: base64Image2,
   }
 
-  const imageOverrideAfter = instance.overrides.find(o => o.property === 'image')
+  const imageOverrideAfter = instance.overrides.find(
+    (o) => o.property === 'image'
+  )
   expect(imageOverrideAfter.property).toBe('image')
   expect(imageOverrideAfter.isDefault).toBe(false)
   expect(imageOverrideAfter.value.type).toBe('ImageData')
@@ -177,7 +193,7 @@ test('should be able to select an override', (_context, document) => {
   document.selectedPage.layers = document.selectedPage.layers.concat(instance)
 
   // find the override point for the text layer's string value
-  const override = instance.overrides.find(o => o.property === 'stringValue')
+  const override = instance.overrides.find((o) => o.property === 'stringValue')
 
   expect(override.selected).toBe(false)
   expect(instance.selected).toBe(false)
@@ -185,7 +201,9 @@ test('should be able to select an override', (_context, document) => {
   // toggle selected on the text layer
   override.selected = true
 
-  const overrideAfter = instance.overrides.find(o => o.property === 'stringValue')
+  const overrideAfter = instance.overrides.find(
+    (o) => o.property === 'stringValue'
+  )
 
   expect(overrideAfter.selected).toBe(true)
   expect(instance.selected).toBe(false)
@@ -193,7 +211,9 @@ test('should be able to select an override', (_context, document) => {
   // toggle selected again
   overrideAfter.selected = false
 
-  const overrideAfter2 = instance.overrides.find(o => o.property === 'stringValue')
+  const overrideAfter2 = instance.overrides.find(
+    (o) => o.property === 'stringValue'
+  )
   expect(overrideAfter2.selected).toBe(false)
   expect(instance.selected).toBe(false)
 })
@@ -204,7 +224,7 @@ test('should be able to access the frame of an override', (_context, document) =
   document.selectedPage.layers = document.selectedPage.layers.concat(instance)
 
   // find the override point for the text layer's string value
-  const override = instance.overrides.find(o => o.property === 'stringValue')
+  const override = instance.overrides.find((o) => o.property === 'stringValue')
 
   // expects to be able to access the frame of the affected text layer
   expect(override.getFrame().toJSON()).toEqual({
@@ -213,4 +233,143 @@ test('should be able to access the frame of an override', (_context, document) =
     width: 55,
     height: 14,
   })
+})
+
+test('should handle style color overrides', (_context, document) => {
+  const artboard = new Artboard({
+    name: 'Test',
+    parent: document.selectedPage,
+  })
+  // eslint-disable-next-line
+  const shape = new ShapePath({
+    style: {
+      fills: [
+        {
+          color: '#00aa00ff',
+          fillType: 'Color',
+        },
+      ],
+    },
+    parent: artboard,
+  })
+  // build the symbol master
+  const master = SymbolMaster.fromFrame(artboard)
+  const instance = master.createNewInstance()
+  // add the instance to the page
+  document.selectedPage.layers.push(instance)
+  // find the shape fill color override point
+  const fillColorOverride = instance.overrides.find((o) => {
+    return (
+      o.affectedLayer.id === shape.id && o.property.startsWith('color:fill')
+    )
+  })
+
+  expect(fillColorOverride.colorOverride).toBe(true)
+  expect(fillColorOverride.isDefault).toBe(true)
+  expect(fillColorOverride.value).toBe('#00aa00ff')
+
+  fillColorOverride.value = '#cafebabe'
+
+  expect(fillColorOverride.isDefault).toBe(false)
+  expect(fillColorOverride.value).toBe('#cafebabe')
+})
+
+test('should handle text color overrides', (_context, document) => {
+  const artboard = new Artboard({
+    name: 'Test',
+    parent: document.selectedPage,
+  })
+  // eslint-disable-next-line
+  const text = new Text({
+    text: 'Test value',
+    style: {
+      textColor: '#00aa00ff',
+    },
+    parent: artboard,
+  })
+  // build the symbol master
+  const master = SymbolMaster.fromFrame(artboard)
+  const instance = master.createNewInstance()
+  // add the instance to the page
+  document.selectedPage.layers.push(instance)
+  // find the text color override point
+  const textColorOverride = instance.overrides.find((o) => {
+    return o.property === 'textColor'
+  })
+
+  expect(textColorOverride.colorOverride).toBe(true)
+  expect(textColorOverride.isDefault).toBe(true)
+  expect(textColorOverride.value).toBe('#00aa00ff')
+
+  textColorOverride.value = '#cafebabe'
+
+  expect(textColorOverride.isDefault).toBe(false)
+  expect(textColorOverride.value).toBe('#cafebabe')
+})
+
+test('should handle tint color overrides', (_context, document) => {
+  const artboard = new Artboard({
+    name: 'Test',
+    parent: document.selectedPage,
+  })
+  // eslint-disable-next-line
+  const shape = new ShapePath({
+    style: {
+      fills: [
+        {
+          color: '#00aa00ff',
+          fillType: 'Color',
+        },
+      ],
+    },
+    parent: artboard,
+  })
+  // build the symbol master
+  const master = SymbolMaster.fromFrame(artboard)
+  const instance = master.createNewInstance()
+  // add the instance to the page
+  document.selectedPage.layers.push(instance)
+  // enable a tint if the API is there
+  instance.style.fills = [
+    {
+      color: '#deadbeef',
+      fillType: 'Color',
+    },
+  ]
+  if (!instance.style.fills[0].sketchObject.setLayeringType) {
+    return
+  }
+  instance.style.fills[0].sketchObject.setLayeringType(
+    /* BCFillLayeringTypeTint */ 1
+  )
+  // find the tint color override point
+  const tintColorOverride = instance.overrides.find((o) => {
+    return o.property === 'fillColor'
+  })
+
+  expect(tintColorOverride.colorOverride).toBe(true)
+  expect(tintColorOverride.value).toBe('#deadbeef')
+
+  tintColorOverride.value = '#cafebabe'
+
+  expect(tintColorOverride.value).toBe('#cafebabe')
+})
+
+test('should provide the default value', (_context, document) => {
+  const { master } = createSymbolMaster(document)
+  const instance = master.createNewInstance()
+  document.selectedPage.layers = document.selectedPage.layers.concat(instance)
+
+  // find the override point for the text layer's string value
+  const override = instance.overrides.find((o) => o.property === 'stringValue')
+
+  expect(override.isDefault).toBe(true)
+  expect(override.defaultValue).toBe('Test value')
+  expect(override.value).toBe('Test value')
+
+  override.value = 'overridden value'
+
+  expect(override.isDefault).toBe(false)
+  expect(override.defaultValue).toBe('Test value')
+  expect(override.value).toBe('overridden value')
 })

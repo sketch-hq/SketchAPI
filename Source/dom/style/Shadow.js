@@ -3,6 +3,7 @@ import { Color, colorToString } from './Color'
 import { WrappedObject, DefinedPropertiesKey } from '../WrappedObject'
 import { Types } from '../enums'
 import { isWrappedObject } from '../utils'
+import { BlendingModeMap } from '../models/BlendingMode'
 
 export class Shadow extends WrappedObject {
   static toNative(nativeClass, value) {
@@ -38,6 +39,14 @@ export class Shadow extends WrappedObject {
     if (typeof value.isInnerShadow !== 'undefined') {
       shadow.isInnerShadow = Boolean(value.isInnerShadow)
     }
+
+    if (value.blendingMode) {
+      const blendingMode = BlendingModeMap[value.blendingMode]
+      if (typeof blendingMode !== 'undefined') {
+        shadow.contextSettings().setBlendMode(blendingMode)
+      }
+    }
+
     return shadow
   }
 }
@@ -115,5 +124,22 @@ Shadow.define('isInnerShadow', {
   },
   set(value) {
     this._object.setIsInnerShadow(value)
+  },
+})
+
+Shadow.define('blendingMode', {
+  get() {
+    const mode = this._object.contextSettings().blendMode()
+    return (
+      Object.keys(BlendingModeMap).find(
+        (key) => BlendingModeMap[key] === mode
+      ) || mode
+    )
+  },
+  set(mode) {
+    const blendingMode = BlendingModeMap[mode]
+    this._object
+      .contextSettings()
+      .setBlendMode(typeof blendingMode !== 'undefined' ? blendingMode : mode)
   },
 })

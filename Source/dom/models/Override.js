@@ -4,6 +4,7 @@ import { Factory } from '../Factory'
 import { ImageData } from './ImageData'
 import { wrapNativeObject } from '../wrapNativeObject'
 import { Rectangle } from './Rectangle'
+import { Color } from '../style/Color'
 
 export class Override extends WrappedObject {
   // Returns any override directly set on the symbol instance or null if none is set or this is an override point on a symbol source
@@ -26,9 +27,7 @@ export class Override extends WrappedObject {
   // out-of-date if the detached symbol hasn't yet updated.
   getResolvedValueOnDetachedSymbol() {
     var layer = this._object.layer()
-    return layer.valueForOverrideAttribute(
-      this.property
-    )
+    return layer.valueForOverrideAttribute(this.property)
   }
 
   // Returns the value the override point will have if there is no override set on this instance.
@@ -68,6 +67,27 @@ export class Override extends WrappedObject {
 
   getFrame() {
     return new Rectangle(this._object.layer().frame().rect())
+  }
+
+  wrapNativeOverrideValue(value) {
+    if (this.property === 'image') {
+      return ImageData.fromNative(value)
+    }
+    if (this.colorOverride) {
+      if (typeof value === 'string') {
+        return value
+      }
+      return Color.from(value).toString()
+    }
+    if (value !== null && value.isKindOfClass_(NSDictionary.class())) {
+      // Map dictionary overrides into a javascript dictionary
+      var map = {}
+      Object.keys(value).forEach((name) => {
+        map[name] = value[name]
+      })
+      return map
+    }
+    return String(value)
   }
 }
 Override.type = Types.Override
@@ -110,24 +130,24 @@ Override.define('symbolOverride', {
   },
 })
 
+Override.define('colorOverride', {
+  get() {
+    return (
+      this.property &&
+      (this.property === 'textColor' ||
+        this.property === 'fillColor' ||
+        this.property.startsWith('color:'))
+    )
+  },
+})
+
 Override.define('value', {
   get() {
     var value = this.getValueSetOnInstance()
     if (!value) {
       value = this.getResolvedValueOnDetachedSymbol()
     }
-    if (this.property === 'image') {
-      return ImageData.fromNative(value)
-    }
-    if (value !== null && value.isKindOfClass_(NSDictionary.class())) {
-      // Map dictionary overrides into a javascript dictionary
-      var map = {}
-      Object.keys(value).forEach((name) => {
-        map[name] = value[name]
-      })
-      return map
-    }
-    return String(value)
+    return this.wrapNativeOverrideValue(value)
   },
   set(value) {
     // __symbolInstance is set when building the Override
@@ -141,6 +161,15 @@ Override.define('value', {
 Override.define('isDefault', {
   get() {
     return this.getValueSetOnInstance() == null
+  },
+})
+
+Override.define('defaultValue', {
+  exportable: false,
+  importable: false,
+  enumerable: false,
+  get() {
+    return this.wrapNativeOverrideValue(this.getDefaultValue())
   },
 })
 
@@ -185,7 +214,7 @@ Override.define('selected', {
   get() {
     let page = this.getOwningPage()
     if (!page) {
-	  return false
+      return false
     }
     let item = this.selectionItem()
     if (page.selection().isItemSelected(item)) {

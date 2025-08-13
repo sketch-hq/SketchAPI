@@ -21,7 +21,7 @@ function createLibrary(testOutputPath = outputPath()) {
       text: 'Test value',
       parent: artboard,
     })
-    SymbolMaster.fromArtboard(artboard)
+    SymbolMaster.fromFrame(artboard)
 
     document.save(
       `${testOutputPath}/sketch-api-unit-tests-library.sketch`,

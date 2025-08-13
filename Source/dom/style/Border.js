@@ -5,6 +5,7 @@ import { Gradient } from './Gradient'
 import { FillTypeMap } from './Fill'
 import { Types } from '../enums'
 import { isWrappedObject } from '../utils'
+import { BlendingModeMap } from '../models/BlendingMode'
 
 const BorderPositionMap = {
   Center: 0,
@@ -62,6 +63,14 @@ export class Border extends WrappedObject {
     } else {
       border.isEnabled = value.enabled
     }
+
+    if (value.blendingMode) {
+      const blendingMode = BlendingModeMap[value.blendingMode]
+      if (typeof blendingMode !== 'undefined') {
+        border.contextSettings().setBlendMode(blendingMode)
+      }
+    }
+
     return border
   }
 }
@@ -124,9 +133,8 @@ Border.define('gradient', {
   get() {
     return Gradient.from(this._object.gradient())
   },
-  set(_gradient) {
-    const gradient = Gradient.from(_gradient)
-    this._object.gradient = gradient
+  set(gradient) {
+    this._object.setGradient(Gradient.from(gradient).sketchObject)
   },
 })
 
@@ -145,5 +153,22 @@ Border.define('enabled', {
   },
   set(enabled) {
     this._object.isEnabled = enabled
+  },
+})
+
+Border.define('blendingMode', {
+  get() {
+    const mode = this._object.contextSettings().blendMode()
+    return (
+      Object.keys(BlendingModeMap).find(
+        (key) => BlendingModeMap[key] === mode
+      ) || mode
+    )
+  },
+  set(mode) {
+    const blendingMode = BlendingModeMap[mode]
+    this._object
+      .contextSettings()
+      .setBlendMode(typeof blendingMode !== 'undefined' ? blendingMode : mode)
   },
 })

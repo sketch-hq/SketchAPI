@@ -1,6 +1,7 @@
 import { toArray } from 'util'
 import { DefinedPropertiesKey } from '../WrappedObject'
 import { Artboard } from './Artboard'
+import { Group } from './Group'
 import { Layer } from './Layer'
 import { Rectangle } from '../models/Rectangle'
 import { Types } from '../enums'
@@ -12,7 +13,7 @@ import { Document } from '../models/Document'
 /**
  * A Sketch symbol master.
  */
-export class SymbolMaster extends Artboard {
+export class SymbolMaster extends Group {
   /**
    * Make a new symbol master.
    */
@@ -26,13 +27,20 @@ export class SymbolMaster extends Artboard {
     super(master)
   }
 
-  // Replace the artboard with a symbol master
-  static fromArtboard(artboard) {
-    const wrappedArtboard = wrapObject(artboard)
+  // Replace the frame with a symbol master
+  static fromFrame(frame) {
+    const wrappedFrame = wrapObject(frame)
 
     return SymbolMaster.fromNative(
-      MSSymbolMaster.convertFrameToSymbol(wrappedArtboard.sketchObject)
+      MSSymbolMaster.convertFrameToSymbol(wrappedFrame.sketchObject)
     )
+  }
+
+  static fromArtboard(artboard) {
+    console.warn(
+      'SymbolMaster.fromArtboard() is deprecated, use SymbolMaster.fromFrame() instead.'
+    )
+    return SymbolMaster.fromFrame(artboard)
   }
 
   // Replace the symbol with an artboard and detach all its instances converting them into groups.
@@ -40,6 +48,10 @@ export class SymbolMaster extends Artboard {
     const artboard = MSSymbolMaster.convertSymbolToFrame(this._object)
 
     return Artboard.fromNative(artboard)
+  }
+
+  getParentArtboard() {
+    return undefined
   }
 
   // Returns a new SymbolInstance linked to this Frame, ready for inserting in the document
@@ -128,7 +140,7 @@ export class SymbolMaster extends Artboard {
 }
 
 SymbolMaster.type = Types.SymbolMaster
-SymbolMaster[DefinedPropertiesKey] = { ...Artboard[DefinedPropertiesKey] }
+SymbolMaster[DefinedPropertiesKey] = { ...Group[DefinedPropertiesKey] }
 Factory.registerClass(SymbolMaster, MSSymbolMaster)
 Factory.registerClass(SymbolMaster, MSImmutableSymbolMaster)
 
@@ -172,13 +184,14 @@ SymbolMaster.define('overrides', {
     this._object.overridePoints().forEach((o) => {
       dict[o.name()] = o
     })
-  
+
     overrides.forEach((o) => {
       const overridePoint = dict[o.id]
       if (overridePoint) {
         this._object.setOverridePoint_editable(overridePoint, o.editable)
       }
     })
+    this._object.ensureDetachHasUpdated()
   },
 })
 

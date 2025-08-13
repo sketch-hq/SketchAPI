@@ -317,8 +317,8 @@ function source(identifier, tests) {
       prepareStackTrace
     })
     .finally(() => {
-      console.log('✅ Test results saved to: ' + output)
-      sketch.UI.message('✅ Test results saved to disk.')
+      console.log('Test results saved to: ' + output)
+      sketch.UI.message('Test results saved to disk.')
       fiber.cleanup()
     })
   }

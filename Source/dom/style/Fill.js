@@ -5,6 +5,7 @@ import { Gradient } from './Gradient'
 import { Types } from '../enums'
 import { ImageData } from '../models/ImageData'
 import { isWrappedObject } from '../utils'
+import { BlendingModeMap } from '../models/BlendingMode'
 
 export const FillTypeMap = {
   Color: 0, // A solid fill/border.
@@ -86,6 +87,14 @@ export class Fill extends WrappedObject {
     } else {
       fill.isEnabled = value.enabled
     }
+
+    if (value.blendingMode) {
+      const blendingMode = BlendingModeMap[value.blendingMode]
+      if (typeof blendingMode !== 'undefined') {
+        fill.contextSettings().setBlendMode(blendingMode)
+      }
+    }
+
     return fill
   }
 }
@@ -146,9 +155,8 @@ Fill.define('gradient', {
   get() {
     return Gradient.from(this._object.gradient())
   },
-  set(_gradient) {
-    const gradient = Gradient.from(_gradient)
-    this._object.gradient = gradient
+  set(gradient) {
+    this._object.setGradient(Gradient.from(gradient).sketchObject)
   },
 })
 
@@ -194,5 +202,22 @@ Fill.define('enabled', {
   },
   set(enabled) {
     this._object.isEnabled = enabled
+  },
+})
+
+Fill.define('blendingMode', {
+  get() {
+    const mode = this._object.contextSettings().blendMode()
+    return (
+      Object.keys(BlendingModeMap).find(
+        (key) => BlendingModeMap[key] === mode
+      ) || mode
+    )
+  },
+  set(mode) {
+    const blendingMode = BlendingModeMap[mode]
+    this._object
+      .contextSettings()
+      .setBlendMode(typeof blendingMode !== 'undefined' ? blendingMode : mode)
   },
 })

@@ -8,6 +8,7 @@ import { wrapObject } from '../wrapNativeObject'
 import { Override } from '../models/Override'
 import { ImageData } from '../models/ImageData'
 import { getDocuments } from '../models/Document'
+import { Color } from '../style/Color'
 
 /**
  * A Sketch symbol instance.
@@ -60,9 +61,15 @@ export class SymbolInstance extends StyledLayer {
       )
     } else if (wrappedOverride.property === 'stringValue') {
       this._object.setValue_forOverridePoint(String(value), overridePoint)
+    } else if (wrappedOverride.colorOverride) {
+      this._object.setValue_forOverridePoint(
+        Color.from(value).toMSImmutableColor(),
+        overridePoint
+      )
     } else {
       this._object.setValue_forOverridePoint(value, overridePoint)
     }
+    this._object.ensureDetachHasUpdated()
     return this
   }
 
@@ -169,5 +176,21 @@ SymbolInstance.define('overrides', {
     throw new Error(
       'Cannot set the overrides directly. Set the value of each overrides instead.'
     )
+  },
+})
+
+// An "override" for the `Layer.hidden` property so we can
+// call `ensureDetachHasUpdated()` afterwards (SMAC-4904)
+delete SymbolInstance[DefinedPropertiesKey].hidden
+SymbolInstance.define('hidden', {
+  get() {
+    return !this._object.isVisible()
+  },
+  set(hidden) {
+    if (this.isImmutable()) {
+      return
+    }
+    this._object.setIsVisible(!hidden)
+    this._object.ensureDetachHasUpdated()
   },
 })

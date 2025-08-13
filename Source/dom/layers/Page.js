@@ -4,6 +4,7 @@ import { Selection } from '../models/Selection'
 import { Types } from '../enums'
 import { Factory } from '../Factory'
 import { wrapNativeObject, wrapObject } from '../wrapNativeObject'
+import { find } from '../find'
 
 /**
  * Represents a Page in a Sketch document.
@@ -183,5 +184,17 @@ Page.define('selectedLayers', {
   importable: false,
   get() {
     return new Selection(this)
+  },
+})
+
+Page.define('canvasLevelFrames', {
+  enumerable: false,
+  exportable: false,
+  importable: false,
+  get() {
+    // This should be faster than iterating through `layers` since
+    // `find()` operates on native objects directly and only drops
+    // to (much slower) JavaScript to wrap the results
+    return find('Artboard', this)
   },
 })

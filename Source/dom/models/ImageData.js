@@ -80,6 +80,15 @@ ImageData.define('nsdata', {
   },
 })
 
+ImageData.define('base64', {
+  get() {
+    if (!this.nsdata) {
+      return null
+    }
+    return String(this.nsdata.base64EncodedStringWithOptions(0))
+  },
+})
+
 ImageData.define('size', {
   /**
    * The size of the image.

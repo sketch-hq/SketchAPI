@@ -58,3 +58,30 @@ test('should be in and out of sync with its shared style', (_context, document) 
   expect(style.isOutOfSyncWithSharedStyle(sharedStyle)).toBe(false)
   expect(sharedStyle.style.opacity).toBe(1)
 })
+
+test('should get and set progressive alpha gradient', () => {
+  const style = new Style()
+  expect(style.progressiveAlpha).toBeUndefined()
+
+  style.progressiveAlpha = {
+    stops: [
+      { color: '#00000000', position: 0 },
+      { color: '#0000007f', position: 0.5 },
+      { color: '#000000ff', position: 1 },
+    ],
+  }
+  expect(style.progressiveAlpha.toJSON()).toEqual({
+    gradientType: 'Linear',
+    from: { x: 0.5, y: 0 },
+    to: { x: 0.5, y: 1 },
+    aspectRatio: 0,
+    stops: [
+      { color: '#00000000', position: 0 },
+      { color: '#0000007f', position: 0.5 },
+      { color: '#000000ff', position: 1 },
+    ],
+  })
+
+  style.progressiveAlpha = null
+  expect(style.progressiveAlpha).toBeUndefined()
+})

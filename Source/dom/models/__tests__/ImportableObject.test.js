@@ -24,7 +24,7 @@ test('should import a symbol from a lib', () => {
     parent: artboard,
   })
   // eslint-disable-next-line
-  const master = SymbolMaster.fromArtboard(artboard)
+  const master = SymbolMaster.fromFrame(artboard)
   return new Promise((resolve, reject) => {
     document.save(
       `${testOutputPath}/sketch-api-unit-tests-importable-objects.sketch`,

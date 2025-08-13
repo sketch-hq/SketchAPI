@@ -67,3 +67,17 @@ test('should create a shape path from an svg path', () => {
   const shapePath = ShapePath.fromSVGPath(svgPath)
   expect(shapePath.getSVGPath()).toBe(svgPath)
 })
+
+test('should report its edited status', () => {
+  const shapePath = new ShapePath()
+  expect(shapePath.edited).toBe(false)
+
+  shapePath.points[0].point = { x: 10, y: 10 }
+  expect(shapePath.edited).toBe(true)
+
+  const shapePath2 = new ShapePath()
+  expect(shapePath2.edited).toBe(false)
+
+  shapePath2.edited = true
+  expect(shapePath2.edited).toBe(true)
+})

@@ -21,7 +21,7 @@ export function createSymbolMaster(document) {
   })
 
   // build the symbol master
-  const master = SymbolMaster.fromArtboard(artboard)
+  const master = SymbolMaster.fromFrame(artboard)
   master.sketchObject.ensureDetachHasUpdated()
 
   return {
@@ -60,8 +60,7 @@ export function createSharedStyle(document, Primitive, style) {
 
 export function outputPath() {
   const uuid = NSUUID.UUID().UUIDString()
-  const path = NSTemporaryDirectory()
-    .stringByAppendingPathComponent(uuid)
+  const path = NSTemporaryDirectory().stringByAppendingPathComponent(uuid)
 
   fs.mkdirSync(path, { recursive: true })
   return path
