@@ -14,6 +14,7 @@ const { Library, getLibraries } = require('./models/Library')
 const { SharedStyle } = require('./models/SharedStyle')
 const { Rectangle } = require('./models/Rectangle')
 const { SmartLayout } = require('./models/SmartLayout')
+const { StackLayout } = require('./models/StackLayout')
 
 const { Style } = require('./style/Style')
 
@@ -58,6 +59,7 @@ const DOM = {
   getLibraries,
   SharedStyle,
   SmartLayout,
+  StackLayout,
   Rectangle,
   Style,
   Layer,

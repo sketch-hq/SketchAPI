@@ -15,6 +15,7 @@ export const Types = {
   Text: 'Text',
   Document: 'Document',
   Library: 'Library',
+  StackLayout: `StackLayout`,
   SymbolMaster: 'SymbolMaster',
   SymbolInstance: 'SymbolInstance',
   Override: 'Override',

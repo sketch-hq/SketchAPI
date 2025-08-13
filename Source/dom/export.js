@@ -1,11 +1,7 @@
+import { ExportFormat } from './models/ExportFormat'
 import { isWrappedObject } from './utils'
 import { wrapNativeObject } from './wrapNativeObject'
-import {
-  isArray,
-  toArray,
-  isObject,
-  toObject,
-} from 'util'
+import { isArray, toArray, isObject, toObject } from 'util'
 
 let Buffer
 
@@ -98,21 +94,36 @@ function exportToImageFile(nativeObjects, options) {
 
   // export the layers
   if (layers.length) {
-    success = exporter.exportLayers(layers) && success
+    if (options.exportFormats?.length) {
+      const exportFormats = options.exportFormats.map((format) =>
+        new ExportFormat(format).sketchObject.immutableModelObject()
+      )
+      success =
+        layers.every((layer) => {
+          const requests = exporter.exportRequestsForLayer_inRect_exportFormats(
+            layer,
+            CGRectNull,
+            exportFormats
+          )
+          return requests.every((request) => exporter.export(request))
+        }) && success
+    } else {
+      success = exporter.exportLayers(layers) && success
+    }
   }
 
   if (!success) {
-    const errors = exporter.results()["errors"]
+    const errors = exporter.results()['errors']
 
     if (isArray(errors) && errors.length) {
       const errorMessages = toArray(errors)
         .filter((error) => isObject(error))
-        .map((error) => toObject(error)["error"])
+        .map((error) => toObject(error)['error'])
         .filter((error) => error && error.isKindOfClass(NSError))
         .map((error) => error.localizedDescription())
 
       if (errorMessages && errorMessages.length) {
-        throw Error(errorMessages.join("\n"))
+        throw Error(errorMessages.join('\n'))
       }
     }
   }
@@ -124,7 +135,11 @@ function exportToBuffer(nativeObject, options) {
   const exporter = MSSelfContainedHighLevelExporter.alloc().initWithOptions(
     options
   )
-  const formats = exporter.formatsToExport()
+  const formats = options.exportFormats?.length
+    ? options.exportFormats.map((format) =>
+        new ExportFormat(format).sketchObject.immutableModelObject()
+      )
+    : exporter.formatsToExport()
 
   const rect = isPage ? exporter.rectToExportForPage(nativeObject) : CGRectNull
 

@@ -1,5 +1,13 @@
 /* globals expect, test */
-import { Group, Rectangle, Artboard, SymbolMaster, Shape, ShapePath } from '../..'
+import {
+  Group,
+  Rectangle,
+  Artboard,
+  SymbolMaster,
+  Shape,
+  ShapePath,
+  Layer,
+} from '../..'
 
 test('should set the name of the layer', (_context, document) => {
   // setting an existing name
@@ -273,7 +281,7 @@ test('should get the different parents', (_context, document) => {
   expect(group.getParentSymbolMaster()).toBe(undefined)
   expect(group.getParentShape()).toBe(undefined)
 
-  const symbolMaster = SymbolMaster.fromArtboard(artboard)
+  const symbolMaster = SymbolMaster.fromFrame(artboard)
   expect(symbolMaster.parent).toEqual(page)
   expect(symbolMaster.getParentPage()).toEqual(page)
   expect(symbolMaster.getParentArtboard()).toEqual(undefined)
@@ -317,21 +325,23 @@ test('should return valid line rotation', () => {
   let path = MSPath.alloc().initWithLineFrom_to(start, end)
   let layer = MSShapePathLayer.layerWithPath(path)
 
-  let immutableShape = new ShapePath({sketchObject: layer.immutableModelObject()})
+  let immutableShape = new ShapePath({
+    sketchObject: layer.immutableModelObject(),
+  })
   expect(Number(immutableShape.sketchObject.isLine())).toBe(1)
   expect(immutableShape.transform.rotation).toBe(45)
-  
+
   immutableShape.transform.rotation = 80
   // It should not be possible to modify an immutable object.
   expect(immutableShape.transform.rotation).toBe(45)
 
-  let shape = new ShapePath({sketchObject: layer})
+  let shape = new ShapePath({ sketchObject: layer })
   expect(Number(shape.sketchObject.isLine())).toBe(1)
   expect(shape.transform.rotation).toBe(45)
 
   shape.transform.rotation = 80
   expect(shape.transform.rotation).toBe(80)
-  
+
   shape.transform.rotation = 0
   expect(shape.transform.rotation).toBeCloseTo(0)
 })
@@ -401,7 +411,7 @@ test('should not accept invalid layer sizing values', (_context, document) => {
   expect(layer.horizontalSizing).toBe(1) // Should remain at previous valid value
   layer.horizontalSizing = 999
   expect(layer.horizontalSizing).toBe(1) // Should remain at previous valid value
-  layer.verticalSizing = 'Invalid' 
+  layer.verticalSizing = 'Invalid'
   expect(layer.verticalSizing).toBe(1) // Should remain at previous valid value
   layer.verticalSizing = 999
   expect(layer.verticalSizing).toBe(1) // Should remain at previous valid value
@@ -410,11 +420,11 @@ test('should not accept invalid layer sizing values', (_context, document) => {
 test('should handle layer pin properties', (_context, document) => {
   const frame = new Artboard({
     frame: { x: 0, y: 0, width: 10, height: 10 },
-    parent: document.selectedPage
+    parent: document.selectedPage,
   })
   const layer = new Shape({
     frame: { x: 2, y: 2, width: 6, height: 6 },
-    parent: frame
+    parent: frame,
   })
   // Test horizontal pins
   expect(layer.horizontalPins).toBe(0) // Default should be None (0)
@@ -424,20 +434,20 @@ test('should handle layer pin properties', (_context, document) => {
   expect(layer.horizontalPins).toBe(4) // Max is 1<<2
   layer.horizontalPins = 'All'
   expect(layer.horizontalPins).toBe(5) // All is Min|Max (5)
-  
+
   // Test setting numeric values
   layer.horizontalPins = 0
   expect(layer.horizontalPins).toBe(0)
-  
+
   // Test vertical pins
   expect(layer.verticalPins).toBe(0) // Default should be None (0)
   layer.verticalPins = 'Min'
   expect(layer.verticalPins).toBe(1) // Min is 1<<0
-  layer.verticalPins = 'Max'  
+  layer.verticalPins = 'Max'
   expect(layer.verticalPins).toBe(4) // Max is 1<<2
   layer.verticalPins = 'All'
   expect(layer.verticalPins).toBe(5) // All is Min|Max (5)
-  
+
   // Test setting numeric values
   layer.verticalPins = 0
   expect(layer.verticalPins).toBe(0)
@@ -459,10 +469,80 @@ test('should not accept invalid layer pin values', (_context, document) => {
   // Test invalid values don't change the pins
   layer.horizontalPins = 'Invalid'
   expect(layer.horizontalPins).toBe(1) // Should remain at previous valid value
-  layer.horizontalPins = 999 
+  layer.horizontalPins = 999
   expect(layer.horizontalPins).toBe(1) // Should remain at previous valid value
   layer.verticalPins = 'Invalid'
   expect(layer.verticalPins).toBe(1) // Should remain at previous valid value
   layer.verticalPins = 999
   expect(layer.verticalPins).toBe(1) // Should remain at previous valid value
+})
+
+test('should mask siblings', (_context, document) => {
+  const mask = new Shape({
+    frame: new Rectangle(20, 20, 40, 40),
+    masksSiblings: true,
+    maskMode: Layer.MaskMode.Outline,
+  })
+  const sibling = new ShapePath({
+    frame: new Rectangle(0, 0, 100, 100),
+  })
+
+  // eslint-disable-next-line no-unused-vars
+  const group = new Group({
+    parent: document.selectedPage,
+    layers: [mask, sibling],
+  })
+
+  expect(mask.masksSiblings).toBe(true)
+  expect(mask.maskMode).toBe(Layer.MaskMode.Outline)
+  expect(sibling.masksSiblings).toBe(false)
+  expect(sibling.closestMaskingLayer).toEqual(mask)
+
+  mask.masksSiblings = false
+  expect(sibling.closestMaskingLayer).toBeUndefined()
+})
+
+test('should break mask chain if needed', (_context, document) => {
+  const mask = new Shape({
+    masksSiblings: true,
+    maskMode: Layer.MaskMode.Alpha,
+  })
+  const sibling1 = new ShapePath()
+  const sibling2 = new ShapePath()
+
+  // eslint-disable-next-line no-unused-vars
+  const group = new Group({
+    parent: document.selectedPage,
+    layers: [mask, sibling1, sibling2],
+  })
+
+  expect(sibling1.closestMaskingLayer).toEqual(mask)
+  expect(sibling2.closestMaskingLayer).toEqual(mask)
+
+  // Break the mask chain at sibling1
+  sibling1.breaksMaskChain = true
+
+  expect(sibling1.closestMaskingLayer).toBeUndefined()
+  expect(sibling2.closestMaskingLayer).toBeUndefined()
+})
+
+test('should navigate the entire mask chain', (_context, document) => {
+  const mask1 = new Shape({
+    masksSiblings: true,
+    maskMode: Layer.MaskMode.Alpha,
+  })
+  const mask2 = new Shape({
+    masksSiblings: true,
+    maskMode: Layer.MaskMode.Alpha,
+  })
+  const sibling = new ShapePath()
+
+  // eslint-disable-next-line no-unused-vars
+  const group = new Group({
+    parent: document.selectedPage,
+    layers: [mask1, mask2, sibling],
+  })
+
+  expect(sibling.closestMaskingLayer).toEqual(mask2)
+  expect(sibling.closestMaskingLayer.closestMaskingLayer).toEqual(mask1)
 })

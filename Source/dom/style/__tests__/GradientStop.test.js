@@ -44,3 +44,28 @@ test('should create a gradient with some stops', () => {
     ],
   })
 })
+
+test('should report alpha of gradient stops', () => {
+  const s = new Style({
+    fills: [
+      {
+        fillType: FillType.Gradient,
+        gradient: {
+          gradientType: GradientType.Linear,
+          stops: [
+            {
+              position: 0,
+              color: '#1234567F',
+            },
+            {
+              position: 1,
+              color: '#123456FF',
+            },
+          ],
+        },
+      },
+    ],
+  })
+  expect(Math.round(s.fills[0].gradient.stops[0].alpha * 255)).toEqual(127)
+  expect(Math.round(s.fills[0].gradient.stops[1].alpha * 255)).toEqual(255)
+})

@@ -332,9 +332,9 @@ def main(argv):
         print_results(results)
 
         if (failed):
-            raise Exception('Some tests failed')
+            raise Exception('🛑 Some tests failed')
 
-        print('All test suites passed')
+        print('✅ All test suites passed')
         sys.exit(0)
     
     except Exception as e:

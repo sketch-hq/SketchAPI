@@ -7,7 +7,7 @@
   ],
   "plugins": ["import"],
   "parserOptions": {
-    "ecmaVersion": 9,
+    "ecmaVersion": 2020,
     "sourceType": "module"
   },
   "env": {
@@ -43,6 +43,7 @@
     "NSImage": "readonly",
     "NSTextField": "readonly",
     "NSSlider": "readonly",
+    "MSStyleBlur": "readonly",
     "MSStyleFill": "readonly",
     "MSStyleBorder": "readonly",
     "MSColor": "readonly",
@@ -71,6 +72,7 @@
     "NSString": "readonly",
     "MSForeignSymbolProvider": "readonly",
     "MSForeignObjectCollector": "readonly",
+    "MSStyleCorners": "readonly",
     "MSStyleShadow": "readonly",
     "MSGradientStop": "readonly",
     "MSImmutableGradientStop": "readonly",
@@ -176,6 +178,8 @@
     "NSMutableDictionary": "readonly",
     "NSDictionary": "readonly",
     "SmartLayout": "readonly",
+    "StackLayout": "readonly",
+    "MSFlexGroupLayout": "readonly",
     "MSInferredGroupLayout": "readonly",
     "MSFreeformGroupLayout": "readonly",
     "MSSwatch": "readonly",

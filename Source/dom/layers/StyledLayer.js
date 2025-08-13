@@ -84,3 +84,36 @@ StyledLayer.define('sharedStyle', {
     this._object.setSharedStyleID(nativeSharedStyle.id)
   },
 })
+
+StyledLayer.define('masksSiblings', {
+  get() {
+    return Boolean(this._object.hasClippingMask())
+  },
+  set(shouldMaskSiblings) {
+    if (this.isImmutable()) {
+      return
+    }
+    this._object.setHasClippingMask(Boolean(shouldMaskSiblings))
+  },
+})
+
+Layer.MaskMode = Object.freeze({
+  Outline: 0,
+  Alpha: 1,
+})
+
+StyledLayer.define('maskMode', {
+  get() {
+    return Number(this._object.clippingMaskMode())
+  },
+  set(newMaskMode) {
+    if (this.isImmutable()) {
+      return
+    }
+    if (Number.isInteger(newMaskMode)) {
+      this._object.setClippingMaskMode(newMaskMode)
+    } else {
+      throw new Error(`Invalid mask mode: ${newMaskMode}. Expected an integer.`)
+    }
+  },
+})

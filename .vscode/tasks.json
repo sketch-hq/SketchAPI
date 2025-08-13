@@ -1,59 +1,129 @@
 {
   "version": "2.0.0",
   "tasks": [
+    //
+    // Build & Lint
+    //
     {
-      "label": "Build & lint",
+      "label": "Build & Lint",
       "group": {
         "kind": "build",
         "isDefault": true
       },
       "dependsOrder": "sequence",
-      "dependsOn": ["Lint", "Build"]
+      "dependsOn": ["Build", "Lint"]
     },
     {
       "label": "Build",
       "type": "npm",
+      "hide": true,
       "script": "build",
-      "group": {
-        "kind": "build"
+      "presentation": {
+        "clear": true
       }
     },
     {
       "label": "Lint",
       "type": "npm",
-      "script": "lint",
-      "group": {
-        "kind": "build"
-      }
+      "hide": true,
+      "script": "lint"
     },
+    //
+    // Test
+    //
     {
-      "label": "Build and run tests",
+      "label": "Test",
       "dependsOrder": "sequence",
-      "dependsOn": ["Build", "Please choose target Xcode variant", "Run tests"],
+      "dependsOn": ["Build & Lint", "Test Default"],
       "group": {
         "kind": "test",
         "isDefault": true
       }
     },
     {
-      "label": "Please choose target Xcode variant",
-      "type": "shell",
-      "command": "echo -e '\\033[0;34m=====================================================================\nSelect the Sketch variant to test against in the VSCode popup above ☝️\n(or just press Enter)\n=====================================================================\\033[0m'",
+      "label": "Test Default",
+      "type": "npm",
+      "hide": true,
+      "script": "test"
+    },
+    //
+    // Test (single test suite)
+    //
+    {
+      "label": "Test [Single Suite]",
+      "dependsOrder": "sequence",
+      "dependsOn": [
+        "[Show the test suite name prompt]",
+        "Build & Lint",
+        "Test Single Suite"
+      ],
       "group": {
         "kind": "test"
       }
     },
     {
-      "label": "Run tests",
-      "type": "npm",
-      "script": "test",
+      "label": "[Show the test suite name prompt]",
+      "type": "shell",
+      "hide": true,
+      "command": "echo",
       "options": {
         "env": {
-          "TARGET_SKETCH_VARIANT_BUNDLE_ID": "${input:sketchTarget}"
+          "TEST_SUITE": "${input:testSuite}"
+        }
+      }
+    },
+    {
+      "label": "Test Single Suite",
+      "type": "npm",
+      "hide": true,
+      "script": "test:suite",
+      "options": {
+        "env": {
+          "TEST_SUITE": "${input:testSuite}"
+        }
+      }
+    },
+    //
+    // Test (custom Sketch target)
+    //
+    {
+      "label": "Test [Custom Sketch]",
+      "dependsOrder": "sequence",
+      "dependsOn": [
+        "[Show target Sketch variant prompt]",
+        "Build & Lint",
+        "Test Sketch Variant"
+      ],
+      "group": {
+        "kind": "test"
+      }
+    },
+    {
+      "label": "[Show target Sketch variant prompt]",
+      "type": "shell",
+      "hide": true,
+      "command": "echo",
+      "options": {
+        "env": {
+          "SKETCH_VARIANT_BUNDLE_ID": "${input:sketchTarget}"
+        }
+      }
+    },
+    {
+      "label": "Test Sketch Variant",
+      "type": "npm",
+      "script": "test:custom",
+      "hide": true,
+      "options": {
+        "env": {
+          "SKETCH_VARIANT_BUNDLE_ID": "${input:sketchTarget}"
         }
       }
     }
   ],
+  //
+  // [INPUTS]
+  //
   "inputs": [
     {
       "id": "sketchTarget",
@@ -65,6 +135,12 @@
         "com.bohemiancoding.sketch3"
       ],
       "default": "com.bohemiancoding.sketch3.xcode"
+    },
+    {
+      "id": "testSuite",
+      "description": "Enter the test suite name:",
+      "type": "promptString",
+      "default": ""
     }
   ]
 }

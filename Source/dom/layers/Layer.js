@@ -6,6 +6,7 @@ import { wrapObject, wrapNativeObject } from '../wrapNativeObject'
 import { Flow } from '../models/Flow'
 import { ExportFormat } from '../models/ExportFormat'
 import { Types } from '../enums'
+import { defineStackItemLayerProperties } from '../models/StackLayout'
 
 /**
  * Abstract class that represents a Sketch layer.
@@ -355,7 +356,9 @@ Layer.defineObject('transform', {
   rotation: {
     get() {
       // `userVisibleRotation` is only defined on mutable objects.
-      let layer = this._parent.isImmutable() ? this._object.newMutableCounterpart() : this._object
+      let layer = this._parent.isImmutable()
+        ? this._object.newMutableCounterpart()
+        : this._object
 
       // Calling `userVisibleRotation` matches what users see in the inspector (which may be different from the raw `rotation` value).
       return layer.userVisibleRotation()
@@ -394,7 +397,31 @@ Layer.defineObject('transform', {
   },
 })
 
-/** 
+Layer.define('breaksMaskChain', {
+  get() {
+    return Boolean(this._object.shouldBreakMaskChain())
+  },
+  set(shouldIgnoreMask) {
+    if (this.isImmutable()) {
+      return
+    }
+    this._object.setShouldBreakMaskChain(Boolean(shouldIgnoreMask))
+  },
+})
+
+Layer.define('closestMaskingLayer', {
+  get() {
+    if (this.breaksMaskChain) {
+      return undefined
+    }
+    if (!this._object.closestClippingLayer) {
+      return undefined
+    }
+    return wrapObject(this._object.closestClippingLayer())
+  },
+})
+
+/**
  * -----------
  * Flex Sizing
  * -----------
@@ -412,7 +439,7 @@ export const FlexSizing = {
 }
 
 /**
- * Determines how the item is sized horizontally relative to its children or 
+ * Determines how the item is sized horizontally relative to its children or
  * its parent group when their size changes.
  */
 Layer.define('horizontalSizing', {
@@ -420,8 +447,10 @@ Layer.define('horizontalSizing', {
     return this._object.horizontalSizing()
   },
   set(value) {
-    if (this.isImmutable()) { return }
-    const sizingValue = typeof value === 'string' ? FlexSizing[value] : value;
+    if (this.isImmutable()) {
+      return
+    }
+    const sizingValue = typeof value === 'string' ? FlexSizing[value] : value
     if (Object.values(FlexSizing).includes(sizingValue)) {
       this._object.setHorizontalSizing(sizingValue)
     }
@@ -429,7 +458,7 @@ Layer.define('horizontalSizing', {
 })
 
 /**
- * Determines how the item is sized vertically relative to its children or 
+ * Determines how the item is sized vertically relative to its children or
  * its parent group when their size changes.
  */
 Layer.define('verticalSizing', {
@@ -437,8 +466,10 @@ Layer.define('verticalSizing', {
     return this._object.verticalSizing()
   },
   set(value) {
-    if (this.isImmutable()) { return }
-    const sizingValue = typeof value === 'string' ? FlexSizing[value] : value;
+    if (this.isImmutable()) {
+      return
+    }
+    const sizingValue = typeof value === 'string' ? FlexSizing[value] : value
     if (Object.values(FlexSizing).includes(sizingValue)) {
       this._object.setVerticalSizing(sizingValue)
     }
@@ -452,12 +483,10 @@ Layer.define('verticalSizing', {
  * @return {string} The name of the sizing
  */
 export function getFlexSizing(value) {
-  return Object.keys(FlexSizing).find(
-    (key) => FlexSizing[key] === value
-  )
+  return Object.keys(FlexSizing).find((key) => FlexSizing[key] === value)
 }
 
-/** 
+/**
  * -----------
  * Horizontal and Vertical Pinning
  * -----------
@@ -479,8 +508,10 @@ Layer.define('horizontalPins', {
     return this._object.horizontalPins()
   },
   set(value) {
-    if (this.isImmutable()) { return }
-    const pinValue = typeof value === 'string' ? Pin[value] : value;
+    if (this.isImmutable()) {
+      return
+    }
+    const pinValue = typeof value === 'string' ? Pin[value] : value
     if (Object.values(Pin).includes(pinValue)) {
       this._object.setHorizontalPins(pinValue)
     }
@@ -492,10 +523,14 @@ Layer.define('verticalPins', {
     return this._object.verticalPins()
   },
   set(value) {
-    if (this.isImmutable()) { return }
-    const pinValue = typeof value === 'string' ? Pin[value] : value;
+    if (this.isImmutable()) {
+      return
+    }
+    const pinValue = typeof value === 'string' ? Pin[value] : value
     if (Object.values(Pin).includes(pinValue)) {
       this._object.setVerticalPins(pinValue)
     }
   },
 })
+
+defineStackItemLayerProperties(Layer)

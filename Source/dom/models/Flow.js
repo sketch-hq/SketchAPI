@@ -82,10 +82,10 @@ Flow.define('target', {
   enumerable: false,
   exportable: false,
   get() {
-    const target = this._object.destinationFrame()
-    if (target == BackTarget) {
+    if (this.targetId == BackTarget) {
       return BackTarget
     }
+    const target = this._object.destinationFrame()
     return wrapObject(target)
   },
   set(target) {

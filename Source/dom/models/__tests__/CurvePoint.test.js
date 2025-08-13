@@ -3,7 +3,6 @@
 // Use ShapePath to indirectly instantiate CurvePoint as there's no public,
 // direct API.
 import { Document, ShapePath } from '../..'
-import { toArray } from 'util'
 
 test('should be able to log an CurvePoint', () => {
   const p = new ShapePath().points[0]
@@ -34,34 +33,42 @@ test('should be able to modify a CurvePoint', () => {
   expect(p.point.toJSON()).toEqual({ x: 0.3, y: 0.4 })
 })
 
-test('should be able to modify the corner radius of a rectangle\'s CurvePoint', () => {
+test("should be able to modify the corner radius of a rectangle's CurvePoint", () => {
   const cornerRadius = 42
 
   const rectangle = new ShapePath()
   rectangle.points[1].cornerRadius = cornerRadius
-  expect(toArray(rectangle.sketchObject.CSSAttributes()).join(''))
-    .toEqual('border-radius: 0 ' + cornerRadius + 'px 0 0;')
+  expect(rectangle.sketchObject.CSSAttributeString().split('\n')).toEqual([
+    'width: 100px;',
+    'height: 100px;',
+    `border-radius: 0 ${cornerRadius}px 0 0;`,
+  ])
 })
 
-test('should be able to modify the corner radius of a rectangle\'s first CurvePoint', () => {
+test("should be able to modify the corner radius of a rectangle's first CurvePoint", () => {
   const cornerRadius = 42
 
   const rectangle = new ShapePath()
   rectangle.points[0].cornerRadius = cornerRadius
-  expect(toArray(rectangle.sketchObject.CSSAttributes()).join(''))
-    .toEqual('border-radius: ' + cornerRadius + 'px 0 0 0;')
+  expect(rectangle.sketchObject.CSSAttributeString().split('\n')).toEqual([
+    'width: 100px;',
+    'height: 100px;',
+    `border-radius: ${cornerRadius}px 0 0;`,
+  ])
 })
 
 // sketch-hq/SketchAPI#775, #39183.
-test('should be able to modify the corner radius of every rectangle\'s CurvePoint', () => {
+test("should be able to modify the corner radius of every rectangle's CurvePoint", () => {
   const cornerRadius = 42
 
   const rectangle = new ShapePath()
-  rectangle.points.forEach(point => point.cornerRadius = cornerRadius)
-  expect(toArray(rectangle.sketchObject.CSSAttributes()).join(''))
-    .toEqual('border-radius: ' + cornerRadius + 'px;')
-  expect(rectangle.sketchObject.cornerRadius())
-    .toEqual(cornerRadius)
+  rectangle.points.forEach((point) => (point.cornerRadius = cornerRadius))
+  expect(rectangle.sketchObject.CSSAttributeString().split('\n')).toEqual([
+    'width: 100px;',
+    'height: 100px;',
+    `border-radius: ${cornerRadius}px;`,
+  ])
+  expect(rectangle.sketchObject.cornerRadius()).toEqual(cornerRadius)
 })
 
 test('should be able to tell if a point is selected)', () => {
@@ -69,7 +76,7 @@ test('should be able to tell if a point is selected)', () => {
   const shape = new ShapePath({
     parent: document.pages[0],
   })
-  
+
   // no point selected
   expect(shape.points[0].isSelected()).toBe(false)
 
@@ -83,15 +90,15 @@ test('should be able to tell if a point is selected)', () => {
   //still no selection
   expect(shape.points[0].isSelected()).toBe(false)
 
-  //select the first point 
-  document.sketchObject 
+  //select the first point
+  document.sketchObject
     .eventHandlerManager()
     .currentHandler()
     .pathController()
     .selectNext(null)
 
-  //now selected true  
+  //now selected true
   expect(shape.points[0].isSelected()).toBe(true)
-  
+
   document.close()
 })

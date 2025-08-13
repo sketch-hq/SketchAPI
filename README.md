@@ -52,7 +52,7 @@ sel.forEach(function (elem) {
 
 ### Prerequisits
 
-- Have [Node](https://nodejs.org) installed
+- Have [Node](https://nodejs.org) 22+ installed
 - [Visual Studio Code](https://code.visualstudio.com) (recommended)
 
 ### Overview
@@ -62,6 +62,7 @@ The Sketch API is written in JavaScript/CocoaScript and gets bundled as part of 
 In addition to the API, this project also defines core modules to be included in Sketch as part of the official release process. Both are written to the `build` output folder when the build script is run:
 
 ```sh
+npm install
 ./build.sh
 ```
 
@@ -69,14 +70,25 @@ In addition to the API, this project also defines core modules to be included in
 
 The following npm scripts are available for development of the API.
 
-| Script                        | Description                             |
-| ----------------------------- | --------------------------------------- |
-| `npm run build`               | Build SketchAPI into the `build` folder |
-| `npm run test:build`          | Build integration test plugin           |
-| `npm run lint`                | Lint the source code                    |
-| `npm run format-check`        | Check the format with Prettier          |
-| `npm run api-location:write`  | Tell Sketch to use your local SketchAPI |
-| `npm run api-location:delete` | Undo `npm run api-location:write`       |
+| Script                        | Description                                 |
+| ----------------------------- | ------------------------------------------- |
+| `npm run build`               | Build SketchAPI into the `build` folder     |
+| `npm run test [suite]`        | Run integrations tests (or a single suite). |
+| `npm run lint`                | Lint the source code                        |
+| `npm run format-check`        | Check the format with Prettier              |
+| `npm run api-location:write`  | Tell Sketch to use your local SketchAPI     |
+| `npm run api-location:delete` | Undo `npm run api-location:write`           |
+
+In case you're using Visual Studio Code to work on SketchAPI, this project's `tasks.json` define the following shortcuts, available via _Command Palette > Run Task_:
+
+| Task | Description |
+| --- | --- |
+| `Build & Lint` | Build SketchAPI and lint the source code |
+| `Test` | Build SketchAPI and run integration tests |
+| `Test [Single Suite]` | Build SketchAPI and run a select test suite |
+| `Test [Custom Sketch]` | Build SketchAPI and run tests against a selected Sketch variant (e.g. Sketch Beta) |
+
+The last two tasks will prompt you for a test suite name, or a Sketch bundleID respectively.
 
 ### Build and run
 
@@ -110,6 +122,32 @@ Note, any plugins you have installed or code you invoke in Sketch's _Plugins_ â€
 The SketchAPI builds on top of macOS and internal Sketch APIs via CocoaScript. To ensure the API works for a specific Sketch version or build, this repository includes `*.test.js` files containing integration tests.
 
 These integration tests are compiled into a single test plugin using Webpack and can run by the `run_tests.py` Python script, or from the Sketch application menu.
+
+> [!TIP]  
+> Install the `psutil` Python module, so that the test runner can terminate Sketch automatically upon test completion:
+>
+> ```
+> pip install psutil
+> ```
+>
+> Otherwise every new test run will leave a new instance of Sketch app hanging around.
+
+All the necessary plumbing is done automatically when you run:
+
+```sh
+./test.sh
+```
+
+which optionally takes a name of the test suite to be run exclusively:
+
+```sh
+./test.sh SymbolInstance
+```
+
+This will build SketchAPI and tests, prepare the host plugin, set up your environment for testing, launch Sketch, and run the test suite in it, collecting and reporting the results back to you.
+
+<details>
+<summary>(Alternative) Manual steps to build and run tests</summary>
 
 **Build test plugin**
 
@@ -149,6 +187,8 @@ Tests can also be run manually from within Sketch:
 3. Select _Test Sketch API_ from the application menu in _Plugins_ â€º _Sketch Integration Tests (`$UUID`)_
 
 The test results are written to the specified output file or, if no dedicated path is provided, to a temporary file. Use macOS' _Console.app_ to view Sketch's logs containing information on the file location and test progress in general.
+
+</details>
 
 ## Acknowledgements
 

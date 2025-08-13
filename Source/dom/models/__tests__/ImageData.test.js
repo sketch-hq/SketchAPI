@@ -40,3 +40,26 @@ test('should return image size regardless of scale', (_context, document) => {
   expect(image.image.size.width).toBe(50)
   expect(image.image.size.height).toBe(50)
 })
+
+test('should return base64-encoded image data', (_context, document) => {
+  const page = document.selectedPage
+
+  const firstImage = new Image({
+    parent: page,
+    image: {
+      base64: base64Image,
+    },
+  })
+
+  const exportedBase64String = firstImage.image.base64
+  expect(typeof exportedBase64String).toBe('string')
+
+  const secondImage = new Image({
+    parent: page,
+    image: {
+      base64: exportedBase64String,
+    },
+  })
+  expect(secondImage.image.size.width).toBe(firstImage.image.size.width)
+  expect(secondImage.image.size.height).toBe(firstImage.image.size.height)
+})

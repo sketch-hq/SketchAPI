@@ -36,13 +36,14 @@ test('should have overrides', (_context, document) => {
 
   expect(instance.overrides.length).toBe(10)
 
-  const override = instance.overrides.find(o => o.property === 'stringValue')
+  const override = instance.overrides.find((o) => o.property === 'stringValue')
   const result = {
     type: 'Override',
     id: `${text.id}_stringValue`,
     path: text.id,
     property: 'stringValue',
     symbolOverride: false,
+    colorOverride: false,
     value: 'Test value',
     isDefault: true,
     editable: true,
@@ -50,9 +51,13 @@ test('should have overrides', (_context, document) => {
     selected: false,
   }
   delete result.affectedLayer.selected
+  delete result.affectedLayer.ignoresStackLayout
+  delete result.affectedLayer.preservesSpaceInStackLayoutWhenHidden
   result.affectedLayer.style = override.affectedLayer.style.toJSON()
 
-  const overrideAfter = instance.overrides.find(o => o.property === 'stringValue')
+  const overrideAfter = instance.overrides.find(
+    (o) => o.property === 'stringValue'
+  )
   expect(overrideAfter.toJSON()).toEqual(result)
 })
 
@@ -60,7 +65,7 @@ test('should have overrides', (_context, document) => {
 // - fix #49472 didn't work after all. :sad-panda:
 // We NEED these tests, so for now we should disable this one until
 // we know why this isn't working correctly. - JLN, 6 Mar, 2023
-// 
+//
 //test('should detach an instance', (_context, document) => {
 //  const { master } = createSymbolMaster(document)
 //  const instance = new SymbolInstance({

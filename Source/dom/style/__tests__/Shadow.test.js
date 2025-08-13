@@ -56,6 +56,7 @@ test('should get the shadows', () => {
     spread: 20,
     enabled: false,
     isInnerShadow: false,
+    blendingMode: 'Normal',
   })
   expect(style.innerShadows[0].toJSON()).toEqual({
     color: '#11223344',
@@ -65,6 +66,7 @@ test('should get the shadows', () => {
     spread: 10,
     enabled: true,
     isInnerShadow: true,
+    blendingMode: 'Normal',
   })
 })
 
@@ -92,4 +94,39 @@ test('should set the shadows with 0 values', () => {
   expect(style.shadows[0].y).toBe(0)
   expect(style.innerShadows[0].blur).toBe(0)
   expect(style.innerShadows[0].y).toBe(0)
+})
+
+test('should set and get blending mode', () => {
+  const style = new Style({
+    blendingMode: Style.BlendingMode.ColorBurn,
+  })
+  style.shadows = [
+    {
+      spread: 0,
+      blur: 0,
+      x: 1,
+      y: 0,
+      color: '#ebc100',
+      blendingMode: Style.BlendingMode.Darken,
+    },
+    {
+      spread: 0,
+      blur: 0,
+      x: 1,
+      y: 0,
+      color: '#ebc100',
+      isInnerShadow: true,
+      blendingMode: Style.BlendingMode.Difference,
+    },
+  ]
+
+  expect(style.shadows[0].blendingMode).toBe(Style.BlendingMode.Darken)
+  expect(style.innerShadows[0].blendingMode).toBe(Style.BlendingMode.Difference)
+
+  style.shadows[0].blendingMode = Style.BlendingMode.HardLight
+  style.innerShadows[0].blendingMode = Style.BlendingMode.Hue
+  style.blendingMode = Style.BlendingMode.Lighten
+
+  expect(style.shadows[0].blendingMode).toBe(Style.BlendingMode.HardLight)
+  expect(style.innerShadows[0].blendingMode).toBe(Style.BlendingMode.Hue)
 })

@@ -3,7 +3,7 @@ import { Buffer } from 'buffer'
 import fs from '@skpm/fs'
 
 import sketch from '../..'
-const { Shape } = sketch
+const { Shape, ShapePath, Style, Image } = sketch
 
 import { outputPath } from '../../test-utils'
 
@@ -154,7 +154,9 @@ test('Should fail when exporting a shape too large for WebP', (_context, documen
     })
     expect(false).toBe(true)
   } catch (err) {
-    expect(err.message).toMatch('Failed to export WebP file. Exported image size for \'Shape\' exceeds maximum pixel dimensions supported by the WebP format (16383 x 16383): 100 x 16800.')
+    expect(err.message).toMatch(
+      "Failed to export WebP file. Exported image size for 'Shape' exceeds maximum pixel dimensions supported by the WebP format (16383 x 16383): 100 x 16800."
+    )
   }
 })
 
@@ -174,4 +176,252 @@ test('Should export a shape to json file', (_context, document) => {
     output: testOutputPath,
   })
   expect(fs.existsSync(filePath)).toBe(true)
+})
+
+test('should export to file according to existing exportFormats', (_context, document) => {
+  const testOutputPath = outputPath()
+  const filePath = `${testOutputPath}/prefix-Shape.jpg`
+  try {
+    fs.unlinkSync(filePath)
+  } catch (err) {
+    // just ignore
+  }
+  const object = new ShapePath({
+    parent: document.selectedPage,
+    name: 'Shape',
+    style: {
+      fills: [
+        {
+          color: '#c0ffee',
+          fillType: Style.FillType.Color,
+        },
+      ],
+    },
+    exportFormats: [
+      {
+        size: '1x',
+        prefix: 'prefix-',
+        fileFormat: 'jpg',
+      },
+    ],
+  })
+
+  const result = sketch.export(object, {
+    output: testOutputPath,
+    exportFormats: object.exportFormats,
+  })
+  expect(result).toBe(true)
+  expect(fs.existsSync(filePath)).toBe(true)
+
+  try {
+    fs.unlinkSync(filePath)
+  } finally {
+    // ignore
+  }
+})
+
+test('should export to file according to custom exportFormats', (_context, document) => {
+  const testOutputPath = outputPath()
+  const filePath = `${testOutputPath}/Shape-suffix.png`
+  try {
+    fs.unlinkSync(filePath)
+  } catch (err) {
+    // just ignore
+  }
+  const object = new ShapePath({
+    parent: document.selectedPage,
+    name: 'Shape',
+    style: {
+      fills: [
+        {
+          color: '#c0ffee',
+          fillType: Style.FillType.Color,
+        },
+      ],
+    },
+  })
+
+  const result = sketch.export(object, {
+    output: testOutputPath,
+    exportFormats: [
+      {
+        size: '1x',
+        suffix: '-suffix',
+        fileFormat: 'png',
+      },
+    ],
+  })
+  expect(result).toBe(true)
+  expect(fs.existsSync(filePath)).toBe(true)
+
+  try {
+    fs.unlinkSync(filePath)
+  } finally {
+    // ignore
+  }
+})
+
+test('should export to multiple files according to exportFormats', (_context, document) => {
+  const testOutputPath = outputPath()
+  const filePath1 = `${testOutputPath}/prefix-Shape.jpg`
+  const filePath2 = `${testOutputPath}/Shape-suffix.png`
+  try {
+    fs.unlinkSync(filePath1)
+    fs.unlinkSync(filePath2)
+  } catch (err) {
+    // just ignore
+  }
+  const object = new ShapePath({
+    parent: document.selectedPage,
+    name: 'Shape',
+    style: {
+      fills: [
+        {
+          color: '#c0ffee',
+          fillType: Style.FillType.Color,
+        },
+      ],
+    },
+  })
+
+  const result = sketch.export(object, {
+    output: testOutputPath,
+    exportFormats: [
+      {
+        size: '1x',
+        prefix: 'prefix-',
+        fileFormat: 'jpg',
+      },
+      {
+        size: '15h',
+        suffix: '-suffix',
+        fileFormat: 'png',
+      },
+    ],
+  })
+  expect(result).toBe(true)
+  expect(fs.existsSync(filePath1)).toBe(true)
+  expect(fs.existsSync(filePath2)).toBe(true)
+
+  try {
+    fs.unlinkSync(filePath1)
+    fs.unlinkSync(filePath2)
+  } finally {
+    // ignore
+  }
+})
+
+test('should export to file with default options when exportFormats are empty', (_context, document) => {
+  const testOutputPath = outputPath()
+  const filePath = `${testOutputPath}/Shape.png`
+  try {
+    fs.unlinkSync(filePath)
+  } catch (err) {
+    // just ignore
+  }
+  const object = new ShapePath({
+    parent: document.selectedPage,
+    name: 'Shape',
+    style: {
+      fills: [
+        {
+          color: '#c0ffee',
+          fillType: Style.FillType.Color,
+        },
+      ],
+    },
+  })
+
+  const result = sketch.export(object, {
+    output: testOutputPath,
+    exportFormats: [],
+  })
+  expect(result).toBe(true)
+  expect(fs.existsSync(filePath)).toBe(true)
+
+  try {
+    fs.unlinkSync(filePath)
+  } finally {
+    // ignore
+  }
+})
+
+test('should export to buffer according to existing exportFormats', (_context, document) => {
+  const object = new ShapePath({
+    parent: document.selectedPage,
+    name: 'Shape',
+    style: {
+      fills: [
+        {
+          color: '#c0ffee',
+          fillType: Style.FillType.Color,
+        },
+      ],
+    },
+    exportFormats: [
+      {
+        size: '2x',
+        fileFormat: 'png',
+      },
+    ],
+  })
+
+  const buffer = sketch.export(object, {
+    output: false,
+    exportFormats: object.exportFormats,
+  })
+
+  expect(Buffer.isBuffer(buffer)).toBe(true)
+  expect(new Image({ image: buffer }).image.size.width).toBe(200)
+})
+
+test('should export to buffer according to new exportFormats', (_context, document) => {
+  const object = new ShapePath({
+    parent: document.selectedPage,
+    name: 'Shape',
+    style: {
+      fills: [
+        {
+          color: '#c0ffee',
+          fillType: Style.FillType.Color,
+        },
+      ],
+    },
+  })
+
+  const buffer = sketch.export(object, {
+    output: false,
+    exportFormats: [
+      {
+        size: '2x',
+        fileFormat: 'png',
+      },
+    ],
+  })
+
+  expect(Buffer.isBuffer(buffer)).toBe(true)
+  expect(new Image({ image: buffer }).image.size.width).toBe(200)
+})
+
+test('should export to buffer with default options when exportFormats are empty', (_context, document) => {
+  const object = new ShapePath({
+    parent: document.selectedPage,
+    name: 'Shape',
+    style: {
+      fills: [
+        {
+          color: '#c0ffee',
+          fillType: Style.FillType.Color,
+        },
+      ],
+    },
+  })
+
+  const buffer = sketch.export(object, {
+    output: false,
+    exportFormats: [],
+  })
+
+  expect(Buffer.isBuffer(buffer)).toBe(true)
+  expect(new Image({ image: buffer }).image.size.width).toBe(100)
 })

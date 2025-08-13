@@ -146,6 +146,7 @@ test('should create a back action', () => {
     animationType: 'slideFromRight',
     maintainScrollPosition: false,
   })
+  expect(rect.flow.target).toBe(Flow.BackTarget)
   expect(rect.flow.isBackAction()).toBe(true)
 })
 
