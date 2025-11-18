@@ -36,7 +36,9 @@ export const StackLayoutAlignItems = Object.freeze({
   Center: 1,
   // Align to the end of the cross-axis (e.g. right or bottom).
   End: 2,
-  /// For an individual stack item, use the default alignment inherited from the stack.
+  // Align via stretching.
+  Stretch: 3,
+  // For an individual stack item, use the default alignment inherited from the stack.
   None: 5,
 })
 
@@ -108,6 +110,10 @@ StackLayout.define('alignItems', {
     return Number(this._object.alignItems())
   },
   set(alignItems) {
+    if (this.wraps && alignItems === StackLayout.AlignItems.Stretch) {
+      // Can't set alignItems to Stretch when wrapping is enabled
+      return
+    }
     if (Number.isInteger(alignItems)) {
       this._object.setAlignItems(alignItems)
     }
@@ -119,9 +125,7 @@ StackLayout.define('gap', {
     return Number(this._object.allGuttersGap())
   },
   set(gap) {
-    if (Number.isInteger(gap)) {
-      this._object.setAllGuttersGap(gap)
-    }
+    this._object.setAllGuttersGap(Number(gap))
   },
 })
 
@@ -219,9 +223,43 @@ StackLayout.define('padding', {
   },
 })
 
+StackLayout.define('wraps', {
+  get() {
+    return Boolean(this._object.wrappingEnabled())
+  },
+  set(wraps) {
+    if (wraps && this.alignItems === StackLayout.AlignItems.Stretch) {
+      // Can't enable wrapping when alignItems is set to Stretch
+      return
+    }
+    this._object.setWrappingEnabled(Boolean(wraps))
+  },
+})
+
+StackLayout.define('alignContent', {
+  get() {
+    return Number(this._object.alignContent())
+  },
+  set(alignContent) {
+    if (Number.isInteger(alignContent)) {
+      this._object.setAlignContent(alignContent)
+    }
+  },
+})
+
+StackLayout.define('crossAxisGap', {
+  get() {
+    return Number(this._object.crossAxisGutterGap())
+  },
+  set(crossAxisGap) {
+    this._object.setCrossAxisGutterGap(Number(crossAxisGap))
+  },
+})
+
 StackLayout.Direction = StackLayoutDirection
 StackLayout.JustifyContent = StackLayoutJustifyContent
 StackLayout.AlignItems = StackLayoutAlignItems
+StackLayout.AlignContent = StackLayoutJustifyContent
 
 StackLayout.type = Types.StackLayout
 StackLayout[DefinedPropertiesKey] = { ...WrappedObject[DefinedPropertiesKey] }

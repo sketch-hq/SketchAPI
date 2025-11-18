@@ -182,3 +182,101 @@ test('should set and get gradient property', () => {
     ],
   })
 })
+
+test('should get color swatch', (_context, document) => {
+  document.swatches = [
+    {
+      name: 'Safety Orange',
+      color: '#ff6600',
+    },
+  ]
+  const swatch = document.swatches[0]
+
+  // Make sure this host layer is actually part of the same document as the swatch itself
+  document.selectedPage.layers = [
+    {
+      type: 'ShapePath',
+      style: {
+        borders: [
+          {
+            fillType: Style.FillType.Color,
+            color: swatch.referencingColor,
+          },
+        ],
+      },
+    },
+  ]
+
+  let layer = document.selectedPage.layers[0]
+  expect(layer.style.borders[0].swatch).toBeDefined()
+  expect(layer.style.borders[0].swatch.name).toBe(swatch.name)
+  expect(layer.style.borders[0].swatch.color).toBe(swatch.color)
+  expect(layer.style.borders[0].color).toBe(swatch.color)
+})
+
+test('should set color swatch', (_context, document) => {
+  document.swatches = [
+    {
+      name: 'Safety Orange',
+      color: '#ff6600',
+    },
+  ]
+
+  // Make sure this host layer is actually part of the same document as the swatch itself
+  document.selectedPage.layers = [
+    {
+      type: 'ShapePath',
+      style: {
+        borders: [
+          {
+            fillType: Style.FillType.Color,
+            color: '#11223344', // will be replaced with the swatch color
+          },
+        ],
+      },
+    },
+  ]
+
+  let layer = document.selectedPage.layers[0]
+  expect(layer.style.borders[0].swatch).toBeUndefined()
+
+  const swatch = document.swatches[0]
+  layer.style.borders[0].swatch = swatch
+  expect(layer.style.borders[0].swatch).toBeDefined()
+  expect(layer.style.borders[0].swatch.name).toBe(swatch.name)
+  expect(layer.style.borders[0].swatch.color).toBe(swatch.color)
+  expect(layer.style.borders[0].color).toBe(swatch.color)
+})
+
+test('should assign swatch directly', (_context, document) => {
+  document.swatches = [
+    {
+      name: 'Safety Orange',
+      color: '#ff6600',
+    },
+  ]
+  const swatch = document.swatches[0]
+
+  // Make sure this host layer is actually part of the same document as the swatch itself
+  document.selectedPage.layers = [
+    {
+      type: 'ShapePath',
+      style: {
+        borders: [
+          {
+            fillType: Style.FillType.Color,
+            swatch: swatch,
+            color: '##11223344', // should be ignored
+          },
+        ],
+      },
+    },
+  ]
+  let layer = document.selectedPage.layers[0]
+
+  expect(layer.style.borders[0].swatch).toBeDefined()
+  expect(layer.style.borders[0].swatch.id).toBe(swatch.id)
+  expect(layer.style.borders[0].swatch.name).toBe(swatch.name)
+  expect(layer.style.borders[0].swatch.color).toBe(swatch.color)
+  expect(layer.style.borders[0].color).toBe(swatch.color)
+})

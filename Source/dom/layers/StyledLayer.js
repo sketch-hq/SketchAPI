@@ -1,10 +1,10 @@
-import { isNativeObject } from 'util'
+import { isNativeObject, toArray } from 'util'
 import { DefinedPropertiesKey } from '../WrappedObject'
 import { Factory } from '../Factory'
 import { Layer } from './Layer'
 import { Style } from '../style/Style'
 import { SharedStyle } from '../models/SharedStyle'
-import { wrapObject } from '../wrapNativeObject'
+import { wrapObject, wrapNativeObject } from '../wrapNativeObject'
 
 /**
  * Represents a layer with style.
@@ -61,14 +61,31 @@ StyledLayer.define('sharedStyle', {
   enumerable: false,
   exportable: false,
   get() {
-    if (!this._object.sharedStyle) {
+    if (this._object.sharedStyle) {
+      const nativeSharedStyle = this._object.sharedStyle()
+      return nativeSharedStyle
+        ? SharedStyle.fromNative(nativeSharedStyle)
+        : null
+    }
+
+    if (!this.sharedStyleId) {
       return null
     }
-    const nativeSharedStyle = this._object.sharedStyle()
-    if (!nativeSharedStyle) {
-      return null
-    }
-    return SharedStyle.fromNative(nativeSharedStyle)
+
+    // We're likely dealing with an immutable layer inside a detached symbol
+    // instance. This means we have to loop through all documents to find one
+    // with a shared style with matching id
+    let nativeSharedStyle = null
+    toArray(NSApp.orderedDocuments())
+      .filter((doc) => doc.isKindOfClass(MSDocument))
+      .some((doc) => {
+        const documentData = doc.documentData?.()?.immutableModelObject?.()
+        nativeSharedStyle =
+          documentData?.textStyleWithID?.(this.sharedStyleId) ||
+          documentData?.layerStyleWithID?.(this.sharedStyleId)
+        return !!nativeSharedStyle
+      })
+    return nativeSharedStyle ? wrapNativeObject(nativeSharedStyle) : null
   },
   set(sharedStyle) {
     if (this.isImmutable()) {

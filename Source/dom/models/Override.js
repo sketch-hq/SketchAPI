@@ -5,6 +5,7 @@ import { ImageData } from './ImageData'
 import { wrapNativeObject } from '../wrapNativeObject'
 import { Rectangle } from './Rectangle'
 import { Color } from '../style/Color'
+import { Swatch } from '../assets'
 
 export class Override extends WrappedObject {
   // Returns any override directly set on the symbol instance or null if none is set or this is an override point on a symbol source
@@ -141,6 +142,42 @@ Override.define('colorOverride', {
   },
 })
 
+Override.define('swatchValue', {
+  get() {
+    if (!this.colorOverride) {
+      return undefined
+    }
+
+    let value = this.getValueSetOnInstance()
+    if (!value) {
+      value = this.getResolvedValueOnDetachedSymbol()
+    }
+
+    let swatchID = Color.from(value).toMSImmutableColor().swatchID?.()
+    if (!swatchID) {
+      return undefined
+    }
+
+    return Swatch.instantiate(
+      swatchID,
+      this.__symbolInstance || this.__symbolMaster
+    )
+  },
+  set(newSwatch) {
+    if (!this.__symbolInstance) {
+      throw new Error('Can only set `swatchValue` for a symbol instance')
+    }
+    if (!this.colorOverride) {
+      return undefined
+    }
+
+    this.__symbolInstance.setOverrideValue(
+      this,
+      Swatch.from(newSwatch).referencingColor
+    )
+  },
+})
+
 Override.define('value', {
   get() {
     var value = this.getValueSetOnInstance()
@@ -170,6 +207,28 @@ Override.define('defaultValue', {
   enumerable: false,
   get() {
     return this.wrapNativeOverrideValue(this.getDefaultValue())
+  },
+})
+
+Override.define('defaultSwatchValue', {
+  get() {
+    if (!this.colorOverride) {
+      return undefined
+    }
+
+    const value = this.getDefaultValue()
+    if (!value) {
+      return undefined
+    }
+    const swatchID = Color.from(value).toMSImmutableColor().swatchID?.()
+    if (!swatchID) {
+      return undefined
+    }
+
+    return Swatch.instantiate(
+      swatchID,
+      this.__symbolInstance || this.__symbolMaster
+    )
   },
 })
 

@@ -9,6 +9,8 @@ import { Override } from '../models/Override'
 import { ImageData } from '../models/ImageData'
 import { getDocuments } from '../models/Document'
 import { Color } from '../style/Color'
+import { NestedExpandedSymbol } from './NestedExpandedSymbol'
+import { LayerAncestry } from './LayerAncestry'
 
 /**
  * A Sketch symbol instance.
@@ -80,6 +82,28 @@ export class SymbolInstance extends StyledLayer {
     this._object.ensureDetachHasUpdated()
     this._object.resizeToFitContentsIfNeeded()
     return this
+  }
+
+  overridesForExpandedLayer(expandedLayer) {
+    // Locating the corresponding overrides for a given "nested" immutable layer
+    // involves the following challenges:
+    // 1) layer IDs are not guaranteed to be unique within a symbol, so we can't
+    //    just look for an override with affectedLayer.id === expandedLayer.id;
+    // 2) we can't rely on the internal object comparison either, because as soon
+    //    as any of our overrides are modified, the immutable detached symbol layer
+    //    hierarchy is regenerated, which renders the previous `expandedLayers`
+    //    snapshot (and by extension, the expandedLayer we've got) outdated;
+    // To overcome these challenges, we manually keep track of the nested detached
+    // symbol ancestry for each nested layer and use that to compute the exact
+    // override path for that layer, which is guaranteed to be unique
+    const correspondingOverridePath = (
+      expandedLayer._detachedSymbolAncestry?.objectIDs() || []
+    )
+      .concat(expandedLayer.id)
+      .join('/')
+    return this.overrides.filter((override) => {
+      return override.path === correspondingOverridePath
+    })
   }
 }
 
@@ -178,6 +202,33 @@ SymbolInstance.define('overrides', {
     )
   },
 })
+
+SymbolInstance.define('expandedLayers', {
+  importable: false,
+  exportable: false,
+  enumerable: false,
+  get() {
+    this._object.ensureDetachHasUpdated()
+
+    const detachedLayers = this._object.detachedInstance()?.layers()
+    if (!detachedLayers) {
+      return undefined
+    }
+
+    return toArray(detachedLayers).map((nativeImmutableLayer) => {
+      const wrapped = wrapObject(nativeImmutableLayer)
+      if (wrapped.isNestedSymbol) {
+        // We need to keep track of the nested symbol ancestry for
+        // overridesForExpandedLayer() to work properly
+        wrapped._detachedSymbolAncestry = new LayerAncestry({ layer: wrapped })
+      }
+      return wrapped
+    })
+  },
+})
+// Reference NestedExpandedSymbol here so it doesn't have to be exposed but can
+// still be Factory-registered
+SymbolInstance._NestedExpandedSymbolPrivateReference = NestedExpandedSymbol
 
 // An "override" for the `Layer.hidden` property so we can
 // call `ensureDetachHasUpdated()` afterwards (SMAC-4904)

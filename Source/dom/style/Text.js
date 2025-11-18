@@ -1,5 +1,6 @@
 import { Color } from './Color'
 import { FloatingPointNumber } from '../utils'
+import { Swatch } from '../assets'
 
 export const TextAlignmentMap = {
   left: 0, // Visually left aligned
@@ -354,6 +355,23 @@ export function defineTextStyleProperties(Style) {
         attributes.MSAttributedStringColorAttribute = _color.toMSImmutableColor()
         return attributes
       })
+    },
+  })
+
+  Style.define('textSwatch', {
+    get() {
+      const attributes = getAttributes(this._object)
+      const swatchID = attributes?.MSAttributedStringColorAttribute?.swatchID?.()
+      if (!swatchID) {
+        return undefined
+      }
+      return Swatch.instantiate(swatchID, this)
+    },
+    set(newSwatch) {
+      if (this.isImmutable()) {
+        return
+      }
+      this.textColor = Swatch.from(newSwatch).referencingColor
     },
   })
 

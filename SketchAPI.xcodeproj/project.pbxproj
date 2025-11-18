@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 63;
+	objectVersion = 77;
 	objects = {
 
 /* Begin PBXAggregateTarget section */
@@ -127,7 +127,6 @@
 				};
 			};
 			buildConfigurationList = 437121362469F097000570FA /* Build configuration list for PBXProject "SketchAPI" */;
-			compatibilityVersion = "Xcode 15.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -136,6 +135,7 @@
 			);
 			mainGroup = 437121322469F097000570FA;
 			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
 			productRefGroup = 82E076C727D1037600402C93 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";

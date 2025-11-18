@@ -2,7 +2,6 @@ import { toArray } from 'util'
 import { DefinedPropertiesKey } from '../WrappedObject'
 import { Artboard } from './Artboard'
 import { Group } from './Group'
-import { Layer } from './Layer'
 import { Rectangle } from '../models/Rectangle'
 import { Types } from '../enums'
 import { Factory } from '../Factory'
@@ -143,9 +142,6 @@ SymbolMaster.type = Types.SymbolMaster
 SymbolMaster[DefinedPropertiesKey] = { ...Group[DefinedPropertiesKey] }
 Factory.registerClass(SymbolMaster, MSSymbolMaster)
 Factory.registerClass(SymbolMaster, MSImmutableSymbolMaster)
-
-Factory.registerClass(Layer, MSDetachedSymbol)
-Factory.registerClass(Layer, MSImmutableDetachedSymbol)
 
 SymbolMaster.define('symbolId', {
   get() {

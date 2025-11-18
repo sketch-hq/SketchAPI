@@ -12,6 +12,7 @@
     "test": "./Scripts/test.sh $npm_config_spec",
     "test:suite": "./Scripts/test.sh",
     "test:custom": "./Scripts/test.sh",
+    "test:suiteOnCustom": "./Scripts/test.sh",
     "lint": "eslint \"Source/**\"",
     "format-check": "prettier --check \"**/*.{js,json}\"",
     "api-location:write": "defaults write com.bohemiancoding.sketch3 SketchAPILocation \"$(pwd)/build\"",
@@ -31,7 +32,7 @@
     "globby": "^11.0.1",
     "prettier": "2.1.2",
     "sketch-utils": "0.2.10",
-    "webpack": "^5.99.9",
+    "webpack": "^5.102.1",
     "webpack-cli": "^6.0.1",
     "webpack-virtual-modules": "^0.6.2"
   }

@@ -69,3 +69,140 @@ test('should report alpha of gradient stops', () => {
   expect(Math.round(s.fills[0].gradient.stops[0].alpha * 255)).toEqual(127)
   expect(Math.round(s.fills[0].gradient.stops[1].alpha * 255)).toEqual(255)
 })
+
+test('should get color swatch', (_context, document) => {
+  document.swatches = [
+    {
+      name: 'Safety Orange',
+      color: '#ff6600',
+    },
+  ]
+  const swatch = document.swatches[0]
+
+  // Make sure this host layer is actually part of the same document as the swatch itself
+  document.selectedPage.layers = [
+    {
+      type: 'ShapePath',
+      style: {
+        fills: [
+          {
+            fillType: FillType.Gradient,
+            gradient: {
+              gradientType: GradientType.Linear,
+              stops: [
+                {
+                  position: 0,
+                  color: swatch.referencingColor,
+                },
+                {
+                  position: 1,
+                  color: '##11223344',
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ]
+
+  let layer = document.selectedPage.layers[0]
+  expect(layer.style.fills[0].gradient.stops[0].swatch).toBeDefined()
+  expect(layer.style.fills[0].gradient.stops[0].swatch.id).toBe(swatch.id)
+  expect(layer.style.fills[0].gradient.stops[0].swatch.name).toBe(swatch.name)
+  expect(layer.style.fills[0].gradient.stops[0].swatch.color).toBe(swatch.color)
+  expect(layer.style.fills[0].gradient.stops[0].color).toBe(swatch.color)
+})
+
+test('should set color swatch', (_context, document) => {
+  document.swatches = [
+    {
+      name: 'Safety Orange',
+      color: '#ff6600',
+    },
+  ]
+
+  // Make sure this host layer is actually part of the same document as the swatch itself
+  document.selectedPage.layers = [
+    {
+      type: 'ShapePath',
+      style: {
+        fills: [
+          {
+            fillType: FillType.Gradient,
+            gradient: {
+              gradientType: GradientType.Linear,
+              stops: [
+                {
+                  position: 0,
+                  color: '##11223344', // will be replaced with the swatch color
+                },
+                {
+                  position: 1,
+                  color: '##11223344',
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ]
+
+  let layer = document.selectedPage.layers[0]
+  expect(layer.style.fills[0].gradient.stops[0].swatch).toBeUndefined()
+
+  const swatch = document.swatches[0]
+  layer.style.fills[0].gradient.stops[0].swatch = swatch
+
+  expect(layer.style.fills[0].gradient.stops[0].swatch).toBeDefined()
+  expect(layer.style.fills[0].gradient.stops[0].swatch.id).toBe(swatch.id)
+  expect(layer.style.fills[0].gradient.stops[0].swatch.name).toBe(swatch.name)
+  expect(layer.style.fills[0].gradient.stops[0].swatch.color).toBe(swatch.color)
+  expect(layer.style.fills[0].gradient.stops[0].color).toBe(swatch.color)
+})
+
+test('should assign swatch directly', (_context, document) => {
+  document.swatches = [
+    {
+      name: 'Safety Orange',
+      color: '#ff6600',
+    },
+  ]
+  const swatch = document.swatches[0]
+
+  // Make sure this host layer is actually part of the same document as the swatch itself
+  document.selectedPage.layers = [
+    {
+      type: 'ShapePath',
+      style: {
+        fills: [
+          {
+            fillType: FillType.Gradient,
+            gradient: {
+              gradientType: GradientType.Linear,
+              stops: [
+                {
+                  position: 0,
+                  swatch: swatch,
+                  color: '##11223344', // should be ignored
+                },
+                {
+                  position: 1,
+                  color: '##11223344',
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ]
+  let layer = document.selectedPage.layers[0]
+
+  expect(layer.style.fills[0].gradient.stops[0].swatch).toBeDefined()
+  expect(layer.style.fills[0].gradient.stops[0].swatch.id).toBe(swatch.id)
+  expect(layer.style.fills[0].gradient.stops[0].swatch.name).toBe(swatch.name)
+  expect(layer.style.fills[0].gradient.stops[0].swatch.color).toBe(swatch.color)
+  expect(layer.style.fills[0].gradient.stops[0].color).toBe(swatch.color)
+})

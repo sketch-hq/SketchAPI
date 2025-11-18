@@ -94,7 +94,9 @@
     "MSSharedTextStyleProvider": "readonly",
     "MSForeignObjectProvider": "readonly",
     "MSSharedStyle": "readonly",
+    "MSImmutableSharedStyle": "readonly",
     "MSStyle": "readonly",
+    "MSImmutableStyle": "readonly",
     "MSDataOverride": "readonly",
     "MSImmutableLayerGroup": "readonly",
     "MSImmutableHotspotLayer": "readonly",
@@ -146,8 +148,9 @@
     "MSPath": "readonly",
     "SVGPathInterpreter": "readonly",
     "NSBezierPath": "readonly",
+    "MSImmutableModelObject": "readonly",
     "MSJSONDataArchiver": "readonly",
-    "MSJSONDictionaryUnarchiver": "readonly",
+    "MSJSONUnarchiver": "readonly",
     "MSArchiveHeader": "readonly",
     "NSUTF8StringEncoding": "readonly",
     "MSExportRequest": "readonly",
@@ -183,11 +186,13 @@
     "MSInferredGroupLayout": "readonly",
     "MSFreeformGroupLayout": "readonly",
     "MSSwatch": "readonly",
+    "MSImmutableSwatch": "readonly",
     "MSSwatchReference": "readonly",
     "MSSwatchProvider": "readonly",
     "NSUUID": "readonly",
     "NSError": "readonly",
     "NSMapTable": "readonly",
-    "MSTextAlignmentConverter": "readonly"
+    "MSTextAlignmentConverter": "readonly",
+    "MSImmutableLayerAncestry": "readonly"
   }
 }

@@ -272,12 +272,21 @@ export function exportObject(object, options) {
  * which represents the restored Sketch object.
  */
 export function objectFromJSON(sketchJSON, version) {
+  // We no longer support unarchiving from an NSDictionary; convert to data and unarchive that instead
+  const data = NSString.stringWithString(
+    JSON.stringify(sketchJSON)
+  ).dataUsingEncoding(NSUTF8StringEncoding)
   const v = version || MSArchiveHeader.metadataForNewHeader().version
   const ptr = MOPointer.new()
-  let object = (
-    MSJSONDictionaryUnarchiver.unarchiveObjectFromDictionary_asVersion_corruptionDetected_error ||
-    MSJSONDictionaryUnarchiver.unarchivedObjectFromDictionary_asVersion_corruptionDetected_error
-  )(sketchJSON, v, null, ptr)
+  let object = MSJSONUnarchiver.unarchivedObjectOfClasses_fromData_asVersion_corruptionDetected_error(
+    // The dictionary we're unarchiving here comes from our own getJSONData(),
+    // which deals with individual immutable model objects
+    [MSImmutableModelObject.class()],
+    data,
+    v,
+    null,
+    ptr
+  )
   if (ptr.value()) {
     throw new Error(`Failed to create object from sketch JSON: ${ptr.value()}`)
   }
