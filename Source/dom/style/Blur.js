@@ -10,6 +10,7 @@ const BlurTypeMap = {
   Motion: 1,
   Zoom: 2,
   Background: 3,
+  Glass: 4,
 }
 
 export const BlurType = {
@@ -17,6 +18,7 @@ export const BlurType = {
   Motion: 'Motion',
   Zoom: 'Zoom',
   Background: 'Background',
+  Glass: 'Glass',
 }
 
 const DEFAULT_BLUR = {
@@ -73,6 +75,23 @@ export class Blur extends WrappedObject {
       nativeBlur.setGradient(
         Gradient.from(blurWithDefault.gradient).sketchObject
       )
+    }
+    if (typeof blurWithDefault.brightness !== 'undefined') {
+      nativeBlur.setBrightness(blurWithDefault.brightness)
+    }
+    if (typeof blurWithDefault.distortion !== 'undefined') {
+      nativeBlur.setDistortion(blurWithDefault.distortion)
+    }
+    if (typeof blurWithDefault.depth !== 'undefined') {
+      nativeBlur.setDepth(blurWithDefault.depth)
+    }
+    if (typeof blurWithDefault.chromaticAberration !== 'undefined') {
+      nativeBlur.setChromaticAberrationMultiplier(
+        blurWithDefault.chromaticAberration
+      )
+    }
+    if (typeof blurWithDefault.hasSpecularHighlights !== 'undefined') {
+      nativeBlur.setSkipLightingEffects(!blurWithDefault.hasSpecularHighlights)
     }
   }
 }
@@ -171,5 +190,67 @@ Blur.define('gradient', {
   },
   set(gradient) {
     this._object.setGradient(Gradient.from(gradient).sketchObject)
+  },
+})
+
+// MARK: - Glass
+
+Blur.define('isCustomGlass', {
+  get() {
+    return true
+  },
+  set() {
+    console.warn(
+      'Blur.isCustomGlass is always `true` in Sketch 2025.3 and later.'
+    )
+  },
+})
+
+Blur.define('brightness', {
+  get() {
+    return Number(this._object.brightness())
+  },
+  set(brightness) {
+    brightness = Math.max(0, Math.min(2, Number(brightness))) // Clamp to [0, 2]
+    this._object.setBrightness(brightness)
+  },
+})
+
+Blur.define('distortion', {
+  get() {
+    return Number(this._object.distortion())
+  },
+  set(distortion) {
+    distortion = Math.max(0, Math.min(1, Number(distortion))) // Clamp to [0, 1]
+    this._object.setDistortion(distortion)
+  },
+})
+
+Blur.define('depth', {
+  get() {
+    return Number(this._object.depth())
+  },
+  set(depth) {
+    depth = Math.max(0, Math.min(1, Number(depth))) // Clamp to [0, 1]
+    this._object.setDepth(depth)
+  },
+})
+
+Blur.define('chromaticAberration', {
+  get() {
+    return Number(this._object.chromaticAberrationMultiplier())
+  },
+  set(multiplier) {
+    multiplier = Math.max(0, Math.min(1, Number(multiplier))) // Clamp to [0, 1]
+    this._object.setChromaticAberrationMultiplier(multiplier)
+  },
+})
+
+Blur.define('hasSpecularHighlights', {
+  get() {
+    return Boolean(!this._object.skipLightingEffects())
+  },
+  set(hasSpecularHighlight) {
+    this._object.setSkipLightingEffects(!hasSpecularHighlight)
   },
 })

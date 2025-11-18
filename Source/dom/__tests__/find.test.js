@@ -1,5 +1,5 @@
 /* globals expect, test */
-import { find, Rectangle, Group } from '..'
+import { find, Rectangle, Group, SymbolMaster, GroupBehavior } from '..'
 
 test('should find Artboard by type', (_context, document) => {
   // eslint-disable-next-line no-param-reassign
@@ -266,6 +266,9 @@ test('should find all canvas frames as Artboards', (_context, document) => {
             new Group({
               name: 'TopLevelFrame->NestedGroup',
             }),
+            new SymbolMaster({
+              name: 'TopLevelFrame->NestedSymbolMaster',
+            }),
           ],
         }),
         new Group.Graphic({
@@ -273,6 +276,10 @@ test('should find all canvas frames as Artboards', (_context, document) => {
           layers: [
             new Group.Frame({
               name: 'TopLevelGraphic->NestedFrame',
+            }),
+            new SymbolMaster({
+              name: 'TopLevelGraphic->NestedSymbolMasterGraphic',
+              groupBehavior: GroupBehavior.Graphic,
             }),
           ],
         }),
@@ -284,12 +291,21 @@ test('should find all canvas frames as Artboards', (_context, document) => {
             }),
           ],
         }),
+        new SymbolMaster({
+          name: 'TopLevelSymbolMaster',
+        }),
+        new SymbolMaster({
+          name: 'TopLevelSymbolMasterGraphic',
+          groupBehavior: GroupBehavior.Graphic,
+        }),
       ],
     },
   ]
   expect(find('Artboard', document).map((x) => x.name)).toEqual([
     'TopLevelFrame',
     'TopLevelGraphic',
+    'TopLevelSymbolMaster',
+    'TopLevelSymbolMasterGraphic',
   ])
 })
 
@@ -307,6 +323,9 @@ test('should find all Frames', (_context, document) => {
             new Group({
               name: 'TopLevelFrame->NestedGroup',
             }),
+            new SymbolMaster({
+              name: 'TopLevelFrame->NestedSymbolMaster',
+            }),
           ],
         }),
         new Group.Graphic({
@@ -314,6 +333,10 @@ test('should find all Frames', (_context, document) => {
           layers: [
             new Group.Frame({
               name: 'TopLevelGraphic->NestedFrame',
+            }),
+            new SymbolMaster({
+              name: 'TopLevelGraphic->NestedSymbolMasterGraphic',
+              groupBehavior: GroupBehavior.Graphic,
             }),
           ],
         }),
@@ -325,15 +348,26 @@ test('should find all Frames', (_context, document) => {
             }),
           ],
         }),
+        new SymbolMaster({
+          name: 'TopLevelSymbolMaster',
+        }),
+        new SymbolMaster({
+          name: 'TopLevelSymbolMasterGraphic',
+          groupBehavior: GroupBehavior.Graphic,
+        }),
       ],
     },
   ]
   expect(find('Frame', document).map((x) => x.name)).toEqual([
     'TopLevelFrame',
     'TopLevelFrame->NestedGraphic',
+    'TopLevelFrame->NestedSymbolMaster',
     'TopLevelGraphic',
     'TopLevelGraphic->NestedFrame',
+    'TopLevelGraphic->NestedSymbolMasterGraphic',
     'TopLevelGroup->NestedFrame',
+    'TopLevelSymbolMaster',
+    'TopLevelSymbolMasterGraphic',
   ])
 })
 
@@ -351,6 +385,9 @@ test('should find all Graphics', (_context, document) => {
             new Group({
               name: 'TopLevelFrame->NestedGroup',
             }),
+            new SymbolMaster({
+              name: 'TopLevelFrame->NestedSymbolMaster',
+            }),
           ],
         }),
         new Group.Graphic({
@@ -358,6 +395,10 @@ test('should find all Graphics', (_context, document) => {
           layers: [
             new Group.Frame({
               name: 'TopLevelGraphic->NestedFrame',
+            }),
+            new SymbolMaster({
+              name: 'TopLevelGraphic->NestedSymbolMasterGraphic',
+              groupBehavior: GroupBehavior.Graphic,
             }),
           ],
         }),
@@ -369,12 +410,21 @@ test('should find all Graphics', (_context, document) => {
             }),
           ],
         }),
+        new SymbolMaster({
+          name: 'TopLevelSymbolMaster',
+        }),
+        new SymbolMaster({
+          name: 'TopLevelSymbolMasterGraphic',
+          groupBehavior: GroupBehavior.Graphic,
+        }),
       ],
     },
   ]
   expect(find('Graphic', document).map((x) => x.name)).toEqual([
     'TopLevelFrame->NestedGraphic',
     'TopLevelGraphic',
+    'TopLevelGraphic->NestedSymbolMasterGraphic',
+    'TopLevelSymbolMasterGraphic',
   ])
 })
 
@@ -392,6 +442,9 @@ test('should find all (top-level & nested) regular Groups together with nested F
             new Group({
               name: 'TopLevelFrame->NestedGroup',
             }),
+            new SymbolMaster({
+              name: 'TopLevelFrame->NestedSymbolMaster',
+            }),
           ],
         }),
         new Group.Graphic({
@@ -399,6 +452,10 @@ test('should find all (top-level & nested) regular Groups together with nested F
           layers: [
             new Group.Frame({
               name: 'TopLevelGraphic->NestedFrame',
+            }),
+            new SymbolMaster({
+              name: 'TopLevelGraphic->NestedSymbolMasterGraphic',
+              groupBehavior: GroupBehavior.Graphic,
             }),
           ],
         }),
@@ -409,6 +466,13 @@ test('should find all (top-level & nested) regular Groups together with nested F
               name: 'TopLevelGroup->NestedFrame',
             }),
           ],
+        }),
+        new SymbolMaster({
+          name: 'TopLevelSymbolMaster',
+        }),
+        new SymbolMaster({
+          name: 'TopLevelSymbolMasterGraphic',
+          groupBehavior: GroupBehavior.Graphic,
         }),
       ],
     },

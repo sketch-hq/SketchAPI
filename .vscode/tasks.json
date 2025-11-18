@@ -119,6 +119,34 @@
           "SKETCH_VARIANT_BUNDLE_ID": "${input:sketchTarget}"
         }
       }
+    },
+    //
+    // Test (Single Suite, Custom Sketch)
+    //
+    {
+      "label": "Test [Single Suite, Custom Sketch]",
+      "dependsOrder": "sequence",
+      "dependsOn": [
+        "[Show the test suite name prompt]",
+        "[Show target Sketch variant prompt]",
+        "Build & Lint",
+        "Test Single Suite on Sketch Variant"
+      ],
+      "group": {
+        "kind": "test"
+      }
+    },
+    {
+      "label": "Test Single Suite on Sketch Variant",
+      "type": "npm",
+      "script": "test:suiteOnCustom",
+      "hide": true,
+      "options": {
+        "env": {
+          "TEST_SUITE": "${input:testSuite}",
+          "SKETCH_VARIANT_BUNDLE_ID": "${input:sketchTarget}"
+        }
+      }
     }
   ],
   //

@@ -164,3 +164,15 @@ test('should return the fragments of a text layer', () => {
   })
   expect(fragments[2].text).toBe('123\n')
 })
+
+test('should not have a border by default when assigned a style', () => {
+  const text = new Text({
+    text: 'test',
+    frame: new Rectangle(10, 10, 100, 100),
+    style: {
+      // could be empty
+    },
+  })
+
+  expect(text.style.borders.length).toBe(0)
+})

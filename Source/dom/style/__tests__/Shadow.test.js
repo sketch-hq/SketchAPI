@@ -130,3 +130,101 @@ test('should set and get blending mode', () => {
   expect(style.shadows[0].blendingMode).toBe(Style.BlendingMode.HardLight)
   expect(style.innerShadows[0].blendingMode).toBe(Style.BlendingMode.Hue)
 })
+
+test('should get color swatch', (_context, document) => {
+  document.swatches = [
+    {
+      name: 'Safety Orange',
+      color: '#ff6600',
+    },
+  ]
+  const swatch = document.swatches[0]
+
+  // Make sure this host layer is actually part of the same document as the swatch itself
+  document.selectedPage.layers = [
+    {
+      type: 'ShapePath',
+      style: {
+        shadows: [
+          {
+            color: swatch.referencingColor,
+            blur: 4,
+          },
+        ],
+      },
+    },
+  ]
+
+  let layer = document.selectedPage.layers[0]
+  expect(layer.style.shadows[0].swatch).toBeDefined()
+  expect(layer.style.shadows[0].swatch.name).toBe(swatch.name)
+  expect(layer.style.shadows[0].swatch.color).toBe(swatch.color)
+  expect(layer.style.shadows[0].color).toBe(swatch.color)
+})
+
+test('should set color swatch', (_context, document) => {
+  document.swatches = [
+    {
+      name: 'Safety Orange',
+      color: '#ff6600',
+    },
+  ]
+
+  // Make sure this host layer is actually part of the same document as the swatch itself
+  document.selectedPage.layers = [
+    {
+      type: 'ShapePath',
+      style: {
+        shadows: [
+          {
+            color: '#11223344', // will be replaced with the swatch color
+            blur: 4,
+          },
+        ],
+      },
+    },
+  ]
+
+  let layer = document.selectedPage.layers[0]
+  expect(layer.style.shadows[0].swatch).toBeUndefined()
+
+  const swatch = document.swatches[0]
+  layer.style.shadows[0].swatch = swatch
+  expect(layer.style.shadows[0].swatch).toBeDefined()
+  expect(layer.style.shadows[0].swatch.name).toBe(swatch.name)
+  expect(layer.style.shadows[0].swatch.color).toBe(swatch.color)
+  expect(layer.style.shadows[0].color).toBe(swatch.color)
+})
+
+test('should assign swatch directly', (_context, document) => {
+  document.swatches = [
+    {
+      name: 'Safety Orange',
+      color: '#ff6600',
+    },
+  ]
+  const swatch = document.swatches[0]
+
+  // Make sure this host layer is actually part of the same document as the swatch itself
+  document.selectedPage.layers = [
+    {
+      type: 'ShapePath',
+      style: {
+        shadows: [
+          {
+            blur: 4,
+            swatch: swatch,
+            color: '##11223344', // should be ignored
+          },
+        ],
+      },
+    },
+  ]
+  let layer = document.selectedPage.layers[0]
+
+  expect(layer.style.shadows[0].swatch).toBeDefined()
+  expect(layer.style.shadows[0].swatch.id).toBe(swatch.id)
+  expect(layer.style.shadows[0].swatch.name).toBe(swatch.name)
+  expect(layer.style.shadows[0].swatch.color).toBe(swatch.color)
+  expect(layer.style.shadows[0].color).toBe(swatch.color)
+})

@@ -211,3 +211,174 @@ test('should set, get, and remove tint', () => {
   expect(style.fills.length).toBe(1)
   expect(style.tint).toBeUndefined()
 })
+
+test('should set and get color swatch as tint', (_context, document) => {
+  document.swatches = [
+    {
+      name: 'Safety Orange',
+      color: '#ff6600',
+    },
+    {
+      name: 'Just Green',
+      color: '#00ff00',
+    },
+    {
+      name: 'Bright Blue',
+      color: '#0000ff',
+    },
+  ]
+  const swatch1 = document.swatches[0]
+  const swatch2 = document.swatches[1]
+  const swatch3 = document.swatches[2]
+
+  // Make sure this host layer is actually part of the same document as the swatch itself
+  document.selectedPage.layers = [
+    {
+      type: 'ShapePath',
+      style: {
+        tint: {
+          color: swatch1.referencingColor,
+        },
+      },
+    },
+    {
+      type: 'ShapePath',
+      style: {
+        tint: {
+          swatch: swatch2,
+          color: '#11223344', // should be ignored
+        },
+      },
+    },
+    {
+      type: 'ShapePath',
+      style: {
+        tint: {
+          color: '#11223344', // will be replaced with the swatch color
+        },
+      },
+    },
+  ]
+
+  let layer1 = document.selectedPage.layers[0]
+  expect(layer1.style.tint.swatch).toBeDefined()
+  expect(layer1.style.tint.swatch.id).toBe(swatch1.id)
+  expect(layer1.style.tint.swatch.name).toBe(swatch1.name)
+  expect(layer1.style.tint.swatch.color).toBe(swatch1.color)
+  expect(layer1.style.tint.color).toBe(swatch1.color)
+
+  let layer2 = document.selectedPage.layers[1]
+  expect(layer2.style.tint.swatch).toBeDefined()
+  expect(layer2.style.tint.swatch.id).toBe(swatch2.id)
+  expect(layer2.style.tint.swatch.name).toBe(swatch2.name)
+  expect(layer2.style.tint.swatch.color).toBe(swatch2.color)
+  expect(layer2.style.tint.color).toBe(swatch2.color)
+
+  let layer3 = document.selectedPage.layers[2]
+  expect(layer3.style.tint.swatch).toBeUndefined()
+
+  layer3.style.tint.swatch = swatch3
+  expect(layer3.style.tint.swatch).toBeDefined()
+  expect(layer3.style.tint.swatch.id).toBe(swatch3.id)
+  expect(layer3.style.tint.swatch.name).toBe(swatch3.name)
+  expect(layer3.style.tint.swatch.color).toBe(swatch3.color)
+  expect(layer3.style.tint.color).toBe(swatch3.color)
+})
+
+test('should get color swatch', (_context, document) => {
+  document.swatches = [
+    {
+      name: 'Safety Orange',
+      color: '#ff6600',
+    },
+  ]
+  const swatch = document.swatches[0]
+
+  // Make sure this host layer is actually part of the same document as the swatch itself
+  document.selectedPage.layers = [
+    {
+      type: 'ShapePath',
+      style: {
+        fills: [
+          {
+            fillType: Style.FillType.Color,
+            color: swatch.referencingColor,
+          },
+        ],
+      },
+    },
+  ]
+
+  let layer = document.selectedPage.layers[0]
+  expect(layer.style.fills[0].swatch).toBeDefined()
+  expect(layer.style.fills[0].swatch.name).toBe(swatch.name)
+  expect(layer.style.fills[0].swatch.color).toBe(swatch.color)
+  expect(layer.style.fills[0].color).toBe(swatch.color)
+})
+
+test('should set color swatch', (_context, document) => {
+  document.swatches = [
+    {
+      name: 'Safety Orange',
+      color: '#ff6600',
+    },
+  ]
+
+  // Make sure this host layer is actually part of the same document as the swatch itself
+  document.selectedPage.layers = [
+    {
+      type: 'ShapePath',
+      style: {
+        fills: [
+          {
+            fillType: Style.FillType.Color,
+            color: '#11223344', // will be replaced with the swatch color
+          },
+        ],
+      },
+    },
+  ]
+
+  let layer = document.selectedPage.layers[0]
+  expect(layer.style.fills[0].swatch).toBeUndefined()
+
+  const swatch = document.swatches[0]
+  layer.style.fills[0].swatch = swatch
+  expect(layer.style.fills[0].swatch).toBeDefined()
+  expect(layer.style.fills[0].swatch.name).toBe(swatch.name)
+  expect(layer.style.fills[0].swatch.color).toBe(swatch.color)
+  expect(layer.style.fills[0].color).toBe(swatch.color)
+})
+
+test('should assign swatch directly', (_context, document) => {
+  document.swatches = [
+    {
+      name: 'Safety Orange',
+      color: '#ff6600',
+    },
+  ]
+  const swatch = document.swatches[0]
+
+  // Make sure this host layer is actually part of the same document as the swatch itself
+  document.selectedPage.layers = [
+    {
+      type: 'ShapePath',
+      style: {
+        fills: [
+          {
+            fillType: Style.FillType.Color,
+            swatch: swatch,
+            color: '##11223344', // should be ignored
+          },
+        ],
+      },
+    },
+  ]
+  let layer = document.selectedPage.layers[0]
+
+  expect(layer.style.fills[0].swatch).toBeDefined()
+  expect(layer.style.fills[0].swatch.id).toBe(swatch.id)
+  expect(layer.style.fills[0].swatch.name).toBe(swatch.name)
+  expect(layer.style.fills[0].swatch.color).toBe(swatch.color)
+  expect(layer.style.fills[0].color).toBe(swatch.color)
+})

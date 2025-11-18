@@ -259,3 +259,134 @@ test('should set progressive radial gradient via property', () => {
     style.blurs[0].gradient.stops.map((x) => Math.round(x.alpha * 255))
   ).toEqual([127, 255])
 })
+
+test('should set glass effect', () => {
+  const style = new Style({
+    blurs: [
+      {
+        blurType: Style.BlurType.Glass,
+      },
+    ],
+  })
+  expect(style.blurs[0].blurType).toBe(Style.BlurType.Glass)
+  // Auto glass has been removed in Sketch 2025.3, it's always custom now
+  expect(style.blurs[0].isCustomGlass).toBe(true)
+})
+
+test('should NOT be able to set auto glass effect', () => {
+  const style = new Style({
+    blurs: [
+      {
+        blurType: Style.BlurType.Glass,
+        // This should be safely ignored in Sketch 2025.3 and later
+        isCustomGlass: false,
+      },
+    ],
+  })
+  expect(style.blurs[0].blurType).toBe(Style.BlurType.Glass)
+  expect(style.blurs[0].isCustomGlass).toBe(true)
+
+  // This should be safely ignored in Sketch 2025.3 and later
+  style.blurs[0].isCustomGlass = false
+  expect(style.blurs[0].isCustomGlass).toBe(true)
+})
+
+test('should set and get custom glass brightness', () => {
+  const style = new Style({
+    blurs: [
+      {
+        blurType: Style.BlurType.Glass,
+        brightness: 1.5,
+      },
+    ],
+  })
+  expect(style.blurs[0].brightness).toBe(1.5)
+
+  style.blurs[0].brightness = 2
+  expect(style.blurs[0].brightness).toBe(2)
+
+  style.blurs[0].brightness = -1
+  expect(style.blurs[0].brightness).toBe(0) // clamped
+
+  style.blurs[0].brightness = 3
+  expect(style.blurs[0].brightness).toBe(2) // clamped
+})
+
+test('should set and get custom glass distortion', () => {
+  const style = new Style({
+    blurs: [
+      {
+        blurType: Style.BlurType.Glass,
+        distortion: 0.5,
+      },
+    ],
+  })
+  expect(style.blurs[0].distortion).toBe(0.5)
+
+  style.blurs[0].distortion = 1
+  expect(style.blurs[0].distortion).toBe(1)
+
+  style.blurs[0].distortion = -1
+  expect(style.blurs[0].distortion).toBe(0)
+
+  style.blurs[0].distortion = 2
+  expect(style.blurs[0].distortion).toBe(1)
+})
+
+test('should set and get custom glass depth', () => {
+  const style = new Style({
+    blurs: [
+      {
+        blurType: Style.BlurType.Glass,
+        depth: 0.5,
+      },
+    ],
+  })
+  expect(style.blurs[0].depth).toBe(0.5)
+
+  style.blurs[0].depth = 1
+  expect(style.blurs[0].depth).toBe(1)
+
+  style.blurs[0].depth = -1
+  expect(style.blurs[0].depth).toBe(0)
+
+  style.blurs[0].depth = 2
+  expect(style.blurs[0].depth).toBe(1)
+})
+
+test('should set and get custom glass chromatic aberration', () => {
+  const style = new Style({
+    blurs: [
+      {
+        blurType: Style.BlurType.Glass,
+        chromaticAberration: 0.5,
+      },
+    ],
+  })
+  expect(style.blurs[0].chromaticAberration).toBe(0.5)
+
+  style.blurs[0].chromaticAberration = 1
+  expect(style.blurs[0].chromaticAberration).toBe(1)
+
+  style.blurs[0].chromaticAberration = -1
+  expect(style.blurs[0].chromaticAberration).toBe(0)
+
+  style.blurs[0].chromaticAberration = 2
+  expect(style.blurs[0].chromaticAberration).toBe(1)
+})
+
+test('should set and get custom glass specular highlights', () => {
+  const style = new Style({
+    blurs: [
+      {
+        blurType: Style.BlurType.Glass,
+        hasSpecularHighlights: false,
+      },
+    ],
+  })
+  expect(style.blurs[0].hasSpecularHighlights).toBe(false)
+
+  style.blurs[0].hasSpecularHighlights = true
+
+  expect(style.blurs[0].hasSpecularHighlights).toBe(true)
+})

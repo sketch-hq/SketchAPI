@@ -4,7 +4,7 @@ import { wrapObject } from './wrapNativeObject'
 import { Types } from './enums'
 import { Factory } from './Factory'
 import { colorFromString } from './style/Color'
-import { Group } from './layers/Group'
+import { Group, GroupBehavior } from './layers/Group'
 
 const simpleAttribute = (attribute, opposite) => (
   operator,
@@ -34,16 +34,19 @@ const attributesMap = {
       operator = '='
     }
     const predicate = []
-
-    if (['Artboard', 'Frame', 'Graphic'].includes(value)) {
-      // Artboards have been replaced by Frames and Graphics (which are
-      // ultimately just fancy names for Groups), but we still allow
-      // querying for Artboards for backwards compatibility.
-      // See `FilterStrategy` below for details
-      value = 'Group'
-    }
-
-    const nativeClasses = Factory._typeToNative[value]
+    const nativeClasses = (() => {
+      if (['Artboard', 'Frame', 'Graphic'].includes(value)) {
+        // Artboards have been replaced by Frames and Graphics (which are
+        // ultimately just fancy names for Groups), but we still allow
+        // querying for Artboards for backwards compatibility.
+        // See `FilterStrategy` below for details
+        return ['Group', 'SymbolMaster'].reduce((classes, type) => {
+          return classes.concat(Factory._typeToNative[type] || [])
+        }, [])
+      }
+      // Fall back to normal type lookup
+      return Factory._typeToNative[value]
+    })()
     if (!nativeClasses) {
       throw new Error(`Unknown layer type ${value}`)
     }
@@ -270,8 +273,15 @@ export function find(predicate, root, options = {}) {
         return (group) => !canvasFrames.includes(group)
       // Include all Frames, including canvas frames and Graphics
       case FilterStrategy.Frame:
-        return (group) =>
-          group.isKindOfClass(MSLayerGroup) && Group.fromNative(group).isFrame
+        return (group) => {
+          const hasFrameBehavior =
+            group.isKindOfClass(MSLayerGroup) && Group.fromNative(group).isFrame
+          // Symbol Masters with default group behavior are treated as Frames by Sketch
+          const isSymbolMasterWithDefaultBehavior =
+            group.isKindOfClass(MSSymbolMaster) &&
+            Group.fromNative(group).groupBehavior === GroupBehavior.Default
+          return hasFrameBehavior || isSymbolMasterWithDefaultBehavior
+        }
       // Include all Graphics, including canvas frames
       case FilterStrategy.Graphic:
         return (group) =>

@@ -4,6 +4,7 @@ import { WrappedObject, DefinedPropertiesKey } from '../WrappedObject'
 import { Types } from '../enums'
 import { isWrappedObject } from '../utils'
 import { BlendingModeMap } from '../models/BlendingMode'
+import { Swatch } from '../assets'
 
 export class Shadow extends WrappedObject {
   static toNative(nativeClass, value) {
@@ -18,6 +19,13 @@ export class Shadow extends WrappedObject {
       typeof value === 'string' ? Color.from(value) : Color.from(value.color)
     if (color) {
       shadow.color = color.toMSColor()
+    }
+    // A swatch property takes precedence over a plain color
+    if (value.swatch) {
+      const swatch = Swatch.from(value.swatch)
+      if (swatch) {
+        shadow.color = swatch.referencingColor
+      }
     }
     if (typeof value.blur !== 'undefined') {
       shadow.blurRadius = value.blur
@@ -106,6 +114,19 @@ Shadow.define('color', {
   set(_color) {
     const color = Color.from(_color)
     this._object.color = color.toMSColor()
+  },
+})
+
+Shadow.define('swatch', {
+  get() {
+    const swatchID = this._object.color?.()?.swatchID?.()
+    if (!swatchID) {
+      return undefined
+    }
+    return Swatch.instantiate(swatchID, this)
+  },
+  set(newSwatch) {
+    this.color = Swatch.from(newSwatch).referencingColor
   },
 })
 

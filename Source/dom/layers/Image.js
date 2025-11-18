@@ -34,6 +34,46 @@ export class Image extends StyledLayer {
     this._object.resizeToOriginalSize()
     return this
   }
+
+  removeBackground(options = {}, callback) {
+    if (this.isImmutable()) {
+      return callback?.(new Error('Cannot modify an immutable image layer'))
+    }
+
+    return Image.removeBackgroundFromLayers([this], options, callback)
+  }
+
+  static removeBackgroundFromLayers(layers, options = {}, callback) {
+    if (typeof options === 'function') {
+      callback = options
+      options = {}
+    }
+    const nativeImages = layers
+      .filter((i) => i.type === Types.Image && !i.isImmutable())
+      .map((i) => i._object)
+    if (nativeImages.length === 0) {
+      return callback?.(new Error('No suitable image layers provided'))
+    }
+
+    const { people = false } = options || {}
+
+    const fiber = coscript.createFiber()
+    const token = `sketchapi.backgroundRemover-${NSUUID.UUID().UUIDString()}`
+    fiber.onCleanup(() => {
+      coscript.env().removeObjectForKey(token)
+    })
+    const remover = MSBitmapLayer.removeBackgroundFromLayers_peopleMode_context_completionHandler(
+      nativeImages,
+      people,
+      coscript,
+      (err) => {
+        callback?.(err ? new Error(err) : undefined)
+        fiber.cleanup()
+      }
+    )
+    // Keep a strong reference to the BackgroundRemover object until it's finished
+    coscript.env().setObject_forKey(remover, token)
+  }
 }
 
 Image.type = Types.Image

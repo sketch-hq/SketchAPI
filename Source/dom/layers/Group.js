@@ -8,6 +8,7 @@ import { wrapNativeObject, wrapObject } from '../wrapNativeObject'
 import { SmartLayout } from '../models/SmartLayout'
 import { StackLayout } from '../models/StackLayout'
 import { Color, colorToString } from '../style/Color'
+import { LayerAncestry } from './LayerAncestry'
 
 /**
  * Represents a group of layers.
@@ -107,7 +108,18 @@ Group.define('groupBehavior', {
 Group.define('layers', {
   array: true,
   get() {
-    return toArray(this._object.layers()).map(wrapNativeObject)
+    return toArray(this._object.layers()).map((nativeLayer) => {
+      let wrapped = wrapNativeObject(nativeLayer)
+      // See SymbolInstance.overridesForExpandedLayer() for details
+      if (wrapped.isNestedSymbol) {
+        wrapped._detachedSymbolAncestry =
+          this._detachedSymbolAncestry?.appending(wrapped) ||
+          new LayerAncestry({ layer: wrapped })
+      } else if (this._detachedSymbolAncestry) {
+        wrapped._detachedSymbolAncestry = this._detachedSymbolAncestry.copy()
+      }
+      return wrapped
+    })
   },
   set(_layers) {
     if (this.isImmutable()) {

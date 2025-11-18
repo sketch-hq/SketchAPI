@@ -307,6 +307,61 @@ test('should handle text color overrides', (_context, document) => {
   expect(textColorOverride.value).toBe('#cafebabe')
 })
 
+test('should handle swatches as text color overrides', (_context, document) => {
+  document.swatches = [
+    {
+      name: 'Safety Orange',
+      color: '#ff6600',
+    },
+    {
+      name: 'Just Green',
+      color: '#00ff00',
+    },
+  ]
+  const swatch1 = document.swatches[0]
+  const swatch2 = document.swatches[1]
+
+  const artboard = new Artboard({
+    name: 'Test',
+    parent: document.selectedPage,
+  })
+  // eslint-disable-next-line
+  const text = new Text({
+    text: 'Test value',
+    style: {
+      textColor: '#00aa00ff', // will be replaced by swatch
+    },
+    parent: artboard,
+  })
+  // build the symbol master
+  const master = SymbolMaster.fromFrame(artboard)
+  const instance = master.createNewInstance()
+  // add the instance to the page
+  document.selectedPage.layers.push(instance)
+  // find the text color override point
+  const textColorOverride = instance.overrides.find((o) => {
+    return o.property === 'textColor'
+  })
+
+  expect(textColorOverride.colorOverride).toBe(true)
+  expect(textColorOverride.value).toBe('#00aa00ff')
+  expect(textColorOverride.swatchValue).toBeUndefined()
+
+  textColorOverride.value = swatch1.referencingColor
+
+  expect(textColorOverride.value).toBe(swatch1.color)
+  expect(textColorOverride.swatchValue?.id).toBe(swatch1.id)
+  expect(textColorOverride.swatchValue?.name).toBe(swatch1.name)
+  expect(textColorOverride.swatchValue?.color).toBe(swatch1.color)
+
+  textColorOverride.swatchValue = swatch2
+
+  expect(textColorOverride.value).toBe(swatch2.color)
+  expect(textColorOverride.swatchValue?.id).toBe(swatch2.id)
+  expect(textColorOverride.swatchValue?.name).toBe(swatch2.name)
+  expect(textColorOverride.swatchValue?.color).toBe(swatch2.color)
+})
+
 test('should handle tint color overrides', (_context, document) => {
   const artboard = new Artboard({
     name: 'Test',
@@ -355,6 +410,169 @@ test('should handle tint color overrides', (_context, document) => {
   expect(tintColorOverride.value).toBe('#cafebabe')
 })
 
+test('should handle swatches as tint color overrides', (_context, document) => {
+  document.swatches = [
+    {
+      name: 'Safety Orange',
+      color: '#ff6600',
+    },
+    {
+      name: 'Just Green',
+      color: '#00ff00',
+    },
+  ]
+  const swatch1 = document.swatches[0]
+  const swatch2 = document.swatches[1]
+
+  const artboard = new Artboard({
+    name: 'Test',
+    parent: document.selectedPage,
+    layers: [{ type: 'ShapePath' }],
+  })
+  // build the symbol master
+  const master = SymbolMaster.fromFrame(artboard)
+  const instance = master.createNewInstance()
+  // add the instance to the page
+  document.selectedPage.layers.push(instance)
+  // enable a tint if the API is there
+  instance.style.fills = [
+    {
+      color: '#deadbeef', // will be replaced by swatch
+      fillType: 'Color',
+    },
+  ]
+  if (!instance.style.fills[0].sketchObject.setLayeringType) {
+    return
+  }
+  instance.style.fills[0].sketchObject.setLayeringType(
+    /* BCFillLayeringTypeTint */ 1
+  )
+  // find the tint color override point
+  const tintColorOverride = instance.overrides.find((o) => {
+    return o.property === 'fillColor'
+  })
+
+  expect(tintColorOverride.colorOverride).toBe(true)
+  expect(tintColorOverride.value).toBe('#deadbeef')
+  expect(tintColorOverride.swatchValue).toBeUndefined()
+
+  tintColorOverride.value = swatch1.referencingColor
+
+  expect(tintColorOverride.value).toBe(swatch1.color)
+  expect(tintColorOverride.swatchValue?.id).toBe(swatch1.id)
+  expect(tintColorOverride.swatchValue?.name).toBe(swatch1.name)
+  expect(tintColorOverride.swatchValue?.color).toBe(swatch1.color)
+
+  tintColorOverride.swatchValue = swatch2
+
+  expect(tintColorOverride.value).toBe(swatch2.color)
+  expect(tintColorOverride.swatchValue?.id).toBe(swatch2.id)
+  expect(tintColorOverride.swatchValue?.name).toBe(swatch2.name)
+  expect(tintColorOverride.swatchValue?.color).toBe(swatch2.color)
+})
+
+test('should handle swatches as fill color overrides', (_context, document) => {
+  document.swatches = [
+    {
+      name: 'Safety Orange',
+      color: '#ff6600',
+    },
+    {
+      name: 'Just Green',
+      color: '#00ff00',
+    },
+  ]
+  const swatch1 = document.swatches[0]
+  const swatch2 = document.swatches[1]
+
+  const artboard = new Artboard({
+    name: 'Test',
+    parent: document.selectedPage,
+  })
+  // eslint-disable-next-line
+  const shape = new ShapePath({
+    style: {
+      fills: [
+        {
+          color: '#11223344',
+          fillType: 'Color',
+        },
+      ],
+    },
+    parent: artboard,
+  })
+  // build the symbol master
+  const master = SymbolMaster.fromFrame(artboard)
+  const instance = master.createNewInstance()
+  // add the instance to the page
+  document.selectedPage.layers.push(instance)
+
+  // find the fill color override point
+  const fillColorOverride = instance.overrides.find((o) => {
+    return (
+      o.property.startsWith('color:fill') && o.affectedLayer?.id === shape.id
+    )
+  })
+
+  expect(fillColorOverride.colorOverride).toBe(true)
+  expect(fillColorOverride.value).toBe('#11223344')
+  expect(fillColorOverride.swatchValue).toBeUndefined()
+
+  fillColorOverride.value = swatch1.referencingColor
+
+  expect(fillColorOverride.value).toBe(swatch1.color)
+  expect(fillColorOverride.swatchValue?.id).toBe(swatch1.id)
+  expect(fillColorOverride.swatchValue?.name).toBe(swatch1.name)
+  expect(fillColorOverride.swatchValue?.color).toBe(swatch1.color)
+
+  fillColorOverride.swatchValue = swatch2
+
+  expect(fillColorOverride.value).toBe(swatch2.color)
+  expect(fillColorOverride.swatchValue?.id).toBe(swatch2.id)
+  expect(fillColorOverride.swatchValue?.name).toBe(swatch2.name)
+  expect(fillColorOverride.swatchValue?.color).toBe(swatch2.color)
+})
+
+test('should access swatch override value via symbol master', (_context, document) => {
+  document.swatches = [
+    {
+      name: 'Safety Orange',
+      color: '#ff6600',
+    },
+  ]
+  const swatch = document.swatches[0]
+
+  const artboard = new Artboard({
+    name: 'Test',
+    parent: document.selectedPage,
+  })
+  // eslint-disable-next-line
+  const shape = new ShapePath({
+    style: {
+      fills: [
+        {
+          swatch,
+        },
+      ],
+    },
+    parent: artboard,
+  })
+  // build the symbol master
+  const master = SymbolMaster.fromFrame(artboard)
+
+  // find the fill color override point
+  const fillColorOverride = master.overrides.find((o) => {
+    return (
+      o.property.startsWith('color:fill') && o.affectedLayer?.id === shape.id
+    )
+  })
+
+  expect(fillColorOverride.value).toBe(swatch.color)
+  expect(fillColorOverride.swatchValue?.id).toBe(swatch.id)
+  expect(fillColorOverride.swatchValue?.name).toBe(swatch.name)
+  expect(fillColorOverride.swatchValue?.color).toBe(swatch.color)
+})
+
 test('should provide the default value', (_context, document) => {
   const { master } = createSymbolMaster(document)
   const instance = master.createNewInstance()
@@ -372,4 +590,46 @@ test('should provide the default value', (_context, document) => {
   expect(override.isDefault).toBe(false)
   expect(override.defaultValue).toBe('Test value')
   expect(override.value).toBe('overridden value')
+})
+
+test('should provide the default swatch value', (_context, document) => {
+  document.swatches = [
+    {
+      name: 'Safety Orange',
+      color: '#ff6600',
+    },
+  ]
+  const swatch = document.swatches[0]
+  const artboard = new Artboard({
+    name: 'Test',
+    parent: document.selectedPage,
+  })
+  const shape = new ShapePath({
+    style: {
+      fills: [
+        {
+          swatch,
+        },
+      ],
+    },
+    parent: artboard,
+  })
+  const master = SymbolMaster.fromFrame(artboard)
+  const instance = master.createNewInstance()
+  document.selectedPage.layers.push(instance)
+
+  // find the fill color override point
+  const fillColorOverride = instance.overrides.find((o) => {
+    return (
+      o.property.startsWith('color:fill') && o.affectedLayer?.id === shape.id
+    )
+  })
+
+  fillColorOverride.value = '#11223344' // remove swatch
+
+  expect(fillColorOverride.value).toBe('#11223344')
+  expect(fillColorOverride.swatchValue).toBeUndefined()
+  expect(fillColorOverride.defaultSwatchValue?.id).toBe(swatch.id)
+  expect(fillColorOverride.defaultSwatchValue?.name).toBe(swatch.name)
+  expect(fillColorOverride.defaultSwatchValue?.color).toBe(swatch.color)
 })

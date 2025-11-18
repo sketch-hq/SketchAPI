@@ -46,10 +46,16 @@ export class Style extends WrappedObject {
       /* eslint-disable no-param-reassign */
       style = Object.assign({}, DEFAULT_STYLE, style)
 
-      style.sketchObject = MSDefaultStyle.defaultStyle()
       if (parentType === Types.Text) {
+        // It's a bit backwards that we have to create an entire text layer here
+        // just to access the default style. But the fact is, we _are_ doing
+        // things backwards here by creating a brand new style object instead of
+        // modifying the one on the parent text layer
+        style.sketchObject = MSTextLayer.alloc().init().style()
         style.sketchObject.textStyle = MSTextStyle.alloc().init()
         style.sketchObject.textStyle().attributes = MSDefaultTextStyle.defaultTextStyle()
+      } else {
+        style.sketchObject = MSDefaultStyle.defaultStyle()
       }
       /* eslint-enable no-param-reassign */
     }
@@ -112,6 +118,7 @@ export class Style extends WrappedObject {
 Style.type = Types.Style
 Style[DefinedPropertiesKey] = { ...WrappedObject[DefinedPropertiesKey] }
 Factory.registerClass(Style, MSStyle)
+Factory.registerClass(Style, MSImmutableStyle)
 
 Style.GradientType = GradientType
 

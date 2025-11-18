@@ -5,6 +5,7 @@ test('should expose configuration types', () => {
   expect(StackLayout.Direction).toBeDefined()
   expect(StackLayout.JustifyContent).toBeDefined()
   expect(StackLayout.AlignItems).toBeDefined()
+  expect(StackLayout.AlignContent).toBeDefined()
 })
 
 test('should set configuration options', () => {
@@ -23,6 +24,7 @@ test('should set configuration options', () => {
   expect(group.stackLayout.alignItems).toBe(StackLayout.AlignItems.Center)
   expect(group.stackLayout.gap).toBe(42)
   expect(group.stackLayout.padding).toEqual({ vertical: 20, horizontal: 0 })
+  expect(group.stackLayout.wraps).toBe(false)
 
   group.stackLayout.direction = StackLayout.Direction.Row
   group.stackLayout.justifyContent = StackLayout.JustifyContent.Start
@@ -37,6 +39,55 @@ test('should set configuration options', () => {
   expect(group.stackLayout.alignItems).toBe(StackLayout.AlignItems.None)
   expect(group.stackLayout.gap).toBe(11)
   expect(group.stackLayout.padding).toEqual(42)
+})
+
+test('should set wrapping options', () => {
+  const group = new Group({
+    stackLayout: {
+      wraps: true,
+      crossAxisGap: 10,
+      alignContent: StackLayout.AlignContent.Center,
+    },
+  })
+
+  expect(group.stackLayout.wraps).toBe(true)
+  expect(group.stackLayout.crossAxisGap).toBe(10)
+  expect(group.stackLayout.alignContent).toBe(StackLayout.AlignContent.Center)
+
+  group.stackLayout.wraps = false
+  // These properties persist even when wrapping is disabled
+  group.stackLayout.crossAxisGap = 20
+  group.stackLayout.alignContent = StackLayout.AlignContent.End
+
+  expect(group.stackLayout.wraps).toBe(false)
+  expect(group.stackLayout.crossAxisGap).toBe(20)
+  expect(group.stackLayout.alignContent).toBe(StackLayout.AlignContent.End)
+})
+
+test('should not allow wrapping when alignItems is Stretch', () => {
+  const group = new Group({
+    stackLayout: {
+      wraps: false,
+      alignItems: StackLayout.AlignItems.Stretch,
+    },
+  })
+
+  expect(group.stackLayout.wraps).toBe(false)
+  group.stackLayout.wraps = true
+  expect(group.stackLayout.wraps).toBe(false)
+})
+
+test('should not allow alignItems to be set to Stretch when wrapping is enabled', () => {
+  const group = new Group({
+    stackLayout: {
+      wraps: true,
+      alignItems: StackLayout.AlignItems.Center,
+    },
+  })
+
+  expect(group.stackLayout.alignItems).toBe(StackLayout.AlignItems.Center)
+  group.stackLayout.alignItems = StackLayout.AlignItems.Stretch
+  expect(group.stackLayout.alignItems).toBe(StackLayout.AlignItems.Center)
 })
 
 test('should set individual padding on parent group', () => {

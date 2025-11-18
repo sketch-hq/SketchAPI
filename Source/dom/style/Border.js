@@ -6,6 +6,7 @@ import { FillTypeMap } from './Fill'
 import { Types } from '../enums'
 import { isWrappedObject } from '../utils'
 import { BlendingModeMap } from '../models/BlendingMode'
+import { Swatch } from '../assets'
 
 const BorderPositionMap = {
   Center: 0,
@@ -36,6 +37,14 @@ export class Border extends WrappedObject {
 
     if (color) {
       border.color = color.toMSColor()
+    }
+
+    // A swatch property takes precedence over a plain color
+    if (value.swatch) {
+      const swatch = Swatch.from(value.swatch)
+      if (swatch) {
+        border.color = swatch.referencingColor
+      }
     }
 
     if (gradient) {
@@ -126,6 +135,19 @@ Border.define('color', {
   set(_color) {
     const color = Color.from(_color)
     this._object.color = color.toMSColor()
+  },
+})
+
+Border.define('swatch', {
+  get() {
+    const swatchID = this._object.color?.()?.swatchID?.()
+    if (!swatchID) {
+      return undefined
+    }
+    return Swatch.instantiate(swatchID, this)
+  },
+  set(newSwatch) {
+    this.color = Swatch.from(newSwatch).referencingColor
   },
 })
 

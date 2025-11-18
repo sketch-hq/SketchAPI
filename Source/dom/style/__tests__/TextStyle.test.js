@@ -144,6 +144,72 @@ test('should change the text color', () => {
   expect(text.style.textColor).toBe('#112233ff')
 })
 
+test('should change the text color using swatches', (_context, document) => {
+  document.swatches = [
+    {
+      name: 'Safety Orange',
+      color: '#ff6600',
+    },
+    {
+      name: 'Just Green',
+      color: '#00ff00',
+    },
+    {
+      name: 'Bright Blue',
+      color: '#0000ff',
+    },
+  ]
+  const swatch1 = document.swatches[0]
+  const swatch2 = document.swatches[1]
+  const swatch3 = document.swatches[2]
+
+  document.selectedPage.layers = [
+    {
+      type: 'Text',
+      text: 'first text layer',
+      style: {
+        textColor: swatch1.referencingColor,
+      },
+    },
+    {
+      type: 'Text',
+      text: 'second text layer',
+      style: {
+        textSwatch: swatch2,
+      },
+    },
+    {
+      type: 'Text',
+      text: 'third text layer',
+      style: {
+        textColor: '#11223344', // will be replaced with the swatch color
+      },
+    },
+  ]
+
+  let layer1 = document.selectedPage.layers[0]
+  expect(layer1.style.textColor).toBe(swatch1.color)
+  expect(layer1.style.textSwatch?.id).toBe(swatch1.id)
+  expect(layer1.style.textSwatch?.name).toBe(swatch1.name)
+  expect(layer1.style.textSwatch?.color).toBe(swatch1.color)
+
+  let layer2 = document.selectedPage.layers[1]
+  expect(layer2.style.textColor).toBe(swatch2.color)
+  expect(layer2.style.textSwatch?.id).toBe(swatch2.id)
+  expect(layer2.style.textSwatch?.name).toBe(swatch2.name)
+  expect(layer2.style.textSwatch?.color).toBe(swatch2.color)
+
+  let layer3 = document.selectedPage.layers[2]
+  expect(layer3.style.textColor).toBe('#11223344')
+  expect(layer3.style.textSwatch).toBeUndefined()
+
+  layer3.style.textSwatch = swatch3
+  expect(layer3.style.textColor).toBe(swatch3.color)
+  expect(layer3.style.textSwatch?.id).toBe(swatch3.id)
+  expect(layer3.style.textSwatch?.name).toBe(swatch3.name)
+  expect(layer3.style.textSwatch?.color).toBe(swatch3.color)
+})
+
 test('should change the font size', () => {
   const text = new Text({
     text: 'blah',

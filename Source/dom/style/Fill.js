@@ -6,6 +6,7 @@ import { Types } from '../enums'
 import { ImageData } from '../models/ImageData'
 import { isWrappedObject } from '../utils'
 import { BlendingModeMap } from '../models/BlendingMode'
+import { Swatch } from '../assets'
 
 export const FillTypeMap = {
   Color: 0, // A solid fill/border.
@@ -52,6 +53,14 @@ export class Fill extends WrappedObject {
 
     if (color) {
       fill.color = color.toMSColor()
+    }
+
+    // A swatch property takes precedence over a plain color
+    if (value.swatch) {
+      const swatch = Swatch.from(value.swatch)
+      if (swatch) {
+        fill.color = swatch.referencingColor
+      }
     }
 
     if (gradient) {
@@ -148,6 +157,19 @@ Fill.define('color', {
   set(_color) {
     const color = Color.from(_color)
     this._object.color = color.toMSColor()
+  },
+})
+
+Fill.define('swatch', {
+  get() {
+    const swatchID = this._object.color?.()?.swatchID?.()
+    if (!swatchID) {
+      return undefined
+    }
+    return Swatch.instantiate(swatchID, this)
+  },
+  set(newSwatch) {
+    this.color = Swatch.from(newSwatch).referencingColor
   },
 })
 

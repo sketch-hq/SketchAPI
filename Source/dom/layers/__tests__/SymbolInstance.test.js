@@ -1,6 +1,6 @@
 /* globals expect, test */
 /* eslint-disable no-param-reassign */
-import { SymbolInstance } from '../..'
+import { SymbolInstance, Group, SymbolMaster } from '../..'
 import { createSymbolMaster, canBeLogged } from '../../../test-utils'
 
 test('should create a instance by setting the master property', (_context, document) => {
@@ -59,6 +59,160 @@ test('should have overrides', (_context, document) => {
     (o) => o.property === 'stringValue'
   )
   expect(overrideAfter.toJSON()).toEqual(result)
+})
+
+test('should have expandedLayers', (_context, document) => {
+  const { master, text } = createSymbolMaster(document)
+  const instance = new SymbolInstance({
+    parent: document.selectedPage,
+    master,
+  })
+
+  expect(instance.expandedLayers.length).toBe(1)
+  expect(instance.expandedLayers[0].id).toBe(text.id)
+  expect(instance.expandedLayers[0].isNestedSymbol).toBeUndefined()
+})
+
+test('should have nested symbols in expandedLayers', (_context, document) => {
+  const { master: nestedMaster } = createSymbolMaster(document)
+
+  const frame = new Group.Frame({
+    name: 'OuterSymbol',
+    parent: document.selectedPage,
+    layers: [
+      nestedMaster.createNewInstance(),
+      { type: 'Text', text: 'Something' },
+    ],
+  })
+
+  const instance = SymbolMaster.fromFrame(frame).createNewInstance()
+  instance.parent = document.selectedPage
+
+  expect(instance.expandedLayers.length).toBe(2)
+  expect(instance.expandedLayers[0].type).toBe(Group.type)
+  expect(instance.expandedLayers[0].isNestedSymbol).toBe(true)
+  expect(instance.expandedLayers[0].symbolId).toBe(nestedMaster.symbolId)
+})
+
+test('should access overrides for an expanded layer', (_context, document) => {
+  const { master, text } = createSymbolMaster(document)
+  const instance = new SymbolInstance({
+    parent: document.selectedPage,
+    master,
+  })
+
+  // Note: we don't store a reference to `instance.expandedLayers[0]` because:
+  // 1) once we modify the override value below, `expandedLayers` collection
+  //    is regenerated, and this reference would become stale
+  // 2) the layer is immutable, so its `text` won't change once we modify the override
+
+  expect(instance.expandedLayers[0].id).toBe(text.id)
+  expect(instance.expandedLayers[0].text).toBe(text.text)
+
+  const overrides = instance.overridesForExpandedLayer(
+    instance.expandedLayers[0]
+  )
+  const textOverride = overrides.find((o) => o.property === 'stringValue')
+  expect(textOverride).toBeDefined()
+  expect(textOverride.value).toBe('Test value')
+
+  textOverride.value = 'New value'
+  expect(textOverride.value).toBe('New value')
+  expect(instance.expandedLayers[0].text).toBe('New value')
+})
+
+test('should access overrides for a deeply nested expanded layer', (_context, document) => {
+  const { master: nestedMaster, text: deeplyNestedText } = createSymbolMaster(
+    document
+  )
+  const intermediateMaster = SymbolMaster.fromFrame(
+    new Group.Frame({
+      name: 'IntermediateSymbol',
+      parent: document.selectedPage,
+      layers: [nestedMaster.createNewInstance()],
+    })
+  )
+  const outerMaster = SymbolMaster.fromFrame(
+    new Group.Frame({
+      name: 'OuterSymbol',
+      parent: document.selectedPage,
+      layers: [intermediateMaster.createNewInstance()],
+    })
+  )
+
+  const instance = new SymbolInstance({
+    parent: document.selectedPage,
+    master: outerMaster,
+  })
+
+  expect(instance.expandedLayers[0]?.layers[0]?.layers[0]).toBeDefined()
+  expect(instance.expandedLayers[0].layers[0].layers[0].text).toBe(
+    deeplyNestedText.text
+  )
+
+  const textOverride = instance
+    .overridesForExpandedLayer(instance.expandedLayers[0].layers[0].layers[0])
+    .find((o) => o.property === 'stringValue')
+
+  expect(textOverride).toBeDefined()
+  expect(textOverride.value).toBe(deeplyNestedText.text)
+
+  textOverride.value = 'New deeply nested value'
+
+  expect(textOverride.value).toBe('New deeply nested value')
+  expect(instance.expandedLayers[0].layers[0].layers[0].text).toBe(
+    'New deeply nested value'
+  )
+})
+
+// The gotcha here is that all 3 instances of the nested symbol share the same
+// underlying immutable model object initially, so we need to make sure we can
+// still override them individually
+test('should access overrides for each individual instance of a nested symbol', (_context, document) => {
+  const { master: nestedMaster, text: nestedText } = createSymbolMaster(
+    document
+  )
+  const outerMaster = SymbolMaster.fromFrame(
+    new Group.Frame({
+      name: 'OuterSymbol',
+      parent: document.selectedPage,
+      layers: [
+        nestedMaster.createNewInstance(),
+        nestedMaster.createNewInstance(),
+        nestedMaster.createNewInstance(),
+      ],
+    })
+  )
+
+  const instance = new SymbolInstance({
+    parent: document.selectedPage,
+    master: outerMaster,
+  })
+
+  expect(instance.expandedLayers[0].layers[0].text).toBe(nestedText.text)
+  expect(instance.expandedLayers[1].layers[0].text).toBe(nestedText.text)
+  expect(instance.expandedLayers[2].layers[0].text).toBe(nestedText.text)
+
+  const textOverrides = instance.expandedLayers.map((layer) =>
+    instance
+      .overridesForExpandedLayer(layer.layers[0])
+      .find((o) => o.property === 'stringValue')
+  )
+  expect(textOverrides[0].value).toBe(nestedText.text)
+  expect(textOverrides[1].value).toBe(nestedText.text)
+  expect(textOverrides[2].value).toBe(nestedText.text)
+
+  textOverrides[0].value = 'First instance'
+  textOverrides[1].value = 'Second instance'
+  textOverrides[2].value = 'Third instance'
+
+  expect(textOverrides[0].value).toBe('First instance')
+  expect(textOverrides[1].value).toBe('Second instance')
+  expect(textOverrides[2].value).toBe('Third instance')
+
+  expect(instance.expandedLayers[0].layers[0].text).toBe('First instance')
+  expect(instance.expandedLayers[1].layers[0].text).toBe('Second instance')
+  expect(instance.expandedLayers[2].layers[0].text).toBe('Third instance')
 })
 
 // Disabled via #49647 and #49751
