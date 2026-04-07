@@ -66,7 +66,7 @@ test('should create a symbol master with a nested symbol', (_context, document) 
 
   // add the instance to the page
   document.selectedPage.layers = document.selectedPage.layers.concat(instance)
-  expect(instance.overrides.length).toBe(25)
+  expect(instance.overrides.length).toBe(29)
   canBeLogged(instance, SymbolInstance)
 
   // Find the override points being tested here:
@@ -158,7 +158,7 @@ test('should create a symbol master with a nested symbol', (_context, document) 
 test('should have overrides', (_context, document) => {
   const { master, text } = createSymbolMaster(document)
 
-  expect(master.overrides.length).toBe(10)
+  expect(master.overrides.length).toBe(12)
   const override = master.overrides.find((o) => o.property === 'stringValue')
   const result = {
     type: 'Override',
@@ -236,3 +236,20 @@ test('should include `includedInInstance` in the `background`', (_context, docum
 //   // This will be null for local Symbols, but that's ok
 //   expect(lib).toBe(null)
 // })
+
+test('should get and set clipsContents for symbol masters', (_context, document) => {
+  const { master } = createSymbolMaster(document)
+
+  // By default, symbol masters should clip contents
+  expect(master.clipsContents).toBe(true)
+
+  // Should be able to disable clipping
+  master.clipsContents = false
+  expect(master.clipsContents).toBe(false)
+  expect(master._object.clippingBehavior()).toBe(2) // 2 = none
+
+  // Should be able to enable clipping
+  master.clipsContents = true
+  expect(master.clipsContents).toBe(true)
+  expect(master._object.clippingBehavior()).toBe(1) // 1 = clipToBounds
+})

@@ -54,7 +54,7 @@
     "MSDetachedSymbol": "readonly",
     "MSSymbolMaster": "readonly",
     "MSSymbolInstance": "readonly",
-    "MSOverridePoint": "readonly",
+    "MSSketchAPIOverrideWrapper": "readonly",
     "MSAssetLibrary": "readonly",
     "MSDocument": "readonly",
     "NSURL": "readonly",

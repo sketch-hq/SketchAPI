@@ -5,7 +5,7 @@ import { Artboard, Document, Page, Group, GroupBehavior, find } from '../..'
 test('should create an artboard', () => {
   const artboard = new Artboard({ name: 'Test' })
   expect(artboard.type).toBe('Artboard')
-  expect(artboard.groupBehavior).toBe(GroupBehavior.Frame)
+  expect(artboard.isFrame).toBe(true)
   canBeLogged(artboard, Artboard)
 
   const pageWithImplicitArtboard = new Page({

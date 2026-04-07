@@ -147,7 +147,7 @@ test('should create Frames and Graphics via convenience constructors', (_context
   })
   expect(frame.type).toBe('Group')
   expect(frame.layers.length).toBe(1)
-  expect(frame.groupBehavior).toBe(GroupBehavior.Frame)
+  expect(frame.isFrame).toBe(true)
 
   const graphic = new Group.Graphic({
     layers: [
@@ -159,7 +159,7 @@ test('should create Frames and Graphics via convenience constructors', (_context
   })
   expect(graphic.type).toBe('Group')
   expect(graphic.layers.length).toBe(1)
-  expect(graphic.groupBehavior).toBe(GroupBehavior.Graphic)
+  expect(graphic.isGraphicFrame).toBe(true)
 
   document.selectedPage.layers = [frame]
   // once a frame is added to the page, it becomes a "canvas frame"
@@ -211,4 +211,53 @@ test('should enable background for new frames', () => {
     groupBehavior: GroupBehavior.Frame,
   })
   expect(frameAdoptedFromNative.background.enabled).toBe(false)
+})
+
+test('should get and set clipsContents for frames', (_context, document) => {
+  const frame = new Group.Frame({
+    parent: document.selectedPage,
+  })
+
+  // By default, frames should clip contents
+  expect(frame.clipsContents).toBe(true)
+
+  // Should be able to disable clipping
+  frame.clipsContents = false
+  expect(frame.clipsContents).toBe(false)
+  expect(frame._object.clippingBehavior()).toBe(2) // 2 = none
+
+  // Should be able to enable clipping
+  frame.clipsContents = true
+  expect(frame.clipsContents).toBe(true)
+  expect(frame._object.clippingBehavior()).toBe(1) // 1 = clipToBounds
+})
+
+test('should get and set clipsContents for graphics', (_context, document) => {
+  const graphic = new Group.Graphic({
+    parent: document.selectedPage,
+  })
+
+  // By default, graphics should clip contents
+  expect(graphic.clipsContents).toBe(true)
+
+  // Should be able to disable clipping
+  graphic.clipsContents = false
+  expect(graphic.clipsContents).toBe(false)
+
+  // Should be able to enable clipping
+  graphic.clipsContents = true
+  expect(graphic.clipsContents).toBe(true)
+})
+
+test('should return undefined for clipsContents on regular groups', (_context, document) => {
+  const group = new Group({
+    parent: document.selectedPage,
+  })
+
+  // Regular groups should not have clipsContents
+  expect(group.clipsContents).toBe(undefined)
+
+  // Setting it should have no effect
+  group.clipsContents = true
+  expect(group.clipsContents).toBe(undefined)
 })

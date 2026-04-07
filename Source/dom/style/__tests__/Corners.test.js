@@ -202,3 +202,34 @@ test('should update concentric corners when parent padding changes', () => {
   parent.frame = new Rectangle(100, 100, 80, 80) // shrink the parent and the child corner radius should follow
   expect(layer.style.corners.radii).toEqual([12])
 })
+
+test('should get and set smoothing', () => {
+  const style = new Style({
+    corners: {
+      style: Style.CornerStyle.Smooth,
+      smoothing: 0.5,
+    },
+  })
+  expect(style.corners.smoothing).toBe(0.5)
+
+  style.corners.smoothing = 0.8
+  expect(style.corners.smoothing).toBe(0.8)
+
+  // value is clamped between 0 and 1
+  style.corners.smoothing = 1.5
+  expect(style.corners.smoothing).toBe(1)
+
+  style.corners.smoothing = -0.5
+  expect(style.corners.smoothing).toBe(0)
+
+  // value is preserved when switching styles
+  style.corners.smoothing = 0.7
+  style.corners.style = Style.CornerStyle.Rounded
+  expect(style.corners.smoothing).toBe(0.7)
+
+  style.corners.style = Style.CornerStyle.Smooth
+  expect(style.corners.smoothing).toBe(0.7)
+
+  // has a default value
+  expect(new Style().corners.smoothing).toBeDefined()
+})

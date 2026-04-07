@@ -4,7 +4,7 @@ import { wrapObject } from './wrapNativeObject'
 import { Types } from './enums'
 import { Factory } from './Factory'
 import { colorFromString } from './style/Color'
-import { Group, GroupBehavior } from './layers/Group'
+import { Group } from './layers/Group'
 
 const simpleAttribute = (attribute, opposite) => (
   operator,
@@ -273,15 +273,8 @@ export function find(predicate, root, options = {}) {
         return (group) => !canvasFrames.includes(group)
       // Include all Frames, including canvas frames and Graphics
       case FilterStrategy.Frame:
-        return (group) => {
-          const hasFrameBehavior =
-            group.isKindOfClass(MSLayerGroup) && Group.fromNative(group).isFrame
-          // Symbol Masters with default group behavior are treated as Frames by Sketch
-          const isSymbolMasterWithDefaultBehavior =
-            group.isKindOfClass(MSSymbolMaster) &&
-            Group.fromNative(group).groupBehavior === GroupBehavior.Default
-          return hasFrameBehavior || isSymbolMasterWithDefaultBehavior
-        }
+        return (group) =>
+          group.isKindOfClass(MSLayerGroup) && Group.fromNative(group).isFrame
       // Include all Graphics, including canvas frames
       case FilterStrategy.Graphic:
         return (group) =>

@@ -1,7 +1,6 @@
 import { DefinedPropertiesKey, WrappedObject } from '../WrappedObject'
 import { Types } from '../enums'
 import { Factory } from '../Factory'
-import { Override } from './Override'
 import { SymbolInstance } from '../layers/SymbolInstance'
 
 /**
@@ -18,13 +17,10 @@ if (typeof MSDataOverride !== 'undefined') {
 
 DataOverride.define('override', {
   get() {
-    const wrapped = Override.fromNative(this._object.overridePoint())
-    Object.defineProperty(wrapped, '__symbolInstance', {
-      writable: false,
-      enumerable: false,
-      value: this.symbolInstance,
-    })
-    return wrapped
+    const pathRepresentation = String(this._object.overridePathRepresentation())
+    return this.symbolInstance.overrides.find(
+      (o) => o.id === pathRepresentation
+    )
   },
 })
 
@@ -38,6 +34,6 @@ DataOverride.define('id', {
   exportable: true,
   importable: false,
   get() {
-    return String(this._object.overrideIdentifier())
+    return String(this._object.overridePathRepresentation())
   },
 })

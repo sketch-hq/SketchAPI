@@ -47,6 +47,21 @@ export class Selection {
         return this.length === 0
       },
     })
+
+    // Allow array-style access to individual layers
+    return new Proxy(this, {
+      get(target, prop) {
+        if (typeof prop === 'string' && /^\d+$/.test(prop)) {
+          return target.layers[Number(prop)]
+        }
+        return target[prop]
+      },
+    })
+  }
+
+  // Allow for-of iteration
+  [Symbol.iterator]() {
+    return this.layers[Symbol.iterator]()
   }
 
   forEach(fn) {

@@ -44,6 +44,9 @@ export class Group extends StyledLayer {
         this.background.enabled = true
       }
     }
+
+    // Make the initial stack layout pass happen immediately if needed
+    this.stackLayout?.apply()
   }
 
   // @deprecated
@@ -93,6 +96,9 @@ Group.Graphic = class Graphic extends Group {
 
 Group.define('groupBehavior', {
   get() {
+    console.warn(
+      'Group.groupBehavior is not a reliable indicator of whether a given group acts as a Frame or Graphic. Use Group.isFrame and Group.isGraphicFrame instead.'
+    )
     return this._object.groupBehavior()
   },
   set(value) {
@@ -220,16 +226,18 @@ Group.define('stackLayout', {
       const padding = stackLayout.padding
       const layout = new StackLayout(stackLayout)
       this._object.setGroupLayout(layout.sketchObject)
-      // We define `padding` on StackLayout itself as a convenient proxy for the corresponding
-      // property of its parent group. Because of that we postpone applying a padding value
-      // until the stack layout has actually been added to a parent group
-      if (padding) {
-        layout.update({ padding })
-      }
       // Match the app behavior that adjusts the group sizing upon applying a stack layout to it
       layout.adjustParentGroupSizing()
+      // We define `padding` on StackLayout itself as a convenient proxy for the corresponding
+      // property of its parent group. Because of that we postpone applying a padding value
+      // until the stack layout has actually been added to a parent group. The padding itself
+      // may be undefined, which will acts as a reset to default (i.e. no padding)
+      layout.update({ padding })
     } else {
       this._object.setGroupLayout(MSFreeformGroupLayout.alloc().init())
+      // The padding is currently tied to a stack layout, see the comment above
+      this._object.setPaddingSelection(0)
+      this._object.setTopPadding(0)
     }
   },
 })
@@ -239,10 +247,7 @@ Group.define('isFrame', {
   exportable: false,
   enumerable: false,
   get() {
-    return (
-      this.groupBehavior === GroupBehavior.Frame ||
-      this.groupBehavior === GroupBehavior.Graphic
-    )
+    return Boolean(this._object.hasFrameTrait())
   },
 })
 
@@ -251,7 +256,7 @@ Group.define('isGraphicFrame', {
   exportable: false,
   enumerable: false,
   get() {
-    return this.groupBehavior === GroupBehavior.Graphic
+    return Boolean(this._object.hasGraphicTrait())
   },
 })
 
@@ -264,6 +269,23 @@ Group.define('flowStartPoint', {
       return
     }
     this._object.isFlowHome = isFlowStartHome
+  },
+})
+
+Group.define('clipsContents', {
+  get() {
+    if (!this.isFrame) {
+      return undefined
+    }
+    return Boolean(Number(this._object.clipsContents()))
+  },
+  set(value) {
+    if (this.isImmutable() || !this.isFrame) {
+      return
+    }
+    // clippingBehavior enum: 0 = default, 1 = clipToBounds, 2 = none
+    const newBehavior = value ? 1 : 2
+    this._object.setClippingBehavior(newBehavior)
   },
 })
 

@@ -7,6 +7,7 @@ import { Types } from '../enums'
 import { isWrappedObject } from '../utils'
 import { BlendingModeMap } from '../models/BlendingMode'
 import { Swatch } from '../assets'
+import { BorderSides } from './BorderSides'
 
 const BorderPositionMap = {
   Center: 0,
@@ -78,6 +79,13 @@ export class Border extends WrappedObject {
       if (typeof blendingMode !== 'undefined') {
         border.contextSettings().setBlendMode(blendingMode)
       }
+    }
+
+    if (value.sides && typeof value.sides === 'object') {
+      const sides = new BorderSides({
+        border: Border.fromNative(border),
+      })
+      sides.update(value.sides)
     }
 
     return border
@@ -192,5 +200,28 @@ Border.define('blendingMode', {
     this._object
       .contextSettings()
       .setBlendMode(typeof blendingMode !== 'undefined' ? blendingMode : mode)
+  },
+})
+
+Border.define(`hasIndividualSides`, {
+  get() {
+    return !!this._object.sides()
+  },
+})
+
+// N.B. `Border.defineObject('sides', ...)` doesn't work here because we want
+// users to be able to nullify the sides via `border.sides = null`
+Border.define(`sides`, {
+  get() {
+    return new BorderSides({ border: this })
+  },
+  set(newValue) {
+    // Make sure to reset all existing sides prior to assigning new ones
+    this._object.setSides(null)
+    if (!newValue || typeof newValue !== 'object') {
+      return
+    }
+    const newSides = new BorderSides({ border: this })
+    newSides.update(newValue)
   },
 })

@@ -114,7 +114,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
-				LastUpgradeCheck = 1620;
+				LastUpgradeCheck = 2640;
 				ORGANIZATIONNAME = Sketch;
 				TargetAttributes = {
 					4371214B2469F0F6000570FA = {
@@ -153,15 +153,15 @@
 			files = (
 			);
 			inputFileListPaths = (
+				"$(SRCROOT)/sketchapi-inputs.xcfilelist",
 			);
 			inputPaths = (
 			);
 			name = "Build SketchAPI";
 			outputFileListPaths = (
+				"$(SRCROOT)/sketchapi-outputs.xcfilelist",
 			);
 			outputPaths = (
-				"",
-				"$(SOURCE_ROOT)/build/",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/zsh;

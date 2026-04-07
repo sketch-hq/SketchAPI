@@ -69,7 +69,7 @@ Factory.registerClass(ImageData, MSImageData)
 // make it explicit that we will get a native object
 ImageData.define('nsimage', {
   get() {
-    return this._object.image()
+    return this._object.NSImage()
   },
 })
 
@@ -81,6 +81,8 @@ ImageData.define('nsdata', {
 })
 
 ImageData.define('base64', {
+  exportable: false,
+  importable: false,
   get() {
     if (!this.nsdata) {
       return null
@@ -96,7 +98,7 @@ ImageData.define('size', {
    * @return {object} The image's size.
    */
   get() {
-    const s = this._object.image().size()
+    const s = this.nsimage.size()
     const size = { width: parseFloat(s.width), height: parseFloat(s.height) }
     return size
   },
