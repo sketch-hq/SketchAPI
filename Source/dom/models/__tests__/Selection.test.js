@@ -93,3 +93,39 @@ test('should define convenience array methods', (_context, document) => {
   expect(selection.reduce).toBeDefined()
   expect(selection.filter).toBeDefined()
 })
+
+test('should allow array-style access to layers', (_context, document) => {
+  const group = new Group({
+    parent: document.selectedPage,
+    selected: true,
+  })
+  const text = new Text({
+    parent: document.selectedPage,
+    selected: true,
+  })
+  const selection = document.selectedLayers
+
+  expect(selection[0].isEqual(group)).toBe(true)
+  expect(selection[1].isEqual(text)).toBe(true)
+})
+
+test('should allow iteration over selected layers', (_context, document) => {
+  const group = new Group({
+    parent: document.selectedPage,
+    selected: true,
+  })
+  const text = new Text({
+    parent: document.selectedPage,
+    selected: true,
+  })
+  const selection = document.selectedLayers
+
+  const layers = []
+  for (const layer of selection) {
+    layers.push(layer)
+  }
+
+  expect(layers.length).toBe(2)
+  expect(layers[0].isEqual(group)).toBe(true)
+  expect(layers[1].isEqual(text)).toBe(true)
+})

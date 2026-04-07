@@ -60,13 +60,20 @@ export class StackLayout extends WrappedObject {
         parent.horizontalSizing = this.isAutomaticallySpaced
           ? FlexSizing.Fixed
           : FlexSizing.Fit
+        parent.verticalSizing = FlexSizing.Fit
         break
       case StackLayout.Direction.Column:
+        parent.horizontalSizing = FlexSizing.Fit
         parent.verticalSizing = this.isAutomaticallySpaced
           ? FlexSizing.Fixed
           : FlexSizing.Fit
         break
     }
+  }
+
+  apply() {
+    // Triggers the layout update of the entire stack hierarchy
+    this._object.layout()
   }
 }
 
@@ -78,6 +85,7 @@ StackLayout.define('direction', {
     if (Number.isInteger(direction)) {
       this._object.setFlexDirection(direction)
     }
+    this.apply()
   },
 })
 
@@ -89,6 +97,7 @@ StackLayout.define('justifyContent', {
     if (Number.isInteger(justifyContent)) {
       this._object.setJustifyContent(justifyContent)
     }
+    this.apply()
   },
 })
 
@@ -117,6 +126,7 @@ StackLayout.define('alignItems', {
     if (Number.isInteger(alignItems)) {
       this._object.setAlignItems(alignItems)
     }
+    this.apply()
   },
 })
 
@@ -126,6 +136,7 @@ StackLayout.define('gap', {
   },
   set(gap) {
     this._object.setAllGuttersGap(Number(gap))
+    this.apply()
   },
 })
 
@@ -220,6 +231,7 @@ StackLayout.define('padding', {
         host.setTopPadding(0)
         break
     }
+    this.apply()
   },
 })
 
@@ -233,6 +245,7 @@ StackLayout.define('wraps', {
       return
     }
     this._object.setWrappingEnabled(Boolean(wraps))
+    this.apply()
   },
 })
 
@@ -244,6 +257,7 @@ StackLayout.define('alignContent', {
     if (Number.isInteger(alignContent)) {
       this._object.setAlignContent(alignContent)
     }
+    this.apply()
   },
 })
 
@@ -253,6 +267,7 @@ StackLayout.define('crossAxisGap', {
   },
   set(crossAxisGap) {
     this._object.setCrossAxisGutterGap(Number(crossAxisGap))
+    this.apply()
   },
 })
 
@@ -266,6 +281,15 @@ StackLayout[DefinedPropertiesKey] = { ...WrappedObject[DefinedPropertiesKey] }
 Factory.registerClass(StackLayout, MSFlexGroupLayout)
 
 delete StackLayout[DefinedPropertiesKey].id
+
+function parentStackLayoutForFlexItem(flexItem) {
+  if (flexItem.ancestorLayer?.()?.parentGroup?.()) {
+    const container = wrapNativeObject(flexItem.ancestorLayer().parentGroup())
+    return container.stackLayout
+  }
+
+  return undefined
+}
 
 export function defineStackItemLayerProperties(Layer) {
   Layer.define('ignoresStackLayout', {
@@ -288,6 +312,7 @@ export function defineStackItemLayerProperties(Layer) {
         return
       }
       flexItem.setIgnoreLayout(newValue)
+      parentStackLayoutForFlexItem(flexItem)?.apply()
     },
   })
 
@@ -311,6 +336,7 @@ export function defineStackItemLayerProperties(Layer) {
         return
       }
       flexItem.setPreserveSpaceWhenHidden(newValue)
+      parentStackLayoutForFlexItem(flexItem)?.apply()
     },
   })
 }

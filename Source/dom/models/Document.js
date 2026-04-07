@@ -207,8 +207,7 @@ export class Document extends WrappedObject {
     console.warn(
       `\`document.getSharedLayerStyles()\` is deprecated. Use \`document.sharedLayerStyles\` instead.`
     )
-    const documentData = this._getMSDocumentData()
-    return toArray(documentData.allLayerStyles()).map(wrapObject)
+    return Array.from(this.sharedLayerStyles)
   }
 
   getSharedTextStyleWithID(sharedId) {
@@ -219,8 +218,7 @@ export class Document extends WrappedObject {
     console.warn(
       `\`document.getSharedTextStyles()\` is deprecated. Use \`document.sharedTextStyles\` instead.`
     )
-    const documentData = this._getMSDocumentData()
-    return toArray(documentData.allTextStyles()).map(wrapObject)
+    return Array.from(this.sharedTextStyles)
   }
 
   /**
@@ -232,12 +230,23 @@ export class Document extends WrappedObject {
     if (this.isImmutable()) {
       return
     }
-    
+
     let relative = layer.frame
     let absoluteRect = relative.changeBasis({ from: layer.parent })
-    this._object
-      .contentDrawView()
-      .centerRect_(absoluteRect.asCGRect())
+    this._object.contentDrawView().centerRect_(absoluteRect.asCGRect())
+  }
+
+  /**
+   * Zoom to fit all layers of the current page in the canvas viewport,
+   * adjusting the zoom level and scroll position as needed.
+   */
+  zoomToFitCanvas() {
+    if (this.isImmutable()) {
+      return
+    }
+    const msdocument = this._getMSDocument()
+    if (!msdocument) return
+    msdocument.zoomToFitCanvas()
   }
 
   static open(path, callback) {

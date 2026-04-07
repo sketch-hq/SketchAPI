@@ -6,9 +6,7 @@ import { Types } from '../enums'
 import { Factory } from '../Factory'
 import { wrapObject } from '../wrapNativeObject'
 import { Override } from '../models/Override'
-import { ImageData } from '../models/ImageData'
 import { getDocuments } from '../models/Document'
-import { Color } from '../style/Color'
 import { NestedExpandedSymbol } from './NestedExpandedSymbol'
 import { LayerAncestry } from './LayerAncestry'
 
@@ -48,31 +46,6 @@ export class SymbolInstance extends StyledLayer {
     }
 
     return group ? wrapObject(group) : null
-  }
-
-  setOverrideValue(override, value) {
-    if (this.isImmutable()) {
-      return this
-    }
-    const wrappedOverride = wrapObject(override)
-    const overridePoint = wrappedOverride.sketchObject
-    if (wrappedOverride.property === 'image') {
-      this._object.setValue_forOverridePoint(
-        ImageData.from(value).sketchObject,
-        overridePoint
-      )
-    } else if (wrappedOverride.property === 'stringValue') {
-      this._object.setValue_forOverridePoint(String(value), overridePoint)
-    } else if (wrappedOverride.colorOverride) {
-      this._object.setValue_forOverridePoint(
-        Color.from(value).toMSImmutableColor(),
-        overridePoint
-      )
-    } else {
-      this._object.setValue_forOverridePoint(value, overridePoint)
-    }
-    this._object.ensureDetachHasUpdated()
-    return this
   }
 
   resizeWithSmartLayout() {
@@ -178,23 +151,12 @@ SymbolInstance.define('master', {
 
 SymbolInstance.define('overrides', {
   get() {
-    // undefined when immutable
-    if (!this._object.overridePoints) {
-      return undefined
+    if (this.isImmutable()) {
+      return
     }
-
-    this._object.ensureDetachHasUpdated()
-
-    const overrides = toArray(this._object.overridePoints())
-    return overrides.map((o) => {
-      const wrapped = Override.fromNative(o)
-      Object.defineProperty(wrapped, '__symbolInstance', {
-        writable: false,
-        enumerable: false,
-        value: this,
-      })
-      return wrapped
-    })
+    return toArray(this._object.sketchapiOverrides()).map((o) =>
+      Override.fromNative(o)
+    )
   },
   set() {
     throw new Error(

@@ -154,40 +154,20 @@ SymbolMaster.define('symbolId', {
 
 SymbolMaster.define('overrides', {
   get() {
-    if (!this._object.overridePoints) {
-      return undefined
+    if (this.isImmutable()) {
+      return
     }
-
-    this._object.ensureDetachHasUpdated()
-    const overrides = toArray(this._object.overridePoints())
-
-    return overrides.map((o) => {
-      const wrapped = Override.fromNative(o)
-      Object.defineProperty(wrapped, '__symbolMaster', {
-        writable: false,
-        enumerable: false,
-        value: this,
-      })
-      return wrapped
-    })
+    return toArray(this._object.sketchapiOverrides()).map((o) =>
+      Override.fromNative(o)
+    )
   },
   set(overrides) {
     if (this.isImmutable()) {
       return
     }
 
-    var dict = {}
-    this._object.overridePoints().forEach((o) => {
-      dict[o.name()] = o
-    })
-
-    overrides.forEach((o) => {
-      const overridePoint = dict[o.id]
-      if (overridePoint) {
-        this._object.setOverridePoint_editable(overridePoint, o.editable)
-      }
-    })
-    this._object.ensureDetachHasUpdated()
+    const batch = Object.fromEntries(overrides.map((o) => [o.id, o.editable]))
+    this._object.batchSetIsEditableForOverrides(batch)
   },
 })
 

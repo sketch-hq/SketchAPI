@@ -32,7 +32,7 @@ test('should be able to set overrides', (_context, document) => {
   const instance = master.createNewInstance()
   document.selectedPage.layers = document.selectedPage.layers.concat(instance)
 
-  expect(instance.overrides.length).toBe(10)
+  expect(instance.overrides.length).toBe(12)
 
   // find the override point for the text layer's string value
   const override = instance.overrides.find((o) => o.property === 'stringValue')
@@ -43,7 +43,7 @@ test('should be able to set overrides', (_context, document) => {
   // override
   override.value = 'overridden'
 
-  expect(instance.overrides.length).toBe(10)
+  expect(instance.overrides.length).toBe(12)
   const result = {
     type: 'Override',
     id: `${text.id}_stringValue`,
@@ -87,7 +87,7 @@ test('should change a nested symbol', (_context, document) => {
 
   // add the instance to the page
   document.selectedPage.layers = document.selectedPage.layers.concat(instance)
-  expect(instance.overrides.length).toBe(25)
+  expect(instance.overrides.length).toBe(29)
 
   // find the symbol override point
   const symbolOverrides = instance.overrides.filter(
@@ -145,20 +145,20 @@ test('should handle image override', (_context, document) => {
 
   // add the instance to the page
   document.selectedPage.layers = document.selectedPage.layers.concat(instance)
-  expect(instance.overrides.length).toBe(6)
+  expect(instance.overrides.length).toBe(8)
 
   // check image resize behavior
   const imageResizeOverride = instance.overrides.find(
     (o) => o.property === 'imageResizeBehavior'
   )
   expect(imageResizeOverride.isDefault).toBe(true)
-  expect(imageResizeOverride.value).toBe('Original')
-  imageResizeOverride.value = 1
+  expect(imageResizeOverride.value).toBe('1')
+  imageResizeOverride.value = 2
   const imageResizeOverrideAfter = instance.overrides.find(
     (o) => o.property === 'imageResizeBehavior'
   )
   expect(imageResizeOverrideAfter.isDefault).toBe(false)
-  expect(imageResizeOverrideAfter.value).toBe('1')
+  expect(imageResizeOverrideAfter.value).toBe('2')
 
   // check image
   const imageOverride = instance.overrides.find((o) => o.property === 'image')
@@ -184,7 +184,7 @@ test('hidden layers still editable', (_context, document) => {
   document.selectedPage.layers = document.selectedPage.layers.concat(instance)
 
   // Update for 51800 - overrides should be available in hidden layers
-  expect(instance.overrides.length).toBe(10)
+  expect(instance.overrides.length).toBe(12)
 })
 
 test('should be able to select an override', (_context, document) => {

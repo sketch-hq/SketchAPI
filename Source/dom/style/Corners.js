@@ -126,6 +126,30 @@ Corners.define('concentric', {
   },
 })
 
+Corners.define('smoothing', {
+  get() {
+    return Number(this._object.smoothing())
+  },
+  set(smoothing) {
+    if (this.isImmutable()) {
+      return
+    }
+    if (this.style !== Corners.Style.Smooth) {
+      console.warn(
+        'Updating Corners.smoothing only has an effect when Corners.style is set to Style.CornerStyle.Smooth.'
+      )
+    }
+    if (typeof smoothing === 'number') {
+      // Clamp to [0, 1]
+      smoothing = Math.max(0, Math.min(1, Number(smoothing)))
+      this._object.setSmoothing(smoothing)
+      this._applyConcentricCornersOnChildren()
+    } else {
+      console.warn('Invalid value for Corners.smoothing. Expected a number.')
+    }
+  },
+})
+
 Corners.Style = CornerStyle
 Corners[DefinedPropertiesKey] = { ...WrappedObject[DefinedPropertiesKey] }
 Factory.registerClass(Corners, MSStyleCorners)

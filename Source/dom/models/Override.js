@@ -2,74 +2,13 @@ import { DefinedPropertiesKey, WrappedObject } from '../WrappedObject'
 import { Types } from '../enums'
 import { Factory } from '../Factory'
 import { ImageData } from './ImageData'
+import { isWrappedObject } from '../utils'
 import { wrapNativeObject } from '../wrapNativeObject'
 import { Rectangle } from './Rectangle'
 import { Color } from '../style/Color'
 import { Swatch } from '../assets'
 
 export class Override extends WrappedObject {
-  // Returns any override directly set on the symbol instance or null if none is set or this is an override point on a symbol source
-  getValueSetOnInstance() {
-    if (!this.__symbolInstance) {
-      return null
-    }
-    var overrideValues = this.__symbolInstance.sketchObject.overrideValues()
-    for (var i = 0; i < overrideValues.length; i++) {
-      if (
-        overrideValues[i].overridePath().isEqual(this._object.overridePath())
-      ) {
-        return overrideValues[i].value()
-      }
-    }
-    return null
-  }
-
-  // Returns the current value of the override point. This is the value set on the layer in the detached version of the symbol. It may be
-  // out-of-date if the detached symbol hasn't yet updated.
-  getResolvedValueOnDetachedSymbol() {
-    var layer = this._object.layer()
-    return layer.valueForOverrideAttribute(this.property)
-  }
-
-  // Returns the value the override point will have if there is no override set on this instance.
-  getDefaultValue() {
-    if (!this.__symbolInstance) {
-      return this.getResolvedValueOnDetachedSymbol()
-    }
-    return this.__symbolInstance.sketchObject.defaultValueForOverridePoint(
-      this._object
-    )
-  }
-
-  // Returns a SelectionItem representing this override point
-  selectionItem() {
-    if (this.__symbolInstance) {
-      return this.__symbolInstance.sketchObject.selectionItemForOverridePoint(
-        this.sketchObject
-      )
-    }
-    if (this.__symbolMaster) {
-      return this.__symbolMaster.sketchObject.selectionItemForOverridePoint(
-        this.sketchObject
-      )
-    }
-    return null
-  }
-
-  getOwningPage() {
-    if (this.__symbolInstance) {
-      return this.__symbolInstance.sketchObject.parentPage()
-    }
-    if (this.__symbolMaster) {
-      return this.__symbolMaster.sketchObject.parentPage()
-    }
-    return null
-  }
-
-  getFrame() {
-    return new Rectangle(this._object.layer().frame().rect())
-  }
-
   wrapNativeOverrideValue(value) {
     if (this.property === 'image') {
       return ImageData.fromNative(value)
@@ -90,10 +29,14 @@ export class Override extends WrappedObject {
     }
     return String(value)
   }
+
+  getFrame() {
+    return new Rectangle(this._object.frame())
+  }
 }
 Override.type = Types.Override
 Override[DefinedPropertiesKey] = { ...WrappedObject[DefinedPropertiesKey] }
-Factory.registerClass(Override, MSOverridePoint)
+Factory.registerClass(Override, MSSketchAPIOverrideWrapper)
 
 Override.define('path', {
   get() {
@@ -109,11 +52,11 @@ Override.define('property', {
 
 Override.define('affectedLayer', {
   get() {
-    var layer = this._object.layer()
-    if (layer.instance) {
-      layer = layer.instance()
+    const nativeObject = this._object.affectedLayer()
+    if (!nativeObject) {
+      return undefined
     }
-    return wrapNativeObject(layer)
+    return wrapNativeObject(nativeObject)
   },
 })
 
@@ -121,7 +64,7 @@ Override.define('id', {
   exportable: true,
   importable: false,
   get() {
-    return String(this._object.name())
+    return String(this._object.identifier())
   },
 })
 
@@ -133,11 +76,87 @@ Override.define('symbolOverride', {
 
 Override.define('colorOverride', {
   get() {
-    return (
-      this.property &&
-      (this.property === 'textColor' ||
-        this.property === 'fillColor' ||
-        this.property.startsWith('color:'))
+    return Boolean(this._object.isColorOverride())
+  },
+})
+
+Override.define('isDefault', {
+  get() {
+    return Boolean(this._object.isDefault())
+  },
+})
+
+Override.define('defaultValue', {
+  exportable: false,
+  importable: false,
+  enumerable: false,
+  get() {
+    return this.wrapNativeOverrideValue(this._object.defaultValue())
+  },
+})
+
+Override.define('value', {
+  get() {
+    return this.wrapNativeOverrideValue(this._object.value())
+  },
+  set(newValue) {
+    if (this.isImmutable()) {
+      return
+    }
+
+    if (this.property === 'image') {
+      this._object.setValue(ImageData.from(newValue).sketchObject)
+    } else if (this.property === 'stringValue') {
+      this._object.setValue(String(newValue))
+    } else if (this.colorOverride) {
+      if (isWrappedObject(newValue) && newValue.type === Types.Swatch) {
+        this._object.setValue(Swatch.from(newValue).referencingColor)
+      } else {
+        this._object.setValue(Color.from(newValue).toMSImmutableColor())
+      }
+    } else {
+      this._object.setValue(newValue)
+    }
+  },
+})
+
+Override.define('editable', {
+  get() {
+    return Boolean(this._object.isEditable())
+  },
+  set(editable) {
+    this._object.setIsEditable(Boolean(editable))
+  },
+})
+
+Override.define('selected', {
+  get() {
+    return Boolean(this._object.isSelected())
+  },
+  set(selected) {
+    this._object.setIsSelected(Boolean(selected))
+  },
+})
+
+Override.define('defaultSwatchValue', {
+  get() {
+    if (!this.colorOverride) {
+      return undefined
+    }
+
+    const nativeValue = this._object.defaultValue()
+    if (!nativeValue) {
+      return undefined
+    }
+
+    const swatchID = Color.from(nativeValue).toMSImmutableColor().swatchID?.()
+    if (!swatchID) {
+      return undefined
+    }
+
+    return Swatch.instantiate(
+      swatchID,
+      wrapNativeObject(this._object.hostObject())
     )
   },
 })
@@ -148,9 +167,9 @@ Override.define('swatchValue', {
       return undefined
     }
 
-    let value = this.getValueSetOnInstance()
+    let value = this._object.value()
     if (!value) {
-      value = this.getResolvedValueOnDetachedSymbol()
+      return undefined
     }
 
     let swatchID = Color.from(value).toMSImmutableColor().swatchID?.()
@@ -160,140 +179,13 @@ Override.define('swatchValue', {
 
     return Swatch.instantiate(
       swatchID,
-      this.__symbolInstance || this.__symbolMaster
+      wrapNativeObject(this._object.hostObject())
     )
   },
   set(newSwatch) {
-    if (!this.__symbolInstance) {
-      throw new Error('Can only set `swatchValue` for a symbol instance')
-    }
     if (!this.colorOverride) {
       return undefined
     }
-
-    this.__symbolInstance.setOverrideValue(
-      this,
-      Swatch.from(newSwatch).referencingColor
-    )
-  },
-})
-
-Override.define('value', {
-  get() {
-    var value = this.getValueSetOnInstance()
-    if (!value) {
-      value = this.getResolvedValueOnDetachedSymbol()
-    }
-    return this.wrapNativeOverrideValue(value)
-  },
-  set(value) {
-    // __symbolInstance is set when building the Override
-    if (!this.__symbolInstance) {
-      throw new Error('Can only set `value` for a symbol instance')
-    }
-    this.__symbolInstance.setOverrideValue(this, value)
-  },
-})
-
-Override.define('isDefault', {
-  get() {
-    return this.getValueSetOnInstance() == null
-  },
-})
-
-Override.define('defaultValue', {
-  exportable: false,
-  importable: false,
-  enumerable: false,
-  get() {
-    return this.wrapNativeOverrideValue(this.getDefaultValue())
-  },
-})
-
-Override.define('defaultSwatchValue', {
-  get() {
-    if (!this.colorOverride) {
-      return undefined
-    }
-
-    const value = this.getDefaultValue()
-    if (!value) {
-      return undefined
-    }
-    const swatchID = Color.from(value).toMSImmutableColor().swatchID?.()
-    if (!swatchID) {
-      return undefined
-    }
-
-    return Swatch.instantiate(
-      swatchID,
-      this.__symbolInstance || this.__symbolMaster
-    )
-  },
-})
-
-Override.define('editable', {
-  get() {
-    var master
-    if (typeof this.__symbolMaster !== 'undefined') {
-      master = this.__symbolMaster.sketchObject
-    } else if (typeof this.__symbolInstance !== 'undefined') {
-      var masterGetter = this.__symbolInstance.sketchObject.symbolMaster
-      if (masterGetter !== 'undefined') {
-        master = masterGetter()
-      }
-    }
-
-    if (typeof master == 'undefined') {
-      throw new Error('Unable to find the symbol source for this override')
-    }
-    if (
-      master.allowsOverrides() &&
-      master.isOverridePointEditable(this._object) &&
-      this._object.isConfigurable()
-    ) {
-      return true
-    } else {
-      return false
-    }
-  },
-  set(editable) {
-    // __symbolInstance is set when building the Override
-    if (typeof this.__symbolMaster == 'undefined') {
-      throw new Error('Can only set `editable` for a symbol master')
-    }
-    this.__symbolMaster.sketchObject.setOverridePoint_editable(
-      this._object,
-      editable
-    )
-  },
-})
-
-Override.define('selected', {
-  get() {
-    let page = this.getOwningPage()
-    if (!page) {
-      return false
-    }
-    let item = this.selectionItem()
-    if (page.selection().isItemSelected(item)) {
-      return true
-    }
-    return false
-  },
-  set(selected) {
-    let item = this.selectionItem()
-    if (!item) {
-      return
-    }
-    let page = this.getOwningPage()
-    if (!page) {
-      return
-    }
-    if (selected) {
-      page.changeSelectionByAddingItems_extendExisting([item], true)
-    } else {
-      page.changeSelectionByRemovingItems([item])
-    }
+    this.value = newSwatch
   },
 })

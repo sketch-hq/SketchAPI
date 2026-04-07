@@ -151,13 +151,13 @@ function exportToBuffer(nativeObject, options) {
   const colorSpace = NSColorSpace.colorSpaceForSketchColorSpace(
     request.immutableDocument().colorSpace()
   ).CGColorSpace()
-  const renderer = MSExporter.exporterForRequest_colorSpace_driver(
+  const renderer = MSExporter.exporterForRequest_colorSpace_options(
     request,
     colorSpace,
-    exporter.driver()
+    0
   )
 
-  const data = renderer.data()
+  const data = renderer.dataAndReturnError(null)
 
   if (!Buffer) {
     // eslint-disable-next-line global-require, prefer-destructuring

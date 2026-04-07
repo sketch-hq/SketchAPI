@@ -243,6 +243,19 @@ Layer.define('name', {
       return
     }
     this._object.setName(value)
+    this.nameIsFixed = true
+  },
+})
+
+Layer.define('nameIsFixed', {
+  get() {
+    return Boolean(this._object.nameIsFixed())
+  },
+  set(fixed) {
+    if (this.isImmutable()) {
+      return
+    }
+    this._object.setNameIsFixed(Boolean(fixed))
   },
 })
 

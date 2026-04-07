@@ -79,6 +79,8 @@ test('should get the borders', () => {
         { position: 1, color: '#000000ff' },
       ],
     },
+    hasIndividualSides: false,
+    sides: { left: 30, top: 30, right: 30, bottom: 30 },
   })
   expect(style.borders[1].toJSON()).toEqual({
     color: '#11223344',
@@ -97,6 +99,8 @@ test('should get the borders', () => {
         { position: 1, color: '#000000ff' },
       ],
     },
+    hasIndividualSides: false,
+    sides: { left: 1, top: 1, right: 1, bottom: 1 },
   })
   expect(style.borders[2].gradient.toJSON()).toEqual({
     gradientType: 'Linear',
@@ -279,4 +283,130 @@ test('should assign swatch directly', (_context, document) => {
   expect(layer.style.borders[0].swatch.name).toBe(swatch.name)
   expect(layer.style.borders[0].swatch.color).toBe(swatch.color)
   expect(layer.style.borders[0].color).toBe(swatch.color)
+})
+
+test('should support individual sides', () => {
+  const style = new Style({
+    borders: [
+      {
+        color: '#000000ff',
+        thickness: 10,
+      },
+    ],
+  })
+  expect(style.borders[0].hasIndividualSides).toBe(false)
+
+  // Could be set as properties
+  style.borders[0].sides.left = 1
+  style.borders[0].sides.top = 2
+  style.borders[0].sides.right = 3
+  style.borders[0].sides.bottom = 4
+  expect(style.borders[0].hasIndividualSides).toBe(true)
+  expect(style.borders[0].sides.left).toBe(1)
+  expect(style.borders[0].sides.top).toBe(2)
+  expect(style.borders[0].sides.right).toBe(3)
+  expect(style.borders[0].sides.bottom).toBe(4)
+
+  // Could be reset
+  style.borders[0].sides = null
+  expect(style.borders[0].hasIndividualSides).toBe(false)
+
+  // Could be set via an object
+  style.borders[0].sides = {
+    left: 0,
+    top: 2,
+    right: 4,
+    bottom: 6,
+  }
+  expect(style.borders[0].hasIndividualSides).toBe(true)
+  expect(style.borders[0].sides.left).toBe(0)
+  expect(style.borders[0].sides.top).toBe(2)
+  expect(style.borders[0].sides.right).toBe(4)
+  expect(style.borders[0].sides.bottom).toBe(6)
+
+  // Could be set via constructor without the general thickness being set
+  const style2 = new Style({
+    borders: [
+      {
+        color: '#000000ff',
+        sides: {
+          left: 0,
+          top: 2,
+          right: 4,
+          bottom: 6,
+        },
+      },
+    ],
+  })
+  expect(style2.borders[0].hasIndividualSides).toBe(true)
+  expect(style2.borders[0].sides.left).toBe(0)
+  expect(style2.borders[0].sides.top).toBe(2)
+  expect(style2.borders[0].sides.right).toBe(4)
+  expect(style2.borders[0].sides.bottom).toBe(6)
+  expect(style2.borders[0].thickness).toBe(6) // thickness is now the max of the sides
+
+  // Could be set via constructor, overriding the general thickness
+  const style3 = new Style({
+    borders: [
+      {
+        color: '#000000ff',
+        thickness: 10,
+        sides: {
+          left: 0,
+          top: 2,
+          right: 4,
+          bottom: 6,
+        },
+      },
+    ],
+  })
+  expect(style3.borders[0].hasIndividualSides).toBe(true)
+  expect(style3.borders[0].sides.left).toBe(0)
+  expect(style3.borders[0].sides.top).toBe(2)
+  expect(style3.borders[0].sides.right).toBe(4)
+  expect(style3.borders[0].sides.bottom).toBe(6)
+  expect(style3.borders[0].thickness).toBe(6) // thickness is now the max of the sides
+
+  // If set partially, the general thickness is not affected
+  const style4 = new Style({
+    borders: [
+      {
+        color: '#000000ff',
+        thickness: 10,
+        sides: {
+          top: 2,
+          right: 3,
+        },
+      },
+    ],
+  })
+  expect(style4.borders[0].hasIndividualSides).toBe(true)
+  expect(style4.borders[0].sides.left).toBe(10)
+  expect(style4.borders[0].sides.top).toBe(2)
+  expect(style4.borders[0].sides.right).toBe(3)
+  expect(style4.borders[0].sides.bottom).toBe(10)
+  expect(style4.borders[0].thickness).toBe(10)
+
+  // Setting sides resets non-specified sides to the general thickness
+  style4.borders[0].sides = {
+    left: 5,
+  }
+  expect(style4.borders[0].hasIndividualSides).toBe(true)
+  expect(style4.borders[0].sides.left).toBe(5)
+  expect(style4.borders[0].sides.top).toBe(10)
+  expect(style4.borders[0].sides.right).toBe(10)
+  expect(style4.borders[0].sides.bottom).toBe(10)
+
+  // Setting sides to null resets all to the general thickness
+  style4.borders[0].sides = null
+  expect(style4.borders[0].hasIndividualSides).toBe(false)
+  expect(style4.borders[0].sides.left).toBe(10)
+  expect(style4.borders[0].sides.top).toBe(10)
+  expect(style4.borders[0].sides.right).toBe(10)
+  expect(style4.borders[0].sides.bottom).toBe(10)
+
+  // Setting a side to a negative value should clamp it to 0
+  style4.borders[0].sides = null
+  style4.borders[0].sides.top = -5
+  expect(style4.borders[0].sides.top).toBe(0)
 })

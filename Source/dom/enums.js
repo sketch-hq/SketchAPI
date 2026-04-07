@@ -7,6 +7,7 @@ export const Types = {
   Blur: 'Blur',
   Border: 'Border',
   BorderOptions: 'BorderOptions',
+  BorderSides: 'BorderSides',
   Fill: 'Fill',
   Gradient: 'Gradient',
   GradientStop: 'GradientStop',
