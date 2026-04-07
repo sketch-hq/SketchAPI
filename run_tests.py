@@ -115,7 +115,7 @@ def watch_test_runner_progress(file_path, timeout=30):
 
         output = str(stream.communicate())
         output = output.split("com.apple.progress.fractionCompleted:")[1]
-        match = re.search('\d+(.\d+)*', output)
+        match = re.search(r"\d+(.\d+)*", output)
 
         latest_progress = float(match.group(0))
         if latest_progress == progress:
@@ -150,7 +150,7 @@ def print_results(results):
             if 'failureReason' not in res:
                 continue
 
-            failure_reason = re.sub('{{{((\w*)|(\/\w*))}}}', '', res['failureReason']['message'])
+            failure_reason = re.sub(r"{{{((\w*)|(\/\w*))}}}", '', res['failureReason']['message'])
             print(f"\t {failure_reason}")
 
         print("") # for legibility

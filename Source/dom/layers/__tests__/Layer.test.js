@@ -7,6 +7,7 @@ import {
   Shape,
   ShapePath,
   Layer,
+  Text,
 } from '../..'
 
 test('should set the name of the layer', (_context, document) => {
@@ -22,6 +23,38 @@ test('should set the name of the layer', (_context, document) => {
   // default name
   const group2 = new Group()
   expect(group2.name).toBe('Group')
+})
+
+test('should fix layer name automatically after rename', () => {
+  const text = new Text({
+    text: 'text',
+  })
+  expect(text.name).toBe('text')
+  expect(text.nameIsFixed).toBe(false)
+
+  text.name = 'Manually renamed'
+  expect(text.name).toBe('Manually renamed')
+  expect(text.nameIsFixed).toBe(true)
+
+  text.text = 'This will not update the name'
+  expect(text.name).toBe('Manually renamed')
+})
+
+test('should not change layer name if nameIsFixed is true', () => {
+  const text = new Text({
+    text: 'text',
+  })
+  expect(text.name).toBe('text')
+  expect(text.nameIsFixed).toBe(false)
+
+  // Changing text updates the layer name
+  text.text = 'Updated text'
+  expect(text.name).toBe('Updated text')
+
+  // Fixing the name prevents further name updates when text changes
+  text.nameIsFixed = true
+  text.text = 'This will not update the name'
+  expect(text.name).toBe('Updated text')
 })
 
 test('should set the frame of the layer', () => {

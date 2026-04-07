@@ -91,7 +91,7 @@ function getNativeStorageObject(layer) {
   if (!layer._isWrappedObject) {
     object = layer
   } else if (layer.type === 'DataOverride') {
-    object = layer.sketchObject.overridePoint().overrideValue()
+    object = layer.override?.affectedLayer?.sketchObject
   } else if (layer.type === 'Override') {
     object = layer.sketchObject.overrideValue()
   } else {
