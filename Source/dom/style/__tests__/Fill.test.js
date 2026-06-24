@@ -1,6 +1,6 @@
 /* globals expect, test */
 import { base64Image } from '../../../test-utils'
-import { Style } from '../..'
+import { Style, Group, ShapePath } from '../..'
 
 test('should set the fills', () => {
   // setting the fills after creation
@@ -59,6 +59,7 @@ test('should get the fills', () => {
           { position: 0, color: '#ffffffff' },
           { position: 1, color: '#000000ff' },
         ],
+        colorInterpolation: 'RGB',
       },
       pattern: { patternType: 'Fill', image: null, tileScale: 1 },
     },
@@ -76,10 +77,48 @@ test('should get the fills', () => {
           { position: 0, color: '#ffffffff' },
           { position: 1, color: '#000000ff' },
         ],
+        colorInterpolation: 'RGB',
       },
       pattern: { patternType: 'Fill', image: null, tileScale: 1 },
     },
   ])
+})
+
+test('should use the correct default fill color for Frames', (_context, document) => {
+  const canvasFrame = new Group.Frame({
+    parent: document.selectedPage,
+    style: {
+      fills: [
+        {
+          fillType: Style.FillType.Color,
+        },
+      ],
+    },
+  })
+  const nestedFrame = new Group.Frame({
+    parent: canvasFrame,
+    style: {
+      fills: [
+        {
+          fillType: Style.FillType.Color,
+        },
+      ],
+    },
+  })
+  const shape = new ShapePath({
+    style: {
+      fills: [
+        {
+          fillType: Style.FillType.Color,
+        },
+      ],
+    },
+  })
+
+  expect(canvasFrame.style.fills[0].color).toBe('#ffffffff')
+  expect(nestedFrame.style.fills[0].color).not.toBe('#ffffffff')
+  expect(shape.style.fills[0].color).not.toBe(canvasFrame.style.fills[0].color)
+  expect(shape.style.fills[0].color).not.toBe(nestedFrame.style.fills[0].color)
 })
 
 test('should set the pattern', () => {
@@ -158,6 +197,7 @@ test('should set and get gradient property', () => {
       { position: 0, color: '#ff00007f' },
       { position: 1, color: '#00ff00ff' },
     ],
+    colorInterpolation: 'RGB',
   })
 })
 
@@ -233,31 +273,28 @@ test('should set and get color swatch as tint', (_context, document) => {
 
   // Make sure this host layer is actually part of the same document as the swatch itself
   document.selectedPage.layers = [
-    {
-      type: 'ShapePath',
+    new Group.Frame({
       style: {
         tint: {
           color: swatch1.referencingColor,
         },
       },
-    },
-    {
-      type: 'ShapePath',
+    }),
+    new Group.Frame({
       style: {
         tint: {
           swatch: swatch2,
           color: '#11223344', // should be ignored
         },
       },
-    },
-    {
-      type: 'ShapePath',
+    }),
+    new Group.Frame({
       style: {
         tint: {
           color: '#11223344', // will be replaced with the swatch color
         },
       },
-    },
+    }),
   ]
 
   let layer1 = document.selectedPage.layers[0]

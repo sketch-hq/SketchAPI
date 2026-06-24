@@ -1,9 +1,10 @@
 import { WrappedObject, DefinedPropertiesKey } from '../WrappedObject'
-import { isWrappedObject } from '../utils'
+import { isWrappedObject, parseEnumValue } from '../utils'
 import { isNativeObject } from 'util'
 import { Point } from '../models/Point'
 import { Types } from '../enums'
 import { Gradient } from './Gradient'
+import { StylePartType } from './StylePartType'
 
 const BlurTypeMap = {
   Gaussian: 0,
@@ -21,77 +22,67 @@ export const BlurType = {
   Glass: 'Glass',
 }
 
-const DEFAULT_BLUR = {
-  center: { x: 0.5, y: 0.5 },
-  motionAngle: 0,
-  radius: 10,
-  enabled: false,
-  blurType: BlurType.Gaussian,
-  saturation: 1,
-}
-
 export class Blur extends WrappedObject {
-  static toNative(value) {
+  static toNative(value, parentStyle) {
     if (isNativeObject(value)) {
       return value
     }
     if (isWrappedObject(value)) {
       return value.sketchObject
     }
-    const nativeBlur = MSStyleBlur.new()
+    const nativeBlur = parentStyle._object.defaultStylePartOfType(
+      StylePartType.Blur
+    )
     this.updateNative(nativeBlur, value)
     return nativeBlur
   }
 
   static updateNative(nativeBlur, blur) {
-    const blurWithDefault = Object.assign({}, DEFAULT_BLUR, blur)
-    if (typeof blurWithDefault.center !== 'undefined') {
-      nativeBlur.setCenter(
-        CGPointMake(blurWithDefault.center.x, blurWithDefault.center.y)
+    if (typeof blur.center !== 'undefined') {
+      nativeBlur.setCenter(CGPointMake(blur.center.x, blur.center.y))
+    }
+    if (typeof blur.motionAngle !== 'undefined') {
+      nativeBlur.setMotionAngle(blur.motionAngle)
+    }
+    if (typeof blur.radius !== 'undefined') {
+      nativeBlur.setRadius(blur.radius)
+    }
+    if (typeof blur.saturation !== 'undefined') {
+      nativeBlur.setSaturation(blur.saturation)
+    }
+    if (typeof blur.blurType !== 'undefined') {
+      const blurType = parseEnumValue(
+        blur.blurType,
+        BlurTypeMap,
+        'Blur.blurType'
       )
+      if (blurType !== undefined) {
+        nativeBlur.setType(blurType)
+      }
     }
-    if (typeof blurWithDefault.motionAngle !== 'undefined') {
-      nativeBlur.setMotionAngle(blurWithDefault.motionAngle)
+    if (typeof blur.enabled !== 'undefined') {
+      nativeBlur.isEnabled = blur.enabled // eslint-disable-line
     }
-    if (typeof blurWithDefault.radius !== 'undefined') {
-      nativeBlur.setRadius(blurWithDefault.radius)
+    if (typeof blur.progressive !== 'undefined') {
+      nativeBlur.setIsProgressive(blur.progressive)
     }
-    if (typeof blurWithDefault.saturation !== 'undefined') {
-      nativeBlur.setSaturation(blurWithDefault.saturation)
+    if (typeof blur.gradient !== 'undefined') {
+      nativeBlur.setGradient(Gradient.from(blur.gradient).sketchObject)
     }
-    if (typeof blurWithDefault.blurType !== 'undefined') {
-      const blurType = BlurTypeMap[blurWithDefault.blurType]
-      nativeBlur.setType(
-        typeof blurType !== 'undefined' ? blurType : blurWithDefault.blurType
-      )
+    if (typeof blur.brightness !== 'undefined') {
+      nativeBlur.setBrightness(blur.brightness)
     }
-    if (typeof blurWithDefault.enabled !== 'undefined') {
-      nativeBlur.isEnabled = blurWithDefault.enabled // eslint-disable-line
+    if (typeof blur.distortion !== 'undefined') {
+      nativeBlur.setDistortion(blur.distortion)
     }
-    if (typeof blurWithDefault.progressive !== 'undefined') {
-      nativeBlur.setIsProgressive(blurWithDefault.progressive)
+    if (typeof blur.depth !== 'undefined') {
+      nativeBlur.setDepth(blur.depth)
     }
-    if (typeof blurWithDefault.gradient !== 'undefined') {
-      nativeBlur.setGradient(
-        Gradient.from(blurWithDefault.gradient).sketchObject
-      )
+    if (typeof blur.chromaticAberration !== 'undefined') {
+      nativeBlur.setChromaticAberrationMultiplier(blur.chromaticAberration)
     }
-    if (typeof blurWithDefault.brightness !== 'undefined') {
-      nativeBlur.setBrightness(blurWithDefault.brightness)
-    }
-    if (typeof blurWithDefault.distortion !== 'undefined') {
-      nativeBlur.setDistortion(blurWithDefault.distortion)
-    }
-    if (typeof blurWithDefault.depth !== 'undefined') {
-      nativeBlur.setDepth(blurWithDefault.depth)
-    }
-    if (typeof blurWithDefault.chromaticAberration !== 'undefined') {
-      nativeBlur.setChromaticAberrationMultiplier(
-        blurWithDefault.chromaticAberration
-      )
-    }
-    if (typeof blurWithDefault.hasSpecularHighlights !== 'undefined') {
-      nativeBlur.setSkipLightingEffects(!blurWithDefault.hasSpecularHighlights)
+    if (typeof blur.hasSpecularHighlights !== 'undefined') {
+      nativeBlur.setSkipLightingEffects(!blur.hasSpecularHighlights)
     }
   }
 }
@@ -166,8 +157,10 @@ Blur.define('blurType', {
     )
   },
   set(type) {
-    const blurType = BlurTypeMap[type]
-    this._object.setType(typeof blurType !== 'undefined' ? blurType : type)
+    const blurType = parseEnumValue(type, BlurTypeMap, 'Blur.blurType')
+    if (blurType !== undefined) {
+      this._object.setType(blurType)
+    }
   },
 })
 

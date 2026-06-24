@@ -1,7 +1,7 @@
 import { toArray } from 'util'
 import { WrappedObject, DefinedPropertiesKey } from '../WrappedObject'
 import { Document } from './Document'
-import { getURLFromPath } from '../utils'
+import { getURLFromPath, isWrappedObject } from '../utils'
 import { Types } from '../enums'
 import { Factory } from '../Factory'
 import { wrapObject } from '../wrapNativeObject'
@@ -38,11 +38,32 @@ const LibraryType = {
   RemoteThirdParty: 'RemoteThirdParty', // A library hosted by a 3rd party
 }
 
-export function getLibraries() {
+export function getLibraries(targetDocument = null, options = {}) {
+  // Make sure we allow `options` to be passed as the first and only argument
+  if (
+    targetDocument &&
+    typeof targetDocument === 'object' &&
+    !isWrappedObject(targetDocument)
+  ) {
+    options = targetDocument
+    targetDocument = null
+  }
+
+  const { includeUnavailable = false } = options || {}
   const libraryController = AppController.sharedInstance().librariesController()
-  return toArray(libraryController.appLibraries()).map(
-    Library.fromNative.bind(Library)
-  )
+
+  let nativeLibraries
+  if (includeUnavailable) {
+    nativeLibraries = libraryController.librariesForDocumentWithIdentifier(
+      targetDocument?.id
+    )
+  } else {
+    nativeLibraries = libraryController.availableLibrariesForDocumentWithIdentifier(
+      targetDocument?.id
+    )
+  }
+
+  return toArray(nativeLibraries).map(Library.fromNative.bind(Library))
 }
 /* eslint-enable */
 
@@ -58,8 +79,8 @@ export class Library extends WrappedObject {
     super(library)
   }
 
-  static getLibraries() {
-    return getLibraries()
+  static getLibraries(...args) {
+    return getLibraries(...args)
   }
 
   static getLibraryForDocumentAtPath(path) {
@@ -167,6 +188,16 @@ export class Library extends WrappedObject {
           document._getMSDocument()
         )
         break
+      case ImportableObjectType.FrameTemplate:
+        provider = MSFrameTemplateProvider.alloc().initWithDocument(
+          document._getMSDocument()
+        )
+        break
+      case ImportableObjectType.GraphicTemplate:
+        provider = MSGraphicTemplateProvider.alloc().initWithDocument(
+          document._getMSDocument()
+        )
+        break
       default:
         throw new Error('Unknown object type')
     }
@@ -211,6 +242,20 @@ export class Library extends WrappedObject {
     return this.getImportableReferencesForDocument(
       document,
       ImportableObjectType.Swatch
+    )
+  }
+
+  getImportableFrameTemplateReferencesForDocument(document) {
+    return this.getImportableReferencesForDocument(
+      document,
+      ImportableObjectType.FrameTemplate
+    )
+  }
+
+  getImportableGraphicTemplateReferencesForDocument(document) {
+    return this.getImportableReferencesForDocument(
+      document,
+      ImportableObjectType.GraphicTemplate
     )
   }
 

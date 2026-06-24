@@ -200,12 +200,7 @@ Swatch.define('color', {
     if (this.isImmutable() || !newColor) {
       return
     }
-    // Update the swatch and all of its references with the new color
     this._object.updateWithColor(Color.from(newColor).toMSColor())
-    this._object
-      .documentData?.()
-      ?.sharedSwatches?.()
-      ?.updateReferencesToSwatch?.(this._object)
   },
 })
 Swatch.define('referencingColor', {

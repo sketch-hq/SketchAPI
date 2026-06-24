@@ -66,11 +66,11 @@ test('should change the line spacing behavior', () => {
     frame: new Rectangle(10, 10, 1000, 1000),
   })
 
-// the default will change over time as we improve behaviour.  default is always "newest" 
-// and right now thats what we're calling 'natural' - see the map below for an explanation.
-//
-// Note that there is a change, currently under feature flag, that will change the default
-// to `system` #38929. Once the feature flag is removed, we should update this expectation. 
+  // the default will change over time as we improve behaviour.  default is always "newest"
+  // and right now thats what we're calling 'natural' - see the map below for an explanation.
+  //
+  // Note that there is a change, currently under feature flag, that will change the default
+  // to `system` #38929. Once the feature flag is removed, we should update this expectation.
   expect(text.lineSpacing).toBe(Text.LineSpacing.natural)
 
   // TextLineSpacingBehaviourMap is private API.

@@ -1,6 +1,9 @@
 import { Color } from './Color'
-import { FloatingPointNumber } from '../utils'
+import { FloatingPointNumber, parseEnumValue } from '../utils'
 import { Swatch } from '../assets'
+import { wrapNativeObject } from '../wrapNativeObject'
+import { Types } from '../enums'
+import { toArray } from 'util'
 
 export const TextAlignmentMap = {
   left: 0, // Visually left aligned
@@ -30,338 +33,114 @@ const VerticalTextAlignmentReverseMap = {
   2: 'bottom', // Visually bottom aligned
 }
 
-function getAttributes(_object) {
-  const textStyle = _object.textStyle()
-  if (!textStyle) {
-    return undefined
-  }
-  const attributes = textStyle.attributes()
-  return attributes
-}
-
-function getParagraphStyle(_object) {
-  const attributes = getAttributes(_object)
-  if (!attributes) {
-    return undefined
-  }
-
-  let paragraphStyle = attributes[NSParagraphStyleAttributeName]
-  if (!paragraphStyle) {
-    paragraphStyle = NSParagraphStyle.defaultParagraphStyle()
-  }
-
-  return paragraphStyle
-}
-
-function updateAttributes(_object, fn) {
-  let textStyle = _object.textStyle()
-
-  if (!textStyle) {
-    textStyle = MSTextStyle.alloc().initWithAttributes(
-      MSDefaultTextStyle.defaultTextStyle()
-    )
-    _object.setTextStyle(textStyle)
-  }
-
-  let attributes = getAttributes(_object)
-
-  attributes = fn(attributes.mutableCopy())
-
-  textStyle.setAttributes(attributes)
-}
-
-function updateParagraphStyle(_object, fn) {
-  updateAttributes(_object, (attributes) => {
-    let paragraphStyle = attributes[NSParagraphStyleAttributeName]
-    if (!paragraphStyle) {
-      paragraphStyle = NSParagraphStyle.defaultParagraphStyle()
-    }
-
-    paragraphStyle = fn(paragraphStyle.mutableCopy())
-
-    // eslint-disable-next-line
-    attributes[NSParagraphStyleAttributeName] = paragraphStyle
-
-    return attributes
-  })
-}
-
-/* eslint-disable no-bitwise */
-function hasTrait(mask, trait) {
-  return (mask & trait) == trait
-}
-
-const UNDERLINE_TRAIT = {
-  none: 0, // NSUnderlineStyleNone
-  solid: 0, // NSUnderlineStylePatternSolid
-  double: 9, // NSUnderlineStyleDouble
-  thick: 2, // NSUnderlineStyleThick
-  single: 1, // NSUnderlineStyleSingle
-  'dash-dot-dot': 1024, // NSUnderlineStylePatternDashDotDot
-  'dash-dot': 768, // NSUnderlineStylePatternDashDot
-  dash: 512, // NSUnderlineStylePatternDash
-  dot: 256, // NSUnderlineStylePatternDot
-  'by-word': 32768, // NSUnderlineStyleByWord
-}
-
-function getUnderline(underline) {
-  if (!underline) {
-    return undefined
-  }
-
-  const traits = []
-
-  if (hasTrait(underline, UNDERLINE_TRAIT.double)) {
-    traits.push('double')
-  } else if (hasTrait(underline, UNDERLINE_TRAIT.thick)) {
-    traits.push('thick')
-  } else if (hasTrait(underline, UNDERLINE_TRAIT.single)) {
-    traits.push('single')
-  }
-  if (hasTrait(underline, UNDERLINE_TRAIT['dash-dot-dot'])) {
-    traits.push('dash-dot-dot')
-  } else if (hasTrait(underline, UNDERLINE_TRAIT['dash-dot'])) {
-    traits.push('dash-dot')
-  } else if (hasTrait(underline, UNDERLINE_TRAIT.dash)) {
-    traits.push('dash')
-  } else if (hasTrait(underline, UNDERLINE_TRAIT.dot)) {
-    traits.push('dot')
-  }
-
-  if (hasTrait(underline, UNDERLINE_TRAIT['by-word'])) {
-    traits.push('by-word')
-  }
-
-  if (!traits.length) {
-    return undefined
-  }
-
-  return traits.join(' ')
-}
-
-function getTrait(trait) {
-  const nativeTrait = UNDERLINE_TRAIT[trait]
-
-  if (!nativeTrait) {
-    throw new Error(`unknown underline trait ${trait}`)
-  }
-
-  return nativeTrait
-}
-
-function getUnderlineMask(underline) {
-  if (!underline || underline === 'none') {
-    return UNDERLINE_TRAIT.none
-  }
-  const traits = underline.split(' ')
-  let mask = getTrait(traits[0])
-  traits.forEach((trait, i) => {
-    if (i === 0) {
-      // already used to init
-      return
-    }
-    mask |= getTrait(trait)
-  })
-
-  return mask
-}
-/* eslint-enable */
-
 export function defineTextStyleProperties(Style) {
-  Style.define('alignment', {
+  Style.define('_textLayer', {
+    exportable: false,
+    importable: false,
+    enumerable: false,
     get() {
-      const paragraphStyle = getParagraphStyle(this._object)
-
-      if (!paragraphStyle) {
+      const layer = wrapNativeObject(
+        this._object.parentLayer?.() || this.__immutableParentLayer
+      )
+      if (!layer || layer.type !== Types.Text) {
         return undefined
       }
-
-      // Get a platform independent raw text alignment value
-      // NSTextAlignment is represented differently on Intel and M1 chips
-      let raw = MSTextAlignmentConverter.archiveNSTextAlignment(
-        paragraphStyle.alignment()
-      )
-      return TextAlignmentReverseMap[raw] || raw
+      return layer
+    },
+  })
+  Style.define('alignment', {
+    get() {
+      const raw = Number(this._textLayer?.swiftBridge?.alignment())
+      return TextAlignmentReverseMap[raw]
     },
     set(mode) {
-      if (this.isImmutable()) {
-        return
+      const alignment = parseEnumValue(mode, TextAlignmentMap, 'Text.alignment')
+      if (alignment !== undefined) {
+        this._textLayer?.swiftBridge?.setAlignment(alignment)
       }
-
-      updateParagraphStyle(this._object, (paragraphStyle) => {
-        const rawValue = TextAlignmentMap[mode]
-
-        const alignment = typeof rawValue === 'undefined' ? mode : rawValue
-
-        // Ensure our new alignment value is known because the Mac app crashes
-        // when using `archiveNSTextAlignent` with an unknown text alignment
-        // value
-        if (typeof TextAlignmentReverseMap[alignment] === 'undefined') {
-          return paragraphStyle
-        }
-
-        // Get a platform independent raw text alignment value
-        // NSTextAlignment is represented differently on Intel and M1 chips
-        const platformIndependentAlignment = MSTextAlignmentConverter.archiveNSTextAlignment(
-          alignment
-        )
-
-        paragraphStyle.setAlignment(platformIndependentAlignment)
-
-        return paragraphStyle
-      })
     },
   })
 
   Style.define('verticalAlignment', {
     get() {
-      const textStyle = this._object.textStyle()
-      if (!textStyle) {
-        return undefined
-      }
-      const raw = textStyle.verticalAlignment()
-      return VerticalTextAlignmentReverseMap[raw] || raw
+      const raw = Number(this._textLayer?.swiftBridge?.verticalAlignment())
+      return VerticalTextAlignmentReverseMap[raw]
     },
     set(mode) {
-      if (this.isImmutable()) {
-        return
+      const translated = parseEnumValue(
+        mode,
+        VerticalTextAlignmentMap,
+        'Text.verticalAlignment'
+      )
+      if (translated !== undefined) {
+        this._textLayer?.swiftBridge?.setVerticalAlignment(translated)
       }
-
-      let textStyle = this._object.textStyle()
-
-      if (!textStyle) {
-        textStyle = MSTextStyle.alloc().initWithAttributes({})
-        this._object.setTextStyle(textStyle)
-      }
-
-      const translated = VerticalTextAlignmentMap[mode]
-      textStyle.verticalAlignment =
-        typeof translated !== 'undefined' ? translated : mode
     },
   })
 
   Style.define('kerning', {
     get() {
-      const attributes = getAttributes(this._object)
-      if (!attributes) {
-        return undefined
-      }
-
-      const raw = attributes[NSKernAttributeName]
-
-      if (raw === null) {
+      const raw = this._textLayer?.swiftBridge?.kerning()
+      if (!raw) {
         return null
       }
-
       return FloatingPointNumber(raw)
     },
 
     set(kerning) {
-      if (this.isImmutable()) {
-        return
-      }
-
-      updateAttributes(this._object, (attributes) => {
-        // eslint-disable-next-line no-param-reassign
-        attributes[NSKernAttributeName] = kerning
-        return attributes
-      })
+      this._textLayer?.swiftBridge?.setKerning(kerning)
     },
   })
 
   Style.define('lineHeight', {
     get() {
-      const paragraphStyle = getParagraphStyle(this._object)
-
-      if (!paragraphStyle) {
-        return undefined
+      const raw = this._textLayer?.swiftBridge?.lineHeight()
+      if (!raw || raw <= 0) {
+        return null
       }
-
-      const fixedLineHeight = paragraphStyle.minimumLineHeight()
-
-      if (
-        fixedLineHeight > 0 &&
-        fixedLineHeight == paragraphStyle.maximumLineHeight()
-      ) {
-        return FloatingPointNumber(fixedLineHeight)
-      }
-      return null
+      return FloatingPointNumber(raw)
     },
 
     set(lineHeight) {
-      if (this.isImmutable()) {
-        return
-      }
-
-      updateParagraphStyle(this._object, (paragraphStyle) => {
-        // eslint-disable-next-line no-param-reassign
-        paragraphStyle.minimumLineHeight = lineHeight
-        // eslint-disable-next-line no-param-reassign
-        paragraphStyle.maximumLineHeight = lineHeight
-        // eslint-disable-next-line no-param-reassign
-        paragraphStyle.lineSpacing = 0
-        return paragraphStyle
-      })
+      this._textLayer?.swiftBridge?.setLineHeight(lineHeight)
     },
   })
 
   Style.define('paragraphSpacing', {
     get() {
-      const paragraphStyle = getParagraphStyle(this._object)
-
-      if (!paragraphStyle) {
-        return undefined
+      const raw = this._textLayer?.swiftBridge?.paragraphSpacing()
+      if (!raw) {
+        return null
       }
-
-      return FloatingPointNumber(paragraphStyle.paragraphSpacing())
+      return FloatingPointNumber(raw)
     },
 
     set(paragraphSpacing) {
-      if (this.isImmutable()) {
-        return
-      }
-
-      updateParagraphStyle(this._object, (paragraphStyle) => {
-        // eslint-disable-next-line no-param-reassign
-        paragraphStyle.paragraphSpacing = paragraphSpacing
-        // eslint-disable-next-line no-param-reassign
-        paragraphStyle.lineSpacing = paragraphSpacing
-        return paragraphStyle
-      })
+      this._textLayer?.swiftBridge?.setParagraphSpacing(paragraphSpacing)
     },
   })
 
   Style.define('textColor', {
     get() {
-      const attributes = getAttributes(this._object)
-      if (!attributes) {
+      const raw = this._textLayer?.swiftBridge?.textColor()
+      if (!raw) {
         return undefined
       }
-
-      const raw = attributes.MSAttributedStringColorAttribute
-
-      return Color.from(raw || '#000000FF').toString()
+      return Color.from(raw).toString()
     },
 
     set(color) {
-      if (this.isImmutable()) {
+      let value = Color.from(color)
+      if (!value) {
         return
       }
-
-      const _color = Color.from(color)
-
-      updateAttributes(this._object, (attributes) => {
-        // eslint-disable-next-line no-param-reassign
-        attributes.MSAttributedStringColorAttribute = _color.toMSImmutableColor()
-        return attributes
-      })
+      this._textLayer?.swiftBridge?.setTextColor(value.toMSImmutableColor())
     },
   })
 
   Style.define('textSwatch', {
     get() {
-      const attributes = getAttributes(this._object)
-      const swatchID = attributes?.MSAttributedStringColorAttribute?.swatchID?.()
+      const swatchID = this._textLayer?.swiftBridge?.textSwatchID()
       if (!swatchID) {
         return undefined
       }
@@ -377,458 +156,141 @@ export function defineTextStyleProperties(Style) {
 
   Style.define('fontSize', {
     get() {
-      const attributes = getAttributes(this._object)
-      if (!attributes) {
+      const raw = this._textLayer?.swiftBridge?.fontSize()
+      if (!raw) {
         return undefined
       }
-
-      const font = attributes[NSFontAttributeName]
-
-      if (!font) {
-        return undefined
-      }
-
-      return Number(font.pointSize())
+      return Number(raw)
     },
 
     set(fontSize) {
-      if (this.isImmutable()) {
-        return
-      }
-
-      updateAttributes(this._object, (attributes) => {
-        const font = attributes[NSFontAttributeName]
-        const newFont = NSFontManager.sharedFontManager().convertFont_toSize(
-          font,
-          fontSize
-        )
-
-        if (!newFont) {
-          return attributes
-        }
-
-        // eslint-disable-next-line no-param-reassign
-        attributes[NSFontAttributeName] = newFont
-        return attributes
-      })
+      this._textLayer?.swiftBridge?.setFontSize(Number(fontSize))
     },
   })
 
   Style.define('textTransform', {
     get() {
-      const attributes = getAttributes(this._object)
-      if (!attributes) {
-        return undefined
-      }
-
-      const transform = attributes.MSAttributedStringTextTransformAttribute
-
-      if (!transform) {
-        return 'none'
-      }
-      if (transform == 1) {
-        return 'uppercase'
-      }
-      if (transform == 2) {
-        return 'lowercase'
-      }
-
-      return undefined
+      return String(this._textLayer?.swiftBridge?.textTransform())
     },
 
     set(transform) {
-      if (this.isImmutable()) {
-        return
-      }
-
-      const _transform = String(transform)
-      let attribute = null
-      if (_transform === 'uppercase') {
-        attribute = 1
-      } else if (_transform === 'lowercase') {
-        attribute = 2
-      } else if (_transform !== 'none' && transform) {
-        attribute = transform
-      }
-
-      updateAttributes(this._object, (attributes) => {
-        // eslint-disable-next-line no-param-reassign
-        attributes.MSAttributedStringTextTransformAttribute = attribute
-        return attributes
-      })
+      this._textLayer?.swiftBridge?.setTextTransform(String(transform))
     },
   })
 
   Style.define('fontFamily', {
     get() {
-      const attributes = getAttributes(this._object)
-      if (!attributes) {
+      const raw = this._textLayer?.swiftBridge?.fontFamily()
+      if (!raw) {
         return undefined
       }
-
-      const font = attributes[NSFontAttributeName]
-
-      if (!font) {
-        return undefined
-      }
-
-      const fontFamily = String(font.familyName())
-
-      // Font family names are reported differently on 10.14 and 10.15
-      const MACOS_SYSTEM_FONTS = ['.SF NS Text', '.AppleSystemUIFont']
-      if (MACOS_SYSTEM_FONTS.includes(fontFamily)) {
-        return 'system'
-      }
-
-      return fontFamily
+      return String(raw)
     },
 
     set(fontFamily) {
-      if (this.isImmutable()) {
-        return
-      }
-
-      updateAttributes(this._object, (attributes) => {
-        const font = attributes[NSFontAttributeName]
-
-        if (fontFamily === 'system') {
-          const systemFont = NSFont.systemFontOfSize(16)
-          // eslint-disable-next-line no-param-reassign
-          fontFamily = systemFont.familyName()
-        }
-
-        const newFont = NSFontManager.sharedFontManager().convertFont_toFamily(
-          font,
-          fontFamily
-        )
-
-        if (!newFont) {
-          return attributes
-        }
-
-        // eslint-disable-next-line no-param-reassign
-        attributes[NSFontAttributeName] = newFont
-
-        return attributes
-      })
+      this._textLayer?.swiftBridge?.setFontFamily(String(fontFamily))
     },
   })
 
   Style.define('fontWeight', {
     get() {
-      const attributes = getAttributes(this._object)
-      if (!attributes) {
+      const raw = this._textLayer?.swiftBridge?.fontWeight()
+      if (!raw) {
         return undefined
       }
-
-      const font = attributes[NSFontAttributeName]
-
-      if (!font) {
-        return undefined
-      }
-
-      return Number(NSFontManager.sharedFontManager().weightOfFont(font))
+      return Number(raw)
     },
 
     set(fontWeight) {
-      if (this.isImmutable()) {
-        return
-      }
-
-      updateAttributes(this._object, (attributes) => {
-        let font = attributes[NSFontAttributeName]
-        const manager = NSFontManager.sharedFontManager()
-
-        // remove the bold trait so that we can actually change the weight
-        font = manager.convertFont_toNotHaveTrait(font, NSBoldFontMask)
-
-        const newFont = manager.fontWithFamily_traits_weight_size(
-          font.familyName(),
-          manager.traitsOfFont(font),
-          fontWeight,
-          font.pointSize()
-        )
-
-        if (!newFont) {
-          return attributes
-        }
-
-        // eslint-disable-next-line no-param-reassign
-        attributes[NSFontAttributeName] = newFont
-
-        return attributes
-      })
+      this._textLayer?.swiftBridge?.setFontWeight(fontWeight)
     },
   })
 
   Style.define('fontStyle', {
     get() {
-      const attributes = getAttributes(this._object)
-      if (!attributes) {
+      const raw = this._textLayer?.swiftBridge?.fontStyle()
+      if (!raw) {
         return undefined
       }
-
-      const font = attributes[NSFontAttributeName]
-
-      if (!font) {
-        return undefined
-      }
-
-      return NSFontManager.sharedFontManager().fontNamed_hasTraits(
-        font.fontName(),
-        NSItalicFontMask
-      )
-        ? 'italic'
-        : undefined
+      return String(raw)
     },
 
     set(fontStyle) {
-      if (this.isImmutable()) {
-        return
-      }
-
-      updateAttributes(this._object, (attributes) => {
-        const font = attributes[NSFontAttributeName]
-        const manager = NSFontManager.sharedFontManager()
-
-        let newFont
-
-        if (fontStyle === 'normal' || !fontStyle) {
-          newFont = manager.convertFont_toNotHaveTrait(font, NSItalicFontMask)
-        } else if (fontStyle === 'italic' || fontStyle === 'oblique') {
-          newFont = manager.convertFont_toHaveTrait(font, NSItalicFontMask)
-        } else {
-          throw new Error('Unknown font style')
-        }
-
-        if (!newFont) {
-          return attributes
-        }
-
-        // eslint-disable-next-line no-param-reassign
-        attributes[NSFontAttributeName] = newFont
-
-        return attributes
-      })
+      this._textLayer?.swiftBridge?.setFontStyle(fontStyle)
     },
   })
 
   Style.define('fontVariant', {
     get() {
-      const attributes = getAttributes(this._object)
-      if (!attributes) {
+      const raw = this._textLayer?.swiftBridge?.fontVariant()
+      if (!raw) {
         return undefined
       }
-
-      const font = attributes[NSFontAttributeName]
-
-      if (!font) {
-        return undefined
-      }
-
-      return NSFontManager.sharedFontManager().fontNamed_hasTraits(
-        font.fontName(),
-        NSSmallCapsFontMask
-      )
-        ? 'small-caps'
-        : undefined
+      return String(raw)
     },
 
     set(fontVariant) {
-      if (this.isImmutable()) {
-        return
-      }
-
-      updateAttributes(this._object, (attributes) => {
-        const font = attributes[NSFontAttributeName]
-        const manager = NSFontManager.sharedFontManager()
-
-        let newFont
-
-        if (fontVariant === 'normal' || !fontVariant) {
-          newFont = manager.convertFont_toNotHaveTrait(
-            font,
-            NSSmallCapsFontMask
-          )
-        } else if (fontVariant === 'small-caps') {
-          newFont = manager.convertFont_toHaveTrait(font, NSSmallCapsFontMask)
-        } else {
-          throw new Error('Unknown font variant')
-        }
-
-        if (!newFont) {
-          return attributes
-        }
-
-        // eslint-disable-next-line no-param-reassign
-        attributes[NSFontAttributeName] = newFont
-
-        return attributes
-      })
+      this._textLayer?.swiftBridge?.setFontVariant(fontVariant)
     },
   })
 
   Style.define('fontStretch', {
     get() {
-      const attributes = getAttributes(this._object)
-      if (!attributes) {
+      const raw = this._textLayer?.swiftBridge?.fontStretch()
+      if (!raw) {
         return undefined
       }
-
-      const font = attributes[NSFontAttributeName]
-
-      if (!font) {
-        return undefined
-      }
-
-      const traits = NSFontManager.sharedFontManager().traitsOfFont(font)
-
-      if (hasTrait(traits, NSCompressedFontMask)) {
-        return 'compressed'
-      }
-      if (hasTrait(traits, NSCondensedFontMask)) {
-        return 'condensed'
-      }
-      if (hasTrait(traits, NSExpandedFontMask)) {
-        return 'expanded'
-      }
-      if (hasTrait(traits, NSNarrowFontMask)) {
-        return 'narrow'
-      }
-      if (hasTrait(traits, NSPosterFontMask)) {
-        return 'poster'
-      }
-      return undefined
+      return String(raw)
     },
 
-    set(fontVariant) {
-      if (this.isImmutable()) {
-        return
-      }
-
-      updateAttributes(this._object, (attributes) => {
-        const font = attributes[NSFontAttributeName]
-        const manager = NSFontManager.sharedFontManager()
-
-        let newFont
-
-        if (fontVariant === 'normal' || !fontVariant) {
-          /* eslint-disable no-bitwise */
-          newFont = manager.convertFont_toNotHaveTrait(
-            font,
-            NSCompressedFontMask |
-              NSCondensedFontMask |
-              NSExpandedFontMask |
-              NSNarrowFontMask |
-              NSPosterFontMask
-          )
-          /* eslint-enable */
-        } else if (fontVariant === 'compressed') {
-          newFont = manager.convertFont_toHaveTrait(font, NSCompressedFontMask)
-        } else if (fontVariant === 'condensed') {
-          newFont = manager.convertFont_toHaveTrait(font, NSCondensedFontMask)
-        } else if (fontVariant === 'expanded') {
-          newFont = manager.convertFont_toHaveTrait(font, NSExpandedFontMask)
-        } else if (fontVariant === 'narrow') {
-          newFont = manager.convertFont_toHaveTrait(font, NSNarrowFontMask)
-        } else if (fontVariant === 'poster') {
-          newFont = manager.convertFont_toHaveTrait(font, NSPosterFontMask)
-        } else {
-          throw new Error('Unknown font stretch')
-        }
-
-        if (!newFont) {
-          return attributes
-        }
-
-        // eslint-disable-next-line no-param-reassign
-        attributes[NSFontAttributeName] = newFont
-
-        return attributes
-      })
+    set(fontStretch) {
+      this._textLayer?.swiftBridge?.setFontStretch(fontStretch)
     },
   })
 
   Style.define('textUnderline', {
     get() {
-      const attributes = getAttributes(this._object)
-      if (!attributes) {
+      const raw = this._textLayer?.swiftBridge?.textUnderline()
+      if (!raw) {
         return undefined
       }
-
-      return getUnderline(attributes[NSUnderlineStyleAttributeName])
+      return String(raw)
     },
 
     set(textUnderline) {
-      if (this.isImmutable()) {
-        return
-      }
-
-      updateAttributes(this._object, (attributes) => {
-        // eslint-disable-next-line no-param-reassign
-        attributes[NSUnderlineStyleAttributeName] = getUnderlineMask(
-          textUnderline
-        )
-
-        return attributes
-      })
+      this._textLayer?.swiftBridge?.setTextUnderline(textUnderline)
     },
   })
 
   Style.define('textStrikethrough', {
     get() {
-      const attributes = getAttributes(this._object)
-      if (!attributes) {
+      const raw = this._textLayer?.swiftBridge?.textStrikethrough()
+      if (!raw) {
         return undefined
       }
-
-      return getUnderline(attributes[NSStrikethroughStyleAttributeName])
+      return String(raw)
     },
 
     set(textStrikethrough) {
-      if (this.isImmutable()) {
-        return
-      }
-
-      updateAttributes(this._object, (attributes) => {
-        // eslint-disable-next-line no-param-reassign
-        attributes[NSStrikethroughStyleAttributeName] = getUnderlineMask(
-          textStrikethrough
-        )
-
-        return attributes
-      })
+      this._textLayer?.swiftBridge?.setTextStrikethrough(textStrikethrough)
     },
   })
 
   Style.define('fontAxes', {
     get() {
-      const attributes = getAttributes(this._object)
-
-      if (!attributes) {
-        return null
-      }
-
-      const font = attributes[NSFontAttributeName]
-
-      if (!font) {
-        return null
-      }
-
-      const axes = font.variableFontAxes()
-
+      const axes = this._textLayer?.swiftBridge?.fontAxes()
       if (!axes) {
         return null
       }
 
       // Normalize the native information about the font axes into a JS object
       const axesObj = {}
-      axes.forEach((axis) => {
-        axesObj[axis.name()] = {
-          id: axis.identifier(),
-          min: axis.minValue(),
-          max: axis.maxValue(),
-          value: axis.currentValue(),
+      toArray(axes).forEach((axis) => {
+        axesObj[String(axis.name())] = {
+          id: Number(axis.identifier()),
+          min: Number(axis.minValue()),
+          max: Number(axis.maxValue()),
+          value: Number(axis.currentValue()),
         }
       })
 
@@ -847,36 +309,11 @@ export function defineTextStyleProperties(Style) {
         // Only set an axis if it's available on the current font, and
         // different to the current value
         if (current[name] && fontAxes[name].value !== current[name].value) {
-          this._fontAxis = fontAxes[name]
+          this._textLayer?.swiftBridge?.setVariableFontAxisValue_forAxisID(
+            fontAxes[name].value,
+            fontAxes[name].id || current[name].id
+          )
         }
-      })
-    },
-  })
-
-  // Private setter to set an individual font axis, used by public fontAxes setter
-  Style.define('_fontAxis', {
-    set(fontAxis) {
-      if (this.isImmutable()) {
-        return
-      }
-      updateAttributes(this._object, (attributes) => {
-        const font = attributes[NSFontAttributeName]
-
-        const subDic = NSMutableDictionary.dictionary()
-        subDic.setObject_forKey(fontAxis.value, fontAxis.id)
-
-        const dic = NSMutableDictionary.dictionary()
-        dic.setObject_forKey(subDic, 'NSCTFontVariationAttribute')
-
-        const fontDesc = font.fontDescriptor()
-        const nextFontDesc = fontDesc.fontDescriptorByAddingAttributes(dic)
-
-        // eslint-disable-next-line no-param-reassign
-        attributes[NSFontAttributeName] = NSFont.fontWithDescriptor_size(
-          nextFontDesc,
-          this.fontSize
-        )
-        return attributes
       })
     },
   })

@@ -51,6 +51,8 @@ test('should be able to set overrides', (_context, document) => {
     property: 'stringValue',
     symbolOverride: false,
     colorOverride: false,
+    textOverride: true,
+    imageOverride: false,
     value: 'overridden',
     isDefault: false,
     editable: true,
@@ -106,6 +108,8 @@ test('should change a nested symbol', (_context, document) => {
     affectedLayer: nestedInstance.toJSON(),
     symbolOverride: true,
     colorOverride: false,
+    textOverride: false,
+    imageOverride: false,
     value: nestedMaster2.symbolId,
     isDefault: false,
     editable: true,
@@ -151,6 +155,8 @@ test('should handle image override', (_context, document) => {
   const imageResizeOverride = instance.overrides.find(
     (o) => o.property === 'imageResizeBehavior'
   )
+  expect(imageResizeOverride).toBeDefined()
+  expect(imageResizeOverride.imageOverride).toBe(true)
   expect(imageResizeOverride.isDefault).toBe(true)
   expect(imageResizeOverride.value).toBe('1')
   imageResizeOverride.value = 2
@@ -632,4 +638,24 @@ test('should provide the default swatch value', (_context, document) => {
   expect(fillColorOverride.defaultSwatchValue?.id).toBe(swatch.id)
   expect(fillColorOverride.defaultSwatchValue?.name).toBe(swatch.name)
   expect(fillColorOverride.defaultSwatchValue?.color).toBe(swatch.color)
+})
+
+test('should reset to default value', (_context, document) => {
+  const { master } = createSymbolMaster(document)
+  const instance = master.createNewInstance()
+  document.selectedPage.layers.push(instance)
+
+  const override = instance.overrides.find((o) => o.property === 'stringValue')
+  expect(override.isDefault).toBe(true)
+  expect(override.value).toBe('Test value')
+
+  override.value = 'overridden value'
+
+  expect(override.isDefault).toBe(false)
+  expect(override.value).toBe('overridden value')
+
+  override.reset()
+
+  expect(override.isDefault).toBe(true)
+  expect(override.value).toBe('Test value')
 })

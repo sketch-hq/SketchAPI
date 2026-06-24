@@ -1,12 +1,5 @@
 /* globals expect, test */
-import {
-  Style,
-  ShapePath,
-  Group,
-  GroupBehavior,
-  Rectangle,
-  FlexSizing,
-} from '../..'
+import { Style, ShapePath, Group, Rectangle, FlexSizing } from '../..'
 
 test('should get and set corner style', () => {
   const style = new Style()
@@ -64,17 +57,17 @@ test('should get corner radius at index', () => {
   expect(style.corners.radiusAt(8)).toBe(10) // wraps around
 })
 
-test('should update corner radii when set to concentric (#1)', () => {
+test('should update corner radii when set to concentric (#1)', (_context, document) => {
   const layer = new ShapePath({
     style: { fills: [{ color: '#ffaa00' }] },
   })
-  const parent = new Group({
-    groupBehavior: GroupBehavior.Frame,
+  const parent = new Group.Frame({
     stackLayout: { padding: 10 },
     frame: new Rectangle(100, 100, 100, 100),
     style: {
       corners: { radii: 20 },
     },
+    parent: document.selectedPage,
   })
   parent.layers = [layer]
 
@@ -82,100 +75,109 @@ test('should update corner radii when set to concentric (#1)', () => {
   expect(layer.style.corners.radii).toEqual([])
 
   layer.style.corners.concentric = true
+  document.processPendingChanges()
 
   expect(layer.style.corners.concentric).toBe(true)
   expect(layer.style.corners.radii).toEqual([10]) // based on the parent Frame's corner radius and padding
 })
 
-test('should update corner radii when set to concentric (#2)', () => {
+test('should update corner radii when set to concentric (#2)', (_context, document) => {
   const layer = new ShapePath({
     style: {
       fills: [{ color: '#ffaa00' }],
       corners: { concentric: true },
     },
   })
-  const parent = new Group({
-    groupBehavior: GroupBehavior.Frame,
+  const parent = new Group.Frame({
     stackLayout: { padding: 10 },
     frame: new Rectangle(100, 100, 100, 100),
     style: {
       corners: { radii: 20 },
     },
+    parent: document.selectedPage,
   })
   parent.layers = [layer]
+
+  document.processPendingChanges()
 
   expect(layer.style.corners.concentric).toBe(true)
   expect(layer.style.corners.radii).toEqual([10])
 })
 
-test('should update corner radii when set to concentric (#3)', () => {
+test('should update corner radii when set to concentric (#3)', (_context, document) => {
   const layer = new ShapePath({
     style: {
       fills: [{ color: '#ffaa00' }],
     },
   })
-  const parent = new Group({
-    groupBehavior: GroupBehavior.Frame,
+  const parent = new Group.Frame({
     stackLayout: { padding: 10 },
     frame: new Rectangle(100, 100, 100, 100),
     style: {
       corners: { radii: 20 },
     },
+    parent: document.selectedPage,
   })
   layer.style.corners.concentric = true
   parent.layers.push(layer)
 
+  document.processPendingChanges()
+
   expect(layer.style.corners.concentric).toBe(true)
   expect(layer.style.corners.radii).toEqual([10])
 })
 
-test('should update corner radii when set to concentric (#4)', () => {
+test('should update corner radii when set to concentric (#4)', (_context, document) => {
   const layer = new ShapePath({
     style: {
       fills: [{ color: '#ffaa00' }],
     },
   })
-  const parent = new Group({
-    groupBehavior: GroupBehavior.Frame,
+  const parent = new Group.Frame({
     stackLayout: { padding: 10 },
     frame: new Rectangle(100, 100, 100, 100),
     style: {
       corners: { radii: 20 },
     },
+    parent: document.selectedPage,
   })
 
   layer.style.corners.style = Style.CornerStyle.Auto
   parent.layers.push(layer)
 
+  document.processPendingChanges()
+
   expect(layer.style.corners.concentric).toBe(true)
   expect(layer.style.corners.radii).toEqual([10])
 })
 
-test('should update concentric corners when parent corner radius changes', () => {
+test('should update concentric corners when parent corner radius changes', (_context, document) => {
   const layer = new ShapePath({
     style: {
       fills: [{ color: '#ffaa00' }],
       corners: { concentric: true },
     },
   })
-  const parent = new Group({
-    groupBehavior: GroupBehavior.Frame,
+  const parent = new Group.Frame({
     stackLayout: { padding: 10 },
     frame: new Rectangle(100, 100, 100, 100),
     style: {
       corners: { radii: 20 },
     },
     layers: [layer],
+    parent: document.selectedPage,
   })
 
+  document.processPendingChanges()
   expect(layer.style.corners.concentric).toBe(true)
   expect(layer.style.corners.radii).toEqual([10])
 
   parent.style.corners.radii = 40
+  document.processPendingChanges()
   expect(layer.style.corners.radii).toEqual([30])
 })
 
-test('should update concentric corners when parent padding changes', () => {
+test('should update concentric corners when parent padding changes', (_context, document) => {
   const layer = new ShapePath({
     style: {
       fills: [{ color: '#ffaa00' }],
@@ -185,8 +187,7 @@ test('should update concentric corners when parent padding changes', () => {
     verticalSizing: FlexSizing.Relative,
     horizontalSizing: FlexSizing.Relative,
   })
-  const parent = new Group({
-    groupBehavior: GroupBehavior.Frame,
+  const parent = new Group.Frame({
     frame: new Rectangle(100, 100, 100, 100),
     style: {
       corners: { radii: 20 },
@@ -194,12 +195,16 @@ test('should update concentric corners when parent padding changes', () => {
     layers: [layer],
     verticalSizing: FlexSizing.Fixed,
     horizontalSizing: FlexSizing.Fixed,
+    parent: document.selectedPage,
   })
 
+  document.processPendingChanges()
   expect(layer.style.corners.concentric).toBe(true)
   expect(layer.style.corners.radii).toEqual([10])
 
   parent.frame = new Rectangle(100, 100, 80, 80) // shrink the parent and the child corner radius should follow
+  document.processPendingChanges()
+
   expect(layer.style.corners.radii).toEqual([12])
 })
 

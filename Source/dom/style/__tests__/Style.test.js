@@ -39,10 +39,10 @@ test('should be in and out of sync with its shared style', (_context, document) 
 
   expect(style.isOutOfSyncWithSharedStyle(sharedStyle)).toBe(false)
 
-  // Starting with Sketch 2025.3, updating the shared style automatically updates
-  // all layers referencing it. As a result, our style instance stays in sync
   sharedStyle.style.opacity = 0.5
+  expect(style.isOutOfSyncWithSharedStyle(sharedStyle)).toBe(true)
 
+  document.processPendingChanges()
   expect(style.isOutOfSyncWithSharedStyle(sharedStyle)).toBe(false)
   expect(style.opacity).toBe(0.5)
 
@@ -77,6 +77,7 @@ test('should get and set progressive alpha gradient', () => {
       { color: '#0000007f', position: 0.5 },
       { color: '#000000ff', position: 1 },
     ],
+    colorInterpolation: 'RGB',
   })
 
   style.progressiveAlpha = null

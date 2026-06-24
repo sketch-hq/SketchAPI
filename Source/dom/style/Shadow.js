@@ -2,60 +2,83 @@ import { isNativeObject } from 'util'
 import { Color, colorToString } from './Color'
 import { WrappedObject, DefinedPropertiesKey } from '../WrappedObject'
 import { Types } from '../enums'
-import { isWrappedObject } from '../utils'
+import { isWrappedObject, parseEnumValue } from '../utils'
 import { BlendingModeMap } from '../models/BlendingMode'
 import { Swatch } from '../assets'
+import { StylePartType } from './StylePartType'
 
 export class Shadow extends WrappedObject {
-  static toNative(nativeClass, value) {
+  static toNativeDropShadow(value, parentStyle) {
     if (isNativeObject(value)) {
       return value
     }
     if (isWrappedObject(value)) {
       return value.sketchObject
     }
-    const shadow = nativeClass.new()
+    const nativeShadow = parentStyle._object.defaultStylePartOfType(
+      StylePartType.Shadow
+    )
+    return this.updateNative(nativeShadow, value)
+  }
+
+  static toNativeInnerShadow(value, parentStyle) {
+    if (isNativeObject(value)) {
+      return value
+    }
+    if (isWrappedObject(value)) {
+      return value.sketchObject
+    }
+    const nativeShadow = parentStyle._object.defaultStylePartOfType(
+      StylePartType.InnerShadow
+    )
+    return this.updateNative(nativeShadow, value)
+  }
+  static updateNative(nativeShadow, value) {
     const color =
       typeof value === 'string' ? Color.from(value) : Color.from(value.color)
     if (color) {
-      shadow.color = color.toMSColor()
+      nativeShadow.color = color.toMSColor()
     }
     // A swatch property takes precedence over a plain color
     if (value.swatch) {
       const swatch = Swatch.from(value.swatch)
       if (swatch) {
-        shadow.color = swatch.referencingColor
+        nativeShadow.color = swatch.referencingColor
       }
     }
     if (typeof value.blur !== 'undefined') {
-      shadow.blurRadius = value.blur
+      nativeShadow.blurRadius = value.blur
     }
     if (typeof value.x !== 'undefined') {
-      shadow.offsetX = value.x
+      nativeShadow.offsetX = value.x
     }
     if (typeof value.y !== 'undefined') {
-      shadow.offsetY = value.y
+      nativeShadow.offsetY = value.y
     }
     if (typeof value.spread !== 'undefined') {
-      shadow.spread = value.spread
+      nativeShadow.spread = value.spread
     }
     if (typeof value.enabled === 'undefined') {
-      shadow.isEnabled = true
+      nativeShadow.isEnabled = true
     } else {
-      shadow.isEnabled = value.enabled
+      nativeShadow.isEnabled = value.enabled
     }
     if (typeof value.isInnerShadow !== 'undefined') {
-      shadow.isInnerShadow = Boolean(value.isInnerShadow)
+      nativeShadow.isInnerShadow = Boolean(value.isInnerShadow)
     }
 
     if (value.blendingMode) {
-      const blendingMode = BlendingModeMap[value.blendingMode]
-      if (typeof blendingMode !== 'undefined') {
-        shadow.contextSettings().setBlendMode(blendingMode)
+      const blendingMode = parseEnumValue(
+        value.blendingMode,
+        BlendingModeMap,
+        'Shadow.blendingMode'
+      )
+      if (blendingMode !== undefined) {
+        nativeShadow.contextSettings().setBlendMode(blendingMode)
       }
     }
 
-    return shadow
+    return nativeShadow
   }
 }
 
@@ -158,9 +181,13 @@ Shadow.define('blendingMode', {
     )
   },
   set(mode) {
-    const blendingMode = BlendingModeMap[mode]
-    this._object
-      .contextSettings()
-      .setBlendMode(typeof blendingMode !== 'undefined' ? blendingMode : mode)
+    const blendingMode = parseEnumValue(
+      mode,
+      BlendingModeMap,
+      'Shadow.blendingMode'
+    )
+    if (blendingMode !== undefined) {
+      this._object.contextSettings().setBlendMode(blendingMode)
+    }
   },
 })

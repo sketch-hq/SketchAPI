@@ -42,6 +42,7 @@ test('should create a gradient with some stops', () => {
       { position: 0, color: '#553344ff' },
       { position: 0.5, color: '#11223344' },
     ],
+    colorInterpolation: 'RGB',
   })
 })
 

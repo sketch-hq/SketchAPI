@@ -52,7 +52,7 @@ export class SymbolInstance extends StyledLayer {
     if (this.isImmutable()) {
       return this
     }
-    this._object.ensureDetachHasUpdated()
+    this._object.sketchapiEnsureDetachHasUpdatedSkippingOverridesSnapshot()
     this._object.resizeToFitContentsIfNeeded()
     return this
   }
@@ -170,7 +170,7 @@ SymbolInstance.define('expandedLayers', {
   exportable: false,
   enumerable: false,
   get() {
-    this._object.ensureDetachHasUpdated()
+    this._object.sketchapiEnsureDetachHasUpdated()
 
     const detachedLayers = this._object.detachedInstance()?.layers()
     if (!detachedLayers) {
@@ -193,7 +193,7 @@ SymbolInstance.define('expandedLayers', {
 SymbolInstance._NestedExpandedSymbolPrivateReference = NestedExpandedSymbol
 
 // An "override" for the `Layer.hidden` property so we can
-// call `ensureDetachHasUpdated()` afterwards (SMAC-4904)
+// call `sketchapiEnsureDetachHasUpdated()` afterwards (SMAC-4904)
 delete SymbolInstance[DefinedPropertiesKey].hidden
 SymbolInstance.define('hidden', {
   get() {
@@ -204,6 +204,6 @@ SymbolInstance.define('hidden', {
       return
     }
     this._object.setIsVisible(!hidden)
-    this._object.ensureDetachHasUpdated()
+    this._object.sketchapiEnsureDetachHasUpdatedSkippingOverridesSnapshot()
   },
 })

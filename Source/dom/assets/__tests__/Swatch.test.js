@@ -97,10 +97,11 @@ test('should update color', (_context, document) => {
 
   expect(layer.style.fills[0].color).toBe('#ff6600ff')
 
+  // Now if we update the swatch's color, it should (eventually) have effect on the layer's fill color
   swatch.color = '#aabbccff'
-
   expect(swatch.color).toBe('#aabbccff')
-  // the referenced color on the layer should also update automatically
+  // For testing purposes, we force that "eventually" to happen immediately via Document.processPendingChanges()
+  document.processPendingChanges()
   expect(layer.style.fills[0].color).toBe('#aabbccff')
 })
 
@@ -214,7 +215,7 @@ test('should instantiate swatches referenced by immutable layer', () => {
     name: 'Test',
     parent: document.selectedPage,
   })
-  const shape = new ShapePath({
+  const group = new Group.Frame({
     style: {
       fills: [
         {
@@ -241,25 +242,25 @@ test('should instantiate swatches referenced by immutable layer', () => {
   document.selectedPage.layers.push(instance)
 
   // find the immutable children referencing the swatches
-  const immutableShape = instance.expandedLayers.find((l) => l.id === shape.id)
+  const immutableGroup = instance.expandedLayers.find((l) => l.id === group.id)
   const immutableText = instance.expandedLayers.find((l) => l.id === text.id)
 
-  expect(immutableShape).toBeDefined()
-  expect(immutableShape.isImmutable()).toBe(true)
+  expect(immutableGroup).toBeDefined()
+  expect(immutableGroup.isImmutable()).toBe(true)
   expect(immutableText).toBeDefined()
   expect(immutableText.isImmutable()).toBe(true)
 
-  expect(immutableShape.style.fills[0].swatch).toBeDefined()
-  expect(immutableShape.style.fills[0].swatch.isImmutable()).toBe(true)
-  expect(immutableShape.style.fills[0].swatch.id).toBe(swatch1.id)
-  expect(immutableShape.style.fills[0].swatch.name).toBe(swatch1.name)
-  expect(immutableShape.style.fills[0].swatch.color).toBe(swatch1.color)
+  expect(immutableGroup.style.fills[0].swatch).toBeDefined()
+  expect(immutableGroup.style.fills[0].swatch.isImmutable()).toBe(true)
+  expect(immutableGroup.style.fills[0].swatch.id).toBe(swatch1.id)
+  expect(immutableGroup.style.fills[0].swatch.name).toBe(swatch1.name)
+  expect(immutableGroup.style.fills[0].swatch.color).toBe(swatch1.color)
 
-  expect(immutableShape.style.tint.swatch).toBeDefined()
-  expect(immutableShape.style.tint.swatch.isImmutable()).toBe(true)
-  expect(immutableShape.style.tint.swatch.id).toBe(swatch2.id)
-  expect(immutableShape.style.tint.swatch.name).toBe(swatch2.name)
-  expect(immutableShape.style.tint.swatch.color).toBe(swatch2.color)
+  expect(immutableGroup.style.tint.swatch).toBeDefined()
+  expect(immutableGroup.style.tint.swatch.isImmutable()).toBe(true)
+  expect(immutableGroup.style.tint.swatch.id).toBe(swatch2.id)
+  expect(immutableGroup.style.tint.swatch.name).toBe(swatch2.name)
+  expect(immutableGroup.style.tint.swatch.color).toBe(swatch2.color)
 
   expect(immutableText.style.textSwatch).toBeDefined()
   expect(immutableText.style.textSwatch.isImmutable()).toBe(true)

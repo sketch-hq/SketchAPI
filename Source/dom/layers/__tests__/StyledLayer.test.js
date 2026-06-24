@@ -7,6 +7,18 @@ test('should get a style', () => {
   expect(shape.style.type).toBe('Style')
 })
 
+test('should handle resetting a style', () => {
+  const text = new Text({
+    style: {
+      borders: [{ color: '#112233ff' }],
+    },
+  })
+  expect(text.style.borders.length).toEqual(1)
+
+  text.style = null
+  expect(text.style.borders.length).toEqual(0)
+})
+
 test('should create a Layer with a style property', () => {
   const shape = new Shape({
     style: {

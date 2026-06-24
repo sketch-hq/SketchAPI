@@ -159,9 +159,9 @@
 			);
 			name = "Build SketchAPI";
 			outputFileListPaths = (
-				"$(SRCROOT)/sketchapi-outputs.xcfilelist",
 			);
 			outputPaths = (
+				"$(SRCROOT)/build",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/zsh;

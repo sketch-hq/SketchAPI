@@ -154,3 +154,28 @@ export function hookedArray(arr, binding, descriptor) {
   arr.shift = () => arr.splice(0, 1)[0]
   return arr
 }
+
+export function parseEnumValue(value, map, propertyName) {
+  if (typeof value === 'undefined' || value === null) {
+    return undefined
+  }
+
+  const mappedValue = map[value]
+  if (typeof mappedValue !== 'undefined') {
+    return mappedValue
+  }
+
+  // We also want to support passing a native (integer) enum value directly
+  // to avoid breaking existing code that relies on doing that
+  const mapValues = Object.values(map)
+  if (mapValues.includes(value)) {
+    return value
+  }
+
+  console.warn(
+    `Invalid value for "${propertyName}": ${value}. Expected one of: ${Object.keys(
+      map
+    ).join(', ')}`
+  )
+  return undefined
+}

@@ -27,6 +27,44 @@ test('should set the shadows', () => {
   expect(style.sketchObject.innerShadows().count()).toBe(1)
 })
 
+test('should preserve inner shadows when setting drop shadows and vice versa', () => {
+  const style = new Style()
+  style.shadows = [
+    {
+      color: '#11223344',
+    },
+  ]
+  style.innerShadows = [
+    {
+      color: '#44332211',
+    },
+  ]
+
+  // Overwrite drop shadows with new values, which should not affect the inner shadows
+  style.shadows = [
+    {
+      color: '#660000ff',
+    },
+  ]
+
+  expect(style.shadows.length).toBe(1)
+  expect(style.shadows[0].color).toBe('#660000ff')
+  expect(style.innerShadows.length).toBe(1)
+  expect(style.innerShadows[0].color).toBe('#44332211')
+
+  // Overwrite inner shadows with new values, which should not affect the drop shadows
+  style.innerShadows = [
+    {
+      color: '#00ff00ff',
+    },
+  ]
+
+  expect(style.shadows.length).toBe(1)
+  expect(style.shadows[0].color).toBe('#660000ff')
+  expect(style.innerShadows.length).toBe(1)
+  expect(style.innerShadows[0].color).toBe('#00ff00ff')
+})
+
 test('should get the shadows', () => {
   const style = new Style()
   style.shadows = [

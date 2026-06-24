@@ -1,5 +1,5 @@
 /* globals expect, test */
-
+import { Group, Text } from '../../..'
 import { Style } from '../..'
 
 test('should set the borders', () => {
@@ -41,6 +41,22 @@ test('should set the borders', () => {
   expect(style3.sketchObject.borders().count()).toBe(3)
 })
 
+test('should adjust default border position for various layer types', () => {
+  const frame = new Group.Frame({
+    style: {
+      borders: [{ color: '#AA0011' }],
+    },
+  })
+  const text = new Text({
+    style: {
+      borders: [{ color: '#AA0011' }],
+    },
+  })
+
+  expect(frame.style.borders[0].position).toBe(Style.BorderPosition.Inside)
+  expect(text.style.borders[0].position).toBe(Style.BorderPosition.Outside)
+})
+
 test('should get the borders', () => {
   const style = new Style()
   style.borders = [
@@ -78,6 +94,7 @@ test('should get the borders', () => {
         { position: 0, color: '#ffffffff' },
         { position: 1, color: '#000000ff' },
       ],
+      colorInterpolation: 'RGB',
     },
     hasIndividualSides: false,
     sides: { left: 30, top: 30, right: 30, bottom: 30 },
@@ -98,6 +115,7 @@ test('should get the borders', () => {
         { position: 0, color: '#ffffffff' },
         { position: 1, color: '#000000ff' },
       ],
+      colorInterpolation: 'RGB',
     },
     hasIndividualSides: false,
     sides: { left: 1, top: 1, right: 1, bottom: 1 },
@@ -112,6 +130,7 @@ test('should get the borders', () => {
       { position: 0.5, color: '#00000000' },
       { position: 1, color: '#11223344' },
     ],
+    colorInterpolation: 'RGB',
   })
 })
 
@@ -184,6 +203,7 @@ test('should set and get gradient property', () => {
       { position: 0, color: '#ff00007f' },
       { position: 1, color: '#00ff00ff' },
     ],
+    colorInterpolation: 'RGB',
   })
 })
 

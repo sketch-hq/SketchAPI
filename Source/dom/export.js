@@ -212,6 +212,12 @@ export function exportObject(object, options) {
     throw new Error('No objects provided to export')
   }
 
+  // Make sure the documents containing the objects have all their deferred state updates processed
+  // before we start exporting their contents
+  objectsToExport
+    .map((o) => wrapNativeObject(o).getParentDocument())
+    .forEach((doc) => doc?.processPendingChanges())
+
   // Validate export formats
   let formats = (options || {}).formats || []
   if (typeof formats === 'string') {

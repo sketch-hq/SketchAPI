@@ -8,7 +8,9 @@ const ObjectTypeMap = {
   LayerStyle: 1,
   TextStyle: 2,
   Swatch: 3,
-  Unknown: 4,
+  FrameTemplate: 5,
+  GraphicTemplate: 6,
+  Unknown: 7,
 }
 
 export const ImportableObjectType = {
@@ -16,6 +18,8 @@ export const ImportableObjectType = {
   LayerStyle: 'LayerStyle',
   TextStyle: 'TextStyle',
   Swatch: 'Swatch',
+  FrameTemplate: 'FrameTemplate',
+  GraphicTemplate: 'GraphicTemplate',
   Unknown: 'Unknown',
 }
 
@@ -38,6 +42,21 @@ export class ImportableObject extends WrappedObject {
   import() {
     if (!this._documentData) {
       throw new Error('missing document data')
+    }
+
+    if (
+      this.objectType === ImportableObjectType.FrameTemplate ||
+      this.objectType === ImportableObjectType.GraphicTemplate
+    ) {
+      const copiedTemplate = this._object
+        .frameTemplate()
+        .immutableModelObject()
+        .copyOfFrameTemplateForInsertingInto_from_allLibraries(
+          this._documentData,
+          this._object.sourceLibrary(),
+          AppController.sharedInstance().librariesController()
+        )
+      return wrapNativeObject(copiedTemplate)
     }
 
     let importedObject =
@@ -101,6 +120,7 @@ export class ImportableObject extends WrappedObject {
 
     return wrapNativeObject(importedObject.localObject())
   }
+
 }
 
 ImportableObject.type = Types.ImportableObject
@@ -115,6 +135,7 @@ if (typeof MSShareableObjectReference !== 'undefined') {
   Factory.registerClass(ImportableObject, MSSharedLayerReference)
   Factory.registerClass(ImportableObject, MSSharedTextReference)
   Factory.registerClass(ImportableObject, MSSwatchReference)
+  Factory.registerClass(ImportableObject, MSFrameTemplateReference)
 }
 
 ImportableObject.define('id', {

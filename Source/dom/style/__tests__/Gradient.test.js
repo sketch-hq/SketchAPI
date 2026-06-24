@@ -4,7 +4,7 @@
 // so it gets imported from the sketch/dom module.
 import { Style } from '../..'
 
-const { FillType, GradientType } = Style
+const { FillType, GradientType, GradientColorInterpolation } = Style
 
 test('should create a default gradient', () => {
   const s = new Style({
@@ -24,6 +24,7 @@ test('should create a default gradient', () => {
     to: { x: 0.5, y: 1 },
     aspectRatio: 0,
     stops: [],
+    colorInterpolation: 'RGB',
   })
 })
 
@@ -44,6 +45,7 @@ test('should create a gradient with a specific type', () => {
     to: { x: 0.5, y: 1 },
     aspectRatio: 0,
     stops: [],
+    colorInterpolation: 'RGB',
   })
 })
 
@@ -65,6 +67,7 @@ test('should create a gradient with a specific from and to coordinates', () => {
     to: { x: 2, y: 5 },
     aspectRatio: 0,
     stops: [],
+    colorInterpolation: 'RGB',
   })
 })
 
@@ -85,6 +88,7 @@ test('should change the from', () => {
     to: { x: 0.5, y: 1 },
     aspectRatio: 0,
     stops: [],
+    colorInterpolation: 'RGB',
   })
 
   gradient.from.x = 0.7
@@ -94,6 +98,7 @@ test('should change the from', () => {
     to: { x: 0.5, y: 1 },
     aspectRatio: 0,
     stops: [],
+    colorInterpolation: 'RGB',
   })
 
   gradient.from.y = 0.1
@@ -103,6 +108,7 @@ test('should change the from', () => {
     to: { x: 0.5, y: 1 },
     aspectRatio: 0,
     stops: [],
+    colorInterpolation: 'RGB',
   })
 
   gradient.from = {
@@ -115,6 +121,7 @@ test('should change the from', () => {
     to: { x: 0.5, y: 1 },
     aspectRatio: 0,
     stops: [],
+    colorInterpolation: 'RGB',
   })
 })
 
@@ -136,6 +143,7 @@ test('should change the to', () => {
     to: { x: 0.5, y: 1 },
     aspectRatio: 0,
     stops: [],
+    colorInterpolation: 'RGB',
   })
 
   gradient.to.x = 0.7
@@ -145,6 +153,7 @@ test('should change the to', () => {
     to: { x: 0.7, y: 1 },
     aspectRatio: 0,
     stops: [],
+    colorInterpolation: 'RGB',
   })
 
   gradient.to.y = 0.1
@@ -154,6 +163,7 @@ test('should change the to', () => {
     to: { x: 0.7, y: 0.1 },
     aspectRatio: 0,
     stops: [],
+    colorInterpolation: 'RGB',
   })
 
   gradient.to = {
@@ -166,6 +176,7 @@ test('should change the to', () => {
     to: { x: 0.1, y: 0.4 },
     aspectRatio: 0,
     stops: [],
+    colorInterpolation: 'RGB',
   })
 })
 
@@ -188,6 +199,7 @@ test('should create a gradient with a specific from and to coordinates including
     to: { x: 0, y: 0 },
     aspectRatio: 0,
     stops: [],
+    colorInterpolation: 'RGB',
   })
 })
 
@@ -208,4 +220,41 @@ test('should set the aspect ratio of a gradient', () => {
 
   gradient.aspectRatio = 2
   expect(gradient.aspectRatio).toBe(2)
+})
+
+test('should default gradient colorInterpolation to RGB', () => {
+  const s = new Style({
+    fills: [{ fillType: FillType.Gradient, gradient: {} }],
+  })
+  expect(s.fills[0].gradient.colorInterpolation).toBe(
+    GradientColorInterpolation.RGB
+  )
+})
+
+test('should set gradient colorInterpolation from constructor', () => {
+  const s = new Style({
+    fills: [
+      {
+        fillType: FillType.Gradient,
+        gradient: {
+          colorInterpolation: GradientColorInterpolation.Oklab,
+        },
+      },
+    ],
+  })
+  expect(s.fills[0].gradient.colorInterpolation).toBe(
+    GradientColorInterpolation.Oklab
+  )
+})
+
+test('should change gradient colorInterpolation', () => {
+  const s = new Style({
+    fills: [{ fillType: FillType.Gradient, gradient: {} }],
+  })
+
+  const gradient = s.fills[0].gradient
+  expect(gradient.colorInterpolation).toBe(GradientColorInterpolation.RGB)
+
+  gradient.colorInterpolation = GradientColorInterpolation.Oklch
+  expect(gradient.colorInterpolation).toBe(GradientColorInterpolation.Oklch)
 })

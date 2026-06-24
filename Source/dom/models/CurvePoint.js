@@ -3,6 +3,7 @@ import { DefinedPropertiesKey, WrappedObject } from '../WrappedObject'
 import { Types } from '../enums'
 import { Factory } from '../Factory'
 import { Point } from './Point'
+import { parseEnumValue } from '../utils'
 
 const PointTypeMap = {
   Undefined: 0,
@@ -141,11 +142,10 @@ CurvePoint.define('pointType', {
     if (!_mode) {
       this._object.changeCurveModeTo_usingPoint(0, 0)
     } else {
-      const mode = PointTypeMap[_mode]
-      this._object.changeCurveModeTo_usingPoint(
-        typeof mode !== 'undefined' ? mode : _mode,
-        0
-      )
+      const mode = parseEnumValue(_mode, PointTypeMap, 'CurvePoint.pointType')
+      if (mode !== undefined) {
+        this._object.changeCurveModeTo_usingPoint(mode, 0)
+      }
     }
 
     if (this._parent) {

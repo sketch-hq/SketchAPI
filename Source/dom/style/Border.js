@@ -4,10 +4,11 @@ import { WrappedObject, DefinedPropertiesKey } from '../WrappedObject'
 import { Gradient } from './Gradient'
 import { FillTypeMap } from './Fill'
 import { Types } from '../enums'
-import { isWrappedObject } from '../utils'
+import { isWrappedObject, parseEnumValue } from '../utils'
 import { BlendingModeMap } from '../models/BlendingMode'
 import { Swatch } from '../assets'
 import { BorderSides } from './BorderSides'
+import { StylePartType } from './StylePartType'
 
 const BorderPositionMap = {
   Center: 0,
@@ -24,14 +25,16 @@ export const BorderPosition = {
 }
 
 export class Border extends WrappedObject {
-  static toNative(value) {
+  static toNative(value, parentStyle) {
     if (isNativeObject(value)) {
       return value
     }
     if (isWrappedObject(value)) {
       return value.sketchObject
     }
-    const border = MSStyleBorder.new()
+    const border = parentStyle._object.defaultStylePartOfType(
+      StylePartType.Border
+    )
     const color =
       typeof value === 'string' ? Color.from(value) : Color.from(value.color)
     const gradient = Gradient.from(value.gradient)
@@ -57,16 +60,24 @@ export class Border extends WrappedObject {
     }
 
     if (typeof value.position !== 'undefined') {
-      const position = BorderPositionMap[value.position]
-      border.position =
-        typeof position !== 'undefined' ? position : value.position
+      const position = parseEnumValue(
+        value.position,
+        BorderPositionMap,
+        'Border.position'
+      )
+      if (position !== undefined) {
+        border.position = position
+      }
     }
 
-    const fillType = FillTypeMap[value.fillType]
-    border.fillType =
-      typeof fillType !== 'undefined'
-        ? fillType
-        : value.fillType || FillTypeMap.Color
+    const fillType = parseEnumValue(
+      value.fillType,
+      FillTypeMap,
+      'Border.fillType'
+    )
+    if (fillType !== undefined) {
+      border.fillType = fillType
+    }
 
     if (typeof value.enabled === 'undefined') {
       border.isEnabled = true
@@ -75,8 +86,12 @@ export class Border extends WrappedObject {
     }
 
     if (value.blendingMode) {
-      const blendingMode = BlendingModeMap[value.blendingMode]
-      if (typeof blendingMode !== 'undefined') {
+      const blendingMode = parseEnumValue(
+        value.blendingMode,
+        BlendingModeMap,
+        'Border.blendingMode'
+      )
+      if (blendingMode !== undefined) {
         border.contextSettings().setBlendMode(blendingMode)
       }
     }
@@ -113,11 +128,14 @@ Border.define('fillType', {
     )
   },
   set(fillType) {
-    const fillTypeMapped = FillTypeMap[fillType]
-    this._object.fillType =
-      typeof fillTypeMapped !== 'undefined'
-        ? fillTypeMapped
-        : fillType || FillTypeMap.Color
+    const fillTypeMapped = parseEnumValue(
+      fillType,
+      FillTypeMap,
+      'Border.fillType'
+    )
+    if (fillTypeMapped !== undefined) {
+      this._object.fillType = fillTypeMapped
+    }
   },
 })
 
@@ -130,9 +148,14 @@ Border.define('position', {
     )
   },
   set(position) {
-    const positionMapped = BorderPositionMap[position]
-    this._object.position =
-      typeof positionMapped !== 'undefined' ? positionMapped : position
+    const positionMapped = parseEnumValue(
+      position,
+      BorderPositionMap,
+      'Border.position'
+    )
+    if (positionMapped !== undefined) {
+      this._object.position = positionMapped
+    }
   },
 })
 
@@ -196,10 +219,14 @@ Border.define('blendingMode', {
     )
   },
   set(mode) {
-    const blendingMode = BlendingModeMap[mode]
-    this._object
-      .contextSettings()
-      .setBlendMode(typeof blendingMode !== 'undefined' ? blendingMode : mode)
+    const blendingMode = parseEnumValue(
+      mode,
+      BlendingModeMap,
+      'Border.blendingMode'
+    )
+    if (blendingMode !== undefined) {
+      this._object.contextSettings().setBlendMode(blendingMode)
+    }
   },
 })
 

@@ -44,3 +44,14 @@ test('should be backward compatible with Style.Arrowhead.ClosedArrow', () => {
     lineJoin: 'Bevel',
   })
 })
+
+test('should be able to use LineJoin.Miter value', () => {
+  const style = new Style()
+  style.borderOptions = {
+    lineJoin: Style.LineJoin.Bevel,
+  }
+  expect(style.borderOptions.lineJoin).toBe(Style.LineJoin.Bevel)
+
+  style.borderOptions.lineJoin = Style.LineJoin.Miter
+  expect(style.borderOptions.lineJoin).toBe(Style.LineJoin.Miter)
+})

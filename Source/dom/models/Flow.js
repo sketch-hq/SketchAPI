@@ -2,7 +2,7 @@ import { isNativeObject } from 'util'
 import { DefinedPropertiesKey, WrappedObject } from '../WrappedObject'
 import { Types } from '../enums'
 import { Factory } from '../Factory'
-import { isWrappedObject } from '../utils'
+import { isWrappedObject, parseEnumValue } from '../utils'
 import { wrapObject } from '../wrapNativeObject'
 
 // Mapping between animation type names and values.
@@ -107,15 +107,20 @@ Flow.define('animationType', {
     )
   },
   set(animationType) {
-    const translated = AnimationTypeMap[animationType]
-    this._object.animationType =
-      typeof translated !== 'undefined' ? translated : animationType
+    const translated = parseEnumValue(
+      animationType,
+      AnimationTypeMap,
+      'Flow.animationType'
+    )
+    if (translated !== undefined) {
+      this._object.animationType = translated
+    }
   },
 })
 
 Flow.define('maintainScrollPosition', {
   get() {
-    return Boolean(this._object.maintainScrollPosition());
+    return Boolean(this._object.maintainScrollPosition())
   },
   set(maintainScrollPosition) {
     if (this.isImmutable()) {
@@ -123,7 +128,7 @@ Flow.define('maintainScrollPosition', {
     }
 
     if (typeof maintainScrollPosition !== 'boolean') {
-      throw new Error('`maintainScrollPosition` must be a boolean value.');
+      throw new Error('`maintainScrollPosition` must be a boolean value.')
     }
 
     this._object.setMaintainScrollPosition(maintainScrollPosition)

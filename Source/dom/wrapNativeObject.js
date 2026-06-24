@@ -32,7 +32,11 @@ export function wrapNativeObject(nativeObject) {
   // for backward compatibility.
   // NOTE: This exception only applies to mutable MSLayerGroup, since `isCanvasFrames()`
   // is not available on MSImmutableLayerGroup (we'd need its Layer Ancestry).
-  if (JsClass === Group && nativeObject.isCanvasFrame && nativeObject.isCanvasFrame()) {
+  if (
+    JsClass === Group &&
+    nativeObject.isCanvasFrame &&
+    nativeObject.isCanvasFrame()
+  ) {
     JsClass = Artboard
   }
 
