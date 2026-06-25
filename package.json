@@ -20,7 +20,7 @@
     "postinstall": "cd core-modules && npm ci"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.3",
+    "@babel/core": "^7.29.6",
     "@babel/preset-env": "^7.12.1",
     "@skpm/builder": "1.0.0",
     "@skpm/fs": "0.2.6",
