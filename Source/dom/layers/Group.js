@@ -9,6 +9,7 @@ import { SmartLayout } from '../models/SmartLayout'
 import { StackLayout } from '../models/StackLayout'
 import { Color, colorToString } from '../style/Color'
 import { LayerAncestry } from './LayerAncestry'
+import { StylePartType } from '../style/StylePartType'
 
 /**
  * Represents a group of layers.
@@ -33,20 +34,38 @@ export class Group extends StyledLayer {
 
     super(group)
 
-    // Mimics behaviour implemented at the controller level where they call
-    // `MSLayer.adjustAfterInsert()` which will apply the default styling.
-    if (createdNewNativeObject && this.isFrame) {
-      const isCanvasFrame =
-        this._object.isCanvasFrame && this._object.isCanvasFrame()
-      const isEmptyNestedFrame = !isCanvasFrame && this.layers.length === 0
-      const noBackgroundOverride = !group.background
-      if ((isCanvasFrame || isEmptyNestedFrame) && noBackgroundOverride) {
-        this.background.enabled = true
+    // We want to apply a default background to some new Frames, but since the exact
+    // default background color depends on whether it's a canvas-level Frame or
+    // a nested one, we have to defer applying it until this Frame has a parent
+    const needsDefaultFrameBackground =
+      createdNewNativeObject &&
+      this.isFrame &&
+      !group.background &&
+      this.type !== Types.SymbolMaster
+    Object.defineProperty(
+      this,
+      '_shouldApplyDefaultFrameBackgroundAfterInsert',
+      {
+        enumerable: false,
+        writable: true,
+        value: needsDefaultFrameBackground,
       }
+    )
+    if (group.parent) {
+      // This layer has been created with the parent property like this:
+      //     const group = new Group({ parent: someParent })
+      // Layer.parent setter calls adjustAfterInsert() automatically but since
+      // the _shouldApplyDefaultFrameBackgroundAfterInsert flag is only set after super(),
+      // it will be a no-op. Instead, we call adjustAfterInsert() manually here to cover this case
+      this.adjustAfterInsert()
     }
+  }
 
-    // Make the initial stack layout pass happen immediately if needed
-    this.stackLayout?.apply()
+  adjustAfterInsert() {
+    if (this._shouldApplyDefaultFrameBackgroundAfterInsert) {
+      this._object.adjustAfterInsert()
+      this._shouldApplyDefaultFrameBackgroundAfterInsert = false
+    }
   }
 
   // @deprecated
@@ -68,6 +87,35 @@ export class Group extends StyledLayer {
     }
     this._object.resizeToFitChildren()
     return this
+  }
+
+  convertToGroup() {
+    if (this.isImmutable()) {
+      return
+    }
+    if (this.type === Types.SymbolMaster) {
+      // Symbol sources must be Frames or Graphics
+      return
+    }
+    if (this.layers.length === 0) {
+      // Plain groups can't be empty
+      return
+    }
+    this._object.convertToGroup()
+  }
+
+  convertToFrame() {
+    if (this.isImmutable()) {
+      return
+    }
+    this._object.convertToFrame()
+  }
+
+  convertToGraphic() {
+    if (this.isImmutable()) {
+      return
+    }
+    this._object.convertToGraphic()
   }
 }
 
@@ -95,18 +143,42 @@ Group.Graphic = class Graphic extends Group {
 }
 
 Group.define('groupBehavior', {
+  enumerable: false,
+  exportable: false,
   get() {
     console.warn(
-      'Group.groupBehavior is not a reliable indicator of whether a given group acts as a Frame or Graphic. Use Group.isFrame and Group.isGraphicFrame instead.'
+      'Group.groupBehavior *getter* is deprecated. Use Group.isFrame and Group.isGraphicFrame instead.'
     )
-    return this._object.groupBehavior()
+    if (this.isGraphicFrame) {
+      return GroupBehavior.Graphic
+    } else if (this.isFrame) {
+      return GroupBehavior.Frame
+    }
+    return GroupBehavior.Default
   },
   set(value) {
     if (this.isImmutable()) return
+
+    let desiredBehavior
     if (typeof value === 'string') {
-      this._object.setGroupBehavior(GroupBehavior[value])
+      desiredBehavior = GroupBehavior[value]
     } else {
-      this._object.setGroupBehavior(value)
+      desiredBehavior = value
+    }
+
+    switch (desiredBehavior) {
+      case GroupBehavior.Frame:
+        this.convertToFrame()
+        break
+      case GroupBehavior.Graphic:
+        this.convertToGraphic()
+        break
+      case GroupBehavior.Default:
+        // This is not really what the "default" behavior means, but since we want
+        // container types to be explicit (i.e. either Frame, Graphic, or Group) we
+        // have to loose precision here and treat it as "convert to a plain group" request
+        this.convertToGroup()
+        break
     }
   },
 })
@@ -146,19 +218,45 @@ Group.define('layers', {
     })
 
     this._object.addLayers(layers)
-    this.style.corners._applyConcentricCornersOnChildren()
+    toArray(_layers)
+      .map(wrapObject)
+      .forEach((layer) => {
+        layer.adjustAfterInsert?.()
+      })
+    this.style.corners.setNeedsUpdateConcentricCorners()
   },
   insertItem(item, index) {
     if (this.isImmutable()) {
       return undefined
     }
     const layer = wrapObject(item)
-    if (layer._object.parentGroup()) {
-      layer._object.removeFromParent()
+    const currentParent = wrapObject(layer._object.parentGroup())
+
+    if (currentParent?.isEqual(this)) {
+      // This layer is already in the group, we just need to move it to the right index
+      const oldIndex = layer.index
+      // The proposed new index is clamped to [0...length-1]
+      const safeNewIndex = Math.max(
+        Math.min(currentParent.layers.length - 1, index),
+        0
+      )
+      if (
+        typeof oldIndex !== 'number' ||
+        oldIndex === NSNotFound ||
+        oldIndex === safeNewIndex
+      ) {
+        return layer
+      }
+      this._object.moveLayerFromIndex_toIndex(oldIndex, safeNewIndex)
+      return layer
+    } else if (currentParent) {
+      // This layer belongs to another group, we need to remove it from there first
+      layer.remove()
     }
     this._object.insertLayer_atIndex(layer._object, index)
-    this.style.corners._applyConcentricCornersOnChildren()
+    this.style.corners.setNeedsUpdateConcentricCorners()
 
+    layer.adjustAfterInsert?.()
     return layer
   },
   removeItem(index) {
@@ -244,8 +342,6 @@ Group.define('stackLayout', {
 
 Group.define('isFrame', {
   importable: false,
-  exportable: false,
-  enumerable: false,
   get() {
     return Boolean(this._object.hasFrameTrait())
   },
@@ -253,10 +349,21 @@ Group.define('isFrame', {
 
 Group.define('isGraphicFrame', {
   importable: false,
-  exportable: false,
-  enumerable: false,
   get() {
     return Boolean(this._object.hasGraphicTrait())
+  },
+})
+
+Group.define('isTemplate', {
+  importable: true,
+  get() {
+    return Boolean(this._object.isTemplate())
+  },
+  set(isTemplate) {
+    if (this.isImmutable()) {
+      return
+    }
+    this._object.setIsTemplate(Boolean(isTemplate))
   },
 })
 
@@ -289,72 +396,81 @@ Group.define('clipsContents', {
   },
 })
 
-Group.defineObject('background', {
-  enabled: {
-    get() {
-      return (
-        this._parent.isFrame &&
-        this._object.style &&
-        this._object.style().fills &&
-        this._object.style().fills().length > 0
-      )
-    },
-    set(enabled) {
-      if (this._parent.isImmutable() || !this._parent.isFrame) {
-        return
-      }
-      const style = this._object.style ? this._object.style() : undefined
-      if (!style) {
-        return
-      }
-      if (enabled) {
-        const numFills = style.fills ? style.fills().length : 0
-        if (numFills === 0) {
-          // Create a default fill if enabling and no fills exist
-          style.addStylePartOfType(0) // 0 is for fills
+Group.defineObject(
+  'background',
+  {
+    enabled: {
+      get() {
+        return (
+          this._parent.isFrame &&
+          this._object.style &&
+          this._object.style().fills &&
+          this._object.style().fills().length > 0
+        )
+      },
+      set(enabled) {
+        if (this._parent.isImmutable() || !this._parent.isFrame) {
+          return
         }
-      } else {
-        // Remove all fills if disabling
-        style.removeAllStyleFills()
-      }
+        const style = this._object.style ? this._object.style() : undefined
+        if (!style) {
+          return
+        }
+        if (enabled) {
+          const numFills = style.fills ? style.fills().length : 0
+          if (numFills === 0) {
+            // Create a default fill if enabling and no fills exist
+            style.addStylePartOfType(StylePartType.Fill)
+          }
+        } else {
+          // Remove all fills if disabling
+          style.removeAllStyleFills()
+        }
+      },
+    },
+    includedInExport: {
+      get() {
+        return Boolean(Number(this._object.includeBackgroundColorInExport()))
+      },
+      set(included) {
+        if (this._parent.isImmutable()) {
+          return
+        }
+        this._object.setIncludeBackgroundColorInExport(included)
+      },
+    },
+    color: {
+      get() {
+        const firstFill = this._object.style
+          ? this._object.style().firstEnabledFill()
+          : undefined
+        return firstFill ? colorToString(firstFill.color()) : '#00000000'
+      },
+      set(color) {
+        if (this._parent.isImmutable()) {
+          return
+        }
+        if (!this._object.style) {
+          return
+        }
+        if (
+          !this._object.style().fills ||
+          this._object.style().fills().length === 0 ||
+          !this._object.style().firstEnabledFill?.()
+        ) {
+          // Add a fill if no suitable candidates exist
+          this._object.style().addStylePartOfType(StylePartType.Fill)
+        }
+        const firstFill = this._object.style().firstEnabledFill()
+        firstFill.color = Color.from(color).toMSColor()
+      },
     },
   },
-  includedInExport: {
-    get() {
-      return Boolean(Number(this._object.includeBackgroundColorInExport()))
-    },
-    set(included) {
-      if (this._parent.isImmutable()) {
-        return
-      }
-      this._object.setIncludeBackgroundColorInExport(included)
-    },
-  },
-  color: {
-    get() {
-      const firstFill = this._object.style
-        ? this._object.style().firstEnabledFill()
-        : undefined
-      return firstFill ? colorToString(firstFill.color()) : '#00000000'
-    },
-    set(color) {
-      if (this._parent.isImmutable()) {
-        return
-      }
-      if (!this._object.style) {
-        return
-      }
-      if (
-        !this._object.style().fills ||
-        this._object.style().fills().length === 0
-      ) {
-        this._object.style().addStylePartOfType(0) // Add a fill if none exists
-      }
-      const firstFill = this._object.style().firstEnabledFill()
-      firstFill.color = Color.from(color).toMSColor()
-    },
-  },
-})
+  {
+    // Only Frames can have a background, so we postpone assignments until a `groupBehavior` is set
+    depends: 'groupBehavior',
+  }
+)
 
 /**
  * Defines how a Group should behave.

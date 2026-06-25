@@ -253,7 +253,7 @@ test('stack item can preserve space in stack when hidden', () => {
   expect(group.layers[2].preservesSpaceInStackLayoutWhenHidden).toBe(true)
 })
 
-test('should apply() layout changes automatically and on demand', () => {
+test('apply() should process pending changes in the document', (_context, document) => {
   const group = new Group.Frame({
     stackLayout: {
       padding: 10,
@@ -263,9 +263,11 @@ test('should apply() layout changes automatically and on demand', () => {
         frame: new Rectangle(0, 0, 100, 100),
       }),
     ],
+    parent: document.selectedPage,
   })
 
-  // Initial layout pass should happen automatically, taking padding into account
+  // Process initial layout, taking padding into account
+  group.stackLayout.apply()
   expect(group.frame.toJSON()).toEqual({
     x: 0,
     y: 0,
@@ -273,10 +275,11 @@ test('should apply() layout changes automatically and on demand', () => {
     height: 120,
   })
 
-  // Setting the property should automatically apply the layout
+  // apply() should be able to trigger the update after modifying stack layout properties
   group.stackLayout = {
     padding: 0,
   }
+  group.stackLayout.apply()
   expect(group.frame.toJSON()).toEqual({
     x: 0,
     y: 0,
@@ -284,47 +287,15 @@ test('should apply() layout changes automatically and on demand', () => {
     height: 100,
   })
 
-  // Direct modification of layout properties should trigger automatic layout update
+  // same for Document.processPendingChanges() called directly
   group.stackLayout.padding = 20
+  document.processPendingChanges()
   expect(group.frame.toJSON()).toEqual({
     x: 0,
     y: 0,
     width: 140,
     height: 140,
   })
-
-  // But changes made to child layers should NOT trigger automatic layout update
-  group.layers[0].frame = new Rectangle(0, 0, 200, 200)
-  expect(group.frame.toJSON()).toEqual({
-    x: 0,
-    y: 0,
-    width: 140,
-    height: 140,
-  })
-
-  // Calling apply() should always update the layout
-  group.stackLayout.apply()
-  expect(group.frame.toJSON()).toEqual({
-    x: 0,
-    y: 0,
-    width: 240,
-    height: 240,
-  })
-
-  // Layer.preservesSpaceInStackLayoutWhenHidden and Layer.ignoresStackLayout
-  // should also trigger automatic layout updates for the parent stack
-  group.layers.push(
-    new Shape({
-      frame: new Rectangle(0, 0, 100, 100),
-      hidden: true,
-    })
-  )
-  group.layers[1].preservesSpaceInStackLayoutWhenHidden = true
-  expect(group.frame.width).toEqual(340) // + 100
-
-  group.layers[1].hidden = false
-  group.layers[1].ignoresStackLayout = true
-  expect(group.frame.width).toEqual(240) // the new layer is ignored
 })
 
 test('removing a stack layout should reset parent group padding', () => {

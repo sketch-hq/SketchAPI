@@ -1,6 +1,7 @@
 import { toArray } from 'util'
 import { WrappedObject, DefinedPropertiesKey } from '../WrappedObject'
 import { Types } from '../enums'
+import { parseEnumValue } from '../utils'
 
 const ArrowheadMap = {
   None: 0,
@@ -44,7 +45,7 @@ const LineJoinMap = {
 }
 
 export const LineJoin = {
-  Miter: 'Mitter',
+  Miter: 'Miter',
   Round: 'Round',
   Bevel: 'Bevel',
 }
@@ -65,35 +66,47 @@ export class BorderOptions extends WrappedObject {
       borderOptions
     )
     if (typeof optionsWithDefault.startArrowhead !== 'undefined') {
-      const startArrowhead = ArrowheadMap[optionsWithDefault.startArrowhead]
-      s.setStartMarkerType(
-        typeof startArrowhead !== 'undefined'
-          ? startArrowhead
-          : optionsWithDefault.startArrowhead
+      const startArrowhead = parseEnumValue(
+        optionsWithDefault.startArrowhead,
+        ArrowheadMap,
+        'BorderOptions.startArrowhead'
       )
+      if (startArrowhead !== undefined) {
+        s.setStartMarkerType(startArrowhead)
+      }
     }
     if (typeof optionsWithDefault.endArrowhead !== 'undefined') {
-      const endArrowhead = ArrowheadMap[optionsWithDefault.endArrowhead]
-      s.setEndMarkerType(
-        typeof endArrowhead !== 'undefined'
-          ? endArrowhead
-          : optionsWithDefault.endArrowhead
+      const endArrowhead = parseEnumValue(
+        optionsWithDefault.endArrowhead,
+        ArrowheadMap,
+        'BorderOptions.endArrowhead'
       )
+      if (endArrowhead !== undefined) {
+        s.setEndMarkerType(endArrowhead)
+      }
     }
     if (typeof optionsWithDefault.dashPattern !== 'undefined') {
       s.borderOptions().setDashPattern(optionsWithDefault.dashPattern)
     }
     if (typeof optionsWithDefault.lineEnd !== 'undefined') {
-      const lineEnd = LineEndMap[optionsWithDefault.lineEnd]
-      s.borderOptions().setLineCapStyle(
-        typeof lineEnd !== 'undefined' ? lineEnd : optionsWithDefault.lineEnd
+      const lineEnd = parseEnumValue(
+        optionsWithDefault.lineEnd,
+        LineEndMap,
+        'BorderOptions.lineEnd'
       )
+      if (lineEnd !== undefined) {
+        s.borderOptions().setLineCapStyle(lineEnd)
+      }
     }
     if (typeof optionsWithDefault.lineJoin !== 'undefined') {
-      const lineJoin = LineJoinMap[optionsWithDefault.lineJoin]
-      s.borderOptions().setLineJoinStyle(
-        typeof lineJoin !== 'undefined' ? lineJoin : optionsWithDefault.lineJoin
+      const lineJoin = parseEnumValue(
+        optionsWithDefault.lineJoin,
+        LineJoinMap,
+        'BorderOptions.lineJoin'
       )
+      if (lineJoin !== undefined) {
+        s.borderOptions().setLineJoinStyle(lineJoin)
+      }
     }
   }
 }
@@ -120,10 +133,14 @@ BorderOptions.define('startArrowhead', {
     )
   },
   set(arrowhead) {
-    const arrowheadMapped = ArrowheadMap[arrowhead]
-    this._object.setStartMarkerType(
-      typeof arrowheadMapped !== 'undefined' ? arrowheadMapped : arrowhead
+    const arrowheadMapped = parseEnumValue(
+      arrowhead,
+      ArrowheadMap,
+      'BorderOptions.startArrowhead'
     )
+    if (arrowheadMapped !== undefined) {
+      this._object.setStartMarkerType(arrowheadMapped)
+    }
   },
 })
 
@@ -136,10 +153,14 @@ BorderOptions.define('endArrowhead', {
     )
   },
   set(arrowhead) {
-    const arrowheadMapped = ArrowheadMap[arrowhead]
-    this._object.setEndMarkerType(
-      typeof arrowheadMapped !== 'undefined' ? arrowheadMapped : arrowhead
+    const arrowheadMapped = parseEnumValue(
+      arrowhead,
+      ArrowheadMap,
+      'BorderOptions.endArrowhead'
     )
+    if (arrowheadMapped !== undefined) {
+      this._object.setEndMarkerType(arrowheadMapped)
+    }
   },
 })
 
@@ -161,12 +182,14 @@ BorderOptions.define('lineEnd', {
     )
   },
   set(lineEnd) {
-    const lineEndMapped = LineEndMap[lineEnd]
-    this._object
-      .borderOptions()
-      .setLineCapStyle(
-        typeof lineEndMapped !== 'undefined' ? lineEndMapped : lineEnd
-      )
+    const lineEndMapped = parseEnumValue(
+      lineEnd,
+      LineEndMap,
+      'BorderOptions.lineEnd'
+    )
+    if (lineEndMapped !== undefined) {
+      this._object.borderOptions().setLineCapStyle(lineEndMapped)
+    }
   },
 })
 
@@ -179,11 +202,13 @@ BorderOptions.define('lineJoin', {
     )
   },
   set(lineJoin) {
-    const lineJoinMapped = LineJoinMap[lineJoin]
-    this._object
-      .borderOptions()
-      .setLineJoinStyle(
-        typeof lineJoinMapped !== 'undefined' ? lineJoinMapped : lineJoin
-      )
+    const lineJoinMapped = parseEnumValue(
+      lineJoin,
+      LineJoinMap,
+      'BorderOptions.lineJoin'
+    )
+    if (lineJoinMapped !== undefined) {
+      this._object.borderOptions().setLineJoinStyle(lineJoinMapped)
+    }
   },
 })

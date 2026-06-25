@@ -55,6 +55,7 @@ $(SRCROOT)/Source/dom/style/Corners.js
 $(SRCROOT)/Source/dom/style/Fill.js
 $(SRCROOT)/Source/dom/style/GradientStop.js
 $(SRCROOT)/Source/dom/style/Shadow.js
+$(SRCROOT)/Source/dom/style/StylePartType.js
 $(SRCROOT)/Source/dom/style/Text.js
 $(SRCROOT)/Source/dom/utils.js
 $(SRCROOT)/Source/dom/wrapNativeObject.js

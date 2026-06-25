@@ -25,7 +25,7 @@ export class Layer extends WrappedObject {
       object.parentGroup().insertLayers_afterLayer([duplicate], object)
     }
     if (this.type === 'SymbolInstance') {
-      duplicate.ensureDetachHasUpdated()
+      duplicate.sketchapiEnsureDetachHasUpdatedSkippingOverridesSnapshot()
     }
     return wrapNativeObject(duplicate)
   }
@@ -86,6 +86,10 @@ export class Layer extends WrappedObject {
     }
     MSLayerMovement.moveBackward([this._object])
     return this
+  }
+
+  getParentDocument() {
+    return this.getParentPage()?.parent
   }
 
   getParentPage() {
@@ -160,6 +164,9 @@ Layer.define('index', {
 Layer.define('parent', {
   enumerable: false,
   exportable: false,
+  // Frames and Graphics must have their traits set up before they are inserted into a parent
+  // for us to be able to configure their defaults correctly
+  depends: 'groupBehavior',
   /**
    * Return the parent container of this layer.
    *
@@ -189,6 +196,8 @@ Layer.define('parent', {
     }
 
     layer._object.addLayers([this._object])
+    this.adjustAfterInsert?.()
+    this.style?.corners.setNeedsUpdateConcentricCorners()
   },
 })
 
@@ -220,6 +229,10 @@ Layer.define('frame', {
     }
     const f = this._object.frame()
     f.setRect(NSMakeRect(value.x, value.y, value.width, value.height))
+    // The native rect observer schedules a deferred concentric corner update that the
+    // SketchAPI run loop doesn't wait for; apply it now so plugin-visible state is
+    // consistent before returning.
+    this._object.updateConcentricCorners?.()
   },
 })
 

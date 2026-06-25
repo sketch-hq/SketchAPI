@@ -1,6 +1,6 @@
 /* globals expect, test */
 import { canBeLogged } from '../../../test-utils'
-import { Artboard, Document, Page, Group, GroupBehavior, find } from '../..'
+import { Artboard, Document, Page, Group, find } from '../..'
 
 test('should create an artboard', () => {
   const artboard = new Artboard({ name: 'Test' })
@@ -20,7 +20,6 @@ test('should create an artboard', () => {
             frame: { x: 10, y: 10, width: 100, height: 100 },
           },
         ],
-        groupBehavior: GroupBehavior.Graphic,
       },
     ],
   })
@@ -69,13 +68,11 @@ test('should set the background', () => {
 
 test('should only return Artboards from Page.selectedLayers, Document.selectedLayers, Group.layers(), and find()', (_context, document) => {
   const page = document.selectedPage
-  const artboard = new Group({
+  const artboard = new Group.Frame({
     name: 'CanvasFrame',
     parent: page,
-    groupBehavior: GroupBehavior.Frame,
     layers: [
-      new Group({
-        groupBehavior: GroupBehavior.Graphic,
+      new Group.Graphic({
         name: 'NestedGraphic',
       }),
     ],
@@ -99,4 +96,32 @@ test('should only return Artboards from Page.selectedLayers, Document.selectedLa
 
   expect(find('[name="NestedGraphic"]', document)[0].type).toBe('Group')
   expect(find('[name="NestedGraphic"]', page)[0].type).toBe('Group')
+})
+
+test('should not convert canvas-level Graphics into Frames when wrapping them as Artboards', () => {
+  const page = new Page({
+    layers: [
+      new Group.Graphic({
+        name: 'A canvas-level Graphic',
+        layers: [],
+      }),
+      new Group.Frame({
+        name: 'A canvas-level Frame',
+        layers: [],
+      }),
+    ],
+  })
+
+  const canvasLevelFrames = page.canvasLevelFrames
+  expect(canvasLevelFrames.length).toBe(2)
+
+  // A canvas-level Graphic is still a Graphic even if we wrap it as an Artboard
+  expect(canvasLevelFrames[0].type).toBe('Artboard')
+  expect(canvasLevelFrames[0].isFrame).toBe(true)
+  expect(canvasLevelFrames[0].isGraphicFrame).toBe(true)
+
+  // A canvas-level Frame is still a Frame even if we wrap it as an Artboard
+  expect(canvasLevelFrames[1].type).toBe('Artboard')
+  expect(canvasLevelFrames[1].isFrame).toBe(true)
+  expect(canvasLevelFrames[1].isGraphicFrame).toBe(false)
 })

@@ -66,6 +66,13 @@ npm install
 ./build.sh
 ```
 
+The `Build SketchAPI` Xcode run script declares `Modules/SketchAPI/build` as its output. The main
+`Sketch` target then uses that same `build` folder as the input for its `Install SketchAPI` run
+script. This relies on the SketchAPI build deleting and recreating the `build` folder whenever the
+JavaScript sources are rebuilt. In practice this means a real source change in one of the
+JavaScript files triggers both the `Build SketchAPI` phase and the app's `Install SketchAPI`
+phase, while unchanged incremental builds skip both phases.
+
 #### Scripts
 
 The following npm scripts are available for development of the API.

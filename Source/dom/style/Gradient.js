@@ -3,6 +3,7 @@ import { WrappedObject, DefinedPropertiesKey } from '../WrappedObject'
 import { GradientStop } from './GradientStop'
 import { Point } from '../models/Point'
 import { Types } from '../enums'
+import { parseEnumValue } from '../utils'
 
 const GradientTypeMap = {
   Linear: 0,
@@ -14,6 +15,18 @@ export const GradientType = {
   Linear: 'Linear',
   Radial: 'Radial',
   Angular: 'Angular',
+}
+
+const GradientColorInterpolationMap = {
+  RGB: 0,
+  Oklab: 1,
+  Oklch: 2,
+}
+
+export const GradientColorInterpolation = {
+  RGB: 'RGB',
+  Oklab: 'Oklab',
+  Oklch: 'Oklch',
 }
 
 export class Gradient extends WrappedObject {
@@ -36,10 +49,14 @@ export class Gradient extends WrappedObject {
     } else {
       nativeGradient = MSGradient.alloc().initBlankGradient()
       if (typeof object.gradientType !== 'undefined') {
-        const type = GradientTypeMap[object.gradientType]
-        nativeGradient.setGradientType(
-          typeof type !== 'undefined' ? type : object.gradientType
+        const type = parseEnumValue(
+          object.gradientType,
+          GradientTypeMap,
+          'Gradient.gradientType'
         )
+        if (type !== undefined) {
+          nativeGradient.setGradientType(type)
+        }
       }
       if (object.from) {
         nativeGradient.setFrom(
@@ -64,6 +81,16 @@ export class Gradient extends WrappedObject {
         nativeGradient.setStops(
           object.stops.map(GradientStop.from).map((g) => g._object)
         )
+      }
+      if (typeof object.colorInterpolation !== 'undefined') {
+        const interpolation = parseEnumValue(
+          object.colorInterpolation,
+          GradientColorInterpolationMap,
+          'Gradient.colorInterpolation'
+        )
+        if (interpolation !== undefined) {
+          nativeGradient.setColorInterpolation(interpolation)
+        }
       }
     }
 
@@ -92,10 +119,14 @@ Gradient.define('gradientType', {
     )
   },
   set(gradientType) {
-    const type = GradientTypeMap[gradientType]
-    this._object.setGradientType(
-      typeof type !== 'undefined' ? type : gradientType
+    const type = parseEnumValue(
+      gradientType,
+      GradientTypeMap,
+      'Gradient.gradientType'
     )
+    if (type !== undefined) {
+      this._object.setGradientType(type)
+    }
   },
 })
 
@@ -152,5 +183,27 @@ Gradient.define('stops', {
     this._object.setStops(
       stops.map(GradientStop.from.bind(GradientStop)).map((g) => g._object)
     )
+  },
+})
+
+Gradient.define('colorInterpolation', {
+  get() {
+    return (
+      Object.keys(GradientColorInterpolationMap).find(
+        (key) =>
+          GradientColorInterpolationMap[key] ===
+          this._object.colorInterpolation()
+      ) || this._object.colorInterpolation()
+    )
+  },
+  set(colorInterpolation) {
+    const interpolation = parseEnumValue(
+      colorInterpolation,
+      GradientColorInterpolationMap,
+      'Gradient.colorInterpolation'
+    )
+    if (interpolation !== undefined) {
+      this._object.setColorInterpolation(interpolation)
+    }
   },
 })

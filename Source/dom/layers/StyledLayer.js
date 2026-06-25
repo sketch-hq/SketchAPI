@@ -5,6 +5,8 @@ import { Layer } from './Layer'
 import { Style } from '../style/Style'
 import { SharedStyle } from '../models/SharedStyle'
 import { wrapObject, wrapNativeObject } from '../wrapNativeObject'
+import { isWrappedObject } from '../utils'
+import { Types } from '../enums'
 
 /**
  * Represents a layer with style.
@@ -16,21 +18,40 @@ Factory.registerClass(StyledLayer, MSStyledLayer)
 Factory.registerClass(StyledLayer, MSImmutableStyledLayer)
 
 StyledLayer.define('style', {
+  // For container types (groups, frames, symbols) we want to make sure the correct groupBehavior
+  // is applied before we attempt to set the style, because certain style properties (e.g. fills, tints)
+  // will be ignored for certain container types
+  depends: 'groupBehavior',
   get() {
-    return Style.fromNative(this._object.style())
+    const style = Style.fromNative(this._object.style())
+    if (this.isImmutable()) {
+      // Immutable objects don't have a reference to their parent, and we might
+      // need one to access the Swift bridge object for a parent Text
+      style.__immutableParentLayer = this._object
+    }
+    return style
   },
   set(style) {
     if (this.isImmutable()) {
       return
     }
 
-    // we can then actually set the style
     if (isNativeObject(style)) {
+      // a) it's a native MSStyle instance, we copy it as is
       this._object.style = style.copy()
-    } else if (!style || !style.sketchObject) {
-      this._object.style = new Style(style, this.type).sketchObject
-    } else {
+    } else if (
+      isWrappedObject(style) &&
+      style.type === Types.Style &&
+      style.sketchObject
+    ) {
+      // b) it's a Style object, we copy it as is
       this._object.style = style.sketchObject.copy()
+    } else if (style) {
+      // c) it's a plain JS object, we apply its properties to our own style
+      Style.fromNative(this._object.style()).update(style)
+    } else {
+      // d) if null or undefined, we reset to defaults by creating a brand new style object
+      this._object.setStyle(new Style({}, this.type).sketchObject)
     }
   },
 })
@@ -44,6 +65,9 @@ StyledLayer.define('sharedStyleId', {
     return String(nativeSharedStyle)
   },
   set(sharedStyleId) {
+    console.warn(
+      'StyledLayer.sharedStyleId is deprecated. Use StyledLayer.sharedStyle instead.'
+    )
     if (this.isImmutable()) {
       return
     }
@@ -98,7 +122,7 @@ StyledLayer.define('sharedStyle', {
     }
 
     const nativeSharedStyle = wrapObject(sharedStyle)
-    this._object.setSharedStyleID(nativeSharedStyle.id)
+    this._object.setSharedStyle(nativeSharedStyle.sketchObject)
   },
 })
 

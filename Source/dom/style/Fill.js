@@ -4,9 +4,10 @@ import { WrappedObject, DefinedPropertiesKey } from '../WrappedObject'
 import { Gradient } from './Gradient'
 import { Types } from '../enums'
 import { ImageData } from '../models/ImageData'
-import { isWrappedObject } from '../utils'
+import { isWrappedObject, parseEnumValue } from '../utils'
 import { BlendingModeMap } from '../models/BlendingMode'
 import { Swatch } from '../assets'
+import { StylePartType } from './StylePartType'
 
 export const FillTypeMap = {
   Color: 0, // A solid fill/border.
@@ -39,14 +40,14 @@ export const PatternFillType = {
 }
 
 export class Fill extends WrappedObject {
-  static toNative(value) {
+  static toNative(value, parentStyle) {
     if (isNativeObject(value)) {
       return value
     }
     if (isWrappedObject(value)) {
       return value.sketchObject
     }
-    const fill = MSStyleFill.new()
+    const fill = parentStyle._object.defaultStylePartOfType(StylePartType.Fill)
     const color =
       typeof value === 'string' ? Color.from(value) : Color.from(value.color)
     const gradient = Gradient.from(value.gradient)
@@ -69,12 +70,14 @@ export class Fill extends WrappedObject {
 
     if (value.pattern) {
       if (typeof value.pattern.patternType !== 'undefined') {
-        const patternTypeMapped = PatternFillTypeMap[value.pattern.patternType]
-        fill.setPatternFillType(
-          typeof patternTypeMapped !== 'undefined'
-            ? patternTypeMapped
-            : value.pattern.patternType || PatternFillTypeMap.Tile
+        const patternTypeMapped = parseEnumValue(
+          value.pattern.patternType,
+          PatternFillTypeMap,
+          'Fill.patternType'
         )
+        if (patternTypeMapped !== undefined) {
+          fill.setPatternFillType(patternTypeMapped)
+        }
       }
       if (typeof value.pattern.tileScale !== 'undefined') {
         fill.setPatternTileScale(value.pattern.tileScale)
@@ -85,11 +88,14 @@ export class Fill extends WrappedObject {
       }
     }
 
-    const fillType = FillTypeMap[value.fillType || value.fill]
-    fill.fillType =
-      typeof fillType !== 'undefined'
-        ? fillType
-        : value.fillType || value.fill || FillTypeMap.Color
+    const fillType = parseEnumValue(
+      value.fillType || value.fill,
+      FillTypeMap,
+      'Fill.fillType'
+    )
+    if (fillType !== undefined) {
+      fill.fillType = fillType
+    }
 
     if (typeof value.enabled === 'undefined') {
       fill.isEnabled = true
@@ -98,8 +104,12 @@ export class Fill extends WrappedObject {
     }
 
     if (value.blendingMode) {
-      const blendingMode = BlendingModeMap[value.blendingMode]
-      if (typeof blendingMode !== 'undefined') {
+      const blendingMode = parseEnumValue(
+        value.blendingMode,
+        BlendingModeMap,
+        'Fill.blendingMode'
+      )
+      if (blendingMode !== undefined) {
         fill.contextSettings().setBlendMode(blendingMode)
       }
     }
@@ -142,11 +152,14 @@ Fill.define('fillType', {
     )
   },
   set(fillType) {
-    const fillTypeMapped = FillTypeMap[fillType]
-    this._object.fillType =
-      typeof fillTypeMapped !== 'undefined'
-        ? fillTypeMapped
-        : fillType || FillTypeMap.Color
+    const fillTypeMapped = parseEnumValue(
+      fillType,
+      FillTypeMap,
+      'Fill.fillType'
+    )
+    if (fillTypeMapped !== undefined) {
+      this._object.fillType = fillTypeMapped
+    }
   },
 })
 
@@ -192,12 +205,14 @@ Fill.defineObject('pattern', {
       )
     },
     set(patternType) {
-      const patternTypeMapped = PatternFillTypeMap[patternType]
-      this._object.setPatternFillType(
-        typeof patternTypeMapped !== 'undefined'
-          ? patternTypeMapped
-          : patternType || PatternFillTypeMap.Tile
+      const patternTypeMapped = parseEnumValue(
+        patternType,
+        PatternFillTypeMap,
+        'Fill.patternType'
       )
+      if (patternTypeMapped !== undefined) {
+        this._object.setPatternFillType(patternTypeMapped)
+      }
     },
   },
   image: {
@@ -237,9 +252,13 @@ Fill.define('blendingMode', {
     )
   },
   set(mode) {
-    const blendingMode = BlendingModeMap[mode]
-    this._object
-      .contextSettings()
-      .setBlendMode(typeof blendingMode !== 'undefined' ? blendingMode : mode)
+    const blendingMode = parseEnumValue(
+      mode,
+      BlendingModeMap,
+      'Fill.blendingMode'
+    )
+    if (blendingMode !== undefined) {
+      this._object.contextSettings().setBlendMode(blendingMode)
+    }
   },
 })

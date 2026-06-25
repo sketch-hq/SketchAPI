@@ -88,13 +88,7 @@ export class ShapePath extends StyledLayer {
   }
 
   getSVGPath() {
-    const nsbezierpath = NSBezierPath.bezierPathWithPath(
-      this._object.pathInFrameWithTransforms()
-    )
-
-    return String(nsbezierpath.svgPathAttribute())
-      .replace(/^d="/g, '')
-      .replace(/"$/g, '')
+    return String(this._object.pathInFrameWithTransforms().sketchapiSVGPath())
   }
 }
 

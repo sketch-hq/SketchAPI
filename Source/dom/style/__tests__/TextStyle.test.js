@@ -142,6 +142,9 @@ test('should change the text color', () => {
 
   text.style.textColor = '#123'
   expect(text.style.textColor).toBe('#112233ff')
+
+  text.style.textColor = 'Clearly an invalid value that should be ignored'
+  expect(text.style.textColor).toBe('#112233ff')
 })
 
 test('should change the text color using swatches', (_context, document) => {
@@ -355,17 +358,11 @@ test('should change the text underline', () => {
   text.style.textUnderline = 'single'
   expect(text.style.textUnderline).toBe('single')
 
-  text.style.textUnderline = 'none'
+  text.style.textUnderline = 'none' // unknown values are treated as null
   expect(text.style.textUnderline).toBe(undefined)
 
-  text.style.textUnderline = 'double dot'
-  expect(text.style.textUnderline).toBe('double dot')
-
-  text.style.textUnderline = 'dot double'
-  expect(text.style.textUnderline).toBe('double dot')
-
-  text.style.textUnderline = 'thick dash-dot'
-  expect(text.style.textUnderline).toBe('thick dash-dot')
+  text.style.textUnderline = 'single dash-dot by-word' // patterns are ignored
+  expect(text.style.textUnderline).toBe('single')
 })
 
 test('should change the text strikethrough', () => {
@@ -380,17 +377,11 @@ test('should change the text strikethrough', () => {
   text.style.textStrikethrough = 'single'
   expect(text.style.textStrikethrough).toBe('single')
 
-  text.style.textStrikethrough = 'none'
+  text.style.textStrikethrough = 'none' // unknown values are treated as null
   expect(text.style.textStrikethrough).toBe(undefined)
 
-  text.style.textStrikethrough = 'double dot'
-  expect(text.style.textStrikethrough).toBe('double dot')
-
-  text.style.textStrikethrough = 'dot double'
-  expect(text.style.textStrikethrough).toBe('double dot')
-
-  text.style.textStrikethrough = 'thick dash-dot'
-  expect(text.style.textStrikethrough).toBe('thick dash-dot')
+  text.style.textStrikethrough = 'single dash-dot by-word' // patterns are ignored
+  expect(text.style.textStrikethrough).toBe('single')
 })
 
 test('should get the default line height', () => {
@@ -417,6 +408,38 @@ test('fontAxes getter should return null when the font is not a variable font', 
   })
 
   expect(text.style.fontAxes).toBe(null)
+
+  text.style.fontFamily = 'Skia'
+  // Make sure the font is actually available for testing its variable axes
+  expect(text.style.fontFamily).toBe('Skia')
+
+  expect(text.style.fontAxes).not.toBe(null)
+  expect(text.style.fontAxes.Weight).toBeDefined()
+  expect(text.style.fontAxes.Width).toBeDefined()
+})
+
+test('fontAxes setter should change the axes values', () => {
+  const text = new Text({
+    text: 'test',
+    frame: new Rectangle(10, 10, 1000, 1000),
+  })
+
+  text.style.fontFamily = 'Skia'
+  // Make sure the font is actually available for testing its variable axes
+  expect(text.style.fontFamily).toBe('Skia')
+
+  text.style.fontAxes = {
+    Weight: {
+      value: 3,
+      id: text.style.fontAxes.Weight.id,
+    },
+    Width: {
+      value: 0.91,
+      id: null, // this should still work without the explicit id here
+    },
+  }
+  expect(text.style.fontAxes.Weight.value).toBe(3)
+  expect(text.style.fontAxes.Width.value).toBe(0.91)
 })
 
 test('fontAxes setter should not error when setting non-existent axes', () => {

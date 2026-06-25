@@ -278,19 +278,23 @@ test('should close a file', () => {
 test('should open a file', () => {
   const testOutputPath = outputPath()
   const document = new Document()
-  const filepath = `${testOutputPath}/should-open-a-file.sketch` 
+  const filepath = `${testOutputPath}/should-open-a-file.sketch`
 
   document.path = filepath
   return new Promise((resolve, reject) => {
     document.save((err, result) => {
-      if (err) { return reject(err) }
+      if (err) {
+        return reject(err)
+      }
       return resolve(result)
     })
   }).then(() => {
     document.close()
 
     const openedDocument = Document.open(filepath)
-    expect(getDocuments().find((d) => d.id === openedDocument.id)).toEqual(openedDocument)
+    expect(getDocuments().find((d) => d.id === openedDocument.id)).toEqual(
+      openedDocument
+    )
 
     openedDocument.close()
   })

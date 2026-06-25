@@ -9,7 +9,6 @@ test('should set blurs', () => {
     {
       radius: 10,
       motionAngle: 45,
-      enabled: true,
       blurType: Style.BlurType.Gaussian,
     },
   ]
@@ -36,7 +35,6 @@ test('should get blurs', () => {
     {
       radius: 10,
       center: { x: 0.5, y: 0.5 },
-      enabled: true,
       blurType: Style.BlurType.Gaussian,
     },
   ]
@@ -67,7 +65,6 @@ test('should get blurs', () => {
       {
         radius: 15,
         motionAngle: 30,
-        enabled: true,
         blurType: Style.BlurType.Zoom,
       },
     ],
@@ -83,7 +80,6 @@ test('should get and set saturation', () => {
   const style = new Style({
     blurs: [
       {
-        enabled: true,
         blurType: Style.BlurType.Background,
         saturation: 0.65,
       },
@@ -105,7 +101,6 @@ test('should set default saturation value', () => {
   const style = new Style({
     blurs: [
       {
-        enabled: true,
         blurType: Style.BlurType.Background,
       },
     ],

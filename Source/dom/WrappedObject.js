@@ -30,38 +30,53 @@ export class WrappedObject {
   update(options = {}) {
     const propertyList = this.constructor[DefinedPropertiesKey]
 
-    Object.keys(options)
-      .sort((a, b) => {
-        if (
-          propertyList[a] &&
-          propertyList[a].depends &&
-          propertyList[a].depends === b
-        ) {
-          return 1
-        }
-        if (
-          propertyList[b] &&
-          propertyList[b].depends &&
-          propertyList[b].depends === a
-        ) {
-          return -1
-        }
-        return 0
-      })
-      .forEach((k) => {
-        if (!propertyList[k]) {
-          // ignore the properties that starts with _, they are workarounds
-          if (k && k[0] !== '_') {
-            console.warn(`no idea what to do with "${k}" in ${this.type}`)
-          }
-          return
-        }
+    function sortPropertiesByDependencyOrder(props) {
+      const result = []
+      const visited = new Set()
+      const visiting = new Set()
 
-        if (!propertyList[k].importable) {
-          return
+      function visit(name) {
+        if (visited.has(name)) return
+        if (visiting.has(name)) {
+          throw new Error(
+            `WrappedObject.update(): Detected a circular dependency when processing property '${name}'. Dependency chain: ${[
+              ...visiting,
+              name,
+            ].join(' -> ')}`
+          )
         }
-        this[k] = options[k]
-      })
+        visiting.add(name)
+        // If the item has a dependency, visit the dependency first, given it exists
+        if (propertyList[name].depends) {
+          const dependency = propertyList[name].depends
+          if (propertyList[dependency]) {
+            visit(dependency)
+          }
+        }
+        // Now that dependencies are resolved, add this item
+        visiting.delete(name)
+        visited.add(name)
+
+        result.push(name)
+      }
+
+      props.forEach((item) => visit(item))
+      return result
+    }
+    sortPropertiesByDependencyOrder(Object.keys(options)).forEach((k) => {
+      if (!propertyList[k]) {
+        // ignore the properties that starts with _, they are workarounds
+        if (k && k[0] !== '_') {
+          console.warn(`no idea what to do with "${k}" in ${this.type}`)
+        }
+        return
+      }
+
+      if (!propertyList[k].importable) {
+        return
+      }
+      this[k] = options[k]
+    })
   }
 
   /**

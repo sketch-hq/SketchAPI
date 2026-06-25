@@ -17,7 +17,7 @@ export class Override extends WrappedObject {
       if (typeof value === 'string') {
         return value
       }
-      return Color.from(value).toString()
+      return String(Color.from(value)?.toString())
     }
     if (value !== null && value.isKindOfClass_(NSDictionary.class())) {
       // Map dictionary overrides into a javascript dictionary
@@ -32,6 +32,10 @@ export class Override extends WrappedObject {
 
   getFrame() {
     return new Rectangle(this._object.frame())
+  }
+
+  reset() {
+    this._object.reset()
   }
 }
 Override.type = Types.Override
@@ -77,6 +81,18 @@ Override.define('symbolOverride', {
 Override.define('colorOverride', {
   get() {
     return Boolean(this._object.isColorOverride())
+  },
+})
+
+Override.define('textOverride', {
+  get() {
+    return Boolean(this._object.isTextOverride())
+  },
+})
+
+Override.define('imageOverride', {
+  get() {
+    return Boolean(this._object.isImageOverride())
   },
 })
 

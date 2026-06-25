@@ -22,7 +22,7 @@ export function createSymbolMaster(document) {
 
   // build the symbol master
   const master = SymbolMaster.fromFrame(artboard)
-  master.sketchObject.ensureDetachHasUpdated()
+  master.sketchObject.sketchapiEnsureDetachHasUpdated()
 
   return {
     master: master,

@@ -1,14 +1,9 @@
 import { DefinedPropertiesKey } from '../WrappedObject'
-import { FlexSizing } from './Layer'
 import { StyledLayer } from './StyledLayer'
 import { Rectangle } from '../models/Rectangle'
 import { Types } from '../enums'
 import { Factory } from '../Factory'
-
-const TextBehaviour = {
-  flexibleWidth: 0, // Width is adjusted to fit the content.
-  fixedWidth: 1, // Width is fixed.
-}
+import { parseEnumValue } from '../utils'
 
 const TextLineSpacingBehaviour = {
   variable: 'variable', // Uses min & max line height on paragraph style
@@ -66,6 +61,13 @@ export class Text extends StyledLayer {
     }
   }
 
+  get swiftBridge() {
+    if (!this._object) {
+      return null
+    }
+    return MSSketchAPITextBridge.alloc().initWithTextLayer(this._object)
+  }
+
   /**
    * Set the font of the layer to an NSFont object.
    *
@@ -75,10 +77,7 @@ export class Text extends StyledLayer {
     console.warn(
       '`Text.font` is deprecated. Use `Text.style.fontFamily` instead'
     )
-    if (this.isImmutable()) {
-      return
-    }
-    this._object.font = value
+    this.swiftBridge?.setFont(value)
   }
 
   /**
@@ -90,21 +89,14 @@ export class Text extends StyledLayer {
     console.warn(
       '`Text.systemFontSize = size` is deprecated. Use `Text.style.fontFamily = "system"; Text.style.fontSize = size` instead.'
     )
-    if (this.isImmutable()) {
-      return
-    }
-    this._object.setFont(NSFont.systemFontOfSize_(size))
+    this.swiftBridge?.setSystemFontSize(size)
   }
 
   /**
    * Adjust the frame of the layer to fit its contents.
    */
   adjustToFit() {
-    if (this.isImmutable()) {
-      return this
-    }
-    this._object.adjustFrameToFit()
-    return this
+    this.swiftBridge?.adjustFrameToFit()
   }
 
   /**
@@ -190,7 +182,7 @@ Factory.registerClass(Text, MSImmutableTextLayer)
 
 Text.define('text', {
   get() {
-    return String(this._object.stringValue())
+    return String(this.swiftBridge?.text())
   },
   /**
    * Set the text of the layer.
@@ -200,12 +192,7 @@ Text.define('text', {
    * @param {string} value The text to use.
    */
   set(value) {
-    if (this.isImmutable()) {
-      return
-    }
-    const object = this._object
-    object.replaceTextPreservingAttributeRanges(value)
-    object.updateNameFromStorage()
+    this.swiftBridge?.setText(String(value))
   },
 })
 
@@ -232,7 +219,7 @@ Text.define('alignment', {
 Text.LineSpacing = TextLineSpacingBehaviour
 Text.define('lineSpacing', {
   get() {
-    const raw = this._object.lineSpacingBehaviour()
+    const raw = Number(this.swiftBridge?.lineSpacing())
     return (
       Object.keys(TextLineSpacingBehaviourMap).find(
         (key) => TextLineSpacingBehaviourMap[key] === raw
@@ -240,38 +227,22 @@ Text.define('lineSpacing', {
     )
   },
   set(mode) {
-    if (this.isImmutable()) {
-      return
+    const lineSpacingBehaviour = parseEnumValue(
+      mode,
+      TextLineSpacingBehaviourMap,
+      'Text.lineSpacing'
+    )
+    if (lineSpacingBehaviour !== undefined) {
+      this.swiftBridge?.setLineSpacing(lineSpacingBehaviour)
     }
-    const translated = TextLineSpacingBehaviourMap[mode]
-    const lineSpacingBehaviour =
-      typeof translated !== 'undefined' ? translated : mode
-
-    const textLayer = this._object
-    const layout = textLayer.immutableModelObject().textLayout()
-    const initialBaselineOffset = layout.firstBaselineOffset()
-    textLayer.lineSpacingBehaviour = lineSpacingBehaviour
-    const baselineOffset = layout.firstBaselineOffset()
-    const rect = this.frame
-    rect.y -= baselineOffset - initialBaselineOffset
-    this.frame = rect
   },
 })
 
 Text.define('fixedWidth', {
   get() {
-    return this._object.textBehaviour() === TextBehaviour.fixedWidth
+    return Boolean(this.swiftBridge?.fixedWidth())
   },
   set(fixed) {
-    if (this.isImmutable()) {
-      return
-    }
-    if (fixed) {
-      this.horizontalSizing = FlexSizing.Fixed
-      this.verticalSizing = FlexSizing.Fit
-    } else {
-      this.horizontalSizing = FlexSizing.Fit
-      this.verticalSizing = FlexSizing.Fit
-    }
+    this.swiftBridge?.setFixedWidth(Boolean(fixed))
   },
 })

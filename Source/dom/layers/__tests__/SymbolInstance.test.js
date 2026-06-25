@@ -32,7 +32,7 @@ test('should have overrides', (_context, document) => {
   const { master, text } = createSymbolMaster(document)
   const instance = master.createNewInstance()
   document.selectedPage.layers = document.selectedPage.layers.concat(instance)
-  instance.sketchObject.ensureDetachHasUpdated()
+  instance.sketchObject.sketchapiEnsureDetachHasUpdated()
 
   expect(instance.overrides.length).toBe(12)
 
@@ -44,6 +44,8 @@ test('should have overrides', (_context, document) => {
     property: 'stringValue',
     symbolOverride: false,
     colorOverride: false,
+    textOverride: true,
+    imageOverride: false,
     value: 'Test value',
     isDefault: true,
     editable: true,
@@ -226,7 +228,7 @@ test('should access overrides for each individual instance of a nested symbol', 
 //    symbolId: master.symbolId,
 //    parent: document.selectedPage,
 //  })
-//  instance.sketchObject.ensureDetachHasUpdated()
+//  instance.sketchObject.sketchapiEnsureDetachHasUpdated()
 //  expect(instance.type).toBe('SymbolInstance')
 //
 //  const group = instance.detach()
@@ -240,7 +242,7 @@ test('should access overrides for each individual instance of a nested symbol', 
 //    symbolId: master.symbolId,
 //    parent: document.selectedPage,
 //  })
-//  instance.sketchObject.ensureDetachHasUpdated()
+//  instance.sketchObject.sketchapiEnsureDetachHasUpdated()
 //  expect(instance.type).toBe('SymbolInstance')
 //
 //  const group = instance.detach({ recursively: true })

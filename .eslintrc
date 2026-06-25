@@ -55,6 +55,7 @@
     "MSSymbolMaster": "readonly",
     "MSSymbolInstance": "readonly",
     "MSSketchAPIOverrideWrapper": "readonly",
+    "MSSketchAPITextBridge": "readonly",
     "MSAssetLibrary": "readonly",
     "MSDocument": "readonly",
     "NSURL": "readonly",
@@ -189,10 +190,14 @@
     "MSImmutableSwatch": "readonly",
     "MSSwatchReference": "readonly",
     "MSSwatchProvider": "readonly",
+    "MSFrameTemplateReference": "readonly",
+    "MSFrameTemplateProvider": "readonly",
+    "MSGraphicTemplateProvider": "readonly",
     "NSUUID": "readonly",
     "NSError": "readonly",
     "NSMapTable": "readonly",
     "MSTextAlignmentConverter": "readonly",
-    "MSImmutableLayerAncestry": "readonly"
+    "MSImmutableLayerAncestry": "readonly",
+    "NSNotFound": "readonly"
   }
 }

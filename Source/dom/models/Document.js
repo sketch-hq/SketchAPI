@@ -10,6 +10,7 @@ import { StyleType } from '../style/Style'
 import { ColorAsset, GradientAsset, Swatch } from '../assets'
 import { Color } from '../style/Color'
 import { SharedStyle } from './SharedStyle'
+import { Library } from './Library'
 
 export const SaveModeType = {
   Save: NSSaveOperation,
@@ -134,6 +135,46 @@ export class Document extends WrappedObject {
 
   static getSelectedDocument() {
     return getSelectedDocument()
+  }
+
+  getLibraries(options = {}) {
+    return Library.getLibraries(this, options)
+  }
+
+  addLibrary(library) {
+    if (library.type !== Types.Library || !library._object) {
+      throw new Error('Expected a Library argument for Document.addLibrary()')
+    }
+    // Step 1: Register this library as a document library
+    this._getMSDocumentData().sketchapiAddOrUpdateDocumentLibrary(
+      library._object
+    )
+    // Step 2: While MSDocumentData.addOrUpdateDocumentLibrary() will end up updating
+    // the libraries controller eventually, we need to trigger this update synchronously
+    // here so that Library.getLibraries(document) will be able to pick it up immediately
+    const libraryController = AppController.sharedInstance().librariesController()
+    libraryController.addLibrary_toDocumentWithIdentifier(
+      library._object,
+      this.id
+    )
+
+    libraryController.notifyLibraryChange(library._object)
+  }
+
+  removeLibrary(library) {
+    if (library.type !== Types.Library || !library._object) {
+      throw new Error(
+        'Expected a Library argument for Document.removeLibrary()'
+      )
+    }
+    this._getMSDocumentData().sketchapiRemoveDocumentLibrary(library._object)
+    // Same approach with forcing a synchronous libraries controller update as in addLibrary()
+    const libraryController = AppController.sharedInstance().librariesController()
+    libraryController.removeLibrary_fromDocumentWithIdentifier(
+      library._object,
+      this.id
+    )
+    libraryController.notifyLibraryChange(library._object)
   }
 
   /**
@@ -412,6 +453,10 @@ export class Document extends WrappedObject {
     } else {
       this._getMSDocumentData().convertToColorSpace(targetColorSpace)
     }
+  }
+
+  processPendingChanges() {
+    this._getMSDocumentData()?.editingContext().processPendingChanges()
   }
 }
 
@@ -868,3 +913,31 @@ function sharedStyleDescriptor(type) {
 
 Document.define('sharedLayerStyles', sharedStyleDescriptor('layer'))
 Document.define('sharedTextStyles', sharedStyleDescriptor('text'))
+
+// Frame and Graphic Templates
+
+Document.define('frameTemplates', {
+  array: true,
+  importable: false,
+  exportable: false,
+  get() {
+    const document = this._getMSDocument()
+    if (!document) {
+      return []
+    }
+    return toArray(document.frameTemplates()).map(wrapObject)
+  },
+})
+
+Document.define('graphicTemplates', {
+  array: true,
+  importable: false,
+  exportable: false,
+  get() {
+    const document = this._getMSDocument()
+    if (!document) {
+      return []
+    }
+    return toArray(document.graphicTemplates()).map(wrapObject)
+  },
+})

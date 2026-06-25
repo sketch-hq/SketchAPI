@@ -3,7 +3,7 @@ import { WrappedObject, DefinedPropertiesKey } from '../WrappedObject'
 import { Factory } from '../Factory'
 import { wrapObject } from '../wrapNativeObject'
 import { Types } from '../enums'
-import { Gradient, GradientType } from './Gradient'
+import { Gradient, GradientType, GradientColorInterpolation } from './Gradient'
 import { colorFromString, colorToString } from './Color'
 import { Shadow } from './Shadow'
 import { BorderOptions, Arrowhead, LineEnd, LineJoin } from './BorderOptions'
@@ -13,6 +13,8 @@ import { Border, BorderPosition } from './Border'
 import { defineTextStyleProperties } from './Text'
 import { BlendingMode, BlendingModeMap } from '../models/BlendingMode'
 import { Corners } from './Corners'
+import { StylePartType } from './StylePartType'
+import { parseEnumValue } from '../utils'
 
 const DEFAULT_STYLE = {
   fills: [],
@@ -55,7 +57,7 @@ export class Style extends WrappedObject {
         style.sketchObject.textStyle = MSTextStyle.alloc().init()
         style.sketchObject.textStyle().attributes = MSDefaultTextStyle.defaultTextStyle()
       } else {
-        style.sketchObject = MSDefaultStyle.defaultStyle()
+        style.sketchObject = MSDefaultStyle.defaultStyle() // implicitly copied
       }
       /* eslint-enable no-param-reassign */
     }
@@ -91,27 +93,11 @@ export class Style extends WrappedObject {
   }
 
   getDefaultLineHeight() {
-    if (!this._object.parentLayer) {
+    const raw = this._textLayer?.swiftBridge?.defaultLineHeight()
+    if (!raw) {
       return undefined
     }
-    const layer = this._object.parentLayer()
-    if (!layer) {
-      return undefined
-    }
-
-    const isImmutableTextLayer = layer.isKindOfClass(MSImmutableTextLayer)
-
-    if (!layer.isKindOfClass(MSTextLayer) && !isImmutableTextLayer) {
-      return undefined
-    }
-    const immutableLayer = isImmutableTextLayer
-      ? layer
-      : layer.immutableModelObject()
-
-    const storage = immutableLayer.createTextStorage()
-    const layoutManager = storage.layoutManagers().firstObject()
-
-    return Number(immutableLayer.defaultLineHeight(layoutManager))
+    return Number(raw)
   }
 }
 
@@ -121,6 +107,7 @@ Factory.registerClass(Style, MSStyle)
 Factory.registerClass(Style, MSImmutableStyle)
 
 Style.GradientType = GradientType
+Style.GradientColorInterpolation = GradientColorInterpolation
 
 Style.define('opacity', {
   get() {
@@ -166,10 +153,14 @@ Style.define('blendingMode', {
     )
   },
   set(mode) {
-    const blendingMode = BlendingModeMap[mode]
-    this._object
-      .contextSettings()
-      .setBlendMode(typeof blendingMode !== 'undefined' ? blendingMode : mode)
+    const blendingMode = parseEnumValue(
+      mode,
+      BlendingModeMap,
+      'Style.blendingMode'
+    )
+    if (blendingMode !== undefined) {
+      this._object.contextSettings().setBlendMode(blendingMode)
+    }
   },
 })
 
@@ -193,14 +184,14 @@ Style.define('blurs', {
     return blurs.map(Blur.fromNative.bind(Blur))
   },
   set(values) {
-    const objects = values.map(Blur.toNative.bind(Blur))
+    const objects = values.map((item) => Blur.toNative(item, this))
     this._object.setBlurs(objects)
   },
   insertItem(item, index) {
     const arr = toArray(this._object.blurs())
     arr.splice(index, 0, item)
     this.blurs = arr
-    return Blur.fromNative(Blur.toNative(item))
+    return Blur.fromNative(Blur.toNative(item, this))
   },
   removeItem(index) {
     const arr = toArray(this._object.blurs())
@@ -248,10 +239,13 @@ Style.define('tint', {
     }
 
     const tint = Fill.fromNative(
-      Fill.toNative({
-        ...newTint,
-        fillType: FillType.Color,
-      })
+      Fill.toNative(
+        {
+          ...newTint,
+          fillType: FillType.Color,
+        },
+        this
+      )
     )
     tint.sketchObject.setLayeringType(FillLayeringType.Tint)
     this.fills.push(tint)
@@ -270,14 +264,14 @@ Style.define('fills', {
     })
   },
   set(values) {
-    const objects = values.map(Fill.toNative.bind(Fill))
+    const objects = values.map((item) => Fill.toNative(item, this))
     this._object.setFills(objects)
   },
   insertItem(item, index) {
     const arr = toArray(this._object.fills())
     arr.splice(index, 0, item)
     this.fills = arr
-    return Fill.fromNative(Fill.toNative(item))
+    return Fill.fromNative(Fill.toNative(item, this))
   },
   removeItem(index) {
     const arr = toArray(this._object.fills())
@@ -295,14 +289,14 @@ Style.define('borders', {
     return borders.map(Border.fromNative.bind(Border))
   },
   set(values) {
-    const objects = values.map(Border.toNative.bind(Border))
+    const objects = values.map((item) => Border.toNative(item, this))
     this._object.setBorders(objects)
   },
   insertItem(item, index) {
     const arr = toArray(this._object.borders())
     arr.splice(index, 0, item)
     this.borders = arr
-    return Border.fromNative(Border.toNative(item))
+    return Border.fromNative(Border.toNative(item, this))
   },
   removeItem(index) {
     const arr = toArray(this._object.borders())
@@ -315,23 +309,25 @@ Style.define('borders', {
 Style.define('shadows', {
   array: true,
   get() {
-    return toArray(this._object.dropShadows()).map(Shadow.fromNative.bind(Shadow))
+    return toArray(this._object.dropShadows()).map(
+      Shadow.fromNative.bind(Shadow)
+    )
   },
   set(values) {
     // remove all existing drop shadows
-    toArray(this._object.dropShadows()).forEach(shadow => 
+    toArray(this._object.dropShadows()).forEach((shadow) =>
       this._object.removeStyleShadow(shadow)
     )
     // create native counterparts and add each as a new shadow style part
-    const objects = values.map(Shadow.toNative.bind(Shadow, MSStyleShadow))
-    objects.forEach(shadow => this._object.addStylePart(shadow))
+    const objects = values.map((item) => Shadow.toNativeDropShadow(item, this))
+    objects.forEach((shadow) => this._object.addStylePart(shadow))
   },
   insertItem(item, index) {
     item.isInnerShadow = false // force the provide item to be a drop shadow
     const arr = toArray(this._object.dropShadows())
     arr.splice(index, 0, item)
     this.shadows = arr
-    return Shadow.fromNative(Shadow.toNative(MSStyleShadow, item))
+    return Shadow.fromNative(Shadow.toNativeDropShadow(item, this))
   },
   removeItem(index) {
     const removed = this._object.stylePartsOfType(StylePartType.Shadow)[index]
@@ -349,22 +345,24 @@ Style.define('innerShadows', {
   },
   set(values) {
     // remove all existing inner shadows
-    toArray(this._object.innerShadows()).forEach(shadow => 
+    toArray(this._object.innerShadows()).forEach((shadow) =>
       this._object.removeStyleShadow(shadow)
     )
     // create native counterparts and add each as a new shadow style part
-    const objects = values.map(Shadow.toNative.bind(Shadow, MSStyleShadow))
-    objects.forEach(shadow => this._object.addStylePart(shadow))
+    const objects = values.map((item) => Shadow.toNativeInnerShadow(item, this))
+    objects.forEach((shadow) => this._object.addStylePart(shadow))
   },
   insertItem(item, index) {
     item.isInnerShadow = true // force the provide item to be a inner shadow
     const arr = toArray(this._object.innerShadows())
     arr.splice(index, 0, item)
     this.innerShadows = arr
-    return Shadow.fromNative(Shadow.toNative(MSStyleShadow, item))
+    return Shadow.fromNative(Shadow.toNativeInnerShadow(item, this))
   },
   removeItem(index) {
-    const removed = this._object.stylePartsOfType(StylePartType.InnerShadow)[index]
+    const removed = this._object.stylePartsOfType(StylePartType.InnerShadow)[
+      index
+    ]
     this._object.deleteStylePartOfType_atIndex(StylePartType.InnerShadow, index)
     return Shadow.fromNative(removed)
   },
@@ -403,12 +401,5 @@ Style.define('corners', {
     existingCorners.update(newCorners)
   },
 })
-
-// Map to values from the `MSStylePartType` enum in SketchModel.
-// Other values ommitted because they are not currently used.
-const StylePartType = {
-  Shadow: 6,
-  InnerShadow: 7,
-}
 
 defineTextStyleProperties(Style)

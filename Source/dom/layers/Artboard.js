@@ -9,10 +9,16 @@ import { Factory } from '../Factory'
  */
 export class Artboard extends Group {
   constructor(artboard = {}) {
-    super({
-      ...artboard,
-      groupBehavior: GroupBehavior.Frame,
-    })
+    if (artboard.sketchObject) {
+      // We're merely wrapping an existing top-level Frame or Graphic object
+      super(artboard)
+    } else {
+      // We're going to create a new Frame object, which means supplying the right groupBehavior
+      super({
+        ...artboard,
+        groupBehavior: GroupBehavior.Frame,
+      })
+    }
   }
 
   getParentArtboard() {
