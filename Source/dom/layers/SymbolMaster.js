@@ -1,4 +1,4 @@
-import { toArray } from 'util'
+import { toArray, toJSObject } from 'util'
 import { DefinedPropertiesKey } from '../WrappedObject'
 import { Artboard } from './Artboard'
 import { Group } from './Group'
@@ -26,9 +26,20 @@ export class SymbolMaster extends Group {
     super(master)
   }
 
-  // Replace the frame with a symbol master
+  /**
+   * Replaces `frame` with a new symbol master made from it.
+   *
+   * @param {Group} frame The frame to convert. Sections can't become components — they are
+   *                      top-level containers — so passing one throws. A variant set carries the
+   *                      section trait too, and is rejected the same way.
+   * @return {SymbolMaster}
+   */
   static fromFrame(frame) {
     const wrappedFrame = wrapObject(frame)
+
+    if (wrappedFrame.isSection) {
+      throw new Error("Can't create a Component from a Section")
+    }
 
     return SymbolMaster.fromNative(
       MSSymbolMaster.convertFrameToSymbol(wrappedFrame.sketchObject)
@@ -168,6 +179,59 @@ SymbolMaster.define('overrides', {
 
     const batch = Object.fromEntries(overrides.map((o) => [o.id, o.editable]))
     this._object.batchSetIsEditableForOverrides(batch)
+  },
+})
+
+SymbolMaster.define('variantConfiguration', {
+  get() {
+    if (!this.getParentVariantSet()) {
+      return undefined
+    }
+    const nativeConfiguration = this._object.variantConfiguration()
+    const jsConfiguration = toJSObject(nativeConfiguration)
+    return Object.fromEntries(
+      Object.entries(jsConfiguration).map(([propName, valueName]) => [
+        String(propName),
+        String(valueName),
+      ])
+    )
+  },
+  set(variantConfiguration) {
+    if (this.isImmutable()) {
+      return
+    }
+    const component = this.getParentVariantSet()
+    if (!component) {
+      return
+    }
+
+    if (typeof variantConfiguration !== 'object') {
+      throw Error(
+        'Expected `SymbolMaster.variantConfiguration` to be an object'
+      )
+    }
+    for (const [propertyName, valueName] of Object.entries(
+      variantConfiguration
+    )) {
+      const property = component.variantProperties.find(
+        (p) => p.name === propertyName
+      )
+      if (!property) {
+        throw Error(
+          `Unknown variant property <${propertyName}>. Available properties: ${component.variantProperties.map(
+            (p) => p.name
+          )}`
+        )
+      }
+
+      if (!property.values.includes(valueName)) {
+        throw Error(
+          `Unknown value <${valueName}> for the variant property <${propertyName}>. Available values: ${property.values}`
+        )
+      }
+    }
+
+    this._object.setVariantConfiguration(variantConfiguration)
   },
 })
 

@@ -32,7 +32,6 @@ test('should have overrides', (_context, document) => {
   const { master, text } = createSymbolMaster(document)
   const instance = master.createNewInstance()
   document.selectedPage.layers = document.selectedPage.layers.concat(instance)
-  instance.sketchObject.sketchapiEnsureDetachHasUpdated()
 
   expect(instance.overrides.length).toBe(12)
 
@@ -215,6 +214,20 @@ test('should access overrides for each individual instance of a nested symbol', 
   expect(instance.expandedLayers[0].layers[0].text).toBe('First instance')
   expect(instance.expandedLayers[1].layers[0].text).toBe('Second instance')
   expect(instance.expandedLayers[2].layers[0].text).toBe('Third instance')
+})
+
+test('should update overrides in bulk', (_context, document) => {
+  const { master } = createSymbolMaster(document)
+  const instance = master.createNewInstance()
+  document.selectedPage.layers.push(instance)
+
+  const expectedNumberOfOverrides = instance.overrides.length
+  // Since SketchAPI tests are ill-equipped to measure actual performance benefits
+  // of batch override updates, we just make sure this API is available and doesn't
+  // throw exceptions on its happy path
+  instance.updateOverrides((overrides) => {
+    expect(overrides.length).toBe(expectedNumberOfOverrides)
+  })
 })
 
 // Disabled via #49647 and #49751

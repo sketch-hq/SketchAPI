@@ -49,15 +49,9 @@ export class Style extends WrappedObject {
       style = Object.assign({}, DEFAULT_STYLE, style)
 
       if (parentType === Types.Text) {
-        // It's a bit backwards that we have to create an entire text layer here
-        // just to access the default style. But the fact is, we _are_ doing
-        // things backwards here by creating a brand new style object instead of
-        // modifying the one on the parent text layer
-        style.sketchObject = MSTextLayer.alloc().init().style()
-        style.sketchObject.textStyle = MSTextStyle.alloc().init()
-        style.sketchObject.textStyle().attributes = MSDefaultTextStyle.defaultTextStyle()
+        style.sketchObject = MSDefaultTextStyle.defaultStyle()
       } else {
-        style.sketchObject = MSDefaultStyle.defaultStyle() // implicitly copied
+        style.sketchObject = MSDefaultStyle.defaultStyle()
       }
       /* eslint-enable no-param-reassign */
     }
@@ -93,7 +87,12 @@ export class Style extends WrappedObject {
   }
 
   getDefaultLineHeight() {
-    const raw = this._textLayer?.swiftBridge?.defaultLineHeight()
+    let raw = undefined
+    if (this.getParentLayer()?.type === Types.Text) {
+      raw = this.getParentLayer()?.swiftBridge?.defaultLineHeight()
+    } else if (this.styleType === StyleType.Text) {
+      raw = this._textStyleSwiftBridge?.defaultLineHeight()
+    }
     if (!raw) {
       return undefined
     }
@@ -111,7 +110,8 @@ Style.GradientColorInterpolation = GradientColorInterpolation
 
 Style.define('opacity', {
   get() {
-    return this._object.contextSettings().opacity()
+    // Not a tail call, so run_code's native access check still sees SketchAPI
+    return Number(this._object.contextSettings().opacity())
   },
   set(opacity) {
     this._object.contextSettings().setOpacity(Math.min(Math.max(opacity, 0), 1))

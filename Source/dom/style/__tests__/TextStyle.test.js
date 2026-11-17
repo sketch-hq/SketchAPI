@@ -460,3 +460,35 @@ test('fontAxes setter should not error when setting non-existent axes', () => {
     expect(false).toBe(true)
   }
 })
+
+test('should preserve mixed font runs when changing font size', () => {
+  const text = new Text({
+    text: 'HelloWorld',
+    frame: new Rectangle(10, 10, 1000, 1000),
+  })
+
+  const boldFont = NSFont.fontWithName_size('Helvetica-Bold', 12)
+  expect(boldFont).toBeDefined()
+  text.sketchObject.addAttribute_value_forRange(
+    NSFontAttributeName,
+    boldFont,
+    NSMakeRange(5, 5)
+  )
+
+  text.style.fontSize = 24
+
+  expect(text.style.fontSize).toBe(24)
+
+  const attributed = text.sketchObject.attributedStringValue()
+  const firstFont = attributed.attributesAtIndex_effectiveRange(0, null)[
+    NSFontAttributeName
+  ]
+  const secondFont = attributed.attributesAtIndex_effectiveRange(5, null)[
+    NSFontAttributeName
+  ]
+
+  expect(String(firstFont.fontName())).toBe('Helvetica')
+  expect(Number(firstFont.pointSize())).toBe(24)
+  expect(String(secondFont.fontName())).toBe('Helvetica-Bold')
+  expect(Number(secondFont.pointSize())).toBe(24)
+})

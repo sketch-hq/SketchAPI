@@ -161,6 +161,24 @@ test('should find by frame.x greater than', (_context, document) => {
   ])
 })
 
+test('should find by frame.x less than or equal', (_context, document) => {
+  // eslint-disable-next-line no-param-reassign
+  document.pages = [
+    {
+      layers: [
+        { type: 'Artboard', frame: new Rectangle(400, 0, 100, 100) },
+        { type: 'Text', frame: new Rectangle(299, 0, 100, 100) },
+        { type: 'Text', frame: new Rectangle(300, 0, 100, 100) },
+        { type: 'Text', frame: new Rectangle(301, 0, 100, 100) },
+      ],
+    },
+  ]
+  expect(find('[frame.x<=300]', document.pages[0]).map((x) => x.id)).toEqual([
+    document.pages[0].layers[1].id,
+    document.pages[0].layers[2].id,
+  ])
+})
+
 test('should find with 2 criteria', (_context, document) => {
   // eslint-disable-next-line no-param-reassign
   document.pages = [

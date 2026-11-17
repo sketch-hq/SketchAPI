@@ -88,6 +88,7 @@ GradientStop.define('alpha', {
   enumerable: false,
   importable: false,
   get() {
-    return this._object.color().alpha()
+    // Not a tail call, so run_code's native access check still sees SketchAPI
+    return Number(this._object.color().alpha())
   },
 })

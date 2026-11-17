@@ -115,7 +115,9 @@ Gradient.define('gradientType', {
     return (
       Object.keys(GradientTypeMap).find(
         (key) => GradientTypeMap[key] === this._object.gradientType()
-      ) || this._object.gradientType()
+      ) ||
+      // Not a tail call, so run_code's native access check still sees SketchAPI
+      Number(this._object.gradientType())
     )
   },
   set(gradientType) {
@@ -193,7 +195,9 @@ Gradient.define('colorInterpolation', {
         (key) =>
           GradientColorInterpolationMap[key] ===
           this._object.colorInterpolation()
-      ) || this._object.colorInterpolation()
+      ) ||
+      // Not a tail call, so run_code's native access check still sees SketchAPI
+      Number(this._object.colorInterpolation())
     )
   },
   set(colorInterpolation) {

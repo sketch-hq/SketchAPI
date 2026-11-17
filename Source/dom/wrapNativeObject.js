@@ -40,6 +40,14 @@ export function wrapNativeObject(nativeObject) {
     JsClass = Artboard
   }
 
+  // Unlike Group.Frame or Group.Graphic, Group.VariantSet is a full-featured
+  // subclass with its own properties and methods. However, it's still backed by
+  // the same MSLayerGroup class internally, so we need to rely on the trait
+  // to differentiate at construction time
+  if (JsClass === Group && nativeObject.hasVariantSetTrait?.()) {
+    JsClass = Group.VariantSet
+  }
+
   return JsClass.fromNative(nativeObject)
 }
 

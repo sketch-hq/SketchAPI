@@ -1,5 +1,5 @@
 /* globals expect, test */
-import { Group, StackLayout, Shape, Rectangle } from '../..'
+import { Group, StackLayout, Shape, Rectangle, FlexSizing } from '../..'
 
 test('should expose configuration types', () => {
   expect(StackLayout.Direction).toBeDefined()
@@ -253,6 +253,60 @@ test('stack item can preserve space in stack when hidden', () => {
   expect(group.layers[2].preservesSpaceInStackLayoutWhenHidden).toBe(true)
 })
 
+test('stack items can have min and max size', (_context, document) => {
+  const group = new Group.Frame({
+    frame: new Rectangle(0, 0, 100, 100),
+    stackLayout: {
+      padding: 10,
+    },
+    layers: [
+      new Shape({
+        horizontalSizing: FlexSizing.Relative,
+        verticalSizing: FlexSizing.Relative,
+      }),
+    ],
+    parent: document.selectedPage,
+  })
+
+  group.layers[0].minSize = { width: 10, height: 15 }
+  group.layers[0].maxSize = { width: 88, height: 55 }
+
+  // document.processPendingChanges()
+  expect(group.layers[0].minSize).toEqual({ width: 10, height: 15 })
+  expect(group.layers[0].maxSize).toEqual({ width: 88, height: 55 })
+
+  group.layers[0].minSize = undefined
+  expect(group.layers[0].minSize).toEqual(undefined)
+
+  group.layers[0].maxSize = null
+  expect(group.layers[0].maxSize).toEqual(undefined)
+})
+
+test('stack items with relative sizing can have percentage size', (_context, document) => {
+  const group = new Group.Frame({
+    frame: new Rectangle(0, 0, 100, 100),
+    stackLayout: {
+      padding: 10,
+    },
+    layers: [
+      new Shape({
+        horizontalSizing: FlexSizing.Relative,
+        verticalSizing: FlexSizing.Relative,
+      }),
+    ],
+    parent: document.selectedPage,
+  })
+
+  group.layers[0].percentageSize = { width: 0.5, height: 0.8 }
+  expect(group.layers[0].percentageSize).toEqual({ width: 0.5, height: 0.8 })
+
+  group.layers[0].percentageSize = null
+  expect(group.layers[0].percentageSize).toBeUndefined()
+
+  group.layers[0].percentageSize = { width: 0, height: 0 }
+  expect(group.layers[0].percentageSize).toBeUndefined()
+})
+
 test('apply() should process pending changes in the document', (_context, document) => {
   const group = new Group.Frame({
     stackLayout: {
@@ -261,6 +315,8 @@ test('apply() should process pending changes in the document', (_context, docume
     layers: [
       new Shape({
         frame: new Rectangle(0, 0, 100, 100),
+        horizontalSizing: FlexSizing.Fixed,
+        verticalSizing: FlexSizing.Fixed,
       }),
     ],
     parent: document.selectedPage,
@@ -319,4 +375,32 @@ test('removing a stack layout should reset parent group padding', () => {
   // technically a property of MSLayerGroup, we expose it as part of the StackLayout
   // JS API -- and this group no longer has a StackLayout instance to query
   expect(group._object.topPadding()).toBe(0)
+})
+
+test('should set stacking order', () => {
+  const group = new Group.Frame({
+    stackLayout: {
+      padding: 10,
+    },
+  })
+  expect(group.stackLayout.stackingOrder).toBe(
+    StackLayout.StackingOrder.FirstOnTop
+  )
+
+  group.stackLayout.stackingOrder = StackLayout.StackingOrder.LastOnTop
+  expect(group.stackLayout.stackingOrder).toBe(
+    StackLayout.StackingOrder.LastOnTop
+  )
+})
+
+test('should toggle borders affecting layout', () => {
+  const group = new Group.Frame({
+    stackLayout: {
+      padding: 10,
+    },
+  })
+  expect(group.stackLayout.bordersAffectLayout).toBe(false)
+
+  group.stackLayout.bordersAffectLayout = true
+  expect(group.stackLayout.bordersAffectLayout).toBe(true)
 })

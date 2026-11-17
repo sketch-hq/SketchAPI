@@ -8,7 +8,10 @@ import {
   ShapePath,
   Layer,
   Text,
+  ScaleOrigin,
+  Style,
 } from '../..'
+import { throws } from '../../../test-utils'
 
 test('should set the name of the layer', (_context, document) => {
   // setting an existing name
@@ -97,6 +100,82 @@ test('should remove the layer from its parent', (_context, document) => {
   const result = group.remove()
   expect(page.layers.length).toBe(0)
   expect(result).toEqual(group)
+})
+
+test('should remove the parent group when removing its only child', (_context, document) => {
+  const page = document.selectedPage
+  const child = new ShapePath()
+  const group = new Group({
+    parent: page,
+    layers: [child],
+  })
+
+  expect(page.layers.length).toBe(1)
+  expect(group.layers.length).toBe(1)
+
+  const result = child.remove()
+
+  expect(page.layers.length).toBe(0)
+  expect(group.parent).toBeUndefined()
+  expect(result).toEqual(child)
+})
+
+test('should remove the parent group when removing its only child layer item', (
+  _context,
+  document
+) => {
+  const page = document.selectedPage
+  const child = new ShapePath()
+  const group = new Group({
+    parent: page,
+    layers: [child],
+  })
+
+  expect(page.layers.length).toBe(1)
+  expect(group.layers.length).toBe(1)
+
+  const removed = group.layers.splice(0, 1)
+
+  expect(page.layers.length).toBe(0)
+  expect(group.parent).toBeUndefined()
+  expect(removed).toEqual([child])
+})
+
+test('should remove the shape group when removing its only shape path', (_context, document) => {
+  const page = document.selectedPage
+  const shapePath = new ShapePath()
+  const shape = new Shape({
+    parent: page,
+    layers: [shapePath],
+  })
+
+  expect(page.layers.length).toBe(1)
+  expect(shape.layers.length).toBe(1)
+
+  const result = shapePath.remove()
+
+  expect(page.layers.length).toBe(0)
+  expect(shape.parent).toBeUndefined()
+  expect(result).toEqual(shapePath)
+})
+
+test('should keep the frame when removing its only child', (_context, document) => {
+  const page = document.selectedPage
+  const child = new ShapePath()
+  const frame = new Group.Frame({
+    parent: page,
+    layers: [child],
+  })
+
+  expect(page.layers.length).toBe(1)
+  expect(frame.layers.length).toBe(1)
+
+  const result = child.remove()
+
+  expect(page.layers.length).toBe(1)
+  expect(page.layers[0]).toEqual(frame)
+  expect(frame.layers.length).toBe(0)
+  expect(result).toEqual(child)
 })
 
 test('should select the layer', (_context, document) => {
@@ -351,6 +430,30 @@ test('should transform the layer', () => {
   expect(group.transform.rotation).toBe(720)
 })
 
+test('should transform the layer through top-level aliases', () => {
+  const group = new Group({ rotation: 45, flippedVertically: true })
+  expect(group.transform.toJSON()).toEqual({
+    rotation: 45,
+    flippedHorizontally: false,
+    flippedVertically: true,
+  })
+
+  group.rotation = 90
+  expect(group.rotation).toBe(90)
+  expect(group.transform.rotation).toBe(90)
+
+  group.flippedHorizontally = true
+  expect(group.flippedHorizontally).toBe(true)
+  expect(group.transform.flippedHorizontally).toBe(true)
+
+  group.transform.flippedVertically = false
+  expect(group.flippedVertically).toBe(false)
+
+  const json = group.toJSON()
+  expect(json.rotation).toBe(undefined)
+  expect(json.transform.rotation).toBe(90)
+})
+
 // Regression #39358, SketchAPI#772.
 test('should return valid line rotation', () => {
   let start = CGPointMake(0, 0)
@@ -379,6 +482,113 @@ test('should return valid line rotation', () => {
   expect(shape.transform.rotation).toBeCloseTo(0)
 })
 
+test('should scale the layer and its style like the Scale tool', (_context, document) => {
+  const shape = new ShapePath({
+    parent: document.selectedPage,
+    frame: new Rectangle(10, 20, 100, 60),
+    style: {
+      borders: [{ thickness: 2 }],
+      borderOptions: { dashPattern: [4, 2] },
+      corners: { radii: [10, 20, 30, 40] },
+      shadows: [{ x: 2, y: 3, blur: 4, spread: 1 }],
+      blurs: [{ radius: 5, blurType: Style.BlurType.Gaussian }],
+    },
+  })
+
+  expect(shape.scale(2)).toBe(shape)
+  expect(shape.frame).toEqual(new Rectangle(10, 20, 200, 120))
+
+  // Style properties scale proportionally, and corner radii only once even though the shape's
+  // points also carry them
+  const { style } = shape
+  expect(style.borders[0].thickness).toBe(4)
+  expect(style.borderOptions.dashPattern).toEqual([8, 4])
+  expect(style.corners.radii).toEqual([20, 40, 60, 80])
+  expect(style.shadows[0].x).toBe(4)
+  expect(style.shadows[0].y).toBe(6)
+  expect(style.shadows[0].blur).toBe(8)
+  expect(style.shadows[0].spread).toBe(2)
+  expect(style.blurs[0].radius).toBe(10)
+})
+
+test('should scale nested layers and text like the Scale tool', (_context, document) => {
+  // A button with a rounded, bordered background and a text label
+  const button = new Group({
+    parent: document.selectedPage,
+    frame: new Rectangle(0, 0, 120, 40),
+  })
+  const background = new ShapePath({
+    parent: button,
+    frame: new Rectangle(0, 0, 120, 40),
+    style: {
+      borders: [{ thickness: 1 }],
+      corners: { radii: 8 },
+    },
+  })
+  const label = new Text({ parent: button, text: 'Button' })
+  label.style.fontSize = 14
+  label.style.kerning = 1
+  label.style.lineHeight = 20
+  label.style.paragraphSpacing = 4
+
+  button.scale(2)
+
+  expect(background.frame).toEqual(new Rectangle(0, 0, 240, 80))
+  expect(background.style.borders[0].thickness).toBe(2)
+  expect(background.style.corners.radii).toEqual([16])
+  expect(label.style.fontSize).toBe(28)
+  expect(label.style.kerning).toBe(2)
+  expect(label.style.lineHeight).toBe(40)
+  expect(label.style.paragraphSpacing).toBe(8)
+})
+
+test('should keep the scale origin in place', (_context, document) => {
+  const shape = new ShapePath({
+    parent: document.selectedPage,
+    frame: new Rectangle(10, 20, 100, 60),
+  })
+
+  shape.scale(0.5, { origin: ScaleOrigin.BottomRight })
+  expect(shape.frame).toEqual(new Rectangle(60, 50, 50, 30))
+
+  shape.scale(2, { origin: 'Center' })
+  expect(shape.frame).toEqual(new Rectangle(35, 35, 100, 60))
+})
+
+test('should scale a layer outside a document', () => {
+  const shape = new ShapePath({ frame: new Rectangle(10, 20, 100, 60) })
+
+  shape.scale(2, { origin: ScaleOrigin.Center })
+  expect(shape.frame).toEqual(new Rectangle(-40, -10, 200, 120))
+})
+
+test('should not scale with an invalid factor or origin', (_context, document) => {
+  const shape = new ShapePath({
+    parent: document.selectedPage,
+    frame: new Rectangle(0, 0, 100, 100),
+  })
+
+  expect(throws(() => shape.scale(0))).toBe(true)
+  expect(throws(() => shape.scale(-1))).toBe(true)
+  expect(throws(() => shape.scale(NaN))).toBe(true)
+  expect(throws(() => shape.scale('2'))).toBe(true)
+  expect(throws(() => shape.scale(2, { origin: 'Middle' }))).toBe(true)
+  expect(shape.frame).toEqual(new Rectangle(0, 0, 100, 100))
+})
+
+test('should not scale what the Scale tool cannot', (_context, document) => {
+  // Pages can't be selected on the canvas
+  expect(throws(() => document.selectedPage.scale(2))).toBe(true)
+
+  // It should not be possible to modify an immutable object
+  const shape = new ShapePath({ parent: document.selectedPage })
+  const immutableShape = new ShapePath({
+    sketchObject: shape.sketchObject.immutableModelObject(),
+  })
+  expect(immutableShape.scale(2)).toBe(immutableShape)
+  expect(immutableShape.frame).toEqual(shape.frame)
+})
+
 test('should remove a flow from a layer', (_context, document) => {
   const artboard = new Artboard({
     name: 'Test1',
@@ -401,6 +611,18 @@ test('should remove a flow from a layer', (_context, document) => {
   rect.flow = undefined
 
   expect(rect.flow).toBe(undefined)
+})
+
+test('should refuse a prototype interaction from or to a page', (_context, document) => {
+  const page = document.selectedPage
+  const artboard = new Artboard({ name: 'Test', parent: page })
+
+  // `canBeFlowSource` and `canBeFlowDestination` rule pages out along with sections.
+  expect(throws(() => (page.flow = { target: artboard }))).toBe(true)
+  expect(page.flow).toBe(undefined)
+
+  expect(throws(() => (artboard.flow = { target: page }))).toBe(true)
+  expect(artboard.flow).toBe(undefined)
 })
 
 test('should handle layer sizing properties', (_context, document) => {

@@ -1,6 +1,7 @@
 import { DefinedPropertiesKey, WrappedObject } from '../WrappedObject'
 import { wrapNativeObject } from '../wrapNativeObject'
 import { Types } from '../enums'
+import { parseEnumValue } from '../utils'
 import { Factory } from '../Factory'
 import { FlexSizing } from '../layers/Layer'
 
@@ -40,6 +41,13 @@ export const StackLayoutAlignItems = Object.freeze({
   Stretch: 3,
   // For an individual stack item, use the default alignment inherited from the stack.
   None: 5,
+})
+
+export const StackLayoutStackingOrder = Object.freeze({
+  // Draw the first layer in the layer list on top.
+  FirstOnTop: 0,
+  // Draw the last layer in the layer list on top.
+  LastOnTop: 1,
 })
 
 export class StackLayout extends WrappedObject {
@@ -83,6 +91,31 @@ export class StackLayout extends WrappedObject {
     hostingLayer.getParentDocument()?.processPendingChanges()
   }
 }
+
+StackLayout.define('stackingOrder', {
+  get() {
+    return Number(this._object.stackingOrder())
+  },
+  set(stackingOrder) {
+    const sanitizedStackingOrder = parseEnumValue(
+      stackingOrder,
+      StackLayout.StackingOrder,
+      'StackLayout.stackingOrder'
+    )
+    if (sanitizedStackingOrder !== undefined) {
+      this._object.setStackingOrder(sanitizedStackingOrder)
+    }
+  },
+})
+
+StackLayout.define('bordersAffectLayout', {
+  get() {
+    return Boolean(this._object.bordersAffectLayout())
+  },
+  set(bordersAffectLayout) {
+    this._object.setBordersAffectLayout(Boolean(bordersAffectLayout))
+  },
+})
 
 StackLayout.define('direction', {
   get() {
@@ -274,6 +307,7 @@ StackLayout.Direction = StackLayoutDirection
 StackLayout.JustifyContent = StackLayoutJustifyContent
 StackLayout.AlignItems = StackLayoutAlignItems
 StackLayout.AlignContent = StackLayoutJustifyContent
+StackLayout.StackingOrder = StackLayoutStackingOrder
 
 StackLayout.type = Types.StackLayout
 StackLayout[DefinedPropertiesKey] = { ...WrappedObject[DefinedPropertiesKey] }
@@ -325,6 +359,103 @@ export function defineStackItemLayerProperties(Layer) {
         return
       }
       flexItem.setPreserveSpaceWhenHidden(newValue)
+    },
+  })
+
+  Layer.define('minSize', {
+    get() {
+      const rawSize = this._object.minSize()
+      if (Number(rawSize.width) == 0 && Number(rawSize.height) == 0) {
+        return undefined
+      }
+      return {
+        width: Number(rawSize.width),
+        height: Number(rawSize.height),
+      }
+    },
+    set(minSize) {
+      if (!minSize) {
+        this._object.setMinSize(NSMakeSize(0, 0))
+        return
+      }
+      if (
+        typeof minSize.width === 'undefined' ||
+        typeof minSize.height === 'undefined'
+      ) {
+        console.warn(
+          `Layer.minSize: Expected an object with "width" and "height", got ${minSize}`
+        )
+        return
+      }
+
+      const rawSize = NSMakeSize(Number(minSize.width), Number(minSize.height))
+      this._object.setMinSize(rawSize)
+    },
+  })
+
+  Layer.define('maxSize', {
+    get() {
+      const rawSize = this._object.maxSize()
+      if (Number(rawSize.width) == 0 && Number(rawSize.height) == 0) {
+        return undefined
+      }
+      return {
+        width: Number(rawSize.width),
+        height: Number(rawSize.height),
+      }
+    },
+    set(maxSize) {
+      if (!maxSize) {
+        this._object.setMaxSize(NSMakeSize(0, 0))
+        return
+      }
+      if (
+        typeof maxSize.width === 'undefined' ||
+        typeof maxSize.height === 'undefined'
+      ) {
+        console.warn(
+          `Layer.maxSize: Expected an object with "width" and "height", got ${maxSize}`
+        )
+        return
+      }
+
+      const rawSize = NSMakeSize(Number(maxSize.width), Number(maxSize.height))
+      this._object.setMaxSize(rawSize)
+    },
+  })
+
+  Layer.define('percentageSize', {
+    get() {
+      const rawSize = this._object.percentageSize()
+      if (Number(rawSize.width) == 0 && Number(rawSize.height) == 0) {
+        return undefined
+      }
+      return {
+        width: Number(rawSize.width),
+        height: Number(rawSize.height),
+      }
+    },
+    set(percentageSize) {
+      if (!percentageSize) {
+        this._object.setPercentageSize(NSMakeSize(0, 0))
+        return
+      }
+
+      if (
+        typeof percentageSize.width === 'undefined' ||
+        typeof percentageSize.height === 'undefined'
+      ) {
+        console.warn(
+          `Layer.percentageSize: Expected an object with "width" and "height", got ${percentageSize}`
+        )
+        return
+      }
+
+      const rawSize = NSMakeSize(
+        Number(percentageSize.width),
+        Number(percentageSize.height)
+      )
+      this._object.setPercentageSize(rawSize)
     },
   })
 }

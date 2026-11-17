@@ -37,7 +37,8 @@ export class Selection {
     Object.defineProperty(this, 'length', {
       enumerable: true,
       get() {
-        return this._object.selectedLayers().count()
+        // Not a tail call, so run_code's native access check still sees SketchAPI
+        return Number(this._object.selectedLayers().count())
       },
     })
 

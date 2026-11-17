@@ -93,7 +93,15 @@ Flow.define('target', {
       this._object.destinationArtboardID = BackTarget
       return
     }
-    this._object.destinationArtboardID = wrapObject(target).id
+    const wrappedTarget = wrapObject(target)
+    // Sections and pages can't be interaction destinations, and a variant set carries the
+    // section trait too.
+    if (!wrappedTarget.sketchObject.canBeFlowDestination()) {
+      throw new Error(
+        `Can't target ${wrappedTarget.name} with a prototype interaction`
+      )
+    }
+    this._object.destinationArtboardID = wrappedTarget.id
   },
 })
 

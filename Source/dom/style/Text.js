@@ -34,36 +34,47 @@ const VerticalTextAlignmentReverseMap = {
 }
 
 export function defineTextStyleProperties(Style) {
-  Style.define('_textLayer', {
+  Style.define('_textStyleSwiftBridge', {
     exportable: false,
     importable: false,
     enumerable: false,
     get() {
+      if (this.styleType !== Style.StyleType.Text) {
+        return undefined
+      }
+      // We might be dealing with either:
+      // a) a text style directly attached to a text layer, in which case we
+      // grab this layer's text style bridge object
       const layer = wrapNativeObject(
         this._object.parentLayer?.() || this.__immutableParentLayer
       )
-      if (!layer || layer.type !== Types.Text) {
-        return undefined
+      if (layer?.type === Types.Text) {
+        return layer.swiftBridge?.textStyleBridge()
       }
-      return layer
+      // b) a text style that exists independently of any text layer (e.g. a shared
+      // text style), in which case it a standalone bridge object
+      return MSSketchAPITextStyleBridge.alloc().initWithTextStyle(
+        this._object?.textStyle()
+      )
     },
   })
+
   Style.define('alignment', {
     get() {
-      const raw = Number(this._textLayer?.swiftBridge?.alignment())
+      const raw = Number(this._textStyleSwiftBridge?.alignment())
       return TextAlignmentReverseMap[raw]
     },
     set(mode) {
       const alignment = parseEnumValue(mode, TextAlignmentMap, 'Text.alignment')
       if (alignment !== undefined) {
-        this._textLayer?.swiftBridge?.setAlignment(alignment)
+        this._textStyleSwiftBridge?.setAlignment(alignment)
       }
     },
   })
 
   Style.define('verticalAlignment', {
     get() {
-      const raw = Number(this._textLayer?.swiftBridge?.verticalAlignment())
+      const raw = Number(this._textStyleSwiftBridge?.verticalAlignment())
       return VerticalTextAlignmentReverseMap[raw]
     },
     set(mode) {
@@ -73,14 +84,14 @@ export function defineTextStyleProperties(Style) {
         'Text.verticalAlignment'
       )
       if (translated !== undefined) {
-        this._textLayer?.swiftBridge?.setVerticalAlignment(translated)
+        this._textStyleSwiftBridge?.setVerticalAlignment(translated)
       }
     },
   })
 
   Style.define('kerning', {
     get() {
-      const raw = this._textLayer?.swiftBridge?.kerning()
+      const raw = this._textStyleSwiftBridge?.kerning()
       if (!raw) {
         return null
       }
@@ -88,13 +99,13 @@ export function defineTextStyleProperties(Style) {
     },
 
     set(kerning) {
-      this._textLayer?.swiftBridge?.setKerning(kerning)
+      this._textStyleSwiftBridge?.setKerning(kerning)
     },
   })
 
   Style.define('lineHeight', {
     get() {
-      const raw = this._textLayer?.swiftBridge?.lineHeight()
+      const raw = this._textStyleSwiftBridge?.lineHeight()
       if (!raw || raw <= 0) {
         return null
       }
@@ -102,13 +113,13 @@ export function defineTextStyleProperties(Style) {
     },
 
     set(lineHeight) {
-      this._textLayer?.swiftBridge?.setLineHeight(lineHeight)
+      this._textStyleSwiftBridge?.setLineHeight(lineHeight)
     },
   })
 
   Style.define('paragraphSpacing', {
     get() {
-      const raw = this._textLayer?.swiftBridge?.paragraphSpacing()
+      const raw = this._textStyleSwiftBridge?.paragraphSpacing()
       if (!raw) {
         return null
       }
@@ -116,13 +127,13 @@ export function defineTextStyleProperties(Style) {
     },
 
     set(paragraphSpacing) {
-      this._textLayer?.swiftBridge?.setParagraphSpacing(paragraphSpacing)
+      this._textStyleSwiftBridge?.setParagraphSpacing(paragraphSpacing)
     },
   })
 
   Style.define('textColor', {
     get() {
-      const raw = this._textLayer?.swiftBridge?.textColor()
+      const raw = this._textStyleSwiftBridge?.textColor()
       if (!raw) {
         return undefined
       }
@@ -134,13 +145,13 @@ export function defineTextStyleProperties(Style) {
       if (!value) {
         return
       }
-      this._textLayer?.swiftBridge?.setTextColor(value.toMSImmutableColor())
+      this._textStyleSwiftBridge?.setTextColor(value.toMSImmutableColor())
     },
   })
 
   Style.define('textSwatch', {
     get() {
-      const swatchID = this._textLayer?.swiftBridge?.textSwatchID()
+      const swatchID = this._textStyleSwiftBridge?.textSwatchID()
       if (!swatchID) {
         return undefined
       }
@@ -156,7 +167,7 @@ export function defineTextStyleProperties(Style) {
 
   Style.define('fontSize', {
     get() {
-      const raw = this._textLayer?.swiftBridge?.fontSize()
+      const raw = this._textStyleSwiftBridge?.fontSize()
       if (!raw) {
         return undefined
       }
@@ -164,23 +175,23 @@ export function defineTextStyleProperties(Style) {
     },
 
     set(fontSize) {
-      this._textLayer?.swiftBridge?.setFontSize(Number(fontSize))
+      this._textStyleSwiftBridge?.setFontSize(Number(fontSize))
     },
   })
 
   Style.define('textTransform', {
     get() {
-      return String(this._textLayer?.swiftBridge?.textTransform())
+      return String(this._textStyleSwiftBridge?.textTransform())
     },
 
     set(transform) {
-      this._textLayer?.swiftBridge?.setTextTransform(String(transform))
+      this._textStyleSwiftBridge?.setTextTransform(String(transform))
     },
   })
 
   Style.define('fontFamily', {
     get() {
-      const raw = this._textLayer?.swiftBridge?.fontFamily()
+      const raw = this._textStyleSwiftBridge?.fontFamily()
       if (!raw) {
         return undefined
       }
@@ -188,13 +199,13 @@ export function defineTextStyleProperties(Style) {
     },
 
     set(fontFamily) {
-      this._textLayer?.swiftBridge?.setFontFamily(String(fontFamily))
+      this._textStyleSwiftBridge?.setFontFamily(String(fontFamily))
     },
   })
 
   Style.define('fontWeight', {
     get() {
-      const raw = this._textLayer?.swiftBridge?.fontWeight()
+      const raw = this._textStyleSwiftBridge?.fontWeight()
       if (!raw) {
         return undefined
       }
@@ -202,13 +213,13 @@ export function defineTextStyleProperties(Style) {
     },
 
     set(fontWeight) {
-      this._textLayer?.swiftBridge?.setFontWeight(fontWeight)
+      this._textStyleSwiftBridge?.setFontWeight(fontWeight)
     },
   })
 
   Style.define('fontStyle', {
     get() {
-      const raw = this._textLayer?.swiftBridge?.fontStyle()
+      const raw = this._textStyleSwiftBridge?.fontStyle()
       if (!raw) {
         return undefined
       }
@@ -216,13 +227,13 @@ export function defineTextStyleProperties(Style) {
     },
 
     set(fontStyle) {
-      this._textLayer?.swiftBridge?.setFontStyle(fontStyle)
+      this._textStyleSwiftBridge?.setFontStyle(fontStyle)
     },
   })
 
   Style.define('fontVariant', {
     get() {
-      const raw = this._textLayer?.swiftBridge?.fontVariant()
+      const raw = this._textStyleSwiftBridge?.fontVariant()
       if (!raw) {
         return undefined
       }
@@ -230,13 +241,13 @@ export function defineTextStyleProperties(Style) {
     },
 
     set(fontVariant) {
-      this._textLayer?.swiftBridge?.setFontVariant(fontVariant)
+      this._textStyleSwiftBridge?.setFontVariant(fontVariant)
     },
   })
 
   Style.define('fontStretch', {
     get() {
-      const raw = this._textLayer?.swiftBridge?.fontStretch()
+      const raw = this._textStyleSwiftBridge?.fontStretch()
       if (!raw) {
         return undefined
       }
@@ -244,13 +255,13 @@ export function defineTextStyleProperties(Style) {
     },
 
     set(fontStretch) {
-      this._textLayer?.swiftBridge?.setFontStretch(fontStretch)
+      this._textStyleSwiftBridge?.setFontStretch(fontStretch)
     },
   })
 
   Style.define('textUnderline', {
     get() {
-      const raw = this._textLayer?.swiftBridge?.textUnderline()
+      const raw = this._textStyleSwiftBridge?.textUnderline()
       if (!raw) {
         return undefined
       }
@@ -258,13 +269,13 @@ export function defineTextStyleProperties(Style) {
     },
 
     set(textUnderline) {
-      this._textLayer?.swiftBridge?.setTextUnderline(textUnderline)
+      this._textStyleSwiftBridge?.setTextUnderline(textUnderline)
     },
   })
 
   Style.define('textStrikethrough', {
     get() {
-      const raw = this._textLayer?.swiftBridge?.textStrikethrough()
+      const raw = this._textStyleSwiftBridge?.textStrikethrough()
       if (!raw) {
         return undefined
       }
@@ -272,13 +283,13 @@ export function defineTextStyleProperties(Style) {
     },
 
     set(textStrikethrough) {
-      this._textLayer?.swiftBridge?.setTextStrikethrough(textStrikethrough)
+      this._textStyleSwiftBridge?.setTextStrikethrough(textStrikethrough)
     },
   })
 
   Style.define('fontAxes', {
     get() {
-      const axes = this._textLayer?.swiftBridge?.fontAxes()
+      const axes = this._textStyleSwiftBridge?.fontAxes()
       if (!axes) {
         return null
       }
@@ -309,7 +320,7 @@ export function defineTextStyleProperties(Style) {
         // Only set an axis if it's available on the current font, and
         // different to the current value
         if (current[name] && fontAxes[name].value !== current[name].value) {
-          this._textLayer?.swiftBridge?.setVariableFontAxisValue_forAxisID(
+          this._textStyleSwiftBridge?.setVariableFontAxisValue_forAxisID(
             fontAxes[name].value,
             fontAxes[name].id || current[name].id
           )

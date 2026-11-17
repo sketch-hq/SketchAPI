@@ -31,15 +31,52 @@ export class Layer extends WrappedObject {
   }
 
   /**
+   * Scale this layer and its style properties, such as borders, shadows, corner radii and text
+   * size, the same way the Scale tool does. Layers inside it are scaled along with it.
+   *
+   * Throws if the layer can't be scaled from the Scale tool, such as a page or a text layer
+   * with missing fonts.
+   *
+   * @param {number} factor - The scale factor. For example, `1.5` scales the layer to 150%.
+   * @param {Object} [options]
+   * @param {ScaleOrigin|string} [options.origin=ScaleOrigin.TopLeft] - The point of the layer that
+   *                                                                   stays in place.
+   * @return {Layer} This layer.
+   */
+  scale(factor, { origin = ScaleOrigin.TopLeft } = {}) {
+    if (this.isImmutable()) {
+      return this
+    }
+    if (!Number.isFinite(factor) || factor <= 0) {
+      throw new Error(
+        'The scale factor must be a finite number greater than zero'
+      )
+    }
+    const corner = typeof origin === 'string' ? ScaleOrigin[origin] : origin
+    if (!Object.values(ScaleOrigin).includes(corner)) {
+      throw new Error(`Invalid scale origin: ${origin}`)
+    }
+    if (this.type === Types.Page || !this._object.canScale()) {
+      throw new Error(`Can't scale ${this.name}`)
+    }
+    this._object.sketchapiScale_from(factor, corner)
+    // Same as the `frame` setter, apply the deferred concentric corner update now so
+    // plugin-visible state is consistent before returning.
+    this._object.updateConcentricCorners?.()
+    return this
+  }
+
+  /**
    * Remove this layer from its parent.
    */
   remove() {
     if (this.isImmutable()) {
       return this
     }
-    const parent = this._object.parentGroup()
+    const layerToRemove = this._object.resolvedLayerToRemove()
+    const parent = layerToRemove.parentGroup()
     if (parent) {
-      parent.removeLayer(this._object)
+      parent.removeLayer(layerToRemove)
     }
     return this
   }
@@ -104,8 +141,27 @@ export class Layer extends WrappedObject {
     return wrapNativeObject(this._object.parentSymbol())
   }
 
+  getParentVariantSet() {
+    return wrapNativeObject(this._object.variantSetGroup?.())
+  }
+
   getParentShape() {
     return wrapNativeObject(this._object.enclosingShapeGroup())
+  }
+
+  /**
+   * The section this layer belongs to, or `undefined` if it is not inside one. Sections can nest,
+   * so this reports the innermost one. Available on any layer — a frame, group or instance can sit
+   * inside a section, not just another section. Immutable snapshots don't carry the accessor, so
+   * they report `undefined`.
+   *
+   * Like any section read back from the document, this is a plain {@link Group}; check `isSection`
+   * on it rather than its class.
+   *
+   * @return {Group}
+   */
+  getParentSection() {
+    return wrapNativeObject(this._object.sectionGroup?.())
   }
 
   // @deprecated
@@ -302,6 +358,13 @@ Layer.define('flow', {
     }
     return Flow.fromNative(this._object.flow())
   },
+  /**
+   * Assigns a prototype interaction to this layer, or removes it with a falsy value.
+   *
+   * Layers the model won't accept as an interaction source — sections and pages — throw. A
+   * variant set carries the section trait too, and is rejected the same way. Removing an
+   * interaction is always allowed.
+   */
   set(flow) {
     if (this.isImmutable()) {
       return
@@ -309,6 +372,9 @@ Layer.define('flow', {
     if (!flow) {
       this._object.flow = null
       return
+    }
+    if (!this._object.canBeFlowSource()) {
+      throw new Error(`Can't add a prototype interaction to ${this.name}`)
     }
     this._object.flow = Flow.from(flow).sketchObject
   },
@@ -387,16 +453,18 @@ Layer.defineObject('transform', {
         : this._object
 
       // Calling `userVisibleRotation` matches what users see in the inspector (which may be different from the raw `rotation` value).
-      return layer.userVisibleRotation()
+      // Not a tail call, so run_code's native access check still sees SketchAPI
+      return Number(layer.userVisibleRotation())
     },
     set(rotation) {
       if (this._parent.isImmutable()) {
         return
       }
-      this._object.applyUserVisibleRotation_explicitRotationCenter(
-        rotation,
-        null
-      )
+      const value = Number(rotation)
+      if (!Number.isFinite(value)) {
+        throw new Error('The rotation must be a finite number')
+      }
+      this._object.applyUserVisibleRotation_explicitRotationCenter(value, null)
     },
   },
   flippedHorizontally: {
@@ -421,6 +489,20 @@ Layer.defineObject('transform', {
       this._object.setIsFlippedVertical(flipped)
     },
   },
+})
+
+// Top-level aliases for the `transform` fields, so that `layer.rotation = 42` rotates the layer
+// instead of silently setting an unused property on the wrapper.
+;['rotation', 'flippedHorizontally', 'flippedVertically'].forEach((field) => {
+  Layer.define(field, {
+    exportable: false,
+    get() {
+      return this.transform[field]
+    },
+    set(value) {
+      this.transform[field] = value
+    },
+  })
 })
 
 Layer.define('breaksMaskChain', {
@@ -470,7 +552,8 @@ export const FlexSizing = {
  */
 Layer.define('horizontalSizing', {
   get() {
-    return this._object.horizontalSizing()
+    // Not a tail call, so run_code's native access check still sees SketchAPI
+    return Number(this._object.horizontalSizing())
   },
   set(value) {
     if (this.isImmutable()) {
@@ -489,7 +572,8 @@ Layer.define('horizontalSizing', {
  */
 Layer.define('verticalSizing', {
   get() {
-    return this._object.verticalSizing()
+    // Not a tail call, so run_code's native access check still sees SketchAPI
+    return Number(this._object.verticalSizing())
   },
   set(value) {
     if (this.isImmutable()) {
@@ -514,6 +598,25 @@ export function getFlexSizing(value) {
 
 /**
  * -----------
+ * Scale Origin
+ * -----------
+ */
+
+/** The point of a layer that stays in place when scaling it. */
+export const ScaleOrigin = {
+  TopLeft: 0,
+  TopRight: 1,
+  BottomLeft: 2,
+  BottomRight: 3,
+  Top: 4,
+  Left: 5,
+  Right: 6,
+  Bottom: 7,
+  Center: 8,
+}
+
+/**
+ * -----------
  * Horizontal and Vertical Pinning
  * -----------
  */
@@ -531,7 +634,8 @@ export const Pin = {
 
 Layer.define('horizontalPins', {
   get() {
-    return this._object.horizontalPins()
+    // Not a tail call, so run_code's native access check still sees SketchAPI
+    return Number(this._object.horizontalPins())
   },
   set(value) {
     if (this.isImmutable()) {
@@ -546,7 +650,8 @@ Layer.define('horizontalPins', {
 
 Layer.define('verticalPins', {
   get() {
-    return this._object.verticalPins()
+    // Not a tail call, so run_code's native access check still sees SketchAPI
+    return Number(this._object.verticalPins())
   },
   set(value) {
     if (this.isImmutable()) {

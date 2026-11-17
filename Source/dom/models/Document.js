@@ -6,11 +6,13 @@ import { getURLFromPath, isWrappedObject } from '../utils'
 import { wrapObject } from '../wrapNativeObject'
 import { Types } from '../enums'
 import { Factory } from '../Factory'
-import { StyleType } from '../style/Style'
+import { Style, StyleType } from '../style/Style'
 import { ColorAsset, GradientAsset, Swatch } from '../assets'
 import { Color } from '../style/Color'
 import { SharedStyle } from './SharedStyle'
 import { Library } from './Library'
+import { ImportableObject } from './ImportableObject'
+import { Group } from '../layers/Group'
 
 export const SaveModeType = {
   Save: NSSaveOperation,
@@ -227,6 +229,44 @@ export class Document extends WrappedObject {
   getSymbols() {
     const documentData = this._getMSDocumentData()
     return toArray(documentData.allSymbols()).map(wrapObject)
+  }
+
+  /**
+   * Find the first variant set in this document which has the given id.
+   *
+   * @return {Group.VariantSet} A variant set object, if one was found.
+   */
+  getVariantSetWithID(variantSetId) {
+    const documentData = this._getMSDocumentData()
+    const layer = documentData.layerWithID(variantSetId)
+    if (
+      layer &&
+      layer.isKindOfClass(MSLayerGroup) &&
+      layer.hasVariantSetTrait()
+    ) {
+      return Group.VariantSet.fromNative(layer)
+    }
+    return undefined
+  }
+
+  /**
+   * All the variant sets in this document, across every page.
+   *
+   * @return {Array<Group.VariantSet>}
+   */
+  getVariantSets() {
+    const variantSets = []
+    const loopPages = this._object.pages().objectEnumerator()
+    let page = loopPages.nextObject()
+    while (page) {
+      toArray(page.childrenIncludingSelf(false)).forEach((layer) => {
+        if (layer.isKindOfClass(MSLayerGroup) && layer.hasVariantSetTrait()) {
+          variantSets.push(Group.VariantSet.fromNative(layer))
+        }
+      })
+      page = loopPages.nextObject()
+    }
+    return variantSets
   }
 
   _getSharedStyleWithIdAndType(sharedId, type) {
@@ -625,6 +665,14 @@ Document.define('path', {
       const msDocument = this._getMSDocument()
       if (msDocument && msDocument.fileURL) {
         url = msDocument.fileURL()
+      } else {
+        // We might not have an actual MSDocument at hand (e.g. when dealing with
+        // an internal copy of its documentData). In that case, we can try to
+        // locate the original document by comparing objectIDs, and grab its URL
+        url = toArray(NSApp.orderedDocuments())
+          .filter((doc) => doc.isKindOfClass(MSDocument))
+          .find((doc) => String(doc.documentData().objectID()) === this.id)
+          ?.fileURL()
       }
     }
     if (url) {
@@ -845,7 +893,10 @@ function sharedStyleDescriptor(type) {
             } else if (isNativeObject(item)) {
               sharedStyle = item
             } else {
-              const wrappedStyle = wrapObject(item.style, Types.Style)
+              const wrappedStyle = new Style(
+                item.style,
+                type === 'text' ? Types.Text : Types.Layer
+              )
 
               sharedStyle = MSSharedStyle.alloc().initWithName_style(
                 item.name,
@@ -875,7 +926,10 @@ function sharedStyleDescriptor(type) {
       } else if (isNativeObject(item)) {
         sharedStyle = item
       } else {
-        const wrappedStyle = wrapObject(item.style, Types.Style)
+        const wrappedStyle = new Style(
+          item.style,
+          type === 'text' ? Types.Text : Types.Layer
+        )
 
         sharedStyle = MSSharedStyle.alloc().initWithName_style(
           item.name,
@@ -921,11 +975,15 @@ Document.define('frameTemplates', {
   importable: false,
   exportable: false,
   get() {
-    const document = this._getMSDocument()
-    if (!document) {
+    const documentData = this._getMSDocumentData()
+    if (!documentData) {
       return []
     }
-    return toArray(document.frameTemplates()).map(wrapObject)
+    return toArray(documentData.frameTemplates()).map((ref) => {
+      const obj = ImportableObject.fromNative(ref)
+      obj._documentData = documentData
+      return obj
+    })
   },
 })
 
@@ -934,10 +992,14 @@ Document.define('graphicTemplates', {
   importable: false,
   exportable: false,
   get() {
-    const document = this._getMSDocument()
-    if (!document) {
+    const documentData = this._getMSDocumentData()
+    if (!documentData) {
       return []
     }
-    return toArray(document.graphicTemplates()).map(wrapObject)
+    return toArray(documentData.graphicTemplates()).map((ref) => {
+      const obj = ImportableObject.fromNative(ref)
+      obj._documentData = documentData
+      return obj
+    })
   },
 })

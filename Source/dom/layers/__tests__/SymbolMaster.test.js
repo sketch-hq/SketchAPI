@@ -1,7 +1,40 @@
 /* globals expect, test */
 /* eslint-disable no-param-reassign */
-import { SymbolInstance, SymbolMaster, Text, Artboard } from '../..'
+import { Group, SymbolInstance, SymbolMaster, Text, Artboard } from '../..'
 import { createSymbolMaster, canBeLogged } from '../../../test-utils'
+
+// The Sketch test harness's `expect` has no `toThrow` matcher, so we assert on a boolean instead.
+function throws(fn) {
+  try {
+    fn()
+    return false
+  } catch (e) {
+    return true
+  }
+}
+
+test('should refuse to create a symbol master from a section', (_context, document) => {
+  const frame = new Group.Frame({ name: 'Welcome' })
+  const section = new Group.Section({ layers: [frame] })
+  section.parent = document.selectedPage
+
+  expect(throws(() => SymbolMaster.fromFrame(section))).toBe(true)
+
+  // Rejected before anything is mutated, so the section keeps its contents and its place.
+  expect(section.isSection).toBe(true)
+  expect(section.layers.length).toBe(1)
+  expect(section.parent.id).toBe(document.selectedPage.id)
+})
+
+test('should refuse to create a symbol master from a variant set', (_context, document) => {
+  const set = new Group.VariantSet({
+    name: 'Button',
+    parent: document.selectedPage,
+  })
+
+  // A variant set carries the section trait, so it is rejected the same way.
+  expect(throws(() => SymbolMaster.fromFrame(set))).toBe(true)
+})
 
 test('should create a symbol master from an artboard', (_context, document) => {
   // build the symbol master
