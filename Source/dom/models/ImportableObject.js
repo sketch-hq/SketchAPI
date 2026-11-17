@@ -10,7 +10,8 @@ const ObjectTypeMap = {
   Swatch: 3,
   FrameTemplate: 5,
   GraphicTemplate: 6,
-  Unknown: 7,
+  VariantSet: 7,
+  Unknown: 8,
 }
 
 export const ImportableObjectType = {
@@ -20,6 +21,7 @@ export const ImportableObjectType = {
   Swatch: 'Swatch',
   FrameTemplate: 'FrameTemplate',
   GraphicTemplate: 'GraphicTemplate',
+  VariantSet: 'VariantSet',
   Unknown: 'Unknown',
 }
 
@@ -120,7 +122,6 @@ export class ImportableObject extends WrappedObject {
 
     return wrapNativeObject(importedObject.localObject())
   }
-
 }
 
 ImportableObject.type = Types.ImportableObject
@@ -136,6 +137,7 @@ if (typeof MSShareableObjectReference !== 'undefined') {
   Factory.registerClass(ImportableObject, MSSharedTextReference)
   Factory.registerClass(ImportableObject, MSSwatchReference)
   Factory.registerClass(ImportableObject, MSFrameTemplateReference)
+  Factory.registerClass(ImportableObject, MSVariantSetReference)
 }
 
 ImportableObject.define('id', {

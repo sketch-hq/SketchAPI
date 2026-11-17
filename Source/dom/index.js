@@ -19,7 +19,7 @@ const { StackLayout } = require('./models/StackLayout')
 const { Style } = require('./style/Style')
 
 const { Layer } = require('./layers/Layer')
-const { Pin, FlexSizing } = require('./layers/Layer')
+const { Pin, FlexSizing, ScaleOrigin } = require('./layers/Layer')
 const { Group, GroupBehavior } = require('./layers/Group')
 const { Text } = require('./layers/Text')
 const { Image } = require('./layers/Image')
@@ -65,6 +65,7 @@ const DOM = {
   Layer,
   FlexSizing,
   Pin,
+  ScaleOrigin,
   Group,
   GroupBehavior,
   Text,

@@ -132,6 +132,27 @@ test('should report isFrame and isGraphicFrame', () => {
   expect(group.isGraphicFrame).toBe(false)
 })
 
+test('should report whether converting a container succeeded', () => {
+  const group = new Group({
+    layers: [
+      {
+        type: 'Text',
+        text: 'hello world',
+      },
+    ],
+  })
+
+  expect(group.convertToFrame()).toBe(true)
+  expect(group.isFrame).toBe(true)
+  expect(group.convertToGroup()).toBe(true)
+  expect(group.isFrame).toBe(false)
+
+  // Plain groups can't be empty
+  const emptyFrame = new Group.Frame()
+  expect(emptyFrame.convertToGroup()).toBe(false)
+  expect(emptyFrame.isFrame).toBe(true)
+})
+
 test('should create Frames and Graphics via convenience constructors', (_context, document) => {
   const plainGroup = new Group({
     layers: [
@@ -342,6 +363,60 @@ test('should create a Frame with a background when one is explicitly requested',
   expect(frame.background.enabled).toBe(true)
 })
 
+test('should NOT add a default background fill when creating a Frame if style.fills are provided', (_context, document) => {
+  const frameWithNoFills = new Group.Frame({
+    style: {},
+  })
+  const frameWithEmptyFills = new Group.Frame({
+    style: {
+      fills: [],
+    },
+  })
+  const frameWithDisabledFills = new Group.Frame({
+    style: {
+      fills: [
+        {
+          enabled: false,
+        },
+        {
+          enabled: false,
+        },
+      ],
+    },
+  })
+  const frameWithFills = new Group.Frame({
+    style: {
+      fills: [
+        {
+          color: '#ff0102ff',
+          enabled: true,
+        },
+      ],
+    },
+  })
+  document.selectedPage.layers = [
+    frameWithNoFills,
+    frameWithEmptyFills,
+    frameWithDisabledFills,
+    frameWithFills,
+  ]
+
+  expect(frameWithNoFills.background.enabled).toBe(true)
+  expect(frameWithNoFills.style.fills.length).toBe(1)
+
+  expect(frameWithEmptyFills.background.enabled).toBe(false)
+  expect(frameWithEmptyFills.style.fills.length).toBe(0)
+
+  expect(frameWithDisabledFills.background.enabled).toBe(false)
+  expect(frameWithDisabledFills.style.fills.length).toBe(2)
+  expect(frameWithDisabledFills.style.fills[0].enabled).toBe(false)
+  expect(frameWithDisabledFills.style.fills[1].enabled).toBe(false)
+
+  expect(frameWithFills.background.enabled).toBe(true)
+  expect(frameWithFills.style.fills.length).toBe(1)
+  expect(frameWithFills.style.fills[0].enabled).toBe(true)
+})
+
 test('should be able to set background color on Frames when all existing fills are disabled', () => {
   const frame = new Group.Frame({
     style: {
@@ -454,4 +529,54 @@ test('should move layers when they are re-inserted into the same group', (_conte
   expect(group.layers[1].id).toBe(layer2.id)
   expect(group.layers[2].id).toBe(layer3.id)
   expect(group.layers[3].id).toBe(layer4.id)
+})
+
+test('should ungroup() by moving children into the parent and removing the group itself', (_context, document) => {
+  const page = document.selectedPage
+  const group = new Group({
+    parent: page,
+    layers: [
+      new Text({ text: 'Layer 1' }),
+      new Text({ text: 'Layer 2' }),
+      new Text({ text: 'Layer 3' }),
+    ],
+  })
+  const leaf1 = group.layers[0]
+  const leaf2 = group.layers[1]
+  const leaf3 = group.layers[2]
+
+  expect(page.layers.map((l) => l.id)).toEqual([group.id])
+
+  const leafs = group.ungroup()
+
+  expect(leafs.map((l) => l.id)).toEqual([leaf1.id, leaf2.id, leaf3.id])
+  expect(page.layers.map((l) => l.id)).toEqual([leaf1.id, leaf2.id, leaf3.id])
+})
+
+test('should return [self] when trying to ungroup() an immutable', (_context, document) => {
+  const page = document.selectedPage
+  const symbolMaster = new SymbolMaster({
+    parent: page,
+    layers: [
+      new Group({
+        name: 'Group 0',
+        layers: [
+          new Text({ text: 'Layer 1' }),
+          new Text({ text: 'Layer 2' }),
+          new Text({ text: 'Layer 3' }),
+        ],
+      }),
+    ],
+  })
+
+  const instance = symbolMaster.createNewInstance()
+  instance.parent = page
+
+  const immutableGroup = instance.expandedLayers[0]
+  expect(immutableGroup.type).toBe('Group')
+  expect(immutableGroup.layers.length).toBe(3)
+
+  const ungrouped = immutableGroup.ungroup()
+  expect(ungrouped.map((l) => l.id)).toEqual([immutableGroup.id])
+  expect(immutableGroup.layers.length).toBe(3)
 })

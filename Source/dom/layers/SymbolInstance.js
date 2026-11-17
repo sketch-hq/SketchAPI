@@ -78,6 +78,21 @@ export class SymbolInstance extends StyledLayer {
       return override.path === correspondingOverridePath
     })
   }
+
+  updateOverrides(callback) {
+    if (typeof callback !== 'function') {
+      return
+    }
+    this._object.batchUpdateOverridesWithJSContext_jsCallback(
+      coscript,
+      (nativeOverrides) => {
+        const jsOverrides = toArray(nativeOverrides).map((o) =>
+          Override.fromNative(o)
+        )
+        callback(jsOverrides)
+      }
+    )
+  }
 }
 
 SymbolInstance.type = Types.SymbolInstance
@@ -193,7 +208,7 @@ SymbolInstance.define('expandedLayers', {
 SymbolInstance._NestedExpandedSymbolPrivateReference = NestedExpandedSymbol
 
 // An "override" for the `Layer.hidden` property so we can
-// call `sketchapiEnsureDetachHasUpdated()` afterwards (SMAC-4904)
+// call `sketchapiEnsureDetachHasUpdated()` afterwards (MAC-4904)
 delete SymbolInstance[DefinedPropertiesKey].hidden
 SymbolInstance.define('hidden', {
   get() {

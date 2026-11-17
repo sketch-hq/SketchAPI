@@ -33,4 +33,5 @@ export const Types = {
   ColorAsset: 'ColorAsset',
   GradientAsset: 'GradientAsset',
   Swatch: 'Swatch',
+  VariantProperty: 'VariantProperty',
 }

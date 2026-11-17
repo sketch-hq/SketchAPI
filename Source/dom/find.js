@@ -87,7 +87,7 @@ const operatorMap = {
   '!=': '!=',
   '^=': 'BEGINSWITH',
   '>=': '>=',
-  '=<': '=<',
+  '<=': '<=',
   '>': '>',
   '<': '<',
 }
@@ -101,7 +101,7 @@ const whitespace = '[\\x20\\t\\r\\n\\f]'
 // with a small twist: we accept `.` for nested property path
 const identifier = '(?:\\\\.|[\\w-]|[^\0-\\xa0]|\\.)+'
 
-const operator = `(?:[~]*[*^$!]?=|>=|>|<|<=)`
+const operator = `(?:[~]*[*^$!]?=|>=|<=|>|<)`
 
 const attributes = `\\[${whitespace}*(${identifier})(?:${whitespace}*(${operator})${whitespace}*(?:'((?:\\\\.|[^\\\\'])*)'|"((?:\\\\.|[^\\\\"])*)"|(${identifier}))|)${whitespace}*\\]`
 const booleans = 'locked|hidden|selected'

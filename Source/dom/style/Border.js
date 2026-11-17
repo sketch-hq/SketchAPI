@@ -124,7 +124,9 @@ Border.define('fillType', {
     return (
       Object.keys(FillTypeMap).find(
         (key) => FillTypeMap[key] === this._object.fillType()
-      ) || this._object.fillType()
+      ) ||
+      // Not a tail call, so run_code's native access check still sees SketchAPI
+      Number(this._object.fillType())
     )
   },
   set(fillType) {
@@ -144,7 +146,9 @@ Border.define('position', {
     return (
       Object.keys(BorderPositionMap).find(
         (key) => BorderPositionMap[key] === this._object.position()
-      ) || this._object.position()
+      ) ||
+      // Not a tail call, so run_code's native access check still sees SketchAPI
+      Number(this._object.position())
     )
   },
   set(position) {

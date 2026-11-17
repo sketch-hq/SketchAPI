@@ -155,7 +155,7 @@ test('Should fail when exporting a shape too large for WebP', (_context, documen
     expect(false).toBe(true)
   } catch (err) {
     expect(err.message).toMatch(
-      "Failed to export WebP file. Exported image size for 'Shape' exceeds maximum pixel dimensions supported by the WebP format (16383 x 16383): 100 x 16800."
+      "Failed to export file. Exported image size for 'Shape' exceeds the maximum pixel dimensions supported by the WebP format (16383 x 16383): 100 x 16800."
     )
   }
 })

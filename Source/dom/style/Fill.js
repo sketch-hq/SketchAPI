@@ -148,7 +148,9 @@ Fill.define('fillType', {
     return (
       Object.keys(FillTypeMap).find(
         (key) => FillTypeMap[key] === this._object.fillType()
-      ) || this._object.fillType()
+      ) ||
+      // Not a tail call, so run_code's native access check still sees SketchAPI
+      Number(this._object.fillType())
     )
   },
   set(fillType) {
@@ -201,7 +203,9 @@ Fill.defineObject('pattern', {
       return (
         Object.keys(PatternFillTypeMap).find(
           (key) => PatternFillTypeMap[key] === this._object.patternFillType()
-        ) || this._object.patternFillType()
+        ) ||
+        // Not a tail call, so run_code's native access check still sees SketchAPI
+        Number(this._object.patternFillType())
       )
     },
     set(patternType) {

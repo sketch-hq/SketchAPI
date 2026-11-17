@@ -19,7 +19,6 @@ $(SRCROOT)/Source/dom/globalAssets.js
 $(SRCROOT)/Source/dom/import.js
 $(SRCROOT)/Source/dom/index.js
 $(SRCROOT)/Source/dom/layers/Artboard.js
-$(SRCROOT)/Source/dom/layers/Group.js
 $(SRCROOT)/Source/dom/layers/HotSpot.js
 $(SRCROOT)/Source/dom/layers/Image.js
 $(SRCROOT)/Source/dom/layers/Layer.js
@@ -39,6 +38,7 @@ $(SRCROOT)/Source/dom/models/ExportFormat.js
 $(SRCROOT)/Source/dom/models/Flow.js
 $(SRCROOT)/Source/dom/models/ImageData.js
 $(SRCROOT)/Source/dom/models/ImportableObject.js
+$(SRCROOT)/Source/dom/models/Library.js
 $(SRCROOT)/Source/dom/models/Override.js
 $(SRCROOT)/Source/dom/models/Point.js
 $(SRCROOT)/Source/dom/models/Rectangle.js
@@ -46,6 +46,7 @@ $(SRCROOT)/Source/dom/models/Selection.js
 $(SRCROOT)/Source/dom/models/SharedStyle.js
 $(SRCROOT)/Source/dom/models/SmartLayout.js
 $(SRCROOT)/Source/dom/models/StackLayout.js
+$(SRCROOT)/Source/dom/models/VariantProperty.js
 $(SRCROOT)/Source/dom/style/Blur.js
 $(SRCROOT)/Source/dom/style/Border.js
 $(SRCROOT)/Source/dom/style/BorderOptions.js

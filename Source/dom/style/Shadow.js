@@ -164,7 +164,8 @@ Shadow.define('enabled', {
 
 Shadow.define('isInnerShadow', {
   get() {
-    return this._object.isInnerShadow()
+    // Not a tail call, so run_code's native access check still sees SketchAPI
+    return Boolean(this._object.isInnerShadow())
   },
   set(value) {
     this._object.setIsInnerShadow(value)

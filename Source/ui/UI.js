@@ -42,7 +42,8 @@ export function alert(title, text) {
   dialog.setMessageText(title)
   dialog.setInformativeText(text)
   dialog.icon = getPluginAlertIcon()
-  return dialog.runModal()
+  // Not a tail call, so run_code's native access check still sees SketchAPI
+  return Number(dialog.runModal())
 }
 
 export const INPUT_TYPE = {

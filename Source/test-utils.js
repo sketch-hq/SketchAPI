@@ -58,6 +58,18 @@ export function createSharedStyle(document, Primitive, style) {
   }
 }
 
+/**
+ * The Sketch test harness's `expect` has no `toThrow` matcher, so tests assert on a boolean.
+ */
+export function throws(fn) {
+  try {
+    fn()
+    return false
+  } catch (e) {
+    return true
+  }
+}
+
 export function outputPath() {
   const uuid = NSUUID.UUID().UUIDString()
   const path = NSTemporaryDirectory().stringByAppendingPathComponent(uuid)

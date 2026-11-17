@@ -10,6 +10,8 @@ import { StackLayout } from '../models/StackLayout'
 import { Color, colorToString } from '../style/Color'
 import { LayerAncestry } from './LayerAncestry'
 import { StylePartType } from '../style/StylePartType'
+import { VariantProperty } from '../models/VariantProperty'
+import { parseEnumValue } from '../utils'
 
 /**
  * Represents a group of layers.
@@ -40,7 +42,10 @@ export class Group extends StyledLayer {
     const needsDefaultFrameBackground =
       createdNewNativeObject &&
       this.isFrame &&
+      // User didn't provide an explicit background configuration
       !group.background &&
+      // User didn't provide any explicit fills
+      !group.style?.fills &&
       this.type !== Types.SymbolMaster
     Object.defineProperty(
       this,
@@ -89,33 +94,72 @@ export class Group extends StyledLayer {
     return this
   }
 
+  /**
+   * Turns this container into a plain Group, matching the Layer Type popup in the app.
+   *
+   * A no-op for a container whose type is fixed: a symbol source (which must be a Frame or a
+   * Graphic), an empty group (plain groups can't be empty), and a variant set (see
+   * {@link Group#convertToFrame}).
+   *
+   * @returns {boolean} Whether the container was converted.
+   */
   convertToGroup() {
     if (this.isImmutable()) {
-      return
+      return false
     }
-    if (this.type === Types.SymbolMaster) {
-      // Symbol sources must be Frames or Graphics
-      return
-    }
-    if (this.layers.length === 0) {
-      // Plain groups can't be empty
-      return
-    }
-    this._object.convertToGroup()
+    return Boolean(this._object.convertToGroup())
   }
 
+  /**
+   * Turns this container into a Frame, matching the Layer Type popup in the app.
+   *
+   * A no-op for a variant set: variant sets have a fixed container type, and the app's
+   * Layer Type popup leaves them out for the same reason. Converting a variant set would also
+   * lose its variant state — use the app's Remove Component to dismantle one.
+   *
+   * @returns {boolean} Whether the container was converted.
+   */
   convertToFrame() {
     if (this.isImmutable()) {
-      return
+      return false
     }
-    this._object.convertToFrame()
+    return Boolean(this._object.convertToFrame())
   }
 
+  /**
+   * Turns this container into a Graphic, matching the Layer Type popup in the app.
+   *
+   * A no-op for a variant set — see {@link Group#convertToFrame}.
+   *
+   * @returns {boolean} Whether the container was converted.
+   */
   convertToGraphic() {
     if (this.isImmutable()) {
-      return
+      return false
     }
-    this._object.convertToGraphic()
+    return Boolean(this._object.convertToGraphic())
+  }
+
+  /**
+   * Turns this container into a Section, matching the Layer Type popup in the app.
+   *
+   * A no-op for a container whose type is fixed (see {@link Group#convertToGroup}),
+   * or a container whose parent cannot contain a section.
+   *
+   * @returns {boolean} Whether the container was converted.
+   */
+  convertToSection() {
+    if (this.isImmutable()) {
+      return false
+    }
+    return Boolean(this._object.convertToSection())
+  }
+
+  ungroup() {
+    if (this.isImmutable()) {
+      return [this]
+    }
+    return toArray(this._object.ungroup()).map(wrapObject)
   }
 }
 
@@ -142,12 +186,198 @@ Group.Graphic = class Graphic extends Group {
   }
 }
 
+/**
+ * A section: a layer group (with the section trait) that acts as a top-level container between the
+ * page and its frames. Sections have a fixed size, can be nested in other sections, and can only be
+ * placed on a page or inside another section.
+ *
+ * Like {@link Group.Frame}, this is a creation-only flavor of `Group`, not a distinct type: it
+ * makes a well-formed section, but a section read back from the document is a plain {@link Group}.
+ * Recognize one with `group.isSection`, and find the enclosing one with `layer.getParentSection()`.
+ *
+ * Note that a {@link Group.VariantSet} also carries the section trait, so it reports
+ * `isSection === true`. Check `isVariantSet` first when the distinction matters.
+ */
+Group.Section = class Section extends Group {
+  /**
+   * Makes a new, well-formed section — empty, or wrapping the given `layers`.
+   *
+   * Like `new Group({ layers })`, the section comes back with no parent: wrapping layers doesn't
+   * decide where the section belongs, and a section may only sit on a page or inside another
+   * section. Pass `parent`, or set it afterwards, to place it.
+   */
+  constructor(group = {}) {
+    if (!group.sketchObject) {
+      const { layers, ...rest } = group
+      // Build through the native factory rather than letting the `layers` setter in `super()` add
+      // them afterwards: `MSLayerGroup.makeSectionWithLayers_insertingIntoSourceParent` also sizes the section to fit its contents.
+      // The factory sizes the section to fit its layers, which the `layers` setter in `super()`
+      // wouldn't. It's told not to insert the section next to them: a section may only sit on a
+      // page or inside another section, so where its contents lived isn't necessarily somewhere it
+      // may go. Like `new Group({ layers })`, it comes back unparented for the caller to place —
+      // `super()` still honors an explicit `parent`.
+      const sketchObject = layers
+        ? MSLayerGroup.makeSectionWithLayers_insertingIntoSourceParent(
+            toArray(layers).map((layer) => wrapObject(layer).sketchObject),
+            false
+          )
+        : MSLayerGroup.makeSectionWithFrame(
+            new Rectangle(0, 0, 100, 100).asCGRect()
+          )
+      super({ ...rest, sketchObject })
+      return
+    }
+    super(group)
+  }
+}
+
+Group.VariantSet = class VariantSet extends Group {
+  constructor(group = {}) {
+    const name = group.name || ''
+    if (!group.sketchObject) {
+      const layers = group.layers?.map(wrapObject) || []
+      const allLayersAreMasters = layers.every((layer) => {
+        return layer.type === Types.SymbolMaster
+      })
+      if (allLayersAreMasters) {
+        // Pass symbol masters to the specialized constructor directly, bypassing
+        // the normal `layers` setter in super()
+        // Pass symbol masters to the specialized constructor directly, bypassing the normal
+        // `layers` setter in super(): it also constrains them as variants and derives the set's
+        // properties from their names. It's told not to insert the set next to them — a variant
+        // set carries the section trait, so where its masters lived isn't necessarily somewhere it
+        // may go. Like `new Group({ layers })`, it comes back unparented for the caller to place.
+        delete group.layers
+        group.sketchObject = MSLayerGroup.makeVariantSetFromSources_withName_insertingIntoSourceParent(
+          layers.map((layer) => layer.sketchObject),
+          name,
+          false
+        )
+      } else {
+        // Create an empty variant set, then let the `layers` setter deal with
+        // adding children layers in super()
+        group.sketchObject = MSLayerGroup.makeVariantSetFromSources_withName_insertingIntoSourceParent(
+          [],
+          name,
+          false
+        )
+      }
+    }
+
+    super(group)
+  }
+
+  getBestVariantMasterForConfiguration(configuration) {
+    if (this.isImmutable()) {
+      return undefined
+    }
+
+    if (typeof configuration !== 'object') {
+      throw Error('Expected `configuration` to be an object')
+    }
+    for (const [propertyName, valueName] of Object.entries(configuration)) {
+      const property = this.variantProperties.find(
+        (p) => p.name === propertyName
+      )
+      if (!property) {
+        throw Error(
+          `Unknown variant property ${propertyName}. Available properties: ${this.variantProperties.map(
+            (p) => p.name
+          )}`
+        )
+      }
+
+      if (!property.values.includes(valueName)) {
+        throw Error(
+          `Unknown value ${valueName} for the variant property <${propertyName}>. Available values: ${property.values}`
+        )
+      }
+    }
+
+    const nativeVariantMaster = this._object.bestVariantMasterForConfiguration(
+      configuration
+    )
+    return wrapObject(nativeVariantMaster, Types.SymbolMaster)
+  }
+}
+
+Group.VariantSet[DefinedPropertiesKey] = { ...Group[DefinedPropertiesKey] }
+
+Group.VariantSet.define('defaultVariantMaster', {
+  exportable: false,
+  importable: false,
+  enumerable: false,
+  get() {
+    if (this.isImmutable()) {
+      return undefined
+    }
+    return wrapObject(this._object.defaultVariantMaster(), Types.SymbolMaster)
+  },
+})
+
+Group.VariantSet.define('variantProperties', {
+  array: true,
+  get() {
+    return toArray(this._object.variantProperties()).map((nativeProperty) => {
+      return VariantProperty.fromNative(nativeProperty)
+    })
+  },
+  set(rawVariantProperties) {
+    if (this.isImmutable()) {
+      return
+    }
+    const currentProperties = this.variantProperties
+    const proposedProperties = rawVariantProperties.map((raw) => {
+      return Factory.create(VariantProperty, raw)
+    })
+    // We match variant properties by their names only
+    const toAdd = proposedProperties.filter((prop) => {
+      return !currentProperties.some((current) => current.name === prop.name)
+    })
+    const toRemove = currentProperties.filter((prop) => {
+      return !proposedProperties.some((proposed) => proposed.name === prop.name)
+    })
+    const toUpdate = currentProperties.filter((prop) => {
+      return proposedProperties.some((proposed) => proposed.name === prop.name)
+    })
+
+    toAdd.forEach((prop) => {
+      this._object.addVariantProperty(prop._object)
+    })
+    toRemove.forEach((prop) => {
+      this._object.removeVariantProperty(prop._object)
+    })
+    toUpdate.forEach((prop) => {
+      const updated = proposedProperties.find(
+        (proposed) => proposed.name === prop.name
+      )
+      if (updated && Array.isArray(updated.values)) {
+        prop.values = updated.values
+      }
+    })
+  },
+  insertItem(item, index) {
+    if (this.isImmutable()) {
+      return undefined
+    }
+    const newProperty = wrapObject(item, Types.VariantProperty)
+    this._object.insertVariantProperty_atIndex(newProperty._object, index)
+    return newProperty
+  },
+  removeItem(index) {
+    if (this.isImmutable()) {
+      return undefined
+    }
+    this._object.removeVariantPropertyAtIndex(index)
+  },
+})
+
 Group.define('groupBehavior', {
   enumerable: false,
   exportable: false,
   get() {
     console.warn(
-      'Group.groupBehavior *getter* is deprecated. Use Group.isFrame and Group.isGraphicFrame instead.'
+      'Group.groupBehavior is deprecated. Use Group.isFrame, Group.isGraphicFrame, or Group.isVariantSet instead.'
     )
     if (this.isGraphicFrame) {
       return GroupBehavior.Graphic
@@ -159,13 +389,11 @@ Group.define('groupBehavior', {
   set(value) {
     if (this.isImmutable()) return
 
-    let desiredBehavior
-    if (typeof value === 'string') {
-      desiredBehavior = GroupBehavior[value]
-    } else {
-      desiredBehavior = value
-    }
-
+    const desiredBehavior = parseEnumValue(
+      value,
+      GroupBehavior,
+      'Group.groupBehavior'
+    )
     switch (desiredBehavior) {
       case GroupBehavior.Frame:
         this.convertToFrame()
@@ -264,7 +492,7 @@ Group.define('layers', {
       return undefined
     }
     const item = wrapNativeObject(this._object.layers()[index])
-    this._object.removeLayerAtIndex(index)
+    item.remove()
     return item
   },
 })
@@ -354,6 +582,34 @@ Group.define('isGraphicFrame', {
   },
 })
 
+Group.define('isVariantSet', {
+  importable: false,
+  get() {
+    return Boolean(this._object.hasVariantSetTrait())
+  },
+})
+
+Group.define('isVariant', {
+  importable: false,
+  get() {
+    if (this.isImmutable()) {
+      return false
+    }
+    return Boolean(this._object.isVariant())
+  },
+})
+
+/**
+ * Whether this group is a section. Mirrors the native trait, so a variant set — which carries the
+ * section trait too — also reports `true`. Check `isVariantSet` first when the distinction matters.
+ */
+Group.define('isSection', {
+  importable: false,
+  get() {
+    return Boolean(this._object.isSection())
+  },
+})
+
 Group.define('isTemplate', {
   importable: true,
   get() {
@@ -371,9 +627,20 @@ Group.define('flowStartPoint', {
   get() {
     return !!this._object.isFlowHome()
   },
+  /**
+   * Whether this group is a prototype start point.
+   *
+   * Making a section one throws, and a variant set carries the section trait too, so it is
+   * rejected the same way. Clearing the flag is always allowed. The app only ever sets this on
+   * a canvas Frame, but we don't require one here: a Frame is commonly created with this
+   * property before it is given a parent, and only then becomes a canvas Frame.
+   */
   set(isFlowStartHome) {
     if (this.isImmutable()) {
       return
+    }
+    if (isFlowStartHome && this.isSection) {
+      throw new Error("Can't make a Section a prototype start point")
     }
     this._object.isFlowHome = isFlowStartHome
   },
@@ -402,10 +669,7 @@ Group.defineObject(
     enabled: {
       get() {
         return (
-          this._parent.isFrame &&
-          this._object.style &&
-          this._object.style().fills &&
-          this._object.style().fills().length > 0
+          this._parent.isFrame && !!this._object.style?.().firstEnabledFill?.()
         )
       },
       set(enabled) {

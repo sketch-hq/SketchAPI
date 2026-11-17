@@ -165,37 +165,49 @@ export class Library extends WrappedObject {
   }
 
   getImportableReferencesForDocument(_document, objectType) {
-    const document = wrapObject(_document)
+    const documentData = wrapObject(_document)?._getMSDocumentData()
+    if (!documentData) {
+      return []
+    }
+    const documentProvider = MSSketchAPIDocumentEnvironment.alloc().initWithDocumentData(
+      documentData
+    )
+
     let provider
     switch (objectType) {
       case ImportableObjectType.Symbol:
-        provider = MSForeignSymbolProvider.alloc().initWithDocument(
-          document._getMSDocument()
+        provider = MSForeignSymbolProvider.alloc().initWithDocumentProvider(
+          documentProvider
         )
         break
       case ImportableObjectType.LayerStyle:
-        provider = MSSharedLayerStyleProvider.alloc().initWithDocument(
-          document._getMSDocument()
+        provider = MSSharedLayerStyleProvider.alloc().initWithDocumentProvider(
+          documentProvider
         )
         break
       case ImportableObjectType.TextStyle:
-        provider = MSSharedTextStyleProvider.alloc().initWithDocument(
-          document._getMSDocument()
+        provider = MSSharedTextStyleProvider.alloc().initWithDocumentProvider(
+          documentProvider
         )
         break
       case ImportableObjectType.Swatch:
-        provider = MSSwatchProvider.alloc().initWithDocument(
-          document._getMSDocument()
+        provider = MSSwatchProvider.alloc().initWithDocumentProvider(
+          documentProvider
         )
         break
       case ImportableObjectType.FrameTemplate:
-        provider = MSFrameTemplateProvider.alloc().initWithDocument(
-          document._getMSDocument()
+        provider = MSFrameTemplateProvider.alloc().initWithDocumentProvider(
+          documentProvider
         )
         break
       case ImportableObjectType.GraphicTemplate:
-        provider = MSGraphicTemplateProvider.alloc().initWithDocument(
-          document._getMSDocument()
+        provider = MSGraphicTemplateProvider.alloc().initWithDocumentProvider(
+          documentProvider
+        )
+        break
+      case ImportableObjectType.VariantSet:
+        provider = MSForeignVariantSetProvider.alloc().initWithDocumentProvider(
+          documentProvider
         )
         break
       default:
@@ -209,7 +221,6 @@ export class Library extends WrappedObject {
       collector.collectImportableReferencesFromLibrary(this.sketchObject)
     )
 
-    const documentData = document._getMSDocumentData()
     return toArray(shareableObjectRefs).map((ref) => {
       const obj = ImportableObject.fromNative(ref)
       obj._documentData = documentData
@@ -256,6 +267,13 @@ export class Library extends WrappedObject {
     return this.getImportableReferencesForDocument(
       document,
       ImportableObjectType.GraphicTemplate
+    )
+  }
+
+  getImportableVariantSetReferencesForDocument(document) {
+    return this.getImportableReferencesForDocument(
+      document,
+      ImportableObjectType.VariantSet
     )
   }
 

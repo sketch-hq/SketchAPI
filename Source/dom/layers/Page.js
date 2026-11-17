@@ -107,6 +107,9 @@ delete Page[DefinedPropertiesKey].locked
 delete Page[DefinedPropertiesKey].hidden
 delete Page[DefinedPropertiesKey].exportFormats
 delete Page[DefinedPropertiesKey].transform
+delete Page[DefinedPropertiesKey].rotation
+delete Page[DefinedPropertiesKey].flippedHorizontally
+delete Page[DefinedPropertiesKey].flippedVertically
 delete Page[DefinedPropertiesKey].smartLayout
 
 // override setting up the parent as it's needs to a be a Document
