@@ -498,6 +498,85 @@ export class Document extends WrappedObject {
   processPendingChanges() {
     this._getMSDocumentData()?.editingContext().processPendingChanges()
   }
+
+  /**
+   * Undo the latest change in this document.
+   *
+   * The app groups every change from one script invocation into a single
+   * history step, so one call rolls back the previous invocation. Calling
+   * this before making any new changes undoes that invocation; later changes
+   * in the same script stay a separate step.
+   *
+   * @return {boolean} `true` when a step was undone.
+   */
+  undo() {
+    return this._moveThroughHistory(true)
+  }
+
+  /**
+   * Redo the latest undone change in this document.
+   *
+   * @return {boolean} `true` when a step was redone.
+   */
+  redo() {
+    return this._moveThroughHistory(false)
+  }
+
+  /**
+   * Step through document history.
+   *
+   * `backwards` selects undo. A script invocation coalesces history for its
+   * whole run, and moving through history is refused while that grouping is
+   * open, so close it first and open it again afterwards. Closing it with no
+   * edits of our own leaves the previous invocation as the step we move.
+   *
+   * @return {boolean} `true` when history moved.
+   */
+  _moveThroughHistory(backwards) {
+    const msdocument = this._getMSDocument()
+    if (
+      this.isImmutable() ||
+      !msdocument ||
+      typeof msdocument.historyMaker !== 'function'
+    ) {
+      return false
+    }
+
+    const maker = msdocument.historyMaker()
+    if (
+      !maker ||
+      typeof maker.moveDocument_throughHistoryBackInTime !== 'function' ||
+      typeof maker.canMoveThroughHistoryBackInTime !== 'function'
+    ) {
+      return false
+    }
+
+    // Model edits made in this turn have to be part of history before we step.
+    this.processPendingChanges()
+
+    const wasCoalescing =
+      typeof maker.historyIsCoalescing === 'function' &&
+      !!maker.historyIsCoalescing()
+    if (wasCoalescing && typeof maker.finishCoalescingHistory === 'function') {
+      maker.finishCoalescingHistory()
+    }
+
+    let moved = false
+    try {
+      if (maker.canMoveThroughHistoryBackInTime(backwards)) {
+        maker.moveDocument_throughHistoryBackInTime(
+          msdocument.documentData(),
+          backwards
+        )
+        moved = true
+      }
+    } finally {
+      if (wasCoalescing && typeof maker.startCoalescingHistory === 'function') {
+        maker.startCoalescingHistory()
+      }
+    }
+    return moved
+  }
 }
 
 Document.type = Types.Document

@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- [New] `Document.undo()` and `Document.redo()`. Each script invocation is a single history step, so one `undo()` rolls it back.
+
 ## Releases
 
 ### Sketch 69

@@ -403,6 +403,55 @@ test('can replace all swatches in Document', (_context, document) => {
   expect(document.swatches.length).toBe(1)
 })
 
+test('undo and redo are safe when the document has no history', (_context, document) => {
+  expect(document.undo()).toBe(false)
+  expect(document.redo()).toBe(false)
+})
+
+test('one undo rolls back every edit made while history is coalesced', () => {
+  const document = new Document()
+  try {
+    const page = document.selectedPage
+    const before = page.layers.length
+    const nativeDocument = document.sketchObject
+    const maker =
+      nativeDocument &&
+      typeof nativeDocument.historyMaker === 'function' &&
+      nativeDocument.historyMaker()
+
+    // The integration runner passes a document model with no undo stack.
+    // A real document window records history, and a script invocation groups
+    // every edit into that one step.
+    if (
+      !maker ||
+      typeof maker.startCoalescingHistory !== 'function' ||
+      typeof maker.finishCoalescingHistory !== 'function'
+    ) {
+      expect(document.undo()).toBe(false)
+      expect(document.redo()).toBe(false)
+      return
+    }
+
+    maker.startCoalescingHistory()
+    new Shape({ name: 'Undo A', parent: page })
+    new Shape({ name: 'Undo B', parent: page })
+    document.processPendingChanges()
+    maker.finishCoalescingHistory()
+
+    expect(page.layers.length).toBe(before + 2)
+    expect(document.undo()).toBe(true)
+    expect(page.layers.length).toBe(before)
+    expect(document.redo()).toBe(true)
+    expect(page.layers.length).toBe(before + 2)
+    const restored = page.layers.filter(
+      (layer) => layer.name === 'Undo A' || layer.name === 'Undo B'
+    )
+    expect(restored.length).toBe(2)
+  } finally {
+    document.close()
+  }
+})
+
 test('can remove all swatches in Document', (_context, document) => {
   const swatchOne = Swatch.from('#ffffff')
   const swatchTwo = Swatch.from('#000000')
